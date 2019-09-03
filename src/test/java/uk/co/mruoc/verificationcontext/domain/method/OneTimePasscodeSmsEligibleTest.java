@@ -8,10 +8,10 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OneTimePasscodeSettingsSmsEligibleTest {
+class OneTimePasscodeSmsEligibleTest {
 
     private final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
-    private final Collection<String> mobileNumbers = Collections.singleton("07809347780");
+    private final Collection<MobileNumber> mobileNumbers = Collections.singleton(new MobileNumber("07809347780"));
 
     private final OneTimePasscodeSms method = OneTimePasscodeSmsEligible.builder()
             .passcodeSettings(passcodeSettings)
@@ -29,11 +29,6 @@ class OneTimePasscodeSettingsSmsEligibleTest {
     }
 
     @Test
-    void shouldReturnPasscodeSettings() {
-        assertThat(method.getPasscodeSettings()).isEqualTo(passcodeSettings);
-    }
-
-    @Test
     void shouldBeEligible() {
         assertThat(method.isEligible()).isTrue();
     }
@@ -41,6 +36,11 @@ class OneTimePasscodeSettingsSmsEligibleTest {
     @Test
     void shouldReturnEligibleEligibility() {
         assertThat(method.getEligibility()).isInstanceOf(Eligible.class);
+    }
+
+    @Test
+    void shouldReturnPasscodeSettings() {
+        assertThat(method.getPasscodeSettings()).isEqualTo(passcodeSettings);
     }
 
     @Test

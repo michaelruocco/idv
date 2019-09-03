@@ -23,6 +23,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.8'
 
+    compile 'org.apache.commons:commons-lang3:3.9'
+
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.5.1'
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
 

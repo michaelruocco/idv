@@ -7,15 +7,15 @@ import java.util.Collection;
 import java.util.Collections;
 
 @RequiredArgsConstructor
-public class OneTimePasscodeSms implements VerificationMethod {
+public class PhysicalPinsentry implements VerificationMethod {
 
     private final Eligibility eligibility;
-    private final PasscodeSettings passcodeSettings;
-    private final Collection<MobileNumber> mobileNumbers;
+    private final PinsentryFunction function;
+    private final Collection<CardNumber> cardNumbers;
 
     @Override
     public String getName() {
-        return Names.ONE_TIME_PASSCODE_SMS;
+        return Names.PHYSICAL_PINSENTRY;
     }
 
     @Override
@@ -33,12 +33,12 @@ public class OneTimePasscodeSms implements VerificationMethod {
         return eligibility;
     }
 
-    public PasscodeSettings getPasscodeSettings() {
-        return passcodeSettings;
+    public PinsentryFunction getFunction() {
+        return function;
     }
 
-    public Collection<MobileNumber> getMobileNumbers() {
-        return Collections.unmodifiableCollection(mobileNumbers);
+    public Collection<CardNumber> getCardNumbers() {
+        return Collections.unmodifiableCollection(cardNumbers);
     }
 
 }

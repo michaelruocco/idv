@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CardCredentialsTest {
 
     private final Eligibility eligibility = new Eligible();
+
     private final VerificationMethod method = new CardCredentials(eligibility);
 
     @Test

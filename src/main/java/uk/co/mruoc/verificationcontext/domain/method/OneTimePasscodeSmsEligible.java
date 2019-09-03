@@ -8,7 +8,7 @@ public class OneTimePasscodeSmsEligible extends OneTimePasscodeSms {
 
     @Builder
     public OneTimePasscodeSmsEligible(final PasscodeSettings passcodeSettings,
-                                      final Collection<String> mobileNumbers) {
+                                      final Collection<MobileNumber> mobileNumbers) {
         super(new Eligible(), passcodeSettings, mobileNumbers);
     }
 

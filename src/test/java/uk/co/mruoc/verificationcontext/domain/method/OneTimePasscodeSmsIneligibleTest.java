@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OneTimePasscodeSettingsSmsIneligibleTest {
+class OneTimePasscodeSmsIneligibleTest {
 
     private final Ineligible ineligible = new Ineligible("no mobile numbers available");
     private final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();

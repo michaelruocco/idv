@@ -3,19 +3,16 @@ package uk.co.mruoc.verificationcontext.domain.method;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
 
 @RequiredArgsConstructor
-public class OneTimePasscodeSms implements VerificationMethod {
+public class MobilePinsentry implements VerificationMethod {
 
     private final Eligibility eligibility;
-    private final PasscodeSettings passcodeSettings;
-    private final Collection<MobileNumber> mobileNumbers;
+    private final PinsentryFunction function;
 
     @Override
     public String getName() {
-        return Names.ONE_TIME_PASSCODE_SMS;
+        return Names.MOBILE_PINSENTRY;
     }
 
     @Override
@@ -33,12 +30,8 @@ public class OneTimePasscodeSms implements VerificationMethod {
         return eligibility;
     }
 
-    public PasscodeSettings getPasscodeSettings() {
-        return passcodeSettings;
-    }
-
-    public Collection<MobileNumber> getMobileNumbers() {
-        return Collections.unmodifiableCollection(mobileNumbers);
+    public PinsentryFunction getFunction() {
+        return function;
     }
 
 }
