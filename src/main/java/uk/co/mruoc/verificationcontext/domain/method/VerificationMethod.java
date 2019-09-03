@@ -1,4 +1,4 @@
-package uk.co.mruoc.verificationcontext.domain;
+package uk.co.mruoc.verificationcontext.domain.method;
 
 import java.time.Duration;
 
