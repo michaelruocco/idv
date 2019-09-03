@@ -34,8 +34,8 @@ class PhysicalPinsentryEligibleTest {
     }
 
     @Test
-    void shouldReturnEligibleEligibility() {
-        assertThat(method.getEligibility()).isInstanceOf(Eligible.class);
+    void shouldReturnEligibility() {
+        assertThat(method.getEligibility()).isEqualTo(new Eligible());
     }
 
     @Test

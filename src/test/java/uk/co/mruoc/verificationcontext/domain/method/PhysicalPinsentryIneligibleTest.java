@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PhysicalPinsentryIneligibleTest {
 
-    private final Ineligible ineligible = new Ineligible("no card numbers available");
+    private final Ineligible ineligible = new NoPinsentryDevice();
     private final PinsentryFunction function = PinsentryFunction.RESPOND;
 
     private final PhysicalPinsentry method = PhysicalPinsentryIneligible.builder()

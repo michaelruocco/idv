@@ -1,7 +1,10 @@
 package uk.co.mruoc.verificationcontext.domain.method;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.Optional;
 
+@EqualsAndHashCode
 public class Eligible implements Eligibility {
 
     @Override

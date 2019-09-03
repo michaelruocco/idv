@@ -1,14 +1,11 @@
 package uk.co.mruoc.verificationcontext.domain.method;
 
-import lombok.Builder;
-
 import java.util.Collections;
 
 public class OneTimePasscodeSmsIneligible extends OneTimePasscodeSms {
 
-    @Builder
-    public OneTimePasscodeSmsIneligible(final Ineligible ineligible, final PasscodeSettings passcodeSettings) {
-        super(ineligible, passcodeSettings, Collections.emptyList());
+    public OneTimePasscodeSmsIneligible(final PasscodeSettings passcodeSettings) {
+        super(new NoEligibleMobileNumbers(), passcodeSettings, Collections.emptyList());
     }
 
 }
