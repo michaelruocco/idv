@@ -9,23 +9,21 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class PhysicalPinsentry implements VerificationMethod {
 
+    private static final String NAME = "physical-pinsentry";
+    private static final Duration DURATION = Duration.ofMinutes(5);
+
     private final Eligibility eligibility;
     private final PinsentryFunction function;
     private final Collection<CardNumber> cardNumbers;
 
     @Override
     public String getName() {
-        return Names.PHYSICAL_PINSENTRY;
+        return NAME;
     }
 
     @Override
     public Duration getDuration() {
-        return Duration.ofMinutes(5);
-    }
-
-    @Override
-    public boolean isEligible() {
-        return eligibility.isEligible();
+        return DURATION;
     }
 
     @Override

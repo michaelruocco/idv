@@ -2,25 +2,26 @@ package uk.co.mruoc.verificationcontext.domain.method;
 
 import java.time.Duration;
 
-public class PushNotification implements VerificationMethod {
-
-    private static final String NAME = "push-notification";
-    private static final Duration DURATION = Duration.ofMinutes(5);
+public class FakeVerificationMethod implements VerificationMethod {
 
     private final Eligibility eligibility;
 
-    public PushNotification(final Eligibility eligibility) {
+    public FakeVerificationMethod() {
+        this(new Eligible());
+    }
+
+    public FakeVerificationMethod(final Eligibility eligibility) {
         this.eligibility = eligibility;
     }
 
     @Override
     public String getName() {
-        return NAME;
+        return "fake-method";
     }
 
     @Override
     public Duration getDuration() {
-        return DURATION;
+        return Duration.ofMinutes(5);
     }
 
     @Override

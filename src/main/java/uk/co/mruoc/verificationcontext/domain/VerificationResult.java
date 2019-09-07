@@ -1,4 +1,7 @@
 package uk.co.mruoc.verificationcontext.domain;
 
-public class VerificationResult {
+public interface VerificationResult {
+
+    String getMethodName();
+
 }

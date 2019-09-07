@@ -9,23 +9,21 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class OneTimePasscodeSms implements VerificationMethod {
 
+    private static final String NAME = "one-time-passcode-sms";
+    private static final Duration DURATION = Duration.ofMinutes(5);
+
     private final Eligibility eligibility;
     private final PasscodeSettings passcodeSettings;
     private final Collection<MobileNumber> mobileNumbers;
 
     @Override
     public String getName() {
-        return Names.ONE_TIME_PASSCODE_SMS;
+        return NAME;
     }
 
     @Override
     public Duration getDuration() {
-        return Duration.ofMinutes(5);
-    }
-
-    @Override
-    public boolean isEligible() {
-        return eligibility.isEligible();
+        return DURATION;
     }
 
     @Override

@@ -20,17 +20,12 @@ class OneTimePasscodeSmsEligibleTest {
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo(VerificationMethod.Names.ONE_TIME_PASSCODE_SMS);
+        assertThat(method.getName()).isEqualTo("one-time-passcode-sms");
     }
 
     @Test
     void shouldReturnDuration() {
         assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(5));
-    }
-
-    @Test
-    void shouldBeEligible() {
-        assertThat(method.isEligible()).isTrue();
     }
 
     @Test

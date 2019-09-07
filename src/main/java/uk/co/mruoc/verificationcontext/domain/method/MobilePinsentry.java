@@ -7,22 +7,20 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class MobilePinsentry implements VerificationMethod {
 
+    private static final String NAME = "mobile-pinsentry";
+    private static final Duration DURATION = Duration.ofMinutes(5);
+
     private final Eligibility eligibility;
     private final PinsentryFunction function;
 
     @Override
     public String getName() {
-        return Names.MOBILE_PINSENTRY;
+        return NAME;
     }
 
     @Override
     public Duration getDuration() {
-        return Duration.ofMinutes(5);
-    }
-
-    @Override
-    public boolean isEligible() {
-        return eligibility.isEligible();
+        return DURATION;
     }
 
     @Override

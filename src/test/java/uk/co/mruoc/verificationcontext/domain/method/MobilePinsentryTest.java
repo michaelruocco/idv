@@ -15,17 +15,12 @@ class MobilePinsentryTest {
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo(VerificationMethod.Names.MOBILE_PINSENTRY);
+        assertThat(method.getName()).isEqualTo("mobile-pinsentry");
     }
 
     @Test
     void shouldReturnDuration() {
         assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(5));
-    }
-
-    @Test
-    void shouldReturnEligible() {
-        assertThat(method.isEligible()).isEqualTo(eligibility.isEligible());
     }
 
     @Test

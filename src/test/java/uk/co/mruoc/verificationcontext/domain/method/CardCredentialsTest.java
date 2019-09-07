@@ -14,17 +14,12 @@ class CardCredentialsTest {
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo(VerificationMethod.Names.CARD_CREDENTIALS);
+        assertThat(method.getName()).isEqualTo("card-credentials");
     }
 
     @Test
     void shouldReturnDuration() {
         assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(5));
-    }
-
-    @Test
-    void shouldReturnEligible() {
-        assertThat(method.isEligible()).isEqualTo(eligibility.isEligible());
     }
 
     @Test

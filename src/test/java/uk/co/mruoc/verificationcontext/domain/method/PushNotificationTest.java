@@ -14,17 +14,12 @@ class PushNotificationTest {
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo(VerificationMethod.Names.PUSH_NOTIFICATION);
+        assertThat(method.getName()).isEqualTo("push-notification");
     }
 
     @Test
     void shouldReturnDuration() {
         assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(5));
-    }
-
-    @Test
-    void shouldReturnEligible() {
-        assertThat(method.isEligible()).isEqualTo(eligibility.isEligible());
     }
 
     @Test

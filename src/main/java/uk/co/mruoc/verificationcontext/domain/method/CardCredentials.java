@@ -4,6 +4,9 @@ import java.time.Duration;
 
 public class CardCredentials implements VerificationMethod {
 
+    private static final String NAME = "card-credentials";
+    private static final Duration DURATION = Duration.ofMinutes(5);
+
     private final Eligibility eligibility;
 
     public CardCredentials(final Eligibility eligibility) {
@@ -12,17 +15,12 @@ public class CardCredentials implements VerificationMethod {
 
     @Override
     public String getName() {
-        return Names.CARD_CREDENTIALS;
+        return NAME;
     }
 
     @Override
     public Duration getDuration() {
-        return Duration.ofMinutes(5);
-    }
-
-    @Override
-    public boolean isEligible() {
-        return eligibility.isEligible();
+        return DURATION;
     }
 
     @Override

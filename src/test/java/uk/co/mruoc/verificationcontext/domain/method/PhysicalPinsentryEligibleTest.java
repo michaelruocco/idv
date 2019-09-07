@@ -20,17 +20,12 @@ class PhysicalPinsentryEligibleTest {
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo(VerificationMethod.Names.PHYSICAL_PINSENTRY);
+        assertThat(method.getName()).isEqualTo("physical-pinsentry");
     }
 
     @Test
     void shouldReturnDuration() {
         assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(5));
-    }
-
-    @Test
-    void shouldBeEligible() {
-        assertThat(method.isEligible()).isTrue();
     }
 
     @Test
