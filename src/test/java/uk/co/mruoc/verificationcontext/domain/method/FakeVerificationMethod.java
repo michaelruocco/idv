@@ -1,7 +1,10 @@
 package uk.co.mruoc.verificationcontext.domain.method;
 
+import lombok.ToString;
+
 import java.time.Duration;
 
+@ToString
 public class FakeVerificationMethod implements VerificationMethod {
 
     private final Eligibility eligibility;

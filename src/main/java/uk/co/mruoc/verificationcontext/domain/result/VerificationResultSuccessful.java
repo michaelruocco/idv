@@ -1,10 +1,12 @@
 package uk.co.mruoc.verificationcontext.domain.result;
 
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.time.Instant;
 import java.util.UUID;
 
+@ToString
 @RequiredArgsConstructor
 public class VerificationResultSuccessful implements VerificationResult {
 

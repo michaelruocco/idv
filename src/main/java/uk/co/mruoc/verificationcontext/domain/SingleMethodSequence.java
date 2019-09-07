@@ -1,5 +1,6 @@
 package uk.co.mruoc.verificationcontext.domain;
 
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.mruoc.verificationcontext.domain.method.CardCredentials;
 import uk.co.mruoc.verificationcontext.domain.method.MobilePinsentry;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
+@ToString
 public class SingleMethodSequence implements VerificationSequence {
 
     private final VerificationMethod method;
@@ -112,7 +114,7 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     private void logResultNotAdded(final VerificationResult result) {
-        log.info("result not added {} to sequence {} as sequence does not contain method {}",
+        log.info("result not added {} to sequence {} as sequence does not contain method with name {}",
                 result,
                 this,
                 result.getMethodName());
