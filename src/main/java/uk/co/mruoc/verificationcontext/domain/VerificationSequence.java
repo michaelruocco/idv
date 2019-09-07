@@ -5,6 +5,7 @@ import uk.co.mruoc.verificationcontext.domain.method.MobilePinsentry;
 import uk.co.mruoc.verificationcontext.domain.method.OneTimePasscodeSms;
 import uk.co.mruoc.verificationcontext.domain.method.PhysicalPinsentry;
 import uk.co.mruoc.verificationcontext.domain.method.PushNotification;
+import uk.co.mruoc.verificationcontext.domain.result.VerificationResult;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -33,5 +34,7 @@ public interface VerificationSequence {
     Collection<VerificationResult> getResults();
 
     boolean isComplete();
+
+    boolean isSuccessful();
 
 }

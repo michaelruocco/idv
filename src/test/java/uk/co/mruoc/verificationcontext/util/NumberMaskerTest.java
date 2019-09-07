@@ -1,6 +1,7 @@
-package uk.co.mruoc.verificationcontext.domain;
+package uk.co.mruoc.verificationcontext.util;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.verificationcontext.util.NumberMasker;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

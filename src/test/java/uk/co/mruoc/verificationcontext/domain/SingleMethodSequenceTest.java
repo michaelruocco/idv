@@ -8,9 +8,10 @@ import uk.co.mruoc.verificationcontext.domain.method.OneTimePasscodeSms;
 import uk.co.mruoc.verificationcontext.domain.method.PhysicalPinsentry;
 import uk.co.mruoc.verificationcontext.domain.method.PushNotification;
 import uk.co.mruoc.verificationcontext.domain.method.VerificationMethod;
+import uk.co.mruoc.verificationcontext.domain.result.FakeVerificationResultSuccessful;
+import uk.co.mruoc.verificationcontext.domain.result.VerificationResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class SingleMethodSequenceTest {
@@ -99,7 +100,7 @@ class SingleMethodSequenceTest {
     void shouldNotAddResultIfResultMethodDoesNotMatchSequenceMethod() {
         final VerificationMethod method = new FakeVerificationMethod();
         final VerificationSequence sequence = new SingleMethodSequence(method);
-        final VerificationResult result = buildResultWithMethodName("other-name");
+        final VerificationResult result = new FakeVerificationResultSuccessful("other-name");
 
         final VerificationSequence newSequence = sequence.addResultIfContainsMethod(result);
 
@@ -110,7 +111,7 @@ class SingleMethodSequenceTest {
     void shouldAddResultIfResultMethodMatchesSequenceMethod() {
         final VerificationMethod method = new FakeVerificationMethod();
         final VerificationSequence sequence = new SingleMethodSequence(method);
-        final VerificationResult result = buildResultWithMethodName(method.getName());
+        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
 
         final VerificationSequence newSequence = sequence.addResultIfContainsMethod(result);
 
@@ -130,17 +131,30 @@ class SingleMethodSequenceTest {
     @Test
     void shouldBeCompleteIfResultsAreNotEmpty() {
         final VerificationMethod method = new FakeVerificationMethod();
-        final VerificationResult result = buildResultWithMethodName(method.getName());
+        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
 
         final VerificationSequence sequence = new SingleMethodSequence(method, result);
 
         assertThat(sequence.isComplete()).isTrue();
     }
 
-    private static VerificationResult buildResultWithMethodName(final String methodName) {
-        final VerificationResult result = mock(VerificationResult.class);
-        given(result.getMethodName()).willReturn(methodName);
-        return result;
+    @Test
+    void shouldNotBeSuccessfulIfDoesNotContainSuccessfulResult() {
+        final VerificationMethod method = new FakeVerificationMethod();
+
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        assertThat(sequence.isSuccessful()).isFalse();
+    }
+
+    @Test
+    void shouldBeSuccessfulIfContainsSuccessfulResult() {
+        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
+
+        final VerificationSequence sequence = new SingleMethodSequence(method, result);
+
+        assertThat(sequence.isSuccessful()).isTrue();
     }
 
 }

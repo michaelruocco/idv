@@ -1,4 +1,4 @@
-package uk.co.mruoc.verificationcontext.domain;
+package uk.co.mruoc.verificationcontext.util;
 
 import org.apache.commons.lang3.StringUtils;
 

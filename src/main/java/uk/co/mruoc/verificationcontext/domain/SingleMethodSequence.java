@@ -7,6 +7,7 @@ import uk.co.mruoc.verificationcontext.domain.method.OneTimePasscodeSms;
 import uk.co.mruoc.verificationcontext.domain.method.PhysicalPinsentry;
 import uk.co.mruoc.verificationcontext.domain.method.PushNotification;
 import uk.co.mruoc.verificationcontext.domain.method.VerificationMethod;
+import uk.co.mruoc.verificationcontext.domain.result.VerificationResult;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -90,6 +91,11 @@ public class SingleMethodSequence implements VerificationSequence {
     @Override
     public boolean isComplete() {
         return !results.isEmpty();
+    }
+
+    @Override
+    public boolean isSuccessful() {
+        return results.stream().anyMatch(VerificationResult::isSuccessful);
     }
 
     private <T> Optional<T> castMethodTo(final Class<T> type) {
