@@ -24,6 +24,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.8'
 
     compile 'org.apache.commons:commons-lang3:3.9'
+    compile 'org.javamoney:moneta:1.1'
 
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.5.1'
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
@@ -42,5 +43,5 @@ test {
 }
 
 bootJar {
-    mainClassName = 'uk.co.mruoc.verificationcontext.Application'
+    mainClassName = 'uk.co.mruoc.idv.verificationcontext.Application'
 }
