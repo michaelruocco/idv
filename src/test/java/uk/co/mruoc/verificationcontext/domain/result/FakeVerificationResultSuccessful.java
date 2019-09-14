@@ -1,7 +1,5 @@
 package uk.co.mruoc.verificationcontext.domain.result;
 
-import uk.co.mruoc.verificationcontext.domain.result.VerificationResultSuccessful;
-
 import java.time.Instant;
 import java.util.UUID;
 

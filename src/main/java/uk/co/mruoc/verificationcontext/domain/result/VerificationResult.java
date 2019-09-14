@@ -13,4 +13,8 @@ public interface VerificationResult {
 
     Instant getTimestamp();
 
+    default boolean hasMethodName(final String otherName) {
+        return getMethodName().equals(otherName);
+    }
+
 }

@@ -102,9 +102,9 @@ class SingleMethodSequenceTest {
         final VerificationSequence sequence = new SingleMethodSequence(method);
         final VerificationResult result = new FakeVerificationResultSuccessful("other-name");
 
-        final VerificationSequence newSequence = sequence.addResultIfContainsMethod(result);
+        final VerificationSequence updatedSequence = sequence.addResultIfContainsMethod(result);
 
-        assertThat(newSequence).isEqualTo(sequence);
+        assertThat(updatedSequence).isEqualTo(sequence);
     }
 
     @Test
@@ -113,10 +113,10 @@ class SingleMethodSequenceTest {
         final VerificationSequence sequence = new SingleMethodSequence(method);
         final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
 
-        final VerificationSequence newSequence = sequence.addResultIfContainsMethod(result);
+        final VerificationSequence updatedSequece = sequence.addResultIfContainsMethod(result);
 
-        assertThat(newSequence).isEqualToIgnoringGivenFields(sequence, "results");
-        assertThat(newSequence.getResults()).containsExactly(result);
+        assertThat(updatedSequece).isEqualToIgnoringGivenFields(sequence, "results");
+        assertThat(updatedSequece.getResults()).containsExactly(result);
     }
 
     @Test

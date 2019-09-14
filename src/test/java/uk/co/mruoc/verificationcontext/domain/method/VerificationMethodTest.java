@@ -2,8 +2,6 @@ package uk.co.mruoc.verificationcontext.domain.method;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class VerificationMethodTest {

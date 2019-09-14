@@ -1,8 +1,6 @@
 package uk.co.mruoc.verificationcontext.domain.result;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.verificationcontext.domain.result.VerificationResult;
-import uk.co.mruoc.verificationcontext.domain.result.VerificationResultFailed;
 
 import java.time.Instant;
 import java.util.UUID;

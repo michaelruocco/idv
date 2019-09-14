@@ -1,37 +1,19 @@
 package uk.co.mruoc.verificationcontext.domain.result;
 
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @ToString
-@RequiredArgsConstructor
-public class VerificationResultSuccessful implements VerificationResult {
+public class VerificationResultSuccessful extends AbstractVerificationResult {
 
-    private final String name;
-    private final UUID verificationId;
-    private final Instant timestamp;
+    private static final boolean SUCCESSFUL = true;
 
-    @Override
-    public String getMethodName() {
-        return name;
-    }
-
-    @Override
-    public UUID getVerificationId() {
-        return verificationId;
-    }
-
-    @Override
-    public Instant getTimestamp() {
-        return timestamp;
-    }
-
-    @Override
-    public boolean isSuccessful() {
-        return true;
+    public VerificationResultSuccessful(final String name,
+                                        final UUID verificationId,
+                                        final Instant timestamp) {
+        super(name, verificationId, timestamp, SUCCESSFUL);
     }
 
 }
