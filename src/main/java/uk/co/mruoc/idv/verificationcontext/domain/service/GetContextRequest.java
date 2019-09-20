@@ -1,6 +1,15 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
-public interface GetContextRequest {
 
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.UUID;
+
+@Builder
+@Getter
+public class GetContextRequest {
+
+    private final UUID id;
 
 }

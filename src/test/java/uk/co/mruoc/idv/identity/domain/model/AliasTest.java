@@ -14,7 +14,7 @@ class AliasTest {
 
         final String type = alias.getType();
 
-        assertThat(type).isEqualTo("fake-alias");
+        assertThat(type).isEqualTo("fake-providedAlias");
     }
 
     @Test
@@ -37,7 +37,7 @@ class AliasTest {
     void shouldReturnIsTypeTrueIfTypeMatches() {
         final Alias alias = new FakeAlias(VALUE);
 
-        final boolean isType = alias.isType("fake-alias");
+        final boolean isType = alias.isType("fake-providedAlias");
 
         assertThat(isType).isTrue();
     }
@@ -46,7 +46,7 @@ class AliasTest {
     void shouldReturnIsTypeFalseIfTypeDoesNotMatch() {
         final Alias alias = new FakeAlias(VALUE);
 
-        final boolean isType = alias.isType("other-alias-type");
+        final boolean isType = alias.isType("other-providedAlias-type");
 
         assertThat(isType).isFalse();
     }
@@ -61,7 +61,7 @@ class AliasTest {
 
         @Override
         public String getType() {
-            return "fake-alias";
+            return "fake-providedAlias";
         }
 
         @Override

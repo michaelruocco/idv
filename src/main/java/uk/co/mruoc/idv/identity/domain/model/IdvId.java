@@ -1,7 +1,10 @@
 package uk.co.mruoc.idv.identity.domain.model;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.UUID;
 
+@EqualsAndHashCode
 public class IdvId implements Alias {
 
     public static final String TYPE = "idv-id";
