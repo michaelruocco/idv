@@ -9,9 +9,7 @@ import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext.VerificationContextBuilder;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
 
 import java.time.Instant;
 import java.util.Collection;

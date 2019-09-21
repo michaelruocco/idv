@@ -18,7 +18,7 @@ public class CardNumber {
     public CardNumber(final String tokenized) {
         this(UUID.randomUUID(), tokenized);
     }
-    
+
     public String getMasked() {
         return NumberMasker.mask(tokenized, NUMBER_OF_UNMASKED_CHARS);
     }

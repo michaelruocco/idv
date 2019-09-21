@@ -1,8 +1,6 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;

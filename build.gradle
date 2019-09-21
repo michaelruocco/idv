@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.0.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'com.diffplug.gradle.spotless' version '3.24.2'
 }
 
 group 'uk.co.mruoc'
@@ -44,4 +45,16 @@ test {
 
 bootJar {
     mainClassName = 'uk.co.mruoc.idv.verificationcontext.Application'
+}
+
+spotless {
+    java {
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        indentWithSpaces(4)
+        endWithNewline()
+
+        replace      'Not enough space after if', 'if(', 'if ('
+        replaceRegex 'Too much space after if', 'if +\\(', 'if ('
+    }
 }

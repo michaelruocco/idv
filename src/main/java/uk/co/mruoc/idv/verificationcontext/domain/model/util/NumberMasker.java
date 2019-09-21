@@ -7,7 +7,7 @@ public class NumberMasker {
     private NumberMasker() {
         // utility class
     }
-    
+
     public static String mask(final String value, int numberOfUnmaskedCharacters) {
         int maskLength = value.length() - numberOfUnmaskedCharacters;
         if (maskLength <= 0) {
