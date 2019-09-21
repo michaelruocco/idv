@@ -1,0 +1,48 @@
+package uk.co.mruoc.idv.verificationcontext.domain.service;
+
+import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
+
+import java.time.Duration;
+import java.time.Instant;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+
+class MaxDurationExpiryCalculatorTest {
+
+    private final Instant created = Instant.now();
+    private final VerificationSequences sequences = mock(VerificationSequences.class);
+    private final CalculateExpiryRequest request = buildRequest();
+
+    private final ExpiryCalculator calculator = new MaxDurationExpiryCalculator();
+
+    @Test
+    void shouldReturnCreatedIfSequencesIsEmpty() {
+        given(sequences.isEmpty()).willReturn(true);
+
+        final Instant expiry = calculator.calculateExpiry(request);
+
+        assertThat(expiry).isEqualTo(created);
+    }
+
+    @Test
+    void shouldReturnCreatedPlusMaxDurationIfSequencesIsNotEmpty() {
+        final Duration maxDuration = Duration.ofMinutes(5);
+        given(sequences.isEmpty()).willReturn(false);
+        given(sequences.calculateMaxDuration()).willReturn(maxDuration);
+
+        final Instant expiry = calculator.calculateExpiry(request);
+
+        assertThat(expiry).isEqualTo(created.plus(maxDuration));
+    }
+
+    private CalculateExpiryRequest buildRequest() {
+        return CalculateExpiryRequest.builder()
+                .sequences(sequences)
+                .created(created)
+                .build();
+    }
+
+}
