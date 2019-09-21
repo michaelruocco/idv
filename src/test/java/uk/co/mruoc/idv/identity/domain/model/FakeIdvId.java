@@ -5,7 +5,11 @@ import java.util.UUID;
 public class FakeIdvId extends IdvId {
 
     public FakeIdvId() {
-        super(UUID.randomUUID());
+        this(UUID.randomUUID());
+    }
+
+    public FakeIdvId(final UUID idValue) {
+        super(idValue);
     }
 
 }

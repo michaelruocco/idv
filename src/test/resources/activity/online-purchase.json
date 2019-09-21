@@ -1,0 +1,10 @@
+{
+  "name": "online-purchase",
+  "timestamp": "2019-09-21T20:43:32.187972Z",
+  "merchantName": "Amazon",
+  "reference": "ABC-123",
+  "cost": {
+    "amount": 10.99,
+    "currency": "GBP"
+  }
+}

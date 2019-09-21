@@ -1,14 +1,20 @@
 package uk.co.mruoc.idv.identity.domain.model;
 
+import java.util.UUID;
+
 public class FakeIdentity extends Identity {
 
     public FakeIdentity() {
-        super(buildAliases());
+        this(UUID.randomUUID());
     }
 
-    private static Aliases buildAliases() {
+    public FakeIdentity(final UUID idvIdValue) {
+        super(buildAliases(idvIdValue));
+    }
+
+    private static Aliases buildAliases(final UUID idvIdValue) {
         return Aliases.with(
-                new FakeIdvId(),
+                new FakeIdvId(idvIdValue),
                 new FakeCreditCardNumber()
         );
     }

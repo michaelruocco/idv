@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "merchantName",
         "reference",
         "cost"})
-class ActivityMixin {
+interface ActivityMixin {
 
     //intentionally blank
 
