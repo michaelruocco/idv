@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext.domain;
+package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;

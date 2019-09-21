@@ -11,7 +11,7 @@ import uk.co.mruoc.idv.identity.domain.model.Alias;
 public class CreateContextRequest {
 
     private final Channel channel;
-    private final Alias providedAlias;
     private final Activity activity;
+    private final Alias providedAlias;
 
 }
