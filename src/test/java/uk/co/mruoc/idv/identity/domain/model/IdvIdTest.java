@@ -1,5 +1,7 @@
 package uk.co.mruoc.idv.identity.domain.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -66,24 +68,11 @@ class IdvIdTest {
     }
 
     @Test
-    void shouldBeEqualIfHaveSameValues() {
-        final UUID value = UUID.randomUUID();
-        final IdvId alias1 = new IdvId(value);
-        final IdvId alias2 = new IdvId(value);
-
-        final boolean equal = alias1.equals(alias2);
-
-        assertThat(equal).isTrue();
-    }
-
-    @Test
-    void shouldNotBeEqualIfHaveDifferentValues() {
-        final IdvId alias1 = new IdvId(UUID.randomUUID());
-        final IdvId alias2 = new IdvId(UUID.randomUUID());
-
-        final boolean equal = alias1.equals(alias2);
-
-        assertThat(equal).isFalse();
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(IdvId.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .withNonnullFields("value")
+                .verify();
     }
 
 }

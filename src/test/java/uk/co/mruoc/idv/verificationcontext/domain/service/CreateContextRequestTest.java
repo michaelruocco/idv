@@ -1,5 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
@@ -38,6 +40,13 @@ class CreateContextRequestTest {
         final CreateContextRequest request = builder.providedAlias(providedAlias).build();
 
         assertThat(request.getProvidedAlias()).isEqualTo(providedAlias);
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(CreateContextRequest.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

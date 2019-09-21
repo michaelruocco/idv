@@ -1,5 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
@@ -49,6 +51,13 @@ class CalculateExpiryRequestTest {
         final CalculateExpiryRequest request = builder.sequences(sequences).build();
 
         assertThat(request.getSequences()).isEqualTo(sequences);
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(CalculateExpiryRequest.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

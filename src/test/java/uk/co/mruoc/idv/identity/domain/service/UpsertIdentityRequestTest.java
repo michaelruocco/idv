@@ -1,5 +1,7 @@
 package uk.co.mruoc.idv.identity.domain.service;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
@@ -28,6 +30,13 @@ class UpsertIdentityRequestTest {
         final UpsertIdentityRequest request = builder.providedAlias(providedAlias).build();
 
         assertThat(request.getProvidedAlias()).isEqualTo(providedAlias);
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(UpsertIdentityRequest.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

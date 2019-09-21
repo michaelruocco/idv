@@ -14,8 +14,6 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 @Builder
@@ -27,8 +25,6 @@ public class DefaultVerificationContextService implements VerificationContextSer
     private final SequenceLoader sequenceLoader;
     private final ExpiryCalculator expiryCalculator;
     private final VerificationContextDao dao;
-
-    private final Map<UUID, VerificationContext> contexts = new HashMap<>();
 
     @Override
     public VerificationContext create(final CreateContextRequest request) {
@@ -42,6 +38,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
         final UUID id = idGenerator.generate();
         final Instant created = timeService.now();
         final Instant expiry = calculateExpiry(channel, activity, created, sequences);
+
         final VerificationContext context = VerificationContext.builder()
                 .id(id)
                 .channel(channel)
@@ -52,7 +49,9 @@ public class DefaultVerificationContextService implements VerificationContextSer
                 .sequences(sequences)
                 .expiry(expiry)
                 .build();
+
         dao.save(context);
+
         return context;
     }
 

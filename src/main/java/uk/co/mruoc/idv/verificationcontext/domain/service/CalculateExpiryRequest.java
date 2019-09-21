@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
@@ -10,6 +11,7 @@ import java.time.Instant;
 
 @Builder
 @Getter
+@EqualsAndHashCode
 public class CalculateExpiryRequest {
 
     private final Instant created;
