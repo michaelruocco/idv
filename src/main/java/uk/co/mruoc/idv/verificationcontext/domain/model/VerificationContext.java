@@ -25,6 +25,10 @@ public class VerificationContext {
         return id;
     }
 
+    public Channel getChannel() {
+        return channel;
+    }
+
     public String getChannelId() {
         return channel.getId();
     }

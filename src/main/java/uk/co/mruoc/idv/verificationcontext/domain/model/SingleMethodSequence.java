@@ -62,6 +62,11 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
+    public Collection<VerificationMethod> getMethods() {
+        return Collections.singleton(method);
+    }
+
+    @Override
     public Duration getDuration() {
         return method.getDuration();
     }
@@ -83,6 +88,11 @@ public class SingleMethodSequence implements VerificationSequence {
         }
         logResultNotAdded(result);
         return this;
+    }
+
+    @Override
+    public boolean hasResults() {
+        return !results.isEmpty();
     }
 
     @Override

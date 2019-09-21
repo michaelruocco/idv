@@ -113,10 +113,10 @@ class SingleMethodSequenceTest {
         final VerificationSequence sequence = new SingleMethodSequence(method);
         final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
 
-        final VerificationSequence updatedSequece = sequence.addResultIfContainsMethod(result);
+        final VerificationSequence updatedSequence = sequence.addResultIfContainsMethod(result);
 
-        assertThat(updatedSequece).isEqualToIgnoringGivenFields(sequence, "results");
-        assertThat(updatedSequece.getResults()).containsExactly(result);
+        assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "results");
+        assertThat(updatedSequence.getResults()).containsExactly(result);
     }
 
     @Test
@@ -155,6 +155,34 @@ class SingleMethodSequenceTest {
         final VerificationSequence sequence = new SingleMethodSequence(method, result);
 
         assertThat(sequence.isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldReturnMethodInCollection() {
+        final VerificationMethod method = new FakeVerificationMethod();
+
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        assertThat(sequence.getMethods()).containsExactly(method);
+    }
+
+    @Test
+    void shouldReturnHasResultsFalseIfHasNoResults() {
+        final VerificationMethod method = new FakeVerificationMethod();
+
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        assertThat(sequence.hasResults()).isFalse();
+    }
+
+    @Test
+    void shouldReturnHasResultsTrueIfHasResults() {
+        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
+
+        final VerificationSequence sequence = new SingleMethodSequence(method, result);
+
+        assertThat(sequence.hasResults()).isTrue();
     }
 
 }

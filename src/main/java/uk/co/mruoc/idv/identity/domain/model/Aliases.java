@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static java.util.Collections.unmodifiableSet;
 
@@ -30,6 +31,10 @@ public class Aliases implements Iterable<Alias> {
 
     public boolean contains(final Alias alias) {
         return aliases.contains(alias);
+    }
+
+    public Stream<Alias> stream() {
+        return aliases.stream();
     }
 
     private IdvId getIdvId() {

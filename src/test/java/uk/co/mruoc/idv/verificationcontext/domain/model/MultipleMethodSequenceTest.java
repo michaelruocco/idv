@@ -129,7 +129,7 @@ class MultipleMethodSequenceTest {
 
         final VerificationSequence updatedSequence = sequence.addResultIfContainsMethod(result);
 
-        assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "results");
+        assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "results", "methods");
         assertThat(updatedSequence.getResults()).containsExactly(result);
     }
 
@@ -206,6 +206,38 @@ class MultipleMethodSequenceTest {
         );
 
         assertThat(sequence.isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldReturnMethods() {
+        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
+
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
+
+        assertThat(sequence.getMethods()).containsExactly(method1, method2);
+    }
+
+    @Test
+    void shouldReturnHasResultsFalseIfHasNoResults() {
+        final VerificationMethod method = new FakeVerificationMethod();
+
+        final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
+
+        assertThat(sequence.hasResults()).isFalse();
+    }
+
+    @Test
+    void shouldReturnHasResultsTrueIfHasResults() {
+        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
+
+        final VerificationSequence sequence = new MultipleMethodSequence(
+                Collections.singleton(method),
+                Collections.singleton(result)
+        );
+
+        assertThat(sequence.hasResults()).isTrue();
     }
 
 }

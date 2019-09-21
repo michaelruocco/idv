@@ -36,6 +36,15 @@ class VerificationContextTest {
 
         final VerificationContext context = builder.channel(channel).build();
 
+        assertThat(context.getChannel()).isEqualTo(channel);
+    }
+
+    @Test
+    void shouldReturnChannelId() {
+        final Channel channel = new FakeChannel();
+
+        final VerificationContext context = builder.channel(channel).build();
+
         assertThat(context.getChannelId()).isEqualTo(channel.getId());
     }
 

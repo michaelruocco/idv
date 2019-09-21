@@ -5,6 +5,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Duration;
@@ -23,6 +24,8 @@ public interface VerificationSequence {
 
     Optional<CardCredentials> getCardCredentials();
 
+    Collection<VerificationMethod> getMethods();
+
     Duration getDuration();
 
     boolean containsMethod(final String name);
@@ -30,6 +33,8 @@ public interface VerificationSequence {
     boolean isEligible();
 
     VerificationSequence addResultIfContainsMethod(final VerificationResult result);
+
+    boolean hasResults();
 
     Collection<VerificationResult> getResults();
 

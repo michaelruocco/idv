@@ -63,6 +63,11 @@ public class MultipleMethodSequence implements VerificationSequence {
     }
 
     @Override
+    public Collection<VerificationMethod> getMethods() {
+        return Collections.unmodifiableCollection(methods);
+    }
+
+    @Override
     public Duration getDuration() {
         return calculateLongestMethodDuration();
     }
@@ -84,6 +89,11 @@ public class MultipleMethodSequence implements VerificationSequence {
         }
         logResultNotAdded(result);
         return this;
+    }
+
+    @Override
+    public boolean hasResults() {
+        return !results.isEmpty();
     }
 
     @Override
