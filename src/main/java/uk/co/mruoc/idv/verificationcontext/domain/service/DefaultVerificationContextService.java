@@ -9,7 +9,7 @@ import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
-import uk.co.mruoc.idv.verificationcontext.domain.dao.VerificationContextDao;
+import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 
@@ -69,8 +69,8 @@ public class DefaultVerificationContextService implements VerificationContextSer
     }
 
     private VerificationSequences loadVerificationSequences(final Channel channel,
-                                                                       final Activity activity,
-                                                                       final Identity identity) {
+                                                            final Activity activity,
+                                                            final Identity identity) {
         final LoadSequenceRequest request = LoadSequenceRequest.builder()
                 .channel(channel)
                 .activity(activity)

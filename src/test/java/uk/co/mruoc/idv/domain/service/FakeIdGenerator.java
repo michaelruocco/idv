@@ -4,15 +4,15 @@ import java.util.UUID;
 
 public class FakeIdGenerator implements IdGenerator {
 
-    private UUID idToGenerate;
+    private final UUID id;
+
+    public FakeIdGenerator(final UUID id) {
+        this.id = id;
+    }
 
     @Override
     public UUID generate() {
-        return idToGenerate;
-    }
-
-    public void setIdToGenerate(final UUID idToGenerate) {
-        this.idToGenerate = idToGenerate;
+        return id;
     }
 
 }

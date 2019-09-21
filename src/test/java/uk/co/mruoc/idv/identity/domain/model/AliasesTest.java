@@ -52,4 +52,23 @@ class AliasesTest {
         assertThat(value).isEqualTo(idvId.getValueAsUuid());
     }
 
+    @Test
+    void shouldReturnTrueIfContainsAlias() {
+        final Alias idvId = new FakeIdvId();
+
+        final Aliases aliases = Aliases.with(idvId);
+
+        assertThat(aliases.contains(idvId)).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDoesNotContainAlias() {
+        final Alias idvId = new FakeIdvId();
+
+        final Aliases aliases = Aliases.with(idvId);
+
+        final Alias creditCardNumber = new FakeCreditCardNumber();
+        assertThat(aliases.contains(creditCardNumber)).isFalse();
+    }
+
 }

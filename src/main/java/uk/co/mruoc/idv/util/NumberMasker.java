@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext.domain.model.util;
+package uk.co.mruoc.idv.util;
 
 import org.apache.commons.lang3.StringUtils;
 

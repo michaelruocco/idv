@@ -15,23 +15,34 @@ import static org.mockito.Mockito.mock;
 
 class DefaultIdentityServiceTest {
 
-    private final FakeIdGenerator idGenerator = new FakeIdGenerator();
+    private static final UUID VALUE = UUID.randomUUID();
+
+    private final FakeIdGenerator idGenerator = new FakeIdGenerator(VALUE);
 
     private final IdentityService service = DefaultIdentityService.builder()
             .idGenerator(idGenerator)
             .build();
 
     @Test
-    void shouldReturnIdentityWithGeneratedIdvIdProvidedAlias() {
-        final UUID idvIdValue = UUID.randomUUID();
-        idGenerator.setIdToGenerate(idvIdValue);
+    void shouldReturnIdentityWithGeneratedIdvId() {
         final Alias providedAlias = mock(Alias.class);
         final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
 
         final Identity identity = service.upsert(request);
 
         final Aliases aliases = identity.getAliases();
-        assertThat(aliases).containsExactly(new IdvId(idvIdValue), providedAlias);
+        assertThat(aliases).contains(new IdvId(VALUE));
+    }
+
+    @Test
+    void shouldReturnIdentityWithGeneratedIdvIdProvidedAlias() {
+        final Alias providedAlias = mock(Alias.class);
+        final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
+
+        final Identity identity = service.upsert(request);
+
+        final Aliases aliases = identity.getAliases();
+        assertThat(aliases).containsExactly(new IdvId(VALUE), providedAlias);
     }
 
     private static UpsertIdentityRequest buildUpsertRequest(final Alias providedAlias) {

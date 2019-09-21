@@ -1,5 +1,7 @@
 package uk.co.mruoc.idv.identity.domain.model;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,6 +29,13 @@ class CreditCardNumberTest {
         final Alias cardNumber = new CreditCardNumber(VALUE);
 
         assertThat(cardNumber.isCardNumber()).isTrue();
+    }
+
+    @Test
+    void shouldBeEqualIfValueAndTypeAreTheSame() {
+        EqualsVerifier.forClass(CreditCardNumber.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

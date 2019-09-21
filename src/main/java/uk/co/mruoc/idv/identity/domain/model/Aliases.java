@@ -28,6 +28,10 @@ public class Aliases implements Iterable<Alias> {
         return idvId.getValueAsUuid();
     }
 
+    public boolean contains(final Alias alias) {
+        return aliases.contains(alias);
+    }
+
     private IdvId getIdvId() {
         return (IdvId) getAliasByType(IdvId.TYPE);
     }

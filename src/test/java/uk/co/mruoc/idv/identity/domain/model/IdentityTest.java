@@ -18,11 +18,29 @@ class IdentityTest {
     @Test
     void shouldReturnIdvIdAliasValue() {
         final IdvId idvId = new FakeIdvId();
-        final Aliases aliases = Aliases.with(idvId);
 
-        final Identity identity = new Identity(aliases);
+        final Identity identity = new Identity(Aliases.with(idvId));
 
         assertThat(identity.getIdvIdValue()).isEqualTo(idvId.getValueAsUuid());
+    }
+
+    @Test
+    void shouldReturnTrueIfHasAlias() {
+        final IdvId idvId = new FakeIdvId();
+
+        final Identity identity = new Identity(Aliases.with(idvId));
+
+        assertThat(identity.hasAlias(idvId)).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDoesNotHaveAlias() {
+        final IdvId idvId = new FakeIdvId();
+
+        final Identity identity = new Identity(Aliases.with(idvId));
+
+        final Alias creditCardNumber = new FakeCreditCardNumber();
+        assertThat(identity.hasAlias(creditCardNumber)).isFalse();
     }
 
 }

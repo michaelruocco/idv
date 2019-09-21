@@ -18,4 +18,8 @@ public class Identity {
         return aliases;
     }
 
+    public boolean hasAlias(final Alias alias) {
+        return aliases.contains(alias);
+    }
+
 }
