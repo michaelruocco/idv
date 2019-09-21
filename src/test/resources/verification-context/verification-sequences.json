@@ -1,0 +1,75 @@
+[
+  {
+    "duration": 300000,
+    "eligible": true,
+    "complete": false,
+    "successful": false,
+    "methods": [
+      {
+        "name": "push-notification",
+        "duration": 300000,
+        "eligible": true
+      }
+    ]
+  },
+  {
+    "duration": 300000,
+    "eligible": true,
+    "complete": false,
+    "successful": false,
+    "methods": [
+      {
+        "name": "physical-pinsentry",
+        "duration": 300000,
+        "eligible": true,
+        "function": "RESPOND",
+        "cardNumbers": [
+          {
+            "id": "${json-unit.ignore}",
+            "tokenized": "4929991234567890",
+            "masked": "************7890"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "duration": 300000,
+    "eligible": true,
+    "complete": false,
+    "successful": false,
+    "methods": [
+      {
+        "name": "mobile-pinsentry",
+        "duration": 300000,
+        "eligible": true,
+        "function": "RESPOND"
+      }
+    ]
+  },
+  {
+    "duration": 300000,
+    "eligible": true,
+    "complete": false,
+    "successful": false,
+    "methods": [
+      {
+        "name": "one-time-passcode-sms",
+        "duration": 300000,
+        "eligible": true,
+        "passcodeSettings": {
+          "length": 8,
+          "duration": 150000,
+          "maxAttempts": 3
+        },
+        "mobileNumbers": [
+          {
+            "id": "${json-unit.ignore}",
+            "number": "07809385580",
+            "masked": "********580"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "duration": 300000,
+    "eligible": true,
+    "complete": true,
+    "successful": true,
+    "methods": [
+      {
+        "name": "fake-method",
+        "duration": 300000,
+        "eligible": true
+      }
+    ],
+    "results": [
+      {
+        "verificationId": "${json-unit.ignore}",
+        "timestamp": "${json-unit.ignore}",
+        "successful": true,
+        "methodName": "fake-method"
+      }
+    ]
+  }
+]

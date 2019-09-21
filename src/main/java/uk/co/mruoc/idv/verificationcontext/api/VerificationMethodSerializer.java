@@ -10,16 +10,15 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 
 public class VerificationMethodSerializer extends JsonSerializer<VerificationMethod> {
 
     @Override
-    public void serialize(final VerificationMethod method, final JsonGenerator json, final SerializerProvider provider) {
+    public void serialize(final VerificationMethod method, final JsonGenerator json, final SerializerProvider provider) throws IOException {
         toJson(method, json, provider);
     }
 
-    private void toJson(final VerificationMethod method, final JsonGenerator json, final SerializerProvider provider) {
+    private void toJson(final VerificationMethod method, final JsonGenerator json, final SerializerProvider provider) throws IOException {
         if (method instanceof PushNotification) {
             toJson((PushNotification) method, json);
         } else if (method instanceof MobilePinsentry) {
@@ -29,56 +28,40 @@ public class VerificationMethodSerializer extends JsonSerializer<VerificationMet
         } else if (method instanceof OneTimePasscodeSms) {
             toJson((OneTimePasscodeSms) method, json, provider);
         } else {
-            throw new VerificationMethodNotSerializableException(method.getName());
+            toJson(method, json);
         }
     }
 
-    private void toJson(final PushNotification method, final JsonGenerator json) {
-        try {
-            json.writeStartObject();
-            writeCommonFields(method, json);
-            json.writeEndObject();
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
+    private void toJson(final PushNotification method, final JsonGenerator json) throws IOException {
+        json.writeStartObject();
+        writeCommonFields(method, json);
+        json.writeEndObject();
     }
 
-    private void toJson(final MobilePinsentry method, final JsonGenerator json) {
-        try {
-            json.writeStartObject();
-            writeCommonFields(method, json);
-            json.writeStringField("function", method.getFunction().name());
-            json.writeEndObject();
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
+    private void toJson(final MobilePinsentry method, final JsonGenerator json) throws IOException {
+        json.writeStartObject();
+        writeCommonFields(method, json);
+        json.writeStringField("function", method.getFunction().name());
+        json.writeEndObject();
     }
 
-    private void toJson(final PhysicalPinsentry method, final JsonGenerator json, final SerializerProvider provider) {
-        try {
-            json.writeStartObject();
-            writeCommonFields(method, json);
-            json.writeStringField("function", method.getFunction().name());
-            json.writeFieldName("cardNumbers");
-            provider.defaultSerializeValue(method.getCardNumbers(), json);
-            json.writeEndObject();
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
+    private void toJson(final PhysicalPinsentry method, final JsonGenerator json, final SerializerProvider provider) throws IOException {
+        json.writeStartObject();
+        writeCommonFields(method, json);
+        json.writeStringField("function", method.getFunction().name());
+        json.writeFieldName("cardNumbers");
+        provider.defaultSerializeValue(method.getCardNumbers(), json);
+        json.writeEndObject();
     }
 
-    private void toJson(final OneTimePasscodeSms method, final JsonGenerator json, final SerializerProvider provider) {
-        try {
-            json.writeStartObject();
-            writeCommonFields(method, json);
-            json.writeFieldName("passcodeSettings");
-            provider.defaultSerializeValue(method.getPasscodeSettings(), json);
-            json.writeFieldName("mobileNumbers");
-            provider.defaultSerializeValue(method.getMobileNumbers(), json);
-            json.writeEndObject();
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
+    private void toJson(final OneTimePasscodeSms method, final JsonGenerator json, final SerializerProvider provider) throws IOException {
+        json.writeStartObject();
+        writeCommonFields(method, json);
+        json.writeFieldName("passcodeSettings");
+        provider.defaultSerializeValue(method.getPasscodeSettings(), json);
+        json.writeFieldName("mobileNumbers");
+        provider.defaultSerializeValue(method.getMobileNumbers(), json);
+        json.writeEndObject();
     }
 
     private void writeCommonFields(final VerificationMethod method, final JsonGenerator json) throws IOException {
@@ -87,12 +70,10 @@ public class VerificationMethodSerializer extends JsonSerializer<VerificationMet
         json.writeBooleanField("eligible", method.isEligible());
     }
 
-    public static class VerificationMethodNotSerializableException extends RuntimeException {
-
-        public VerificationMethodNotSerializableException(final String methodName) {
-            super(methodName);
-        }
-
+    private void toJson(final VerificationMethod method, final JsonGenerator json) throws IOException {
+        json.writeStartObject();
+        writeCommonFields(method, json);
+        json.writeEndObject();
     }
 
 }
