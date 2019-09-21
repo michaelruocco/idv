@@ -3,12 +3,10 @@ package uk.co.mruoc.idv.verificationcontext.domain.service;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CalculateExpiryRequest.CalculateExpiryRequestBuilder;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -46,7 +44,7 @@ class CalculateExpiryRequestTest {
 
     @Test
     void shouldReturnSequences() {
-        final Collection<VerificationSequence> sequences = Collections.emptyList();
+        final VerificationSequences sequences = mock(VerificationSequences.class);
 
         final CalculateExpiryRequest request = builder.sequences(sequences).build();
 

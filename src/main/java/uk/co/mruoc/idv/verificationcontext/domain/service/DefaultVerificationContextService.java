@@ -11,10 +11,9 @@ import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 
 import java.time.Instant;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -38,7 +37,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
         final Identity identity = loadIdentity(channel, providedAlias);
 
         final Activity activity = request.getActivity();
-        final Collection<VerificationSequence> sequences = loadVerificationSequences(channel, activity, identity);
+        final VerificationSequences sequences = loadVerificationSequences(channel, activity, identity);
 
         final UUID id = idGenerator.generate();
         final Instant created = timeService.now();
@@ -70,7 +69,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
         return identityService.upsert(request);
     }
 
-    private Collection<VerificationSequence> loadVerificationSequences(final Channel channel,
+    private VerificationSequences loadVerificationSequences(final Channel channel,
                                                                        final Activity activity,
                                                                        final Identity identity) {
         final LoadSequenceRequest request = LoadSequenceRequest.builder()
@@ -84,7 +83,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
     private Instant calculateExpiry(final Channel channel,
                                     final Activity activity,
                                     final Instant created,
-                                    final Collection<VerificationSequence> sequences) {
+                                    final VerificationSequences sequences) {
         final CalculateExpiryRequest request = CalculateExpiryRequest.builder()
                 .channel(channel)
                 .activity(activity)

@@ -7,7 +7,6 @@ import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 
 import java.time.Instant;
-import java.util.Collection;
 import java.util.UUID;
 
 @Builder
@@ -20,7 +19,7 @@ public class VerificationContext {
     private final Activity activity;
     private final Instant created;
     private final Instant expiry;
-    private final Collection<VerificationSequence> sequences;
+    private final VerificationSequences sequences;
 
     public UUID getId() {
         return id;
@@ -50,7 +49,7 @@ public class VerificationContext {
         return expiry;
     }
 
-    public Collection<VerificationSequence> getSequences() {
+    public VerificationSequences getSequences() {
         return sequences;
     }
 

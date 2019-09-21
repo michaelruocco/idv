@@ -12,11 +12,10 @@ import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext.VerificationContextBuilder;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 class VerificationContextTest {
 
@@ -87,7 +86,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnSequences() {
-        final Collection<VerificationSequence> sequences = Collections.emptyList();
+        final VerificationSequences sequences = mock(VerificationSequences.class);
 
         final VerificationContext context = builder.sequences(sequences).build();
 
