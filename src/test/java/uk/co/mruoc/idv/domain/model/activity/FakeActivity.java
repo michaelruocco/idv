@@ -4,10 +4,14 @@ import java.time.Instant;
 
 public class FakeActivity implements Activity {
 
-    private final Instant now;
+    private final Instant timestamp;
 
-    public FakeActivity(final Instant now) {
-        this.now = now;
+    public FakeActivity() {
+        this(Instant.now());
+    }
+
+    public FakeActivity(final Instant timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
@@ -17,7 +21,7 @@ public class FakeActivity implements Activity {
 
     @Override
     public Instant getTimestamp() {
-        return now;
+        return timestamp;
     }
 
 }
