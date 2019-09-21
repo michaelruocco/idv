@@ -56,5 +56,11 @@ spotless {
 
         replace      'Not enough space after if', 'if(', 'if ('
         replaceRegex 'Too much space after if', 'if +\\(', 'if ('
+
+        replace      'Not enough space after for', 'for(', 'for ('
+        replaceRegex 'Too much space after for', 'for +\\(', 'for ('
+
+        replace      'Not enough space after while', 'while(', 'while ('
+        replaceRegex 'Too much space after while', 'while +\\(', 'while ('
     }
 }
