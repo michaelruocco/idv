@@ -1,7 +1,5 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
@@ -40,13 +38,6 @@ class LoadSequenceRequestTest {
         final LoadSequenceRequest request = builder.identity(identity).build();
 
         assertThat(request.getIdentity()).isEqualTo(identity);
-    }
-
-    @Test
-    void shouldTestEquals() {
-        EqualsVerifier.forClass(LoadSequenceRequest.class)
-                .suppress(Warning.STRICT_INHERITANCE)
-                .verify();
     }
 
 }
