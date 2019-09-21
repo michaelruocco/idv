@@ -15,7 +15,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMetho
 
 import java.util.Collections;
 
-public class DefaultSequenceLoader implements SequenceLoader {
+public class StubbedSequenceLoader implements SequenceLoader {
 
     @Override
     public VerificationSequences loadSequences(final LoadSequenceRequest request) {
