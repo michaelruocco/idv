@@ -1,7 +1,6 @@
 package uk.co.mruoc.idv.verificationcontext.api;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -19,7 +18,7 @@ public class CreateContextRequestDeserializer extends StdDeserializer<CreateCont
     }
 
     @Override
-    public CreateContextRequest deserialize(final JsonParser parser, final DeserializationContext context) throws IOException, JsonProcessingException {
+    public CreateContextRequest deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
         return CreateContextRequest.builder()
                 .channel(toChannel(parser, node.get("channel")))

@@ -13,7 +13,7 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.verificationcontext.api.VerificationContextModule;
+import uk.co.mruoc.idv.verificationcontext.api.jsonapi.JsonApiVerificationContextModule;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextService;
@@ -22,6 +22,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.service.MaxDurationExpiryCalcu
 import uk.co.mruoc.idv.verificationcontext.domain.service.SequenceLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.StubbedSequenceLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
+import uk.co.mruoc.jsonapi.JsonApiModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
@@ -31,9 +32,10 @@ public class ApplicationConfig {
     @Bean
     public ObjectMapper objectMapper() {
         final ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JsonApiModule());
         mapper.registerModule(new IdvModule());
         mapper.registerModule(new IdentityModule());
-        mapper.registerModule(new VerificationContextModule());
+        mapper.registerModule(new JsonApiVerificationContextModule());
         mapper.registerModule(new MoneyModule());
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(WRITE_DATES_AS_TIMESTAMPS);

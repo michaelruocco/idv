@@ -4,8 +4,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.mruoc.idv.verificationcontext.api.jsonapi.CreateContextRequestDocument;
+import uk.co.mruoc.idv.verificationcontext.api.jsonapi.VerificationContextDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.GetContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
 
@@ -21,8 +22,9 @@ public class VerificationContextController {
     }
 
     @PostMapping
-    public VerificationContext createContext(@RequestBody final CreateContextRequest request) {
-        return contextService.create(request);
+    public VerificationContextDocument createContext(@RequestBody final CreateContextRequestDocument request) {
+        final VerificationContext context = contextService.create(request.getAttributes());
+        return new VerificationContextDocument(context);
     }
 
     @GetMapping("/{id}")
