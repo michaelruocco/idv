@@ -10,7 +10,6 @@ import uk.co.mruoc.idv.domain.model.activity.FakeOnlinePurchase;
 
 import java.io.IOException;
 
-import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -24,11 +23,11 @@ class ActivityDeserializerTest {
 
         final Activity activity = MAPPER.readValue(json, Activity.class);
 
-        assertThatJson(activity).isEqualTo(new FakeOnlinePurchase());
+        assertThat(activity).isEqualToComparingFieldByField(new FakeOnlinePurchase());
     }
 
     @Test
-    void shouldThrowExceptionIfActivitylNotSupported() throws IOException {
+    void shouldThrowExceptionIfActivityNotSupported() {
         final String json = ContentLoader.loadContentFromClasspath("activity/not-supported-activity.json");
 
         final Throwable error = catchThrowable(() -> MAPPER.readValue(json, Activity.class));

@@ -11,6 +11,7 @@ public class IdvModule extends SimpleModule {
 
     public IdvModule() {
         setMixInAnnotation(Activity.class, ActivityMixin.class);
+
         addDeserializer(Channel.class, new ChannelDeserializer());
         addDeserializer(Activity.class, new ActivityDeserializer());
     }

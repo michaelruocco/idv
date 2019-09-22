@@ -11,6 +11,7 @@ public class VerificationContextModule extends SimpleModule {
 
     public VerificationContextModule() {
         setMixInAnnotation(VerificationContext.class, VerificationContextMixin.class);
+
         addSerializer(VerificationSequences.class, new VerificationSequencesSerializer());
         addSerializer(VerificationSequence.class, new VerificationSequenceSerializer());
         addSerializer(VerificationMethod.class, new VerificationMethodSerializer());
