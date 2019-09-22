@@ -4,24 +4,28 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
+import uk.co.mruoc.idv.identity.domain.model.Aliases;
+import uk.co.mruoc.idv.identity.domain.model.FakeDebitCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.FakeIdvId;
 
 import java.util.UUID;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class IdentityModuleTest {
+class AliasesSerializerTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldSerializeIdentity() throws JsonProcessingException {
-        final Identity identity = new FakeIdentity(UUID.fromString("582de75b-d207-4d70-81ea-1be9bd326a28"));
+    void shouldSerializeAliases() throws JsonProcessingException {
+        final Aliases aliases = Aliases.with(
+                new FakeIdvId(UUID.fromString("582de75b-d207-4d70-81ea-1be9bd326a28")),
+                new FakeDebitCardNumber()
+        );
 
-        final String json = MAPPER.writeValueAsString(identity);
+        final String json = MAPPER.writeValueAsString(aliases);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("identity/identity.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("identity/aliases.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
