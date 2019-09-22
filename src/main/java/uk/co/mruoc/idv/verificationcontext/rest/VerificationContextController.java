@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
-import uk.co.mruoc.idv.domain.model.channel.RsaChannel;
+import uk.co.mruoc.idv.domain.model.channel.Rsa;
 import uk.co.mruoc.idv.identity.domain.model.CreditCardNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
@@ -34,7 +34,7 @@ public class VerificationContextController {
                 .reference("ABC-123")
                 .build();
         final CreateContextRequest request = CreateContextRequest.builder()
-                .channel(new RsaChannel())
+                .channel(new Rsa())
                 .activity(activity)
                 .providedAlias(new CreditCardNumber("49290012345678"))
                 .build();

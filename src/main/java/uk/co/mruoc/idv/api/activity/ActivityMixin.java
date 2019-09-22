@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.api;
+package uk.co.mruoc.idv.api.activity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "merchantName",
         "reference",
         "cost"})
-interface ActivityMixin {
+public interface ActivityMixin {
 
     //intentionally blank
 

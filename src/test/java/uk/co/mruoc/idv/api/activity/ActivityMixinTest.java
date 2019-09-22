@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.api;
+package uk.co.mruoc.idv.api.activity;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.zalando.jackson.datatype.money.MoneyModule;
 import uk.co.mruoc.file.content.ContentLoader;
+import uk.co.mruoc.idv.api.IdvModule;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.activity.FakeOnlinePurchase;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class IdvModuleTest {
+class ActivityMixinTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 

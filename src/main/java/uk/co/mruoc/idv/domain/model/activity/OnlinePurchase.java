@@ -8,6 +8,8 @@ import java.time.Instant;
 @Builder
 public class OnlinePurchase implements Activity {
 
+    public static final String NAME = "online-purchase";
+
     private final Instant timestamp;
     private final String merchantName;
     private final String reference;
@@ -15,7 +17,7 @@ public class OnlinePurchase implements Activity {
 
     @Override
     public String getName() {
-        return "online-purchase";
+        return NAME;
     }
 
     @Override
