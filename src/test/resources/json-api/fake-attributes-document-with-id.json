@@ -1,0 +1,11 @@
+{
+  "data": {
+    "id": "94e65ed0-1334-4c78-8c8f-bfd12773d041",
+    "type": "fake-attributes-type",
+    "attributes": {
+      "id": "94e65ed0-1334-4c78-8c8f-bfd12773d041",
+      "value1": "fake-value-1",
+      "value2": "fake-value-2"
+    }
+  }
+}

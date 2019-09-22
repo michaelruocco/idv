@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "type",
         "attributes"
 })
-public interface JsonApiDataItemMixin {
+interface JsonApiDataItemMixin {
 
     //intentionally blank
 

@@ -6,10 +6,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 import java.io.IOException;
+import java.util.UUID;
 
-public abstract class AbstractJsonApiDocumentDeserializer<T extends JsonApiDocument> extends StdDeserializer<T> {
+public abstract class AbstractJsonApiDocumentWithIdDeserializer<T extends JsonApiDocumentWithId> extends StdDeserializer<T> {
 
-    protected AbstractJsonApiDocumentDeserializer(final Class<T> type) {
+    protected AbstractJsonApiDocumentWithIdDeserializer(final Class<T> type) {
         super(type);
     }
 
@@ -18,12 +19,18 @@ public abstract class AbstractJsonApiDocumentDeserializer<T extends JsonApiDocum
         final JsonNode node = parser.getCodec().readTree(parser);
         final JsonNode data = JsonNodeExtractor.extractDataNode(node);
         final String jsonApiType = JsonNodeExtractor.extractJsonApiType(data);
+        final UUID id = extractId(data);
         final JsonNode attributes = JsonNodeExtractor.extractAttributesNode(data);
-        return toDocument(parser, attributes, jsonApiType);
+        return toDocument(parser, attributes, jsonApiType, id);
+    }
+
+    private static UUID extractId(final JsonNode node) {
+        return UUID.fromString(node.get("id").asText());
     }
 
     protected abstract T toDocument(final JsonParser parser,
                                     final JsonNode attributesNode,
-                                    final String jsonApiType) throws IOException;
+                                    final String jsonApiType,
+                                    final UUID id) throws IOException;
 
 }

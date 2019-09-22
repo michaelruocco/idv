@@ -6,7 +6,9 @@ public class FakeJsonApiModule extends JsonApiModule {
 
     public FakeJsonApiModule() {
         addSerializer(FakeJsonApiDocument.class, new FakeJsonApiDocumentSerializer());
+
         addDeserializer(FakeJsonApiDocument.class, new FakeJsonApiDocumentDeserializer());
+        addDeserializer(FakeJsonApiDocumentWithId.class, new FakeJsonApiDocumentWithIdDeserializer());
     }
 
 }
