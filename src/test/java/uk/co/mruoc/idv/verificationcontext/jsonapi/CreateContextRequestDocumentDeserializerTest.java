@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.api.IdvModule;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
@@ -14,7 +15,7 @@ class CreateContextRequestDocumentDeserializerTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 
-    //@Test
+    @Test
     void shouldDeserializeDocument() throws IOException {
         final String json = ContentLoader.loadContentFromClasspath("verification-context/json-api/create-context-request-document.json");
 
