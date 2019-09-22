@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class VerificationSequenceSerializer extends StdSerializer<VerificationSequence> {
 
-    protected VerificationSequenceSerializer() {
+    VerificationSequenceSerializer() {
         super(VerificationSequence.class);
     }
 

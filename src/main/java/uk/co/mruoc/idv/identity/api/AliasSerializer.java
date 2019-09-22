@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class AliasSerializer extends StdSerializer<Alias> {
 
-    protected AliasSerializer() {
+    AliasSerializer() {
         super(Alias.class);
     }
 
@@ -18,7 +18,7 @@ public class AliasSerializer extends StdSerializer<Alias> {
         toJson(alias, json);
     }
 
-    public static void toJson(final Alias alias, final JsonGenerator json) throws IOException {
+    private void toJson(final Alias alias, final JsonGenerator json) throws IOException {
         json.writeStartObject();
         json.writeStringField("type", alias.getType());
         json.writeStringField("value", alias.getValue());

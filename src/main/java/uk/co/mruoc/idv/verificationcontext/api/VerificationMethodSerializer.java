@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.api;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
@@ -11,7 +11,11 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMetho
 
 import java.io.IOException;
 
-public class VerificationMethodSerializer extends JsonSerializer<VerificationMethod> {
+public class VerificationMethodSerializer extends StdSerializer<VerificationMethod> {
+
+    VerificationMethodSerializer() {
+        super(VerificationMethod.class);
+    }
 
     @Override
     public void serialize(final VerificationMethod method, final JsonGenerator json, final SerializerProvider provider) throws IOException {
