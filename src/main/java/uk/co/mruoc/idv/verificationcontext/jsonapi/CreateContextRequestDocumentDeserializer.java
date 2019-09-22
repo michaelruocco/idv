@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext.api.jsonapi;
+package uk.co.mruoc.idv.verificationcontext.jsonapi;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;

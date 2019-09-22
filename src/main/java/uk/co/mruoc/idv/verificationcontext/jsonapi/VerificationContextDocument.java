@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext.api.jsonapi;
+package uk.co.mruoc.idv.verificationcontext.jsonapi;
 
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.jsonapi.JsonApiDocumentWithId;

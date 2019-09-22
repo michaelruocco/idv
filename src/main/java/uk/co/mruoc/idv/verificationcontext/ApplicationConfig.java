@@ -13,7 +13,7 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.verificationcontext.api.jsonapi.JsonApiVerificationContextModule;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.JsonApiVerificationContextModule;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextService;

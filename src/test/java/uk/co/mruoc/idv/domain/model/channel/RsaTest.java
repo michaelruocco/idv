@@ -16,7 +16,7 @@ class RsaTest {
     }
 
     @Test
-    void shouldBeEqualIfIdsAreTheSame() {
+    void shouldBeEqualIfAllValuesAreTheSame() {
         EqualsVerifier.forClass(Rsa.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();

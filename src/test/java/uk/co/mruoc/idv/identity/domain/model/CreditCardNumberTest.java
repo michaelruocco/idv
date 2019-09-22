@@ -32,7 +32,7 @@ class CreditCardNumberTest {
     }
 
     @Test
-    void shouldBeEqualIfValueAndTypeAreTheSame() {
+    void shouldBeEqualIfAllValuesAreTheSame() {
         EqualsVerifier.forClass(CreditCardNumber.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
