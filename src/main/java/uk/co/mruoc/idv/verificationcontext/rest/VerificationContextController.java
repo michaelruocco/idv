@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.verificationcontext.rest;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,11 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.service.GetContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
 
+import java.net.URI;
 import java.util.UUID;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 public class VerificationContextController {
@@ -23,9 +28,12 @@ public class VerificationContextController {
     }
 
     @PostMapping("/verificationContexts")
-    public VerificationContextDocument createContext(@RequestBody final CreateContextRequestDocument request) {
+    public ResponseEntity<VerificationContextDocument> createContext(@RequestBody final CreateContextRequestDocument request) {
         final VerificationContext context = contextService.create(request.getAttributes());
-        return toDocument(context);
+        final VerificationContextDocument document = toDocument(context);
+        return ResponseEntity
+                .created(buildGetContextUri(context.getId()))
+                .body(document);
     }
 
     @GetMapping("/verificationContexts/{id}")
@@ -43,6 +51,10 @@ public class VerificationContextController {
 
     private static VerificationContextDocument toDocument(final VerificationContext context) {
         return new VerificationContextDocument(context);
+    }
+
+    private static URI buildGetContextUri(final UUID id) {
+        return linkTo(methodOn(VerificationContextController.class).getContext(id)).toUri();
     }
 
 }

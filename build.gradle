@@ -19,6 +19,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-dependencies:2.0.5.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    
     compileOnly 'org.projectlombok:lombok:1.18.8'
     testCompileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
@@ -28,7 +29,8 @@ dependencies {
     compile 'org.javamoney:moneta:1.1'
     compile 'org.zalando:jackson-datatype-money:1.1.1'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.9'
-
+    compile 'org.springframework.boot:spring-boot-starter-hateoas:2.1.4.RELEASE'
+    
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.5.1'
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
 
