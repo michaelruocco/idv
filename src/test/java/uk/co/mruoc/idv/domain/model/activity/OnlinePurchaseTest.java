@@ -1,5 +1,7 @@
 package uk.co.mruoc.idv.domain.model.activity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase.OnlinePurchaseBuilder;
@@ -54,6 +56,13 @@ class OnlinePurchaseTest {
         final OnlinePurchase onlinePurchase = builder.reference(reference).build();
 
         assertThat(onlinePurchase.getReference()).isEqualTo(reference);
+    }
+
+    @Test
+    void shouldBeEqualIfAllValuesAreTheSame() {
+        EqualsVerifier.forClass(OnlinePurchase.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

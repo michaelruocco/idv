@@ -6,6 +6,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
 
 public class VerificationContextModule extends SimpleModule {
 
@@ -16,6 +17,8 @@ public class VerificationContextModule extends SimpleModule {
         addSerializer(VerificationSequence.class, new VerificationSequenceSerializer());
         addSerializer(VerificationMethod.class, new VerificationMethodSerializer());
         addSerializer(PasscodeSettings.class, new PasscodeSettingsSerializer());
+
+        addDeserializer(CreateContextRequest.class, new CreateContextRequestDeserializer());
     }
 
 }
