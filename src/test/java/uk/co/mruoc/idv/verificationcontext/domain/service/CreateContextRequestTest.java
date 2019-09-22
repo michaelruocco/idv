@@ -7,7 +7,6 @@ import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest.CreateContextRequestBuilder;
-import uk.co.mruoc.jsonapi.JsonApiDataItem;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

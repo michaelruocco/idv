@@ -1,0 +1,49 @@
+{
+  "data": {
+    "id": "eaca769b-c8ac-42fc-ba6a-97e6f1be36f8",
+    "type": "verificationContexts",
+    "attributes": {
+      "channel": {
+        "id": "fake-channel"
+      },
+      "providedAlias": {
+        "type": "credit-card-number",
+        "value": "4929001111111111"
+      },
+      "identity": {
+        "id": "d23d923a-521a-422d-9ba9-8cb1c756dbee",
+        "aliases": [
+          {
+            "type": "idv-id",
+            "value": "d23d923a-521a-422d-9ba9-8cb1c756dbee"
+          },
+          {
+            "type": "credit-card-number",
+            "value": "4929001111111111"
+          }
+        ]
+      },
+      "activity": {
+        "name": "fake-activity",
+        "timestamp": "2019-09-21T20:40:29.061224Z"
+      },
+      "sequences": [
+        {
+          "duration": 300000,
+          "eligible": true,
+          "complete": false,
+          "successful": false,
+          "methods": [
+            {
+              "name": "fake-method",
+              "duration": 300000,
+              "eligible": true
+            }
+          ]
+        }
+      ],
+      "created": "2019-09-21T20:43:32.233721Z",
+      "expiry": "2019-09-21T20:48:32.233721Z"
+    }
+  }
+}
