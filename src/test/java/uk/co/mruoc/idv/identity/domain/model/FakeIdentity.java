@@ -9,14 +9,7 @@ public class FakeIdentity extends Identity {
     }
 
     public FakeIdentity(final UUID idvIdValue) {
-        super(buildAliases(idvIdValue));
-    }
-
-    private static Aliases buildAliases(final UUID idvIdValue) {
-        return Aliases.with(
-                new FakeIdvId(idvIdValue),
-                new FakeCreditCardNumber()
-        );
+        super(new FakeAliases(idvIdValue));
     }
 
 }

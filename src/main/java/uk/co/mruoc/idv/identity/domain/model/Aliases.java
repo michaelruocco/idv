@@ -14,7 +14,7 @@ public class Aliases implements Iterable<Alias> {
 
     private Collection<Alias> aliases;
 
-    private Aliases(final Collection<Alias> aliases) {
+    protected Aliases(final Collection<Alias> aliases) {
         this.aliases = unmodifiableSet(new LinkedHashSet<>(aliases));
     }
 
@@ -51,7 +51,7 @@ public class Aliases implements Iterable<Alias> {
         return with(Arrays.asList(aliases));
     }
 
-    private static Aliases with(final Collection<Alias> aliases) {
+    public static Aliases with(final Collection<Alias> aliases) {
         return new Aliases(aliases);
     }
 

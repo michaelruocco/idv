@@ -1,28 +1,28 @@
 package uk.co.mruoc.idv.identity.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
 import uk.co.mruoc.idv.identity.domain.model.FakeAliases;
 
+import java.io.IOException;
 import java.util.UUID;
 
-import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.assertj.core.api.Assertions.assertThat;
 
-class AliasesSerializerTest {
+class AliasesDeserializerTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldSerializeAliases() throws JsonProcessingException {
-        final Aliases aliases = new FakeAliases(UUID.fromString("582de75b-d207-4d70-81ea-1be9bd326a28"));
+    void shouldDeserializeAliases() throws IOException {
+        final String json = ContentLoader.loadContentFromClasspath("identity/aliases.json");
 
-        final String json = MAPPER.writeValueAsString(aliases);
+        final Aliases aliases = MAPPER.readValue(json, Aliases.class);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("identity/aliases.json");
-        assertThatJson(json).isEqualTo(expectedJson);
+        final Aliases expectedAliases = new FakeAliases(UUID.fromString("582de75b-d207-4d70-81ea-1be9bd326a28"));
+        assertThat(aliases).containsExactlyElementsOf(expectedAliases);
     }
 
     private static ObjectMapper buildMapper() {
