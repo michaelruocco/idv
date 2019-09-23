@@ -2,10 +2,8 @@ package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.domain.service.IdGenerator;
 import uk.co.mruoc.idv.domain.service.TimeService;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
@@ -28,21 +26,19 @@ public class DefaultVerificationContextService implements VerificationContextSer
 
     @Override
     public VerificationContext create(final CreateContextRequest request) {
-        final Channel channel = request.getChannel();
-        final Alias providedAlias = request.getProvidedAlias();
-        final Identity identity = loadIdentity(channel, providedAlias);
+        final Identity identity = loadIdentity(request);
 
         final Activity activity = request.getActivity();
-        final VerificationSequences sequences = loadVerificationSequences(channel, activity, identity);
+        final VerificationSequences sequences = loadVerificationSequences(request, identity);
 
         final UUID id = idGenerator.generate();
         final Instant created = timeService.now();
-        final Instant expiry = calculateExpiry(channel, activity, created, sequences);
+        final Instant expiry = calculateExpiry(request, created, sequences);
 
         final VerificationContext context = VerificationContext.builder()
                 .id(id)
-                .channel(channel)
-                .providedAlias(providedAlias)
+                .channel(request.getChannel())
+                .providedAlias(request.getProvidedAlias())
                 .activity(activity)
                 .identity(identity)
                 .created(created)
@@ -60,32 +56,31 @@ public class DefaultVerificationContextService implements VerificationContextSer
         return dao.load(request.getId());
     }
 
-    private Identity loadIdentity(final Channel channel, final Alias providedAlias) {
+    private Identity loadIdentity(final CreateContextRequest createContextRequest) {
         final UpsertIdentityRequest request = UpsertIdentityRequest.builder()
-                .channel(channel)
-                .providedAlias(providedAlias)
+                .channel(createContextRequest.getChannel())
+                .providedAlias(createContextRequest.getProvidedAlias())
                 .build();
         return identityService.upsert(request);
     }
 
-    private VerificationSequences loadVerificationSequences(final Channel channel,
-                                                            final Activity activity,
+    private VerificationSequences loadVerificationSequences(final CreateContextRequest createContextRequest,
                                                             final Identity identity) {
-        final LoadSequenceRequest request = LoadSequenceRequest.builder()
-                .channel(channel)
-                .activity(activity)
+        final LoadSequencesRequest request = LoadSequencesRequest.builder()
+                .channel(createContextRequest.getChannel())
+                .activity(createContextRequest.getActivity())
+                .providedAlias(createContextRequest.getProvidedAlias())
                 .identity(identity)
                 .build();
         return sequenceLoader.loadSequences(request);
     }
 
-    private Instant calculateExpiry(final Channel channel,
-                                    final Activity activity,
+    private Instant calculateExpiry(final CreateContextRequest createContextRequest,
                                     final Instant created,
                                     final VerificationSequences sequences) {
         final CalculateExpiryRequest request = CalculateExpiryRequest.builder()
-                .channel(channel)
-                .activity(activity)
+                .channel(createContextRequest.getChannel())
+                .activity(createContextRequest.getActivity())
                 .created(created)
                 .sequences(sequences)
                 .build();

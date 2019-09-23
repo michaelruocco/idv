@@ -22,7 +22,8 @@ public class VerificationSequenceSerializer extends StdSerializer<VerificationSe
         json.writeStartObject();
         json.writeStringField("name", sequence.getName());
         json.writeNumberField("duration", sequence.getDuration().toMillis());
-        json.writeBooleanField("eligible", sequence.isEligible());
+        final boolean eligible = sequence.isEligible();
+        json.writeBooleanField("eligible", eligible);
         json.writeBooleanField("complete", sequence.isComplete());
         json.writeBooleanField("successful", sequence.isSuccessful());
         json.writeFieldName("methods");

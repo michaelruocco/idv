@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequences;
+import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequencesEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
@@ -23,7 +23,7 @@ class VerificationSequencesSerializerTest {
 
     @Test
     void shouldSerializeSequences() throws JsonProcessingException {
-        final VerificationSequences sequences = new FakeVerificationSequences();
+        final VerificationSequences sequences = new FakeVerificationSequencesEligible();
 
         final String json = MAPPER.writeValueAsString(sequences);
 

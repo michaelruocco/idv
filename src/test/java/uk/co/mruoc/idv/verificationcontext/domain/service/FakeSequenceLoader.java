@@ -6,19 +6,19 @@ public class FakeSequenceLoader implements SequenceLoader {
 
     private final VerificationSequences sequences;
 
-    private LoadSequenceRequest lastRequest;
+    private LoadSequencesRequest lastRequest;
 
     public FakeSequenceLoader(final VerificationSequences sequences) {
         this.sequences = sequences;
     }
 
     @Override
-    public VerificationSequences loadSequences(final LoadSequenceRequest request) {
+    public VerificationSequences loadSequences(final LoadSequencesRequest request) {
         this.lastRequest = request;
         return sequences;
     }
 
-    public LoadSequenceRequest getLastRequest() {
+    public LoadSequencesRequest getLastRequest() {
         return lastRequest;
     }
 

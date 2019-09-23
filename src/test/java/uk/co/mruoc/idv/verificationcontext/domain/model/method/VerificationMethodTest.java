@@ -2,6 +2,8 @@ package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class VerificationMethodTest {
@@ -34,12 +36,31 @@ class VerificationMethodTest {
     }
 
     @Test
-    void shouldReturnIsEligibleTrueIfIneligible() {
+    void shouldReturnIsEligibleFalseIfIneligible() {
         final VerificationMethod method = new FakeVerificationMethod(new Ineligible("reason"));
 
         final boolean eligible = method.isEligible();
 
         assertThat(eligible).isFalse();
+    }
+
+    @Test
+    void shouldReturnIsEmptyEligibilityReasonIfEligible() {
+        final VerificationMethod method = new FakeVerificationMethod(new Eligible());
+
+        final Optional<String> reason = method.getEligibilityReason();
+
+        assertThat(reason).isEmpty();
+    }
+
+    @Test
+    void shouldReturnIsIneligibilityReasonIfIneligible() {
+        final String expectedReason = "reason";
+        final VerificationMethod method = new FakeVerificationMethod(new Ineligible(expectedReason));
+
+        final Optional<String> reason = method.getEligibilityReason();
+
+        assertThat(reason).contains(expectedReason);
     }
 
 }

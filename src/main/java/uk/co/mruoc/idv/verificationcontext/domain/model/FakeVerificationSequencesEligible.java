@@ -16,14 +16,14 @@ import java.util.Collections;
 
 import static uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction.RESPOND;
 
-public class FakeVerificationSequences extends VerificationSequences {
+public class FakeVerificationSequencesEligible extends VerificationSequences {
 
     private static final VerificationSequence PUSH_AUTHENTICATION = buildPushNotificationSequence();
     private static final VerificationSequence PHYSICAL_PINSENTRY = buildPhysicalPinsentrySequence();
     private static final VerificationSequence MOBILE_PINSENTRY = buildMobilePinsentrySequence();
     private static final VerificationSequence ONE_TIME_PASSCODE_SMS = buildOneTimePasscodeSmsSequence();
 
-    public FakeVerificationSequences() {
+    public FakeVerificationSequencesEligible() {
         super(PUSH_AUTHENTICATION,
                 PHYSICAL_PINSENTRY,
                 MOBILE_PINSENTRY,

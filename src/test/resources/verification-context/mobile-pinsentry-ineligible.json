@@ -1,0 +1,7 @@
+{
+  "name": "mobile-pinsentry",
+  "duration": 300000,
+  "eligible": false,
+  "reason": "no mobile application",
+  "function": "RESPOND"
+}

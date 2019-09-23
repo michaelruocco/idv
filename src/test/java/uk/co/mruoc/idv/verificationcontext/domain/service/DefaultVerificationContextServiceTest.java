@@ -17,7 +17,7 @@ import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
-import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequences;
+import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequencesEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 
@@ -39,7 +39,7 @@ class DefaultVerificationContextServiceTest {
     private final Identity identity = new Identity(Aliases.empty());
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
 
-    private final VerificationSequences sequences = new FakeVerificationSequences();
+    private final VerificationSequences sequences = new FakeVerificationSequencesEligible();
     private final FakeSequenceLoader sequenceLoader = new FakeSequenceLoader(sequences);
 
     private final FakeExpiryCalculator expiryCalculator = new FakeExpiryCalculator(EXPIRY_DURATION);
@@ -161,8 +161,8 @@ class DefaultVerificationContextServiceTest {
 
         contextService.create(createContextRequest);
 
-        final LoadSequenceRequest loadSequenceRequest = sequenceLoader.getLastRequest();
-        assertThat(loadSequenceRequest.getChannel()).isEqualTo(channel);
+        final LoadSequencesRequest loadSequencesRequest = sequenceLoader.getLastRequest();
+        assertThat(loadSequencesRequest.getChannel()).isEqualTo(channel);
     }
 
     @Test
@@ -174,8 +174,21 @@ class DefaultVerificationContextServiceTest {
 
         contextService.create(createContextRequest);
 
-        final LoadSequenceRequest loadSequenceRequest = sequenceLoader.getLastRequest();
-        assertThat(loadSequenceRequest.getActivity()).isEqualTo(activity);
+        final LoadSequencesRequest loadSequencesRequest = sequenceLoader.getLastRequest();
+        assertThat(loadSequencesRequest.getActivity()).isEqualTo(activity);
+    }
+
+    @Test
+    void shouldPassProvidedAliasWhenLoadingSequences() {
+        final Alias providedAlias = new FakeCreditCardNumber();
+        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
+                .providedAlias(providedAlias)
+                .build();
+
+        contextService.create(createContextRequest);
+
+        final LoadSequencesRequest loadSequencesRequest = sequenceLoader.getLastRequest();
+        assertThat(loadSequencesRequest.getProvidedAlias()).isEqualTo(providedAlias);
     }
 
     @Test
@@ -184,8 +197,8 @@ class DefaultVerificationContextServiceTest {
 
         contextService.create(createContextRequest);
 
-        final LoadSequenceRequest loadSequenceRequest = sequenceLoader.getLastRequest();
-        assertThat(loadSequenceRequest.getIdentity()).isEqualTo(identity);
+        final LoadSequencesRequest loadSequencesRequest = sequenceLoader.getLastRequest();
+        assertThat(loadSequencesRequest.getIdentity()).isEqualTo(identity);
     }
 
     @Test

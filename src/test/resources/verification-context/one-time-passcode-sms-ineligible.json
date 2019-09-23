@@ -1,0 +1,11 @@
+{
+  "name": "one-time-passcode-sms",
+  "duration": 300000,
+  "eligible": false,
+  "reason": "no eligible mobile numbers found",
+  "passcodeSettings": {
+    "length": 8,
+    "duration": 150000,
+    "maxAttempts": 3
+  }
+}
