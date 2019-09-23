@@ -29,6 +29,7 @@
       },
       "sequences": [
         {
+          "name": "fake-method",
           "duration": 300000,
           "eligible": true,
           "complete": false,

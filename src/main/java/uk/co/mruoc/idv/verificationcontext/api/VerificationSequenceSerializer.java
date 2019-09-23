@@ -20,6 +20,7 @@ public class VerificationSequenceSerializer extends StdSerializer<VerificationSe
 
     private void toJson(final VerificationSequence sequence, final JsonGenerator json, final SerializerProvider provider) throws IOException {
         json.writeStartObject();
+        json.writeStringField("name", sequence.getName());
         json.writeNumberField("duration", sequence.getDuration().toMillis());
         json.writeBooleanField("eligible", sequence.isEligible());
         json.writeBooleanField("complete", sequence.isComplete());
