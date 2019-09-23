@@ -58,6 +58,7 @@ public class VerificationMethodSerializer extends StdSerializer<VerificationMeth
         writeCommonFields(method, json);
         json.writeStringField("function", method.getFunction().name());
         if (!method.isEligible()) {
+            json.writeEndObject();
             return;
         }
         final Collection<CardNumber> cardNumbers = method.getCardNumbers();
@@ -76,6 +77,7 @@ public class VerificationMethodSerializer extends StdSerializer<VerificationMeth
         json.writeStartObject();
         writeCommonFields(method, json);
         if (!method.isEligible()) {
+            json.writeEndObject();
             return;
         }
         json.writeFieldName("passcodeSettings");

@@ -1,0 +1,13 @@
+[
+  {
+    "name": "fake-method",
+    "eligible": false,
+    "methods": [
+      {
+        "name": "fake-method",
+        "eligible": false,
+        "reason": "fake reason"
+      }
+    ]
+  }
+]
