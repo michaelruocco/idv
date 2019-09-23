@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCardNumbers;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoMobileApplication;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
@@ -33,7 +33,7 @@ public class FakeVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPhysicalPinsentrySequence() {
-        final VerificationMethod physicalPinsentry = new PhysicalPinsentryIneligible(new NoEligibleCardNumbers(), RESPOND);
+        final VerificationMethod physicalPinsentry = new PhysicalPinsentryIneligible(new NoEligibleCards(), RESPOND);
         return new SingleMethodSequence(physicalPinsentry);
     }
 

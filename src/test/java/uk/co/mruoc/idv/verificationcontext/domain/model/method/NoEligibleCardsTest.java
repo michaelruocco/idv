@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NoEligibleCardNumbersTest {
+class NoEligibleCardsTest {
 
-    private final Ineligible ineligible = new NoEligibleCardNumbers();
+    private final Ineligible ineligible = new NoEligibleCards();
 
     @Test
     void shouldReturnReason() {
-        assertThat(ineligible.reason()).contains("no eligible card numbers found");
+        assertThat(ineligible.reason()).contains("no eligible cards found");
     }
 
 }

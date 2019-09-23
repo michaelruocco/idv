@@ -10,7 +10,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCardNumbers;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoMobileApplication;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsIneligible;
@@ -64,7 +64,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeIneligiblePhysicalPinsentry() throws JsonProcessingException {
-        final VerificationMethod method = new PhysicalPinsentryIneligible(new NoEligibleCardNumbers(), RESPOND);
+        final VerificationMethod method = new PhysicalPinsentryIneligible(new NoEligibleCards(), RESPOND);
 
         final String json = MAPPER.writeValueAsString(method);
 
