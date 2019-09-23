@@ -18,11 +18,16 @@ import static uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryF
 
 public class FakeVerificationSequences extends VerificationSequences {
 
+    private static final VerificationSequence PUSH_AUTHENTICATION = buildPushNotificationSequence();
+    private static final VerificationSequence PHYSICAL_PINSENTRY = buildPhysicalPinsentrySequence();
+    private static final VerificationSequence MOBILE_PINSENTRY = buildMobilePinsentrySequence();
+    private static final VerificationSequence ONE_TIME_PASSCODE_SMS = buildOneTimePasscodeSmsSequence();
+
     public FakeVerificationSequences() {
-        super(buildPushNotificationSequence(),
-                buildPhysicalPinsentrySequence(),
-                buildMobilePinsentrySequence(),
-                buildOneTimePasscodeSmsSequence()
+        super(PUSH_AUTHENTICATION,
+                PHYSICAL_PINSENTRY,
+                MOBILE_PINSENTRY,
+                ONE_TIME_PASSCODE_SMS
         );
     }
 

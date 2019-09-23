@@ -240,4 +240,25 @@ class MultipleMethodSequenceTest {
         assertThat(sequence.hasResults()).isTrue();
     }
 
+    @Test
+    void shouldReturnDefaultNameIfNotSpecified() {
+        final VerificationMethod method1 = new FakeVerificationMethod("method1");
+        final VerificationMethod method2 = new FakeVerificationMethod("method2");
+
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
+
+        final String expectedName = String.format("%s_%s", method1.getName(), method2.getName());
+        assertThat(sequence.getName()).isEqualTo(expectedName);
+    }
+
+    @Test
+    void shouldReturnSpecifiedName() {
+        final String name = "my-specific-name";
+        final VerificationMethod method = new FakeVerificationMethod();
+
+        final VerificationSequence sequence = new MultipleMethodSequence(name, Collections.singleton(method));
+
+        assertThat(sequence.getName()).isEqualTo(name);
+    }
+
 }

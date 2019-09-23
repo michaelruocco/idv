@@ -110,6 +110,11 @@ public class SingleMethodSequence implements VerificationSequence {
         return results.stream().anyMatch(VerificationResult::isSuccessful);
     }
 
+    @Override
+    public String getName() {
+        return method.getName();
+    }
+
     private <T> Optional<T> castMethodTo(final Class<T> type) {
         if (type.isAssignableFrom(method.getClass())) {
             return Optional.of(type.cast(method));

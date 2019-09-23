@@ -21,18 +21,28 @@ import java.util.stream.Collectors;
 @ToString
 public class MultipleMethodSequence implements VerificationSequence {
 
+    private final String name;
     private final Collection<VerificationMethod> methods;
     private final Collection<VerificationResult> results;
 
     public MultipleMethodSequence(final Collection<VerificationMethod> methods) {
-        this(methods, Collections.emptyList());
+        this(buildDefaultName(methods), methods, Collections.emptyList());
     }
 
     public MultipleMethodSequence(final Collection<VerificationMethod> methods, final VerificationResult result) {
-        this(methods, Collections.singleton(result));
+        this(buildDefaultName(methods), methods, Collections.singleton(result));
     }
 
     public MultipleMethodSequence(final Collection<VerificationMethod> methods, final Collection<VerificationResult> results) {
+        this(buildDefaultName(methods), methods, results);
+    }
+
+    public MultipleMethodSequence(final String name, final Collection<VerificationMethod> methods) {
+        this(name, methods, Collections.emptyList());
+    }
+
+    public MultipleMethodSequence(final String name, final Collection<VerificationMethod> methods, final Collection<VerificationResult> results) {
+        this.name = name;
         this.methods = methods;
         this.results = results;
     }
@@ -114,6 +124,11 @@ public class MultipleMethodSequence implements VerificationSequence {
         return methodNames.stream().allMatch(this::hasSuccessfulResult);
     }
 
+    @Override
+    public String getName() {
+        return name;
+    }
+
     private <T> Optional<T> castMethodTo(final Class<T> type) {
         return methods.stream()
                 .filter(method -> type.isAssignableFrom(method.getClass()))
@@ -124,7 +139,7 @@ public class MultipleMethodSequence implements VerificationSequence {
     private VerificationSequence addResult(final VerificationResult result) {
         final Collection<VerificationResult> updatedResults = new ArrayList<>(results);
         updatedResults.add(result);
-        return new MultipleMethodSequence(methods, updatedResults);
+        return new MultipleMethodSequence(name, methods, updatedResults);
     }
 
     private void logResultNotAdded(final VerificationResult result) {
@@ -161,6 +176,12 @@ public class MultipleMethodSequence implements VerificationSequence {
         return results.stream()
                 .filter(result -> result.hasMethodName(methodName))
                 .anyMatch(VerificationResult::isSuccessful);
+    }
+
+    private static String buildDefaultName(final Collection<VerificationMethod> methods) {
+        return methods.stream()
+                .map(VerificationMethod::getName)
+                .collect(Collectors.joining("_"));
     }
 
 }

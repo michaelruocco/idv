@@ -185,4 +185,14 @@ class SingleMethodSequenceTest {
         assertThat(sequence.hasResults()).isTrue();
     }
 
+    @Test
+    void shouldReturnMethodName() {
+        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        final String sequenceName = sequence.getName();
+
+        assertThat(sequenceName).isEqualTo(method.getName());
+    }
+
 }
