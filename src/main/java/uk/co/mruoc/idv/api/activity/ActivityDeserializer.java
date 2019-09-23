@@ -8,10 +8,13 @@ import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
 
 import java.io.IOException;
-
-import static uk.co.mruoc.idv.api.activity.JsonNodeToOnlinePurchaseConverter.toOnlinePurchase;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActivityDeserializer extends StdDeserializer<Activity> {
+
+    private final Map<String, JsonNodeToActivityConverter> converters = buildConverters();
 
     public ActivityDeserializer() {
         super(Activity.class);
@@ -21,14 +24,21 @@ public class ActivityDeserializer extends StdDeserializer<Activity> {
     public Activity deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
         final String name = extractName(node);
-        if (OnlinePurchase.NAME.equals(name)) {
-            return toOnlinePurchase(node);
+        if (converters.containsKey(name)) {
+            final JsonNodeToActivityConverter converter = converters.get(name);
+            return converter.toActivity(node);
         }
         throw new ActivityNotSupportedException(name);
     }
 
     private static String extractName(final JsonNode node) {
         return node.get("name").asText();
+    }
+
+    private static Map<String, JsonNodeToActivityConverter> buildConverters() {
+        final Map<String, JsonNodeToActivityConverter> converters = new HashMap<>();
+        converters.put(OnlinePurchase.NAME, new JsonNodeToOnlinePurchaseConverter());
+        return Collections.unmodifiableMap(converters);
     }
 
     public static class ActivityNotSupportedException extends RuntimeException {

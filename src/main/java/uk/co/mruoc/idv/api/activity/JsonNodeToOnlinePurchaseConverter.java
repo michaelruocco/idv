@@ -8,9 +8,9 @@ import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
 import javax.money.MonetaryAmount;
 import java.time.Instant;
 
-public class JsonNodeToOnlinePurchaseConverter {
+public class JsonNodeToOnlinePurchaseConverter implements JsonNodeToActivityConverter {
 
-    public static Activity toOnlinePurchase(final JsonNode node) {
+    public Activity toActivity(final JsonNode node) {
         return OnlinePurchase.builder()
                 .timestamp(extractTimestamp(node))
                 .merchantName(extractMerchantName(node))

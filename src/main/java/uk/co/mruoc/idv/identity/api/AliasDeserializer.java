@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class AliasDeserializer extends StdDeserializer<Alias> {
 
-    public AliasDeserializer() {
+    AliasDeserializer() {
         super(Alias.class);
     }
 
