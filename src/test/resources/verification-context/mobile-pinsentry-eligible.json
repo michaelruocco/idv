@@ -1,6 +1,6 @@
 {
   "name": "mobile-pinsentry",
-  "duration": 300000,
+  "function": "RESPOND",
   "eligible": true,
-  "function": "RESPOND"
+  "duration": 300000
 }

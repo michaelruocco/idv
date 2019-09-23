@@ -10,7 +10,7 @@ class NoEligibleMobileNumbersTest {
 
     @Test
     void shouldReturnReason() {
-        assertThat(ineligible.reason()).contains("no eligible mobile numbers found");
+        assertThat(ineligible.getReason()).contains("no eligible mobile numbers found");
     }
 
 }

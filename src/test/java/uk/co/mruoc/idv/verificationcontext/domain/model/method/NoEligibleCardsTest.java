@@ -10,7 +10,7 @@ class NoEligibleCardsTest {
 
     @Test
     void shouldReturnReason() {
-        assertThat(ineligible.reason()).contains("no eligible cards found");
+        assertThat(ineligible.getReason()).contains("no eligible cards found");
     }
 
 }

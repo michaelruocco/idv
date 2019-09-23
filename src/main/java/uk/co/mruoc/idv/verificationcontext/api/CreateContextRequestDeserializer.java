@@ -13,12 +13,12 @@ import java.io.IOException;
 
 public class CreateContextRequestDeserializer extends StdDeserializer<CreateContextRequest> {
 
-    protected CreateContextRequestDeserializer() {
+    CreateContextRequestDeserializer() {
         super(CreateContextRequest.class);
     }
 
     @Override
-    public CreateContextRequest deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
+    public CreateContextRequest deserialize(final JsonParser parser,final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
         return CreateContextRequest.builder()
                 .channel(toChannel(parser, node.get("channel")))

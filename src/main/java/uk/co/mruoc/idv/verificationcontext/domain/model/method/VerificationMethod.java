@@ -16,7 +16,7 @@ public interface VerificationMethod {
     }
 
     default Optional<String> getEligibilityReason() {
-        return getEligibility().reason();
+        return getEligibility().getReason();
     }
 
     default boolean hasName(final String otherName) {

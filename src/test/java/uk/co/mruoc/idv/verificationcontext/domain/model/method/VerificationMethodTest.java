@@ -37,7 +37,7 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnIsEligibleFalseIfIneligible() {
-        final VerificationMethod method = new FakeVerificationMethod(new Ineligible("reason"));
+        final VerificationMethod method = new FakeVerificationMethod(new FakeIneligible());
 
         final boolean eligible = method.isEligible();
 
@@ -55,7 +55,7 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnIsIneligibilityReasonIfIneligible() {
-        final String expectedReason = "reason";
+        final String expectedReason = "my reason";
         final VerificationMethod method = new FakeVerificationMethod(new Ineligible(expectedReason));
 
         final Optional<String> reason = method.getEligibilityReason();

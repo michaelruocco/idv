@@ -10,7 +10,7 @@ class NoMobileApplicationTest {
 
     @Test
     void shouldReturnReason() {
-        assertThat(ineligible.reason()).contains("no mobile application");
+        assertThat(ineligible.getReason()).contains("no mobile application");
     }
 
 }

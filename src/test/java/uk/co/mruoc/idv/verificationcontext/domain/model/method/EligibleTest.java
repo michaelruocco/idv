@@ -15,7 +15,7 @@ class EligibleTest {
 
     @Test
     void reasonShouldBeEmpty() {
-        assertThat(eligible.reason()).isEmpty();
+        assertThat(eligible.getReason()).isEmpty();
     }
 
 }

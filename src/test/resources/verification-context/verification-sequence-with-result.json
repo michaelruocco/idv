@@ -1,15 +1,15 @@
 [
   {
     "name": "fake-method",
-    "duration": 300000,
     "eligible": true,
     "complete": true,
     "successful": true,
+    "duration": 300000,
     "methods": [
       {
         "name": "fake-method",
-        "duration": 300000,
-        "eligible": true
+        "eligible": true,
+        "duration": 300000
       }
     ],
     "results": [

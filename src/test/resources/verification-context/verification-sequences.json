@@ -1,30 +1,30 @@
 [
   {
     "name": "push-notification",
-    "duration": 300000,
     "eligible": true,
     "complete": false,
     "successful": false,
+    "duration": 300000,
     "methods": [
       {
         "name": "push-notification",
-        "duration": 300000,
-        "eligible": true
+        "eligible": true,
+        "duration": 300000
       }
     ]
   },
   {
     "name": "physical-pinsentry",
-    "duration": 300000,
     "eligible": true,
     "complete": false,
     "successful": false,
+    "duration": 300000,
     "methods": [
       {
         "name": "physical-pinsentry",
-        "duration": 300000,
-        "eligible": true,
         "function": "RESPOND",
+        "eligible": true,
+        "duration": 300000,
         "cardNumbers": [
           {
             "id": "${json-unit.ignore}",
@@ -37,30 +37,30 @@
   },
   {
     "name": "mobile-pinsentry",
-    "duration": 300000,
     "eligible": true,
     "complete": false,
     "successful": false,
+    "duration": 300000,
     "methods": [
       {
         "name": "mobile-pinsentry",
-        "duration": 300000,
+        "function": "RESPOND",
         "eligible": true,
-        "function": "RESPOND"
+        "duration": 300000
       }
     ]
   },
   {
     "name": "one-time-passcode-sms",
-    "duration": 300000,
     "eligible": true,
     "complete": false,
     "successful": false,
+    "duration": 300000,
     "methods": [
       {
         "name": "one-time-passcode-sms",
-        "duration": 300000,
         "eligible": true,
+        "duration": 300000,
         "passcodeSettings": {
           "length": 8,
           "duration": 150000,

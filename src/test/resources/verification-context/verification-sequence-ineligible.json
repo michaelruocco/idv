@@ -6,7 +6,7 @@
       {
         "name": "fake-method",
         "eligible": false,
-        "reason": "fake reason"
+        "reason": "fake ineligible reason"
       }
     ]
   }

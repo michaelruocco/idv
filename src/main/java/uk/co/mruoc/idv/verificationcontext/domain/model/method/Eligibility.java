@@ -6,6 +6,6 @@ public interface Eligibility {
 
     boolean isEligible();
 
-    Optional<String> reason();
+    Optional<String> getReason();
 
 }

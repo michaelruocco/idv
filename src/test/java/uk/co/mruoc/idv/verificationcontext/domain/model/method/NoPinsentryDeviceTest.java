@@ -10,7 +10,7 @@ class NoPinsentryDeviceTest {
 
     @Test
     void shouldReturnReason() {
-        assertThat(ineligible.reason()).contains("no pinsentry device");
+        assertThat(ineligible.getReason()).contains("no pinsentry device");
     }
 
 }

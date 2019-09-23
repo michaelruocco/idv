@@ -1,6 +1,6 @@
 {
   "name": "mobile-pinsentry",
+  "function": "RESPOND",
   "eligible": false,
-  "reason": "no mobile application",
-  "function": "RESPOND"
+  "reason": "no mobile application"
 }

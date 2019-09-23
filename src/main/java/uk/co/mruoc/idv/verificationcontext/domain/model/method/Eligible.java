@@ -15,7 +15,7 @@ public class Eligible implements Eligibility {
     }
 
     @Override
-    public Optional<String> reason() {
+    public Optional<String> getReason() {
         return Optional.empty();
     }
 

@@ -1,7 +1,7 @@
 {
   "name": "one-time-passcode-sms",
-  "duration": 300000,
   "eligible": true,
+  "duration": 300000,
   "passcodeSettings": {
     "length": 8,
     "duration": 150000,

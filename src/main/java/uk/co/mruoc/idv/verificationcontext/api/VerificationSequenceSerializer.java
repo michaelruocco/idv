@@ -24,9 +24,9 @@ public class VerificationSequenceSerializer extends StdSerializer<VerificationSe
         final boolean eligible = sequence.isEligible();
         json.writeBooleanField("eligible", eligible);
         if (eligible) {
-            json.writeNumberField("duration", sequence.getDuration().toMillis());
             json.writeBooleanField("complete", sequence.isComplete());
             json.writeBooleanField("successful", sequence.isSuccessful());
+            json.writeNumberField("duration", sequence.getDuration().toMillis());
         }
         json.writeFieldName("methods");
         provider.defaultSerializeValue(sequence.getMethods(), json);

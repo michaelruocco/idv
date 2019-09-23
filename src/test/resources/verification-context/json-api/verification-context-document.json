@@ -30,15 +30,15 @@
       "sequences": [
         {
           "name": "fake-method",
-          "duration": 300000,
           "eligible": true,
           "complete": false,
           "successful": false,
+          "duration": 300000,
           "methods": [
             {
               "name": "fake-method",
-              "duration": 300000,
-              "eligible": true
+              "eligible": true,
+              "duration": 300000
             }
           ]
         }

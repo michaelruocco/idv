@@ -19,7 +19,7 @@ public class Ineligible implements Eligibility {
     }
 
     @Override
-    public Optional<String> reason() {
+    public Optional<String> getReason() {
         return Optional.of(reason);
     }
 

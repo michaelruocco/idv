@@ -4,34 +4,33 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class VerificationMethodSerializerTest {
+class PushNotificationSerializerTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldSerializeCommonFieldsForEligibleUnrecognisedMethod() throws JsonProcessingException {
-        final VerificationMethod method = new FakeVerificationMethod();
+    void shouldSerializeEligiblePushNotification() throws JsonProcessingException {
+        final VerificationMethod method = new PushNotificationEligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/fake-method-eligible.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/push-notification-eligible.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
     @Test
-    void shouldSerializeCommonFieldsForIneligibleUnrecognisedMethod() throws JsonProcessingException {
-        final VerificationMethod method = new FakeVerificationMethod(new FakeIneligible());
+    void shouldSerializeIneligiblePushNotification() throws JsonProcessingException {
+        final VerificationMethod method = new PushNotificationIneligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/fake-method-ineligible.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/push-notification-ineligible.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

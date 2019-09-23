@@ -1,8 +1,8 @@
 {
   "name": "physical-pinsentry",
-  "duration": 300000,
-  "eligible": true,
   "function": "RESPOND",
+  "eligible": true,
+  "duration": 300000,
   "cardNumbers": [
     {
       "id": "6c880ce6-0d3c-4ac7-b419-8c2dce645cfa",

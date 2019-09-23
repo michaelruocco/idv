@@ -17,7 +17,7 @@ class IneligibleTest {
 
     @Test
     void shouldReturnReason() {
-        assertThat(ineligible.reason()).contains(REASON);
+        assertThat(ineligible.getReason()).contains(REASON);
     }
 
 }

@@ -1,5 +1,5 @@
 {
-  "name": "push-notification",
+  "name": "fake-method",
   "eligible": true,
   "duration": 300000
 }
