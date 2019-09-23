@@ -6,12 +6,11 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MobilePinsentryTest {
+class MobilePinsentryEligibleTest {
 
-    private final Eligibility eligibility = new Eligible();
     private final PinsentryFunction function = PinsentryFunction.IDENTIFY;
 
-    private final MobilePinsentry method = new MobilePinsentry(eligibility, function);
+    private final MobilePinsentry method = new MobilePinsentryEligible(function);
 
     @Test
     void shouldReturnName() {
@@ -25,7 +24,7 @@ class MobilePinsentryTest {
 
     @Test
     void shouldReturnEligibility() {
-        assertThat(method.getEligibility()).isEqualTo(eligibility);
+        assertThat(method.getEligibility()).isEqualTo(new Eligible());
     }
 
     @Test

@@ -6,11 +6,9 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PushNotificationTest {
+class PushNotificationEligibleTest {
 
-    private final Eligibility eligibility = new Eligible();
-
-    private final VerificationMethod method = new PushNotification(eligibility);
+    private final VerificationMethod method = new PushNotificationEligible();
 
     @Test
     void shouldReturnName() {
@@ -24,7 +22,7 @@ class PushNotificationTest {
 
     @Test
     void shouldReturnEligibility() {
-        assertThat(method.getEligibility()).isEqualTo(eligibility);
+        assertThat(method.getEligibility()).isEqualTo(new Eligible());
     }
 
 }

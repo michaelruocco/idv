@@ -8,9 +8,9 @@ import java.time.Duration;
 public class MobilePinsentry implements VerificationMethod {
 
     private static final String NAME = "mobile-pinsentry";
-    private static final Duration DURATION = Duration.ofMinutes(5);
 
     private final Eligibility eligibility;
+    private final Duration duration;
     private final PinsentryFunction function;
 
     @Override
@@ -20,7 +20,7 @@ public class MobilePinsentry implements VerificationMethod {
 
     @Override
     public Duration getDuration() {
-        return DURATION;
+        return duration;
     }
 
     @Override

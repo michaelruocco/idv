@@ -10,9 +10,9 @@ import java.util.Collections;
 public class OneTimePasscodeSms implements VerificationMethod {
 
     private static final String NAME = "one-time-passcode-sms";
-    private static final Duration DURATION = Duration.ofMinutes(5);
 
     private final Eligibility eligibility;
+    private final Duration duration;
     private final PasscodeSettings passcodeSettings;
     private final Collection<MobileNumber> mobileNumbers;
 
@@ -23,7 +23,7 @@ public class OneTimePasscodeSms implements VerificationMethod {
 
     @Override
     public Duration getDuration() {
-        return DURATION;
+        return duration;
     }
 
     @Override

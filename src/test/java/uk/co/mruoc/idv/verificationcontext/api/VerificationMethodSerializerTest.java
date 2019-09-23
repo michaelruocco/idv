@@ -6,18 +6,18 @@ import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoMobileApplication;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 import java.util.Collection;
@@ -33,7 +33,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeEligiblePushNotification() throws JsonProcessingException {
-        final VerificationMethod method = new PushNotification(new Eligible());
+        final VerificationMethod method = new PushNotificationEligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -43,7 +43,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeIneligiblePushNotification() throws JsonProcessingException {
-        final VerificationMethod method = new PushNotification(new NoMobileApplication());
+        final VerificationMethod method = new PushNotificationIneligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -74,7 +74,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeEligibleMobilePinsentry() throws JsonProcessingException {
-        final VerificationMethod method = new MobilePinsentry(new Eligible(), RESPOND);
+        final VerificationMethod method = new MobilePinsentryEligible(RESPOND);
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -84,7 +84,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeIneligibleMobilePinsentry() throws JsonProcessingException {
-        final VerificationMethod method = new MobilePinsentry(new NoMobileApplication(), RESPOND);
+        final VerificationMethod method = new MobilePinsentryIneligible(RESPOND);
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -106,8 +106,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeIneligibleOneTimePasscodeSms() throws JsonProcessingException {
-        final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
-        final VerificationMethod method = new OneTimePasscodeSmsIneligible(passcodeSettings);
+        final VerificationMethod method = new OneTimePasscodeSmsIneligible();
 
         final String json = MAPPER.writeValueAsString(method);
 

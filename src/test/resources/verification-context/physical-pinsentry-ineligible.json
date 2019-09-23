@@ -1,6 +1,5 @@
 {
   "name": "physical-pinsentry",
-  "duration": 300000,
   "eligible": false,
   "reason": "no eligible cards found",
   "function": "RESPOND"

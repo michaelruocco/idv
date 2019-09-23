@@ -1,13 +1,10 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoMobileApplication;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 import static uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction.RESPOND;
@@ -28,7 +25,7 @@ public class FakeVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPushNotificationSequence() {
-        final VerificationMethod pushNotification = new PushNotification(new NoMobileApplication());
+        final VerificationMethod pushNotification = new PushNotificationIneligible();
         return new SingleMethodSequence(pushNotification);
     }
 
@@ -38,13 +35,12 @@ public class FakeVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildMobilePinsentrySequence() {
-        final VerificationMethod mobilePinsentry = new MobilePinsentry(new NoMobileApplication(), RESPOND);
+        final VerificationMethod mobilePinsentry = new MobilePinsentryIneligible(RESPOND);
         return new SingleMethodSequence(mobilePinsentry);
     }
 
     private static VerificationSequence buildOneTimePasscodeSmsSequence() {
-        final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
-        final VerificationMethod oneTimePasscodeSms = new OneTimePasscodeSmsIneligible(passcodeSettings);
+        final VerificationMethod oneTimePasscodeSms = new OneTimePasscodeSmsIneligible();
         return new SingleMethodSequence(oneTimePasscodeSms);
     }
 

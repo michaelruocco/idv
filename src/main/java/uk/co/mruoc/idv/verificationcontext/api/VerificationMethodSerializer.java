@@ -57,6 +57,9 @@ public class VerificationMethodSerializer extends StdSerializer<VerificationMeth
         json.writeStartObject();
         writeCommonFields(method, json);
         json.writeStringField("function", method.getFunction().name());
+        if (!method.isEligible()) {
+            return;
+        }
         final Collection<CardNumber> cardNumbers = method.getCardNumbers();
         if (!cardNumbers.isEmpty()) {
             writeCardNumbersJson(cardNumbers, json, provider);
@@ -72,6 +75,9 @@ public class VerificationMethodSerializer extends StdSerializer<VerificationMeth
     private void writeJson(final OneTimePasscodeSms method, final JsonGenerator json, final SerializerProvider provider) throws IOException {
         json.writeStartObject();
         writeCommonFields(method, json);
+        if (!method.isEligible()) {
+            return;
+        }
         json.writeFieldName("passcodeSettings");
         provider.defaultSerializeValue(method.getPasscodeSettings(), json);
         final Collection<MobileNumber> mobileNumbers = method.getMobileNumbers();
@@ -88,8 +94,11 @@ public class VerificationMethodSerializer extends StdSerializer<VerificationMeth
 
     private void writeCommonFields(final VerificationMethod method, final JsonGenerator json) throws IOException {
         json.writeStringField("name", method.getName());
-        json.writeNumberField("duration", method.getDuration().toMillis());
-        json.writeBooleanField("eligible", method.isEligible());
+        final boolean eligible = method.isEligible();
+        json.writeBooleanField("eligible", eligible);
+        if (eligible) {
+            json.writeNumberField("duration", method.getDuration().toMillis());
+        }
         final Optional<String> reason = method.getEligibilityReason();
         if (reason.isPresent()) {
             json.writeStringField("reason", reason.get());

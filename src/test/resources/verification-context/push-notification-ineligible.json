@@ -1,6 +1,5 @@
 {
   "name": "push-notification",
-  "duration": 300000,
   "eligible": false,
   "reason": "no mobile application"
 }

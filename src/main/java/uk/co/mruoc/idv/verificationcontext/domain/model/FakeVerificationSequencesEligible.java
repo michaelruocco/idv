@@ -2,13 +2,12 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 import java.util.Collection;
@@ -32,7 +31,7 @@ public class FakeVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPushNotificationSequence() {
-        final VerificationMethod pushNotification = new PushNotification(new Eligible());
+        final VerificationMethod pushNotification = new PushNotificationEligible();
         return new SingleMethodSequence(pushNotification);
     }
 
@@ -43,7 +42,7 @@ public class FakeVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildMobilePinsentrySequence() {
-        final VerificationMethod mobilePinsentry = new MobilePinsentry(new Eligible(), RESPOND);
+        final VerificationMethod mobilePinsentry = new MobilePinsentryEligible(RESPOND);
         return new SingleMethodSequence(mobilePinsentry);
     }
 

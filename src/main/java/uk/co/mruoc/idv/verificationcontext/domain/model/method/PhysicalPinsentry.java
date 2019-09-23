@@ -10,9 +10,9 @@ import java.util.Collections;
 public class PhysicalPinsentry implements VerificationMethod {
 
     private static final String NAME = "physical-pinsentry";
-    private static final Duration DURATION = Duration.ofMinutes(5);
 
     private final Eligibility eligibility;
+    private final Duration duration;
     private final PinsentryFunction function;
     private final Collection<CardNumber> cardNumbers;
 
@@ -23,7 +23,7 @@ public class PhysicalPinsentry implements VerificationMethod {
 
     @Override
     public Duration getDuration() {
-        return DURATION;
+        return duration;
     }
 
     @Override
