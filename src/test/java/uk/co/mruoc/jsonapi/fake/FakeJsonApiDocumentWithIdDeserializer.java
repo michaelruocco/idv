@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class FakeJsonApiDocumentWithIdDeserializer extends AbstractJsonApiDocumentWithIdDeserializer<FakeJsonApiDocumentWithId> {
 
-    protected FakeJsonApiDocumentWithIdDeserializer() {
+    FakeJsonApiDocumentWithIdDeserializer() {
         super(FakeJsonApiDocumentWithId.class);
     }
 

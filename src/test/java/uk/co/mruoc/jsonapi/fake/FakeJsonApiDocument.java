@@ -8,7 +8,7 @@ public class FakeJsonApiDocument extends JsonApiDocument<FakeAttributes> {
         this("fake-attributes-type", new FakeAttributes());
     }
 
-    public FakeJsonApiDocument(final String type, final FakeAttributes attributes) {
+    FakeJsonApiDocument(final String type, final FakeAttributes attributes) {
         super(type, attributes);
     }
 

@@ -15,7 +15,7 @@ class AbstractJsonApiDocumentWithIdSerializerTest {
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldSerializeJsonApiDocument() throws JsonProcessingException {
+    void shouldSerializeJsonApiDocumentWithId() throws JsonProcessingException {
         final JsonApiDocumentWithId<FakeAttributes> document = new FakeJsonApiDocumentWithId();
 
         final String json = MAPPER.writeValueAsString(document);

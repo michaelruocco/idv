@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class FakeJsonApiDocumentDeserializer extends AbstractJsonApiDocumentDeserializer<FakeJsonApiDocument> {
 
-    protected FakeJsonApiDocumentDeserializer() {
+    FakeJsonApiDocumentDeserializer() {
         super(FakeJsonApiDocument.class);
     }
 

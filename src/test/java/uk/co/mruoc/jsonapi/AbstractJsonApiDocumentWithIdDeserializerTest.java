@@ -15,7 +15,7 @@ class AbstractJsonApiDocumentWithIdDeserializerTest {
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldDeserializeJsonApiDocument() throws IOException {
+    void shouldDeserializeJsonApiDocumentWithId() throws IOException {
         final String json = ContentLoader.loadContentFromClasspath("json-api/fake-attributes-document-with-id.json");
 
         final FakeJsonApiDocumentWithId document = MAPPER.readValue(json, FakeJsonApiDocumentWithId.class);

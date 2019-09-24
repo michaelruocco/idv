@@ -1,0 +1,16 @@
+{
+  "errors": [
+    {
+      "id": "a3d222ec-4dcd-4bc0-9838-734d6ae19c4d",
+      "status": "400",
+      "title": "Bad Request",
+      "detail": "invalid json request"
+    },
+    {
+      "id": "35f0e14b-269b-4d14-b5d9-a8dadf5efb64",
+      "status": "404",
+      "title": "Item Not Found",
+      "detail": "item with id 123 not found"
+    }
+  ]
+}
