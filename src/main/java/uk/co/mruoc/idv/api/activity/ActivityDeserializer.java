@@ -43,7 +43,7 @@ public class ActivityDeserializer extends StdDeserializer<Activity> {
 
     public static class ActivityNotSupportedException extends RuntimeException {
 
-        private ActivityNotSupportedException(final String name) {
+        public ActivityNotSupportedException(final String name) {
             super(name);
         }
 

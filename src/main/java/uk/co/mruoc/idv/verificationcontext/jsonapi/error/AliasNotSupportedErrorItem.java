@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext.error;
+package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import uk.co.mruoc.jsonapi.error.BadRequestErrorItem;
 
@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
-class AliasNotSupportedErrorItem extends BadRequestErrorItem {
+public class AliasNotSupportedErrorItem extends BadRequestErrorItem {
 
     private static final String TITLE = "Alias Not Supported";
 
-    AliasNotSupportedErrorItem(final String detail) {
+    public AliasNotSupportedErrorItem(final String detail) {
         this(UUID.randomUUID(), detail);
     }
 

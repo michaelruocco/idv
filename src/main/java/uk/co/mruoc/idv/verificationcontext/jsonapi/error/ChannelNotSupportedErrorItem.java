@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext.error;
+package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import uk.co.mruoc.jsonapi.error.BadRequestErrorItem;
 
@@ -6,11 +6,11 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
-class ChannelNotSupportedErrorItem extends BadRequestErrorItem {
+public class ChannelNotSupportedErrorItem extends BadRequestErrorItem {
 
     private static final String TITLE = "Channel Not Supported";
 
-    ChannelNotSupportedErrorItem(final String detail) {
+    public ChannelNotSupportedErrorItem(final String detail) {
         this(UUID.randomUUID(), detail);
     }
 

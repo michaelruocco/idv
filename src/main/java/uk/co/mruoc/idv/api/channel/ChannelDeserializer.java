@@ -43,7 +43,7 @@ public class ChannelDeserializer extends StdDeserializer<Channel> {
 
     public static class ChannelNotSupportedException extends RuntimeException {
 
-        private ChannelNotSupportedException(final String channelId) {
+        public ChannelNotSupportedException(final String channelId) {
             super(channelId);
         }
 

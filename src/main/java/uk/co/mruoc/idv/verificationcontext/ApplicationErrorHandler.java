@@ -1,13 +1,18 @@
-package uk.co.mruoc.idv.verificationcontext.error;
+package uk.co.mruoc.idv.verificationcontext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import uk.co.mruoc.idv.api.activity.ActivityDeserializer.ActivityNotSupportedException;
 import uk.co.mruoc.idv.api.channel.ChannelDeserializer.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestErrorItem;
 import uk.co.mruoc.jsonapi.error.InternalServerErrorItem;
 import uk.co.mruoc.jsonapi.error.JsonApiErrorDocument;
 import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
@@ -17,10 +22,15 @@ import uk.co.mruoc.jsonapi.error.JsonApiSingleErrorDocument;
 @Slf4j
 public class ApplicationErrorHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final Exception e) {
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<JsonApiErrorDocument> handleException(final Throwable e) {
         log.error("internal server error", e);
         return buildResponseEntity(new InternalServerErrorItem(e.getMessage()));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<JsonApiErrorDocument> handleException(final HttpMessageNotReadableException e) {
+        return buildResponseEntity(new InvalidJsonRequestErrorItem(e.getMessage()));
     }
 
     @ExceptionHandler(ChannelNotSupportedException.class)

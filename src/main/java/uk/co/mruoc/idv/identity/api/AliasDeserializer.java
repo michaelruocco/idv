@@ -39,7 +39,7 @@ public class AliasDeserializer extends StdDeserializer<Alias> {
 
     public static class AliasNotSupportedException extends RuntimeException {
 
-        private AliasNotSupportedException(final String type) {
+        public AliasNotSupportedException(final String type) {
             super(type);
         }
 
