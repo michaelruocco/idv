@@ -10,6 +10,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
 
 public class VerificationContextModule extends SimpleModule {
@@ -27,6 +28,7 @@ public class VerificationContextModule extends SimpleModule {
         addSerializer(PasscodeSettings.class, new PasscodeSettingsSerializer());
 
         addDeserializer(CreateContextRequest.class, new CreateContextRequestDeserializer());
+        addDeserializer(VerificationResult.class, new VerificationResultDeserializer());
     }
 
 }
