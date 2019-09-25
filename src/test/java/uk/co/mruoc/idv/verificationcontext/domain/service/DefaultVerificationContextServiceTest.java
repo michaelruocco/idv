@@ -287,7 +287,7 @@ class DefaultVerificationContextServiceTest {
                 .result(result)
                 .build();
 
-        final VerificationContext updatedContext = contextService.updateResult(updateResultRequest);
+        final VerificationContext updatedContext = contextService.updateResults(updateResultRequest);
 
         verify(dao).save(updatedContext);
         assertThat(updatedContext).isEqualTo(expectedUpdatedContext);

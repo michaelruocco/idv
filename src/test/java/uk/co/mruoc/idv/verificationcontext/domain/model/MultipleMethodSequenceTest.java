@@ -11,6 +11,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMetho
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -164,7 +165,7 @@ class MultipleMethodSequenceTest {
 
         final VerificationSequence sequence = new MultipleMethodSequence(
                 Arrays.asList(method1, method2),
-                Arrays.asList(result1, result2)
+                new VerificationResults(result1, result2)
         );
 
         assertThat(sequence.isComplete()).isTrue();
@@ -188,7 +189,7 @@ class MultipleMethodSequenceTest {
 
         final VerificationSequence sequence = new MultipleMethodSequence(
                 Arrays.asList(method1, method2),
-                Arrays.asList(result1, result2)
+                new VerificationResults(result1, result2)
         );
 
         assertThat(sequence.isSuccessful()).isFalse();
@@ -203,7 +204,7 @@ class MultipleMethodSequenceTest {
 
         final VerificationSequence sequence = new MultipleMethodSequence(
                 Arrays.asList(method1, method2),
-                Arrays.asList(result1, result2)
+                new VerificationResults(result1, result2)
         );
 
         assertThat(sequence.isSuccessful()).isTrue();
@@ -235,7 +236,7 @@ class MultipleMethodSequenceTest {
 
         final VerificationSequence sequence = new MultipleMethodSequence(
                 Collections.singleton(method),
-                Collections.singleton(result)
+                new VerificationResults(result)
         );
 
         assertThat(sequence.hasResults()).isTrue();

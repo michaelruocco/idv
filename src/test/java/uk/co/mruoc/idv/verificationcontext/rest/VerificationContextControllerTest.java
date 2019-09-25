@@ -9,7 +9,9 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.FakeVerificationContextService;
 import uk.co.mruoc.idv.verificationcontext.domain.service.GetContextRequest;
+import uk.co.mruoc.idv.verificationcontext.domain.service.UpdateContextResultRequest;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.CreateContextRequestDocument;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.UpdateContextResultsRequestDocument;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.VerificationContextDocument;
 
 import java.util.UUID;
@@ -90,9 +92,32 @@ class VerificationContextControllerTest {
         assertThat(document.getAttributes()).isEqualTo(CONTEXT);
     }
 
-    private CreateContextRequestDocument buildCreateContextRequestDocument() {
+    @Test
+    void shouldPassUpdateContextResultsRequestToService() {
+        final UpdateContextResultsRequestDocument requestDocument = buildUpdateContextResultsRequestDocument();
+
+        controller.updateContextResults(requestDocument);
+
+        assertThat(service.getLastUpdateResultRequest()).isEqualTo(requestDocument.getAttributes());
+    }
+
+    @Test
+    void shouldReturnContextFromUpdateResults() {
+        final UpdateContextResultsRequestDocument requestDocument = buildUpdateContextResultsRequestDocument();
+
+        final VerificationContextDocument document = controller.updateContextResults(requestDocument);
+
+        assertThat(document.getAttributes()).isEqualTo(CONTEXT);
+    }
+
+    private static CreateContextRequestDocument buildCreateContextRequestDocument() {
         final CreateContextRequest request = CreateContextRequest.builder().build();
         return new CreateContextRequestDocument(request);
+    }
+
+    private static UpdateContextResultsRequestDocument buildUpdateContextResultsRequestDocument() {
+        final UpdateContextResultRequest request = UpdateContextResultRequest.builder().build();
+        return new UpdateContextResultsRequestDocument(request);
     }
 
 }

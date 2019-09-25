@@ -23,7 +23,7 @@ public class FakeVerificationContextService implements VerificationContextServic
     }
 
     @Override
-    public VerificationContext updateResult(final UpdateContextResultRequest request) {
+    public VerificationContext updateResults(final UpdateContextResultRequest request) {
         this.lastUpdateResultRequest = request;
         return context;
     }

@@ -8,9 +8,9 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -19,17 +19,17 @@ import java.util.Optional;
 public class SingleMethodSequence implements VerificationSequence {
 
     private final VerificationMethod method;
-    private final Collection<VerificationResult> results;
+    private final VerificationResults results;
 
     public SingleMethodSequence(final VerificationMethod method) {
-        this(method, Collections.emptyList());
+        this(method, new VerificationResults());
     }
 
     public SingleMethodSequence(final VerificationMethod method, final VerificationResult result) {
-        this(method, Collections.singleton(result));
+        this(method, new VerificationResults(result));
     }
 
-    public SingleMethodSequence(final VerificationMethod method, final Collection<VerificationResult> results) {
+    public SingleMethodSequence(final VerificationMethod method, final VerificationResults results) {
         this.method = method;
         this.results = results;
     }
@@ -93,8 +93,8 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public Collection<VerificationResult> getResults() {
-        return Collections.unmodifiableCollection(results);
+    public VerificationResults getResults() {
+        return results;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class SingleMethodSequence implements VerificationSequence {
 
     @Override
     public boolean isSuccessful() {
-        return results.stream().anyMatch(VerificationResult::isSuccessful);
+        return results.containsSuccessful();
     }
 
     @Override
@@ -125,9 +125,8 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     private VerificationSequence addResult(final VerificationResult result) {
-        final Collection<VerificationResult> updatedResults = new ArrayList<>(results);
-        updatedResults.add(result);
-        return new SingleMethodSequence(method, updatedResults);
+        final VerificationResults updatedResults = new VerificationResults(results);
+        return new SingleMethodSequence(method, updatedResults.add(result));
     }
 
 }

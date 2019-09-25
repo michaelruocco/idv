@@ -58,7 +58,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
     }
 
     @Override
-    public VerificationContext updateResult(final UpdateContextResultRequest request) {
+    public VerificationContext updateResults(final UpdateContextResultRequest request) {
         final VerificationContext context = load(request.getContextId());
         final VerificationResult result = request.getResult();
         final VerificationContext updatedContext = context.addResult(result);

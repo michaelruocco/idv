@@ -1,9 +1,10 @@
-package uk.co.mruoc.idv.verificationcontext.api;
+package uk.co.mruoc.idv.verificationcontext.api.result;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
+import uk.co.mruoc.idv.verificationcontext.api.VerificationContextModule;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
@@ -19,7 +20,7 @@ class VerificationResultDeserializerTest {
 
     @Test
     void shouldDeserializeSuccessfulVerificationResult() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("verification-context/verification-result-successful.json");
+        final String json = ContentLoader.loadContentFromClasspath("verification-context/result/verification-result-successful.json");
 
         final VerificationResult result = MAPPER.readValue(json, VerificationResult.class);
 
@@ -29,7 +30,7 @@ class VerificationResultDeserializerTest {
 
     @Test
     void shouldDeserializeFailedVerificationResult() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("verification-context/verification-result-failed.json");
+        final String json = ContentLoader.loadContentFromClasspath("verification-context/result/verification-result-failed.json");
 
         final VerificationResult result = MAPPER.readValue(json, VerificationResult.class);
 

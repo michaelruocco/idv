@@ -1,0 +1,14 @@
+{
+  "data": {
+    "id": "513d667f-718b-4bb4-b969-35244b6e7e1e",
+    "type": "verificationContexts",
+    "attributes": {
+      "result": {
+          "methodName": "push-notification",
+          "verificationId": "524d0e6d-cead-49f3-b0f5-04e29e789681",
+          "timestamp": "2019-09-24T15:52:49.569287Z",
+          "successful": true
+      }
+    }
+  }
+}

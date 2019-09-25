@@ -7,6 +7,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -36,7 +37,7 @@ public interface VerificationSequence {
 
     boolean hasResults();
 
-    Collection<VerificationResult> getResults();
+    VerificationResults getResults();
 
     boolean isComplete();
 

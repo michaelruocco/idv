@@ -9,9 +9,9 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -22,25 +22,25 @@ public class MultipleMethodSequence implements VerificationSequence {
 
     private final String name;
     private final Collection<VerificationMethod> methods;
-    private final Collection<VerificationResult> results;
+    private final VerificationResults results;
 
     public MultipleMethodSequence(final Collection<VerificationMethod> methods) {
-        this(buildDefaultName(methods), methods, Collections.emptyList());
+        this(buildDefaultName(methods), methods, new VerificationResults());
     }
 
     public MultipleMethodSequence(final Collection<VerificationMethod> methods, final VerificationResult result) {
-        this(buildDefaultName(methods), methods, Collections.singleton(result));
+        this(buildDefaultName(methods), methods, new VerificationResults(result));
     }
 
-    public MultipleMethodSequence(final Collection<VerificationMethod> methods, final Collection<VerificationResult> results) {
+    public MultipleMethodSequence(final Collection<VerificationMethod> methods, final VerificationResults results) {
         this(buildDefaultName(methods), methods, results);
     }
 
     public MultipleMethodSequence(final String name, final Collection<VerificationMethod> methods) {
-        this(name, methods, Collections.emptyList());
+        this(name, methods, new VerificationResults());
     }
 
-    public MultipleMethodSequence(final String name, final Collection<VerificationMethod> methods, final Collection<VerificationResult> results) {
+    public MultipleMethodSequence(final String name, final Collection<VerificationMethod> methods, final VerificationResults results) {
         this.name = name;
         this.methods = methods;
         this.results = results;
@@ -105,21 +105,21 @@ public class MultipleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public Collection<VerificationResult> getResults() {
-        return Collections.unmodifiableCollection(results);
+    public VerificationResults getResults() {
+        return results;
     }
 
     @Override
     public boolean isComplete() {
         final Collection<String> methodNames = getMethodNames();
-        final Collection<String> resultMethodNames = getResultMethodNames();
+        final Collection<String> resultMethodNames = results.getMethodNames();
         return resultMethodNames.containsAll(methodNames);
     }
 
     @Override
     public boolean isSuccessful() {
         final Collection<String> methodNames = getMethodNames();
-        return methodNames.stream().allMatch(this::hasSuccessfulResult);
+        return methodNames.stream().allMatch(results::hasSuccessfulResult);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class MultipleMethodSequence implements VerificationSequence {
     @Override
     public boolean hasNextMethod(final String methodName) {
         final Collection<String> methodNames = getMethodNames();
-        final Collection<String> resultMethodNames = getResultMethodNames();
+        final Collection<String> resultMethodNames = results.getMethodNames();
         final Collection<String> incompleteMethodNames = CollectionUtils.subtract(methodNames, resultMethodNames);
         final Optional<String> nextMethodName = incompleteMethodNames.stream().findFirst();
         return nextMethodName.map(value -> value.equals(methodName)).orElse(false);
@@ -144,9 +144,8 @@ public class MultipleMethodSequence implements VerificationSequence {
     }
 
     private VerificationSequence addResult(final VerificationResult result) {
-        final Collection<VerificationResult> updatedResults = new ArrayList<>(results);
-        updatedResults.add(result);
-        return new MultipleMethodSequence(name, methods, updatedResults);
+        final VerificationResults updatedResults = new VerificationResults(results);
+        return new MultipleMethodSequence(name, methods, updatedResults.add(result));
     }
 
     private Duration calculateLongestMethodDuration() {
@@ -164,18 +163,6 @@ public class MultipleMethodSequence implements VerificationSequence {
         return methods.stream()
                 .map(VerificationMethod::getName)
                 .collect(Collectors.toSet());
-    }
-
-    private Collection<String> getResultMethodNames() {
-        return results.stream()
-                .map(VerificationResult::getMethodName)
-                .collect(Collectors.toSet());
-    }
-
-    private boolean hasSuccessfulResult(final String methodName) {
-        return results.stream()
-                .filter(result -> result.hasMethodName(methodName))
-                .anyMatch(VerificationResult::isSuccessful);
     }
 
     private static String buildDefaultName(final Collection<VerificationMethod> methods) {

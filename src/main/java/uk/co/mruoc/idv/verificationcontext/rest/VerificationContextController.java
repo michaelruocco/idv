@@ -2,11 +2,13 @@ package uk.co.mruoc.idv.verificationcontext.rest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.CreateContextRequestDocument;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.UpdateContextResultsRequestDocument;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.VerificationContextDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.service.GetContextRequest;
@@ -40,6 +42,12 @@ public class VerificationContextController {
     public VerificationContextDocument getContext(@PathVariable("id") final UUID id) {
         final GetContextRequest request = toGetContextRequest(id);
         final VerificationContext context = contextService.get(request);
+        return toDocument(context);
+    }
+
+    @PatchMapping("/verificationContexts/{id}")
+    public VerificationContextDocument updateContextResults(@RequestBody final UpdateContextResultsRequestDocument request) {
+        final VerificationContext context = contextService.updateResults(request.getAttributes());
         return toDocument(context);
     }
 

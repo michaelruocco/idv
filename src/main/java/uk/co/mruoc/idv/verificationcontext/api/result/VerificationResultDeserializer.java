@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext.api;
+package uk.co.mruoc.idv.verificationcontext.api.result;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 public class VerificationResultDeserializer extends StdDeserializer<VerificationResult> {
 
-    VerificationResultDeserializer() {
+    public VerificationResultDeserializer() {
         super(VerificationResult.class);
     }
 
