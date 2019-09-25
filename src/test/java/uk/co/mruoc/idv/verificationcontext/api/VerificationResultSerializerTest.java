@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -16,12 +17,22 @@ class VerificationResultSerializerTest {
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldSerializeVerificationResult() throws JsonProcessingException {
+    void shouldSerializeSuccessfulVerificationResult() throws JsonProcessingException {
         final VerificationResult result = new FakeVerificationResultSuccessful("push-notification");
 
         final String json = MAPPER.writeValueAsString(result);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/verification-result.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/verification-result-successful.json");
+        assertThatJson(json).isEqualTo(expectedJson);
+    }
+
+    @Test
+    void shouldSerializeFailedVerificationResult() throws JsonProcessingException {
+        final VerificationResult result = new FakeVerificationResultFailed("push-notification");
+
+        final String json = MAPPER.writeValueAsString(result);
+
+        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/verification-result-failed.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

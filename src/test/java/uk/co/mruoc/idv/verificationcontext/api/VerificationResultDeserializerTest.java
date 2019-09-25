@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -17,12 +18,22 @@ class VerificationResultDeserializerTest {
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldDeserializeVerificationResult() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("verification-context/verification-result.json");
+    void shouldDeserializeSuccessfulVerificationResult() throws IOException {
+        final String json = ContentLoader.loadContentFromClasspath("verification-context/verification-result-successful.json");
 
         final VerificationResult result = MAPPER.readValue(json, VerificationResult.class);
 
         final VerificationResult expectedResult = new FakeVerificationResultSuccessful("push-notification");
+        assertThat(result).isEqualToComparingFieldByField(expectedResult);
+    }
+
+    @Test
+    void shouldDeserializeFailedVerificationResult() throws IOException {
+        final String json = ContentLoader.loadContentFromClasspath("verification-context/verification-result-failed.json");
+
+        final VerificationResult result = MAPPER.readValue(json, VerificationResult.class);
+
+        final VerificationResult expectedResult = new FakeVerificationResultFailed("push-notification");
         assertThat(result).isEqualToComparingFieldByField(expectedResult);
     }
 
