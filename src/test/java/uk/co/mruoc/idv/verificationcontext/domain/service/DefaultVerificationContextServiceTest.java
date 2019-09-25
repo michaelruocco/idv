@@ -15,17 +15,21 @@ import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
-import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequencesEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class DefaultVerificationContextServiceTest {
 
@@ -43,7 +47,7 @@ class DefaultVerificationContextServiceTest {
     private final FakeSequenceLoader sequenceLoader = new FakeSequenceLoader(sequences);
 
     private final FakeExpiryCalculator expiryCalculator = new FakeExpiryCalculator(EXPIRY_DURATION);
-    private final VerificationContextDao dao = new InMemoryVerificationContextDao();
+    private final VerificationContextDao dao = mock(VerificationContextDao.class);
 
     private final VerificationContextService contextService = DefaultVerificationContextService.builder()
             .idGenerator(idGenerator)
@@ -258,15 +262,35 @@ class DefaultVerificationContextServiceTest {
 
     @Test
     void shouldLoadCreatedContext() {
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder().build();
-        final VerificationContext context = contextService.create(createContextRequest);
+        final UUID id = UUID.randomUUID();
+        final VerificationContext context = mock(VerificationContext.class);
+        when(dao.load(id)).thenReturn(context);
         final GetContextRequest request = GetContextRequest.builder()
-                .id(context.getId())
+                .id(id)
                 .build();
 
         final VerificationContext loadedContext = contextService.get(request);
 
         assertThat(loadedContext).isEqualTo(context);
+    }
+
+    @Test
+    void shouldAddResultToContext() {
+        final UUID id = UUID.randomUUID();
+        final VerificationContext context = mock(VerificationContext.class);
+        when(dao.load(id)).thenReturn(context);
+        final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
+        final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
+        when(context.addResult(result)).thenReturn(expectedUpdatedContext);
+        final UpdateContextResultRequest updateResultRequest = UpdateContextResultRequest.builder()
+                .contextId(id)
+                .result(result)
+                .build();
+
+        final VerificationContext updatedContext = contextService.updateResult(updateResultRequest);
+
+        verify(dao).save(updatedContext);
+        assertThat(updatedContext).isEqualTo(expectedUpdatedContext);
     }
 
 }

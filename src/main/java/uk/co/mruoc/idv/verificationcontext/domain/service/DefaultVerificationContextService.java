@@ -10,6 +10,7 @@ import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -53,7 +54,16 @@ public class DefaultVerificationContextService implements VerificationContextSer
 
     @Override
     public VerificationContext get(final GetContextRequest request) {
-        return dao.load(request.getId());
+        return load(request.getId());
+    }
+
+    @Override
+    public VerificationContext updateResult(final UpdateContextResultRequest request) {
+        final VerificationContext context = load(request.getContextId());
+        final VerificationResult result = request.getResult();
+        final VerificationContext updatedContext = context.addResult(result);
+        dao.save(updatedContext);
+        return updatedContext;
     }
 
     private Identity loadIdentity(final CreateContextRequest createContextRequest) {
@@ -85,6 +95,10 @@ public class DefaultVerificationContextService implements VerificationContextSer
                 .sequences(sequences)
                 .build();
         return expiryCalculator.calculateExpiry(request);
+    }
+
+    private VerificationContext load(final UUID id) {
+        return dao.load(id);
     }
 
 }

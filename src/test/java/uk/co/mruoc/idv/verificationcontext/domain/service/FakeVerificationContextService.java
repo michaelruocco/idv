@@ -5,8 +5,10 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 public class FakeVerificationContextService implements VerificationContextService {
 
     private VerificationContext context;
+
     private CreateContextRequest lastCreateRequest;
     private GetContextRequest lastGetRequest;
+    private UpdateContextResultRequest lastUpdateResultRequest;
 
     @Override
     public VerificationContext create(final CreateContextRequest request) {
@@ -20,6 +22,12 @@ public class FakeVerificationContextService implements VerificationContextServic
         return context;
     }
 
+    @Override
+    public VerificationContext updateResult(final UpdateContextResultRequest request) {
+        this.lastUpdateResultRequest = request;
+        return context;
+    }
+
     public void setContextToReturn(final VerificationContext context) {
         this.context = context;
     }
@@ -30,6 +38,10 @@ public class FakeVerificationContextService implements VerificationContextServic
 
     public GetContextRequest getLastGetRequest() {
         return lastGetRequest;
+    }
+
+    public UpdateContextResultRequest getLastUpdateResultRequest() {
+        return lastUpdateResultRequest;
     }
 
 }

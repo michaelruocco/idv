@@ -2,6 +2,10 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.CannotCalculateMaxDurationOfEmptySequencesException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NoSequencesFoundWithNextMethodException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Duration;
 
@@ -58,6 +62,41 @@ class VerificationSequencesTest {
         final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
 
         assertThat(sequences.calculateMaxDuration()).isEqualTo(Duration.ofMinutes(10));
+    }
+
+    @Test
+    void shouldThrowExceptionIfAddingResultWithMethodThatIsNotNextMethodInSequence() {
+        final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
+
+        final VerificationSequence sequence1 = new SingleMethodSequence(new FakeVerificationMethod("other-name-1"));
+        final VerificationSequence sequence2 = new SingleMethodSequence(new FakeVerificationMethod("other-name-2"));
+
+        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+
+        final Throwable error = catchThrowable(() -> sequences.addResultIfHasSequencesWithNextMethod(result));
+
+        assertThat(error)
+                .isInstanceOf(NoSequencesFoundWithNextMethodException.class)
+                .hasMessage(result.getMethodName());
+    }
+
+    @Test
+    void shouldAddResultToSequencesWithMethodThatIsNextMethodInSequence() {
+        final String methodName = "method-name";
+        final VerificationResult result = new FakeVerificationResultSuccessful(methodName);
+        final VerificationSequence sequence1 = new SingleMethodSequence(new FakeVerificationMethod(methodName));
+        final VerificationSequence sequence2 = new SingleMethodSequence(new FakeVerificationMethod(methodName));
+        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+
+        final VerificationSequences updatedSequences = sequences.addResultIfHasSequencesWithNextMethod(result);
+
+        assertThat(updatedSequences).hasSameSizeAs(sequences);
+        final VerificationSequence updatedSequence1 = updatedSequences.get(0);
+        assertThat(updatedSequence1).isEqualToIgnoringGivenFields(sequence1, "results");
+        assertThat(updatedSequence1.getResults()).containsExactly(result);
+        final VerificationSequence updatedSequence2 = updatedSequences.get(1);
+        assertThat(updatedSequence2).isEqualToIgnoringGivenFields(sequence2, "results");
+        assertThat(updatedSequence2.getResults()).containsExactly(result);
     }
 
 }

@@ -1,19 +1,16 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.result;
 
-import lombok.ToString;
-
 import java.time.Instant;
 import java.util.UUID;
 
-@ToString
 public class VerificationResultSuccessful extends AbstractVerificationResult {
 
     private static final boolean SUCCESSFUL = true;
 
-    public VerificationResultSuccessful(final String name,
+    public VerificationResultSuccessful(final String methodName,
                                         final UUID verificationId,
                                         final Instant timestamp) {
-        super(name, verificationId, timestamp, SUCCESSFUL);
+        super(methodName, verificationId, timestamp, SUCCESSFUL);
     }
 
 }

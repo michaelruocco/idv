@@ -30,7 +30,8 @@ dependencies {
     compile 'org.zalando:jackson-datatype-money:1.1.1'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.9'
     compile 'org.springframework.boot:spring-boot-starter-hateoas:2.1.4.RELEASE'
-    
+    compile 'org.apache.commons:commons-collections4:4.1'
+
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.5.1'
     testCompile 'org.junit.jupiter:junit-jupiter-engine:5.5.1'
 

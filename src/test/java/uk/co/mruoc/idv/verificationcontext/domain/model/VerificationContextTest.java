@@ -10,12 +10,15 @@ import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext.VerificationContextBuilder;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class VerificationContextTest {
 
@@ -100,6 +103,21 @@ class VerificationContextTest {
         final VerificationContext context = builder.sequences(sequences).build();
 
         assertThat(context.getSequences()).isEqualTo(sequences);
+    }
+
+    @Test
+    void shouldAddResult() {
+        final String methodName = "method-name";
+        final VerificationSequences sequences = mock(VerificationSequences.class);
+        final VerificationSequences updatedSequences = mock(VerificationSequences.class);
+        final VerificationResult result = new FakeVerificationResultSuccessful(methodName);
+        when(sequences.addResultIfHasSequencesWithNextMethod(result)).thenReturn(updatedSequences);
+        final VerificationContext context = builder.sequences(sequences).build();
+
+        final VerificationContext updatedContext = context.addResult(result);
+
+        assertThat(updatedContext).isEqualToIgnoringGivenFields(context, "sequences");
+        assertThat(updatedContext.getSequences()).isEqualTo(updatedSequences);
     }
 
 }

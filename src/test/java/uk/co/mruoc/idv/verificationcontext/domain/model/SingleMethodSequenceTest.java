@@ -97,23 +97,23 @@ class SingleMethodSequenceTest {
     }
 
     @Test
-    void shouldNotAddResultIfResultMethodDoesNotMatchSequenceMethod() {
+    void shouldReturnExistingSequenceIfResultMethodIsNotNextMethodInSequence() {
         final VerificationMethod method = new FakeVerificationMethod();
         final VerificationSequence sequence = new SingleMethodSequence(method);
         final VerificationResult result = new FakeVerificationResultSuccessful("other-name");
 
-        final VerificationSequence updatedSequence = sequence.addResultIfContainsMethod(result);
+        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
 
-        assertThat(updatedSequence).isEqualTo(sequence);
+        assertThat(updatedSequence).isSameAs(sequence);
     }
 
     @Test
-    void shouldAddResultIfResultMethodMatchesSequenceMethod() {
+    void shouldAddResultIfResultMethodIsNextMethodInSequence() {
         final VerificationMethod method = new FakeVerificationMethod();
         final VerificationSequence sequence = new SingleMethodSequence(method);
         final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
 
-        final VerificationSequence updatedSequence = sequence.addResultIfContainsMethod(result);
+        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
 
         assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "results");
         assertThat(updatedSequence.getResults()).containsExactly(result);
@@ -193,6 +193,16 @@ class SingleMethodSequenceTest {
         final String sequenceName = sequence.getName();
 
         assertThat(sequenceName).isEqualTo(method.getName());
+    }
+
+    @Test
+    void shouldReturnHasNextMethod() {
+        final VerificationMethod method = new FakeVerificationMethod();
+
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        assertThat(sequence.hasNextMethod(method.getName())).isTrue();
+        assertThat(sequence.hasNextMethod("other-name")).isFalse();
     }
 
 }

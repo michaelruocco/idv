@@ -1,6 +1,5 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
@@ -17,7 +16,6 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
-@ToString
 public class SingleMethodSequence implements VerificationSequence {
 
     private final VerificationMethod method;
@@ -72,8 +70,8 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public boolean containsMethod(final String name) {
-        return method.hasName(name);
+    public boolean containsMethod(final String methodName) {
+        return method.hasName(methodName);
     }
 
     @Override
@@ -82,11 +80,10 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public VerificationSequence addResultIfContainsMethod(final VerificationResult result) {
-        if (containsMethod(result.getMethodName())) {
+    public VerificationSequence addResultIfHasNextMethod(final VerificationResult result) {
+        if (hasNextMethod(result.getMethodName())) {
             return addResult(result);
         }
-        logResultNotAdded(result);
         return this;
     }
 
@@ -115,6 +112,11 @@ public class SingleMethodSequence implements VerificationSequence {
         return method.getName();
     }
 
+    @Override
+    public boolean hasNextMethod(final String methodName) {
+        return containsMethod(methodName);
+    }
+
     private <T> Optional<T> castMethodTo(final Class<T> type) {
         if (type.isAssignableFrom(method.getClass())) {
             return Optional.of(type.cast(method));
@@ -126,13 +128,6 @@ public class SingleMethodSequence implements VerificationSequence {
         final Collection<VerificationResult> updatedResults = new ArrayList<>(results);
         updatedResults.add(result);
         return new SingleMethodSequence(method, updatedResults);
-    }
-
-    private void logResultNotAdded(final VerificationResult result) {
-        log.info("result not added {} to sequence {} as sequence does not contain method with name {}",
-                result,
-                this,
-                result.getMethodName());
     }
 
 }

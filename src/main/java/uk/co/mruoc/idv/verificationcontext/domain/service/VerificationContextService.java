@@ -8,4 +8,6 @@ public interface VerificationContextService {
 
     VerificationContext get(final GetContextRequest request);
 
+    VerificationContext updateResult(final UpdateContextResultRequest request);
+
 }

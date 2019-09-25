@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
-@ToString
 public class MultipleMethodSequence implements VerificationSequence {
 
     private final String name;
@@ -93,11 +92,10 @@ public class MultipleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public VerificationSequence addResultIfContainsMethod(final VerificationResult result) {
-        if (containsMethod(result.getMethodName())) {
+    public VerificationSequence addResultIfHasNextMethod(final VerificationResult result) {
+        if (hasNextMethod(result.getMethodName())) {
             return addResult(result);
         }
-        logResultNotAdded(result);
         return this;
     }
 
@@ -129,6 +127,15 @@ public class MultipleMethodSequence implements VerificationSequence {
         return name;
     }
 
+    @Override
+    public boolean hasNextMethod(final String methodName) {
+        final Collection<String> methodNames = getMethodNames();
+        final Collection<String> resultMethodNames = getResultMethodNames();
+        final Collection<String> incompleteMethodNames = CollectionUtils.subtract(methodNames, resultMethodNames);
+        final Optional<String> nextMethodName = incompleteMethodNames.stream().findFirst();
+        return nextMethodName.map(value -> value.equals(methodName)).orElse(false);
+    }
+
     private <T> Optional<T> castMethodTo(final Class<T> type) {
         return methods.stream()
                 .filter(method -> type.isAssignableFrom(method.getClass()))
@@ -140,13 +147,6 @@ public class MultipleMethodSequence implements VerificationSequence {
         final Collection<VerificationResult> updatedResults = new ArrayList<>(results);
         updatedResults.add(result);
         return new MultipleMethodSequence(name, methods, updatedResults);
-    }
-
-    private void logResultNotAdded(final VerificationResult result) {
-        log.info("result not added {} to sequence {} as sequence does not contain method with name {}",
-                result,
-                this,
-                result.getMethodName());
     }
 
     private Duration calculateLongestMethodDuration() {

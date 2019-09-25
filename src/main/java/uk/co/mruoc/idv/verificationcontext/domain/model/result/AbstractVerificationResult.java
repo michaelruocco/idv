@@ -8,14 +8,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public abstract class AbstractVerificationResult implements VerificationResult {
 
-    private final String name;
+    private final String methodName;
     private final UUID verificationId;
     private final Instant timestamp;
     private final boolean successful;
 
     @Override
     public String getMethodName() {
-        return name;
+        return methodName;
     }
 
     @Override

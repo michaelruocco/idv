@@ -5,6 +5,7 @@ import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -55,6 +56,20 @@ public class VerificationContext {
 
     public VerificationSequences getSequences() {
         return sequences;
+    }
+
+    public VerificationContext addResult(final VerificationResult result) {
+        final VerificationSequences updatedSequences = this.sequences.addResultIfHasSequencesWithNextMethod(result);
+        return VerificationContext.builder()
+                .id(id)
+                .channel(channel)
+                .providedAlias(providedAlias)
+                .identity(identity)
+                .activity(activity)
+                .created(created)
+                .expiry(expiry)
+                .sequences(updatedSequences)
+                .build();
     }
 
 }

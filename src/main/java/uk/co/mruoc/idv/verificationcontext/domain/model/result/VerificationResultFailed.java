@@ -7,10 +7,10 @@ public class VerificationResultFailed extends AbstractVerificationResult {
 
     private static final boolean SUCCESSFUL = false;
 
-    public VerificationResultFailed(final String name,
+    public VerificationResultFailed(final String methodName,
                                     final UUID verificationId,
                                     final Instant timestamp) {
-        super(name, verificationId, timestamp, SUCCESSFUL);
+        super(methodName, verificationId, timestamp, SUCCESSFUL);
     }
 
 }

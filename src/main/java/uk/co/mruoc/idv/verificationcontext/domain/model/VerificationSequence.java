@@ -28,11 +28,11 @@ public interface VerificationSequence {
 
     Duration getDuration();
 
-    boolean containsMethod(final String name);
+    boolean containsMethod(String methodName);
 
     boolean isEligible();
 
-    VerificationSequence addResultIfContainsMethod(final VerificationResult result);
+    VerificationSequence addResultIfHasNextMethod(VerificationResult result);
 
     boolean hasResults();
 
@@ -43,5 +43,7 @@ public interface VerificationSequence {
     boolean isSuccessful();
 
     String getName();
+
+    boolean hasNextMethod(String methodName);
 
 }

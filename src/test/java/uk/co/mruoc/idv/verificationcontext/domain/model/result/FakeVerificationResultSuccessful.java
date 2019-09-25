@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class FakeVerificationResultSuccessful extends VerificationResultSuccessful {
 
-    public FakeVerificationResultSuccessful(final String name) {
-        super(name, UUID.randomUUID(), Instant.now());
+    public FakeVerificationResultSuccessful(final String methodName) {
+        super(methodName, UUID.randomUUID(), Instant.now());
     }
 
 }
