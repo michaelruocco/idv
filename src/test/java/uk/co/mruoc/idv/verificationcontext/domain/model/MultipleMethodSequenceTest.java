@@ -1,23 +1,22 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class MultipleMethodSequenceTest {
@@ -35,7 +34,7 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnMobilePinsentry() {
-        final MobilePinsentry method = mock(MobilePinsentry.class);
+        final MobilePinsentryEligible method = mock(MobilePinsentryEligible.class);
         final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
 
         assertThat(sequence.getMobilePinsentry()).contains(method);
@@ -59,7 +58,7 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnCardCredentials() {
-        final CardCredentials method = mock(CardCredentials.class);
+        final CardCredentialsEligible method = mock(CardCredentialsEligible.class);
         final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
 
         assertThat(sequence.getCardCredentials()).contains(method);
@@ -67,7 +66,7 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnEmptyIfMethodIsNotPresent() {
-        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationMethod method = new FakeVerificationMethodEligible();
         final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
 
         assertThat(sequence.getPhysicalPinsentry()).isEmpty();
@@ -79,8 +78,8 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnDurationFromMethodWithLongestDuration() {
-        final VerificationMethod method1 = new FakeVerificationMethod(Duration.ofMinutes(10));
-        final VerificationMethod method2 = new FakeVerificationMethod(Duration.ofMinutes(3));
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(Duration.ofMinutes(10));
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(Duration.ofMinutes(3));
 
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
@@ -89,8 +88,8 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnContainsMethod() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
 
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
@@ -101,8 +100,8 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnIsEligibleIfAllMethodsAreEligible() {
-        final VerificationMethod method1 = new FakeVerificationMethod();
-        final VerificationMethod method2 = new FakeVerificationMethod();
+        final VerificationMethod method1 = new FakeVerificationMethodEligible();
+        final VerificationMethod method2 = new FakeVerificationMethodEligible();
 
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
@@ -111,8 +110,8 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnExistingSequenceIfResultMethodIsNotNextMethodInSequence() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
         final VerificationResult result = new FakeVerificationResultSuccessful("other-name");
 
@@ -123,22 +122,25 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldAddResultIfResultMethodIsNextMethodInSequence() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
         final VerificationResult result = new FakeVerificationResultSuccessful(method1.getName());
 
         final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
 
-        assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "results", "methods");
-        assertThat(updatedSequence.getMethods()).containsExactly(method1, method2);
-        assertThat(updatedSequence.getResults()).containsExactly(result);
+        assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "methods");
+        final VerificationMethod updatedMethod1 = updatedSequence.getMethod(method1.getName());
+        assertThat(updatedMethod1).isEqualToIgnoringGivenFields(method1, "results");
+        assertThat(updatedMethod1.getResults()).containsExactly(result);
+        final VerificationMethod updatedMethod2 = updatedSequence.getMethod(method2.getName());
+        assertThat(updatedMethod2).isEqualToIgnoringGivenFields(method2);
     }
 
     @Test
     void shouldNotBeCompleteIfResultsAreEmpty() {
-        final VerificationMethod method1 = new FakeVerificationMethod();
-        final VerificationMethod method2 = new FakeVerificationMethod();
+        final VerificationMethod method1 = new FakeVerificationMethodEligible();
+        final VerificationMethod method2 = new FakeVerificationMethodEligible();
 
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
@@ -147,33 +149,29 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldNotBeCompleteIfAllMethodsDoNotHaveResult() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
-        final VerificationResult result = new FakeVerificationResultSuccessful(method1.getName());
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
 
-        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2), result);
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
         assertThat(sequence.isComplete()).isFalse();
     }
 
     @Test
-    void shouldBeCompleteIfAllMethodsHaveResult() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
-        final VerificationResult result1 = new FakeVerificationResultSuccessful(method1.getName());
-        final VerificationResult result2 = new FakeVerificationResultSuccessful(method2.getName());
+    void shouldBeCompleteIfAllMethodsAreComplete() {
+        final VerificationMethod method1 = mock(VerificationMethod.class);
+        given(method1.isComplete()).willReturn(true);
+        final VerificationMethod method2 = mock(VerificationMethod.class);
+        given(method2.isComplete()).willReturn(true);
 
-        final VerificationSequence sequence = new MultipleMethodSequence(
-                Arrays.asList(method1, method2),
-                new VerificationResults(result1, result2)
-        );
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
         assertThat(sequence.isComplete()).isTrue();
     }
 
     @Test
     void shouldNotBeSuccessfulIfResultsAreEmpty() {
-        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
 
@@ -182,38 +180,30 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldNotBeSuccessfulIfAllMethodsDoNotHaveSuccessfulResult() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
-        final VerificationResult result1 = new FakeVerificationResultSuccessful(method1.getName());
-        final VerificationResult result2 = new FakeVerificationResultFailed(method2.getName());
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
 
-        final VerificationSequence sequence = new MultipleMethodSequence(
-                Arrays.asList(method1, method2),
-                new VerificationResults(result1, result2)
-        );
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
         assertThat(sequence.isSuccessful()).isFalse();
     }
 
     @Test
     void shouldBeSuccessfulIfAllMethodsHaveSuccessfulResult() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
-        final VerificationResult result1 = new FakeVerificationResultSuccessful(method1.getName());
-        final VerificationResult result2 = new FakeVerificationResultSuccessful(method2.getName());
+        final VerificationMethod method1 = mock(VerificationMethod.class);
+        given(method1.isSuccessful()).willReturn(true);
+        final VerificationMethod method2 = mock(VerificationMethod.class);
+        given(method2.isSuccessful()).willReturn(true);
 
-        final VerificationSequence sequence = new MultipleMethodSequence(
-                Arrays.asList(method1, method2),
-                new VerificationResults(result1, result2)
-        );
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
         assertThat(sequence.isSuccessful()).isTrue();
     }
 
     @Test
     void shouldReturnMethods() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
 
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
@@ -221,31 +211,9 @@ class MultipleMethodSequenceTest {
     }
 
     @Test
-    void shouldReturnHasResultsFalseIfHasNoResults() {
-        final VerificationMethod method = new FakeVerificationMethod();
-
-        final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
-
-        assertThat(sequence.hasResults()).isFalse();
-    }
-
-    @Test
-    void shouldReturnHasResultsTrueIfHasResults() {
-        final VerificationMethod method = new FakeVerificationMethod();
-        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
-
-        final VerificationSequence sequence = new MultipleMethodSequence(
-                Collections.singleton(method),
-                new VerificationResults(result)
-        );
-
-        assertThat(sequence.hasResults()).isTrue();
-    }
-
-    @Test
     void shouldReturnDefaultNameIfNotSpecified() {
-        final VerificationMethod method1 = new FakeVerificationMethod("method1");
-        final VerificationMethod method2 = new FakeVerificationMethod("method2");
+        final VerificationMethod method1 = new FakeVerificationMethodEligible("method1");
+        final VerificationMethod method2 = new FakeVerificationMethodEligible("method2");
 
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 
@@ -256,7 +224,7 @@ class MultipleMethodSequenceTest {
     @Test
     void shouldReturnSpecifiedName() {
         final String name = "my-specific-name";
-        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final VerificationSequence sequence = new MultipleMethodSequence(name, Collections.singleton(method));
 
@@ -265,8 +233,8 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnHasNextMethod() {
-        final VerificationMethod method1 = new FakeVerificationMethod(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethod(METHOD_NAME_2);
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
 
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
 

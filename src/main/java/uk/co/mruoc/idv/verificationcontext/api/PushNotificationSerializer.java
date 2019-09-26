@@ -18,29 +18,36 @@ public class PushNotificationSerializer extends StdSerializer<PushNotification> 
                           final JsonGenerator json,
                           final SerializerProvider provider) throws IOException {
         if (method.isEligible()) {
-            writeEligibleJson(method, json);
+            writeEligibleJson(method, json, provider);
             return;
         }
         writeIneligibleJson(method, json);
     }
 
     private void writeEligibleJson(final PushNotification method,
-                                   final JsonGenerator json) throws IOException {
+                                   final JsonGenerator json,
+                                   final SerializerProvider provider) throws IOException {
         json.writeStartObject();
-        writeCommonFields(method, json);
+        writeNameAndEligibility(method, json);
+        JsonFieldWriter.writeComplete(method.isComplete(), json);
+        JsonFieldWriter.writeSuccessful(method.isSuccessful(), json);
         JsonFieldWriter.writeDuration(method.getDuration(), json);
+        JsonFieldWriter.writeMaxAttempts(method.getMaxAttempts(), json);
+        if (method.hasResults()) {
+            JsonFieldWriter.writeResults(method.getResults(), json, provider);
+        }
         json.writeEndObject();
     }
 
     private void writeIneligibleJson(final PushNotification method,
                                      final JsonGenerator json) throws IOException {
         json.writeStartObject();
-        writeCommonFields(method, json);
+        writeNameAndEligibility(method, json);
         json.writeEndObject();
     }
 
-    private void writeCommonFields(final PushNotification method,
-                                   final JsonGenerator json) throws IOException {
+    private void writeNameAndEligibility(final PushNotification method,
+                                         final JsonGenerator json) throws IOException {
         JsonFieldWriter.writeName(method.getName(), json);
         JsonFieldWriter.writeEligibility(method.getEligibility(), json);
     }

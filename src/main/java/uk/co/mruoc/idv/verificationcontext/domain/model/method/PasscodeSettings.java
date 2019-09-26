@@ -8,6 +8,6 @@ public interface PasscodeSettings {
 
     Duration getDuration();
 
-    int getMaxAttempts();
+    int getMaxGenerationAttempts();
 
 }

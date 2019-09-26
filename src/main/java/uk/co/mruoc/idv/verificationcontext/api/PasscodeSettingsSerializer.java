@@ -21,7 +21,7 @@ public class PasscodeSettingsSerializer extends JsonSerializer<PasscodeSettings>
         json.writeStartObject();
         json.writeNumberField("length", passcode.getLength());
         json.writeNumberField("duration", passcode.getDuration().toMillis());
-        json.writeNumberField("maxAttempts", passcode.getMaxAttempts());
+        json.writeNumberField("maxGenerationAttempts", passcode.getMaxGenerationAttempts());
         json.writeEndObject();
     }
 

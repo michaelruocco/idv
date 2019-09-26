@@ -2,14 +2,19 @@ package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import lombok.Builder;
 
-import java.time.Duration;
-import java.util.Collections;
+public class PhysicalPinsentryIneligible extends AbstractVerificationMethodIneligible implements PhysicalPinsentry {
 
-public class PhysicalPinsentryIneligible extends PhysicalPinsentry {
+    private final PinsentryFunction function;
 
     @Builder
     public PhysicalPinsentryIneligible(final Ineligible ineligible, final PinsentryFunction function) {
-        super(ineligible, Duration.ZERO, function, Collections.emptyList());
+        super(NAME, ineligible);
+        this.function = function;
+    }
+
+    @Override
+    public PinsentryFunction getFunction() {
+        return function;
     }
 
 }

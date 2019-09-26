@@ -13,7 +13,7 @@ class OneTimePasscodeSmsEligibleTest {
     private final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
     private final Collection<MobileNumber> mobileNumbers = Collections.singleton(new MobileNumber("07809347780"));
 
-    private final OneTimePasscodeSms method = OneTimePasscodeSmsEligible.builder()
+    private final OneTimePasscodeSmsEligible method = OneTimePasscodeSmsEligible.builder()
             .passcodeSettings(passcodeSettings)
             .mobileNumbers(mobileNumbers)
             .build();

@@ -15,7 +15,7 @@ import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
 import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 import uk.co.mruoc.jsonapi.JsonApiModule;
 
 import java.time.Instant;
@@ -38,7 +38,7 @@ class VerificationContextDocumentSerializerTest {
                 .activity(new FakeActivity(Instant.parse("2019-09-21T20:40:29.061224Z")))
                 .created(Instant.parse("2019-09-21T20:43:32.233721Z"))
                 .expiry(Instant.parse("2019-09-21T20:48:32.233721Z"))
-                .sequences(new VerificationSequences(new SingleMethodSequence(new FakeVerificationMethod())))
+                .sequences(new VerificationSequences(new SingleMethodSequence(new FakeVerificationMethodEligible())))
                 .build();
         final VerificationContextDocument document = new VerificationContextDocument(context);
 

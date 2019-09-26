@@ -11,7 +11,7 @@ class VerificationResultsTest {
 
     @Test
     void shouldReturnIsEmptyTrueIfContainsNoResults() {
-        final VerificationResults results = new VerificationResults();
+        final VerificationResults results = new DefaultVerificationResults();
 
         assertThat(results.isEmpty()).isTrue();
     }
@@ -20,7 +20,7 @@ class VerificationResultsTest {
     void shouldReturnIsEmptyFalseIfContainsResults() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME_1);
 
-        final VerificationResults results = new VerificationResults(result);
+        final VerificationResults results = new DefaultVerificationResults(result);
 
         assertThat(results.isEmpty()).isFalse();
     }
@@ -29,7 +29,7 @@ class VerificationResultsTest {
     void shouldReturnContainsSuccessfulTrueIfContainsSuccessfulResult() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME_1);
 
-        final VerificationResults results = new VerificationResults(result);
+        final VerificationResults results = new DefaultVerificationResults(result);
 
         assertThat(results.containsSuccessful()).isTrue();
     }
@@ -38,7 +38,7 @@ class VerificationResultsTest {
     void shouldReturnContainsSuccessfulFalseIfDoesNotContainsSuccessfulResult() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME_1);
 
-        final VerificationResults results = new VerificationResults(result);
+        final VerificationResults results = new DefaultVerificationResults(result);
 
         assertThat(results.isEmpty()).isFalse();
     }
@@ -48,7 +48,7 @@ class VerificationResultsTest {
         final VerificationResult result1 = new FakeVerificationResultFailed(METHOD_NAME_1);
         final VerificationResult result2 = new FakeVerificationResultFailed(METHOD_NAME_2);
 
-        final VerificationResults results = new VerificationResults(result1, result2);
+        final VerificationResults results = new DefaultVerificationResults(result1, result2);
 
         assertThat(results.getMethodNames()).containsExactly(METHOD_NAME_1, METHOD_NAME_2);
     }
@@ -57,29 +57,38 @@ class VerificationResultsTest {
     void shouldReturnHasSuccessfulTrueIfContainsSuccessfulResultWithName() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME_1);
 
-        final VerificationResults results = new VerificationResults(result);
+        final VerificationResults results = new DefaultVerificationResults(result);
 
-        assertThat(results.hasSuccessfulResult(METHOD_NAME_1)).isTrue();
+        assertThat(results.containsSuccessful(METHOD_NAME_1)).isTrue();
     }
 
     @Test
     void shouldReturnHasSuccessfulFalseIfDoesNotContainsSuccessfulResultWithName() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME_1);
 
-        final VerificationResults results = new VerificationResults(result);
+        final VerificationResults results = new DefaultVerificationResults(result);
 
-        assertThat(results.hasSuccessfulResult(METHOD_NAME_1)).isFalse();
+        assertThat(results.containsSuccessful(METHOD_NAME_1)).isFalse();
     }
 
     @Test
     void shouldAddResult() {
         final VerificationResult result1 = new FakeVerificationResultFailed(METHOD_NAME_1);
-        final VerificationResults results = new VerificationResults(result1);
+        final VerificationResults results = new DefaultVerificationResults(result1);
         final VerificationResult result2 = new FakeVerificationResultFailed(METHOD_NAME_1);
 
         final VerificationResults updatedResults = results.add(result2);
 
         assertThat(updatedResults).containsExactly(result1, result2);
+    }
+
+    @Test
+    void shouldReturnSize() {
+        final VerificationResult result1 = new FakeVerificationResultFailed(METHOD_NAME_1);
+        final VerificationResult result2 = new FakeVerificationResultFailed(METHOD_NAME_1);
+        final VerificationResults results = new DefaultVerificationResults(result1, result2);
+
+        assertThat(results.size()).isEqualTo(2);
     }
 
 }

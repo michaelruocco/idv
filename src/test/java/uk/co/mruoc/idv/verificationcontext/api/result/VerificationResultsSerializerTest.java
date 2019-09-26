@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.verificationcontext.api.VerificationContextModule;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
@@ -20,7 +21,7 @@ class VerificationResultsSerializerTest {
     @Test
     void shouldSerializeVerificationResults() throws JsonProcessingException {
         final VerificationResult result = new FakeVerificationResultSuccessful("push-notification");
-        final VerificationResults results = new VerificationResults(result);
+        final VerificationResults results = new DefaultVerificationResults(result);
 
         final String json = MAPPER.writeValueAsString(results);
 

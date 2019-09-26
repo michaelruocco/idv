@@ -2,8 +2,8 @@
   "name": "physical-pinsentry",
   "function": "RESPOND",
   "eligible": true,
-  "complete": false,
-  "successful": false,
+  "complete": true,
+  "successful": true,
   "maxAttempts": 1,
   "duration": 300000,
   "cardNumbers": [
@@ -11,6 +11,14 @@
       "id": "6c880ce6-0d3c-4ac7-b419-8c2dce645cfa",
       "tokenized": "4929991234567890",
       "masked": "************7890"
+    }
+  ],
+  "results": [
+    {
+      "methodName": "physical-pinsentry",
+      "verificationId": "524d0e6d-cead-49f3-b0f5-04e29e789681",
+      "timestamp": "2019-09-24T15:52:49.569287Z",
+      "successful": true
     }
   ]
 }

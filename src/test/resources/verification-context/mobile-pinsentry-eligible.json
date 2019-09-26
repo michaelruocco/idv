@@ -2,5 +2,8 @@
   "name": "mobile-pinsentry",
   "function": "RESPOND",
   "eligible": true,
+  "complete": false,
+  "successful": false,
+  "maxAttempts": 1,
   "duration": 300000
 }

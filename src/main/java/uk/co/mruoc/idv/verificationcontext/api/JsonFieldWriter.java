@@ -7,6 +7,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligibility;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -27,12 +28,31 @@ class JsonFieldWriter {
         json.writeStringField("function", function.name());
     }
 
+    static void writeComplete(final boolean complete, final JsonGenerator json) throws IOException {
+        json.writeBooleanField("complete", complete);
+    }
+
+    static void writeSuccessful(final boolean successful, final JsonGenerator json) throws IOException {
+        json.writeBooleanField("successful", successful);
+    }
+
+    static void writeMaxAttempts(final int maxAttempts, final JsonGenerator json) throws IOException {
+        json.writeNumberField("maxAttempts", maxAttempts);
+    }
+    
     static void writeEligibility(final Eligibility eligibility, final JsonGenerator json) throws IOException {
         json.writeBooleanField("eligible", eligibility.isEligible());
         final Optional<String> reason = eligibility.getReason();
         if (reason.isPresent()) {
             json.writeStringField("reason", reason.get());
         }
+    }
+
+    static void writeResults(final VerificationResults results,
+                             final JsonGenerator json,
+                             final SerializerProvider provider) throws IOException {
+        json.writeFieldName("results");
+        provider.defaultSerializeValue(results, json);
     }
 
     static void writeCardNumbersJson(final Collection<CardNumber> cardNumbers,

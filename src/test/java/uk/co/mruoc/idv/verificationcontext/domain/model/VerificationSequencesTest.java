@@ -2,8 +2,10 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.CannotCalculateMaxDurationOfEmptySequencesException;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NoSequencesFoundWithNextMethodException;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NoSequencesFoundWithNextMethodEligibleException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -65,38 +67,50 @@ class VerificationSequencesTest {
     }
 
     @Test
+    void shouldThrowExceptionIfAddingResultWithMethodThatIsNextMethodInSequenceButNotEligible() {
+        final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
+        final VerificationMethod method = new FakeVerificationMethodIneligible(result.getMethodName());
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        final VerificationSequences sequences = new VerificationSequences(sequence);
+
+        final Throwable error = catchThrowable(() -> sequences.addResultIfHasSequencesWithNextMethod(result));
+
+        assertThat(error)
+                .isInstanceOf(NoSequencesFoundWithNextMethodEligibleException.class)
+                .hasMessage(result.getMethodName());
+    }
+
+    @Test
     void shouldThrowExceptionIfAddingResultWithMethodThatIsNotNextMethodInSequence() {
         final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
 
-        final VerificationSequence sequence1 = new SingleMethodSequence(new FakeVerificationMethod("other-name-1"));
-        final VerificationSequence sequence2 = new SingleMethodSequence(new FakeVerificationMethod("other-name-2"));
+        final VerificationSequence sequence1 = new SingleMethodSequence(new FakeVerificationMethodEligible("other-name-1"));
+        final VerificationSequence sequence2 = new SingleMethodSequence(new FakeVerificationMethodEligible("other-name-2"));
 
         final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
 
         final Throwable error = catchThrowable(() -> sequences.addResultIfHasSequencesWithNextMethod(result));
 
         assertThat(error)
-                .isInstanceOf(NoSequencesFoundWithNextMethodException.class)
+                .isInstanceOf(NoSequencesFoundWithNextMethodEligibleException.class)
                 .hasMessage(result.getMethodName());
     }
 
     @Test
-    void shouldAddResultToSequencesWithMethodThatIsNextMethodInSequence() {
+    void shouldAddResultToMethodThatIsNextMethodInAnySequences() {
         final String methodName = "method-name";
-        final VerificationResult result = new FakeVerificationResultSuccessful(methodName);
-        final VerificationSequence sequence1 = new SingleMethodSequence(new FakeVerificationMethod(methodName));
-        final VerificationSequence sequence2 = new SingleMethodSequence(new FakeVerificationMethod(methodName));
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(methodName);
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(methodName);
+        final VerificationSequence sequence1 = new SingleMethodSequence(method1);
+        final VerificationSequence sequence2 = new SingleMethodSequence(method2);
         final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+        final VerificationResult result = new FakeVerificationResultSuccessful(methodName);
 
         final VerificationSequences updatedSequences = sequences.addResultIfHasSequencesWithNextMethod(result);
 
-        assertThat(updatedSequences).hasSameSizeAs(sequences);
-        final VerificationSequence updatedSequence1 = updatedSequences.get(0);
-        assertThat(updatedSequence1).isEqualToIgnoringGivenFields(sequence1, "results");
-        assertThat(updatedSequence1.getResults()).containsExactly(result);
-        final VerificationSequence updatedSequence2 = updatedSequences.get(1);
-        assertThat(updatedSequence2).isEqualToIgnoringGivenFields(sequence2, "results");
-        assertThat(updatedSequence2.getResults()).containsExactly(result);
+        assertThat(updatedSequences.getResults(sequence1.getName(), method1.getName())).containsExactly(result);
+        assertThat(updatedSequences.getResults(sequence2.getName(), method2.getName())).containsExactly(result);
     }
 
 }

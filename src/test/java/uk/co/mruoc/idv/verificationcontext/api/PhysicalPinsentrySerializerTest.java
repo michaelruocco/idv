@@ -6,9 +6,12 @@ import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResultSuccessful;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -29,6 +32,18 @@ class PhysicalPinsentrySerializerTest {
         final String json = MAPPER.writeValueAsString(method);
 
         final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/physical-pinsentry-eligible.json");
+        assertThatJson(json).isEqualTo(expectedJson);
+    }
+
+    @Test
+    void shouldSerializeEligiblePhysicalPinsentryWithResult() throws JsonProcessingException {
+        final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(PhysicalPinsentry.NAME);
+        final Collection<CardNumber> cardNumbers = Collections.singleton(new CardNumber(UUID.fromString("6c880ce6-0d3c-4ac7-b419-8c2dce645cfa"), "4929991234567890"));
+        final VerificationMethod method = new PhysicalPinsentryEligible(RESPOND, cardNumbers, result);
+
+        final String json = MAPPER.writeValueAsString(method);
+
+        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/physical-pinsentry-eligible-with-result.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

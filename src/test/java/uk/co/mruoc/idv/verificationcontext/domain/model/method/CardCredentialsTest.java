@@ -8,9 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CardCredentialsTest {
 
-    private final Eligibility eligibility = new Eligible();
-
-    private final VerificationMethod method = new CardCredentials(eligibility);
+    private final VerificationMethod method = new CardCredentialsEligible();
 
     @Test
     void shouldReturnName() {
@@ -24,7 +22,7 @@ class CardCredentialsTest {
 
     @Test
     void shouldReturnEligibility() {
-        assertThat(method.getEligibility()).isEqualTo(eligibility);
+        assertThat(method.getEligibility()).isEqualTo(new Eligible());
     }
 
 }

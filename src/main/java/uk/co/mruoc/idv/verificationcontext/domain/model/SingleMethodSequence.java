@@ -1,14 +1,13 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -19,19 +18,9 @@ import java.util.Optional;
 public class SingleMethodSequence implements VerificationSequence {
 
     private final VerificationMethod method;
-    private final VerificationResults results;
 
     public SingleMethodSequence(final VerificationMethod method) {
-        this(method, new VerificationResults());
-    }
-
-    public SingleMethodSequence(final VerificationMethod method, final VerificationResult result) {
-        this(method, new VerificationResults(result));
-    }
-
-    public SingleMethodSequence(final VerificationMethod method, final VerificationResults results) {
         this.method = method;
-        this.results = results;
     }
 
     @Override
@@ -40,8 +29,8 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public Optional<MobilePinsentry> getMobilePinsentry() {
-        return castMethodTo(MobilePinsentry.class);
+    public Optional<MobilePinsentryEligible> getMobilePinsentry() {
+        return castMethodTo(MobilePinsentryEligible.class);
     }
 
     @Override
@@ -55,13 +44,21 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public Optional<CardCredentials> getCardCredentials() {
-        return castMethodTo(CardCredentials.class);
+    public Optional<CardCredentialsEligible> getCardCredentials() {
+        return castMethodTo(CardCredentialsEligible.class);
     }
 
     @Override
     public Collection<VerificationMethod> getMethods() {
         return Collections.singleton(method);
+    }
+
+    @Override
+    public VerificationMethod getMethod(final String methodName) {
+        if (method.hasName(methodName)) {
+            return method;
+        }
+        throw new MethodNotFoundInSequenceException(methodName, getName());
     }
 
     @Override
@@ -81,30 +78,20 @@ public class SingleMethodSequence implements VerificationSequence {
 
     @Override
     public VerificationSequence addResultIfHasNextMethod(final VerificationResult result) {
-        if (hasNextMethod(result.getMethodName())) {
-            return addResult(result);
+        if (containsMethod(result.getMethodName())) {
+            return new SingleMethodSequence(method.addResult(result));
         }
         return this;
     }
 
     @Override
-    public boolean hasResults() {
-        return !results.isEmpty();
-    }
-
-    @Override
-    public VerificationResults getResults() {
-        return results;
-    }
-
-    @Override
     public boolean isComplete() {
-        return !results.isEmpty();
+        return method.isComplete();
     }
 
     @Override
     public boolean isSuccessful() {
-        return results.containsSuccessful();
+        return method.isSuccessful();
     }
 
     @Override
@@ -122,11 +109,6 @@ public class SingleMethodSequence implements VerificationSequence {
             return Optional.of(type.cast(method));
         }
         return Optional.empty();
-    }
-
-    private VerificationSequence addResult(final VerificationResult result) {
-        final VerificationResults updatedResults = new VerificationResults(results);
-        return new SingleMethodSequence(method, updatedResults.add(result));
     }
 
 }

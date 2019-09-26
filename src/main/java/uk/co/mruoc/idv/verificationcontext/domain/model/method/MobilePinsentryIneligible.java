@@ -1,11 +1,19 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
-import java.time.Duration;
+public class MobilePinsentryIneligible extends AbstractVerificationMethodIneligible implements MobilePinsentry {
 
-public class MobilePinsentryIneligible extends MobilePinsentry {
+    private static final String NAME = "mobile-pinsentry";
+
+    private final PinsentryFunction function;
 
     public MobilePinsentryIneligible(final PinsentryFunction function) {
-        super(new NoMobileApplication(), Duration.ZERO, function);
+        super(NAME, new NoMobileApplication());
+        this.function = function;
+    }
+
+    @Override
+    public PinsentryFunction getFunction() {
+        return function;
     }
 
 }

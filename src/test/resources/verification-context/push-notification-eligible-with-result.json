@@ -1,0 +1,16 @@
+{
+  "name": "push-notification",
+  "eligible": true,
+  "complete": true,
+  "successful": true,
+  "duration": 300000,
+  "maxAttempts": 1,
+  "results": [
+    {
+      "methodName": "push-notification",
+      "verificationId": "524d0e6d-cead-49f3-b0f5-04e29e789681",
+      "timestamp": "2019-09-24T15:52:49.569287Z",
+      "successful": true
+    }
+  ]
+}

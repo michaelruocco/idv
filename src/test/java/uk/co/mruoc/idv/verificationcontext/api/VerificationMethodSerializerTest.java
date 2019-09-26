@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 
@@ -17,7 +18,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeCommonFieldsForEligibleUnrecognisedMethod() throws JsonProcessingException {
-        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -27,7 +28,7 @@ class VerificationMethodSerializerTest {
 
     @Test
     void shouldSerializeCommonFieldsForIneligibleUnrecognisedMethod() throws JsonProcessingException {
-        final VerificationMethod method = new FakeVerificationMethod(new FakeIneligible());
+        final VerificationMethod method = new FakeVerificationMethodIneligible();
 
         final String json = MAPPER.writeValueAsString(method);
 

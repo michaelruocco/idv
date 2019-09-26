@@ -17,8 +17,8 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class VerificationContextTest {
 
@@ -111,7 +111,7 @@ class VerificationContextTest {
         final VerificationSequences sequences = mock(VerificationSequences.class);
         final VerificationSequences updatedSequences = mock(VerificationSequences.class);
         final VerificationResult result = new FakeVerificationResultSuccessful(methodName);
-        when(sequences.addResultIfHasSequencesWithNextMethod(result)).thenReturn(updatedSequences);
+        given(sequences.addResultIfHasSequencesWithNextMethod(result)).willReturn(updatedSequences);
         final VerificationContext context = builder.sequences(sequences).build();
 
         final VerificationContext updatedContext = context.addResult(result);

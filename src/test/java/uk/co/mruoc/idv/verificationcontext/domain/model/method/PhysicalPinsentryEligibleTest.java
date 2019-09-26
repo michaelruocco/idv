@@ -13,7 +13,7 @@ class PhysicalPinsentryEligibleTest {
     private final PinsentryFunction function = PinsentryFunction.RESPOND;
     private final Collection<CardNumber> cardNumbers = Collections.singleton(new CardNumber("1234876543211234"));
 
-    private final PhysicalPinsentry method = PhysicalPinsentryEligible.builder()
+    private final PhysicalPinsentryEligible method = PhysicalPinsentryEligible.builder()
             .function(function)
             .cardNumbers(cardNumbers)
             .build();

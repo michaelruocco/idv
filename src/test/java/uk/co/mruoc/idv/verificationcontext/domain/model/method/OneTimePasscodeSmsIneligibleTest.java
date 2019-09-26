@@ -20,14 +20,4 @@ class OneTimePasscodeSmsIneligibleTest {
         assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(0));
     }
 
-    @Test
-    void shouldReturnPasscodeSettings() {
-        assertThat(method.getPasscodeSettings()).isEqualTo(new IneligiblePasscodeSettings());
-    }
-
-    @Test
-    void shouldReturnEmptyMobileNumbers() {
-        assertThat(method.getMobileNumbers()).isEmpty();
-    }
-
 }

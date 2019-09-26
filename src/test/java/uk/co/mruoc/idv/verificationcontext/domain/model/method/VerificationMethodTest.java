@@ -10,7 +10,7 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnHasNameTrueIfNameMatches() {
-        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final boolean hasName = method.hasName(method.getName());
 
@@ -19,7 +19,7 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnHasNameFalseIfNameDoesNotMatch() {
-        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final boolean hasName = method.hasName("other-name");
 
@@ -28,7 +28,7 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnIsEligibleTrueIfEligible() {
-        final VerificationMethod method = new FakeVerificationMethod();
+        final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final boolean eligible = method.isEligible();
 
@@ -37,7 +37,7 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnIsEligibleFalseIfIneligible() {
-        final VerificationMethod method = new FakeVerificationMethod(new FakeIneligible());
+        final VerificationMethod method = new FakeVerificationMethodIneligible();
 
         final boolean eligible = method.isEligible();
 
@@ -46,7 +46,7 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnIsEmptyEligibilityReasonIfEligible() {
-        final VerificationMethod method = new FakeVerificationMethod(new Eligible());
+        final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final Optional<String> reason = method.getEligibilityReason();
 
@@ -55,12 +55,11 @@ class VerificationMethodTest {
 
     @Test
     void shouldReturnIsIneligibilityReasonIfIneligible() {
-        final String expectedReason = "my reason";
-        final VerificationMethod method = new FakeVerificationMethod(new Ineligible(expectedReason));
+        final VerificationMethod method = new FakeVerificationMethodIneligible();
 
         final Optional<String> reason = method.getEligibilityReason();
 
-        assertThat(reason).contains(expectedReason);
+        assertThat(reason).contains("fake ineligible reason");
     }
 
 }

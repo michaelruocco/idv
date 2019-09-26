@@ -11,7 +11,7 @@ class PhysicalPinsentryIneligibleTest {
     private final Ineligible ineligible = new NoPinsentryDevice();
     private final PinsentryFunction function = PinsentryFunction.RESPOND;
 
-    private final PhysicalPinsentry method = PhysicalPinsentryIneligible.builder()
+    private final PhysicalPinsentryIneligible method = PhysicalPinsentryIneligible.builder()
             .ineligible(ineligible)
             .function(function)
             .build();
@@ -24,11 +24,6 @@ class PhysicalPinsentryIneligibleTest {
     @Test
     void shouldReturnDuration() {
         assertThat(method.getDuration()).isEqualTo(Duration.ZERO);
-    }
-
-    @Test
-    void shouldReturnEmptyCardNumbers() {
-        assertThat(method.getCardNumbers()).isEmpty();
     }
 
 }

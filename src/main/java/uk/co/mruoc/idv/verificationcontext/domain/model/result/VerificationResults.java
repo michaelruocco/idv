@@ -1,57 +1,19 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.result;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
 
-public class VerificationResults implements Iterable<VerificationResult> {
+public interface VerificationResults extends Iterable<VerificationResult> {
 
-    private final List<VerificationResult> results;
+    boolean isEmpty();
 
-    public VerificationResults(final VerificationResult... results) {
-        this(Arrays.asList(results));
-    }
+    boolean containsSuccessful();
 
-    public VerificationResults(final VerificationResults results) {
-        this(results.results);
-    }
+    boolean containsSuccessful(final String methodName);
 
-    public VerificationResults(final Collection<VerificationResult> results) {
-        this.results = new ArrayList<>(results);
-    }
+    Collection<String> getMethodNames();
 
-    @Override
-    public Iterator<VerificationResult> iterator() {
-        return results.iterator();
-    }
+    VerificationResults add(final VerificationResult result);
 
-    public boolean isEmpty() {
-        return results.isEmpty();
-    }
-
-    public boolean containsSuccessful() {
-        return results.stream().anyMatch(VerificationResult::isSuccessful);
-    }
-
-    public Collection<String> getMethodNames() {
-        return results.stream()
-                .map(VerificationResult::getMethodName)
-                .collect(Collectors.toSet());
-    }
-
-    public boolean hasSuccessfulResult(final String methodName) {
-        return results.stream()
-                .filter(result -> result.hasMethodName(methodName))
-                .anyMatch(VerificationResult::isSuccessful);
-    }
-
-    public VerificationResults add(final VerificationResult result) {
-        final Collection<VerificationResult> updatedResults = new ArrayList<>(results);
-        updatedResults.add(result);
-        return new VerificationResults(updatedResults);
-    }
+    int size();
 
 }

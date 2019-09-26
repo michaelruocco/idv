@@ -1,6 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -41,10 +43,26 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
     public VerificationSequences addResultIfHasSequencesWithNextMethod(final VerificationResult result) {
         final String methodName = result.getMethodName();
-        if (!hasSequencesWithNextMethod(methodName)) {
-            throw new NoSequencesFoundWithNextMethodException(methodName);
+        if (!hasEligibleSequencesWithNextMethod(methodName)) {
+            throw new NoSequencesFoundWithNextMethodEligibleException(methodName);
         }
         return addResult(result);
+    }
+
+    public VerificationSequence get(final int index) {
+        return sequences.get(index);
+    }
+
+    public VerificationSequence get(final String sequenceName) {
+        return sequences.stream().filter(sequence -> sequence.getName().equals(sequenceName))
+                .findFirst()
+                .orElseThrow(() -> new NoSequencesFoundWithName(sequenceName));
+    }
+
+    public VerificationResults getResults(final String sequenceName, final String methodName) {
+        final VerificationSequence sequence = get(sequenceName);
+        final VerificationMethod method = sequence.getMethod(methodName);
+        return method.getResults();
     }
 
     private VerificationSequences addResult(final VerificationResult result) {
@@ -54,12 +72,11 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
         return new VerificationSequences(updatedSequences);
     }
 
-    public VerificationSequence get(final int index) {
-        return sequences.get(index);
-    }
 
-    private boolean hasSequencesWithNextMethod(final String methodName) {
-        return sequences.stream().anyMatch(sequence -> sequence.hasNextMethod(methodName));
+    private boolean hasEligibleSequencesWithNextMethod(final String methodName) {
+        return sequences.stream()
+                .filter(VerificationSequence::isEligible)
+                .anyMatch(sequence -> sequence.hasNextMethod(methodName));
     }
 
     public static class CannotCalculateMaxDurationOfEmptySequencesException extends RuntimeException {
@@ -70,10 +87,18 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
     }
 
-    public static class NoSequencesFoundWithNextMethodException extends RuntimeException {
+    public static class NoSequencesFoundWithNextMethodEligibleException extends RuntimeException {
 
-        public NoSequencesFoundWithNextMethodException(final String methodName) {
+        public NoSequencesFoundWithNextMethodEligibleException(final String methodName) {
             super(methodName);
+        }
+
+    }
+
+    public static class NoSequencesFoundWithName extends RuntimeException {
+
+        public NoSequencesFoundWithName(final String sequenceName) {
+            super(sequenceName);
         }
 
     }

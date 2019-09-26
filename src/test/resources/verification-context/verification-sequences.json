@@ -9,7 +9,10 @@
       {
         "name": "push-notification",
         "eligible": true,
-        "duration": 300000
+        "complete": false,
+        "successful": false,
+        "duration": 300000,
+        "maxAttempts": 1
       }
     ]
   },
@@ -24,7 +27,10 @@
         "name": "physical-pinsentry",
         "function": "RESPOND",
         "eligible": true,
+        "complete": false,
+        "successful": false,
         "duration": 300000,
+        "maxAttempts": 1,
         "cardNumbers": [
           {
             "id": "${json-unit.ignore}",
@@ -46,7 +52,10 @@
         "name": "mobile-pinsentry",
         "function": "RESPOND",
         "eligible": true,
-        "duration": 300000
+        "complete": false,
+        "successful": false,
+        "duration": 300000,
+        "maxAttempts": 1
       }
     ]
   },
@@ -60,11 +69,14 @@
       {
         "name": "one-time-passcode-sms",
         "eligible": true,
+        "complete": false,
+        "successful": false,
         "duration": 300000,
+        "maxAttempts": 1,
         "passcodeSettings": {
           "length": 8,
           "duration": 150000,
-          "maxAttempts": 3
+          "maxGenerationAttempts": 3
         },
         "mobileNumbers": [
           {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsEligible;
 
 import java.io.IOException;
 
@@ -18,20 +19,27 @@ public class OneTimePasscodeSmsSerializer extends StdSerializer<OneTimePasscodeS
                           final JsonGenerator json,
                           final SerializerProvider provider) throws IOException {
         if (method.isEligible()) {
-            writeEligibleJson(method, json, provider);
+            writeEligibleJson((OneTimePasscodeSmsEligible) method, json, provider);
             return;
         }
         writeIneligibleJson(method, json);
     }
 
-    private void writeEligibleJson(final OneTimePasscodeSms method,
+    private void writeEligibleJson(final OneTimePasscodeSmsEligible method,
                                    final JsonGenerator json,
                                    final SerializerProvider provider) throws IOException {
         json.writeStartObject();
         writeCommonFields(method, json);
+        JsonFieldWriter.writeComplete(method.isComplete(), json);
+        JsonFieldWriter.writeSuccessful(method.isSuccessful(), json);
+        JsonFieldWriter.writeDuration(method.getDuration(), json);
+        JsonFieldWriter.writeMaxAttempts(method.getMaxAttempts(), json);
         JsonFieldWriter.writeDuration(method.getDuration(), json);
         JsonFieldWriter.writePasscodeSettings(method.getPasscodeSettings(), json, provider);
         JsonFieldWriter.writeMobileNumbersJson(method.getMobileNumbers(), json, provider);
+        if (method.hasResults()) {
+            JsonFieldWriter.writeResults(method.getResults(), json, provider);
+        }
         json.writeEndObject();
     }
 

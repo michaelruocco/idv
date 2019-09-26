@@ -27,9 +27,9 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class DefaultVerificationContextServiceTest {
 
@@ -264,7 +264,7 @@ class DefaultVerificationContextServiceTest {
     void shouldLoadCreatedContext() {
         final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
-        when(dao.load(id)).thenReturn(context);
+        given(dao.load(id)).willReturn(context);
         final GetContextRequest request = GetContextRequest.builder()
                 .id(id)
                 .build();
@@ -278,10 +278,10 @@ class DefaultVerificationContextServiceTest {
     void shouldAddResultToContext() {
         final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
-        when(dao.load(id)).thenReturn(context);
+        given(dao.load(id)).willReturn(context);
         final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
         final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
-        when(context.addResult(result)).thenReturn(expectedUpdatedContext);
+        given(context.addResult(result)).willReturn(expectedUpdatedContext);
         final UpdateContextResultRequest updateResultRequest = UpdateContextResultRequest.builder()
                 .contextId(id)
                 .result(result)

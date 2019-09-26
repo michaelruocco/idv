@@ -30,15 +30,15 @@ public class VerificationSequenceSerializer extends StdSerializer<VerificationSe
         }
         json.writeFieldName("methods");
         provider.defaultSerializeValue(sequence.getMethods(), json);
-        if (sequence.hasResults()) {
-            writeResults(sequence, json, provider);
-        }
+        //if (sequence.hasResults()) {
+        //    writeResults(sequence, json, provider);
+        //}
         json.writeEndObject();
     }
 
-    private void writeResults(final VerificationSequence sequence, final JsonGenerator json, final SerializerProvider provider) throws IOException {
-        json.writeFieldName("results");
-        provider.defaultSerializeValue(sequence.getResults(), json);
-    }
+    //private void writeResults(final VerificationSequence sequence, final JsonGenerator json, final SerializerProvider provider) throws IOException {
+    //    json.writeFieldName("results");
+    //    provider.defaultSerializeValue(sequence.getResults(), json);
+    //}
 
 }

@@ -10,7 +10,7 @@ class MobilePinsentryEligibleTest {
 
     private final PinsentryFunction function = PinsentryFunction.IDENTIFY;
 
-    private final MobilePinsentry method = new MobilePinsentryEligible(function);
+    private final MobilePinsentryEligible method = new MobilePinsentryEligible(function);
 
     @Test
     void shouldReturnName() {

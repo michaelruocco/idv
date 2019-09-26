@@ -1,11 +1,9 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
-import java.time.Duration;
-
-public class PushNotificationIneligible extends PushNotification {
+public class PushNotificationIneligible extends AbstractVerificationMethodIneligible implements PushNotification {
 
     public PushNotificationIneligible() {
-        super(new NoMobileApplication(), Duration.ZERO);
+        super(NAME, new NoMobileApplication());
     }
 
 }

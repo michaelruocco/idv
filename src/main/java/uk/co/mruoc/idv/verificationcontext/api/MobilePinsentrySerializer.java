@@ -18,17 +18,25 @@ public class MobilePinsentrySerializer extends StdSerializer<MobilePinsentry> {
                           final JsonGenerator json,
                           final SerializerProvider provider) throws IOException {
         if (method.isEligible()) {
-            writeEligibleJson(method, json);
+            writeEligibleJson(method, json, provider);
             return;
         }
         writeIneligibleJson(method, json);
     }
 
     private void writeEligibleJson(final MobilePinsentry method,
-                                   final JsonGenerator json) throws IOException {
+                                   final JsonGenerator json,
+                                   final SerializerProvider provider) throws IOException {
         json.writeStartObject();
         writeCommonFields(method, json);
+        JsonFieldWriter.writeComplete(method.isComplete(), json);
+        JsonFieldWriter.writeSuccessful(method.isSuccessful(), json);
         JsonFieldWriter.writeDuration(method.getDuration(), json);
+        JsonFieldWriter.writeMaxAttempts(method.getMaxAttempts(), json);
+        JsonFieldWriter.writeDuration(method.getDuration(), json);
+        if (method.hasResults()) {
+            JsonFieldWriter.writeResults(method.getResults(), json, provider);
+        }
         json.writeEndObject();
     }
 
