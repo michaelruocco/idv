@@ -42,8 +42,16 @@ public class VerificationContext {
         return identity;
     }
 
+    public UUID getIdvIdValue() {
+        return identity.getIdvIdValue();
+    }
+
     public Activity getActivity() {
         return activity;
+    }
+
+    public String getActivityName() {
+        return activity.getName();
     }
 
     public Instant getCreated() {

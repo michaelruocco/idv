@@ -13,6 +13,11 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
+import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.service.DefaultVerificationAttemptsService;
+import uk.co.mruoc.idv.lockout.service.VerificationAttemptsService;
+import uk.co.mruoc.idv.lockout.service.VerificationResultConverter;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.JsonApiVerificationContextModule;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
@@ -53,13 +58,28 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public ExpiryCalculator expiryCalculator() {
+        return new MaxDurationExpiryCalculator();
+    }
+
+    @Bean
+    public VerificationResultConverter resultConverter() {
+        return new VerificationResultConverter();
+    }
+
+    @Bean
+    public SequenceLoader sequenceLoader() {
+        return new StubbedSequenceLoader();
+    }
+
+    @Bean
     public VerificationContextDao verificationContextDao() {
         return new InMemoryVerificationContextDao();
     }
 
     @Bean
-    public ExpiryCalculator expiryCalculator() {
-        return new MaxDurationExpiryCalculator();
+    public VerificationAttemptsDao verificationAttemptsDao() {
+        return new InMemoryVerificationAttemptsDao();
     }
 
     @Bean
@@ -70,8 +90,12 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public SequenceLoader sequenceLoader() {
-        return new StubbedSequenceLoader();
+    public VerificationAttemptsService attemptsService(final VerificationResultConverter resultConverter,
+                                                       final VerificationAttemptsDao dao) {
+        return DefaultVerificationAttemptsService.builder()
+                .resultConverter(resultConverter)
+                .dao(dao)
+                .build();
     }
 
     @Bean
@@ -80,7 +104,8 @@ public class ApplicationConfig {
                                                                  final IdentityService identityService,
                                                                  final SequenceLoader sequenceLoader,
                                                                  final ExpiryCalculator expiryCalculator,
-                                                                 final VerificationContextDao dao) {
+                                                                 final VerificationContextDao dao,
+                                                                 final VerificationAttemptsService attemptsService) {
         return DefaultVerificationContextService.builder()
                 .idGenerator(idGenerator)
                 .timeService(timeService)
@@ -88,6 +113,7 @@ public class ApplicationConfig {
                 .sequenceLoader(sequenceLoader)
                 .expiryCalculator(expiryCalculator)
                 .dao(dao)
+                .attemptsService(attemptsService)
                 .build();
     }
 

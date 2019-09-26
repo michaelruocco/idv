@@ -3,6 +3,8 @@ package uk.co.mruoc.idv.verificationcontext.api;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.UUID;
+
 @JsonPropertyOrder({
         "id",
         "channel",
@@ -17,5 +19,11 @@ public interface VerificationContextMixin {
 
     @JsonIgnore
     String getChannelId();
+
+    @JsonIgnore
+    String getActivityName();
+
+    @JsonIgnore
+    UUID getIdvIdValue();
 
 }

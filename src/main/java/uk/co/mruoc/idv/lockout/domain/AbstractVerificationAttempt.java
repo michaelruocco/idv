@@ -2,6 +2,7 @@ package uk.co.mruoc.idv.lockout.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 
 import java.time.Instant;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Getter
+@ToString
 public abstract class AbstractVerificationAttempt implements VerificationAttempt {
 
     private final UUID contextId;

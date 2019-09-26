@@ -7,6 +7,7 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
+import uk.co.mruoc.idv.lockout.service.VerificationAttemptsService;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
@@ -24,6 +25,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
     private final SequenceLoader sequenceLoader;
     private final ExpiryCalculator expiryCalculator;
     private final VerificationContextDao dao;
+    private final VerificationAttemptsService attemptsService;
 
     @Override
     public VerificationContext create(final CreateContextRequest request) {
@@ -63,6 +65,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
         final VerificationResult result = request.getResult();
         final VerificationContext updatedContext = context.addResult(result);
         dao.save(updatedContext);
+        attemptsService.recordAttempt(result, updatedContext);
         return updatedContext;
     }
 

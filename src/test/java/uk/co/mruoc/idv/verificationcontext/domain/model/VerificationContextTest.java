@@ -70,12 +70,30 @@ class VerificationContextTest {
     }
 
     @Test
+    void shouldReturnIdvIdValue() {
+        final Identity identity = new FakeIdentity();
+
+        final VerificationContext context = builder.identity(identity).build();
+
+        assertThat(context.getIdvIdValue()).isEqualTo(identity.getIdvIdValue());
+    }
+
+    @Test
     void shouldReturnActivity() {
         final Activity activity = new FakeActivity(Instant.now());
 
         final VerificationContext context = builder.activity(activity).build();
 
         assertThat(context.getActivity()).isEqualTo(activity);
+    }
+
+    @Test
+    void shouldReturnActivityName() {
+        final Activity activity = new FakeActivity(Instant.now());
+
+        final VerificationContext context = builder.activity(activity).build();
+
+        assertThat(context.getActivityName()).isEqualTo(activity.getName());
     }
 
     @Test
