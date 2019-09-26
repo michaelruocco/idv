@@ -9,8 +9,6 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequence
 import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 

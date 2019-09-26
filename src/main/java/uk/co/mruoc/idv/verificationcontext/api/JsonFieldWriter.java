@@ -39,7 +39,7 @@ class JsonFieldWriter {
     static void writeMaxAttempts(final int maxAttempts, final JsonGenerator json) throws IOException {
         json.writeNumberField("maxAttempts", maxAttempts);
     }
-    
+
     static void writeEligibility(final Eligibility eligibility, final JsonGenerator json) throws IOException {
         json.writeBooleanField("eligible", eligibility.isEligible());
         final Optional<String> reason = eligibility.getReason();
