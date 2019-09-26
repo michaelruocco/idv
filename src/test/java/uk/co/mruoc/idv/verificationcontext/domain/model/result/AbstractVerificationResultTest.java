@@ -57,11 +57,11 @@ class AbstractVerificationResultTest {
 
     private static class FakeVerificationResult extends AbstractVerificationResult {
 
-        private FakeVerificationResult(final String name,
+        private FakeVerificationResult(final String methodName,
                                       final UUID verificationId,
                                       final Instant timestamp,
                                       final boolean successful) {
-            super(name, verificationId, timestamp, successful);
+            super(methodName, verificationId, timestamp, successful);
         }
 
     }

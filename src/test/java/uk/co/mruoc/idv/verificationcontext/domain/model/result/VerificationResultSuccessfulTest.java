@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.result;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResultSuccessful.VerificationResultSuccessfulBuilder;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -9,30 +10,40 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class VerificationResultSuccessfulTest {
 
-    private static final String METHOD_NAME = "method-name";
-    private static final UUID VERIFICATION_ID = UUID.randomUUID();
-    private static final Instant TIMESTAMP = Instant.now();
-
-    private final VerificationResult result = new VerificationResultSuccessful(METHOD_NAME, VERIFICATION_ID, TIMESTAMP);
+    private final VerificationResultSuccessfulBuilder builder = VerificationResultSuccessful.builder();
 
     @Test
     void shouldBeSuccessful() {
+        final VerificationResult result = builder.build();
+
         assertThat(result.isSuccessful()).isTrue();
     }
 
     @Test
     void shouldReturnMethodName() {
-        assertThat(result.getMethodName()).isEqualTo(METHOD_NAME);
+        final String methodName = "method-name";
+
+        final VerificationResult result = builder.methodName(methodName).build();
+
+        assertThat(result.getMethodName()).isEqualTo(methodName);
     }
 
     @Test
     void shouldReturnVerificationId() {
-        assertThat(result.getVerificationId()).isEqualTo(VERIFICATION_ID);
+        final UUID verificationId = UUID.randomUUID();
+
+        final VerificationResult result = builder.verificationId(verificationId).build();
+
+        assertThat(result.getVerificationId()).isEqualTo(verificationId);
     }
 
     @Test
     void shouldReturnTimestamp() {
-        assertThat(result.getTimestamp()).isEqualTo(TIMESTAMP);
+        final Instant timestamp = Instant.now();
+
+        final VerificationResult result = builder.timestamp(timestamp).build();
+
+        assertThat(result.getTimestamp()).isEqualTo(timestamp);
     }
 
 }
