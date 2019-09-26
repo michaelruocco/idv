@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 public class NumberMasker {
 
     private NumberMasker() {
-        // utility class
+        //utility class
     }
 
     public static String mask(final String value, int numberOfUnmaskedCharacters) {

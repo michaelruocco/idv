@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence.MethodNotFoundInSequenceException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
@@ -12,6 +13,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationR
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -187,6 +189,27 @@ class SingleMethodSequenceTest {
 
         assertThat(sequence.hasNextMethod(method.getName())).isTrue();
         assertThat(sequence.hasNextMethod("other-name")).isFalse();
+    }
+
+    @Test
+    void shouldReturnMethodByName() {
+        final VerificationMethod method = new FakeVerificationMethodEligible();
+
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        assertThat(sequence.getMethod(method.getName())).isEqualTo(method);
+    }
+
+    @Test
+    void shouldThrowExceptionIfMethodWithNameCannotBeFound() {
+        final VerificationMethod method = new FakeVerificationMethodEligible();
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        final Throwable cause = catchThrowable(() -> sequence.getMethod("other-method"));
+
+        assertThat(cause)
+                .isInstanceOf(MethodNotFoundInSequenceException.class)
+                .hasMessage("cannot find method other-method in sequence fake-method sequence");
     }
 
 }

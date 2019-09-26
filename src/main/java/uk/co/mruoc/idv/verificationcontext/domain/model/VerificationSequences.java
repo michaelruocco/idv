@@ -52,7 +52,7 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
     public VerificationSequence get(final String sequenceName) {
         return sequences.stream().filter(sequence -> sequence.getName().equals(sequenceName))
                 .findFirst()
-                .orElseThrow(() -> new NoSequencesFoundWithName(sequenceName));
+                .orElseThrow(() -> new NoSequencesFoundWithNameException(sequenceName));
     }
 
     public VerificationResults getResults(final String sequenceName, final String methodName) {
@@ -70,9 +70,7 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
 
     private boolean hasSequencesWithNextMethod(final String methodName) {
-        return sequences.stream()
-                //.filter(VerificationSequence::isEligible)
-                .anyMatch(sequence -> sequence.hasNextMethod(methodName));
+        return sequences.stream().anyMatch(sequence -> sequence.hasNextMethod(methodName));
     }
 
     public static class CannotCalculateMaxDurationOfEmptySequencesException extends RuntimeException {
@@ -91,9 +89,9 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
     }
 
-    public static class NoSequencesFoundWithName extends RuntimeException {
+    public static class NoSequencesFoundWithNameException extends RuntimeException {
 
-        public NoSequencesFoundWithName(final String sequenceName) {
+        public NoSequencesFoundWithNameException(final String sequenceName) {
             super(sequenceName);
         }
 

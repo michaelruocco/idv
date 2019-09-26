@@ -3,6 +3,7 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
@@ -110,10 +111,20 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnExistingSequenceIfResultMethodIsNotNextMethodInSequence() {
-        final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
-        final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
-        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
+        final VerificationMethod method = new FakeVerificationMethodEligible(METHOD_NAME_1);
+        final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
         final VerificationResult result = new FakeVerificationResultSuccessful("other-name");
+
+        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
+
+        assertThat(updatedSequence).isSameAs(sequence);
+    }
+
+    @Test
+    void shouldReturnExistingSequenceIfResultMethodIsNextMethodInSequenceButNotEligible() {
+        final VerificationMethod method = new FakeVerificationMethodIneligible(METHOD_NAME_1);
+        final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
+        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
 
         final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
 

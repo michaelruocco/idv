@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
+import lombok.Getter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
@@ -44,10 +45,16 @@ public interface VerificationSequence {
 
     boolean hasNextMethod(String methodName);
 
+    @Getter
     class MethodNotFoundInSequenceException extends RuntimeException {
+
+        private final String methodName;
+        private final String sequenceName;
 
         public MethodNotFoundInSequenceException(final String methodName, final String sequenceName) {
             super(String.format("cannot find method %s in sequence %s sequence", methodName, sequenceName));
+            this.methodName = methodName;
+            this.sequenceName = sequenceName;
         }
 
     }
