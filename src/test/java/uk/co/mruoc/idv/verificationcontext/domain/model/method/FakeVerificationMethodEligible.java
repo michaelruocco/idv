@@ -9,7 +9,7 @@ import java.time.Duration;
 @ToString
 public class FakeVerificationMethodEligible extends AbstractVerificationMethodEligible implements FakeVerificationMethod {
 
-    private static final int MAX_ATTEMPTS = 1;
+    private static final int MAX_ATTEMPTS = 2;
     private static final Duration DURATION = Duration.ofMinutes(5);
 
     public FakeVerificationMethodEligible() {

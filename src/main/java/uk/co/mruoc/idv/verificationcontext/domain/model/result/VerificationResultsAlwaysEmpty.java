@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.result;
 
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;

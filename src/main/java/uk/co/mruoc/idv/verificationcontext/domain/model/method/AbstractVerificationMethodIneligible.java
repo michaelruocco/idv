@@ -22,7 +22,7 @@ public abstract class AbstractVerificationMethodIneligible extends AbstractVerif
 
     @Override
     protected VerificationMethod updateResults(final VerificationResults results) {
-        throw new UnsupportedOperationException("cannot update results on ineligible method");
+        throw new CannotAddResultToIneligibleMethodException(getName());
     }
 
 }
