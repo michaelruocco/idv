@@ -25,7 +25,7 @@ class JsonFieldWriter {
     }
 
     static void writeFunction(final PinsentryFunction function, final JsonGenerator json) throws IOException {
-        json.writeStringField("function", function.name());
+        json.writeStringField("function", function.name().toLowerCase());
     }
 
     static void writeComplete(final boolean complete, final JsonGenerator json) throws IOException {

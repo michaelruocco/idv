@@ -12,7 +12,7 @@
         "complete": false,
         "successful": false,
         "duration": 300000,
-        "maxAttempts": 1
+        "maxAttempts": 5
       }
     ]
   },
@@ -25,7 +25,7 @@
     "methods": [
       {
         "name": "physical-pinsentry",
-        "function": "RESPOND",
+        "function": "respond",
         "eligible": true,
         "complete": false,
         "successful": false,
@@ -50,7 +50,7 @@
     "methods": [
       {
         "name": "mobile-pinsentry",
-        "function": "RESPOND",
+        "function": "respond",
         "eligible": true,
         "complete": false,
         "successful": false,

@@ -4,7 +4,7 @@
   "complete": true,
   "successful": true,
   "duration": 300000,
-  "maxAttempts": 1,
+  "maxAttempts": 5,
   "results": [
     {
       "methodName": "push-notification",

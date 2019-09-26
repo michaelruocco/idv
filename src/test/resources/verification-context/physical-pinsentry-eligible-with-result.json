@@ -1,6 +1,6 @@
 {
   "name": "physical-pinsentry",
-  "function": "RESPOND",
+  "function": "respond",
   "eligible": true,
   "complete": true,
   "successful": true,

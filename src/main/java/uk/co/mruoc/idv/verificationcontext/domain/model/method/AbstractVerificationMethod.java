@@ -91,6 +91,9 @@ public abstract class AbstractVerificationMethod implements VerificationMethod {
         if (!isEligible()) {
             throw new CannotAddResultToIneligibleMethodException(name);
         }
+        if (isComplete()) {
+            throw new CannotAddResultToCompleteMethodException(name);
+        }
         return updateResults(results.add(result));
     }
 

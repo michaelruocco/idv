@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
+import lombok.Getter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
@@ -32,10 +33,16 @@ public interface VerificationMethod {
 
     VerificationMethod addResult(final VerificationResult result);
 
+    @Getter
     class CannotAddResultToMethodException extends RuntimeException {
+
+        private final String resultMethodName;
+        private final String methodName;
 
         public CannotAddResultToMethodException(final String resultMethodName, final String methodName) {
             super(String.format("cannot add result for method %s to method %s", resultMethodName, methodName));
+            this.resultMethodName = resultMethodName;
+            this.methodName = methodName;
         }
 
     }
@@ -43,7 +50,15 @@ public interface VerificationMethod {
     class CannotAddResultToIneligibleMethodException extends RuntimeException {
 
         public CannotAddResultToIneligibleMethodException(final String methodName) {
-            super(String.format("cannot add result to ineligible method %s", methodName));
+            super(methodName);
+        }
+
+    }
+
+    class CannotAddResultToCompleteMethodException extends RuntimeException {
+
+        public CannotAddResultToCompleteMethodException(final String methodName) {
+            super(methodName);
         }
 
     }

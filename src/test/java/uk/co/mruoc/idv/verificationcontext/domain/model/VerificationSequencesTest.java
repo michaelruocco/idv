@@ -2,10 +2,11 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.CannotCalculateMaxDurationOfEmptySequencesException;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NoSequencesFoundWithNextMethodEligibleException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NoSequencesFoundWithNextMethodException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.CannotAddResultToIneligibleMethodException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -77,7 +78,7 @@ class VerificationSequencesTest {
         final Throwable error = catchThrowable(() -> sequences.addResultIfHasSequencesWithNextMethod(result));
 
         assertThat(error)
-                .isInstanceOf(NoSequencesFoundWithNextMethodEligibleException.class)
+                .isInstanceOf(CannotAddResultToIneligibleMethodException.class)
                 .hasMessage(result.getMethodName());
     }
 
@@ -93,7 +94,7 @@ class VerificationSequencesTest {
         final Throwable error = catchThrowable(() -> sequences.addResultIfHasSequencesWithNextMethod(result));
 
         assertThat(error)
-                .isInstanceOf(NoSequencesFoundWithNextMethodEligibleException.class)
+                .isInstanceOf(NoSequencesFoundWithNextMethodException.class)
                 .hasMessage(result.getMethodName());
     }
 

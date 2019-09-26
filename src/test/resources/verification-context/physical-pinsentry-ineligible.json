@@ -1,6 +1,6 @@
 {
   "name": "physical-pinsentry",
-  "function": "RESPOND",
+  "function": "respond",
   "eligible": false,
   "reason": "no eligible cards found"
 }

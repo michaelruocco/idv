@@ -4,5 +4,5 @@
   "complete": false,
   "successful": false,
   "duration": 300000,
-  "maxAttempts": 1
+  "maxAttempts": 5
 }

@@ -8,7 +8,7 @@ import java.time.Duration;
 
 public class PushNotificationEligible extends AbstractVerificationMethodEligible implements PushNotification {
 
-    private static final int MAX_ATTEMPTS = 1;
+    private static final int MAX_ATTEMPTS = 5;
     private static final Duration DURATION = Duration.ofMinutes(5);
 
     public PushNotificationEligible() {
