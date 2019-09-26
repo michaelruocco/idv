@@ -1,6 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -24,6 +26,11 @@ class PhysicalPinsentryEligibleTest {
     }
 
     @Test
+    void shouldReturnMaxAttempts() {
+        assertThat(method.getMaxAttempts()).isEqualTo(1);
+    }
+
+    @Test
     void shouldReturnDuration() {
         assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(5));
     }
@@ -41,6 +48,17 @@ class PhysicalPinsentryEligibleTest {
     @Test
     void shouldReturnCardNumbers() {
         assertThat(method.getCardNumbers()).containsExactlyElementsOf(cardNumbers);
+    }
+
+    @Test
+    void shouldAddResult() {
+        final VerificationResult result = new FakeVerificationResultSuccessful(PhysicalPinsentry.NAME);
+
+        final PhysicalPinsentryEligible methodWithResult = (PhysicalPinsentryEligible) method.addResult(result);
+
+        assertThat(methodWithResult).isEqualToIgnoringGivenFields(method, "results", "cardNumbers");
+        assertThat(methodWithResult.getCardNumbers()).containsExactlyElementsOf(cardNumbers);
+        assertThat(methodWithResult.getResults()).containsExactly(result);
     }
 
 }

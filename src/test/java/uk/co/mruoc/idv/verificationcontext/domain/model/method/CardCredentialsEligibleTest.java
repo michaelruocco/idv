@@ -8,15 +8,13 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MobilePinsentryEligibleTest {
+class CardCredentialsEligibleTest {
 
-    private final PinsentryFunction function = PinsentryFunction.IDENTIFY;
-
-    private final MobilePinsentryEligible method = new MobilePinsentryEligible(function);
+    private final VerificationMethod method = new CardCredentialsEligible();
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo(MobilePinsentry.NAME);
+        assertThat(method.getName()).isEqualTo(CardCredentials.NAME);
     }
 
     @Test
@@ -35,15 +33,10 @@ class MobilePinsentryEligibleTest {
     }
 
     @Test
-    void shouldReturnFunction() {
-        assertThat(method.getFunction()).isEqualTo(function);
-    }
-
-    @Test
     void shouldAddResult() {
-        final VerificationResult result = new FakeVerificationResultSuccessful(MobilePinsentry.NAME);
+        final VerificationResult result = new FakeVerificationResultSuccessful(CardCredentials.NAME);
 
-        final MobilePinsentryEligible methodWithResult = (MobilePinsentryEligible) method.addResult(result);
+        final CardCredentialsEligible methodWithResult = (CardCredentialsEligible) method.addResult(result);
 
         assertThat(methodWithResult).isEqualToIgnoringGivenFields(method, "results");
         assertThat(methodWithResult.getResults()).containsExactly(result);

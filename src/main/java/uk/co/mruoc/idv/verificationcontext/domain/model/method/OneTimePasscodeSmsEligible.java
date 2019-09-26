@@ -1,6 +1,5 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
-import lombok.Builder;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
@@ -28,7 +27,6 @@ public class OneTimePasscodeSmsEligible extends AbstractVerificationMethodEligib
         this(passcodeSettings, mobileNumbers, new DefaultVerificationResults(result));
     }
 
-    @Builder
     public OneTimePasscodeSmsEligible(final PasscodeSettings passcodeSettings,
                                       final Collection<MobileNumber> mobileNumbers,
                                       final VerificationResults results) {
@@ -46,8 +44,8 @@ public class OneTimePasscodeSmsEligible extends AbstractVerificationMethodEligib
     }
 
     @Override
-    protected VerificationMethod updateResults(VerificationResults results) {
-        return null;
+    protected VerificationMethod updateResults(final VerificationResults results) {
+        return new OneTimePasscodeSmsEligible(passcodeSettings, mobileNumbers, results);
     }
 
 }

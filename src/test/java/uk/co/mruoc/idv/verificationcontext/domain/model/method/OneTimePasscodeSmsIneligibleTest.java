@@ -2,8 +2,6 @@ package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class OneTimePasscodeSmsIneligibleTest {
@@ -11,13 +9,13 @@ class OneTimePasscodeSmsIneligibleTest {
     private final OneTimePasscodeSms method = new OneTimePasscodeSmsIneligible();
 
     @Test
-    void shouldReturnEligibility() {
-        assertThat(method.getEligibility()).isEqualTo(new NoEligibleMobileNumbers());
+    void shouldReturnName() {
+        assertThat(method.getName()).isEqualTo(OneTimePasscodeSms.NAME);
     }
 
     @Test
-    void shouldReturnDuration() {
-        assertThat(method.getDuration()).isEqualTo(Duration.ofMinutes(0));
+    void shouldReturnEligibility() {
+        assertThat(method.getEligibility()).isEqualTo(new NoEligibleMobileNumbers());
     }
 
 }

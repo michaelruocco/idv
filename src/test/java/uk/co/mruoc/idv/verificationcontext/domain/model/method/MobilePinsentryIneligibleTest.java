@@ -2,8 +2,6 @@ package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MobilePinsentryIneligibleTest {
@@ -13,18 +11,18 @@ class MobilePinsentryIneligibleTest {
     private final MobilePinsentry method = new MobilePinsentryIneligible(function);
 
     @Test
-    void shouldReturnDuration() {
-        assertThat(method.getDuration()).isEqualTo(Duration.ZERO);
-    }
-
-    @Test
-    void shouldReturnEligibility() {
-        assertThat(method.getEligibility()).isEqualTo(new NoMobileApplication());
+    void shouldReturnName() {
+        assertThat(method.getName()).isEqualTo(MobilePinsentry.NAME);
     }
 
     @Test
     void shouldReturnFunction() {
         assertThat(method.getFunction()).isEqualTo(function);
+    }
+
+    @Test
+    void shouldReturnEligibility() {
+        assertThat(method.getEligibility()).isEqualTo(new NoMobileApplication());
     }
 
 }

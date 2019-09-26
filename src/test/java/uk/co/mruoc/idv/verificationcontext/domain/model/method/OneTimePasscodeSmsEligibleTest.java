@@ -1,6 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -13,14 +15,16 @@ class OneTimePasscodeSmsEligibleTest {
     private final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
     private final Collection<MobileNumber> mobileNumbers = Collections.singleton(new MobileNumber("07809347780"));
 
-    private final OneTimePasscodeSmsEligible method = OneTimePasscodeSmsEligible.builder()
-            .passcodeSettings(passcodeSettings)
-            .mobileNumbers(mobileNumbers)
-            .build();
+    private final OneTimePasscodeSmsEligible method = new OneTimePasscodeSmsEligible(passcodeSettings, mobileNumbers);
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo("one-time-passcode-sms");
+        assertThat(method.getName()).isEqualTo(OneTimePasscodeSms.NAME);
+    }
+
+    @Test
+    void shouldReturnMaxAttempts() {
+        assertThat(method.getMaxAttempts()).isEqualTo(1);
     }
 
     @Test
@@ -41,6 +45,17 @@ class OneTimePasscodeSmsEligibleTest {
     @Test
     void shouldReturnMobileNumbers() {
         assertThat(method.getMobileNumbers()).containsExactlyElementsOf(mobileNumbers);
+    }
+
+    @Test
+    void shouldAddResult() {
+        final VerificationResult result = new FakeVerificationResultSuccessful(OneTimePasscodeSms.NAME);
+
+        final OneTimePasscodeSmsEligible methodWithResult = (OneTimePasscodeSmsEligible) method.addResult(result);
+
+        assertThat(methodWithResult).isEqualToIgnoringGivenFields(method, "results", "mobileNumbers");
+        assertThat(methodWithResult.getMobileNumbers()).containsExactlyElementsOf(mobileNumbers);
+        assertThat(methodWithResult.getResults()).containsExactly(result);
     }
 
 }
