@@ -24,8 +24,7 @@ public class DefaultVerificationAttemptsService implements VerificationAttemptsS
         return recordAttempt(attempt);
     }
 
-    @Override
-    public VerificationAttempts recordAttempt(final VerificationAttempt attempt) {
+    private VerificationAttempts recordAttempt(final VerificationAttempt attempt) {
         if (attempt.isSuccessful()) {
             return handleSuccessful(attempt);
         }
