@@ -17,7 +17,7 @@ public abstract class AbstractVerificationAttempt implements VerificationAttempt
     private final String channelId;
     private final String activityName;
     private final Alias providedAlias;
-    private final UUID idvId;
+    private final UUID idvIdValue;
     private final String methodName;
     private final UUID verificationId;
     private final Instant timestamp;

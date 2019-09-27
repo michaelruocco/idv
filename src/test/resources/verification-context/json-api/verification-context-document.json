@@ -44,7 +44,18 @@
         }
       ],
       "created": "2019-09-21T20:43:32.233721Z",
-      "expiry": "2019-09-21T20:48:32.233721Z"
+      "expiry": "2019-09-21T20:48:32.233721Z",
+      "lockoutState": {
+        "attempts": {
+          "id": "20a32973-2018-46e8-a93c-28892e71da64",
+          "idvId": "d23d923a-521a-422d-9ba9-8cb1c756dbee"
+        },
+        "id": "20a32973-2018-46e8-a93c-28892e71da64",
+        "type": "MAX_ATTEMPTS",
+        "locked": false,
+        "numberOfAttemptsRemaining": 2,
+        "idvId": "d23d923a-521a-422d-9ba9-8cb1c756dbee"
+      }
     }
   }
 }

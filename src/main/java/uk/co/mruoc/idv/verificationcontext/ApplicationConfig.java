@@ -11,12 +11,16 @@ import uk.co.mruoc.idv.domain.service.IdGenerator;
 import uk.co.mruoc.idv.domain.service.RandomIdGenerator;
 import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
+import uk.co.mruoc.idv.identity.dao.IdentityDao;
+import uk.co.mruoc.idv.identity.dao.InMemoryIdentityDao;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateCalculator;
+import uk.co.mruoc.idv.lockout.domain.service.MaxAttemptsThreeLockoutStateCalculator;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationResultConverter;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.JsonApiVerificationContextModule;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
@@ -28,6 +32,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.service.SequenceLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.StubbedSequenceLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
 import uk.co.mruoc.jsonapi.JsonApiModule;
+
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
@@ -73,6 +78,11 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public LockoutStateCalculator stateCalculator() {
+        return new MaxAttemptsThreeLockoutStateCalculator();
+    }
+
+    @Bean
     public VerificationContextDao verificationContextDao() {
         return new InMemoryVerificationContextDao();
     }
@@ -83,18 +93,27 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public IdentityService identityService(final IdGenerator idGenerator) {
+    public IdentityDao identityDao() {
+        return new InMemoryIdentityDao();
+    }
+
+    @Bean
+    public IdentityService identityService(final IdGenerator idGenerator,
+                                           final IdentityDao dao) {
         return DefaultIdentityService.builder()
                 .idGenerator(idGenerator)
+                .dao(dao)
                 .build();
     }
 
     @Bean
     public LockoutService lockoutService(final VerificationResultConverter resultConverter,
-                                         final VerificationAttemptsDao dao) {
+                                         final VerificationAttemptsDao dao,
+                                         final LockoutStateCalculator stateCalculator) {
         return DefaultLockoutService.builder()
                 .resultConverter(resultConverter)
                 .dao(dao)
+                .stateCalculator(stateCalculator)
                 .build();
     }
 

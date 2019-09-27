@@ -63,7 +63,7 @@ class VerificationAttemptSuccessfulTest {
 
         final VerificationAttempt attempt = builder.idvId(idvId).build();
 
-        assertThat(attempt.getIdvId()).isEqualTo(idvId);
+        assertThat(attempt.getIdvIdValue()).isEqualTo(idvId);
     }
 
     @Test

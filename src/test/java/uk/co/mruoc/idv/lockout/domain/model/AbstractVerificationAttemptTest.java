@@ -55,7 +55,7 @@ class AbstractVerificationAttemptTest {
 
     @Test
     void shouldReturnIdvId() {
-        assertThat(attempt.getIdvId()).isEqualTo(IDV_ID);
+        assertThat(attempt.getIdvIdValue()).isEqualTo(IDV_ID);
     }
 
     @Test
@@ -87,7 +87,7 @@ class AbstractVerificationAttemptTest {
                 "channelId=channel-id, " +
                 "activityName=activity-name, " +
                 "providedAlias=CardNumber(type=credit-card-number, value=4929001111111111), " +
-                "idvId=f8c33391-7d70-4abe-bd8a-8e41e64f446c, " +
+                "idvIdValue=f8c33391-7d70-4abe-bd8a-8e41e64f446c, " +
                 "methodName=method-name, " +
                 "verificationId=ca0b47c5-4bac-4122-ba82-8cbf2713922e, " +
                 "timestamp=2019-09-27T09:40:29.982887Z, " +

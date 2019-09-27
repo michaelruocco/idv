@@ -12,12 +12,16 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.FakeIdvId;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
+import uk.co.mruoc.idv.lockout.domain.model.FakeMaxAttemptsLockoutState;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
+import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequencesEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
@@ -45,7 +49,7 @@ class DefaultVerificationContextServiceTest {
     private final IdGenerator idGenerator = new FakeIdGenerator(ID);
     private final TimeService timeService = new FakeTimeService(NOW);
 
-    private final Identity identity = new Identity(Aliases.empty());
+    private final Identity identity = new Identity(Aliases.with(new FakeIdvId()));
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
 
     private final VerificationSequences sequences = new FakeVerificationSequencesEligible();
@@ -282,15 +286,18 @@ class DefaultVerificationContextServiceTest {
     }
 
     @Test
-    void shouldLoadCreatedContext() {
+    void shouldLoadCreatedContextWithLoadedLockoutState() {
         final UUID id = UUID.randomUUID();
-        final VerificationContext context = mock(VerificationContext.class);
+        final VerificationContext context = new FakeVerificationContext();
         given(dao.load(id)).willReturn(Optional.of(context));
         final GetContextRequest request = toGetContextRequest(id);
+        final LockoutState lockoutState = new FakeMaxAttemptsLockoutState(5);
+        lockoutService.setLockoutStateToReturn(lockoutState);
 
         final VerificationContext loadedContext = contextService.get(request);
 
-        assertThat(loadedContext).isEqualTo(context);
+        assertThat(loadedContext).isEqualToIgnoringGivenFields(context, "lockoutState");
+        assertThat(loadedContext.getLockoutState()).isEqualTo(lockoutState);
     }
 
     @Test
@@ -298,9 +305,13 @@ class DefaultVerificationContextServiceTest {
         final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
         given(dao.load(id)).willReturn(Optional.of(context));
-        final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
+        final VerificationContext contextWithResult = mock(VerificationContext.class);
         final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
-        given(context.addResult(result)).willReturn(expectedUpdatedContext);
+        given(context.addResult(result)).willReturn(contextWithResult);
+        final LockoutState lockoutState = new FakeMaxAttemptsLockoutState(5);
+        lockoutService.setLockoutStateToReturn(lockoutState);
+        final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
+        given(contextWithResult.updateLockoutState(lockoutState)).willReturn(expectedUpdatedContext);
         final UpdateContextResultRequest updateResultRequest = toUpdateContextResultRequest(id, result);
 
         final VerificationContext updatedContext = contextService.updateResults(updateResultRequest);
@@ -335,10 +346,10 @@ class DefaultVerificationContextServiceTest {
         given(context.addResult(result)).willReturn(expectedUpdatedContext);
         final UpdateContextResultRequest updateResultRequest = toUpdateContextResultRequest(id, result);
 
-        final VerificationContext updatedContext = contextService.updateResults(updateResultRequest);
+        contextService.updateResults(updateResultRequest);
 
         final RecordAttemptRequest recordAttemptRequest = lockoutService.getLastRecordAttemptRequest();
-        assertThat(recordAttemptRequest.getContext()).isEqualTo(updatedContext);
+        assertThat(recordAttemptRequest.getContext()).isEqualTo(expectedUpdatedContext);
     }
 
     private static GetContextRequest toGetContextRequest(final UUID id) {

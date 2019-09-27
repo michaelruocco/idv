@@ -15,7 +15,7 @@ public interface VerificationAttempt {
 
     Alias getProvidedAlias();
 
-    UUID getIdvId();
+    UUID getIdvIdValue();
 
     String getMethodName();
 

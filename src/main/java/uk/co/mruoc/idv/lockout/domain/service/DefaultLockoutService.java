@@ -3,7 +3,6 @@ package uk.co.mruoc.idv.lockout.domain.service;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
@@ -18,6 +17,7 @@ public class DefaultLockoutService implements LockoutService {
 
     private final VerificationResultConverter resultConverter;
     private final VerificationAttemptsDao dao;
+    private final LockoutStateCalculator stateCalculator;
 
     @Override
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
@@ -26,14 +26,13 @@ public class DefaultLockoutService implements LockoutService {
         //TODO how should we decide whether to record an attempt? e.g. only if attempt is complete
         final VerificationAttempt attempt = resultConverter.toAttempt(result, context);
         final VerificationAttempts attempts = recordAttempt(attempt);
-        return toLockoutState(attempts);
+        return calculateLockoutState(attempt, attempts);
     }
 
     @Override
     public LockoutState loadState(final LoadLockoutStateRequest request) {
-        final UUID idvId = request.getIdvId();
-        final VerificationAttempts attempts = loadAttempts(idvId);
-        return toLockoutState(attempts);
+        final VerificationAttempts attempts = loadAttempts(request.getIdvIdValue());
+        return calculateLockoutState(request, attempts);
     }
 
     private VerificationAttempts recordAttempt(final VerificationAttempt attempt) {
@@ -45,7 +44,7 @@ public class DefaultLockoutService implements LockoutService {
 
     private VerificationAttempts handleSuccessful(final VerificationAttempt attempt) {
         log.info("handling successful attempt {}", attempt);
-        final VerificationAttempts attempts = loadAttempts(attempt.getIdvId());
+        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
         final VerificationAttempts resetAttempts = attempts.reset(); //TODO add lockout level service here and then reset accordingly
         dao.save(resetAttempts);
         log.info("returning reset attempts {}", resetAttempts);
@@ -54,7 +53,7 @@ public class DefaultLockoutService implements LockoutService {
 
     private VerificationAttempts handleFailed(final VerificationAttempt attempt) {
         log.info("handling failed attempt {}", attempt);
-        final VerificationAttempts attempts = loadAttempts(attempt.getIdvId());
+        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
         final VerificationAttempts updatedAttempts = attempts.add(attempt);
         dao.save(updatedAttempts);
         log.info("returning updated attempts {}", updatedAttempts);
@@ -69,10 +68,24 @@ public class DefaultLockoutService implements LockoutService {
         return new VerificationAttempts(idvId);
     }
 
-    private static LockoutState toLockoutState(final VerificationAttempts attempts) {
-        return DefaultLockoutState.builder()
+    private LockoutState calculateLockoutState(final LoadLockoutStateRequest loadStateRequest, final VerificationAttempts attempts) {
+        final CalculateLockoutStateRequest request = LoadStateCalculateLockoutStateRequest.builder()
+                .loadStateRequest(loadStateRequest)
                 .attempts(attempts)
                 .build();
+        return calculateLockoutState(request);
+    }
+
+    private LockoutState calculateLockoutState(final VerificationAttempt attempt, final VerificationAttempts attempts) {
+        final CalculateLockoutStateRequest request = RecordAttemptCalculateLockoutStateRequest.builder()
+                .attempt(attempt)
+                .attempts(attempts)
+                .build();
+        return calculateLockoutState(request);
+    }
+
+    private LockoutState calculateLockoutState(final CalculateLockoutStateRequest request) {
+        return stateCalculator.calculate(request);
     }
 
 }

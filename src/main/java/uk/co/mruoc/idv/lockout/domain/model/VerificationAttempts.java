@@ -15,14 +15,24 @@ import java.util.stream.Collectors;
 @ToString
 public class VerificationAttempts implements Iterable<VerificationAttempt> {
 
+    private final UUID id;
     private final UUID idvId;
     private final Collection<VerificationAttempt> attempts;
 
     public VerificationAttempts(final UUID idvId) {
-        this(idvId, Collections.emptyList());
+        this(UUID.randomUUID(), idvId);
+    }
+
+    public VerificationAttempts(final UUID id, final UUID idvId) {
+        this(id, idvId, Collections.emptyList());
     }
 
     public VerificationAttempts(final UUID idvId, final Collection<VerificationAttempt> attempts) {
+        this(UUID.randomUUID(), idvId, attempts);
+    }
+
+    public VerificationAttempts(final UUID id, final UUID idvId, final Collection<VerificationAttempt> attempts) {
+        this.id = id;
         this.idvId = idvId;
         this.attempts = attempts;
     }
@@ -32,17 +42,21 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return attempts.iterator();
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public UUID getIdvId() {
         return idvId;
     }
 
     public VerificationAttempts add(final VerificationAttempt attempt) {
-        if (idvId.equals(attempt.getIdvId())) {
+        if (idvId.equals(attempt.getIdvIdValue())) {
             final Collection<VerificationAttempt> newAttempts = new ArrayList<>(attempts);
             newAttempts.add(attempt);
             return toAttempts(newAttempts);
         }
-        throw new CannotAddAttemptException(idvId, attempt.getIdvId());
+        throw new CannotAddAttemptException(idvId, attempt.getIdvIdValue());
     }
 
     public VerificationAttempts reset() {
@@ -67,6 +81,10 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return toAttempts(remainingAttempts);
     }
 
+    public int size() {
+        return attempts.size();
+    }
+
     private VerificationAttempts getAttemptsWithAlias(final Alias alias) {
         Collection<VerificationAttempt> attemptsWithAlias = attempts.stream()
                 .filter(attempt -> alias.equals(attempt.getProvidedAlias()))
@@ -89,7 +107,7 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
     }
 
     private VerificationAttempts toAttempts(final Collection<VerificationAttempt> newAttempts) {
-        return new VerificationAttempts(idvId, newAttempts);
+        return new VerificationAttempts(id, idvId, newAttempts);
     }
 
     @Getter

@@ -16,23 +16,43 @@ import static org.mockito.Mockito.when;
 
 class VerificationAttemptsTest {
 
+    @Test
+    void shouldReturnId() {
+        final UUID id = UUID.randomUUID();
+        final UUID idvId = UUID.randomUUID();
+
+        final VerificationAttempts attempts = new VerificationAttempts(id, idvId);
+
+        assertThat(attempts.getId()).isEqualTo(id);
+    }
 
     @Test
     void shouldReturnIdvId() {
+        final UUID id = UUID.randomUUID();
         final UUID idvId = UUID.randomUUID();
 
-        final VerificationAttempts attempts = new VerificationAttempts(idvId);
+        final VerificationAttempts attempts = new VerificationAttempts(id, idvId);
 
         assertThat(attempts.getIdvId()).isEqualTo(idvId);
     }
 
     @Test
+    void shouldReturnSize() {
+        final UUID idvId = UUID.randomUUID();
+
+        final VerificationAttempts attempts = new VerificationAttempts(idvId);
+
+        assertThat(attempts.size()).isEqualTo(0);
+    }
+
+    @Test
     void shouldThrowExceptionIfIdvIdOnAttemptDoesNotMatch() {
         final UUID idvId = UUID.randomUUID();
+
         final VerificationAttempts attempts = new VerificationAttempts(idvId);
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final UUID attemptIdvId = UUID.randomUUID();
-        when(attempt.getIdvId()).thenReturn(attemptIdvId);
+        when(attempt.getIdvIdValue()).thenReturn(attemptIdvId);
 
         final Throwable error = catchThrowable(() -> attempts.add(attempt));
 
@@ -44,13 +64,24 @@ class VerificationAttemptsTest {
     @Test
     void shouldAddAttemptIfIdvIdMatches() {
         final UUID idvId = UUID.randomUUID();
+
         final VerificationAttempts attempts = new VerificationAttempts(idvId);
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        given(attempt.getIdvId()).willReturn(idvId);
+        given(attempt.getIdvIdValue()).willReturn(idvId);
 
         final VerificationAttempts updatedAttempts = attempts.add(attempt);
 
         assertThat(updatedAttempts).containsExactly(attempt);
+    }
+
+    @Test
+    void shouldCopyIdWhenReset() {
+        final VerificationAttempt attempt = mock(VerificationAttempt.class);
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
+
+        final VerificationAttempts resetAttempts = attempts.reset();
+
+        assertThat(resetAttempts.getId()).isEqualTo(attempts.getId());
     }
 
     @Test
@@ -74,6 +105,16 @@ class VerificationAttemptsTest {
     }
 
     @Test
+    void shouldCopyIdWhenResetByAlias() {
+        final VerificationAttempt attempt = mock(VerificationAttempt.class);
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
+
+        final VerificationAttempts resetAttempts = attempts.resetByAlias(new FakeCreditCardNumber());
+
+        assertThat(resetAttempts.getId()).isEqualTo(attempts.getId());
+    }
+
+    @Test
     void shouldCopyIdvIdWhenResetByAlias() {
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
@@ -85,16 +126,25 @@ class VerificationAttemptsTest {
 
     @Test
     void shouldRemoveAllAttemptsWithAliasWhenResetByAlias() {
-        final UUID idvId = UUID.randomUUID();
         final Alias alias = new FakeCreditCardNumber();
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final VerificationAttempt attemptWithAlias = mock(VerificationAttempt.class);
         given(attemptWithAlias.getProvidedAlias()).willReturn(alias);
-        final VerificationAttempts attempts = new VerificationAttempts(idvId, Collections.singleton(attempt));
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
 
         final VerificationAttempts resetAttempts = attempts.resetByAlias(alias);
 
         assertThat(resetAttempts).containsExactly(attempt);
+    }
+
+    @Test
+    void shouldCopyIdWhenResetByChannelId() {
+        final VerificationAttempt attempt = mock(VerificationAttempt.class);
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
+
+        final VerificationAttempts resetAttempts = attempts.resetByChannel("channel-id");
+
+        assertThat(resetAttempts.getId()).isEqualTo(attempts.getId());
     }
 
     @Test
@@ -109,12 +159,11 @@ class VerificationAttemptsTest {
 
     @Test
     void shouldRemoveAllAttemptsWithAliasWhenResetByChannelId() {
-        final UUID idvId = UUID.randomUUID();
         final String channelId = "channel-id";
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final VerificationAttempt attemptWithChannelId = mock(VerificationAttempt.class);
         given(attemptWithChannelId.getChannelId()).willReturn(channelId);
-        final VerificationAttempts attempts = new VerificationAttempts(idvId, Collections.singleton(attempt));
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
 
         final VerificationAttempts resetAttempts = attempts.resetByChannel(channelId);
 
@@ -147,11 +196,13 @@ class VerificationAttemptsTest {
 
     @Test
     void shouldPrintDetails() {
+        final UUID id = UUID.fromString("2a1d0080-df0d-42f7-a48e-5586ade9fbe4");
         final UUID idvId = UUID.fromString("cc0da921-c677-4ff7-8e4b-c7f72c8b944e");
 
-        final VerificationAttempts attempts = new VerificationAttempts(idvId);
+        final VerificationAttempts attempts = new VerificationAttempts(id, idvId);
 
         assertThat(attempts.toString()).isEqualTo("VerificationAttempts(" +
+                "id=2a1d0080-df0d-42f7-a48e-5586ade9fbe4, " +
                 "idvId=cc0da921-c677-4ff7-8e4b-c7f72c8b944e, " +
                 "attempts=[])");
     }

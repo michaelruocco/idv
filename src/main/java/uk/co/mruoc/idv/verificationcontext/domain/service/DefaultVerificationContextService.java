@@ -8,6 +8,7 @@ import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
+import uk.co.mruoc.idv.lockout.domain.service.LoadLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
@@ -40,6 +41,8 @@ public class DefaultVerificationContextService implements VerificationContextSer
         final Instant created = timeService.now();
         final Instant expiry = calculateExpiry(request, created, sequences);
 
+        final LockoutState lockoutState = loadLockoutState(request, identity);
+
         final VerificationContext context = VerificationContext.builder()
                 .id(id)
                 .channel(request.getChannel())
@@ -49,6 +52,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
                 .created(created)
                 .sequences(sequences)
                 .expiry(expiry)
+                .lockoutState(lockoutState)
                 .build();
 
         dao.save(context);
@@ -58,17 +62,19 @@ public class DefaultVerificationContextService implements VerificationContextSer
 
     @Override
     public VerificationContext get(final GetContextRequest request) {
-        return load(request.getId());
+        final VerificationContext context = loadContext(request.getId());
+        final LockoutState lockoutState = loadLockoutState(context);
+        return context.updateLockoutState(lockoutState);
     }
 
     @Override
     public VerificationContext updateResults(final UpdateContextResultRequest request) {
-        final VerificationContext context = load(request.getContextId());
+        final VerificationContext context = loadContext(request.getContextId());
         final VerificationResult result = request.getResult();
-        final VerificationContext updatedContext = context.addResult(result);
+        final VerificationContext contextWithResult = context.addResult(result);
+        final LockoutState lockoutState = recordAttempt(result, contextWithResult);
+        final VerificationContext updatedContext = contextWithResult.updateLockoutState(lockoutState);
         dao.save(updatedContext);
-        //TODO add lockout state to context, would also need to be added on create context and load context too
-        recordAttempt(result, updatedContext);
         return updatedContext;
     }
 
@@ -103,16 +109,41 @@ public class DefaultVerificationContextService implements VerificationContextSer
         return expiryCalculator.calculateExpiry(request);
     }
 
-    private VerificationContext load(final UUID id) {
+    private VerificationContext loadContext(final UUID id) {
+        //TODO throw exception if expired
         return dao.load(id).orElseThrow(() -> new VerificationContextNotFoundException(id));
     }
 
-    private LockoutState recordAttempt(final VerificationResult result, final VerificationContext context) {
+    private LockoutState recordAttempt(final VerificationResult result,
+                                       final VerificationContext context) {
         final RecordAttemptRequest request = RecordAttemptRequest.builder()
                 .result(result)
                 .context(context)
                 .build();
         return lockoutService.recordAttempt(request);
+    }
+
+    private LockoutState loadLockoutState(final CreateContextRequest createContextRequest,
+                                          final Identity identity) {
+        final LoadLockoutStateRequest request = LoadLockoutStateRequest.builder()
+                .channel(createContextRequest.getChannel())
+                .activity(createContextRequest.getActivity())
+                .alias(createContextRequest.getProvidedAlias())
+                .idvIdValue(identity.getIdvIdValue())
+                .timestamp(timeService.now())
+                .build();
+        return lockoutService.loadState(request);
+    }
+
+    private LockoutState loadLockoutState(final VerificationContext context) {
+        final LoadLockoutStateRequest request = LoadLockoutStateRequest.builder()
+                .channel(context.getChannel())
+                .activity(context.getActivity())
+                .alias(context.getProvidedAlias())
+                .idvIdValue(context.getIdvIdValue())
+                .timestamp(timeService.now())
+                .build();
+        return lockoutService.loadState(request);
     }
 
 }
