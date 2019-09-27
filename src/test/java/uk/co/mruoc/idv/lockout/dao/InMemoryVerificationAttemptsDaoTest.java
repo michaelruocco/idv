@@ -21,9 +21,7 @@ class InMemoryVerificationAttemptsDaoTest {
 
     @Test
     void shouldLoadSavedAttempts() {
-        final VerificationAttempts attempts = VerificationAttempts.builder()
-                .idvId(UUID.randomUUID())
-                .build();
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID());
         dao.save(attempts);
 
         final Optional<VerificationAttempts> loadedAttempts = dao.load(attempts.getIdvId());

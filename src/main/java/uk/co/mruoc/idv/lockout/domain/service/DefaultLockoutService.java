@@ -10,7 +10,6 @@ import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
-import java.util.Collections;
 import java.util.UUID;
 
 @Builder
@@ -66,10 +65,7 @@ public class DefaultLockoutService implements LockoutService {
     }
 
     private static VerificationAttempts buildEmptyAttempts(final UUID idvId) {
-        return VerificationAttempts.builder()
-                .idvId(idvId)
-                .attempts(Collections.emptyList())
-                .build();
+        return new VerificationAttempts(idvId);
     }
 
     private static LockoutState toLockoutState(final VerificationAttempts attempts) {
