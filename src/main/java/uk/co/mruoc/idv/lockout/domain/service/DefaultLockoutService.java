@@ -23,6 +23,7 @@ public class DefaultLockoutService implements LockoutService {
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
         final VerificationResult result = request.getResult();
         final VerificationContext context = request.getContext();
+        //TODO how should we decide whether to record an attempt? e.g. only if attempt is complete
         final VerificationAttempt attempt = resultConverter.toAttempt(result, context);
         final VerificationAttempts attempts = recordAttempt(attempt);
         return toLockoutState(attempts);
