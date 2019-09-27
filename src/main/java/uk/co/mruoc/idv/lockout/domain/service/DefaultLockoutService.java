@@ -1,10 +1,12 @@
-package uk.co.mruoc.idv.lockout.service;
+package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttempts;
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutState;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -13,15 +15,25 @@ import java.util.UUID;
 
 @Builder
 @Slf4j
-public class DefaultVerificationAttemptsService implements VerificationAttemptsService {
+public class DefaultLockoutService implements LockoutService {
 
     private final VerificationResultConverter resultConverter;
     private final VerificationAttemptsDao dao;
 
     @Override
-    public VerificationAttempts recordAttempt(final VerificationResult result, final VerificationContext context) {
+    public LockoutState recordAttempt(final RecordAttemptRequest request) {
+        final VerificationResult result = request.getResult();
+        final VerificationContext context = request.getContext();
         final VerificationAttempt attempt = resultConverter.toAttempt(result, context);
-        return recordAttempt(attempt);
+        final VerificationAttempts attempts = recordAttempt(attempt);
+        return toLockoutState(attempts);
+    }
+
+    @Override
+    public LockoutState loadState(final LoadLockoutStateRequest request) {
+        final UUID idvId = request.getIdvId();
+        final VerificationAttempts attempts = loadAttempts(idvId);
+        return toLockoutState(attempts);
     }
 
     private VerificationAttempts recordAttempt(final VerificationAttempt attempt) {
@@ -33,7 +45,7 @@ public class DefaultVerificationAttemptsService implements VerificationAttemptsS
 
     private VerificationAttempts handleSuccessful(final VerificationAttempt attempt) {
         log.info("handling successful attempt {}", attempt);
-        final VerificationAttempts attempts = load(attempt.getIdvId());
+        final VerificationAttempts attempts = loadAttempts(attempt.getIdvId());
         final VerificationAttempts resetAttempts = attempts.reset(); //TODO add lockout level service here and then reset accordingly
         dao.save(resetAttempts);
         log.info("returning reset attempts {}", resetAttempts);
@@ -42,15 +54,14 @@ public class DefaultVerificationAttemptsService implements VerificationAttemptsS
 
     private VerificationAttempts handleFailed(final VerificationAttempt attempt) {
         log.info("handling failed attempt {}", attempt);
-        final VerificationAttempts attempts = load(attempt.getIdvId());
+        final VerificationAttempts attempts = loadAttempts(attempt.getIdvId());
         final VerificationAttempts updatedAttempts = attempts.add(attempt);
         dao.save(updatedAttempts);
         log.info("returning updated attempts {}", updatedAttempts);
         return updatedAttempts;
     }
 
-    @Override
-    public VerificationAttempts load(final UUID idvId) {
+    private VerificationAttempts loadAttempts(final UUID idvId) {
         return dao.load(idvId).orElse(buildEmptyAttempts(idvId));
     }
 
@@ -58,6 +69,12 @@ public class DefaultVerificationAttemptsService implements VerificationAttemptsS
         return VerificationAttempts.builder()
                 .idvId(idvId)
                 .attempts(Collections.emptyList())
+                .build();
+    }
+
+    private static LockoutState toLockoutState(final VerificationAttempts attempts) {
+        return DefaultLockoutState.builder()
+                .attempts(attempts)
                 .build();
     }
 

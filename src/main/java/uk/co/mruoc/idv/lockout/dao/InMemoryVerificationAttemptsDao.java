@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.lockout.dao;
 
-import uk.co.mruoc.idv.lockout.domain.VerificationAttempts;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.util.HashMap;
 import java.util.Map;

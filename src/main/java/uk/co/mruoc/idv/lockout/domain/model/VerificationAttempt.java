@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.lockout.domain;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 

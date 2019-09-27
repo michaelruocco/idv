@@ -1,26 +1,24 @@
-package uk.co.mruoc.idv.lockout.model;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttemptFailed;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttemptFailed.VerificationAttemptFailedBuilder;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful.VerificationAttemptSuccessfulBuilder;
 
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VerificationAttemptFailedTest {
+class VerificationAttemptSuccessfulTest {
 
-    private final VerificationAttemptFailedBuilder builder = VerificationAttemptFailed.builder();
+    private final VerificationAttemptSuccessfulBuilder builder = VerificationAttemptSuccessful.builder();
 
     @Test
-    void shouldBeFailed() {
+    void shouldBeSuccessful() {
         final VerificationAttempt attempt = builder.build();
 
-        assertThat(attempt.isSuccessful()).isFalse();
+        assertThat(attempt.isSuccessful()).isTrue();
     }
 
     @Test

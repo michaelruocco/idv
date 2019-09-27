@@ -1,8 +1,8 @@
-package uk.co.mruoc.idv.lockout.service;
+package uk.co.mruoc.idv.lockout.domain.service;
 
-import uk.co.mruoc.idv.lockout.domain.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttemptFailed;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttemptSuccessful;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptFailed;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 

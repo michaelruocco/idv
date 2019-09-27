@@ -15,7 +15,8 @@ import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
-import uk.co.mruoc.idv.lockout.service.VerificationAttemptsService;
+import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequencesEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
@@ -53,7 +54,7 @@ class DefaultVerificationContextServiceTest {
     private final FakeExpiryCalculator expiryCalculator = new FakeExpiryCalculator(EXPIRY_DURATION);
     private final VerificationContextDao dao = mock(VerificationContextDao.class);
 
-    private final VerificationAttemptsService attemptsService = mock(VerificationAttemptsService.class);
+    private final FakeLockoutService lockoutService = new FakeLockoutService();
 
     private final VerificationContextService contextService = DefaultVerificationContextService.builder()
             .idGenerator(idGenerator)
@@ -62,7 +63,7 @@ class DefaultVerificationContextServiceTest {
             .sequenceLoader(sequenceLoader)
             .expiryCalculator(expiryCalculator)
             .dao(dao)
-            .attemptsService(attemptsService)
+            .lockoutService(lockoutService)
             .build();
 
     @Test
@@ -309,7 +310,23 @@ class DefaultVerificationContextServiceTest {
     }
 
     @Test
-    void shouldPassResultAndUpdatedContextToAttemptsServiceToRecordAttempt() {
+    void shouldPassResultToLockoutServiceToRecordAttempt() {
+        final UUID id = UUID.randomUUID();
+        final VerificationContext context = mock(VerificationContext.class);
+        given(dao.load(id)).willReturn(Optional.of(context));
+        final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
+        final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
+        given(context.addResult(result)).willReturn(expectedUpdatedContext);
+        final UpdateContextResultRequest updateResultRequest = toUpdateContextResultRequest(id, result);
+
+        contextService.updateResults(updateResultRequest);
+
+        final RecordAttemptRequest recordAttemptRequest = lockoutService.getLastRecordAttemptRequest();
+        assertThat(recordAttemptRequest.getResult()).isEqualTo(result);
+    }
+
+    @Test
+    void shouldPassUpdatedContextToLockoutServiceToRecordAttempt() {
         final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
         given(dao.load(id)).willReturn(Optional.of(context));
@@ -320,7 +337,8 @@ class DefaultVerificationContextServiceTest {
 
         final VerificationContext updatedContext = contextService.updateResults(updateResultRequest);
 
-        verify(attemptsService).recordAttempt(result, updatedContext);
+        final RecordAttemptRequest recordAttemptRequest = lockoutService.getLastRecordAttemptRequest();
+        assertThat(recordAttemptRequest.getContext()).isEqualTo(updatedContext);
     }
 
     private static GetContextRequest toGetContextRequest(final UUID id) {

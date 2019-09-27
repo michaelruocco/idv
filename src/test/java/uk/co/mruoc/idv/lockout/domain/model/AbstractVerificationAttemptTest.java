@@ -1,10 +1,8 @@
-package uk.co.mruoc.idv.lockout.model;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.lockout.domain.AbstractVerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.VerificationAttempt;
 
 import java.time.Instant;
 import java.util.UUID;

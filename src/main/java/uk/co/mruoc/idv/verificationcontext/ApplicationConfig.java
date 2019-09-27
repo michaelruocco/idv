@@ -15,9 +15,9 @@ import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.service.DefaultVerificationAttemptsService;
-import uk.co.mruoc.idv.lockout.service.VerificationAttemptsService;
-import uk.co.mruoc.idv.lockout.service.VerificationResultConverter;
+import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.VerificationResultConverter;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.JsonApiVerificationContextModule;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
@@ -90,9 +90,9 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public VerificationAttemptsService attemptsService(final VerificationResultConverter resultConverter,
-                                                       final VerificationAttemptsDao dao) {
-        return DefaultVerificationAttemptsService.builder()
+    public LockoutService lockoutService(final VerificationResultConverter resultConverter,
+                                         final VerificationAttemptsDao dao) {
+        return DefaultLockoutService.builder()
                 .resultConverter(resultConverter)
                 .dao(dao)
                 .build();
@@ -105,7 +105,7 @@ public class ApplicationConfig {
                                                                  final SequenceLoader sequenceLoader,
                                                                  final ExpiryCalculator expiryCalculator,
                                                                  final VerificationContextDao dao,
-                                                                 final VerificationAttemptsService attemptsService) {
+                                                                 final LockoutService lockoutService) {
         return DefaultVerificationContextService.builder()
                 .idGenerator(idGenerator)
                 .timeService(timeService)
@@ -113,7 +113,7 @@ public class ApplicationConfig {
                 .sequenceLoader(sequenceLoader)
                 .expiryCalculator(expiryCalculator)
                 .dao(dao)
-                .attemptsService(attemptsService)
+                .lockoutService(lockoutService)
                 .build();
     }
 

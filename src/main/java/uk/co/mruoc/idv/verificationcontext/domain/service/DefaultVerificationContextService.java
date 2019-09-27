@@ -7,7 +7,9 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
-import uk.co.mruoc.idv.lockout.service.VerificationAttemptsService;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
@@ -25,7 +27,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
     private final SequenceLoader sequenceLoader;
     private final ExpiryCalculator expiryCalculator;
     private final VerificationContextDao dao;
-    private final VerificationAttemptsService attemptsService;
+    private final LockoutService lockoutService;
 
     @Override
     public VerificationContext create(final CreateContextRequest request) {
@@ -65,7 +67,8 @@ public class DefaultVerificationContextService implements VerificationContextSer
         final VerificationResult result = request.getResult();
         final VerificationContext updatedContext = context.addResult(result);
         dao.save(updatedContext);
-        attemptsService.recordAttempt(result, updatedContext);
+        //TODO add lockout state to context, would also need to be added on create context and load context too
+        recordAttempt(result, updatedContext);
         return updatedContext;
     }
 
@@ -102,6 +105,14 @@ public class DefaultVerificationContextService implements VerificationContextSer
 
     private VerificationContext load(final UUID id) {
         return dao.load(id).orElseThrow(() -> new VerificationContextNotFoundException(id));
+    }
+
+    private LockoutState recordAttempt(final VerificationResult result, final VerificationContext context) {
+        final RecordAttemptRequest request = RecordAttemptRequest.builder()
+                .result(result)
+                .context(context)
+                .build();
+        return lockoutService.recordAttempt(request);
     }
 
 }
