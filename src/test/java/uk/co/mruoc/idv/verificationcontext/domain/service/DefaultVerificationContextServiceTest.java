@@ -22,12 +22,15 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService.VerificationContextNotFoundException;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -265,13 +268,24 @@ class DefaultVerificationContextServiceTest {
     }
 
     @Test
+    void shouldThrowExceptionIfContextNotFound() {
+        final UUID id = UUID.randomUUID();
+        given(dao.load(id)).willReturn(Optional.empty());
+        final GetContextRequest request = toGetContextRequest(id);
+
+        final Throwable error = catchThrowable(() -> contextService.get(request));
+
+        assertThat(error)
+                .isInstanceOf(VerificationContextNotFoundException.class)
+                .hasMessage(id.toString());
+    }
+
+    @Test
     void shouldLoadCreatedContext() {
         final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
-        given(dao.load(id)).willReturn(context);
-        final GetContextRequest request = GetContextRequest.builder()
-                .id(id)
-                .build();
+        given(dao.load(id)).willReturn(Optional.of(context));
+        final GetContextRequest request = toGetContextRequest(id);
 
         final VerificationContext loadedContext = contextService.get(request);
 
@@ -282,14 +296,11 @@ class DefaultVerificationContextServiceTest {
     void shouldAddResultToContext() {
         final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
-        given(dao.load(id)).willReturn(context);
+        given(dao.load(id)).willReturn(Optional.of(context));
         final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
         final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
         given(context.addResult(result)).willReturn(expectedUpdatedContext);
-        final UpdateContextResultRequest updateResultRequest = UpdateContextResultRequest.builder()
-                .contextId(id)
-                .result(result)
-                .build();
+        final UpdateContextResultRequest updateResultRequest = toUpdateContextResultRequest(id, result);
 
         final VerificationContext updatedContext = contextService.updateResults(updateResultRequest);
 
@@ -301,18 +312,28 @@ class DefaultVerificationContextServiceTest {
     void shouldPassResultAndUpdatedContextToAttemptsServiceToRecordAttempt() {
         final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
-        given(dao.load(id)).willReturn(context);
+        given(dao.load(id)).willReturn(Optional.of(context));
         final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
         final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
         given(context.addResult(result)).willReturn(expectedUpdatedContext);
-        final UpdateContextResultRequest updateResultRequest = UpdateContextResultRequest.builder()
-                .contextId(id)
-                .result(result)
-                .build();
+        final UpdateContextResultRequest updateResultRequest = toUpdateContextResultRequest(id, result);
 
         final VerificationContext updatedContext = contextService.updateResults(updateResultRequest);
 
         verify(attemptsService).recordAttempt(result, updatedContext);
+    }
+
+    private static GetContextRequest toGetContextRequest(final UUID id) {
+        return GetContextRequest.builder()
+                .id(id)
+                .build();
+    }
+
+    private static UpdateContextResultRequest toUpdateContextResultRequest(final UUID id, final VerificationResult result) {
+        return UpdateContextResultRequest.builder()
+                .contextId(id)
+                .result(result)
+                .build();
     }
 
 }

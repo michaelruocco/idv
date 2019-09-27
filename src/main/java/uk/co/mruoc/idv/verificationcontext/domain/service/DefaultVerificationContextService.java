@@ -101,7 +101,7 @@ public class DefaultVerificationContextService implements VerificationContextSer
     }
 
     private VerificationContext load(final UUID id) {
-        return dao.load(id);
+        return dao.load(id).orElseThrow(() -> new VerificationContextNotFoundException(id));
     }
 
 }

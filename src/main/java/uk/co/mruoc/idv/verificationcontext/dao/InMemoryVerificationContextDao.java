@@ -4,6 +4,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class InMemoryVerificationContextDao implements VerificationContextDao {
@@ -16,10 +17,8 @@ public class InMemoryVerificationContextDao implements VerificationContextDao {
     }
 
     @Override
-    public VerificationContext load(final UUID id) {
-        if (contexts.containsKey(id)) {
-            return contexts.get(id);
-        }
-        throw new VerificationContextNotFoundException(id);
+    public Optional<VerificationContext> load(final UUID id) {
+        return Optional.ofNullable(contexts.get(id));
     }
+
 }
