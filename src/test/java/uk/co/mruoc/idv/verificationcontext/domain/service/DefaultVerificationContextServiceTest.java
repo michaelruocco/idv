@@ -296,8 +296,7 @@ class DefaultVerificationContextServiceTest {
 
         final VerificationContext loadedContext = contextService.get(request);
 
-        assertThat(loadedContext).isEqualToIgnoringGivenFields(context, "lockoutState");
-        assertThat(loadedContext.getLockoutState()).isEqualTo(lockoutState);
+        assertThat(loadedContext).isEqualTo(context);
     }
 
     @Test
@@ -308,16 +307,12 @@ class DefaultVerificationContextServiceTest {
         final VerificationContext contextWithResult = mock(VerificationContext.class);
         final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
         given(context.addResult(result)).willReturn(contextWithResult);
-        final LockoutState lockoutState = new FakeMaxAttemptsLockoutState(5);
-        lockoutService.setLockoutStateToReturn(lockoutState);
-        final VerificationContext expectedUpdatedContext = mock(VerificationContext.class);
-        given(contextWithResult.updateLockoutState(lockoutState)).willReturn(expectedUpdatedContext);
         final UpdateContextResultRequest updateResultRequest = toUpdateContextResultRequest(id, result);
 
         final VerificationContext updatedContext = contextService.updateResults(updateResultRequest);
 
         verify(dao).save(updatedContext);
-        assertThat(updatedContext).isEqualTo(expectedUpdatedContext);
+        assertThat(updatedContext).isEqualTo(contextWithResult);
     }
 
     @Test

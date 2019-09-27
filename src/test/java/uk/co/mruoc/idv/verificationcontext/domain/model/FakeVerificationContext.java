@@ -4,7 +4,6 @@ import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
 import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
-import uk.co.mruoc.idv.lockout.domain.model.FakeMaxAttemptsLockoutState;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 
 import java.time.Instant;
@@ -22,8 +21,7 @@ public class FakeVerificationContext extends VerificationContext {
                 new FakeActivity(Instant.parse("2019-09-21T20:40:29.061224Z")),
                 Instant.parse("2019-09-21T20:43:32.233721Z"),
                 Instant.parse("2019-09-21T20:48:32.233721Z"),
-                new VerificationSequences(new SingleMethodSequence(new FakeVerificationMethodEligible())),
-                new FakeMaxAttemptsLockoutState(IDV_ID_VALUE));
+                new VerificationSequences(new SingleMethodSequence(new FakeVerificationMethodEligible())));
     }
 
 }

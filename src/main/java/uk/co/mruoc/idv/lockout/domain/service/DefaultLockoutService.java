@@ -8,6 +8,7 @@ import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
 
 import java.util.UUID;
 
@@ -33,6 +34,14 @@ public class DefaultLockoutService implements LockoutService {
     public LockoutState loadState(final LoadLockoutStateRequest request) {
         final VerificationAttempts attempts = loadAttempts(request.getIdvIdValue());
         return calculateLockoutState(request, attempts);
+    }
+
+    @Override
+    public void validateState(final LoadLockoutStateRequest request) {
+        final LockoutState lockoutState = loadState(request);
+        if (lockoutState.isLocked()) {
+            throw new VerificationContextService.LockedOutException(lockoutState);
+        }
     }
 
     private VerificationAttempts recordAttempt(final VerificationAttempt attempt) {

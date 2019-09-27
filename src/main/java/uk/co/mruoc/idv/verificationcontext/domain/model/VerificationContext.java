@@ -5,7 +5,6 @@ import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
 import java.time.Instant;
@@ -22,7 +21,6 @@ public class VerificationContext {
     private final Instant created;
     private final Instant expiry;
     private final VerificationSequences sequences;
-    private final LockoutState lockoutState;
 
     public UUID getId() {
         return id;
@@ -68,24 +66,8 @@ public class VerificationContext {
         return sequences;
     }
 
-    public LockoutState getLockoutState() {
-        return lockoutState;
-    }
-
     public VerificationContext addResult(final VerificationResult result) {
         final VerificationSequences updatedSequences = this.sequences.addResultIfHasSequencesWithNextMethod(result);
-        return copyBuilder()
-                .sequences(updatedSequences)
-                .build();
-    }
-
-    public VerificationContext updateLockoutState(final LockoutState lockoutState) {
-        return copyBuilder()
-                .lockoutState(lockoutState)
-                .build();
-    }
-
-    private VerificationContextBuilder copyBuilder() {
         return VerificationContext.builder()
                 .id(id)
                 .channel(channel)
@@ -94,8 +76,8 @@ public class VerificationContext {
                 .activity(activity)
                 .created(created)
                 .expiry(expiry)
-                .sequences(sequences)
-                .lockoutState(lockoutState);
+                .sequences(updatedSequences)
+                .build();
     }
 
 }
