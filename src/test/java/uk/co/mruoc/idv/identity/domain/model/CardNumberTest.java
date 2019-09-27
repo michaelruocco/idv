@@ -8,25 +8,28 @@ class CardNumberTest {
 
     private static final String VALUE = "4929101234567890";
 
+    private final Alias cardNumber = new FakeCardNumber(VALUE);
+
     @Test
     void shouldReturnType() {
-        final Alias cardNumber = new FakeCardNumber(VALUE);
-
         assertThat(cardNumber.getType()).isEqualTo("fake-card-number");
     }
 
     @Test
     void shouldReturnValue() {
-        final Alias cardNumber = new FakeCardNumber(VALUE);
-
         assertThat(cardNumber.getValue()).isEqualTo(VALUE);
     }
 
     @Test
     void isCardNumber() {
-        final Alias cardNumber = new FakeCardNumber(VALUE);
-
         assertThat(cardNumber.isCardNumber()).isTrue();
+    }
+
+    @Test
+    void shouldPrintDetails() {
+        final String details = cardNumber.toString();
+
+        assertThat(details).isEqualTo("CardNumber(type=fake-card-number, value=4929101234567890)");
     }
 
     private static class FakeCardNumber extends CardNumber {

@@ -1,8 +1,10 @@
 package uk.co.mruoc.idv.identity.domain.model;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @EqualsAndHashCode
+@ToString
 public abstract class CardNumber implements Alias {
 
     private final String type;
