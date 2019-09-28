@@ -10,6 +10,8 @@ public class FakeLockoutService implements LockoutService {
     private LoadLockoutStateRequest lastLoadStateRequest;
     private LoadLockoutStateRequest lastValidateStateRequest;
 
+    private boolean hasLockedState ;
+
     @Override
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
         this.lastRecordAttemptRequest = request;
@@ -25,6 +27,9 @@ public class FakeLockoutService implements LockoutService {
     @Override
     public void validateState(final LoadLockoutStateRequest request) {
         this.lastValidateStateRequest = request;
+        if (hasLockedState) {
+            throw new LockedOutException(stateToReturn);
+        }
     }
 
     public void setLockoutStateToReturn(final LockoutState state) {
@@ -41,6 +46,11 @@ public class FakeLockoutService implements LockoutService {
 
     public LoadLockoutStateRequest getLastValidateStateRequest() {
         return lastValidateStateRequest;
+    }
+
+    public void setHasLockedState(final LockoutState state) {
+        setLockoutStateToReturn(state);
+        hasLockedState = true;
     }
 
 }

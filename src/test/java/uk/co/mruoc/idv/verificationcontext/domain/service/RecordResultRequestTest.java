@@ -2,22 +2,22 @@ package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.service.UpdateContextResultRequest.UpdateContextResultRequestBuilder;
+import uk.co.mruoc.idv.verificationcontext.domain.service.RecordResultRequest.RecordResultRequestBuilder;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-class UpdateContextResultRequestTest {
+class RecordResultRequestTest {
 
-    private final UpdateContextResultRequestBuilder builder = UpdateContextResultRequest.builder();
+    private final RecordResultRequestBuilder builder = RecordResultRequest.builder();
 
     @Test
     void shouldReturnContextId() {
         final UUID contextId = UUID.randomUUID();
 
-        final UpdateContextResultRequest request = builder.contextId(contextId).build();
+        final RecordResultRequest request = builder.contextId(contextId).build();
 
         assertThat(request.getContextId()).isEqualTo(contextId);
     }
@@ -26,7 +26,7 @@ class UpdateContextResultRequestTest {
     void shouldReturnResult() {
         final VerificationResult result = mock(VerificationResult.class);
 
-        final UpdateContextResultRequest request = builder.result(result).build();
+        final RecordResultRequest request = builder.result(result).build();
 
         assertThat(request.getResult()).isEqualTo(result);
     }

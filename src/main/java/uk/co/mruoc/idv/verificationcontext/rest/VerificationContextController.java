@@ -11,7 +11,7 @@ import uk.co.mruoc.idv.verificationcontext.jsonapi.CreateContextRequestDocument;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.UpdateContextResultsRequestDocument;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.VerificationContextDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.service.GetContextRequest;
+import uk.co.mruoc.idv.verificationcontext.domain.service.LoadContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
 
 import java.net.URI;
@@ -40,19 +40,19 @@ public class VerificationContextController {
 
     @GetMapping("/verificationContexts/{id}")
     public VerificationContextDocument getContext(@PathVariable("id") final UUID id) {
-        final GetContextRequest request = toGetContextRequest(id);
-        final VerificationContext context = contextService.get(request);
+        final LoadContextRequest request = toGetContextRequest(id);
+        final VerificationContext context = contextService.load(request);
         return toDocument(context);
     }
 
     @PatchMapping("/verificationContexts/{id}")
     public VerificationContextDocument updateContextResults(@RequestBody final UpdateContextResultsRequestDocument request) {
-        final VerificationContext context = contextService.updateResults(request.getAttributes());
+        final VerificationContext context = contextService.recordResult(request.getAttributes());
         return toDocument(context);
     }
 
-    private static GetContextRequest toGetContextRequest(final UUID id) {
-        return GetContextRequest.builder()
+    private static LoadContextRequest toGetContextRequest(final UUID id) {
+        return LoadContextRequest.builder()
                 .id(id)
                 .build();
     }

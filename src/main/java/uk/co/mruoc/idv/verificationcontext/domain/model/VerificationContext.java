@@ -66,6 +66,14 @@ public class VerificationContext {
         return sequences;
     }
 
+    public boolean hasExpired(final Instant now) {
+        return now.isAfter(expiry);
+    }
+
+    public boolean hasChannelId(final String channelId) {
+        return channel.hasId(channelId);
+    }
+
     public VerificationContext addResult(final VerificationResult result) {
         final VerificationSequences updatedSequences = this.sequences.addResultIfHasSequencesWithNextMethod(result);
         return VerificationContext.builder()

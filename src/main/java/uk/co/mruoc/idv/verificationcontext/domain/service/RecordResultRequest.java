@@ -10,7 +10,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @EqualsAndHashCode
-public class UpdateContextResultRequest {
+public class RecordResultRequest {
 
     private final UUID contextId;
     private final VerificationResult result;

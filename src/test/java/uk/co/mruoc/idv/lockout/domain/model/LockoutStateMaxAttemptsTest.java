@@ -1,18 +1,18 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.lockout.domain.service.MaxAttemptsLockoutState;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateMaxAttempts;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class MaxAttemptsLockoutStateTest {
+class LockoutStateMaxAttemptsTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
     private final VerificationAttempts attempts = new FakeVerificationAttempts();
 
-    private final MaxAttemptsLockoutState state = new MaxAttemptsLockoutState(attempts, MAX_NUMBER_OF_ATTEMPTS);
+    private final LockoutStateMaxAttempts state = new LockoutStateMaxAttempts(attempts, MAX_NUMBER_OF_ATTEMPTS);
 
     @Test
     void shouldReturnIdFromAttempts() {
@@ -49,7 +49,7 @@ class MaxAttemptsLockoutStateTest {
         final VerificationAttempts threeAttempts = mock(VerificationAttempts.class);
         given(threeAttempts.size()).willReturn(3);
 
-        final LockoutState threeAttemptsState = new MaxAttemptsLockoutState(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
+        final LockoutState threeAttemptsState = new LockoutStateMaxAttempts(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
 
         assertThat(threeAttemptsState.isLocked()).isTrue();
     }

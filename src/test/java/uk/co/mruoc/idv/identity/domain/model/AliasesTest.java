@@ -24,6 +24,19 @@ class AliasesTest {
     }
 
     @Test
+    void shouldReturnStream() {
+        final Alias idvId = new FakeIdvId();
+        final Alias creditCardNumber = new FakeCreditCardNumber();
+
+        final Aliases aliases = Aliases.with(idvId, creditCardNumber);
+
+        assertThat(aliases.stream()).containsExactly(
+                idvId,
+                creditCardNumber
+        );
+    }
+
+    @Test
     void shouldCreateEmptyInstance() {
         final Aliases aliases = Aliases.empty();
 

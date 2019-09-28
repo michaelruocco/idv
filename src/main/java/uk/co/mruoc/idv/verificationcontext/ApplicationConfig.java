@@ -18,10 +18,18 @@ import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateCalculator;
-import uk.co.mruoc.idv.lockout.domain.service.MaxAttemptsThreeLockoutStateCalculator;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateCalculatorMaxAttemptsThree;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator;
+import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationResultConverter;
+import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextLoader;
+import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextCreator;
+import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader;
+import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextResultRecorder;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.JsonApiVerificationContextModule;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
@@ -79,7 +87,7 @@ public class ApplicationConfig {
 
     @Bean
     public LockoutStateCalculator stateCalculator() {
-        return new MaxAttemptsThreeLockoutStateCalculator();
+        return new LockoutStateCalculatorMaxAttemptsThree();
     }
 
     @Bean
@@ -107,32 +115,102 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public LockoutService lockoutService(final VerificationResultConverter resultConverter,
-                                         final VerificationAttemptsDao dao,
-                                         final LockoutStateCalculator stateCalculator) {
-        return DefaultLockoutService.builder()
-                .resultConverter(resultConverter)
+    public VerificationAttemptsLoader verificationAttemptsLoader(final VerificationAttemptsDao dao) {
+        return VerificationAttemptsLoader.builder()
                 .dao(dao)
-                .stateCalculator(stateCalculator)
                 .build();
     }
 
     @Bean
-    public VerificationContextService verificationContextService(final IdGenerator idGenerator,
+    public LockoutAttemptRecorder lockoutAttemptRecorder(final VerificationResultConverter resultConverter,
+                                                         final LockoutStateCalculator stateCalculator,
+                                                         final VerificationAttemptsLoader attemptsLoader,
+                                                         final VerificationAttemptsDao dao) {
+        return LockoutAttemptRecorder.builder()
+                .resultConverter(resultConverter)
+                .stateCalculator(stateCalculator)
+                .attemptsLoader(attemptsLoader)
+                .dao(dao)
+                .build();
+    }
+
+    @Bean
+    public LockoutStateLoader lockoutStateLoader(final VerificationAttemptsLoader attemptsLoader,
+                                                 final LockoutStateCalculator stateCalculator) {
+        return LockoutStateLoader.builder()
+                .stateCalculator(stateCalculator)
+                .attemptsLoader(attemptsLoader)
+                .build();
+    }
+
+    @Bean
+    public LockoutStateValidator lockoutStateValidator(final LockoutStateLoader stateLoader) {
+        return LockoutStateValidator.builder()
+                .stateLoader(stateLoader)
+                .build();
+    }
+
+    @Bean
+    public LockoutService lockoutService(final LockoutAttemptRecorder attemptRecorder,
+                                         final LockoutStateLoader stateLoader,
+                                         final LockoutStateValidator stateValidator) {
+        return DefaultLockoutService.builder()
+                .attemptRecorder(attemptRecorder)
+                .stateLoader(stateLoader)
+                .stateValidator(stateValidator)
+                .build();
+    }
+
+    @Bean
+    public VerificationContextLoader verificationContextLoader(final TimeService timeService,
+                                                               final LockoutService lockoutService,
+                                                               final VerificationContextDao dao) {
+        return DefaultVerificationContextLoader.builder()
+                .timeService(timeService)
+                .lockoutService(lockoutService)
+                .dao(dao)
+                .build();
+    }
+
+    @Bean
+    public VerificationContextResultRecorder verificationContextResultRecorder(final VerificationContextLoader contextLoader,
+                                                                               final LockoutService lockoutService,
+                                                                               final VerificationContextDao dao) {
+        return VerificationContextResultRecorder.builder()
+                .contextLoader(contextLoader)
+                .lockoutService(lockoutService)
+                .dao(dao)
+                .build();
+    }
+
+    @Bean
+    public VerificationContextCreator verificationContextCreator(final IdGenerator idGenerator,
                                                                  final TimeService timeService,
                                                                  final IdentityService identityService,
                                                                  final SequenceLoader sequenceLoader,
                                                                  final ExpiryCalculator expiryCalculator,
-                                                                 final VerificationContextDao dao,
-                                                                 final LockoutService lockoutService) {
-        return DefaultVerificationContextService.builder()
+                                                                 final LockoutService lockoutService,
+                                                                 final VerificationContextDao dao) {
+        return VerificationContextCreator.builder()
                 .idGenerator(idGenerator)
                 .timeService(timeService)
                 .identityService(identityService)
                 .sequenceLoader(sequenceLoader)
                 .expiryCalculator(expiryCalculator)
-                .dao(dao)
                 .lockoutService(lockoutService)
+                .dao(dao)
+                .build();
+
+    }
+
+    @Bean
+    public VerificationContextService verificationContextService(final VerificationContextCreator creator,
+                                                                 final VerificationContextLoader loader,
+                                                                 final VerificationContextResultRecorder resultRecorder) {
+        return DefaultVerificationContextService.builder()
+                .creator(creator)
+                .loader(loader)
+                .resultRecorder(resultRecorder)
                 .build();
     }
 

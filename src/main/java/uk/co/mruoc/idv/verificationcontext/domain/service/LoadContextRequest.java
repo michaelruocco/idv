@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Builder
 @Getter
-public class GetContextRequest {
+public class LoadContextRequest {
 
     private final UUID id;
 

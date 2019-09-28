@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.FakeVerificationContextService;
-import uk.co.mruoc.idv.verificationcontext.domain.service.GetContextRequest;
-import uk.co.mruoc.idv.verificationcontext.domain.service.UpdateContextResultRequest;
+import uk.co.mruoc.idv.verificationcontext.domain.service.LoadContextRequest;
+import uk.co.mruoc.idv.verificationcontext.domain.service.RecordResultRequest;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.CreateContextRequestDocument;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.UpdateContextResultsRequestDocument;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.VerificationContextDocument;
@@ -79,7 +79,7 @@ class VerificationContextControllerTest {
 
         controller.getContext(id);
 
-        final GetContextRequest request = service.getLastGetRequest();
+        final LoadContextRequest request = service.getLastGetRequest();
         assertThat(request.getId()).isEqualTo(id);
     }
 
@@ -116,7 +116,7 @@ class VerificationContextControllerTest {
     }
 
     private static UpdateContextResultsRequestDocument buildUpdateContextResultsRequestDocument() {
-        final UpdateContextResultRequest request = UpdateContextResultRequest.builder().build();
+        final RecordResultRequest request = RecordResultRequest.builder().build();
         return new UpdateContextResultsRequestDocument(request);
     }
 

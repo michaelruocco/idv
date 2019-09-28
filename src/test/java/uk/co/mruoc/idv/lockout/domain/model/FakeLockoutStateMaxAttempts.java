@@ -1,27 +1,27 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
-import uk.co.mruoc.idv.lockout.domain.service.MaxAttemptsLockoutState;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateMaxAttempts;
 
 import java.util.UUID;
 
-public class FakeMaxAttemptsLockoutState extends MaxAttemptsLockoutState {
+public class FakeLockoutStateMaxAttempts extends LockoutStateMaxAttempts {
 
     private static final UUID IDV_ID = UUID.fromString("49888d4b-36ac-4d1c-b529-3829869e5858");
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
 
-    public FakeMaxAttemptsLockoutState() {
+    public FakeLockoutStateMaxAttempts() {
         this(IDV_ID);
     }
 
-    public FakeMaxAttemptsLockoutState(final UUID idvId) {
+    public FakeLockoutStateMaxAttempts(final UUID idvId) {
         this(idvId, MAX_NUMBER_OF_ATTEMPTS);
     }
 
-    public FakeMaxAttemptsLockoutState(int maxNumberOfAttempts) {
+    public FakeLockoutStateMaxAttempts(int maxNumberOfAttempts) {
         this(IDV_ID, maxNumberOfAttempts);
     }
 
-    public FakeMaxAttemptsLockoutState(final UUID idvId, int maxNumberOfAttempts) {
+    public FakeLockoutStateMaxAttempts(final UUID idvId, int maxNumberOfAttempts) {
         super(new FakeVerificationAttempts(idvId), maxNumberOfAttempts);
     }
 

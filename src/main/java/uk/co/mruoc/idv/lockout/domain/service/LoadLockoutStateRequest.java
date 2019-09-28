@@ -15,7 +15,6 @@ public class LoadLockoutStateRequest {
     private final Activity activity;
     private final Alias alias;
     private final Instant timestamp;
-
     private final UUID idvIdValue;
 
     public String getChannelId() {

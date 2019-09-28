@@ -43,6 +43,24 @@ class VerificationContextTest {
     }
 
     @Test
+    void shouldReturnHasChannelIdTrueIfChannelIdMatches() {
+        final Channel channel = new FakeChannel();
+
+        final VerificationContext context = builder.channel(channel).build();
+
+        assertThat(context.hasChannelId("fake-channel")).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasChannelIFalseIfChannelIdDoesNotMatch() {
+        final Channel channel = new FakeChannel();
+
+        final VerificationContext context = builder.channel(channel).build();
+
+        assertThat(context.hasChannelId("other-channel")).isFalse();
+    }
+
+    @Test
     void shouldReturnChannelId() {
         final Channel channel = new FakeChannel();
 

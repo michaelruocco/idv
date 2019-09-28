@@ -8,7 +8,7 @@ import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class MaxAttemptsLockoutState implements LockoutState {
+public class LockoutStateMaxAttempts implements LockoutState {
 
     private final VerificationAttempts attempts;
     private final int maxNumberOfAttempts;

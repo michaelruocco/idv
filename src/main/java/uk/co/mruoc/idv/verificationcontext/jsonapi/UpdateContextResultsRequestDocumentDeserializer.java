@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.service.UpdateContextResultRequest;
+import uk.co.mruoc.idv.verificationcontext.domain.service.RecordResultRequest;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -20,7 +20,7 @@ public class UpdateContextResultsRequestDocumentDeserializer extends StdDeserial
     public UpdateContextResultsRequestDocument deserialize(final JsonParser parser,final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
         final JsonNode dataNode = node.get("data");
-        final UpdateContextResultRequest request = UpdateContextResultRequest.builder()
+        final RecordResultRequest request = RecordResultRequest.builder()
                 .contextId(extractId(dataNode))
                 .result(extractResult(parser, dataNode))
                 .build();
