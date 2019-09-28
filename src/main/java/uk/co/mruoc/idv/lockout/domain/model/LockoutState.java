@@ -14,4 +14,6 @@ public interface LockoutState {
 
     VerificationAttempts getAttempts();
 
+    String getMessage();
+
 }

@@ -9,19 +9,29 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import uk.co.mruoc.idv.api.activity.ActivityDeserializer.ActivityNotSupportedException;
 import uk.co.mruoc.idv.api.channel.ChannelDeserializer.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;
+import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttemptsLocked;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutService.LockedOutException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NotNextMethodInSequenceException;
+import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextNotFoundException;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.LockedOutErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.NotNextMethodInSequenceErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextExpiredErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextNotFoundErrorItem;
 import uk.co.mruoc.jsonapi.error.BadRequestErrorItem;
 import uk.co.mruoc.jsonapi.error.InternalServerErrorItem;
 import uk.co.mruoc.jsonapi.error.JsonApiErrorDocument;
 import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
 import uk.co.mruoc.jsonapi.error.JsonApiSingleErrorDocument;
+
+import java.time.Instant;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -119,7 +129,8 @@ class ApplicationErrorHandlerTest {
 
     @Test
     void shouldReturnDocumentForVerificationContextNotFoundException() {
-        final VerificationContextNotFoundException exception = mock(VerificationContextNotFoundException.class);
+        final UUID contextId = UUID.randomUUID();
+        final VerificationContextNotFoundException exception = new VerificationContextNotFoundException(contextId);
 
         final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
 
@@ -127,6 +138,31 @@ class ApplicationErrorHandlerTest {
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
                 .isEqualTo(toDocument(new VerificationContextNotFoundErrorItem(exception.getMessage())));
+    }
+
+    @Test
+    void shouldReturnDocumentForLockedOutException() {
+        final LockedOutException exception = new LockedOutException(new FakeLockoutStateMaxAttemptsLocked());
+
+        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.LOCKED);
+        assertThat(response.getBody())
+                .usingRecursiveComparison(comparisonConfiguration)
+                .isEqualTo(toDocument(new LockedOutErrorItem(exception.getLockoutState())));
+    }
+
+    @Test
+    void shouldReturnDocumentForVerificationContextExpired() {
+        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContextExpiredException exception = new VerificationContextExpiredException(context, Instant.now());
+
+        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.GONE);
+        assertThat(response.getBody())
+                .usingRecursiveComparison(comparisonConfiguration)
+                .isEqualTo(toDocument(new VerificationContextExpiredErrorItem(exception.getMessage())));
     }
 
     private static JsonApiErrorDocument toDocument(final JsonApiErrorItem item) {

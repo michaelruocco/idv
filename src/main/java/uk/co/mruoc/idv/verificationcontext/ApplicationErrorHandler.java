@@ -10,13 +10,17 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import uk.co.mruoc.idv.api.activity.ActivityDeserializer.ActivityNotSupportedException;
 import uk.co.mruoc.idv.api.channel.ChannelDeserializer.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutService.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NotNextMethodInSequenceException;
+import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextNotFoundException;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.LockedOutErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.NotNextMethodInSequenceErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextExpiredErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextNotFoundErrorItem;
 import uk.co.mruoc.jsonapi.error.BadRequestErrorItem;
 import uk.co.mruoc.jsonapi.error.InternalServerErrorItem;
@@ -67,6 +71,16 @@ public class ApplicationErrorHandler {
     @ExceptionHandler(VerificationContextNotFoundException.class)
     public ResponseEntity<JsonApiErrorDocument> handleException(final VerificationContextNotFoundException e) {
         return buildResponseEntity(new VerificationContextNotFoundErrorItem(e.getMessage()));
+    }
+
+    @ExceptionHandler(LockedOutException.class)
+    public ResponseEntity<JsonApiErrorDocument> handleException(final LockedOutException e) {
+        return buildResponseEntity(new LockedOutErrorItem(e.getLockoutState()));
+    }
+
+    @ExceptionHandler(VerificationContextExpiredException.class)
+    public ResponseEntity<JsonApiErrorDocument> handleException(final VerificationContextExpiredException e) {
+        return buildResponseEntity(new VerificationContextExpiredErrorItem(e.getMessage()));
     }
 
     private ResponseEntity<JsonApiErrorDocument> buildResponseEntity(final JsonApiErrorItem error) {

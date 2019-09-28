@@ -38,8 +38,20 @@ public class LockoutStateMaxAttempts implements LockoutState {
         return attempts;
     }
 
+    @Override
+    public String getMessage() {
+        if (isLocked()) {
+            return String.format("maximum number of attempts [%d] reached", maxNumberOfAttempts);
+        }
+        return String.format("%d attempts remaining", getNumberOfAttemptsRemaining());
+    }
+
     public int getNumberOfAttemptsRemaining() {
         return maxNumberOfAttempts - attempts.size();
+    }
+
+    public int getMaxNumberOfAttempts() {
+        return maxNumberOfAttempts;
     }
 
 }

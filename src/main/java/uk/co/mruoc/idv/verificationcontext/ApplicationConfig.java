@@ -41,7 +41,6 @@ import uk.co.mruoc.idv.verificationcontext.domain.service.StubbedSequenceLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
 import uk.co.mruoc.jsonapi.JsonApiModule;
 
-
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
 @Configuration
