@@ -8,6 +8,10 @@ public class BadRequestErrorItem extends JsonApiErrorItem {
 
     private static final int STATUS = 400;
 
+    public BadRequestErrorItem(final String detail) {
+        this(UUID.randomUUID(), "Bad Request", detail);
+    }
+
     public BadRequestErrorItem(final String title, final String detail) {
         this(UUID.randomUUID(), title, detail);
     }

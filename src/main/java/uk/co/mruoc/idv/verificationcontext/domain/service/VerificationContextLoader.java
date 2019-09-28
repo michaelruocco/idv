@@ -12,7 +12,7 @@ public interface VerificationContextLoader {
     class VerificationContextNotFoundException extends RuntimeException {
 
         public VerificationContextNotFoundException(final UUID id) {
-            super(id.toString());
+            super(String.format("verification context with id %s not found", id.toString()));
         }
 
     }

@@ -46,7 +46,7 @@ class VerificationContextLoaderTest {
 
         assertThat(error)
                 .isInstanceOf(VerificationContextNotFoundException.class)
-                .hasMessage(id.toString());
+                .hasMessage(String.format("verification context with id %s not found", id.toString()));
     }
 
     @Test

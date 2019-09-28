@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BadRequestErrorItemTest {
+class UnprocessableEntityErrorItemTest {
 
     private static final String TITLE = "My Title";
     private static final String DETAIL = "my detail";
-    private static final int STATUS = 400;
+    private static final int STATUS = 422;
 
-    private final JsonApiErrorItem item = new BadRequestErrorItem(TITLE, DETAIL);
+    private final JsonApiErrorItem item = new UnprocessableEntityErrorItem(TITLE, DETAIL);
 
     @Test
     void shouldGenerateRandomIdIfNotProvided() {
@@ -20,13 +20,6 @@ class BadRequestErrorItemTest {
     @Test
     void shouldReturnStatus() {
         assertThat(item.getStatus()).isEqualTo(STATUS);
-    }
-
-    @Test
-    void shouldReturnDefaultTitleIfNotProvided() {
-        final JsonApiErrorItem noTitleItem = new BadRequestErrorItem(DETAIL);
-
-        assertThat(noTitleItem.getTitle()).isEqualTo("Bad Request");
     }
 
 }

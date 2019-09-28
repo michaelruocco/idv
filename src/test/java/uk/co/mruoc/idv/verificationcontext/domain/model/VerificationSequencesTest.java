@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.CannotCalculateMaxDurationOfEmptySequencesException;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NoSequencesFoundWithNextMethodException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NotNextMethodInSequenceException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
@@ -94,8 +94,8 @@ class VerificationSequencesTest {
         final Throwable error = catchThrowable(() -> sequences.addResultIfHasSequencesWithNextMethod(result));
 
         assertThat(error)
-                .isInstanceOf(NoSequencesFoundWithNextMethodException.class)
-                .hasMessage(result.getMethodName());
+                .isInstanceOf(NotNextMethodInSequenceException.class)
+                .hasMessage("method-name is not the next method in any sequences");
     }
 
     @Test

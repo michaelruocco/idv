@@ -44,7 +44,7 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
     public VerificationSequences addResultIfHasSequencesWithNextMethod(final VerificationResult result) {
         final String methodName = result.getMethodName();
         if (!hasSequencesWithNextMethod(methodName)) {
-            throw new NoSequencesFoundWithNextMethodException(methodName);
+            throw new NotNextMethodInSequenceException(methodName);
         }
         return addResult(result);
     }
@@ -81,10 +81,10 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
     }
 
-    public static class NoSequencesFoundWithNextMethodException extends RuntimeException {
+    public static class NotNextMethodInSequenceException extends RuntimeException {
 
-        public NoSequencesFoundWithNextMethodException(final String methodName) {
-            super(methodName);
+        public NotNextMethodInSequenceException(final String methodName) {
+            super(String.format("%s is not the next method in any sequences", methodName));
         }
 
     }
