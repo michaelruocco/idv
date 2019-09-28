@@ -1,21 +1,44 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
+import lombok.Builder;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.time.Instant;
 import java.util.UUID;
 
-public interface CalculateLockoutStateRequest {
-    String getChannelId();
+@Builder
+public class CalculateLockoutStateRequest {
 
-    String getActivityName();
+    private final String channelId;
+    private final String activityName;
+    private final Instant timestamp;
+    private final Alias alias;
+    private final UUID idvIdValue;
+    private final VerificationAttempts attempts;
 
-    Instant getTimestamp();
+    public String getChannelId() {
+        return channelId;
+    }
 
-    Alias getAlias();
+    public String getActivityName() {
+        return activityName;
+    }
 
-    UUID getIdvIdValue();
+    public Instant getTimestamp() {
+        return timestamp;
+    }
 
-    VerificationAttempts getAttempts();
+    public Alias getAlias() {
+        return alias;
+    }
+
+    public UUID getIdvIdValue() {
+        return idvIdValue;
+    }
+
+    public VerificationAttempts getAttempts() {
+        return attempts;
+    }
+
 }

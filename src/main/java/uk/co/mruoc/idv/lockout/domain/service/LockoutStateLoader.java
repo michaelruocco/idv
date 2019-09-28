@@ -16,9 +16,14 @@ public class LockoutStateLoader {
         return calculateLockoutState(request, attempts);
     }
 
-    private LockoutState calculateLockoutState(final LoadLockoutStateRequest loadStateRequest, final VerificationAttempts attempts) {
-        final CalculateLockoutStateRequest request = LoadStateCalculateLockoutStateRequest.builder()
-                .loadStateRequest(loadStateRequest)
+    private LockoutState calculateLockoutState(final LoadLockoutStateRequest loadStateRequest,
+                                               final VerificationAttempts attempts) {
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequest.builder()
+                .channelId(loadStateRequest.getChannelId())
+                .activityName(loadStateRequest.getActivityName())
+                .alias(loadStateRequest.getAlias())
+                .timestamp(loadStateRequest.getTimestamp())
+                .idvIdValue(loadStateRequest.getIdvIdValue())
                 .attempts(attempts)
                 .build();
         return stateCalculator.calculate(request);

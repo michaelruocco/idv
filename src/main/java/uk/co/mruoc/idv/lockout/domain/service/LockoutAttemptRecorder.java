@@ -58,9 +58,14 @@ public class LockoutAttemptRecorder {
         return attemptsLoader.load(idvId);
     }
 
-    private LockoutState calculateLockoutState(final VerificationAttempt attempt, final VerificationAttempts attempts) {
-        final CalculateLockoutStateRequest request = RecordAttemptCalculateLockoutStateRequest.builder()
-                .attempt(attempt)
+    private LockoutState calculateLockoutState(final VerificationAttempt attempt,
+                                               final VerificationAttempts attempts) {
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequest.builder()
+                .channelId(attempt.getChannelId())
+                .activityName(attempt.getActivityName())
+                .alias(attempt.getProvidedAlias())
+                .timestamp(attempt.getTimestamp())
+                .idvIdValue(attempt.getIdvIdValue())
                 .attempts(attempts)
                 .build();
         return stateCalculator.calculate(request);
