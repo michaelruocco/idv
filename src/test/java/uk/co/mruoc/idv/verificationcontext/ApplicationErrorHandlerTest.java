@@ -10,7 +10,7 @@ import uk.co.mruoc.idv.api.activity.ActivityDeserializer.ActivityNotSupportedExc
 import uk.co.mruoc.idv.api.channel.ChannelDeserializer.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttemptsLocked;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutService.LockedOutException;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NotNextMethodInSequenceException;

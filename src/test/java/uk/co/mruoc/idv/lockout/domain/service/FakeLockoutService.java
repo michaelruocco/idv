@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 
 public class FakeLockoutService implements LockoutService {
 

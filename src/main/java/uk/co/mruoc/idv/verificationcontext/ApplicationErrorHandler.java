@@ -10,7 +10,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import uk.co.mruoc.idv.api.activity.ActivityDeserializer.ActivityNotSupportedException;
 import uk.co.mruoc.idv.api.channel.ChannelDeserializer.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutService.LockedOutException;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NotNextMethodInSequenceException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextNotFoundException;

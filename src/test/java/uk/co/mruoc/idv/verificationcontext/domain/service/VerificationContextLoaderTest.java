@@ -6,7 +6,7 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LoadLockoutStateRequest;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutService.LockedOutException;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;

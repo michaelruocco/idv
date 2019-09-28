@@ -49,9 +49,25 @@ class LockoutStateMaxAttemptsTest {
         final VerificationAttempts threeAttempts = mock(VerificationAttempts.class);
         given(threeAttempts.size()).willReturn(3);
 
-        final LockoutState threeAttemptsState = new LockoutStateMaxAttempts(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
+        final LockoutState lockedState = new LockoutStateMaxAttempts(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
 
-        assertThat(threeAttemptsState.isLocked()).isTrue();
+        assertThat(lockedState.isLocked()).isTrue();
+    }
+
+    @Test
+    void shouldReturnNotLockedMessageIfNotLocked() {
+        assertThat(state.getMessage()).isEqualTo("2 attempts remaining");
+    }
+
+    @Test
+    void shouldReturnLockedMessageIfLocked() {
+        final VerificationAttempts threeAttempts = mock(VerificationAttempts.class);
+        given(threeAttempts.size()).willReturn(MAX_NUMBER_OF_ATTEMPTS);
+
+        final LockoutState lockedState = new LockoutStateMaxAttempts(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
+
+        final String expectedMessage = String.format("maximum number of attempts [%d] reached", MAX_NUMBER_OF_ATTEMPTS);
+        assertThat(lockedState.getMessage()).isEqualTo(expectedMessage);
     }
 
 }
