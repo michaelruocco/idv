@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext;
+package uk.co.mruoc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

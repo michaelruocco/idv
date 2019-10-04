@@ -16,17 +16,21 @@ import java.util.UUID;
 public class LockoutAttemptRecorder {
 
     private final VerificationResultConverter resultConverter;
-    private final LockoutStateCalculator stateCalculator;
     private final VerificationAttemptsLoader attemptsLoader;
     private final VerificationAttemptsDao dao;
+    private final LockoutPolicyLoader policyLoader;
 
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
         final VerificationResult result = request.getResult();
         final VerificationContext context = request.getContext();
-        //TODO how should we decide whether to record an attempt? e.g. only if attempt is complete
         final VerificationAttempt attempt = resultConverter.toAttempt(result, context);
-        final VerificationAttempts attempts = recordAttempt(attempt);
-        return calculateLockoutState(attempt, attempts);
+        final LockoutPolicy policy = policyLoader.load(attempt);
+        if (policy.shouldRecordAttempt(request)) {
+            final VerificationAttempts attempts = recordAttempt(attempt);
+            return calculateLockoutState(policy, attempt, attempts);
+        }
+        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
+        return calculateLockoutState(policy, attempt, attempts);
     }
 
     private VerificationAttempts recordAttempt(final VerificationAttempt attempt) {
@@ -58,7 +62,8 @@ public class LockoutAttemptRecorder {
         return attemptsLoader.load(idvId);
     }
 
-    private LockoutState calculateLockoutState(final VerificationAttempt attempt,
+    private LockoutState calculateLockoutState(final LockoutPolicy policy,
+                                               final VerificationAttempt attempt,
                                                final VerificationAttempts attempts) {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequest.builder()
                 .channelId(attempt.getChannelId())
@@ -68,7 +73,7 @@ public class LockoutAttemptRecorder {
                 .idvIdValue(attempt.getIdvIdValue())
                 .attempts(attempts)
                 .build();
-        return stateCalculator.calculate(request);
+        return policy.calculateLockoutState(request);
     }
 
 }

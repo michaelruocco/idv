@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.verificationcontext.rest;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,13 +22,10 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
+@RequiredArgsConstructor
 public class VerificationContextController {
 
     private final VerificationContextService contextService;
-
-    public VerificationContextController(final VerificationContextService contextService) {
-        this.contextService = contextService;
-    }
 
     @PostMapping("/verificationContexts")
     public ResponseEntity<VerificationContextDocument> createContext(@RequestBody final CreateContextRequestDocument request) {

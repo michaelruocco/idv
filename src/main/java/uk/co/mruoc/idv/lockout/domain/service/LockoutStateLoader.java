@@ -9,7 +9,7 @@ import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 public class LockoutStateLoader {
 
     private final VerificationAttemptsLoader attemptsLoader;
-    private final LockoutStateCalculator stateCalculator;
+    private final LockoutPolicyLoader policyLoader;
 
     public LockoutState load(final LoadLockoutStateRequest request) {
         final VerificationAttempts attempts = attemptsLoader.load(request.getIdvIdValue());
@@ -26,7 +26,8 @@ public class LockoutStateLoader {
                 .idvIdValue(loadStateRequest.getIdvIdValue())
                 .attempts(attempts)
                 .build();
-        return stateCalculator.calculate(request);
+        final LockoutPolicy policy = policyLoader.load(loadStateRequest);
+        return policy.calculateLockoutState(request);
     }
 
 }

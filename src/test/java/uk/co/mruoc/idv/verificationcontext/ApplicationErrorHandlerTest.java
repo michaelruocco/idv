@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import uk.co.mruoc.ApplicationErrorHandler;
 import uk.co.mruoc.idv.api.activity.ActivityDeserializer.ActivityNotSupportedException;
 import uk.co.mruoc.idv.api.channel.ChannelDeserializer.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;

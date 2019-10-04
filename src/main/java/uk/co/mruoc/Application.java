@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext;
+package uk.co.mruoc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

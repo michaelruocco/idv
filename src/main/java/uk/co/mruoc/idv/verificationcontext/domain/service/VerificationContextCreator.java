@@ -63,7 +63,7 @@ public class VerificationContextCreator {
     }
 
     private void validateLockoutState(final CreateContextRequest createContextRequest, final Identity identity) {
-        final LoadLockoutStateRequest request = LoadLockoutStateRequest.builder()
+        final LoadLockoutStateRequest request = VerificationContextLoadLockoutStateRequest.builder()
                 .channel(createContextRequest.getChannel())
                 .activity(createContextRequest.getActivity())
                 .alias(createContextRequest.getProvidedAlias())

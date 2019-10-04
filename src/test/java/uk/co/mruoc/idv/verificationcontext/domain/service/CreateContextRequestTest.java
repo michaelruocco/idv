@@ -4,12 +4,14 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
+import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
+import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.mruoc.idv.identity.domain.model.FakeIdvId;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest.CreateContextRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class CreateContextRequestTest {
 
@@ -17,7 +19,7 @@ class CreateContextRequestTest {
 
     @Test
     void shouldReturnChannel() {
-        final Channel channel = mock(Channel.class);
+        final Channel channel = new FakeChannel();
 
         final CreateContextRequest request = builder.channel(channel).build();
 
@@ -25,8 +27,17 @@ class CreateContextRequestTest {
     }
 
     @Test
+    void shouldReturnChannelId() {
+        final Channel channel = new FakeChannel();
+
+        final CreateContextRequest request = builder.channel(channel).build();
+
+        assertThat(request.getChannelId()).isEqualTo(channel.getId());
+    }
+
+    @Test
     void shouldReturnActivity() {
-        final Activity activity = mock(Activity.class);
+        final Activity activity = new FakeActivity();
 
         final CreateContextRequest request = builder.activity(activity).build();
 
@@ -34,8 +45,17 @@ class CreateContextRequestTest {
     }
 
     @Test
+    void shouldReturnActivityName() {
+        final Activity activity = new FakeActivity();
+
+        final CreateContextRequest request = builder.activity(activity).build();
+
+        assertThat(request.getActivityName()).isEqualTo(activity.getName());
+    }
+
+    @Test
     void shouldReturnCreated() {
-        final Alias providedAlias = mock(Alias.class);
+        final Alias providedAlias = new FakeIdvId();
 
         final CreateContextRequest request = builder.providedAlias(providedAlias).build();
 

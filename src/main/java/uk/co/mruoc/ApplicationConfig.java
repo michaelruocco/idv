@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext;
+package uk.co.mruoc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -13,15 +13,15 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.dao.InMemoryIdentityDao;
+import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutStateCalculator;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutStateCalculatorMaxAttemptsThree;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
@@ -85,8 +85,13 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public LockoutStateCalculator stateCalculator() {
-        return new LockoutStateCalculatorMaxAttemptsThree();
+    public LockoutPolicyLoader lockoutPolicyLoader() {
+        return new LockoutPolicyLoader();
+    }
+
+    @Bean
+    public AliasFactory aliasFactory() {
+        return new AliasFactory();
     }
 
     @Bean
@@ -122,12 +127,12 @@ public class ApplicationConfig {
 
     @Bean
     public LockoutAttemptRecorder lockoutAttemptRecorder(final VerificationResultConverter resultConverter,
-                                                         final LockoutStateCalculator stateCalculator,
+                                                         final LockoutPolicyLoader policyLoader,
                                                          final VerificationAttemptsLoader attemptsLoader,
                                                          final VerificationAttemptsDao dao) {
         return LockoutAttemptRecorder.builder()
                 .resultConverter(resultConverter)
-                .stateCalculator(stateCalculator)
+                .policyLoader(policyLoader)
                 .attemptsLoader(attemptsLoader)
                 .dao(dao)
                 .build();
@@ -135,9 +140,9 @@ public class ApplicationConfig {
 
     @Bean
     public LockoutStateLoader lockoutStateLoader(final VerificationAttemptsLoader attemptsLoader,
-                                                 final LockoutStateCalculator stateCalculator) {
+                                                 final LockoutPolicyLoader policyLoader) {
         return LockoutStateLoader.builder()
-                .stateCalculator(stateCalculator)
+                .policyLoader(policyLoader)
                 .attemptsLoader(attemptsLoader)
                 .build();
     }
