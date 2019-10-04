@@ -14,6 +14,7 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLoadLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LoadLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
+import uk.co.mruoc.idv.lockout.jsonapi.LockoutStateDocument;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,13 +26,14 @@ public class LockoutController {
     private final IdentityService identityService;
 
     @GetMapping("/lockoutStates")
-    public LockoutState getLockoutState(@RequestParam final String channelId,
+    public LockoutStateDocument getLockoutState(@RequestParam final String channelId,
                                         @RequestParam final String activityName,
                                         @RequestParam final String aliasType,
                                         @RequestParam final String aliasValue) {
         final Alias alias = aliasFactory.build(aliasType, aliasValue);
         final Identity identity = loadIdentity(alias);
-        return loadLockoutState(channelId, activityName, alias, identity);
+        final LockoutState state = loadLockoutState(channelId, activityName, alias, identity);
+        return toDocument(state);
     }
 
     private Identity loadIdentity(final Alias alias) {
@@ -64,6 +66,10 @@ public class LockoutController {
                 .alias(alias)
                 .idvIdValue(identity.getIdvIdValue())
                 .build();
+    }
+
+    private static LockoutStateDocument toDocument(final LockoutState state) {
+        return new LockoutStateDocument(state);
     }
 
 }

@@ -16,7 +16,6 @@ import uk.co.mruoc.idv.identity.dao.InMemoryIdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.lockout.api.LockoutStateModule;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
@@ -27,6 +26,7 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationResultConverter;
+import uk.co.mruoc.idv.lockout.jsonapi.JsonApiLockoutStateModule;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextCreator;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader;
@@ -50,11 +50,11 @@ public class ApplicationConfig {
     @Bean
     public ObjectMapper objectMapper() {
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JsonApiModule());
         mapper.registerModule(new IdvModule());
         mapper.registerModule(new IdentityModule());
-        mapper.registerModule(new LockoutStateModule());
+        mapper.registerModule(new JsonApiModule());
         mapper.registerModule(new JsonApiVerificationContextModule());
+        mapper.registerModule(new JsonApiLockoutStateModule());
         mapper.registerModule(new MoneyModule());
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(WRITE_DATES_AS_TIMESTAMPS);
