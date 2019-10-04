@@ -9,6 +9,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSm
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -97,6 +98,17 @@ class MultipleMethodSequenceTest {
         assertThat(sequence.containsMethod(method1.getName())).isTrue();
         assertThat(sequence.containsMethod(method2.getName())).isTrue();
         assertThat(sequence.containsMethod("other-name")).isFalse();
+    }
+
+    @Test
+    void shouldReturnContainsMethodComplete() {
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(new FakeVerificationResultSuccessful(METHOD_NAME_1));
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(new FakeVerificationResultFailed(METHOD_NAME_2));
+
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
+
+        assertThat(sequence.containsCompleteMethod(method1.getName())).isTrue();
+        assertThat(sequence.containsCompleteMethod(method2.getName())).isFalse();
     }
 
     @Test

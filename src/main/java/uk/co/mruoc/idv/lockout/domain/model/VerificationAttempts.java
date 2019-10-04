@@ -4,12 +4,14 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.UUID;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @ToString
@@ -69,6 +71,26 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return toAttempts(remainingAttempts);
     }
 
+    public VerificationAttempts resetBy(final Predicate<LockoutPolicyRequest> filter) {
+        final VerificationAttempts filteredAttempts = filterBy(filter);
+        final Collection<VerificationAttempt> remainingAttempts = CollectionUtils.subtract(attempts, filteredAttempts);
+        return toAttempts(remainingAttempts);
+    }
+
+    public VerificationAttempts filterBy(final Predicate<LockoutPolicyRequest> filter) {
+        final Collection<VerificationAttempt> filteredAttempts = attempts.stream()
+                .filter(filter)
+                .collect(Collectors.toList());
+        return toAttempts(filteredAttempts);
+    }
+
+    public VerificationAttempts getAttemptsWithAlias(final Alias alias) {
+        Collection<VerificationAttempt> attemptsWithAlias = attempts.stream()
+                .filter(attempt -> alias.equals(attempt.getProvidedAlias()))
+                .collect(Collectors.toList());
+        return toAttempts(attemptsWithAlias);
+    }
+
     public VerificationAttempts resetByChannel(final String channelId) {
         final VerificationAttempts attemptsWithChannel = getAttemptsWithChannel(channelId);
         final Collection<VerificationAttempt> remainingAttempts = CollectionUtils.subtract(attempts, attemptsWithChannel);
@@ -83,13 +105,6 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
 
     public int size() {
         return attempts.size();
-    }
-
-    private VerificationAttempts getAttemptsWithAlias(final Alias alias) {
-        Collection<VerificationAttempt> attemptsWithAlias = attempts.stream()
-                .filter(attempt -> alias.equals(attempt.getProvidedAlias()))
-                .collect(Collectors.toList());
-        return toAttempts(attemptsWithAlias);
     }
 
     private VerificationAttempts getAttemptsWithChannel(final String channelId) {

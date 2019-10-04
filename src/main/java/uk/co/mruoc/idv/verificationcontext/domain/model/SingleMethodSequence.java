@@ -72,6 +72,11 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
+    public boolean containsCompleteMethod(final String methodName) {
+        return containsMethod(methodName) && isComplete();
+    }
+
+    @Override
     public boolean isEligible() {
         return method.isEligible();
     }

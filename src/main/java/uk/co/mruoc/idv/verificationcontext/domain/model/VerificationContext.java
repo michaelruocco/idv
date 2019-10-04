@@ -88,4 +88,12 @@ public class VerificationContext {
                 .build();
     }
 
+    public boolean containsCompleteSequenceContainingMethod(final String methodName) {
+        return sequences.containsCompleteSequenceContainingMethod(methodName);
+    }
+
+    public boolean containsCompleteMethod(final String methodName) {
+        return sequences.containsCompleteMethod(methodName);
+    }
+
 }

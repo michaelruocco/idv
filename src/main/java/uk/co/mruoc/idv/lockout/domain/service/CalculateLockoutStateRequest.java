@@ -41,4 +41,15 @@ public class CalculateLockoutStateRequest {
         return attempts;
     }
 
+    public CalculateLockoutStateRequest updateAttempts(final VerificationAttempts updatedAttempts) {
+        return CalculateLockoutStateRequest.builder()
+                .channelId(channelId)
+                .activityName(activityName)
+                .timestamp(timestamp)
+                .alias(alias)
+                .idvIdValue(idvIdValue)
+                .attempts(updatedAttempts)
+                .build();
+    }
+
 }

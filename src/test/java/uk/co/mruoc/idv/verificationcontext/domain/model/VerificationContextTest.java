@@ -156,4 +156,30 @@ class VerificationContextTest {
         assertThat(updatedContext.getSequences()).isEqualTo(updatedSequences);
     }
 
+    @Test
+    void shouldReturnContainsCompleteMethodFromSequences() {
+        final String methodName = "method-name";
+        final boolean expectedResult = true;
+        final VerificationSequences sequences = mock(VerificationSequences.class);
+        given(sequences.containsCompleteMethod(methodName)).willReturn(expectedResult);
+        final VerificationContext context = builder.sequences(sequences).build();
+
+        final boolean result = context.containsCompleteMethod(methodName);
+
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void shouldReturnContainsCompleteSequenceContainingMethodFromSequences() {
+        final String methodName = "method-name";
+        final boolean expectedResult = true;
+        final VerificationSequences sequences = mock(VerificationSequences.class);
+        given(sequences.containsCompleteSequenceContainingMethod(methodName)).willReturn(expectedResult);
+        final VerificationContext context = builder.sequences(sequences).build();
+
+        final boolean result = context.containsCompleteSequenceContainingMethod(methodName);
+
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
 }

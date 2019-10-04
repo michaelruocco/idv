@@ -33,6 +33,8 @@ public interface VerificationSequence {
 
     boolean containsMethod(String methodName);
 
+    boolean containsCompleteMethod(String methodName);
+
     boolean isEligible();
 
     boolean isComplete();

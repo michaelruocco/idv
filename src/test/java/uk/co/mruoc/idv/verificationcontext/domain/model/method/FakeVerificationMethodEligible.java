@@ -2,6 +2,7 @@ package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import lombok.ToString;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
 
 import java.time.Duration;
@@ -22,6 +23,10 @@ public class FakeVerificationMethodEligible extends AbstractVerificationMethodEl
 
     public FakeVerificationMethodEligible(final Duration duration) {
         super(NAME, new DefaultVerificationResults(), MAX_ATTEMPTS, duration);
+    }
+
+    public FakeVerificationMethodEligible(final VerificationResult result) {
+        this(result.getMethodName(), new DefaultVerificationResults(result));
     }
 
     public FakeVerificationMethodEligible(final VerificationResults results) {

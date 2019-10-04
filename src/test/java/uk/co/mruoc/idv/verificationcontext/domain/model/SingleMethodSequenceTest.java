@@ -3,12 +3,14 @@ package uk.co.mruoc.idv.verificationcontext.domain.model;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence.MethodNotFoundInSequenceException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -88,6 +90,24 @@ class SingleMethodSequenceTest {
 
         assertThat(sequence.containsMethod(method.getName())).isTrue();
         assertThat(sequence.containsMethod("other-name")).isFalse();
+    }
+
+    @Test
+    void shouldReturnContainsCompleteTrueIfMethodIsComplete() {
+        final VerificationMethod completeMethod = new FakeVerificationMethodEligible(new FakeVerificationResultSuccessful(FakeVerificationMethod.NAME));
+
+        final VerificationSequence sequence = new SingleMethodSequence(completeMethod);
+
+        assertThat(sequence.containsCompleteMethod(completeMethod.getName())).isTrue();
+    }
+
+    @Test
+    void shouldReturnContainsCompleteMethodFalseIfMethodIsIncomplete() {
+        final VerificationMethod incompleteMethod = new FakeVerificationMethodEligible(new FakeVerificationResultFailed(FakeVerificationMethod.NAME));
+
+        final VerificationSequence sequence = new SingleMethodSequence(incompleteMethod);
+
+        assertThat(sequence.containsCompleteMethod(incompleteMethod.getName())).isFalse();
     }
 
     @Test

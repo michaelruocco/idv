@@ -23,4 +23,9 @@ public abstract class AbstractVerificationAttempt implements VerificationAttempt
     private final Instant timestamp;
     private final boolean successful;
 
+    @Override
+    public String getAliasType() {
+        return providedAlias.getType();
+    }
+
 }

@@ -63,9 +63,7 @@ public class MultipleMethodSequence implements VerificationSequence {
 
     @Override
     public VerificationMethod getMethod(String methodName) {
-        return methods.stream()
-                .filter(method -> method.hasName(methodName))
-                .findFirst()
+        return getMethodOptional(methodName)
                 .orElseThrow(() -> new MethodNotFoundInSequenceException(methodName, getName()));
     }
 
@@ -77,6 +75,12 @@ public class MultipleMethodSequence implements VerificationSequence {
     @Override
     public boolean containsMethod(final String name) {
         return methods.stream().anyMatch(method -> method.hasName(name));
+    }
+
+    @Override
+    public boolean containsCompleteMethod(final String methodName) {
+        final Optional<VerificationMethod> method = getMethodOptional(methodName);
+        return method.map(VerificationMethod::isComplete).orElse(false);
     }
 
     @Override
@@ -162,6 +166,12 @@ public class MultipleMethodSequence implements VerificationSequence {
                 .filter(VerificationMethod::hasResults)
                 .map(VerificationMethod::getName)
                 .collect(Collectors.toSet());
+    }
+
+    private Optional<VerificationMethod> getMethodOptional(String methodName) {
+        return methods.stream()
+                .filter(method -> method.hasName(methodName))
+                .findFirst();
     }
 
     private static String buildDefaultName(final Collection<VerificationMethod> methods) {

@@ -7,6 +7,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationM
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.CannotAddResultToIneligibleMethodException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
@@ -112,6 +113,32 @@ class VerificationSequencesTest {
 
         assertThat(updatedSequences.getResults(sequence1.getName(), method1.getName())).containsExactly(result);
         assertThat(updatedSequences.getResults(sequence2.getName(), method2.getName())).containsExactly(result);
+    }
+
+    @Test
+    void shouldReturnContainsSequenceWithCompleteMethod() {
+        final VerificationMethod completeMethod = new FakeVerificationMethodEligible(new FakeVerificationResultSuccessful("method-name-1"));
+        final VerificationMethod incompleteMethod = new FakeVerificationMethodEligible(new FakeVerificationResultFailed("method-name-2"));
+        final VerificationSequence sequence1 = new SingleMethodSequence(completeMethod);
+        final VerificationSequence sequence2 = new SingleMethodSequence(incompleteMethod);
+
+        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+
+        assertThat(sequences.containsCompleteMethod(completeMethod.getName())).isTrue();
+        assertThat(sequences.containsCompleteMethod(incompleteMethod.getName())).isFalse();
+    }
+
+    @Test
+    void shouldReturnContainsCompleteSequenceContainingMethod() {
+        final VerificationMethod completeMethod = new FakeVerificationMethodEligible(new FakeVerificationResultSuccessful("method-name-1"));
+        final VerificationMethod incompleteMethod = new FakeVerificationMethodEligible(new FakeVerificationResultFailed("method-name-2"));
+        final VerificationSequence sequence1 = new SingleMethodSequence(completeMethod);
+        final VerificationSequence sequence2 = new SingleMethodSequence(incompleteMethod);
+
+        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+
+        assertThat(sequences.containsCompleteSequenceContainingMethod(completeMethod.getName())).isTrue();
+        assertThat(sequences.containsCompleteSequenceContainingMethod(incompleteMethod.getName())).isFalse();
     }
 
 }

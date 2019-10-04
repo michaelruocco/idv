@@ -68,9 +68,16 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
         return new VerificationSequences(updatedSequences);
     }
 
-
     private boolean hasSequencesWithNextMethod(final String methodName) {
         return sequences.stream().anyMatch(sequence -> sequence.hasNextMethod(methodName));
+    }
+
+    public boolean containsCompleteMethod(String methodName) {
+        return sequences.stream().anyMatch(sequence -> sequence.containsCompleteMethod(methodName));
+    }
+
+    public boolean containsCompleteSequenceContainingMethod(String methodName) {
+        return sequences.stream().anyMatch(sequence -> sequence.containsMethod(methodName) && sequence.isComplete());
     }
 
     public static class CannotCalculateMaxDurationOfEmptySequencesException extends RuntimeException {
