@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutStateMaxAttempts;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
 
 import java.util.Collections;
 import java.util.Map;

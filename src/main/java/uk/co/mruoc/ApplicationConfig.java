@@ -16,6 +16,7 @@ import uk.co.mruoc.idv.identity.dao.InMemoryIdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
+import uk.co.mruoc.idv.lockout.api.LockoutStateModule;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
@@ -52,6 +53,7 @@ public class ApplicationConfig {
         mapper.registerModule(new JsonApiModule());
         mapper.registerModule(new IdvModule());
         mapper.registerModule(new IdentityModule());
+        mapper.registerModule(new LockoutStateModule());
         mapper.registerModule(new JsonApiVerificationContextModule());
         mapper.registerModule(new MoneyModule());
         mapper.registerModule(new JavaTimeModule());

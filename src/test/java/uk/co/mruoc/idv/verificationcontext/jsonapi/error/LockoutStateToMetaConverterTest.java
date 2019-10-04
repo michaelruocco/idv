@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttemptsLocked;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutStateMaxAttempts;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
 
 import java.util.Map;
 

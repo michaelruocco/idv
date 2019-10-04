@@ -1,7 +1,5 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
-import uk.co.mruoc.idv.lockout.domain.service.LockoutStateMaxAttempts;
-
 import java.util.UUID;
 
 public class FakeLockoutStateMaxAttempts extends LockoutStateMaxAttempts {

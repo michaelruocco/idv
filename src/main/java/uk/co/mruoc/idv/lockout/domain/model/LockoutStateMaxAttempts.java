@@ -1,9 +1,6 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutType;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.util.UUID;
 
