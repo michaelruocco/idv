@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.0.5.RELEASE'
     id 'io.spring.dependency-management' version '1.0.7.RELEASE'
-    id 'com.diffplug.gradle.spotless' version '3.24.2'
+    id 'com.diffplug.gradle.spotless' version '3.24.3'
     id 'com.github.ben-manes.versions' version '0.25.0'
 }
 
