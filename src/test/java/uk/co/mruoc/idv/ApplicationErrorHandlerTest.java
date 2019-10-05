@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.verificationcontext;
+package uk.co.mruoc.idv;
 
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.Test;
@@ -58,7 +58,7 @@ class ApplicationErrorHandlerTest {
 
     @Test
     void shouldReturnDocumentForHttpMessageNotReadableException() {
-        final HttpMessageNotReadableException exception = new HttpMessageNotReadableException(MESSAGE);
+        final HttpMessageNotReadableException exception = mock(HttpMessageNotReadableException.class);
 
         final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
 
