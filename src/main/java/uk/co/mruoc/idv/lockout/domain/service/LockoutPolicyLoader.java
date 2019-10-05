@@ -7,7 +7,15 @@ import java.util.Collections;
 
 public class LockoutPolicyLoader {
 
-    private final Collection<LockoutPolicy> policies = Collections.singleton(new LockoutPolicyRsa());
+    private final Collection<LockoutPolicy> policies;
+
+    public LockoutPolicyLoader() {
+        this(Collections.singleton(new LockoutPolicyRsa()));
+    }
+
+    public LockoutPolicyLoader(final Collection<LockoutPolicy> policies) {
+        this.policies = policies;
+    }
 
     public LockoutPolicy load(final LockoutPolicyRequest request) {
         return policies.stream()

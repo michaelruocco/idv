@@ -26,6 +26,7 @@ public class LockoutStateValidator {
             super("locked");
             this.lockoutState = lockoutState;
         }
+
     }
 
 }

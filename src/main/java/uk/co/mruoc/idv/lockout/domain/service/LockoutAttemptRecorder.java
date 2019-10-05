@@ -43,7 +43,14 @@ public class LockoutAttemptRecorder {
     private VerificationAttempts handleSuccessful(final VerificationAttempt attempt) {
         log.info("handling successful attempt {}", attempt);
         final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
-        final VerificationAttempts resetAttempts = attempts.reset(); //TODO add lockout level service here and then reset accordingly
+        final LockoutPolicy policy = policyLoader.load(attempt);
+        final ResetAttemptsRequest request = ResetAttemptsRequest.builder()
+                .channelId(attempt.getChannelId())
+                .activityName(attempt.getActivityName())
+                .alias(attempt.getProvidedAlias())
+                .attempts(attempts)
+                .build();
+        final VerificationAttempts resetAttempts = policy.reset(request);
         dao.save(resetAttempts);
         log.info("returning reset attempts {}", resetAttempts);
         return resetAttempts;
