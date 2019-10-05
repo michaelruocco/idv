@@ -9,16 +9,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class RecordOnSequenceCompleteTest {
+class RecordOnMethodCompleteTest {
 
     private final VerificationContext context = mock(VerificationContext.class);
     private final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
 
-    private final RecordAttemptStrategy strategy = new RecordOnSequenceComplete();
+    private final RecordAttemptStrategy strategy = new RecordOnMethodComplete();
 
     @Test
-    void shouldReturnFalseIfContextDoesNotContainCompleteSequenceContainingResultMethod() {
-        given(context.containsCompleteSequenceContainingMethod(result.getMethodName())).willReturn(false);
+    void shouldReturnFalseIfContextDoesNotContainCompleteMethod() {
+        given(context.containsCompleteMethod(result.getMethodName())).willReturn(false);
         final RecordAttemptRequest request = RecordAttemptRequest.builder()
                 .context(context)
                 .result(result)
@@ -30,8 +30,8 @@ class RecordOnSequenceCompleteTest {
     }
 
     @Test
-    void shouldReturnTrueIfContextContainsCompleteSequenceContainingResultMethod() {
-        given(context.containsCompleteSequenceContainingMethod(result.getMethodName())).willReturn(true);
+    void shouldReturnTrueIfContextContainsCompleteMethod() {
+        given(context.containsCompleteMethod(result.getMethodName())).willReturn(true);
         final RecordAttemptRequest request = RecordAttemptRequest.builder()
                 .context(context)
                 .result(result)
