@@ -122,8 +122,10 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public VerificationAttemptsLoader verificationAttemptsLoader(final VerificationAttemptsDao dao) {
+    public VerificationAttemptsLoader verificationAttemptsLoader(final IdGenerator idGenerator,
+                                                                 final VerificationAttemptsDao dao) {
         return VerificationAttemptsLoader.builder()
+                .idGenerator(idGenerator)
                 .dao(dao)
                 .build();
     }
