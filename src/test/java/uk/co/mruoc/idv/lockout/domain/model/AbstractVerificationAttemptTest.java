@@ -79,6 +79,11 @@ class AbstractVerificationAttemptTest {
     }
 
     @Test
+    void shouldReturnAliasType() {
+        assertThat(attempt.getAliasType()).isEqualTo(PROVIDED_ALIAS.getType());
+    }
+
+    @Test
     void shouldPrintDetails() {
         final String details = attempt.toString();
 

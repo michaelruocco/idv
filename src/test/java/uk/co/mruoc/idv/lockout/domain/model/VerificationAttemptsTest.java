@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts.CannotAddAttemptException;
+import uk.co.mruoc.idv.lockout.domain.service.PredicateMatchesActivityNames;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -192,6 +193,28 @@ class VerificationAttemptsTest {
         final VerificationAttempts resetAttempts = attempts.resetByActivity(activityName);
 
         assertThat(resetAttempts).containsExactly(attempt);
+    }
+
+    @Test
+    void shouldCopyIdvIdWhenResetByPredicate() {
+        final UUID idvId = UUID.randomUUID();
+        final VerificationAttempt attempt = new FakeVerificationAttemptFailed(idvId);
+        final VerificationAttempts attempts = new VerificationAttempts(idvId, Collections.singleton(attempt));
+
+        final VerificationAttempts resetAttempts = attempts.resetBy(new PredicateMatchesActivityNames(attempt.getActivityName()));
+
+        assertThat(resetAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
+    }
+
+    @Test
+    void shouldRemoveAllAttemptsMatchingPredicateWhenResetByPredicate() {
+        final UUID idvId = UUID.randomUUID();
+        final VerificationAttempt attempt = new FakeVerificationAttemptFailed(idvId);
+        final VerificationAttempts attempts = new VerificationAttempts(idvId, Collections.singleton(attempt));
+
+        final VerificationAttempts resetAttempts = attempts.resetBy(new PredicateMatchesActivityNames(attempt.getActivityName()));
+
+        assertThat(resetAttempts).isEmpty();
     }
 
     @Test
