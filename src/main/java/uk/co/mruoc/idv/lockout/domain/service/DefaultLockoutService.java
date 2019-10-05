@@ -11,6 +11,7 @@ public class DefaultLockoutService implements LockoutService {
     private final LockoutAttemptRecorder attemptRecorder;
     private final LockoutStateLoader stateLoader;
     private final LockoutStateValidator stateValidator;
+    private final LockoutStateResetter stateResetter;
 
     @Override
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
@@ -20,6 +21,11 @@ public class DefaultLockoutService implements LockoutService {
     @Override
     public LockoutState loadState(final LoadLockoutStateRequest request) {
         return stateLoader.load(request);
+    }
+
+    @Override
+    public LockoutState resetState(final LoadLockoutStateRequest request) {
+        return stateResetter.reset(request);
     }
 
     @Override

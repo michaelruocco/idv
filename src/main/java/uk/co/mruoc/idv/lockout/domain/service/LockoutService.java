@@ -8,6 +8,8 @@ public interface LockoutService {
 
     LockoutState loadState(final LoadLockoutStateRequest request);
 
+    LockoutState resetState(final LoadLockoutStateRequest request);
+
     void validateState(final LoadLockoutStateRequest request);
 
 }

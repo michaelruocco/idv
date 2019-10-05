@@ -23,6 +23,7 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateResetter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationResultConverter;
@@ -141,6 +142,17 @@ public class ApplicationConfig {
     }
 
     @Bean
+    public LockoutStateResetter lockoutStateResetter(final LockoutPolicyLoader policyLoader,
+                                                     final VerificationAttemptsLoader attemptsLoader,
+                                                     final VerificationAttemptsDao dao) {
+        return LockoutStateResetter.builder()
+                .policyLoader(policyLoader)
+                .attemptsLoader(attemptsLoader)
+                .dao(dao)
+                .build();
+    }
+
+    @Bean
     public LockoutStateLoader lockoutStateLoader(final VerificationAttemptsLoader attemptsLoader,
                                                  final LockoutPolicyLoader policyLoader) {
         return LockoutStateLoader.builder()
@@ -159,11 +171,13 @@ public class ApplicationConfig {
     @Bean
     public LockoutService lockoutService(final LockoutAttemptRecorder attemptRecorder,
                                          final LockoutStateLoader stateLoader,
-                                         final LockoutStateValidator stateValidator) {
+                                         final LockoutStateValidator stateValidator,
+                                         final LockoutStateResetter stateResetter) {
         return DefaultLockoutService.builder()
                 .attemptRecorder(attemptRecorder)
                 .stateLoader(stateLoader)
                 .stateValidator(stateValidator)
+                .stateResetter(stateResetter)
                 .build();
     }
 

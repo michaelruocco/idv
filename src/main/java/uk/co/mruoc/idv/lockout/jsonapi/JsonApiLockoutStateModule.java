@@ -7,6 +7,9 @@ public class JsonApiLockoutStateModule extends LockoutStateModule {
 
     public JsonApiLockoutStateModule() {
         setMixInAnnotation(LockoutStateMaxAttempts.class, JsonApiLockoutStateMaxAttemptsMixin.class);
+
+        addDeserializer(ResetLockoutStateDocument.class, new ResetLockoutStateDocumentDeserializer());
+        addDeserializer(ResetLockoutStateAttributes.class, new ResetLockoutStateAttributesDeserializer());
     }
 
 }
