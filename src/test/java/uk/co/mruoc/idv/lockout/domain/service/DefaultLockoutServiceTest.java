@@ -15,11 +15,13 @@ class DefaultLockoutServiceTest {
     private final LockoutAttemptRecorder attemptRecorder = mock(LockoutAttemptRecorder.class);
     private final LockoutStateLoader stateLoader = mock(LockoutStateLoader.class);
     private final LockoutStateValidator stateValidator = mock(LockoutStateValidator.class);
+    private final LockoutStateResetter stateResetter = mock(LockoutStateResetter.class);
 
     private final LockoutService service = DefaultLockoutService.builder()
             .attemptRecorder(attemptRecorder)
             .stateLoader(stateLoader)
             .stateValidator(stateValidator)
+            .stateResetter(stateResetter)
             .build();
 
     @Test
@@ -53,6 +55,17 @@ class DefaultLockoutServiceTest {
         final ArgumentCaptor<LoadLockoutStateRequest> captor = ArgumentCaptor.forClass(LoadLockoutStateRequest.class);
         verify(stateValidator).validateState(captor.capture());
         assertThat(captor.getValue()).isEqualTo(request);
+    }
+
+    @Test
+    void shouldResetState() {
+        final LoadLockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
+        final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
+        given(stateResetter.reset(request)).willReturn(expectedState);
+
+        final LockoutState state = service.resetState(request);
+
+        assertThat(state).isEqualTo(expectedState);
     }
 
 }
