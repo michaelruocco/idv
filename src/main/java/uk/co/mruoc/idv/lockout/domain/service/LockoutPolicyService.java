@@ -18,7 +18,7 @@ public interface LockoutPolicyService {
         private final LockoutRequest request;
 
         public LockoutPolicyNotFoundException(final LockoutRequest request) {
-            super(String.format("channelId %s, activity %s aliasType %s",
+            super(String.format("channelId %s activity %s aliasType %s",
                     request.getChannelId(),
                     request.getActivityName(),
                     request.getAliasType()));
