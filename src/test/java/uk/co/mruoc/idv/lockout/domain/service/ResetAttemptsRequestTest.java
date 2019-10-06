@@ -7,6 +7,9 @@ import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.service.ResetAttemptsRequest.ResetAttemptsRequestBuilder;
 
+import java.time.Instant;
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ResetAttemptsRequestTest {
@@ -38,6 +41,33 @@ class ResetAttemptsRequestTest {
         final ResetAttemptsRequest request = builder.alias(alias).build();
 
         assertThat(request.getAlias()).isEqualTo(alias);
+    }
+
+    @Test
+    void shouldReturnAliasType() {
+        final Alias alias = new FakeCreditCardNumber();
+
+        final ResetAttemptsRequest request = builder.alias(alias).build();
+
+        assertThat(request.getAliasType()).isEqualTo(alias.getType());
+    }
+
+    @Test
+    void shouldReturnTimestamp() {
+        final Instant timestamp = Instant.now();
+
+        final ResetAttemptsRequest request = builder.timestamp(timestamp).build();
+
+        assertThat(request.getTimestamp()).isEqualTo(timestamp);
+    }
+
+    @Test
+    void shouldReturnIdvIdValue() {
+        final UUID idvIdValue = UUID.randomUUID();
+
+        final ResetAttemptsRequest request = builder.idvIdValue(idvIdValue).build();
+
+        assertThat(request.getIdvIdValue()).isEqualTo(idvIdValue);
     }
 
     @Test

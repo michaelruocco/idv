@@ -29,9 +29,9 @@ class CalculateLockoutStateRequestTest {
     void shouldReturnActivityName() {
         final String activityName = "activityName";
 
-        final CalculateLockoutStateRequest request = builder.channelId(activityName).build();
+        final CalculateLockoutStateRequest request = builder.activityName(activityName).build();
 
-        assertThat(request.getChannelId()).isEqualTo(activityName);
+        assertThat(request.getActivityName()).isEqualTo(activityName);
     }
 
     @Test
@@ -50,6 +50,15 @@ class CalculateLockoutStateRequestTest {
         final CalculateLockoutStateRequest request = builder.alias(alias).build();
 
         assertThat(request.getAlias()).isEqualTo(alias);
+    }
+
+    @Test
+    void shouldReturnAliasType() {
+        final Alias alias = new FakeCreditCardNumber();
+
+        final CalculateLockoutStateRequest request = builder.alias(alias).build();
+
+        assertThat(request.getAliasType()).isEqualTo(alias.getType());
     }
 
     @Test

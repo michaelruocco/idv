@@ -19,7 +19,6 @@ public class ResetAttemptsRequest implements LockoutStateRequest {
     private final UUID idvIdValue;
     private final VerificationAttempts attempts;
 
-
     @Override
     public String getAliasType() {
         return alias.getType();
