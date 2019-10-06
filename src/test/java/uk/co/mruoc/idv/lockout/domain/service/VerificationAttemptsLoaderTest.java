@@ -22,7 +22,7 @@ class VerificationAttemptsLoaderTest {
     private final IdGenerator idGenerator = new FakeIdGenerator(ATTEMPTS_ID);
     private final VerificationAttemptsDao dao = mock(VerificationAttemptsDao.class);
 
-    private final VerificationAttemptsLoader loader = VerificationAttemptsLoader.builder()
+    private final VerificationAttemptsLoader loader = DefaultVerificationAttemptsLoader.builder()
             .idGenerator(idGenerator)
             .dao(dao)
             .build();

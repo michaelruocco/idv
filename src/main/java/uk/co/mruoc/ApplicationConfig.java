@@ -18,7 +18,9 @@ import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.DefaultVerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
@@ -90,7 +92,7 @@ public class ApplicationConfig {
 
     @Bean
     public LockoutPolicyService lockoutPolicyLoader() {
-        return new LockoutPolicyService();
+        return new DefaultLockoutPolicyService();
     }
 
     @Bean
@@ -130,7 +132,7 @@ public class ApplicationConfig {
     @Bean
     public VerificationAttemptsLoader verificationAttemptsLoader(final IdGenerator idGenerator,
                                                                  final VerificationAttemptsDao dao) {
-        return VerificationAttemptsLoader.builder()
+        return DefaultVerificationAttemptsLoader.builder()
                 .idGenerator(idGenerator)
                 .dao(dao)
                 .build();
