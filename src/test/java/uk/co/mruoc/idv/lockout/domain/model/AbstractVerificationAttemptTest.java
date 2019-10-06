@@ -3,11 +3,13 @@ package uk.co.mruoc.idv.lockout.domain.model;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 class AbstractVerificationAttemptTest {
 
@@ -15,7 +17,7 @@ class AbstractVerificationAttemptTest {
     private static final String CHANNEL_ID = "channel-id";
     private static final String ACTIVITY_NAME = "activity-name";
     private static final Alias PROVIDED_ALIAS = new FakeCreditCardNumber();
-    private static final UUID IDV_ID = UUID.fromString("f8c33391-7d70-4abe-bd8a-8e41e64f446c");
+    private static final UUID IDV_ID_VALUE = UUID.fromString("f8c33391-7d70-4abe-bd8a-8e41e64f446c");
     private static final String METHOD_NAME = "method-name";
     private static final UUID VERIFICATION_ID = UUID.fromString("ca0b47c5-4bac-4122-ba82-8cbf2713922e");
     private static final Instant TIMESTAMP = Instant.parse("2019-09-27T09:40:29.982887Z");
@@ -26,7 +28,7 @@ class AbstractVerificationAttemptTest {
             CHANNEL_ID,
             ACTIVITY_NAME,
             PROVIDED_ALIAS,
-            IDV_ID,
+            IDV_ID_VALUE,
             METHOD_NAME,
             VERIFICATION_ID,
             TIMESTAMP,
@@ -55,7 +57,7 @@ class AbstractVerificationAttemptTest {
 
     @Test
     void shouldReturnIdvId() {
-        assertThat(attempt.getIdvIdValue()).isEqualTo(IDV_ID);
+        assertThat(attempt.getIdvIdValue()).isEqualTo(IDV_ID_VALUE);
     }
 
     @Test
@@ -81,6 +83,51 @@ class AbstractVerificationAttemptTest {
     @Test
     void shouldReturnAliasType() {
         assertThat(attempt.getAliasType()).isEqualTo(PROVIDED_ALIAS.getType());
+    }
+
+    @Test
+    void shouldPopulateChannelIdOnCalculateLockoutStateRequest() {
+        final VerificationAttempts attempts = mock(VerificationAttempts.class);
+
+        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
+
+        assertThat(request.getChannelId()).isEqualTo(CHANNEL_ID);
+    }
+
+    @Test
+    void shouldPopulateActivityNameOnCalculateLockoutStateRequest() {
+        final VerificationAttempts attempts = mock(VerificationAttempts.class);
+
+        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
+
+        assertThat(request.getActivityName()).isEqualTo(ACTIVITY_NAME);
+    }
+
+    @Test
+    void shouldPopulateAliasOnCalculateLockoutStateRequest() {
+        final VerificationAttempts attempts = mock(VerificationAttempts.class);
+
+        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
+
+        assertThat(request.getAlias()).isEqualTo(PROVIDED_ALIAS);
+    }
+
+    @Test
+    void shouldPopulateIdvIdValueOnCalculateLockoutStateRequest() {
+        final VerificationAttempts attempts = mock(VerificationAttempts.class);
+
+        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
+
+        assertThat(request.getIdvIdValue()).isEqualTo(IDV_ID_VALUE);
+    }
+
+    @Test
+    void shouldPopulateTimestampOnCalculateLockoutStateRequest() {
+        final VerificationAttempts attempts = mock(VerificationAttempts.class);
+
+        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
+
+        assertThat(request.getTimestamp()).isEqualTo(TIMESTAMP);
     }
 
     @Test
