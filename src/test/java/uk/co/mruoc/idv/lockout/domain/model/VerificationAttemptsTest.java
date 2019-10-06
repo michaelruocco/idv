@@ -130,7 +130,7 @@ class VerificationAttemptsTest {
         final Alias alias = new FakeCreditCardNumber();
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final VerificationAttempt attemptWithAlias = mock(VerificationAttempt.class);
-        given(attemptWithAlias.getProvidedAlias()).willReturn(alias);
+        given(attemptWithAlias.getAlias()).willReturn(alias);
         final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
 
         final VerificationAttempts resetAttempts = attempts.resetByAlias(alias);

@@ -22,7 +22,6 @@ class LockoutStateToMetaConverterTest {
         assertThat(meta).containsOnly(
                 entry("maxNumberOfAttempts", lockoutState.getMaxNumberOfAttempts()),
                 entry("numberOfAttemptsRemaining", lockoutState.getNumberOfAttemptsRemaining()),
-                entry("lockoutType", lockoutState.getType()),
                 entry("idvId", lockoutState.getIdvId())
         );
     }

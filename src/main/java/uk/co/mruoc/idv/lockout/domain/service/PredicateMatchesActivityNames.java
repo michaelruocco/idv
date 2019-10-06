@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-public class PredicateMatchesActivityNames implements Predicate<LockoutPolicyRequest> {
+public class PredicateMatchesActivityNames implements Predicate<LockoutRequest> {
 
     private final Collection<String> activityNames;
 
@@ -17,7 +17,7 @@ public class PredicateMatchesActivityNames implements Predicate<LockoutPolicyReq
     }
 
     @Override
-    public boolean test(final LockoutPolicyRequest provider) {
+    public boolean test(final LockoutRequest provider) {
         return activityNames.isEmpty() || activityNames.contains(provider.getActivityName());
     }
 

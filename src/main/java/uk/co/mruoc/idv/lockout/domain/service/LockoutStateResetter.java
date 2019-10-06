@@ -14,41 +14,15 @@ public class LockoutStateResetter {
 
     private final VerificationAttemptsLoader attemptsLoader;
     private final VerificationAttemptsDao dao;
-    private final LockoutPolicyLoader policyLoader;
+    private final LockoutPolicyService policyService;
 
-    public LockoutState reset(final LoadLockoutStateRequest loadRequest) {
-        log.info("resetting lockout state for request {}", loadRequest);
-        final VerificationAttempts attempts = loadAttempts(loadRequest.getIdvIdValue());
-        final LockoutPolicy policy = policyLoader.load(loadRequest);
-        final VerificationAttempts resetAttempts = reset(attempts, policy, loadRequest);
-        dao.save(resetAttempts);
-        return calculateState(resetAttempts, policy, loadRequest);
-    }
-
-    private VerificationAttempts reset(final VerificationAttempts attempts,
-                                       final LockoutPolicy policy,
-                                       final LoadLockoutStateRequest loadRequest) {
-        final ResetAttemptsRequest resetRequest = ResetAttemptsRequest.builder()
-                .channelId(loadRequest.getChannelId())
-                .activityName(loadRequest.getActivityName())
-                .alias(loadRequest.getAlias())
-                .attempts(attempts)
-                .build();
-        return policy.reset(resetRequest);
-    }
-
-    private LockoutState calculateState(final VerificationAttempts attempts,
-                                        final LockoutPolicy policy,
-                                        final LoadLockoutStateRequest loadRequest) {
-        final CalculateLockoutStateRequest calculateRequest = CalculateLockoutStateRequest.builder()
-                .channelId(loadRequest.getChannelId())
-                .activityName(loadRequest.getActivityName())
-                .alias(loadRequest.getAlias())
-                .idvIdValue(loadRequest.getIdvIdValue())
-                .timestamp(loadRequest.getTimestamp())
-                .attempts(attempts)
-                .build();
-        return policy.calculateLockoutState(calculateRequest);
+    public LockoutState reset(final LockoutStateRequest lockoutRequest) {
+        log.info("resetting lockout state for request {}", lockoutRequest);
+        final VerificationAttempts attempts = loadAttempts(lockoutRequest.getIdvIdValue());
+        final CalculateLockoutStateRequest resetRequest = lockoutRequest.withAttempts(attempts);
+        final LockoutState state = policyService.resetState(resetRequest);
+        dao.save(state.getAttempts());
+        return state;
     }
 
     private VerificationAttempts loadAttempts(final UUID idvId) {

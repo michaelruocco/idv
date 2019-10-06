@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,13 +71,13 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return toAttempts(remainingAttempts);
     }
 
-    public VerificationAttempts resetBy(final Predicate<LockoutPolicyRequest> filter) {
+    public VerificationAttempts resetBy(final Predicate<LockoutRequest> filter) {
         final VerificationAttempts filteredAttempts = filterBy(filter);
         final Collection<VerificationAttempt> remainingAttempts = CollectionUtils.subtract(attempts, filteredAttempts);
         return toAttempts(remainingAttempts);
     }
 
-    public VerificationAttempts filterBy(final Predicate<LockoutPolicyRequest> filter) {
+    public VerificationAttempts filterBy(final Predicate<LockoutRequest> filter) {
         final Collection<VerificationAttempt> filteredAttempts = attempts.stream()
                 .filter(filter)
                 .collect(Collectors.toList());
@@ -86,7 +86,7 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
 
     public VerificationAttempts getAttemptsWithAlias(final Alias alias) {
         Collection<VerificationAttempt> attemptsWithAlias = attempts.stream()
-                .filter(attempt -> alias.equals(attempt.getProvidedAlias()))
+                .filter(attempt -> alias.equals(attempt.getAlias()))
                 .collect(Collectors.toList());
         return toAttempts(attemptsWithAlias);
     }

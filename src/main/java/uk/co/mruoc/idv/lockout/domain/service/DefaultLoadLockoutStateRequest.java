@@ -2,12 +2,13 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.time.Instant;
 import java.util.UUID;
 
 @Builder
-public class DefaultLoadLockoutStateRequest implements LoadLockoutStateRequest {
+public class DefaultLoadLockoutStateRequest implements LockoutStateRequest {
 
     private final String channelId;
     private final String activityName;
@@ -43,6 +44,18 @@ public class DefaultLoadLockoutStateRequest implements LoadLockoutStateRequest {
     @Override
     public UUID getIdvIdValue() {
         return idvIdValue;
+    }
+
+    @Override
+    public CalculateLockoutStateRequest withAttempts(final VerificationAttempts attempts) {
+        return CalculateLockoutStateRequest.builder()
+                .channelId(channelId)
+                .activityName(activityName)
+                .alias(alias)
+                .timestamp(timestamp)
+                .idvIdValue(idvIdValue)
+                .attempts(attempts)
+                .build();
     }
 
 }

@@ -1,12 +1,12 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 
 import java.time.Instant;
 import java.util.UUID;
 
-public interface VerificationAttempt extends LockoutPolicyRequest {
+public interface VerificationAttempt extends LockoutStateRequest {
 
     UUID getContextId();
 
@@ -20,6 +20,6 @@ public interface VerificationAttempt extends LockoutPolicyRequest {
 
     Instant getTimestamp();
 
-    Alias getProvidedAlias();
+    Alias getAlias();
 
 }

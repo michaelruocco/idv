@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.verificationcontext.domain.service;
 import lombok.Builder;
 import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLoadLockoutStateRequest;
-import uk.co.mruoc.idv.lockout.domain.service.LoadLockoutStateRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
@@ -38,7 +38,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
     }
 
     private void validateLockoutState(final VerificationContext context) {
-        final LoadLockoutStateRequest request = DefaultLoadLockoutStateRequest.builder()
+        final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder()
                 .channelId(context.getChannelId())
                 .activityName(context.getActivityName())
                 .alias(context.getProvidedAlias())

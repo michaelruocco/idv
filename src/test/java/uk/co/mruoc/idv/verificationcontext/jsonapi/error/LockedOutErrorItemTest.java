@@ -39,7 +39,6 @@ class LockedOutErrorItemTest {
         assertThat(error.getMeta()).containsOnly(
                 entry("maxNumberOfAttempts", LOCKOUT_STATE_MAX_ATTEMPTS.getMaxNumberOfAttempts()),
                 entry("numberOfAttemptsRemaining", LOCKOUT_STATE_MAX_ATTEMPTS.getNumberOfAttemptsRemaining()),
-                entry("lockoutType", LOCKOUT_STATE_MAX_ATTEMPTS.getType()),
                 entry("idvId", LOCKOUT_STATE_MAX_ATTEMPTS.getIdvId())
         );
     }

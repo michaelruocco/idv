@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-public class PredicateMatchesAliasTypes implements Predicate<LockoutPolicyRequest> {
+public class PredicateMatchesAliasTypes implements Predicate<LockoutRequest> {
 
     private final Collection<String> aliasTypes;
 
@@ -17,7 +17,7 @@ public class PredicateMatchesAliasTypes implements Predicate<LockoutPolicyReques
     }
 
     @Override
-    public boolean test(final LockoutPolicyRequest provider) {
+    public boolean test(final LockoutRequest provider) {
         return aliasTypes.isEmpty() || aliasTypes.contains(provider.getAliasType());
     }
 

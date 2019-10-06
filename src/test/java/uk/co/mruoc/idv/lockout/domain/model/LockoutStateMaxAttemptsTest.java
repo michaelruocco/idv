@@ -24,11 +24,6 @@ class LockoutStateMaxAttemptsTest {
     }
 
     @Test
-    void shouldReturnLockoutType() {
-        assertThat(state.getType()).isEqualTo(LockoutType.MAX_ATTEMPTS);
-    }
-
-    @Test
     void shouldReturnAttempts() {
         assertThat(state.getAttempts()).isEqualTo(attempts);
     }

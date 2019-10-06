@@ -20,7 +20,7 @@ import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyLoader;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateResetter;
@@ -88,8 +88,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public LockoutPolicyLoader lockoutPolicyLoader() {
-        return new LockoutPolicyLoader();
+    public LockoutPolicyService lockoutPolicyLoader() {
+        return new LockoutPolicyService();
     }
 
     @Bean
@@ -132,23 +132,23 @@ public class ApplicationConfig {
 
     @Bean
     public LockoutAttemptRecorder lockoutAttemptRecorder(final VerificationResultConverter resultConverter,
-                                                         final LockoutPolicyLoader policyLoader,
+                                                         final LockoutPolicyService policyService,
                                                          final VerificationAttemptsLoader attemptsLoader,
                                                          final VerificationAttemptsDao dao) {
         return LockoutAttemptRecorder.builder()
                 .resultConverter(resultConverter)
-                .policyLoader(policyLoader)
+                .policyService(policyService)
                 .attemptsLoader(attemptsLoader)
                 .dao(dao)
                 .build();
     }
 
     @Bean
-    public LockoutStateResetter lockoutStateResetter(final LockoutPolicyLoader policyLoader,
+    public LockoutStateResetter lockoutStateResetter(final LockoutPolicyService policyService,
                                                      final VerificationAttemptsLoader attemptsLoader,
                                                      final VerificationAttemptsDao dao) {
         return LockoutStateResetter.builder()
-                .policyLoader(policyLoader)
+                .policyService(policyService)
                 .attemptsLoader(attemptsLoader)
                 .dao(dao)
                 .build();
@@ -156,9 +156,9 @@ public class ApplicationConfig {
 
     @Bean
     public LockoutStateLoader lockoutStateLoader(final VerificationAttemptsLoader attemptsLoader,
-                                                 final LockoutPolicyLoader policyLoader) {
+                                                 final LockoutPolicyService policyService) {
         return LockoutStateLoader.builder()
-                .policyLoader(policyLoader)
+                .policyService(policyService)
                 .attemptsLoader(attemptsLoader)
                 .build();
     }

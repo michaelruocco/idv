@@ -8,8 +8,6 @@ public interface LockoutState {
 
     UUID getIdvId();
 
-    LockoutType getType();
-
     boolean isLocked();
 
     VerificationAttempts getAttempts();

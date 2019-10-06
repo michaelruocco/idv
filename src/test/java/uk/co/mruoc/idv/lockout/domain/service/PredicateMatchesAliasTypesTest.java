@@ -14,8 +14,8 @@ class PredicateMatchesAliasTypesTest {
 
     @Test
     void shouldReturnTrueIfLockoutPolicyRequestMatchesAliasType() {
-        final Predicate<LockoutPolicyRequest> predicate = new PredicateMatchesAliasTypes(ALIAS_TYPE);
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final Predicate<LockoutRequest> predicate = new PredicateMatchesAliasTypes(ALIAS_TYPE);
+        final LockoutStateRequest request = mock(LockoutStateRequest.class);
         given(request.getAliasType()).willReturn(ALIAS_TYPE);
 
         boolean result = predicate.test(request);
@@ -25,8 +25,8 @@ class PredicateMatchesAliasTypesTest {
 
     @Test
     void shouldReturnFalseIfLockoutPolicyRequestDoesNotMatchAliasType() {
-        final Predicate<LockoutPolicyRequest> predicate = new PredicateMatchesAliasTypes(ALIAS_TYPE);
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final Predicate<LockoutRequest> predicate = new PredicateMatchesAliasTypes(ALIAS_TYPE);
+        final LockoutStateRequest request = mock(LockoutStateRequest.class);
         given(request.getAliasType()).willReturn("other-alias-type");
 
         boolean result = predicate.test(request);
@@ -36,8 +36,8 @@ class PredicateMatchesAliasTypesTest {
 
     @Test
     void shouldReturnTrueForAllAliasTypesIfNoneProvided() {
-        final Predicate<LockoutPolicyRequest> predicate = new PredicateMatchesAliasTypes();
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final Predicate<LockoutRequest> predicate = new PredicateMatchesAliasTypes();
+        final LockoutStateRequest request = mock(LockoutStateRequest.class);
         given(request.getAliasType()).willReturn("any-alias-type");
 
         boolean result = predicate.test(request);

@@ -9,7 +9,7 @@ public class LockoutStateValidator {
 
     private final LockoutStateLoader stateLoader;
 
-    public boolean validateState(final LoadLockoutStateRequest request) {
+    public boolean validateState(final LockoutStateRequest request) {
         final LockoutState lockoutState = stateLoader.load(request);
         if (lockoutState.isLocked()) {
             throw new LockedOutException(lockoutState);

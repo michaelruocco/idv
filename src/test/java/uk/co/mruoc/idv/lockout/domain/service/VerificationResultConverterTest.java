@@ -90,7 +90,7 @@ class VerificationResultConverterTest {
 
         final VerificationAttempt attempt = converter.toAttempt(result, context);
 
-        assertThat(attempt.getProvidedAlias()).isEqualTo(context.getProvidedAlias());
+        assertThat(attempt.getAlias()).isEqualTo(context.getProvidedAlias());
     }
 
     @Test
@@ -173,7 +173,7 @@ class VerificationResultConverterTest {
 
         final VerificationAttempt attempt = converter.toAttempt(result, context);
 
-        assertThat(attempt.getProvidedAlias()).isEqualTo(context.getProvidedAlias());
+        assertThat(attempt.getAlias()).isEqualTo(context.getProvidedAlias());
     }
 
     @Test

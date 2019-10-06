@@ -14,7 +14,7 @@ import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.LoadIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLoadLockoutStateRequest;
-import uk.co.mruoc.idv.lockout.domain.service.LoadLockoutStateRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.jsonapi.LockoutStateDocument;
 import uk.co.mruoc.idv.lockout.jsonapi.ResetLockoutStateAttributes;
@@ -63,7 +63,7 @@ public class LockoutController {
                                           final String activityName,
                                           final Alias alias,
                                           final Identity identity) {
-        final LoadLockoutStateRequest request = toLoadLockoutStateRequest(channelId, activityName, alias, identity);
+        final LockoutStateRequest request = toLockoutRequest(channelId, activityName, alias, identity);
         return service.loadState(request);
     }
 
@@ -72,14 +72,14 @@ public class LockoutController {
         final String channelId = attributes.getChannelId();
         final String activityName = attributes.getActivityName();
         final Alias alias = attributes.getAlias();
-        final LoadLockoutStateRequest request = toLoadLockoutStateRequest(channelId, activityName, alias, identity);
+        final LockoutStateRequest request = toLockoutRequest(channelId, activityName, alias, identity);
         return service.resetState(request);
     }
 
-    private LoadLockoutStateRequest toLoadLockoutStateRequest(final String channelId,
-                                                              final String activityName,
-                                                              final Alias alias,
-                                                              final Identity identity) {
+    private LockoutStateRequest toLockoutRequest(final String channelId,
+                                                 final String activityName,
+                                                 final Alias alias,
+                                                 final Identity identity) {
         return DefaultLoadLockoutStateRequest.builder()
                 .timestamp(timeService.now())
                 .channelId(channelId)

@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Predicate;
 
-public class PredicateMatchesChannel implements Predicate<LockoutPolicyRequest> {
+public class PredicateMatchesChannel implements Predicate<LockoutRequest> {
 
     private final Collection<String> channelIds;
 
@@ -17,7 +17,7 @@ public class PredicateMatchesChannel implements Predicate<LockoutPolicyRequest> 
     }
 
     @Override
-    public boolean test(final LockoutPolicyRequest request) {
+    public boolean test(final LockoutRequest request) {
         return channelIds.isEmpty() || channelIds.contains(request.getChannelId());
     }
 

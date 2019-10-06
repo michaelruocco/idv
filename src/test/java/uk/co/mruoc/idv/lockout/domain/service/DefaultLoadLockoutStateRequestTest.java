@@ -18,7 +18,7 @@ class DefaultLoadLockoutStateRequestTest {
     void shouldReturnChannelId() {
         final String channelId = "channelId";
 
-        final LoadLockoutStateRequest request = builder.channelId(channelId).build();
+        final LockoutStateRequest request = builder.channelId(channelId).build();
 
         assertThat(request.getChannelId()).isEqualTo(channelId);
     }
@@ -27,7 +27,7 @@ class DefaultLoadLockoutStateRequestTest {
     void shouldReturnActivityName() {
         final String activityName = "activityName";
 
-        final LoadLockoutStateRequest request = builder.activityName(activityName).build();
+        final LockoutStateRequest request = builder.activityName(activityName).build();
 
         assertThat(request.getActivityName()).isEqualTo(activityName);
     }
@@ -36,7 +36,7 @@ class DefaultLoadLockoutStateRequestTest {
     void shouldReturnTimestamp() {
         final Instant timestamp = Instant.now();
 
-        final LoadLockoutStateRequest request = builder.timestamp(timestamp).build();
+        final LockoutStateRequest request = builder.timestamp(timestamp).build();
 
         assertThat(request.getTimestamp()).isEqualTo(timestamp);
     }
@@ -45,7 +45,7 @@ class DefaultLoadLockoutStateRequestTest {
     void shouldReturnAlias() {
         final Alias alias = new FakeCreditCardNumber();
 
-        final LoadLockoutStateRequest request = builder.alias(alias).build();
+        final LockoutStateRequest request = builder.alias(alias).build();
 
         assertThat(request.getAlias()).isEqualTo(alias);
     }
@@ -54,7 +54,7 @@ class DefaultLoadLockoutStateRequestTest {
     void shouldReturnAliasType() {
         final Alias alias = new FakeCreditCardNumber();
 
-        final LoadLockoutStateRequest request = builder.alias(alias).build();
+        final LockoutStateRequest request = builder.alias(alias).build();
 
         assertThat(request.getAliasType()).isEqualTo(alias.getType());
     }
@@ -63,7 +63,7 @@ class DefaultLoadLockoutStateRequestTest {
     void shouldReturnIdvIdValue() {
         final UUID idvIdValue = UUID.randomUUID();
 
-        final LoadLockoutStateRequest request = builder.idvIdValue(idvIdValue).build();
+        final LockoutStateRequest request = builder.idvIdValue(idvIdValue).build();
 
         assertThat(request.getIdvIdValue()).isEqualTo(idvIdValue);
     }

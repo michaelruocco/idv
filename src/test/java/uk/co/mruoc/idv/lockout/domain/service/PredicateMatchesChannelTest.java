@@ -14,8 +14,8 @@ class PredicateMatchesChannelTest {
 
     @Test
     void shouldReturnTrueIfLockoutPolicyRequestMatchesChannelId() {
-        final Predicate<LockoutPolicyRequest> predicate = new PredicateMatchesChannel(CHANNEL_ID);
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final Predicate<LockoutRequest> predicate = new PredicateMatchesChannel(CHANNEL_ID);
+        final LockoutStateRequest request = mock(LockoutStateRequest.class);
         given(request.getChannelId()).willReturn(CHANNEL_ID);
 
         boolean result = predicate.test(request);
@@ -25,8 +25,8 @@ class PredicateMatchesChannelTest {
 
     @Test
     void shouldReturnFalseIfLockoutPolicyRequestDoesNotMatchChannelId() {
-        final Predicate<LockoutPolicyRequest> predicate = new PredicateMatchesChannel(CHANNEL_ID);
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final Predicate<LockoutRequest> predicate = new PredicateMatchesChannel(CHANNEL_ID);
+        final LockoutStateRequest request = mock(LockoutStateRequest.class);
         given(request.getChannelId()).willReturn("other-channel-id");
 
         boolean result = predicate.test(request);
@@ -36,8 +36,8 @@ class PredicateMatchesChannelTest {
 
     @Test
     void shouldReturnTrueForAllChannelIdsIfNoneProvided() {
-        final Predicate<LockoutPolicyRequest> predicate = new PredicateMatchesChannel();
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final Predicate<LockoutRequest> predicate = new PredicateMatchesChannel();
+        final LockoutStateRequest request = mock(LockoutStateRequest.class);
         given(request.getChannelId()).willReturn("any-channel-id");
 
         boolean result = predicate.test(request);

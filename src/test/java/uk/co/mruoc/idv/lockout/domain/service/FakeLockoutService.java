@@ -8,9 +8,9 @@ public class FakeLockoutService implements LockoutService {
     private LockoutState stateToReturn;
 
     private RecordAttemptRequest lastRecordAttemptRequest;
-    private LoadLockoutStateRequest lastLoadStateRequest;
-    private LoadLockoutStateRequest lastValidateStateRequest;
-    private LoadLockoutStateRequest lastResetStateRequest;
+    private LockoutStateRequest lastLoadStateRequest;
+    private LockoutStateRequest lastValidateStateRequest;
+    private LockoutStateRequest lastResetStateRequest;
 
     private boolean hasLockedState;
 
@@ -21,19 +21,19 @@ public class FakeLockoutService implements LockoutService {
     }
 
     @Override
-    public LockoutState loadState(final LoadLockoutStateRequest request) {
+    public LockoutState loadState(final LockoutStateRequest request) {
         this.lastLoadStateRequest = request;
         return stateToReturn;
     }
 
     @Override
-    public LockoutState resetState(final LoadLockoutStateRequest request) {
+    public LockoutState resetState(final LockoutStateRequest request) {
         this.lastResetStateRequest = request;
         return stateToReturn;
     }
 
     @Override
-    public void validateState(final LoadLockoutStateRequest request) {
+    public void validateState(final LockoutStateRequest request) {
         this.lastValidateStateRequest = request;
         if (hasLockedState) {
             throw new LockedOutException(stateToReturn);
@@ -48,15 +48,15 @@ public class FakeLockoutService implements LockoutService {
         return lastRecordAttemptRequest;
     }
 
-    public LoadLockoutStateRequest getLastLoadStateRequest() {
+    public LockoutStateRequest getLastLoadStateRequest() {
         return lastLoadStateRequest;
     }
 
-    public LoadLockoutStateRequest getLastValidateStateRequest() {
+    public LockoutStateRequest getLastValidateStateRequest() {
         return lastValidateStateRequest;
     }
 
-    public LoadLockoutStateRequest getLastResetStateRequest() {
+    public LockoutStateRequest getLastResetStateRequest() {
         return lastResetStateRequest;
     }
 

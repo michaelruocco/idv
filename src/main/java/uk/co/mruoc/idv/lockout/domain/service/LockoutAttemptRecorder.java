@@ -18,69 +18,52 @@ public class LockoutAttemptRecorder {
     private final VerificationResultConverter resultConverter;
     private final VerificationAttemptsLoader attemptsLoader;
     private final VerificationAttemptsDao dao;
-    private final LockoutPolicyLoader policyLoader;
+    private final LockoutPolicyService policyService;
 
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
         final VerificationResult result = request.getResult();
         final VerificationContext context = request.getContext();
         final VerificationAttempt attempt = resultConverter.toAttempt(result, context);
-        final LockoutPolicy policy = policyLoader.load(attempt);
-        if (policy.shouldRecordAttempt(request)) {
-            final VerificationAttempts attempts = recordAttempt(attempt);
-            return calculateLockoutState(policy, attempt, attempts);
+        if (policyService.shouldRecordAttempt(request)) {
+            return recordAttempt(attempt);
         }
-        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
-        return calculateLockoutState(policy, attempt, attempts);
+        return loadState(attempt);
     }
 
-    private VerificationAttempts recordAttempt(final VerificationAttempt attempt) {
+    private LockoutState recordAttempt(final VerificationAttempt attempt) {
         if (attempt.isSuccessful()) {
-            return handleSuccessful(attempt);
+            return resetLockoutState(attempt);
         }
-        return handleFailed(attempt);
+        return saveFailedAttempt(attempt);
     }
 
-    private VerificationAttempts handleSuccessful(final VerificationAttempt attempt) {
-        log.info("handling successful attempt {}", attempt);
+    private LockoutState resetLockoutState(final VerificationAttempt attempt) {
+        log.info("resetting lockout state after successful attempt {}", attempt);
         final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
-        final LockoutPolicy policy = policyLoader.load(attempt);
-        final ResetAttemptsRequest request = ResetAttemptsRequest.builder()
-                .channelId(attempt.getChannelId())
-                .activityName(attempt.getActivityName())
-                .alias(attempt.getProvidedAlias())
-                .attempts(attempts)
-                .build();
-        final VerificationAttempts resetAttempts = policy.reset(request);
-        dao.save(resetAttempts);
-        log.info("returning reset attempts {}", resetAttempts);
-        return resetAttempts;
+        return policyService.resetState(attempt.withAttempts(attempts));
     }
 
-    private VerificationAttempts handleFailed(final VerificationAttempt attempt) {
-        log.info("handling failed attempt {}", attempt);
+    private LockoutState saveFailedAttempt(final VerificationAttempt attempt) {
+        log.info("saving failed attempt {}", attempt);
         final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
         final VerificationAttempts updatedAttempts = attempts.add(attempt);
         dao.save(updatedAttempts);
-        log.info("returning updated attempts {}", updatedAttempts);
-        return updatedAttempts;
+        return calculateState(attempt, updatedAttempts);
+    }
+
+    private LockoutState loadState(final VerificationAttempt attempt) {
+        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
+        return calculateState(attempt, attempts);
     }
 
     private VerificationAttempts loadAttempts(final UUID idvId) {
         return attemptsLoader.load(idvId);
     }
 
-    private LockoutState calculateLockoutState(final LockoutPolicy policy,
-                                               final VerificationAttempt attempt,
+    private LockoutState calculateState(final VerificationAttempt attempt,
                                                final VerificationAttempts attempts) {
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequest.builder()
-                .channelId(attempt.getChannelId())
-                .activityName(attempt.getActivityName())
-                .alias(attempt.getProvidedAlias())
-                .timestamp(attempt.getTimestamp())
-                .idvIdValue(attempt.getIdvIdValue())
-                .attempts(attempts)
-                .build();
-        return policy.calculateLockoutState(request);
+        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
+        return policyService.calculateState(request);
     }
 
 }

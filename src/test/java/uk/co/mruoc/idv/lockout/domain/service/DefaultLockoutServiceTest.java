@@ -37,7 +37,7 @@ class DefaultLockoutServiceTest {
 
     @Test
     void shouldLoadState() {
-        final LoadLockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
+        final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
         given(stateLoader.load(request)).willReturn(expectedState);
 
@@ -48,18 +48,18 @@ class DefaultLockoutServiceTest {
 
     @Test
     void shouldValidateState() {
-        final LoadLockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
+        final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
 
         service.validateState(request);
 
-        final ArgumentCaptor<LoadLockoutStateRequest> captor = ArgumentCaptor.forClass(LoadLockoutStateRequest.class);
+        final ArgumentCaptor<LockoutStateRequest> captor = ArgumentCaptor.forClass(LockoutStateRequest.class);
         verify(stateValidator).validateState(captor.capture());
         assertThat(captor.getValue()).isEqualTo(request);
     }
 
     @Test
     void shouldResetState() {
-        final LoadLockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
+        final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
         given(stateResetter.reset(request)).willReturn(expectedState);
 

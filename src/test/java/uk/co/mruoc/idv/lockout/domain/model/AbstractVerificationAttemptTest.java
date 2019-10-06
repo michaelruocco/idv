@@ -50,7 +50,7 @@ class AbstractVerificationAttemptTest {
 
     @Test
     void shouldReturnProvidedAlias() {
-        assertThat(attempt.getProvidedAlias()).isEqualTo(PROVIDED_ALIAS);
+        assertThat(attempt.getAlias()).isEqualTo(PROVIDED_ALIAS);
     }
 
     @Test
@@ -91,7 +91,7 @@ class AbstractVerificationAttemptTest {
                 "contextId=8f0afda8-df73-4ea9-b7b2-2ee45e667227, " +
                 "channelId=channel-id, " +
                 "activityName=activity-name, " +
-                "providedAlias=CardNumber(type=credit-card-number, value=4929001111111111), " +
+                "alias=CardNumber(type=credit-card-number, value=4929001111111111), " +
                 "idvIdValue=f8c33391-7d70-4abe-bd8a-8e41e64f446c, " +
                 "methodName=method-name, " +
                 "verificationId=ca0b47c5-4bac-4122-ba82-8cbf2713922e, " +

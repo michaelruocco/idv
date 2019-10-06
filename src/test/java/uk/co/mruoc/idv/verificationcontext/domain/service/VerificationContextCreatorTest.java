@@ -18,7 +18,7 @@ import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutService;
-import uk.co.mruoc.idv.lockout.domain.service.LoadLockoutStateRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequencesEligible;
@@ -98,7 +98,7 @@ class VerificationContextCreatorTest {
 
         creator.create(createContextRequest);
 
-        final LoadLockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
+        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getChannelId()).isEqualTo(channel.getId());
     }
 
@@ -111,7 +111,7 @@ class VerificationContextCreatorTest {
 
         creator.create(createContextRequest);
 
-        final LoadLockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
+        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getActivityName()).isEqualTo(activity.getName());
     }
 
@@ -124,7 +124,7 @@ class VerificationContextCreatorTest {
 
         creator.create(createContextRequest);
 
-        final LoadLockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
+        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getAlias()).isEqualTo(providedAlias);
     }
 
@@ -134,7 +134,7 @@ class VerificationContextCreatorTest {
 
         creator.create(createContextRequest);
 
-        final LoadLockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
+        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getIdvIdValue()).isEqualTo(identity.getIdvIdValue());
     }
 
@@ -144,7 +144,7 @@ class VerificationContextCreatorTest {
 
         creator.create(createContextRequest);
 
-        final LoadLockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
+        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getTimestamp()).isEqualTo(NOW);
     }
 

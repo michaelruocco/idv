@@ -19,17 +19,17 @@ public class DefaultLockoutService implements LockoutService {
     }
 
     @Override
-    public LockoutState loadState(final LoadLockoutStateRequest request) {
+    public LockoutState loadState(final LockoutStateRequest request) {
         return stateLoader.load(request);
     }
 
     @Override
-    public LockoutState resetState(final LoadLockoutStateRequest request) {
+    public LockoutState resetState(final LockoutStateRequest request) {
         return stateResetter.reset(request);
     }
 
     @Override
-    public void validateState(final LoadLockoutStateRequest request) {
+    public void validateState(final LockoutStateRequest request) {
         stateValidator.validateState(request);
     }
 

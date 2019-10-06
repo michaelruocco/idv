@@ -16,10 +16,10 @@ public class LockoutPolicyRsa extends LockoutPolicyDefault {
                 new RecordEveryAttempt());
     }
 
-    private static Predicate<LockoutPolicyRequest> buildAppliesToPolicyPredicate() {
-        final Predicate<LockoutPolicyRequest> appliesToChannel = new PredicateMatchesChannel(Rsa.ID);
-        final Predicate<LockoutPolicyRequest> appliesToActivity = new PredicateMatchesActivityNames(OnlinePurchase.NAME);
-        final Predicate<LockoutPolicyRequest> appliesToAlias = new PredicateMatchesAliasTypes(Arrays.asList(
+    private static Predicate<LockoutRequest> buildAppliesToPolicyPredicate() {
+        final Predicate<LockoutRequest> appliesToChannel = new PredicateMatchesChannel(Rsa.ID);
+        final Predicate<LockoutRequest> appliesToActivity = new PredicateMatchesActivityNames(OnlinePurchase.NAME);
+        final Predicate<LockoutRequest> appliesToAlias = new PredicateMatchesAliasTypes(Arrays.asList(
                 CreditCardNumber.TYPE,
                 DebitCardNumber.TYPE
         ));

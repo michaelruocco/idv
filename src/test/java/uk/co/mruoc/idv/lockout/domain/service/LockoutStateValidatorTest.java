@@ -11,7 +11,7 @@ import static org.mockito.Mockito.mock;
 
 class LockoutStateValidatorTest {
 
-    private final LoadLockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
+    private final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
     private final LockoutStateLoader stateLoader = mock(LockoutStateLoader.class);
 
     private final LockoutStateValidator stateValidator = LockoutStateValidator.builder()

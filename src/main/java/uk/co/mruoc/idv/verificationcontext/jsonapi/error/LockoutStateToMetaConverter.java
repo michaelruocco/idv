@@ -19,7 +19,6 @@ public class LockoutStateToMetaConverter {
         return Map.of(
                 "maxNumberOfAttempts", lockoutState.getMaxNumberOfAttempts(),
                 "numberOfAttemptsRemaining", lockoutState.getNumberOfAttemptsRemaining(),
-                "lockoutType", lockoutState.getType(),
                 "idvId", lockoutState.getIdvId()
         );
     }

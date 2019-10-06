@@ -21,11 +21,6 @@ public class LockoutStateMaxAttempts implements LockoutState {
     }
 
     @Override
-    public LockoutType getType() {
-        return LockoutType.MAX_ATTEMPTS;
-    }
-
-    @Override
     public boolean isLocked() {
         return getNumberOfAttemptsRemaining() <= 0;
     }

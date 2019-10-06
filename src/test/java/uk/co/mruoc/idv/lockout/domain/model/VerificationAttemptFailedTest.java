@@ -54,7 +54,7 @@ class VerificationAttemptFailedTest {
 
         final VerificationAttempt attempt = builder.providedAlias(providedAlias).build();
 
-        assertThat(attempt.getProvidedAlias()).isEqualTo(providedAlias);
+        assertThat(attempt.getAlias()).isEqualTo(providedAlias);
     }
 
     @Test

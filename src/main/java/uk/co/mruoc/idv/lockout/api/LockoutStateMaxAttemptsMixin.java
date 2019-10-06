@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "id",
         "idvId",
         "locked",
-        "type",
         "maxNumberOfAttempts",
         "numberOfAttemptsRemaining",
         "created",

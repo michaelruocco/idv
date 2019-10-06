@@ -7,7 +7,7 @@ import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
-import uk.co.mruoc.idv.lockout.domain.service.LoadLockoutStateRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
@@ -63,7 +63,7 @@ public class VerificationContextCreator {
     }
 
     private void validateLockoutState(final CreateContextRequest createContextRequest, final Identity identity) {
-        final LoadLockoutStateRequest request = VerificationContextLoadLockoutStateRequest.builder()
+        final LockoutStateRequest request = VerificationContextLoadLockoutStateRequest.builder()
                 .channel(createContextRequest.getChannel())
                 .activity(createContextRequest.getActivity())
                 .alias(createContextRequest.getProvidedAlias())

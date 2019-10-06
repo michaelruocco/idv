@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Builder
-public class CalculateLockoutStateRequest {
+public class CalculateLockoutStateRequest implements LockoutStateRequest {
 
     private final String channelId;
     private final String activityName;
@@ -17,31 +17,38 @@ public class CalculateLockoutStateRequest {
     private final UUID idvIdValue;
     private final VerificationAttempts attempts;
 
+    @Override
     public String getChannelId() {
         return channelId;
     }
 
+    @Override
     public String getActivityName() {
         return activityName;
     }
 
+    @Override
     public Instant getTimestamp() {
         return timestamp;
     }
 
+    @Override
     public Alias getAlias() {
         return alias;
     }
 
+    @Override
+    public String getAliasType() {
+        return alias.getType();
+    }
+
+    @Override
     public UUID getIdvIdValue() {
         return idvIdValue;
     }
 
-    public VerificationAttempts getAttempts() {
-        return attempts;
-    }
-
-    public CalculateLockoutStateRequest updateAttempts(final VerificationAttempts updatedAttempts) {
+    @Override
+    public CalculateLockoutStateRequest withAttempts(final VerificationAttempts updatedAttempts) {
         return CalculateLockoutStateRequest.builder()
                 .channelId(channelId)
                 .activityName(activityName)
@@ -50,6 +57,10 @@ public class CalculateLockoutStateRequest {
                 .idvIdValue(idvIdValue)
                 .attempts(updatedAttempts)
                 .build();
+    }
+
+    public VerificationAttempts getAttempts() {
+        return attempts;
     }
 
 }
