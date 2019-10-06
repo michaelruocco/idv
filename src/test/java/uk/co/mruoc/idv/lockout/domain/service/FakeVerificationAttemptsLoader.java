@@ -4,7 +4,7 @@ import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.util.UUID;
 
-public class FakeVerificationAttemptLoader implements VerificationAttemptsLoader {
+public class FakeVerificationAttemptsLoader implements VerificationAttemptsLoader {
 
     private VerificationAttempts attemptsToLoad;
     private UUID lastLoadedIdvIdValue;

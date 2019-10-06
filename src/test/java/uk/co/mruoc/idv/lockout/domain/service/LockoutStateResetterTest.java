@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LockoutStateResetterTest {
 
-    private final FakeVerificationAttemptLoader attemptsLoader = new FakeVerificationAttemptLoader();
+    private final FakeVerificationAttemptsLoader attemptsLoader = new FakeVerificationAttemptsLoader();
     private final FakeVerificationAttemptsDao dao = new FakeVerificationAttemptsDao();
     private final FakeLockoutPolicyService policyService = new FakeLockoutPolicyService();
 
