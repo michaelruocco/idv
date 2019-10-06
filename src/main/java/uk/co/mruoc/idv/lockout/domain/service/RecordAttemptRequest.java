@@ -38,7 +38,8 @@ public class RecordAttemptRequest implements LockoutStateRequest {
 
     @Override
     public String getAliasType() {
-        return getAlias().getType();
+        final Alias alias = context.getProvidedAlias();
+        return alias.getType();
     }
 
     @Override
