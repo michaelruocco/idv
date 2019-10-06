@@ -58,13 +58,14 @@ class DefaultLockoutServiceTest {
     }
 
     @Test
-    void shouldResetState() {
+    void shouldResetStateThenLoadLockoutState() {
         final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
-        given(stateResetter.reset(request)).willReturn(expectedState);
+        given(stateLoader.load(request)).willReturn(expectedState);
 
         final LockoutState state = service.resetState(request);
 
+        verify(stateResetter).reset(request);
         assertThat(state).isEqualTo(expectedState);
     }
 

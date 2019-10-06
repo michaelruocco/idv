@@ -2,6 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Getter;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
+import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -9,13 +10,20 @@ import java.util.Collections;
 public class LockoutPolicyService {
 
     private final Collection<LockoutPolicy> policies;
+    private final LockoutStateRequestConverter requestConverter;
 
     public LockoutPolicyService() {
-        this(Collections.singleton(new LockoutPolicyRsa()));
+        this(new LockoutStateRequestConverter());
     }
 
-    public LockoutPolicyService(final Collection<LockoutPolicy> policies) {
+    public LockoutPolicyService(final LockoutStateRequestConverter requestConverter) {
+        this(Collections.singleton(new LockoutPolicyRsa()), requestConverter);
+    }
+
+    public LockoutPolicyService(final Collection<LockoutPolicy> policies,
+                                final LockoutStateRequestConverter requestConverter) {
         this.policies = policies;
+        this.requestConverter = requestConverter;
     }
 
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
@@ -28,9 +36,9 @@ public class LockoutPolicyService {
         return policy.calculateLockoutState(request);
     }
 
-    public LockoutState resetState(final CalculateLockoutStateRequest request) {
+    public VerificationAttempts resetAttempts(final CalculateLockoutStateRequest request) {
         final LockoutPolicy policy = load(request);
-        return policy.reset(request);
+        return policy.reset(request.getAttempts());
     }
 
     private LockoutPolicy load(final LockoutRequest request) {

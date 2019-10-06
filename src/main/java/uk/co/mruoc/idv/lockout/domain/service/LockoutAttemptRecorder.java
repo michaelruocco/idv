@@ -42,7 +42,9 @@ public class LockoutAttemptRecorder {
         log.info("resetting lockout state after successful attempt {}", attempt);
         final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
         final CalculateLockoutStateRequest request = requestConverter.toCalculateRequest(attempt, attempts);
-        return policyService.resetState(request);
+        final VerificationAttempts resetAttempts = policyService.resetAttempts(request);
+        dao.save(resetAttempts);
+        return calculateState(attempt, resetAttempts);
     }
 
     private LockoutState saveFailedAttempt(final VerificationAttempt attempt) {

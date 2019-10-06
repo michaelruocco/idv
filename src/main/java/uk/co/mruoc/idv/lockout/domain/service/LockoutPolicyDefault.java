@@ -42,6 +42,11 @@ public class LockoutPolicyDefault implements LockoutPolicy {
     }
 
     @Override
+    public VerificationAttempts reset(final VerificationAttempts attempts) {
+        return attempts.resetBy(appliesToPolicy);
+    }
+
+    @Override
     public LockoutState reset(final CalculateLockoutStateRequest request) {
         final VerificationAttempts attempts = request.getAttempts();
         final VerificationAttempts resetAttempts = attempts.resetBy(appliesToPolicy);
