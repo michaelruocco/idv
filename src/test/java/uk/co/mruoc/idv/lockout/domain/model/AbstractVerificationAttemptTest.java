@@ -3,13 +3,11 @@ package uk.co.mruoc.idv.lockout.domain.model;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class AbstractVerificationAttemptTest {
 
@@ -83,51 +81,6 @@ class AbstractVerificationAttemptTest {
     @Test
     void shouldReturnAliasType() {
         assertThat(attempt.getAliasType()).isEqualTo(PROVIDED_ALIAS.getType());
-    }
-
-    @Test
-    void shouldPopulateChannelIdOnCalculateLockoutStateRequest() {
-        final VerificationAttempts attempts = mock(VerificationAttempts.class);
-
-        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
-
-        assertThat(request.getChannelId()).isEqualTo(CHANNEL_ID);
-    }
-
-    @Test
-    void shouldPopulateActivityNameOnCalculateLockoutStateRequest() {
-        final VerificationAttempts attempts = mock(VerificationAttempts.class);
-
-        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
-
-        assertThat(request.getActivityName()).isEqualTo(ACTIVITY_NAME);
-    }
-
-    @Test
-    void shouldPopulateAliasOnCalculateLockoutStateRequest() {
-        final VerificationAttempts attempts = mock(VerificationAttempts.class);
-
-        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
-
-        assertThat(request.getAlias()).isEqualTo(PROVIDED_ALIAS);
-    }
-
-    @Test
-    void shouldPopulateIdvIdValueOnCalculateLockoutStateRequest() {
-        final VerificationAttempts attempts = mock(VerificationAttempts.class);
-
-        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
-
-        assertThat(request.getIdvIdValue()).isEqualTo(IDV_ID_VALUE);
-    }
-
-    @Test
-    void shouldPopulateTimestampOnCalculateLockoutStateRequest() {
-        final VerificationAttempts attempts = mock(VerificationAttempts.class);
-
-        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
-
-        assertThat(request.getTimestamp()).isEqualTo(TIMESTAMP);
     }
 
     @Test

@@ -17,8 +17,9 @@ public class LockoutAttemptRecorder {
 
     private final VerificationResultConverter resultConverter;
     private final VerificationAttemptsLoader attemptsLoader;
-    private final VerificationAttemptsDao dao;
     private final LockoutPolicyService policyService;
+    private final LockoutStateRequestConverter requestConverter;
+    private final VerificationAttemptsDao dao;
 
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
         final VerificationResult result = request.getResult();
@@ -40,7 +41,8 @@ public class LockoutAttemptRecorder {
     private LockoutState resetLockoutState(final VerificationAttempt attempt) {
         log.info("resetting lockout state after successful attempt {}", attempt);
         final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
-        return policyService.resetState(attempt.withAttempts(attempts));
+        final CalculateLockoutStateRequest request = requestConverter.toCalculateRequest(attempt, attempts);
+        return policyService.resetState(request);
     }
 
     private LockoutState saveFailedAttempt(final VerificationAttempt attempt) {
@@ -61,8 +63,8 @@ public class LockoutAttemptRecorder {
     }
 
     private LockoutState calculateState(final VerificationAttempt attempt,
-                                               final VerificationAttempts attempts) {
-        final CalculateLockoutStateRequest request = attempt.withAttempts(attempts);
+                                        final VerificationAttempts attempts) {
+        final CalculateLockoutStateRequest request = requestConverter.toCalculateRequest(attempt, attempts);
         return policyService.calculateState(request);
     }
 

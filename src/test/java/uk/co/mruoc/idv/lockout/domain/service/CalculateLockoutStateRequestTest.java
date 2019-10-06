@@ -70,16 +70,4 @@ class CalculateLockoutStateRequestTest {
         assertThat(request.getAttempts()).isEqualTo(attempts);
     }
 
-    @Test
-    void shouldReturnUpdatedAttemptsWithAllValuesTheSame() {
-        final VerificationAttempts originalAttempts = new FakeVerificationAttempts();
-        final CalculateLockoutStateRequest originalRequest = builder.attempts(originalAttempts).build();
-
-        final VerificationAttempts updatedAttempts = new FakeVerificationAttempts();
-        final CalculateLockoutStateRequest updatedRequest = originalRequest.withAttempts(updatedAttempts);
-
-        assertThat(updatedRequest).isEqualToIgnoringGivenFields(originalRequest, "attempts");
-        assertThat(updatedRequest.getAttempts()).isEqualTo(updatedAttempts);
-    }
-
 }

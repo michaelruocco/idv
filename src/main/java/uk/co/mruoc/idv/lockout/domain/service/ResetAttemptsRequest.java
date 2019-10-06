@@ -35,8 +35,4 @@ public class ResetAttemptsRequest implements LockoutStateRequest {
         return idvIdValue;
     }
 
-    @Override
-    public CalculateLockoutStateRequest withAttempts(VerificationAttempts attempts) {
-        return null;
-    }
 }

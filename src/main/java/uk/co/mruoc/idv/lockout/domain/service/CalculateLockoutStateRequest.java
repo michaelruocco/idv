@@ -47,18 +47,6 @@ public class CalculateLockoutStateRequest implements LockoutStateRequest {
         return idvIdValue;
     }
 
-    @Override
-    public CalculateLockoutStateRequest withAttempts(final VerificationAttempts updatedAttempts) {
-        return CalculateLockoutStateRequest.builder()
-                .channelId(channelId)
-                .activityName(activityName)
-                .timestamp(timestamp)
-                .alias(alias)
-                .idvIdValue(idvIdValue)
-                .attempts(updatedAttempts)
-                .build();
-    }
-
     public VerificationAttempts getAttempts() {
         return attempts;
     }

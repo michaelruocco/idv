@@ -9,6 +9,7 @@ public class LockoutStateLoader {
 
     private final VerificationAttemptsLoader attemptsLoader;
     private final LockoutPolicyService policyService;
+    private final LockoutStateRequestConverter requestConverter;
 
     public LockoutState load(final LockoutStateRequest request) {
         final VerificationAttempts attempts = attemptsLoader.load(request.getIdvIdValue());
@@ -17,8 +18,8 @@ public class LockoutStateLoader {
 
     private LockoutState calculateLockoutState(final LockoutStateRequest lockoutRequest,
                                                final VerificationAttempts attempts) {
-        final CalculateLockoutStateRequest request = lockoutRequest.withAttempts(attempts);
-        return policyService.calculateState(request);
+        final CalculateLockoutStateRequest calculateRequest = requestConverter.toCalculateRequest(lockoutRequest, attempts);
+        return policyService.calculateState(calculateRequest);
     }
 
 }

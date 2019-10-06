@@ -4,8 +4,6 @@ import lombok.Builder;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
-import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 
 import java.time.Instant;
@@ -48,18 +46,6 @@ public class VerificationContextLoadLockoutStateRequest implements LockoutStateR
     @Override
     public UUID getIdvIdValue() {
         return idvIdValue;
-    }
-
-    @Override
-    public CalculateLockoutStateRequest withAttempts(VerificationAttempts attempts) {
-        return CalculateLockoutStateRequest.builder()
-                .channelId(getChannelId())
-                .activityName(getActivityName())
-                .alias(alias)
-                .timestamp(timestamp)
-                .idvIdValue(idvIdValue)
-                .attempts(attempts)
-                .build();
     }
 
 }

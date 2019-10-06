@@ -13,13 +13,14 @@ import java.util.UUID;
 public class LockoutStateResetter {
 
     private final VerificationAttemptsLoader attemptsLoader;
-    private final VerificationAttemptsDao dao;
     private final LockoutPolicyService policyService;
+    private final LockoutStateRequestConverter requestConverter;
+    private final VerificationAttemptsDao dao;
 
     public LockoutState reset(final LockoutStateRequest lockoutRequest) {
         log.info("resetting lockout state for request {}", lockoutRequest);
         final VerificationAttempts attempts = loadAttempts(lockoutRequest.getIdvIdValue());
-        final CalculateLockoutStateRequest resetRequest = lockoutRequest.withAttempts(attempts);
+        final CalculateLockoutStateRequest resetRequest = requestConverter.toCalculateRequest(lockoutRequest, attempts);
         final LockoutState state = policyService.resetState(resetRequest);
         dao.save(state.getAttempts());
         return state;
