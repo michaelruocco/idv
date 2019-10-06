@@ -10,9 +10,11 @@ import java.util.function.Predicate;
 
 public class LockoutPolicyRsa extends LockoutPolicyDefault {
 
+    private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
+
     public LockoutPolicyRsa() {
         super(buildAppliesToPolicyPredicate(),
-                new LockoutStateCalculatorMaxAttemptsThree(),
+                new LockoutStateCalculatorMaxAttempts(MAX_NUMBER_OF_ATTEMPTS),
                 new RecordEveryAttempt());
     }
 

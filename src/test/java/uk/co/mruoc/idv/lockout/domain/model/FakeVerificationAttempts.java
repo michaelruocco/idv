@@ -12,6 +12,9 @@ public class FakeVerificationAttempts extends VerificationAttempts {
     public FakeVerificationAttempts() {
         this(DEFAULT_IDV_ID);
     }
+    public FakeVerificationAttempts(final Collection<VerificationAttempt> attempts) {
+        super(ID, DEFAULT_IDV_ID, attempts);
+    }
 
     public FakeVerificationAttempts(final UUID idvId) {
         super(ID, idvId, buildAttempts(idvId));
