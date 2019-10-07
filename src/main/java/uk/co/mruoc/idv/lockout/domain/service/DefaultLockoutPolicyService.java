@@ -3,15 +3,15 @@ package uk.co.mruoc.idv.lockout.domain.service;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public class DefaultLockoutPolicyService implements LockoutPolicyService {
 
     private final Collection<LockoutPolicy> policies;
 
-    public DefaultLockoutPolicyService() {
-        this(Collections.singleton(new LockoutPolicyRsa()));
+    public DefaultLockoutPolicyService(final LockoutPolicy... policies) {
+        this(Arrays.asList(policies));
     }
 
     public DefaultLockoutPolicyService(final Collection<LockoutPolicy> policies) {

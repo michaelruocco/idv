@@ -22,6 +22,7 @@ import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultVerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyRsa;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
@@ -91,8 +92,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public LockoutPolicyService lockoutPolicyLoader() {
-        return new DefaultLockoutPolicyService();
+    public LockoutPolicyService lockoutPolicyService() {
+        return new DefaultLockoutPolicyService(new LockoutPolicyRsa());
     }
 
     @Bean
