@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -8,6 +9,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Builder
+@RequiredArgsConstructor
 public class CalculateLockoutStateRequest implements LockoutStateRequest {
 
     private final String channelId;

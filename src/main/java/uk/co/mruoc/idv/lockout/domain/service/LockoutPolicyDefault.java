@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
+import lombok.Builder;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -12,6 +13,7 @@ public class LockoutPolicyDefault implements LockoutPolicy {
     private final RecordAttemptStrategy recordAttemptStrategy;
     private final LockoutStateRequestConverter requestConverter;
 
+    @Builder
     public LockoutPolicyDefault(final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
