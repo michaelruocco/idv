@@ -21,6 +21,7 @@ public class LockoutPolicyDefault implements LockoutPolicy {
                 new LockoutStateRequestConverter()
         );
     }
+
     public LockoutPolicyDefault(final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy,
@@ -49,7 +50,7 @@ public class LockoutPolicyDefault implements LockoutPolicy {
     @Override
     public LockoutState reset(final CalculateLockoutStateRequest request) {
         final VerificationAttempts attempts = request.getAttempts();
-        final VerificationAttempts resetAttempts = attempts.resetBy(appliesToPolicy);
+        final VerificationAttempts resetAttempts = reset(attempts);
         final CalculateLockoutStateRequest calculateRequest = requestConverter.toCalculateRequest(request, resetAttempts);
         return stateCalculator.calculate(calculateRequest);
     }
