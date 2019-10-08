@@ -11,6 +11,10 @@ public class FakeVerificationAttemptFailed extends VerificationAttemptFailed {
     private static final UUID VERIFICATION_ID = UUID.fromString("1fb7cd98-694d-4ba4-968a-9b86bbf52c01");
     private static final Instant TIMESTAMP = Instant.parse("2019-09-27T09:35:15.612Z");
 
+    public FakeVerificationAttemptFailed() {
+        this(UUID.randomUUID());
+    }
+
     public FakeVerificationAttemptFailed(final UUID idvId) {
         super(CONTEXT_ID,
                 "fake-channel",
