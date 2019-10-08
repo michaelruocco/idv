@@ -12,19 +12,20 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResul
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VerificationResultConverterTest {
+class RecordAttemptRequestConverterTest {
 
     private static final String METHOD_NAME = "method-name";
 
     private final VerificationContext context = new FakeVerificationContext();
 
-    private final VerificationResultConverter converter = new VerificationResultConverter();
+    private final RecordAttemptRequestConverter converter = new RecordAttemptRequestConverter();
 
     @Test
     void shouldConvertSuccessfulResultToSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt).isInstanceOf(VerificationAttemptSuccessful.class);
         assertThat(attempt.isSuccessful()).isTrue();
@@ -33,8 +34,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateMethodNameOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getMethodName()).isEqualTo(result.getMethodName());
     }
@@ -42,8 +44,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateVerificationIdOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getVerificationId()).isEqualTo(result.getVerificationId());
     }
@@ -51,8 +54,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateTimestampOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getTimestamp()).isEqualTo(result.getTimestamp());
     }
@@ -60,8 +64,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateContextIdOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getContextId()).isEqualTo(context.getId());
     }
@@ -69,8 +74,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateChannelIdOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getChannelId()).isEqualTo(context.getChannelId());
     }
@@ -78,8 +84,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateActivityNameOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getActivityName()).isEqualTo(context.getActivityName());
     }
@@ -87,8 +94,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateProvidedAliasOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getAlias()).isEqualTo(context.getProvidedAlias());
     }
@@ -96,8 +104,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateIdvIdOnSuccessfulAttempt() {
         final VerificationResult result = new FakeVerificationResultSuccessful(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getIdvIdValue()).isEqualTo(context.getIdvIdValue());
     }
@@ -105,8 +114,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldConvertFailedResultToFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt).isInstanceOf(VerificationAttemptFailed.class);
         assertThat(attempt.isSuccessful()).isFalse();
@@ -116,8 +126,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateMethodNameOnFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getMethodName()).isEqualTo(result.getMethodName());
     }
@@ -125,8 +136,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateVerificationIdOnFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getVerificationId()).isEqualTo(result.getVerificationId());
     }
@@ -134,8 +146,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateTimestampOnFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getTimestamp()).isEqualTo(result.getTimestamp());
     }
@@ -143,8 +156,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateContextIdOnFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getContextId()).isEqualTo(context.getId());
     }
@@ -152,8 +166,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateChannelIdOnFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getChannelId()).isEqualTo(context.getChannelId());
     }
@@ -161,8 +176,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateActivityNameOnFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getActivityName()).isEqualTo(context.getActivityName());
     }
@@ -170,8 +186,9 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateProvidedAliasOnFailedAttempt() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getAlias()).isEqualTo(context.getProvidedAlias());
     }
@@ -179,10 +196,18 @@ class VerificationResultConverterTest {
     @Test
     void shouldPopulateIdvIdOnSuccessfulFailed() {
         final VerificationResult result = new FakeVerificationResultFailed(METHOD_NAME);
+        final RecordAttemptRequest request = toRequest(result);
 
-        final VerificationAttempt attempt = converter.toAttempt(result, context);
+        final VerificationAttempt attempt = converter.toAttempt(request);
 
         assertThat(attempt.getIdvIdValue()).isEqualTo(context.getIdvIdValue());
+    }
+
+    private RecordAttemptRequest toRequest(final VerificationResult result) {
+        return RecordAttemptRequest.builder()
+                .result(result)
+                .context(context)
+                .build();
     }
 
 }

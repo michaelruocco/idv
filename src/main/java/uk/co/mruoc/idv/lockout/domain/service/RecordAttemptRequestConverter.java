@@ -6,9 +6,13 @@ import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
-public class VerificationResultConverter {
+public class RecordAttemptRequestConverter {
 
-    public VerificationAttempt toAttempt(final VerificationResult result, final VerificationContext context) {
+    public VerificationAttempt toAttempt(final RecordAttemptRequest request) {
+        return toAttempt(request.getResult(), request.getContext());
+    }
+
+    private VerificationAttempt toAttempt(final VerificationResult result, final VerificationContext context) {
         if (result.isSuccessful()) {
             return toSuccessfulAttempt(result, context);
         }

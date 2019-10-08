@@ -29,8 +29,9 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequestConverter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateResetter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator;
+import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptPersister;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
-import uk.co.mruoc.idv.lockout.domain.service.VerificationResultConverter;
+import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequestConverter;
 import uk.co.mruoc.idv.lockout.jsonapi.JsonApiLockoutStateModule;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextCreator;
@@ -82,8 +83,8 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public VerificationResultConverter resultConverter() {
-        return new VerificationResultConverter();
+    public RecordAttemptRequestConverter recordAttemptRequestConverter() {
+        return new RecordAttemptRequestConverter();
     }
 
     @Bean
@@ -140,17 +141,26 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public LockoutAttemptRecorder lockoutAttemptRecorder(final VerificationResultConverter resultConverter,
-                                                         final VerificationAttemptsLoader attemptsLoader,
-                                                         final LockoutPolicyService policyService,
-                                                         final LockoutStateRequestConverter requestConverter,
-                                                         final VerificationAttemptsDao dao) {
-        return LockoutAttemptRecorder.builder()
-                .resultConverter(resultConverter)
-                .attemptsLoader(attemptsLoader)
-                .policyService(policyService)
-                .requestConverter(requestConverter)
+    public VerificationAttemptPersister verificationAttemptPersister(final VerificationAttemptsLoader attemptLoader,
+                                                                     final VerificationAttemptsDao dao) {
+        return VerificationAttemptPersister.builder()
+                .attemptsLoader(attemptLoader)
                 .dao(dao)
+                .build();
+    }
+
+    @Bean
+    public LockoutAttemptRecorder lockoutAttemptRecorder(final RecordAttemptRequestConverter requestConverter,
+                                                         final LockoutStateLoader stateLoader,
+                                                         final LockoutPolicyService policyService,
+                                                         final LockoutStateResetter stateResetter,
+                                                         final VerificationAttemptPersister statePersister) {
+        return LockoutAttemptRecorder.builder()
+                .requestConverter(requestConverter)
+                .policyService(policyService)
+                .stateLoader(stateLoader)
+                .stateResetter(stateResetter)
+                .attemptPersister(statePersister)
                 .build();
     }
 

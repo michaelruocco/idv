@@ -2,29 +2,21 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-
-import java.util.UUID;
 
 @Builder
 @Slf4j
 public class LockoutAttemptRecorder {
 
-    private final VerificationResultConverter resultConverter;
-    private final VerificationAttemptsLoader attemptsLoader;
+    private final RecordAttemptRequestConverter requestConverter;
     private final LockoutPolicyService policyService;
-    private final LockoutStateRequestConverter requestConverter;
-    private final VerificationAttemptsDao dao;
+    private final LockoutStateLoader stateLoader;
+    private final LockoutStateResetter stateResetter;
+    private final VerificationAttemptPersister attemptPersister;
 
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
-        final VerificationResult result = request.getResult();
-        final VerificationContext context = request.getContext();
-        final VerificationAttempt attempt = resultConverter.toAttempt(result, context);
+        final VerificationAttempt attempt = requestConverter.toAttempt(request);
         if (policyService.shouldRecordAttempt(request)) {
             return recordAttempt(attempt);
         }
@@ -35,39 +27,21 @@ public class LockoutAttemptRecorder {
         if (attempt.isSuccessful()) {
             return resetLockoutState(attempt);
         }
-        return saveFailedAttempt(attempt);
+        return recordFailedAttempt(attempt);
     }
 
     private LockoutState resetLockoutState(final VerificationAttempt attempt) {
-        log.info("resetting lockout state after successful attempt {}", attempt);
-        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
-        final CalculateLockoutStateRequest request = requestConverter.toCalculateRequest(attempt, attempts);
-        final VerificationAttempts resetAttempts = policyService.resetAttempts(request);
-        dao.save(resetAttempts);
-        return calculateState(attempt, resetAttempts);
+        stateResetter.reset(attempt);
+        return stateLoader.load(attempt);
     }
 
-    private LockoutState saveFailedAttempt(final VerificationAttempt attempt) {
-        log.info("saving failed attempt {}", attempt);
-        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
-        final VerificationAttempts updatedAttempts = attempts.add(attempt);
-        dao.save(updatedAttempts);
-        return calculateState(attempt, updatedAttempts);
+    private LockoutState recordFailedAttempt(final VerificationAttempt attempt) {
+        attemptPersister.persist(attempt);
+        return stateLoader.load(attempt);
     }
 
     private LockoutState loadState(final VerificationAttempt attempt) {
-        final VerificationAttempts attempts = loadAttempts(attempt.getIdvIdValue());
-        return calculateState(attempt, attempts);
-    }
-
-    private VerificationAttempts loadAttempts(final UUID idvId) {
-        return attemptsLoader.load(idvId);
-    }
-
-    private LockoutState calculateState(final VerificationAttempt attempt,
-                                        final VerificationAttempts attempts) {
-        final CalculateLockoutStateRequest request = requestConverter.toCalculateRequest(attempt, attempts);
-        return policyService.calculateState(request);
+        return stateLoader.load(attempt);
     }
 
 }
