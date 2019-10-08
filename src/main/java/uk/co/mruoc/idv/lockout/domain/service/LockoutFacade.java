@@ -12,19 +12,19 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 public class LockoutFacade {
 
     private final TimeService timeService;
-    private final LockoutService service;
     private final IdentityService identityService;
+    private final LockoutService lockoutService;
 
     public LockoutState getLockoutState(final LockoutRequest request) {
         final Identity identity = loadIdentity(request.getAlias());
         final LockoutStateRequest stateRequest = toLockoutStateRequest(request, identity);
-        return service.loadState(stateRequest);
+        return lockoutService.loadState(stateRequest);
     }
 
     public LockoutState resetLockoutState(final LockoutRequest request) {
         final Identity identity = loadIdentity(request.getAlias());
         final LockoutStateRequest stateRequest = toLockoutStateRequest(request, identity);
-        return service.resetState(stateRequest);
+        return lockoutService.resetState(stateRequest);
     }
 
     private Identity loadIdentity(final Alias alias) {

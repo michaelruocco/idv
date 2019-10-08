@@ -22,6 +22,7 @@ import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultVerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyRsa;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
@@ -258,6 +259,17 @@ public class ApplicationConfig {
                 .creator(creator)
                 .loader(loader)
                 .resultRecorder(resultRecorder)
+                .build();
+    }
+
+    @Bean
+    public LockoutFacade lockoutFacade(final TimeService timeService,
+                                       final IdentityService identityService,
+                                       final LockoutService lockoutService) {
+        return LockoutFacade.builder()
+                .timeService(timeService)
+                .identityService(identityService)
+                .lockoutService(lockoutService)
                 .build();
     }
 
