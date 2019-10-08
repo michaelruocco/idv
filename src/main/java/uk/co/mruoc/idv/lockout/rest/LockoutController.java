@@ -6,16 +6,12 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.identity.domain.service.LoadIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
-import uk.co.mruoc.idv.lockout.domain.service.DefaultLoadLockoutStateRequest;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
+import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutFacade;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 import uk.co.mruoc.idv.lockout.jsonapi.LockoutStateDocument;
 import uk.co.mruoc.idv.lockout.jsonapi.ResetLockoutStateAttributes;
 import uk.co.mruoc.idv.lockout.jsonapi.ResetLockoutStateDocument;
@@ -24,68 +20,35 @@ import uk.co.mruoc.idv.lockout.jsonapi.ResetLockoutStateDocument;
 @RequiredArgsConstructor
 public class LockoutController {
 
-    private final TimeService timeService;
-    private final LockoutService service;
     private final AliasFactory aliasFactory;
-    private final IdentityService identityService;
+    private final LockoutFacade lockoutFacade;
 
     @GetMapping("/lockoutStates")
     public LockoutStateDocument getLockoutState(@RequestParam final String channelId,
                                                 @RequestParam final String activityName,
                                                 @RequestParam final String aliasType,
                                                 @RequestParam final String aliasValue) {
-        final Alias alias = aliasFactory.build(aliasType, aliasValue);
-        final Identity identity = loadIdentity(alias);
-        final LockoutState state = loadLockoutState(channelId, activityName, alias, identity);
+        final LockoutRequest request = toRequest(channelId, activityName, aliasType, aliasValue);
+        final LockoutState state = lockoutFacade.getLockoutState(request);
         return toDocument(state);
     }
 
     @PatchMapping("/lockoutStates")
     public LockoutStateDocument resetLockoutState(@RequestBody final ResetLockoutStateDocument document) {
         final ResetLockoutStateAttributes attributes = document.getAttributes();
-        final Identity identity = loadIdentity(attributes.getAlias());
-        final LockoutState state = resetLockoutState(attributes, identity);
+        final LockoutState state = lockoutFacade.resetLockoutState(attributes);
         return toDocument(state);
     }
 
-    private Identity loadIdentity(final Alias alias) {
-        final LoadIdentityRequest request = toLoadIdentityRequest(alias);
-        return identityService.load(request);
-    }
-
-    private LoadIdentityRequest toLoadIdentityRequest(final Alias alias) {
-        return LoadIdentityRequest.builder()
-                .alias(alias)
-                .build();
-    }
-
-    private LockoutState loadLockoutState(final String channelId,
-                                          final String activityName,
-                                          final Alias alias,
-                                          final Identity identity) {
-        final LockoutStateRequest request = toLockoutRequest(channelId, activityName, alias, identity);
-        return service.loadState(request);
-    }
-
-    private LockoutState resetLockoutState(final ResetLockoutStateAttributes attributes,
-                                           final Identity identity) {
-        final String channelId = attributes.getChannelId();
-        final String activityName = attributes.getActivityName();
-        final Alias alias = attributes.getAlias();
-        final LockoutStateRequest request = toLockoutRequest(channelId, activityName, alias, identity);
-        return service.resetState(request);
-    }
-
-    private LockoutStateRequest toLockoutRequest(final String channelId,
-                                                 final String activityName,
-                                                 final Alias alias,
-                                                 final Identity identity) {
-        return DefaultLoadLockoutStateRequest.builder()
-                .timestamp(timeService.now())
+    private LockoutRequest toRequest(final String channelId,
+                                     final String activityName,
+                                     final String aliasType,
+                                     final String aliasValue) {
+        final Alias alias = aliasFactory.build(aliasType, aliasValue);
+        return DefaultLockoutRequest.builder()
                 .channelId(channelId)
                 .activityName(activityName)
                 .alias(alias)
-                .idvIdValue(identity.getIdvIdValue())
                 .build();
     }
 

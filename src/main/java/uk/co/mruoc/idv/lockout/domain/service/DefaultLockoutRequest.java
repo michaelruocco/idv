@@ -1,15 +1,12 @@
-package uk.co.mruoc.idv.lockout.jsonapi;
+package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
 @Builder
 @Getter
-@EqualsAndHashCode
-public class ResetLockoutStateAttributes implements LockoutRequest {
+public class DefaultLockoutRequest implements LockoutRequest {
 
     private final String channelId;
     private final String activityName;
