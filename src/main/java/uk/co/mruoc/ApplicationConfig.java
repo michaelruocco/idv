@@ -18,6 +18,7 @@ import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultVerificationAttemptsLoader;
@@ -266,7 +267,7 @@ public class ApplicationConfig {
     public LockoutFacade lockoutFacade(final TimeService timeService,
                                        final IdentityService identityService,
                                        final LockoutService lockoutService) {
-        return LockoutFacade.builder()
+        return DefaultLockoutFacade.builder()
                 .timeService(timeService)
                 .identityService(identityService)
                 .lockoutService(lockoutService)
