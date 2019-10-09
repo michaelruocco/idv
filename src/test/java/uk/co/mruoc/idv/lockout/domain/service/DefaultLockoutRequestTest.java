@@ -1,9 +1,12 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutRequest.DefaultLockoutRequestBuilder;
+import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -45,6 +48,13 @@ class DefaultLockoutRequestTest {
         final LockoutRequest request = builder.alias(alias).build();
 
         assertThat(request.getAliasType()).isEqualTo(alias.getType());
+    }
+
+    @Test
+    void shouldBeEqualIfAllValuesAreTheSame() {
+        EqualsVerifier.forClass(DefaultLockoutRequest.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

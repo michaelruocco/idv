@@ -2,6 +2,7 @@ package uk.co.mruoc.idv.lockout.jsonapi;
 
 import uk.co.mruoc.idv.lockout.api.LockoutStateModule;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
 public class JsonApiLockoutStateModule extends LockoutStateModule {
 
@@ -9,7 +10,7 @@ public class JsonApiLockoutStateModule extends LockoutStateModule {
         setMixInAnnotation(LockoutStateMaxAttempts.class, JsonApiLockoutStateMaxAttemptsMixin.class);
 
         addDeserializer(ResetLockoutStateDocument.class, new ResetLockoutStateDocumentDeserializer());
-        addDeserializer(ResetLockoutStateAttributes.class, new ResetLockoutStateAttributesDeserializer());
+        addDeserializer(LockoutRequest.class, new LockoutRequestDeserializer());
     }
 
 }

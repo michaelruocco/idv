@@ -13,7 +13,6 @@ import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 import uk.co.mruoc.idv.lockout.jsonapi.LockoutStateDocument;
-import uk.co.mruoc.idv.lockout.jsonapi.ResetLockoutStateAttributes;
 import uk.co.mruoc.idv.lockout.jsonapi.ResetLockoutStateDocument;
 
 @RestController
@@ -35,8 +34,8 @@ public class LockoutController {
 
     @PatchMapping("/lockoutStates")
     public LockoutStateDocument resetLockoutState(@RequestBody final ResetLockoutStateDocument document) {
-        final ResetLockoutStateAttributes attributes = document.getAttributes();
-        final LockoutState state = lockoutFacade.resetLockoutState(attributes);
+        final LockoutRequest request = document.getAttributes();
+        final LockoutState state = lockoutFacade.resetLockoutState(request);
         return toDocument(state);
     }
 
