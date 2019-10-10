@@ -17,16 +17,19 @@ public class DefaultLockoutFacade implements LockoutFacade {
 
     @Override
     public LockoutState getLockoutState(final LockoutRequest request) {
-        final Identity identity = loadIdentity(request.getAlias());
-        final LockoutStateRequest stateRequest = toLockoutStateRequest(request, identity);
+        final LockoutStateRequest stateRequest = toLockoutStateRequest(request);
         return lockoutService.loadState(stateRequest);
     }
 
     @Override
     public LockoutState resetLockoutState(final LockoutRequest request) {
-        final Identity identity = loadIdentity(request.getAlias());
-        final LockoutStateRequest stateRequest = toLockoutStateRequest(request, identity);
+        final LockoutStateRequest stateRequest = toLockoutStateRequest(request);
         return lockoutService.resetState(stateRequest);
+    }
+
+    private LockoutStateRequest toLockoutStateRequest(final LockoutRequest request) {
+        final Identity identity = loadIdentity(request.getAlias());
+        return toLockoutStateRequest(request, identity);
     }
 
     private Identity loadIdentity(final Alias alias) {
