@@ -28,7 +28,7 @@ public class LockoutController {
                                                 @RequestParam final String aliasType,
                                                 @RequestParam final String aliasValue) {
         final LockoutRequest request = toRequest(channelId, activityName, aliasType, aliasValue);
-        final LockoutState state = lockoutFacade.getLockoutState(request);
+        final LockoutState state = lockoutFacade.loadLockoutState(request);
         return toDocument(state);
     }
 

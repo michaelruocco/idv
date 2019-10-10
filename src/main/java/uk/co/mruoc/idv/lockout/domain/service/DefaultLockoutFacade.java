@@ -16,7 +16,7 @@ public class DefaultLockoutFacade implements LockoutFacade {
     private final LockoutService lockoutService;
 
     @Override
-    public LockoutState getLockoutState(final LockoutRequest request) {
+    public LockoutState loadLockoutState(final LockoutRequest request) {
         final LockoutStateRequest stateRequest = toLockoutStateRequest(request);
         return lockoutService.loadState(stateRequest);
     }

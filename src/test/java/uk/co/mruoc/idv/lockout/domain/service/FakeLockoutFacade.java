@@ -9,7 +9,7 @@ public class FakeLockoutFacade implements LockoutFacade {
     private LockoutState stateToReturn;
 
     @Override
-    public LockoutState getLockoutState(final LockoutRequest request) {
+    public LockoutState loadLockoutState(final LockoutRequest request) {
         this.lastGetRequest = request;
         return stateToReturn;
     }
