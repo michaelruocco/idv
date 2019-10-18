@@ -12,11 +12,9 @@ import uk.co.mruoc.idv.domain.service.RandomIdGenerator;
 import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
-import uk.co.mruoc.idv.identity.dao.InMemoryIdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
@@ -35,7 +33,6 @@ import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequestConverter;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptPersister;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.jsonapi.JsonApiLockoutStateModule;
-import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextService;
@@ -107,21 +104,6 @@ public class ApplicationConfig {
     @Bean
     public AliasFactory aliasFactory() {
         return new AliasFactory();
-    }
-
-    @Bean
-    public VerificationContextDao verificationContextDao() {
-        return new InMemoryVerificationContextDao();
-    }
-
-    @Bean
-    public VerificationAttemptsDao verificationAttemptsDao() {
-        return new InMemoryVerificationAttemptsDao();
-    }
-
-    @Bean
-    public IdentityDao identityDao() {
-        return new InMemoryIdentityDao();
     }
 
     @Bean

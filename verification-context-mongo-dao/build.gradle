@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':verification-context-domain')
+
+    compileOnly 'org.springframework.data:spring-data-mongodb:2.2.0.RELEASE'
+}
