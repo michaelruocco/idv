@@ -1,2 +1,6 @@
 rootProject.name = 'verification-context'
 
+include 'verification-context-domain'
+include 'verification-context-mongo-dao'
+include 'verification-context-spring-rest'
+include 'verification-context-client'

@@ -1,0 +1,22 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-dependencies:2.2.0.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+
+    //the spring boot gradle plugin pulls on old versions of junit platform engine and commons (1.3.2)
+    //the explicit dependencies below bring in the latest version otherwise it is not
+    //possible to run / detect unit tests
+    testImplementation 'org.junit.platform:junit-platform-engine:1.5.2'
+    testImplementation 'org.junit.platform:junit-platform-commons:1.5.2'
+
+    compile project(':verification-context-domain')
+}
