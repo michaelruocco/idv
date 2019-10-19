@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.mongo.verificationcontext.dao;
+package uk.co.mruoc.idv.mongo.verificationcontext.dao.result;
 
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;

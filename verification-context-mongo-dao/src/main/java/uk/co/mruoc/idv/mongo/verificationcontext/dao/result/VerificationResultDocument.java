@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.mongo.verificationcontext.dao;
+package uk.co.mruoc.idv.mongo.verificationcontext.dao.result;
 
 import lombok.Builder;
 import lombok.Getter;

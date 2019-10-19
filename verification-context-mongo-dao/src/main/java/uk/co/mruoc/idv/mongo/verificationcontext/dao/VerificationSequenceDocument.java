@@ -2,6 +2,7 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
 import lombok.Builder;
 import lombok.Getter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocument;
 
 import java.util.Collection;
 

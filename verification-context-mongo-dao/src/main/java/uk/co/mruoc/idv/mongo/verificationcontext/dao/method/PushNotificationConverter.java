@@ -1,13 +1,13 @@
-package uk.co.mruoc.idv.mongo.verificationcontext.dao;
+package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import lombok.Builder;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
-
-import java.util.Collections;
 
 @Builder
 public class PushNotificationConverter implements VerificationMethodConverter {
@@ -31,13 +31,13 @@ public class PushNotificationConverter implements VerificationMethodConverter {
 
     @Override
     public VerificationMethodDocument toDocument(final VerificationMethod method) {
-        return VerificationMethodDocument.builder()
-                .name(method.getName())
-                .maxAttempts(method.getMaxAttempts())
-                .duration(method.getDuration().toString())
-                .eligibility(eligibilityConverter.toDocument(method.getEligibility()))
-                .results(resultConverter.toDocuments(method.getResults()))
-                .properties(Collections.emptyMap())
-                .build();
+        final VerificationMethodDocument document = new VerificationMethodDocument();
+        document.setName(method.getName());
+        document.setMaxAttempts(method.getMaxAttempts());
+        document.setDuration(method.getDuration().toString());
+        document.setEligibility(eligibilityConverter.toDocument(method.getEligibility()));
+        document.setResults(resultConverter.toDocuments(method.getResults()));
+        return document;
     }
+
 }

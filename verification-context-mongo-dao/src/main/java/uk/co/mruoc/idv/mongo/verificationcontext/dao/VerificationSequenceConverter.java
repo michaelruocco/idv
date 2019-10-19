@@ -1,6 +1,8 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
 import lombok.Builder;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverterDelegator;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.MultipleMethodSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;

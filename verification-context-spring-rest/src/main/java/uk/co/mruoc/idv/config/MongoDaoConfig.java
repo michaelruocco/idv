@@ -39,12 +39,12 @@ import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.PushNotificationConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PushNotificationConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextRepository;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationMethodConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationMethodConverterDelegator;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationResultConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverterDelegator;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequenceConverter;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 

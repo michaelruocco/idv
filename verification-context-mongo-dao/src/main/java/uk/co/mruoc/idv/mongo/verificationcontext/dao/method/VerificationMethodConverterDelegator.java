@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.mongo.verificationcontext.dao;
+package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import uk.co.mruoc.idv.domain.exception.MethodNotSupportedException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
