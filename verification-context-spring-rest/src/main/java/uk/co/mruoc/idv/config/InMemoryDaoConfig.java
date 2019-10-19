@@ -23,6 +23,7 @@ import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 public class InMemoryDaoConfig {
 
     @Bean
+    @Profile("stub")
     public VerificationContextDao verificationContextDao() {
         return new InMemoryVerificationContextDao();
     }

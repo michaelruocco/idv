@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
 
@@ -39,14 +40,6 @@ public class ActivityDeserializer extends StdDeserializer<Activity> {
         final Map<String, JsonNodeToActivityConverter> converters = new HashMap<>();
         converters.put(OnlinePurchase.NAME, new JsonNodeToOnlinePurchaseConverter());
         return Collections.unmodifiableMap(converters);
-    }
-
-    public static class ActivityNotSupportedException extends RuntimeException {
-
-        public ActivityNotSupportedException(final String name) {
-            super(name);
-        }
-
     }
 
 }

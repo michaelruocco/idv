@@ -27,13 +27,22 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
+import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverter;
+import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
+import uk.co.mruoc.idv.mongo.dao.activity.OnlinePurchaseConverter;
+import uk.co.mruoc.idv.mongo.dao.channel.ChannelConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
 import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextRepository;
+import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 
 import java.net.InetSocketAddress;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -103,8 +112,18 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public AliasConverter aliasConverter(final AliasFactory aliasFactory) {
-        return new AliasConverter(aliasFactory);
+    public ChannelConverter channelConverter() {
+        return new ChannelConverter();
+    }
+
+    @Bean
+    public OnlinePurchaseConverter onlinePurchaseConverter() {
+        return new OnlinePurchaseConverter();
+    }
+
+    @Bean
+    public ActivityConverterDelegator activityConverterDelegator(final Collection<ActivityConverter> converters) {
+        return new ActivityConverterDelegator(converters);
     }
 
     @Bean
@@ -113,9 +132,33 @@ public class MongoDaoConfig {
     }
 
     @Bean
+    public AliasConverter aliasConverter(final AliasFactory aliasFactory) {
+        return new AliasConverter(aliasFactory);
+    }
+
+    @Bean
+    public VerificationContextConverter verificationContextConverter(final ChannelConverter channelConverter,
+                                                                     final AliasConverter aliasConverter,
+                                                                     final IdentityConverter identityConverter,
+                                                                     final ActivityConverterDelegator activityConverter) {
+        return VerificationContextConverter.builder()
+                .channelConverter(channelConverter)
+                .aliasConverter(aliasConverter)
+                .identityConverter(identityConverter)
+                .activityConverter(activityConverter)
+                .build();
+    }
+
+    @Bean
     public IdentityDao identityDao(final IdentityRepository repository,
                                    final IdentityConverter identityConverter) {
         return new MongoIdentityDao(repository, identityConverter);
+    }
+
+    @Bean
+    public VerificationContextDao verificationContextDao(final VerificationContextRepository repository,
+                                                         final VerificationContextConverter contextConverter) {
+        return new MongoVerificationContextDao(repository, contextConverter);
     }
 
     @Builder

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.api.IdvModule;
-import uk.co.mruoc.idv.api.activity.ActivityDeserializer.ActivityNotSupportedException;
+import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.activity.FakeOnlinePurchase;
 

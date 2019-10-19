@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.mruoc.idv.domain.exception.ChannelNotSupportedException;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.domain.model.channel.Rsa;
 
@@ -39,14 +40,6 @@ public class ChannelDeserializer extends StdDeserializer<Channel> {
         final Map<String, JsonNodeToChannelConverter> converters = new HashMap<>();
         converters.put(Rsa.ID, new JsonNodeToRsaConverter());
         return Collections.unmodifiableMap(converters);
-    }
-
-    public static class ChannelNotSupportedException extends RuntimeException {
-
-        public ChannelNotSupportedException(final String channelId) {
-            super(channelId);
-        }
-
     }
 
 }

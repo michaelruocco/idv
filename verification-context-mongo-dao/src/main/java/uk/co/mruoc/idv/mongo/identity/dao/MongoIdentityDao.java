@@ -12,11 +12,11 @@ import java.util.Optional;
 public class MongoIdentityDao implements IdentityDao {
 
     private final IdentityRepository repository;
-    private final IdentityConverter identityConverter;
+    private final IdentityConverter converter;
 
     @Override
     public void save(final Identity identity) {
-        final IdentityDocument document = identityConverter.toDocument(identity);
+        final IdentityDocument document = converter.toDocument(identity);
         repository.insert(document);
     }
 
@@ -27,7 +27,7 @@ public class MongoIdentityDao implements IdentityDao {
             return Optional.empty();
         }
         if (documents.size() == 1) {
-            final Identity identity = identityConverter.toIdentity(documents.iterator().next());
+            final Identity identity = converter.toIdentity(documents.iterator().next());
             return Optional.of(identity);
         }
         throw new IllegalStateException("found multiple identities for alias " + alias);
