@@ -39,6 +39,7 @@ import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardCredentialsConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumberConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumberConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobilePinsentryConverter;
@@ -203,7 +204,7 @@ public class MongoDaoConfig {
 
     @Bean
     public VerificationMethodConverter mobilePinsentryConverter(final VerificationResultConverter resultConverter,
-                                                             final EligibilityConverter eligibilityConverter) {
+                                                                final EligibilityConverter eligibilityConverter) {
         return MobilePinsentryConverter.builder()
                 .resultConverter(resultConverter)
                 .eligibilityConverter(eligibilityConverter)
@@ -220,6 +221,15 @@ public class MongoDaoConfig {
                 .eligibilityConverter(eligibilityConverter)
                 .mobileNumberConverter(mobileNumberConverter)
                 .passcodeSettingsConverter(passcodeSettingsConverter)
+                .build();
+    }
+
+    @Bean
+    public VerificationMethodConverter cardCredentialsConverter(final VerificationResultConverter resultConverter,
+                                                                final EligibilityConverter eligibilityConverter) {
+        return CardCredentialsConverter.builder()
+                .resultConverter(resultConverter)
+                .eligibilityConverter(eligibilityConverter)
                 .build();
     }
 
