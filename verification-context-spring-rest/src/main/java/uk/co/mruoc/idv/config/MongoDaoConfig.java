@@ -39,6 +39,12 @@ import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumberConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumberConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobilePinsentryConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.OneTimePasscodeSmsConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PasscodeSettingsConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PhysicalPinsentryConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PushNotificationConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextRepository;
@@ -161,11 +167,59 @@ public class MongoDaoConfig {
     }
 
     @Bean
+    public CardNumberConverter cardNumberConverter() {
+        return new CardNumberConverter();
+    }
+
+    @Bean
+    public MobileNumberConverter mobileNumberConverter() {
+        return new MobileNumberConverter();
+    }
+
+    @Bean
+    public PasscodeSettingsConverter passcodeSettingsConverter() {
+        return new PasscodeSettingsConverter();
+    }
+
+    @Bean
     public VerificationMethodConverter pushNotificationConverter(final VerificationResultConverter resultConverter,
                                                                  final EligibilityConverter eligibilityConverter) {
         return PushNotificationConverter.builder()
                 .resultConverter(resultConverter)
                 .eligibilityConverter(eligibilityConverter)
+                .build();
+    }
+
+    @Bean
+    public VerificationMethodConverter physicalPinsentryConverter(final VerificationResultConverter resultConverter,
+                                                                  final EligibilityConverter eligibilityConverter,
+                                                                  final CardNumberConverter cardNumberConverter) {
+        return PhysicalPinsentryConverter.builder()
+                .resultConverter(resultConverter)
+                .eligibilityConverter(eligibilityConverter)
+                .cardNumberConverter(cardNumberConverter)
+                .build();
+    }
+
+    @Bean
+    public VerificationMethodConverter mobilePinsentryConverter(final VerificationResultConverter resultConverter,
+                                                             final EligibilityConverter eligibilityConverter) {
+        return MobilePinsentryConverter.builder()
+                .resultConverter(resultConverter)
+                .eligibilityConverter(eligibilityConverter)
+                .build();
+    }
+
+    @Bean
+    public VerificationMethodConverter oneTimePasscodeSmsConverter(final VerificationResultConverter resultConverter,
+                                                                   final EligibilityConverter eligibilityConverter,
+                                                                   final MobileNumberConverter mobileNumberConverter,
+                                                                   final PasscodeSettingsConverter passcodeSettingsConverter) {
+        return OneTimePasscodeSmsConverter.builder()
+                .resultConverter(resultConverter)
+                .eligibilityConverter(eligibilityConverter)
+                .mobileNumberConverter(mobileNumberConverter)
+                .passcodeSettingsConverter(passcodeSettingsConverter)
                 .build();
     }
 
