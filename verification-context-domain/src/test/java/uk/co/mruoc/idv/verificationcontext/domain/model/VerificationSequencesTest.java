@@ -56,6 +56,16 @@ class VerificationSequencesTest {
     }
 
     @Test
+    void shouldReturnStream() {
+        final VerificationSequence sequence1 = mock(VerificationSequence.class);
+        final VerificationSequence sequence2 = mock(VerificationSequence.class);
+
+        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+
+        assertThat(sequences.stream()).containsExactly(sequence1, sequence2);
+    }
+
+    @Test
     void shouldCalculateMaxDuration() {
         final VerificationSequence sequence1 = mock(VerificationSequence.class);
         given(sequence1.getDuration()).willReturn(Duration.ofMinutes(5));

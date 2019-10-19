@@ -18,6 +18,13 @@ class VerificationResultsAlwaysEmptyTest {
     }
 
     @Test
+    void shouldReturnEmptyStream() {
+        final VerificationResults results = new VerificationResultsAlwaysEmpty();
+
+        assertThat(results.stream()).isEmpty();
+    }
+
+    @Test
     void shouldNotContainSuccessful() {
         final VerificationResults results = new VerificationResultsAlwaysEmpty();
 

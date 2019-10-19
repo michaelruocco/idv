@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.result;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 public interface VerificationResults extends Iterable<VerificationResult> {
 
@@ -15,5 +16,7 @@ public interface VerificationResults extends Iterable<VerificationResult> {
     VerificationResults add(final VerificationResult result);
 
     int size();
+
+    Stream<VerificationResult> stream();
 
 }

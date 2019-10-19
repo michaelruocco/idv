@@ -1,16 +1,12 @@
 package uk.co.mruoc.idv.mongo.dao.activity;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
-import java.util.Map;
 
-@Getter
-@Builder
+@Data
 public class ActivityDocument {
 
-    private final String name;
-    private final String timestamp;
-    private final Map<String, String> properties;
+    private String name;
+    private String timestamp;
 
 }

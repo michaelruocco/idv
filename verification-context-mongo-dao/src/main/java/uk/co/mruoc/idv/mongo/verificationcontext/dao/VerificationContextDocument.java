@@ -9,6 +9,8 @@ import uk.co.mruoc.idv.mongo.dao.channel.ChannelDocument;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasDocument;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityDocument;
 
+import java.util.Collection;
+
 
 @Document("verificationContexts")
 @Getter
@@ -23,5 +25,6 @@ public class VerificationContextDocument {
     private final ActivityDocument activity;
     private final String created;
     private final String expiry;
+    private final Collection<VerificationSequenceDocument> sequences;
 
 }

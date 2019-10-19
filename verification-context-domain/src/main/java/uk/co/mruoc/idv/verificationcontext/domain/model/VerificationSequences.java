@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class VerificationSequences implements Iterable<VerificationSequence> {
 
@@ -78,6 +79,10 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
     public boolean containsCompleteSequenceContainingMethod(String methodName) {
         return sequences.stream().anyMatch(sequence -> sequence.containsMethod(methodName) && sequence.isComplete());
+    }
+
+    public Stream<VerificationSequence> stream() {
+        return sequences.stream();
     }
 
     public static class CannotCalculateMaxDurationOfEmptySequencesException extends RuntimeException {

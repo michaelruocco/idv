@@ -4,6 +4,7 @@ package uk.co.mruoc.idv.verificationcontext.domain.model.result;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 public class VerificationResultsAlwaysEmpty implements VerificationResults {
 
@@ -34,6 +35,11 @@ public class VerificationResultsAlwaysEmpty implements VerificationResults {
 
     public int size() {
         return 0;
+    }
+
+    @Override
+    public Stream<VerificationResult> stream() {
+        return Stream.empty();
     }
 
     public VerificationResults add(final VerificationResult result) {

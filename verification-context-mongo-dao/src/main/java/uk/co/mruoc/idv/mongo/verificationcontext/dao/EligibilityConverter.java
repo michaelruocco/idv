@@ -1,0 +1,24 @@
+package uk.co.mruoc.idv.mongo.verificationcontext.dao;
+
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocument.EligibilityDocumentBuilder;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligibility;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.Ineligible;
+
+public class EligibilityConverter {
+
+    public Eligibility toEligibility(final EligibilityDocument document) {
+        if (document.isEligible()) {
+            return new Eligible();
+        }
+        return new Ineligible(document.getReason());
+    }
+
+    public EligibilityDocument toDocument(final Eligibility eligibility) {
+        final EligibilityDocumentBuilder builder = EligibilityDocument.builder()
+                .eligible(eligibility.isEligible());
+        eligibility.getReason().ifPresent(builder::reason);
+        return builder.build();
+    }
+
+}

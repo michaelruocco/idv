@@ -29,6 +29,7 @@ import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverter;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
+import uk.co.mruoc.idv.mongo.dao.activity.MonetaryAmountConverter;
 import uk.co.mruoc.idv.mongo.dao.activity.OnlinePurchaseConverter;
 import uk.co.mruoc.idv.mongo.dao.channel.ChannelConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
@@ -36,9 +37,15 @@ import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
 import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.PushNotificationConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextRepository;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationMethodConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationMethodConverterDelegator;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationResultConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequenceConverter;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 
 import java.net.InetSocketAddress;
@@ -117,13 +124,20 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public OnlinePurchaseConverter onlinePurchaseConverter() {
-        return new OnlinePurchaseConverter();
+    public MonetaryAmountConverter amountConverter() {
+        return new MonetaryAmountConverter();
     }
 
     @Bean
-    public ActivityConverterDelegator activityConverterDelegator(final Collection<ActivityConverter> converters) {
-        return new ActivityConverterDelegator(converters);
+    public OnlinePurchaseConverter onlinePurchaseConverter(final MonetaryAmountConverter amountConverter) {
+        return OnlinePurchaseConverter.builder()
+                .amountConverter(amountConverter)
+                .build();
+    }
+
+    @Bean
+    public ActivityConverterDelegator activityConverterDelegator(final Collection<ActivityConverter> activityConverters) {
+        return new ActivityConverterDelegator(activityConverters);
     }
 
     @Bean
@@ -137,15 +151,48 @@ public class MongoDaoConfig {
     }
 
     @Bean
+    public VerificationResultConverter resultConverter() {
+        return new VerificationResultConverter();
+    }
+
+    @Bean
+    public EligibilityConverter eligibilityConverter() {
+        return new EligibilityConverter();
+    }
+
+    @Bean
+    public VerificationMethodConverter pushNotificationConverter(final VerificationResultConverter resultConverter,
+                                                                 final EligibilityConverter eligibilityConverter) {
+        return PushNotificationConverter.builder()
+                .resultConverter(resultConverter)
+                .eligibilityConverter(eligibilityConverter)
+                .build();
+    }
+
+    @Bean
+    public VerificationMethodConverterDelegator methodConverterDelegator(final Collection<VerificationMethodConverter> methodConverters) {
+        return new VerificationMethodConverterDelegator(methodConverters);
+    }
+
+    @Bean
+    public VerificationSequenceConverter sequenceConverter(final VerificationMethodConverterDelegator methodConverter) {
+        return VerificationSequenceConverter.builder()
+                .methodConverter(methodConverter)
+                .build();
+    }
+
+    @Bean
     public VerificationContextConverter verificationContextConverter(final ChannelConverter channelConverter,
                                                                      final AliasConverter aliasConverter,
                                                                      final IdentityConverter identityConverter,
-                                                                     final ActivityConverterDelegator activityConverter) {
+                                                                     final ActivityConverterDelegator activityConverter,
+                                                                     final VerificationSequenceConverter sequenceConverter) {
         return VerificationContextConverter.builder()
                 .channelConverter(channelConverter)
                 .aliasConverter(aliasConverter)
                 .identityConverter(identityConverter)
                 .activityConverter(activityConverter)
+                .sequenceConverter(sequenceConverter)
                 .build();
     }
 

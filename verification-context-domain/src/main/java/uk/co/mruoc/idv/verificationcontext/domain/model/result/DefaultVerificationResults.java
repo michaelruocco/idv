@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DefaultVerificationResults implements VerificationResults {
 
@@ -58,6 +59,11 @@ public class DefaultVerificationResults implements VerificationResults {
     @Override
     public int size() {
         return results.size();
+    }
+
+    @Override
+    public Stream<VerificationResult> stream() {
+        return results.stream();
     }
 
 }

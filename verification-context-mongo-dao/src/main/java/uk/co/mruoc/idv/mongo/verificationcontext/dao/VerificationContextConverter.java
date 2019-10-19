@@ -6,7 +6,6 @@ import uk.co.mruoc.idv.mongo.dao.channel.ChannelConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -18,6 +17,7 @@ public class VerificationContextConverter {
     private final AliasConverter aliasConverter;
     private final IdentityConverter identityConverter;
     private final ActivityConverterDelegator activityConverter;
+    private final VerificationSequenceConverter sequenceConverter;
 
     public VerificationContext toContext(final VerificationContextDocument document) {
         return VerificationContext.builder()
@@ -28,7 +28,7 @@ public class VerificationContextConverter {
                 .activity(activityConverter.toActivity(document.getActivity()))
                 .created(Instant.parse(document.getCreated()))
                 .expiry(Instant.parse(document.getExpiry()))
-                .sequences(new VerificationSequences()) //TODO add sequences converter
+                .sequences(sequenceConverter.toSequences(document.getSequences()))
                 .build();
     }
 
@@ -41,7 +41,7 @@ public class VerificationContextConverter {
                 .activity(activityConverter.toDocument(context.getActivity()))
                 .created(context.getCreated().toString())
                 .expiry(context.getExpiry().toString())
-                //TODO add sequences converter
+                .sequences(sequenceConverter.toDocuments(context.getSequences()))
                 .build();
     }
 
