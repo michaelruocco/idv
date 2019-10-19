@@ -1,7 +1,6 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityDocument;
@@ -13,18 +12,17 @@ import java.util.Collection;
 
 
 @Document("verificationContexts")
-@Getter
-@Builder
+@Data
 public class VerificationContextDocument {
 
     @Id
-    private final String id;
-    private final ChannelDocument channel;
-    private final AliasDocument providedAlias;
-    private final IdentityDocument identity;
-    private final ActivityDocument activity;
-    private final String created;
-    private final String expiry;
-    private final Collection<VerificationSequenceDocument> sequences;
+    private String id;
+    private ChannelDocument channel;
+    private AliasDocument providedAlias;
+    private IdentityDocument identity;
+    private ActivityDocument activity;
+    private String created;
+    private String expiry;
+    private Collection<VerificationSequenceDocument> sequences;
 
 }

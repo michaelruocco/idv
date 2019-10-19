@@ -1,17 +1,14 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocument;
 
 import java.util.Collection;
 
-
-@Getter
-@Builder
+@Data
 public class VerificationSequenceDocument {
 
-    private final String name;
-    private final Collection<VerificationMethodDocument> methods;
+    private String name;
+    private Collection<VerificationMethodDocument> methods;
 
 }

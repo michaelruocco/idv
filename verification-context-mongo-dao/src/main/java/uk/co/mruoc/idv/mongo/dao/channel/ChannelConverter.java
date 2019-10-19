@@ -15,9 +15,9 @@ public class ChannelConverter {
     }
 
     public ChannelDocument toDocument(final Channel channel) {
-        return ChannelDocument.builder()
-                .id(channel.getId())
-                .build();
+        final ChannelDocument document = new ChannelDocument();
+        document.setId(channel.getId());
+        return document;
     }
 
 }

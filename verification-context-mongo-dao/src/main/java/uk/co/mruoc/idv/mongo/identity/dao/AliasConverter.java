@@ -33,10 +33,10 @@ public class AliasConverter {
     }
 
     public AliasDocument toDocument(final Alias alias) {
-        return AliasDocument.builder()
-                .type(alias.getType())
-                .value(alias.getValue())
-                .build();
+        final AliasDocument document = new AliasDocument();
+        document.setType(alias.getType());
+        document.setValue(alias.getValue());
+        return document;
     }
 
 }

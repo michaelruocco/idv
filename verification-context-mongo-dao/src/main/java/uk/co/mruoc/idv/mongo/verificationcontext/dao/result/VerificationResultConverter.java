@@ -34,12 +34,12 @@ public class VerificationResultConverter {
     }
 
     public VerificationResultDocument toDocument(final VerificationResult result) {
-        return VerificationResultDocument.builder()
-                .successful(result.isSuccessful())
-                .methodName(result.getMethodName())
-                .timestamp(result.getTimestamp().toString())
-                .verificationId(result.getVerificationId().toString())
-                .build();
+        final VerificationResultDocument document = new VerificationResultDocument();
+        document.setSuccessful(result.isSuccessful());
+        document.setMethodName(result.getMethodName());
+        document.setTimestamp(result.getTimestamp().toString());
+        document.setVerificationId(result.getVerificationId().toString());
+        return document;
     }
 
     private VerificationResult toSuccessfulResult(final VerificationResultDocument document) {

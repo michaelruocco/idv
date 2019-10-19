@@ -2,7 +2,6 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverterDelegator;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.MultipleMethodSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
@@ -38,11 +37,10 @@ public class VerificationSequenceConverter {
                 .collect(Collectors.toList());
     }
     public VerificationSequenceDocument toDocument(final VerificationSequence sequence) {
-        final Collection<VerificationMethodDocument> methods = methodConverter.toDocuments(sequence.getMethods());
-        return VerificationSequenceDocument.builder()
-                .name(sequence.getName())
-                .methods(methods)
-                .build();
+        final VerificationSequenceDocument document = new VerificationSequenceDocument();
+        document.setName(sequence.getName());
+        document.setMethods(methodConverter.toDocuments(sequence.getMethods()));
+        return document;
     }
 
 }

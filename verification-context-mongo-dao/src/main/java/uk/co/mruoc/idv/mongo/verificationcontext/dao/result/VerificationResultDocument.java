@@ -1,15 +1,13 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao.result;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
-@Builder
+@Data
 public class VerificationResultDocument {
 
-    private final String methodName;
-    private final String verificationId;
-    private final String timestamp;
-    private final boolean successful;
+    private String methodName;
+    private String verificationId;
+    private String timestamp;
+    private boolean successful;
 
 }

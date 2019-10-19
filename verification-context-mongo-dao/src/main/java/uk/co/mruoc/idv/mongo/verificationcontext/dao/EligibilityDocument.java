@@ -1,15 +1,11 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
-
-
-@Getter
-@Builder
+@Data
 public class EligibilityDocument {
 
-    final boolean eligible;
-    final String reason;
+    private boolean eligible;
+    private String reason;
 
 }

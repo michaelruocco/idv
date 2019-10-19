@@ -17,10 +17,10 @@ public class IdentityConverter {
     }
 
     public IdentityDocument toDocument(final Identity identity) {
-        return IdentityDocument.builder()
-                .id(identity.getIdvIdValue().toString())
-                .aliases(aliasConverter.toDocuments(identity.getAliases()))
-                .build();
+        final IdentityDocument document = new IdentityDocument();
+        document.setId(identity.getIdvIdValue().toString());
+        document.setAliases(aliasConverter.toDocuments(identity.getAliases()));
+        return document;
     }
 
 }

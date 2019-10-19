@@ -33,16 +33,16 @@ public class VerificationContextConverter {
     }
 
     public VerificationContextDocument toDocument(final VerificationContext context) {
-        return VerificationContextDocument.builder()
-                .id(context.getId().toString())
-                .channel(channelConverter.toDocument(context.getChannel()))
-                .providedAlias(aliasConverter.toDocument(context.getProvidedAlias()))
-                .identity(identityConverter.toDocument(context.getIdentity()))
-                .activity(activityConverter.toDocument(context.getActivity()))
-                .created(context.getCreated().toString())
-                .expiry(context.getExpiry().toString())
-                .sequences(sequenceConverter.toDocuments(context.getSequences()))
-                .build();
+        final VerificationContextDocument document = new VerificationContextDocument();
+        document.setId(context.getId().toString());
+        document.setChannel(channelConverter.toDocument(context.getChannel()));
+        document.setProvidedAlias(aliasConverter.toDocument(context.getProvidedAlias()));
+        document.setIdentity(identityConverter.toDocument(context.getIdentity()));
+        document.setActivity(activityConverter.toDocument(context.getActivity()));
+        document.setCreated(context.getCreated().toString());
+        document.setExpiry(context.getExpiry().toString());
+        document.setSequences(sequenceConverter.toDocuments(context.getSequences()));
+        return document;
     }
 
 }
