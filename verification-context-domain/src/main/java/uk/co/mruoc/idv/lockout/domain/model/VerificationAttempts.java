@@ -103,6 +103,10 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return toAttempts(remainingAttempts);
     }
 
+    public Collection<VerificationAttempt> asCollection() {
+        return Collections.unmodifiableCollection(attempts);
+    }
+
     public int size() {
         return attempts.size();
     }

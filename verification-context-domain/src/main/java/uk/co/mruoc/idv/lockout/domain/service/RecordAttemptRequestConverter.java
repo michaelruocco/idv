@@ -40,8 +40,8 @@ public class RecordAttemptRequestConverter {
                 .contextId(context.getId())
                 .channelId(context.getChannelId())
                 .activityName(context.getActivityName())
-                .providedAlias(context.getProvidedAlias())
-                .idvId(context.getIdvIdValue())
+                .alias(context.getProvidedAlias())
+                .idvIdValue(context.getIdvIdValue())
                 .build();
     }
 

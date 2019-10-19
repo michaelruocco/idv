@@ -52,7 +52,7 @@ class VerificationAttemptFailedTest {
     void shouldReturnProvidedAlias() {
         final Alias providedAlias = new FakeCreditCardNumber();
 
-        final VerificationAttempt attempt = builder.providedAlias(providedAlias).build();
+        final VerificationAttempt attempt = builder.alias(providedAlias).build();
 
         assertThat(attempt.getAlias()).isEqualTo(providedAlias);
     }
@@ -61,7 +61,7 @@ class VerificationAttemptFailedTest {
     void shouldReturnIdvId() {
         final UUID idvId = UUID.randomUUID();
 
-        final VerificationAttempt attempt = builder.idvId(idvId).build();
+        final VerificationAttempt attempt = builder.idvIdValue(idvId).build();
 
         assertThat(attempt.getIdvIdValue()).isEqualTo(idvId);
     }

@@ -16,7 +16,7 @@ public class MongoVerificationContextDao implements VerificationContextDao {
     @Override
     public void save(final VerificationContext context) {
         final VerificationContextDocument document = converter.toDocument(context);
-        repository.insert(document);
+        repository.save(document);
     }
 
     @Override

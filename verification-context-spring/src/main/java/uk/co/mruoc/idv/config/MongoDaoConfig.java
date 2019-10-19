@@ -27,6 +27,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
+import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverter;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
 import uk.co.mruoc.idv.mongo.dao.activity.MonetaryAmountConverter;
@@ -37,6 +38,9 @@ import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
 import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
+import uk.co.mruoc.idv.mongo.lockout.dao.MongoVerificationAttemptsDao;
+import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptsRepository;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardCredentialsConverter;
@@ -261,6 +265,13 @@ public class MongoDaoConfig {
     }
 
     @Bean
+    public VerificationAttemptConverter verificationAttemptConverter(final AliasConverter aliasConverter) {
+        return VerificationAttemptConverter.builder()
+                .aliasConverter(aliasConverter)
+                .build();
+    }
+
+    @Bean
     public IdentityDao identityDao(final IdentityRepository repository,
                                    final IdentityConverter identityConverter) {
         return new MongoIdentityDao(repository, identityConverter);
@@ -270,6 +281,12 @@ public class MongoDaoConfig {
     public VerificationContextDao verificationContextDao(final VerificationContextRepository repository,
                                                          final VerificationContextConverter contextConverter) {
         return new MongoVerificationContextDao(repository, contextConverter);
+    }
+
+    @Bean
+    public VerificationAttemptsDao verificationAttemptsDao(final VerificationAttemptsRepository repository,
+                                                           final VerificationAttemptConverter attemptConverter) {
+        return new MongoVerificationAttemptsDao(repository, attemptConverter);
     }
 
     @Builder

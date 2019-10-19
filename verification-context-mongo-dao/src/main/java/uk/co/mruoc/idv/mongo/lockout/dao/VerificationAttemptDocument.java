@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv.mongo.lockout;
+package uk.co.mruoc.idv.mongo.lockout.dao;
 
 import lombok.Data;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasDocument;

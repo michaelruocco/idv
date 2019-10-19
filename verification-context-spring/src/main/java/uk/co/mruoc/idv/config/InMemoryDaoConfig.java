@@ -20,10 +20,10 @@ import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
         MongoDataAutoConfiguration.class,
         MongoRepositoriesAutoConfiguration.class
 })
+@Profile("stub")
 public class InMemoryDaoConfig {
 
     @Bean
-    @Profile("stub")
     public VerificationContextDao verificationContextDao() {
         return new InMemoryVerificationContextDao();
     }
@@ -34,7 +34,6 @@ public class InMemoryDaoConfig {
     }
 
     @Bean
-    @Profile("stub")
     public IdentityDao identityDao() {
         return new InMemoryIdentityDao();
     }
