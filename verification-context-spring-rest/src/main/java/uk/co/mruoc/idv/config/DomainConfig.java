@@ -50,7 +50,7 @@ import uk.co.mruoc.jsonapi.JsonApiModule;
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
 @Configuration
-public class ApplicationConfig {
+public class DomainConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
