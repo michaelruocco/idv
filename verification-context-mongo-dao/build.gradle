@@ -1,7 +1,17 @@
+configurations {
+    provided
+}
+
+sourceSets {
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
 dependencies {
     compile project(':verification-context-domain')
 
-    compileOnly 'org.springframework.data:spring-data-mongodb:2.2.0.RELEASE'
+    provided 'org.springframework.data:spring-data-mongodb:2.2.0.RELEASE'
 
     testCompile project(':verification-context-domain').sourceSets.test.output
     testCompile 'org.meanbean:meanbean:2.0.3'
