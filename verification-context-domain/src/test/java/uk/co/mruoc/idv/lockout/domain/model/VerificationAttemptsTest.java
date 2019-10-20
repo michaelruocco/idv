@@ -6,6 +6,7 @@ import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts.CannotAddAttemptException;
 import uk.co.mruoc.idv.lockout.domain.service.PredicateMatchesActivityNames;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -215,6 +216,16 @@ class VerificationAttemptsTest {
         final VerificationAttempts resetAttempts = attempts.resetBy(new PredicateMatchesActivityNames(attempt.getActivityName()));
 
         assertThat(resetAttempts).isEmpty();
+    }
+
+    @Test
+    void shouldReturnAttemptsAsCollection() {
+        final VerificationAttempt attempt1 = mock(VerificationAttempt.class);
+        final VerificationAttempt attempt2 = mock(VerificationAttempt.class);
+
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Arrays.asList(attempt1, attempt2));
+
+        assertThat(attempts.asCollection()).containsExactly(attempt1, attempt2);
     }
 
     @Test

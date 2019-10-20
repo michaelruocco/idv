@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class VerificationMethodConverterDelegator {
 
@@ -17,24 +16,12 @@ public class VerificationMethodConverterDelegator {
         converters.forEach(converter -> this.converters.put(converter.getSupportedMethodName(), converter));
     }
 
-    public Collection<VerificationMethod> toMethods(final Collection<VerificationMethodDocument> documents) {
-        return documents.stream()
-                .map(this::toMethod)
-                .collect(Collectors.toList());
-    }
-
     public VerificationMethod toMethod(final VerificationMethodDocument document) {
         final String name = document.getName();
         final Optional<VerificationMethodConverter> methodConverter = findConverter(name);
         return methodConverter
                 .map(converter -> converter.toMethod(document))
                 .orElseThrow(() -> new MethodNotSupportedException(name));
-    }
-
-    public Collection<VerificationMethodDocument> toDocuments(final Collection<VerificationMethod> methods) {
-        return methods.stream()
-                .map(this::toDocument)
-                .collect(Collectors.toList());
     }
 
     public VerificationMethodDocument toDocument(final VerificationMethod method) {

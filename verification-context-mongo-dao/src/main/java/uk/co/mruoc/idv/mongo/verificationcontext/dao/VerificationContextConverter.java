@@ -17,7 +17,7 @@ public class VerificationContextConverter {
     private final AliasConverter aliasConverter;
     private final IdentityConverter identityConverter;
     private final ActivityConverterDelegator activityConverter;
-    private final VerificationSequenceConverter sequenceConverter;
+    private final VerificationSequencesConverter sequencesConverter;
 
     public VerificationContext toContext(final VerificationContextDocument document) {
         return VerificationContext.builder()
@@ -28,7 +28,7 @@ public class VerificationContextConverter {
                 .activity(activityConverter.toActivity(document.getActivity()))
                 .created(Instant.parse(document.getCreated()))
                 .expiry(Instant.parse(document.getExpiry()))
-                .sequences(sequenceConverter.toSequences(document.getSequences()))
+                .sequences(sequencesConverter.toSequences(document.getSequences()))
                 .build();
     }
 
@@ -41,7 +41,7 @@ public class VerificationContextConverter {
         document.setActivity(activityConverter.toDocument(context.getActivity()));
         document.setCreated(context.getCreated().toString());
         document.setExpiry(context.getExpiry().toString());
-        document.setSequences(sequenceConverter.toDocuments(context.getSequences()));
+        document.setSequences(sequencesConverter.toDocuments(context.getSequences()));
         return document;
     }
 

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligibility;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.Eligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.Ineligible;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,7 +15,7 @@ class EligibilityConverterTest {
     void shouldConvertToIneligible() {
         final EligibilityDocument document = new FakeIneligibleDocument();
 
-        final Ineligible ineligible = converter.toIneligible(document);
+        final Eligibility ineligible = converter.toEligibility(document);
 
         assertThat(ineligible.isEligible()).isFalse();
     }
@@ -34,7 +33,7 @@ class EligibilityConverterTest {
     void shouldConvertReasonToIneligible() {
         final EligibilityDocument document = new FakeIneligibleDocument();
 
-        final Ineligible ineligible = converter.toIneligible(document);
+        final Eligibility ineligible = converter.toEligibility(document);
 
         assertThat(ineligible.getReason()).contains(document.getReason());
     }

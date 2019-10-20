@@ -36,14 +36,14 @@ class VerificationContextConverterTest {
     private final AliasConverter aliasConverter = mock(AliasConverter.class);
     private final IdentityConverter identityConverter = mock(IdentityConverter.class);
     private final ActivityConverterDelegator activityConverter = mock(ActivityConverterDelegator.class);
-    private final VerificationSequenceConverter sequenceConverter = mock(VerificationSequenceConverter.class);
+    private final VerificationSequencesConverter sequencesConverter = mock(VerificationSequencesConverter.class);
 
     private final VerificationContextConverter contextConverter = VerificationContextConverter.builder()
             .channelConverter(channelConverter)
             .aliasConverter(aliasConverter)
             .identityConverter(identityConverter)
             .activityConverter(activityConverter)
-            .sequenceConverter(sequenceConverter)
+            .sequencesConverter(sequencesConverter)
             .build();
 
     @Test
@@ -192,7 +192,7 @@ class VerificationContextConverterTest {
     void shouldConvertSequenceToContext() {
         final VerificationContextDocument document = new FakeVerificationContextDocument();
         final VerificationSequences sequences = new VerificationSequences();
-        given(sequenceConverter.toSequences(document.getSequences())).willReturn(sequences);
+        given(sequencesConverter.toSequences(document.getSequences())).willReturn(sequences);
 
         final VerificationContext context = contextConverter.toContext(document);
 
@@ -204,7 +204,7 @@ class VerificationContextConverterTest {
         final VerificationContext context = new FakeVerificationContext();
         final VerificationSequenceDocument sequenceDocument = new VerificationSequenceDocument();
         final Collection<VerificationSequenceDocument> sequenceDocuments = Collections.singleton(sequenceDocument);
-        given(sequenceConverter.toDocuments(context.getSequences())).willReturn(sequenceDocuments);
+        given(sequencesConverter.toDocuments(context.getSequences())).willReturn(sequenceDocuments);
 
         final VerificationContextDocument contextDocument = contextConverter.toDocument(context);
 

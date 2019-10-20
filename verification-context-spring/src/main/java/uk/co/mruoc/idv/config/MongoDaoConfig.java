@@ -43,6 +43,7 @@ import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptConverter;
 import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptsRepository;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequencesConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardCredentialsConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumberConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumberConverter;
@@ -55,6 +56,7 @@ import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextConverte
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextRepository;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverterDelegator;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodsConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequenceConverter;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
@@ -243,9 +245,21 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationSequenceConverter sequenceConverter(final VerificationMethodConverterDelegator methodConverter) {
+    public VerificationMethodsConverter methodsConverter(final VerificationMethodConverterDelegator methodConverter) {
+        return new VerificationMethodsConverter(methodConverter);
+    }
+
+    @Bean
+    public VerificationSequenceConverter sequenceConverter(final VerificationMethodsConverter methodsConverter) {
         return VerificationSequenceConverter.builder()
-                .methodConverter(methodConverter)
+                .methodsConverter(methodsConverter)
+                .build();
+    }
+
+    @Bean
+    public VerificationSequencesConverter sequencesConverter(final VerificationSequenceConverter sequenceConverter) {
+        return VerificationSequencesConverter.builder()
+                .sequenceConverter(sequenceConverter)
                 .build();
     }
 
@@ -254,13 +268,13 @@ public class MongoDaoConfig {
                                                                      final AliasConverter aliasConverter,
                                                                      final IdentityConverter identityConverter,
                                                                      final ActivityConverterDelegator activityConverter,
-                                                                     final VerificationSequenceConverter sequenceConverter) {
+                                                                     final VerificationSequencesConverter sequencesConverter) {
         return VerificationContextConverter.builder()
                 .channelConverter(channelConverter)
                 .aliasConverter(aliasConverter)
                 .identityConverter(identityConverter)
                 .activityConverter(activityConverter)
-                .sequenceConverter(sequenceConverter)
+                .sequencesConverter(sequencesConverter)
                 .build();
     }
 
