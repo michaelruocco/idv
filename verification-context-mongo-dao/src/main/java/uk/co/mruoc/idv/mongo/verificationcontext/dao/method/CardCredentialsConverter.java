@@ -32,9 +32,7 @@ public class CardCredentialsConverter implements VerificationMethodConverter {
     @Override
     public VerificationMethodDocument toDocument(final VerificationMethod method) {
         final VerificationMethodDocument document = new VerificationMethodDocument();
-        document.setName(method.getName());
-        document.setMaxAttempts(method.getMaxAttempts());
-        document.setDuration(method.getDuration().toString());
+        VerificationMethodConverter.populateCommonFields(method, document);
         document.setEligibility(eligibilityConverter.toDocument(method.getEligibility()));
         document.setResults(resultConverter.toDocuments(method.getResults()));
         return document;

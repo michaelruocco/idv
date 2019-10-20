@@ -24,5 +24,6 @@ dependencies {
 
     compile 'de.bwaldvogel:mongo-java-server:1.21.0'
 
+    testCompile project(':verification-context-domain').sourceSets.test.output
     testCompile 'com.github.stefanbirkner:system-rules:1.19.0'
 }

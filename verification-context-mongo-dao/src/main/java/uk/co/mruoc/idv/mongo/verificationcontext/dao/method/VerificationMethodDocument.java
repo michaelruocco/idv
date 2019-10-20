@@ -12,7 +12,7 @@ public class VerificationMethodDocument {
     private String name;
     private Collection<VerificationResultDocument> results;
     private int maxAttempts;
-    private String duration;
+    private long duration;
     private EligibilityDocument eligibility;
 
     public boolean isEligible() {

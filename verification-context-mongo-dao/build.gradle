@@ -3,5 +3,6 @@ dependencies {
 
     compileOnly 'org.springframework.data:spring-data-mongodb:2.2.0.RELEASE'
 
+    testCompile project(':verification-context-domain').sourceSets.test.output
     testCompile 'org.meanbean:meanbean:2.0.3'
 }

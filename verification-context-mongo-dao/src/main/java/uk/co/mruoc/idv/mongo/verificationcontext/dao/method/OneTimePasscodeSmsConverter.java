@@ -52,9 +52,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
     public VerificationMethodDocument toDocument(final VerificationMethod method) {
         final OneTimePasscodeSms oneTimePasscodeSms = (OneTimePasscodeSms) method;
         final OneTimePasscodeSmsDocument document = new OneTimePasscodeSmsDocument();
-        document.setName(oneTimePasscodeSms.getName());
-        document.setMaxAttempts(oneTimePasscodeSms.getMaxAttempts());
-        document.setDuration(oneTimePasscodeSms.getDuration().toString());
+        VerificationMethodConverter.populateCommonFields(method, document);
         document.setEligibility(eligibilityConverter.toDocument(oneTimePasscodeSms.getEligibility()));
         document.setResults(resultConverter.toDocuments(oneTimePasscodeSms.getResults()));
         document.setMobileNumbers(extractMobileNumbers(oneTimePasscodeSms));

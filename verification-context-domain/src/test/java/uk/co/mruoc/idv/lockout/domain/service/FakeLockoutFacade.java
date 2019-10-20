@@ -4,13 +4,13 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 
 public class FakeLockoutFacade implements LockoutFacade {
 
-    private LockoutRequest lastGetRequest;
+    private LockoutRequest lastLoadRequest;
     private LockoutRequest lastResetRequest;
     private LockoutState stateToReturn;
 
     @Override
     public LockoutState loadLockoutState(final LockoutRequest request) {
-        this.lastGetRequest = request;
+        this.lastLoadRequest = request;
         return stateToReturn;
     }
 
@@ -20,8 +20,8 @@ public class FakeLockoutFacade implements LockoutFacade {
         return stateToReturn;
     }
 
-    public LockoutRequest getLastGetRequest() {
-        return lastGetRequest;
+    public LockoutRequest getLastLoadRequest() {
+        return lastLoadRequest;
     }
 
     public LockoutRequest getLastResetRequest() {

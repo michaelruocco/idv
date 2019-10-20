@@ -10,4 +10,10 @@ public interface VerificationMethodConverter {
 
     VerificationMethodDocument toDocument(final VerificationMethod method);
 
+    static void populateCommonFields(final VerificationMethod method, final VerificationMethodDocument document) {
+        document.setName(method.getName());
+        document.setMaxAttempts(method.getMaxAttempts());
+        document.setDuration(method.getDuration().toMillis());
+    }
+
 }

@@ -51,9 +51,7 @@ public class PhysicalPinsentryConverter implements VerificationMethodConverter {
     public VerificationMethodDocument toDocument(final VerificationMethod method) {
         final PhysicalPinsentry physicalPinsentry = (PhysicalPinsentry) method;
         final PhysicalPinsentryDocument document = new PhysicalPinsentryDocument();
-        document.setName(physicalPinsentry.getName());
-        document.setMaxAttempts(physicalPinsentry.getMaxAttempts());
-        document.setDuration(physicalPinsentry.getDuration().toString());
+        VerificationMethodConverter.populateCommonFields(method, document);
         document.setFunction(physicalPinsentry.getFunction());
         document.setEligibility(eligibilityConverter.toDocument(physicalPinsentry.getEligibility()));
         document.setResults(resultConverter.toDocuments(physicalPinsentry.getResults()));

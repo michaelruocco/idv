@@ -7,7 +7,7 @@ public class FakeVerificationContextService implements VerificationContextServic
     private VerificationContext context;
 
     private CreateContextRequest lastCreateRequest;
-    private LoadContextRequest lastGetRequest;
+    private LoadContextRequest lastLoadRequest;
     private RecordResultRequest lastUpdateResultRequest;
 
     @Override
@@ -18,7 +18,7 @@ public class FakeVerificationContextService implements VerificationContextServic
 
     @Override
     public VerificationContext load(final LoadContextRequest request) {
-        this.lastGetRequest = request;
+        this.lastLoadRequest = request;
         return context;
     }
 
@@ -36,8 +36,8 @@ public class FakeVerificationContextService implements VerificationContextServic
         return lastCreateRequest;
     }
 
-    public LoadContextRequest getLastGetRequest() {
-        return lastGetRequest;
+    public LoadContextRequest getLastLoadRequest() {
+        return lastLoadRequest;
     }
 
     public RecordResultRequest getLastUpdateResultRequest() {

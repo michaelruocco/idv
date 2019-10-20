@@ -43,9 +43,7 @@ public class MobilePinsentryConverter implements VerificationMethodConverter {
     public VerificationMethodDocument toDocument(final VerificationMethod method) {
         final MobilePinsentry mobilePinsentry = (MobilePinsentry) method;
         final MobilePinsentryDocument document = new MobilePinsentryDocument();
-        document.setName(mobilePinsentry.getName());
-        document.setMaxAttempts(mobilePinsentry.getMaxAttempts());
-        document.setDuration(mobilePinsentry.getDuration().toString());
+        VerificationMethodConverter.populateCommonFields(method, document);
         document.setFunction(mobilePinsentry.getFunction());
         document.setEligibility(eligibilityConverter.toDocument(mobilePinsentry.getEligibility()));
         document.setResults(resultConverter.toDocuments(mobilePinsentry.getResults()));
