@@ -7,7 +7,7 @@ import lombok.Data;
 public class PasscodeSettingsDocument {
 
     private int length;
-    private String duration;
+    private long duration;
     private int maxGenerationAttempts;
 
 }

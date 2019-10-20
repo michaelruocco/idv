@@ -12,7 +12,7 @@ public class PasscodeSettingsConverter {
     public PasscodeSettingsDocument toDocument(final PasscodeSettings passcodeSettings) {
         final PasscodeSettingsDocument document = new PasscodeSettingsDocument();
         document.setLength(passcodeSettings.getLength());
-        document.setDuration(passcodeSettings.getDuration().toString());
+        document.setDuration(passcodeSettings.getDuration().toMillis());
         document.setMaxGenerationAttempts(passcodeSettings.getMaxGenerationAttempts());
         return document;
     }
