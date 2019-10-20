@@ -8,6 +8,10 @@ public class ActivityDocumentMother {
         return new DefaultActivityDocument();
     }
 
+    public static OnlinePurchaseDocument buildOnlinePurchase() {
+        return new DefaultOnlinePurchaseActivityDocument();
+    }
+
     public static ActivityDocument withName(final String name) {
         final ActivityDocument document = buildDefault();
         document.setName(name);
@@ -25,6 +29,18 @@ public class ActivityDocumentMother {
         private DefaultActivityDocument() {
             setName("fake-activity");
             setTimestamp(Instant.now().toString());
+        }
+
+    }
+
+    private static class DefaultOnlinePurchaseActivityDocument extends OnlinePurchaseDocument {
+
+        private DefaultOnlinePurchaseActivityDocument() {
+            setName("online-purchase");
+            setTimestamp(Instant.now().toString());
+            setMerchantName("fake-merchant-name");
+            setReference("fake-reference");
+            setCost(new FakeMonetaryAmountDocument());
         }
 
     }
