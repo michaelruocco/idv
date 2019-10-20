@@ -1,13 +1,13 @@
 package uk.co.mruoc.idv.mongo.lockout.dao;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@Builder
 public class MongoVerificationAttemptsDao implements VerificationAttemptsDao {
 
     private final VerificationAttemptsRepository repository;

@@ -1,13 +1,13 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@Builder
 public class MongoVerificationContextDao implements VerificationContextDao {
 
     private final VerificationContextRepository repository;

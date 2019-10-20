@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.identity.dao;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
@@ -8,7 +8,7 @@ import uk.co.mruoc.idv.identity.domain.model.Identity;
 import java.util.Collection;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@Builder
 public class MongoIdentityDao implements IdentityDao {
 
     private final IdentityRepository repository;

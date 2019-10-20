@@ -288,19 +288,28 @@ public class MongoDaoConfig {
     @Bean
     public IdentityDao identityDao(final IdentityRepository repository,
                                    final IdentityConverter identityConverter) {
-        return new MongoIdentityDao(repository, identityConverter);
+        return MongoIdentityDao.builder()
+                .repository(repository)
+                .converter(identityConverter)
+                .build();
     }
 
     @Bean
     public VerificationContextDao verificationContextDao(final VerificationContextRepository repository,
                                                          final VerificationContextConverter contextConverter) {
-        return new MongoVerificationContextDao(repository, contextConverter);
+        return MongoVerificationContextDao.builder()
+                .repository(repository)
+                .converter(contextConverter)
+                .build();
     }
 
     @Bean
     public VerificationAttemptsDao verificationAttemptsDao(final VerificationAttemptsRepository repository,
                                                            final VerificationAttemptConverter attemptConverter) {
-        return new MongoVerificationAttemptsDao(repository, attemptConverter);
+        return MongoVerificationAttemptsDao.builder()
+                .repository(repository)
+                .converter(attemptConverter)
+                .build();
     }
 
     @Builder
