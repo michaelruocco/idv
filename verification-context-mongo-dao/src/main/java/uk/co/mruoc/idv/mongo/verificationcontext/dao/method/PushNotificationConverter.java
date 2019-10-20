@@ -16,8 +16,8 @@ public class PushNotificationConverter implements VerificationMethodConverter {
     private final EligibilityConverter eligibilityConverter;
 
     @Override
-    public String getSupportedMethodName() {
-        return PushNotification.NAME;
+    public boolean supportsMethod(final String methodName) {
+        return PushNotification.NAME.equals(methodName);
     }
 
     @Override

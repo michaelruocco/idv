@@ -3,7 +3,11 @@ package uk.co.mruoc.idv.mongo.dao.channel;
 public class FakeChannelDocument extends ChannelDocument {
 
     public FakeChannelDocument() {
-        setId("fake-channel");
+        this("fake-channel");
+    }
+
+    public FakeChannelDocument(final String id) {
+        setId(id);
     }
 
 }

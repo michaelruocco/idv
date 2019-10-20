@@ -19,8 +19,8 @@ public class PhysicalPinsentryConverter implements VerificationMethodConverter {
     private final CardNumberConverter cardNumberConverter;
 
     @Override
-    public String getSupportedMethodName() {
-        return PhysicalPinsentry.NAME;
+    public boolean supportsMethod(final String methodName) {
+        return PhysicalPinsentry.NAME.equals(methodName);
     }
 
     @Override

@@ -12,8 +12,8 @@ public class OnlinePurchaseConverter implements ActivityConverter {
     private final MonetaryAmountConverter amountConverter;
 
     @Override
-    public String getSupportedActivityName() {
-        return OnlinePurchase.NAME;
+    public boolean supportsActivity(final String activityName) {
+        return OnlinePurchase.NAME.equals(activityName);
     }
 
     @Override

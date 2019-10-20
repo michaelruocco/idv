@@ -16,8 +16,8 @@ public class CardCredentialsConverter implements VerificationMethodConverter {
     private final EligibilityConverter eligibilityConverter;
 
     @Override
-    public String getSupportedMethodName() {
-        return CardCredentials.NAME;
+    public boolean supportsMethod(final String methodName) {
+        return CardCredentials.NAME.equals(methodName);
     }
 
     @Override

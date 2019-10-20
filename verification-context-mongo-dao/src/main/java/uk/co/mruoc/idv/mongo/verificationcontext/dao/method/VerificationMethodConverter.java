@@ -4,7 +4,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMetho
 
 public interface VerificationMethodConverter {
 
-    String getSupportedMethodName();
+    boolean supportsMethod(final String methodName);
 
     VerificationMethod toMethod(final VerificationMethodDocument document);
 

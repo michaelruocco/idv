@@ -15,8 +15,8 @@ public class MobilePinsentryConverter implements VerificationMethodConverter {
     private final EligibilityConverter eligibilityConverter;
 
     @Override
-    public String getSupportedMethodName() {
-        return MobilePinsentry.NAME;
+    public boolean supportsMethod(final String methodName) {
+        return MobilePinsentry.NAME.equals(methodName);
     }
 
     @Override

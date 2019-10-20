@@ -4,16 +4,14 @@ import uk.co.mruoc.idv.domain.exception.MethodNotSupportedException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class VerificationMethodConverterDelegator {
 
-    private final Map<String, VerificationMethodConverter> converters = new HashMap<>();
+    private final Collection<VerificationMethodConverter> converters;
 
     public VerificationMethodConverterDelegator(final Collection<VerificationMethodConverter> converters) {
-        converters.forEach(converter -> this.converters.put(converter.getSupportedMethodName(), converter));
+        this.converters = converters;
     }
 
     public VerificationMethod toMethod(final VerificationMethodDocument document) {
@@ -32,8 +30,10 @@ public class VerificationMethodConverterDelegator {
                 .orElseThrow(() -> new MethodNotSupportedException(name));
     }
 
-    private Optional<VerificationMethodConverter> findConverter(final String activityName) {
-        return Optional.ofNullable(converters.get(activityName));
+    private Optional<VerificationMethodConverter> findConverter(final String methodName) {
+        return converters.stream()
+                .filter(converter -> converter.supportsMethod(methodName))
+                .findFirst();
     }
 
 }

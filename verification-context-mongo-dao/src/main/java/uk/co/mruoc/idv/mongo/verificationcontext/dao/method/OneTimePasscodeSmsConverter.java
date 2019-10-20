@@ -20,8 +20,8 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
     private final PasscodeSettingsConverter passcodeSettingsConverter;
 
     @Override
-    public String getSupportedMethodName() {
-        return OneTimePasscodeSms.NAME;
+    public boolean supportsMethod(final String methodName) {
+        return OneTimePasscodeSms.NAME.equals(methodName);
     }
 
     @Override

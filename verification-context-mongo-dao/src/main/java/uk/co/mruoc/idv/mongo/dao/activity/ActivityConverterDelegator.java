@@ -3,17 +3,20 @@ package uk.co.mruoc.idv.mongo.dao.activity;
 import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 public class ActivityConverterDelegator {
 
-    private final Map<String, ActivityConverter> converters = new HashMap<>();
+    private final Collection<ActivityConverter> converters;
+
+    public ActivityConverterDelegator(final ActivityConverter... converters) {
+        this(Arrays.asList(converters));
+    }
 
     public ActivityConverterDelegator(final Collection<ActivityConverter> converters) {
-        converters.forEach(converter -> this.converters.put(converter.getSupportedActivityName(), converter));
+        this.converters = converters;
     }
 
     public Activity toActivity(final ActivityDocument document) {
@@ -33,7 +36,9 @@ public class ActivityConverterDelegator {
     }
 
     private Optional<ActivityConverter> findConverter(final String activityName) {
-        return Optional.ofNullable(converters.get(activityName));
+        return converters.stream()
+                .filter(converter -> converter.supportsActivity(activityName))
+                .findFirst();
     }
 
 }

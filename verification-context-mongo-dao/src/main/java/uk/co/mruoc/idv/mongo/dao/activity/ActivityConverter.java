@@ -4,7 +4,7 @@ import uk.co.mruoc.idv.domain.model.activity.Activity;
 
 public interface ActivityConverter {
 
-    String getSupportedActivityName();
+    boolean supportsActivity(final String activityName);
 
     Activity toActivity(final ActivityDocument document);
 
