@@ -21,9 +21,7 @@ class VerificationSequencesConverterTest {
 
     private final VerificationSequenceConverter sequenceConverter = mock(VerificationSequenceConverter.class);
 
-    private final VerificationSequencesConverter sequencesConverter = VerificationSequencesConverter.builder()
-            .sequenceConverter(sequenceConverter)
-            .build();
+    private final VerificationSequencesConverter sequencesConverter = new VerificationSequencesConverter(sequenceConverter);
 
     @Test
     void shouldConvertMultipleSequences() {

@@ -16,7 +16,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
 
     private final VerificationResultsConverter resultsConverter;
     private final EligibilityConverter eligibilityConverter;
-    private final MobileNumberConverter mobileNumberConverter;
+    private final MobileNumbersConverter mobileNumbersConverter;
     private final PasscodeSettingsConverter passcodeSettingsConverter;
 
     @Override
@@ -36,7 +36,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
     private VerificationMethod toEligible(final OneTimePasscodeSmsDocument document) {
         return new OneTimePasscodeSmsEligible(
                 passcodeSettingsConverter.toPasscodeSettings(document.getPasscodeSettings()),
-                mobileNumberConverter.toMobileNumbers(document.getMobileNumbers()),
+                mobileNumbersConverter.toMobileNumbers(document.getMobileNumbers()),
                 resultsConverter.toResults(document.getResults())
         );
     }
@@ -44,7 +44,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
     private VerificationMethod toIneligible(final OneTimePasscodeSmsDocument document) {
         return new OneTimePasscodeSmsEligible(
                 passcodeSettingsConverter.toPasscodeSettings(document.getPasscodeSettings()),
-                mobileNumberConverter.toMobileNumbers(document.getMobileNumbers())
+                mobileNumbersConverter.toMobileNumbers(document.getMobileNumbers())
         );
     }
 
@@ -71,7 +71,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
     private Collection<MobileNumberDocument> extractMobileNumbers(final OneTimePasscodeSms oneTimePasscodeSms) {
         if (oneTimePasscodeSms.isEligible()) {
             final OneTimePasscodeSmsEligible eligible = (OneTimePasscodeSmsEligible) oneTimePasscodeSms;
-            return mobileNumberConverter.toDocuments(eligible.getMobileNumbers());
+            return mobileNumbersConverter.toDocuments(eligible.getMobileNumbers());
         }
         return Collections.emptyList();
     }

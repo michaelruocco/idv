@@ -21,9 +21,7 @@ class VerificationSequenceConverterTest {
 
     private final VerificationMethodsConverter methodsConverter = mock(VerificationMethodsConverter.class);
 
-    private final VerificationSequenceConverter sequenceConverter = VerificationSequenceConverter.builder()
-            .methodsConverter(methodsConverter)
-            .build();
+    private final VerificationSequenceConverter sequenceConverter = new VerificationSequenceConverter(methodsConverter);
 
     @Test
     void shouldConvertToSingleMethodSequenceIfOnlyOneMethod() {

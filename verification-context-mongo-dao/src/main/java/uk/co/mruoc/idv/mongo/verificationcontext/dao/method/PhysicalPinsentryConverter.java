@@ -16,7 +16,7 @@ public class PhysicalPinsentryConverter implements VerificationMethodConverter {
 
     private final VerificationResultsConverter resultsConverter;
     private final EligibilityConverter eligibilityConverter;
-    private final CardNumberConverter cardNumberConverter;
+    private final CardNumbersConverter cardNumbersConverter;
 
     @Override
     public boolean supportsMethod(final String methodName) {
@@ -35,7 +35,7 @@ public class PhysicalPinsentryConverter implements VerificationMethodConverter {
     private VerificationMethod toEligible(final PhysicalPinsentryDocument document) {
         return new PhysicalPinsentryEligible(
                 document.getFunction(),
-                cardNumberConverter.toCardNumbers(document.getCardNumbers()),
+                cardNumbersConverter.toCardNumbers(document.getCardNumbers()),
                 resultsConverter.toResults(document.getResults())
         );
     }
@@ -62,7 +62,7 @@ public class PhysicalPinsentryConverter implements VerificationMethodConverter {
     private Collection<CardNumberDocument> extractCardNumbers(final PhysicalPinsentry physicalPinsentry) {
         if (physicalPinsentry.isEligible()) {
             final PhysicalPinsentryEligible eligible = (PhysicalPinsentryEligible) physicalPinsentry;
-            return cardNumberConverter.toDocuments(eligible.getCardNumbers());
+            return cardNumbersConverter.toDocuments(eligible.getCardNumbers());
         }
         return Collections.emptyList();
     }

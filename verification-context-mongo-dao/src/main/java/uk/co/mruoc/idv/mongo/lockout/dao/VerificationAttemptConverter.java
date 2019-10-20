@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.lockout.dao;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptFailed;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful;
@@ -9,7 +9,7 @@ import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
 import java.time.Instant;
 import java.util.UUID;
 
-@Builder
+@RequiredArgsConstructor
 public class VerificationAttemptConverter {
 
     private final AliasConverter aliasConverter;

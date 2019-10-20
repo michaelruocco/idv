@@ -1,12 +1,12 @@
 package uk.co.mruoc.idv.mongo.dao.activity;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.idv.domain.model.activity.Activity;
 import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
 
 import java.time.Instant;
 
-@Builder
+@RequiredArgsConstructor
 public class OnlinePurchaseConverter implements ActivityConverter {
 
     private final MonetaryAmountConverter amountConverter;

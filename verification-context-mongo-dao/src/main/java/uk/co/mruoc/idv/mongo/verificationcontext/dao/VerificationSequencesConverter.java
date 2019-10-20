@@ -1,13 +1,13 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@Builder
+@RequiredArgsConstructor
 public class VerificationSequencesConverter {
 
     private final VerificationSequenceConverter sequenceConverter;

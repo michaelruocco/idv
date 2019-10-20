@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.lockout.dao;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Builder
+@RequiredArgsConstructor
 public class VerificationAttemptsConverter {
 
     private final VerificationAttemptConverter attemptConverter;

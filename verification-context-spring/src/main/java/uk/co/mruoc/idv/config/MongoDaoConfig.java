@@ -8,7 +8,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.internal.MongoClientImpl;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -48,7 +48,9 @@ import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequencesConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardCredentialsConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumberConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumbersConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumberConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumbersConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobilePinsentryConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.OneTimePasscodeSmsConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PasscodeSettingsConverter;
@@ -129,9 +131,7 @@ public class MongoDaoConfig {
 
     @Bean
     public IndiciesResolverListener indiciesResolverListener(final IndiciesResolver resolver) {
-        return IndiciesResolverListener.builder()
-                .resolver(resolver)
-                .build();
+        return new IndiciesResolverListener(resolver);
     }
 
     @Bean
@@ -146,9 +146,7 @@ public class MongoDaoConfig {
 
     @Bean
     public OnlinePurchaseConverter onlinePurchaseConverter(final MonetaryAmountConverter amountConverter) {
-        return OnlinePurchaseConverter.builder()
-                .amountConverter(amountConverter)
-                .build();
+        return new OnlinePurchaseConverter(amountConverter);
     }
 
     @Bean
@@ -171,8 +169,6 @@ public class MongoDaoConfig {
         return new IdentityConverter(aliasesConverter);
     }
 
-
-
     @Bean
     public VerificationResultConverter resultConverter() {
         return new VerificationResultConverter();
@@ -180,9 +176,7 @@ public class MongoDaoConfig {
 
     @Bean
     public VerificationResultsConverter resultsConverter(final VerificationResultConverter resultConverter) {
-        return VerificationResultsConverter.builder()
-                .resultConverter(resultConverter)
-                .build();
+        return new VerificationResultsConverter(resultConverter);
     }
 
     @Bean
@@ -196,8 +190,18 @@ public class MongoDaoConfig {
     }
 
     @Bean
+    public CardNumbersConverter cardNumbersConverter(final CardNumberConverter cardNumberConverter) {
+        return new CardNumbersConverter(cardNumberConverter);
+    }
+
+    @Bean
     public MobileNumberConverter mobileNumberConverter() {
         return new MobileNumberConverter();
+    }
+
+    @Bean
+    public MobileNumbersConverter mobileNumbersConverter(final MobileNumberConverter mobileNumberConverter) {
+        return new MobileNumbersConverter(mobileNumberConverter);
     }
 
     @Bean
@@ -217,11 +221,11 @@ public class MongoDaoConfig {
     @Bean
     public VerificationMethodConverter physicalPinsentryConverter(final VerificationResultsConverter resultsConverter,
                                                                   final EligibilityConverter eligibilityConverter,
-                                                                  final CardNumberConverter cardNumberConverter) {
+                                                                  final CardNumbersConverter cardNumbersConverter) {
         return PhysicalPinsentryConverter.builder()
                 .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
-                .cardNumberConverter(cardNumberConverter)
+                .cardNumbersConverter(cardNumbersConverter)
                 .build();
     }
 
@@ -237,12 +241,12 @@ public class MongoDaoConfig {
     @Bean
     public VerificationMethodConverter oneTimePasscodeSmsConverter(final VerificationResultsConverter resultsConverter,
                                                                    final EligibilityConverter eligibilityConverter,
-                                                                   final MobileNumberConverter mobileNumberConverter,
+                                                                   final MobileNumbersConverter mobileNumbersConverter,
                                                                    final PasscodeSettingsConverter passcodeSettingsConverter) {
         return OneTimePasscodeSmsConverter.builder()
                 .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
-                .mobileNumberConverter(mobileNumberConverter)
+                .mobileNumbersConverter(mobileNumbersConverter)
                 .passcodeSettingsConverter(passcodeSettingsConverter)
                 .build();
     }
@@ -268,16 +272,12 @@ public class MongoDaoConfig {
 
     @Bean
     public VerificationSequenceConverter sequenceConverter(final VerificationMethodsConverter methodsConverter) {
-        return VerificationSequenceConverter.builder()
-                .methodsConverter(methodsConverter)
-                .build();
+        return new VerificationSequenceConverter(methodsConverter);
     }
 
     @Bean
     public VerificationSequencesConverter sequencesConverter(final VerificationSequenceConverter sequenceConverter) {
-        return VerificationSequencesConverter.builder()
-                .sequenceConverter(sequenceConverter)
-                .build();
+        return new VerificationSequencesConverter(sequenceConverter);
     }
 
     @Bean
@@ -297,16 +297,12 @@ public class MongoDaoConfig {
 
     @Bean
     public VerificationAttemptConverter verificationAttemptConverter(final AliasConverter aliasConverter) {
-        return VerificationAttemptConverter.builder()
-                .aliasConverter(aliasConverter)
-                .build();
+        return new VerificationAttemptConverter(aliasConverter);
     }
 
     @Bean
     public VerificationAttemptsConverter verificationAttemptsConverter(final VerificationAttemptConverter attemptConverter) {
-        return VerificationAttemptsConverter.builder()
-                .attemptConverter(attemptConverter)
-                .build();
+        return new VerificationAttemptsConverter(attemptConverter);
     }
 
     @Bean
@@ -336,7 +332,7 @@ public class MongoDaoConfig {
                 .build();
     }
 
-    @Builder
+    @RequiredArgsConstructor
     private static class IndiciesResolverListener {
 
         private final IndiciesResolver resolver;
