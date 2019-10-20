@@ -40,6 +40,7 @@ import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
 import uk.co.mruoc.idv.mongo.lockout.dao.MongoVerificationAttemptsDao;
 import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptsConverter;
 import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptsRepository;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
@@ -294,6 +295,13 @@ public class MongoDaoConfig {
     }
 
     @Bean
+    public VerificationAttemptsConverter verificationAttemptsConverter(final VerificationAttemptConverter attemptConverter) {
+        return VerificationAttemptsConverter.builder()
+                .attemptConverter(attemptConverter)
+                .build();
+    }
+
+    @Bean
     public IdentityDao identityDao(final IdentityRepository repository,
                                    final IdentityConverter identityConverter) {
         return MongoIdentityDao.builder()
@@ -313,10 +321,10 @@ public class MongoDaoConfig {
 
     @Bean
     public VerificationAttemptsDao verificationAttemptsDao(final VerificationAttemptsRepository repository,
-                                                           final VerificationAttemptConverter attemptConverter) {
+                                                           final VerificationAttemptsConverter attemptsConverter) {
         return MongoVerificationAttemptsDao.builder()
                 .repository(repository)
-                .converter(attemptConverter)
+                .converter(attemptsConverter)
                 .build();
     }
 

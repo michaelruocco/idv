@@ -11,7 +11,7 @@ import java.util.UUID;
 public class MongoVerificationAttemptsDao implements VerificationAttemptsDao {
 
     private final VerificationAttemptsRepository repository;
-    private final VerificationAttemptConverter converter;
+    private final VerificationAttemptsConverter converter;
 
     @Override
     public void save(final VerificationAttempts attempts) {
