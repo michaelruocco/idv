@@ -34,6 +34,7 @@ import uk.co.mruoc.idv.mongo.dao.activity.MonetaryAmountConverter;
 import uk.co.mruoc.idv.mongo.dao.activity.OnlinePurchaseConverter;
 import uk.co.mruoc.idv.mongo.dao.channel.ChannelConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
+import uk.co.mruoc.idv.mongo.identity.dao.AliasesConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
 import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
@@ -156,14 +157,21 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public IdentityConverter identityConverter(final AliasConverter aliasConverter) {
-        return new IdentityConverter(aliasConverter);
-    }
-
-    @Bean
     public AliasConverter aliasConverter(final AliasFactory aliasFactory) {
         return new AliasConverter(aliasFactory);
     }
+
+    @Bean
+    public AliasesConverter aliasesConverter(final AliasConverter aliasConverter) {
+        return new AliasesConverter(aliasConverter);
+    }
+
+    @Bean
+    public IdentityConverter identityConverter(final AliasesConverter aliasesConverter) {
+        return new IdentityConverter(aliasesConverter);
+    }
+
+
 
     @Bean
     public VerificationResultConverter resultConverter() {
