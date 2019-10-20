@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryIneligible;
@@ -14,7 +14,7 @@ import java.util.Collections;
 @Builder
 public class PhysicalPinsentryConverter implements VerificationMethodConverter {
 
-    private final VerificationResultConverter resultConverter;
+    private final VerificationResultsConverter resultsConverter;
     private final EligibilityConverter eligibilityConverter;
     private final CardNumberConverter cardNumberConverter;
 
@@ -36,7 +36,7 @@ public class PhysicalPinsentryConverter implements VerificationMethodConverter {
         return new PhysicalPinsentryEligible(
                 document.getFunction(),
                 cardNumberConverter.toCardNumbers(document.getCardNumbers()),
-                resultConverter.toResults(document.getResults())
+                resultsConverter.toResults(document.getResults())
         );
     }
 
@@ -54,7 +54,7 @@ public class PhysicalPinsentryConverter implements VerificationMethodConverter {
         VerificationMethodConverter.populateCommonFields(method, document);
         document.setFunction(physicalPinsentry.getFunction());
         document.setEligibility(eligibilityConverter.toDocument(physicalPinsentry.getEligibility()));
-        document.setResults(resultConverter.toDocuments(physicalPinsentry.getResults()));
+        document.setResults(resultsConverter.toDocuments(physicalPinsentry.getResults()));
         document.setCardNumbers(extractCardNumbers(physicalPinsentry));
         return document;
     }

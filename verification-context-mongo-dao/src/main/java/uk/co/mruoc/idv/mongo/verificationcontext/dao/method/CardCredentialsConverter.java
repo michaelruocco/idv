@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsIneligible;
@@ -12,7 +12,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResul
 @Builder
 public class CardCredentialsConverter implements VerificationMethodConverter {
 
-    private final VerificationResultConverter resultConverter;
+    private final VerificationResultsConverter resultsConverter;
     private final EligibilityConverter eligibilityConverter;
 
     @Override
@@ -22,7 +22,7 @@ public class CardCredentialsConverter implements VerificationMethodConverter {
 
     @Override
     public VerificationMethod toMethod(final VerificationMethodDocument document) {
-        final VerificationResults results = resultConverter.toResults(document.getResults());
+        final VerificationResults results = resultsConverter.toResults(document.getResults());
         if (document.isEligible()) {
             return new CardCredentialsEligible(results);
         }
@@ -34,7 +34,7 @@ public class CardCredentialsConverter implements VerificationMethodConverter {
         final VerificationMethodDocument document = new VerificationMethodDocument();
         VerificationMethodConverter.populateCommonFields(method, document);
         document.setEligibility(eligibilityConverter.toDocument(method.getEligibility()));
-        document.setResults(resultConverter.toDocuments(method.getResults()));
+        document.setResults(resultsConverter.toDocuments(method.getResults()));
         return document;
     }
 

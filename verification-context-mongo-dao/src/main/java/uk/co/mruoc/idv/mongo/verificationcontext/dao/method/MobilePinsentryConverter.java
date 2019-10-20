@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryIneligible;
@@ -11,7 +11,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMetho
 @Builder
 public class MobilePinsentryConverter implements VerificationMethodConverter {
 
-    private final VerificationResultConverter resultConverter;
+    private final VerificationResultsConverter resultsConverter;
     private final EligibilityConverter eligibilityConverter;
 
     @Override
@@ -31,7 +31,7 @@ public class MobilePinsentryConverter implements VerificationMethodConverter {
     private VerificationMethod toEligible(final MobilePinsentryDocument document) {
         return new MobilePinsentryEligible(
                 document.getFunction(),
-                resultConverter.toResults(document.getResults())
+                resultsConverter.toResults(document.getResults())
         );
     }
 
@@ -46,7 +46,7 @@ public class MobilePinsentryConverter implements VerificationMethodConverter {
         VerificationMethodConverter.populateCommonFields(method, document);
         document.setFunction(mobilePinsentry.getFunction());
         document.setEligibility(eligibilityConverter.toDocument(mobilePinsentry.getEligibility()));
-        document.setResults(resultConverter.toDocuments(mobilePinsentry.getResults()));
+        document.setResults(resultsConverter.toDocuments(mobilePinsentry.getResults()));
         return document;
     }
 

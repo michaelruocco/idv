@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
@@ -14,7 +14,7 @@ import java.util.Optional;
 @Builder
 public class OneTimePasscodeSmsConverter implements VerificationMethodConverter {
 
-    private final VerificationResultConverter resultConverter;
+    private final VerificationResultsConverter resultsConverter;
     private final EligibilityConverter eligibilityConverter;
     private final MobileNumberConverter mobileNumberConverter;
     private final PasscodeSettingsConverter passcodeSettingsConverter;
@@ -37,7 +37,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
         return new OneTimePasscodeSmsEligible(
                 passcodeSettingsConverter.toPasscodeSettings(document.getPasscodeSettings()),
                 mobileNumberConverter.toMobileNumbers(document.getMobileNumbers()),
-                resultConverter.toResults(document.getResults())
+                resultsConverter.toResults(document.getResults())
         );
     }
 
@@ -54,7 +54,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
         final OneTimePasscodeSmsDocument document = new OneTimePasscodeSmsDocument();
         VerificationMethodConverter.populateCommonFields(method, document);
         document.setEligibility(eligibilityConverter.toDocument(oneTimePasscodeSms.getEligibility()));
-        document.setResults(resultConverter.toDocuments(oneTimePasscodeSms.getResults()));
+        document.setResults(resultsConverter.toDocuments(oneTimePasscodeSms.getResults()));
         document.setMobileNumbers(extractMobileNumbers(oneTimePasscodeSms));
         extractPasscodeSettings(oneTimePasscodeSms).ifPresent(document::setPasscodeSettings);
         return document;

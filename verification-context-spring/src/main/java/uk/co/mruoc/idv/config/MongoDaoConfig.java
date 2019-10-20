@@ -59,6 +59,7 @@ import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodCo
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodsConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequenceConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 
 import java.net.InetSocketAddress;
@@ -169,6 +170,13 @@ public class MongoDaoConfig {
     }
 
     @Bean
+    public VerificationResultsConverter resultsConverter(final VerificationResultConverter resultConverter) {
+        return VerificationResultsConverter.builder()
+                .resultConverter(resultConverter)
+                .build();
+    }
+
+    @Bean
     public EligibilityConverter eligibilityConverter() {
         return new EligibilityConverter();
     }
@@ -189,41 +197,41 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationMethodConverter pushNotificationConverter(final VerificationResultConverter resultConverter,
+    public VerificationMethodConverter pushNotificationConverter(final VerificationResultsConverter resultsConverter,
                                                                  final EligibilityConverter eligibilityConverter) {
         return PushNotificationConverter.builder()
-                .resultConverter(resultConverter)
+                .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .build();
     }
 
     @Bean
-    public VerificationMethodConverter physicalPinsentryConverter(final VerificationResultConverter resultConverter,
+    public VerificationMethodConverter physicalPinsentryConverter(final VerificationResultsConverter resultsConverter,
                                                                   final EligibilityConverter eligibilityConverter,
                                                                   final CardNumberConverter cardNumberConverter) {
         return PhysicalPinsentryConverter.builder()
-                .resultConverter(resultConverter)
+                .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .cardNumberConverter(cardNumberConverter)
                 .build();
     }
 
     @Bean
-    public VerificationMethodConverter mobilePinsentryConverter(final VerificationResultConverter resultConverter,
+    public VerificationMethodConverter mobilePinsentryConverter(final VerificationResultsConverter resultsConverter,
                                                                 final EligibilityConverter eligibilityConverter) {
         return MobilePinsentryConverter.builder()
-                .resultConverter(resultConverter)
+                .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .build();
     }
 
     @Bean
-    public VerificationMethodConverter oneTimePasscodeSmsConverter(final VerificationResultConverter resultConverter,
+    public VerificationMethodConverter oneTimePasscodeSmsConverter(final VerificationResultsConverter resultsConverter,
                                                                    final EligibilityConverter eligibilityConverter,
                                                                    final MobileNumberConverter mobileNumberConverter,
                                                                    final PasscodeSettingsConverter passcodeSettingsConverter) {
         return OneTimePasscodeSmsConverter.builder()
-                .resultConverter(resultConverter)
+                .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .mobileNumberConverter(mobileNumberConverter)
                 .passcodeSettingsConverter(passcodeSettingsConverter)
@@ -231,10 +239,10 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationMethodConverter cardCredentialsConverter(final VerificationResultConverter resultConverter,
+    public VerificationMethodConverter cardCredentialsConverter(final VerificationResultsConverter resultsConverter,
                                                                 final EligibilityConverter eligibilityConverter) {
         return CardCredentialsConverter.builder()
-                .resultConverter(resultConverter)
+                .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .build();
     }
