@@ -30,7 +30,22 @@ public class MongoIdentityDao implements IdentityDao {
             final Identity identity = converter.toIdentity(documents.iterator().next());
             return Optional.of(identity);
         }
-        throw new IllegalStateException("found multiple identities for alias " + alias);
+        throw new MultipleIdentitiesFoundException(alias); // should never happen!
+    }
+
+    public static class MultipleIdentitiesFoundException extends RuntimeException {
+
+        private final Alias alias;
+
+        private MultipleIdentitiesFoundException(final Alias alias) {
+            super(String.format("found multiple identities for alias %s", alias));
+            this.alias = alias;
+        }
+
+        public Alias getAlias() {
+            return alias;
+        }
+
     }
 
 }

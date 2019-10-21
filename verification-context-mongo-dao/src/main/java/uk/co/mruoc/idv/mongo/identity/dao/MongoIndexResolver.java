@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.identity.dao;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.IndexOperations;
@@ -9,18 +9,21 @@ import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexRes
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 
 @Slf4j
-@Builder
-public class IndiciesResolver {
+@RequiredArgsConstructor
+public class MongoIndexResolver {
 
     private final MongoTemplate template;
-    private final MongoMappingContext mappingContext;
+    private final IndexResolver resolver;
 
-    public void resolve() {
-        final IndexResolver resolver = new MongoPersistentEntityIndexResolver(mappingContext);
-        resolveIdentityIndicies(resolver);
+    public MongoIndexResolver(final MongoTemplate template, final MongoMappingContext mappingContext) {
+        this(template, new MongoPersistentEntityIndexResolver(mappingContext));
     }
 
-    private void resolveIdentityIndicies(final IndexResolver resolver) {
+    public void resolve() {
+        resolveIdentityIndicies();
+    }
+
+    private void resolveIdentityIndicies() {
         log.info("resolving indicies for {}", IdentityDocument.class);
         final IndexOperations indexOps = template.indexOps(IdentityDocument.class);
         resolver.resolveIndexFor(IdentityDocument.class).forEach(indexOps::ensureIndex);

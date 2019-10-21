@@ -37,7 +37,7 @@ import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasesConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
-import uk.co.mruoc.idv.mongo.identity.dao.IndiciesResolver;
+import uk.co.mruoc.idv.mongo.identity.dao.MongoIndexResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
 import uk.co.mruoc.idv.mongo.lockout.dao.MongoVerificationAttemptsDao;
 import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptConverter;
@@ -121,16 +121,13 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public IndiciesResolver indiciesResolver(final MongoTemplate template,
-                                             final MongoMappingContext mappingContext) {
-        return IndiciesResolver.builder()
-                .template(template)
-                .mappingContext(mappingContext)
-                .build();
+    public MongoIndexResolver indiciesResolver(final MongoTemplate template,
+                                               final MongoMappingContext mappingContext) {
+        return new MongoIndexResolver(template, mappingContext);
     }
 
     @Bean
-    public IndiciesResolverListener indiciesResolverListener(final IndiciesResolver resolver) {
+    public IndiciesResolverListener indiciesResolverListener(final MongoIndexResolver resolver) {
         return new IndiciesResolverListener(resolver);
     }
 
@@ -335,7 +332,7 @@ public class MongoDaoConfig {
     @RequiredArgsConstructor
     private static class IndiciesResolverListener {
 
-        private final IndiciesResolver resolver;
+        private final MongoIndexResolver resolver;
 
         @EventListener(ApplicationReadyEvent.class)
         public void initIndicesAfterStartup() {
