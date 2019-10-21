@@ -44,7 +44,7 @@ class MongoVerificationContextDaoTest {
     }
 
     @Test
-    void shouldLoadEmptyContextIfNotFound() {
+    void shouldLoadEmptyOptionalIfNotFound() {
         given(repository.findById(context.getId().toString())).willReturn(Optional.empty());
 
         final Optional<VerificationContext> loadedContext = dao.load(context.getId());

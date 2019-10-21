@@ -39,7 +39,7 @@ public class VerificationAttemptsConverter {
 
     public Collection<VerificationAttemptDocument> toAttemptDocuments(final Collection<VerificationAttempt> attempts) {
         return attempts.stream()
-                .map(attemptConverter::toAttemptDocument)
+                .map(attemptConverter::toDocument)
                 .collect(Collectors.toList());
     }
 

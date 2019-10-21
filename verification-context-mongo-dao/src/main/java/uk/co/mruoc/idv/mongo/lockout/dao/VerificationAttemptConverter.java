@@ -21,7 +21,7 @@ public class VerificationAttemptConverter {
         return toFailedAttempt(document);
     }
 
-    public VerificationAttemptDocument toAttemptDocument(final VerificationAttempt attempt) {
+    public VerificationAttemptDocument toDocument(final VerificationAttempt attempt) {
         final VerificationAttemptDocument document = new VerificationAttemptDocument();
         document.setContextId(attempt.getContextId().toString());
         document.setChannelId(attempt.getChannelId());
@@ -31,6 +31,7 @@ public class VerificationAttemptConverter {
         document.setMethodName(attempt.getMethodName());
         document.setVerificationId(attempt.getVerificationId().toString());
         document.setTimestamp(attempt.getTimestamp().toString());
+        document.setSuccessful(attempt.isSuccessful());
         return document;
     }
 
