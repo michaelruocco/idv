@@ -14,7 +14,7 @@ class ChannelConverterTest {
 
     @Test
     void shouldConvertToChannel() {
-        final ChannelDocument document = new FakeChannelDocument(Rsa.ID);
+        final ChannelDocument document = ChannelDocumentMother.rsa();
 
         final Channel channel = converter.toChannel(document);
 
@@ -23,7 +23,7 @@ class ChannelConverterTest {
 
     @Test
     void shouldThrowExceptionForNotSupportedChannel() {
-        final ChannelDocument document = new FakeChannelDocument();
+        final ChannelDocument document = ChannelDocumentMother.notSupported();
 
         final Throwable error = catchThrowable(() -> converter.toChannel(document));
 
@@ -32,7 +32,7 @@ class ChannelConverterTest {
 
     @Test
     void shouldThrowExceptionWithChannelIdForNotSupportedChannel() {
-        final ChannelDocument document = new FakeChannelDocument();
+        final ChannelDocument document = ChannelDocumentMother.notSupported();
 
         final Throwable error = catchThrowable(() -> converter.toChannel(document));
 

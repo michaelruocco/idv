@@ -30,7 +30,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldThrowExceptionIfNotOnlinePurchaseDocument() {
-        final ActivityDocument document = ActivityDocumentMother.buildDefault();
+        final ActivityDocument document = ActivityDocumentMother.fake();
 
         final Throwable error = catchThrowable(() -> converter.toActivity(document));
 
@@ -48,7 +48,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertToOnlinePurchaseActivity() {
-        final OnlinePurchaseDocument document = ActivityDocumentMother.buildOnlinePurchase();
+        final OnlinePurchaseDocument document = ActivityDocumentMother.onlinePurchase();
 
         final Activity activity = converter.toActivity(document);
 
@@ -57,7 +57,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertTimestampToActivity() {
-        final OnlinePurchaseDocument document = ActivityDocumentMother.buildOnlinePurchase();
+        final OnlinePurchaseDocument document = ActivityDocumentMother.onlinePurchase();
 
         final OnlinePurchase onlinePurchase = (OnlinePurchase) converter.toActivity(document);
 
@@ -66,7 +66,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertMerchantNameToActivity() {
-        final OnlinePurchaseDocument document = ActivityDocumentMother.buildOnlinePurchase();
+        final OnlinePurchaseDocument document = ActivityDocumentMother.onlinePurchase();
 
         final OnlinePurchase onlinePurchase = (OnlinePurchase) converter.toActivity(document);
 
@@ -75,7 +75,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertReferenceToActivity() {
-        final OnlinePurchaseDocument document = ActivityDocumentMother.buildOnlinePurchase();
+        final OnlinePurchaseDocument document = ActivityDocumentMother.onlinePurchase();
 
         final OnlinePurchase onlinePurchase = (OnlinePurchase) converter.toActivity(document);
 
@@ -85,7 +85,7 @@ class OnlinePurchaseConverterTest {
     @Test
     void shouldConvertCostToActivity() {
         final MonetaryAmount expectedCost = Money.of(BigDecimal.ONE, "GBP");
-        final OnlinePurchaseDocument document = ActivityDocumentMother.buildOnlinePurchase();
+        final OnlinePurchaseDocument document = ActivityDocumentMother.onlinePurchase();
         given(amountConverter.toMonetaryAmount(document.getCost())).willReturn(expectedCost);
 
         final OnlinePurchase onlinePurchase = (OnlinePurchase) converter.toActivity(document);
@@ -141,7 +141,7 @@ class OnlinePurchaseConverterTest {
     @Test
     void shouldConvertCostToDocument() {
         final OnlinePurchase onlinePurchase = new FakeOnlinePurchase();
-        final MonetaryAmountDocument expectedCostDocument = new FakeMonetaryAmountDocument();
+        final MonetaryAmountDocument expectedCostDocument = MonetaryAmountDocumentMother.build();
         given(amountConverter.toDocument(onlinePurchase.getCost())).willReturn(expectedCostDocument);
 
         final OnlinePurchaseDocument document = (OnlinePurchaseDocument) converter.toDocument(onlinePurchase);

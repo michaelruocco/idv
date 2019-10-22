@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PhysicalPinsentryEligibleTest {
 
     private final PinsentryFunction function = PinsentryFunction.RESPOND;
-    private final Collection<CardNumber> cardNumbers = Collections.singleton(new CardNumber("1234876543211234"));
+    private final Collection<CardNumber> cardNumbers = Collections.singleton(CreditCardNumberMother.build());
 
     private final PhysicalPinsentryEligible method = PhysicalPinsentryEligible.builder()
             .function(function)

@@ -6,6 +6,7 @@ plugins {
 }
 
 allprojects {
+    apply plugin: 'idea'
     apply plugin: 'jacoco'
     apply plugin: 'com.github.kt3k.coveralls'
 

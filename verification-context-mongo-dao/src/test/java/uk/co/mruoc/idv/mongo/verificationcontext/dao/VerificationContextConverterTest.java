@@ -48,7 +48,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldConvertIdToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
 
         final VerificationContext context = contextConverter.toContext(document);
 
@@ -66,7 +66,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldChannelToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
         final Channel channel = new FakeChannel();
         given(channelConverter.toChannel(document.getChannel())).willReturn(channel);
 
@@ -88,7 +88,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldProvidedAliasToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
         final Alias alias = new FakeCreditCardNumber();
         given(aliasConverter.toAlias(document.getProvidedAlias())).willReturn(alias);
 
@@ -110,7 +110,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldIdentityToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
         final Identity identity = new FakeIdentity();
         given(identityConverter.toIdentity(document.getIdentity())).willReturn(identity);
 
@@ -132,7 +132,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldActivityToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
         final Activity activity = new FakeActivity();
         given(activityConverter.toActivity(document.getActivity())).willReturn(activity);
 
@@ -154,7 +154,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldCreateToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
 
         final VerificationContext context = contextConverter.toContext(document);
 
@@ -172,7 +172,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldExpiryToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
 
         final VerificationContext context = contextConverter.toContext(document);
 
@@ -190,7 +190,7 @@ class VerificationContextConverterTest {
 
     @Test
     void shouldConvertSequenceToContext() {
-        final VerificationContextDocument document = new FakeVerificationContextDocument();
+        final VerificationContextDocument document = VerificationContextDocumentMother.fake();
         final VerificationSequences sequences = new VerificationSequences();
         given(sequencesConverter.toSequences(document.getSequences())).willReturn(sequences);
 

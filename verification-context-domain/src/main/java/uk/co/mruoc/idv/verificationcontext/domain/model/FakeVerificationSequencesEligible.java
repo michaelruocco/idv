@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.CreditCardNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
@@ -36,7 +37,7 @@ public class FakeVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPhysicalPinsentrySequence() {
-        final Collection<CardNumber> cardNumbers = Collections.singleton(new CardNumber("4929991234567890"));
+        final Collection<CardNumber> cardNumbers = Collections.singleton(new CreditCardNumber("4929991234567890"));
         final VerificationMethod physicalPinsentry = new PhysicalPinsentryEligible(RESPOND, cardNumbers);
         return new SingleMethodSequence(physicalPinsentry);
     }

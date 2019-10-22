@@ -15,8 +15,8 @@ import static org.mockito.Mockito.mock;
 
 class AliasesConverterTest {
 
-    private final AliasDocument document1 = new FakeIdvIdAliasDocument();
-    private final AliasDocument document2 = new FakeCreditCardNumberAliasDocument();
+    private final AliasDocument document1 = AliasDocumentMother.idvId();
+    private final AliasDocument document2 = AliasDocumentMother.creditCard();
 
     private final Alias alias1 = new FakeIdvId();
     private final Alias alias2 = new FakeCreditCardNumber();

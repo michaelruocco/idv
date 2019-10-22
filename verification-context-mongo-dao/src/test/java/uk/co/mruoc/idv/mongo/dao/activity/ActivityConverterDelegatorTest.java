@@ -17,7 +17,7 @@ class ActivityConverterDelegatorTest {
 
     @Test
     void shouldThrowExceptionIfNoConverterSupportingActivityDocument() {
-        final ActivityDocument document = ActivityDocumentMother.buildDefault();
+        final ActivityDocument document = ActivityDocumentMother.fake();
 
         final Throwable error = catchThrowable(() -> delegator.toActivity(document));
 
@@ -38,7 +38,7 @@ class ActivityConverterDelegatorTest {
     @Test
     void shouldConvertActivityDocument() {
         final Activity expectedActivity = new FakeActivity();
-        final ActivityDocument document = ActivityDocumentMother.buildDefault();
+        final ActivityDocument document = ActivityDocumentMother.fake();
         given(converter.supportsActivity(document.getName())).willReturn(true);
         given(converter.toActivity(document)).willReturn(expectedActivity);
 
@@ -50,7 +50,7 @@ class ActivityConverterDelegatorTest {
     @Test
     void shouldConvertActivity() {
         final Activity activity = new FakeActivity();
-        final ActivityDocument expectedDocument = ActivityDocumentMother.buildDefault();
+        final ActivityDocument expectedDocument = ActivityDocumentMother.fake();
         given(converter.supportsActivity(activity.getName())).willReturn(true);
         given(converter.toDocument(activity)).willReturn(expectedDocument);
 

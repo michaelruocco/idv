@@ -1,13 +1,13 @@
 package uk.co.mruoc.idv.mongo.lockout.dao;
 
 import org.junit.jupiter.api.Test;
-import org.meanbean.test.BeanTester;
+import uk.co.mruoc.idv.mongo.CustomBeanTester;
 
 class VerificationAttemptDocumentTest {
 
     @Test
     void shouldTestBean() {
-        new BeanTester().testBean(VerificationAttemptDocument.class);
+        new CustomBeanTester().testBean(VerificationAttemptDocument.class);
     }
 
 }

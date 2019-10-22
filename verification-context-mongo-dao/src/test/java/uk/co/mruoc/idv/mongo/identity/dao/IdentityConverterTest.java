@@ -20,7 +20,7 @@ class IdentityConverterTest {
 
     @Test
     void shouldConvertAliasesToIdentity() {
-        final IdentityDocument identityDocument = new FakeIdentityDocument();
+        final IdentityDocument identityDocument = IdentityDocumentMother.build();
         final Aliases aliases = Aliases.empty();
         given(aliasesConverter.toAliases(identityDocument.getAliases())).willReturn(aliases);
 

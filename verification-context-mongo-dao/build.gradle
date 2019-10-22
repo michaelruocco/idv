@@ -15,4 +15,5 @@ dependencies {
 
     testCompile project(':verification-context-domain').sourceSets.test.output
     testCompile 'org.meanbean:meanbean:2.0.3'
+    testCompile 'org.slf4j:slf4j-simple:1.7.28'
 }

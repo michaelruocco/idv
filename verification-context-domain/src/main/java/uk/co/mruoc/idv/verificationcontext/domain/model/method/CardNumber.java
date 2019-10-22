@@ -14,9 +14,10 @@ public class CardNumber {
 
     private final UUID id;
     private final String tokenized;
+    private final CardType type;
 
-    public CardNumber(final String tokenized) {
-        this(UUID.randomUUID(), tokenized);
+    public CardNumber(final String tokenized, final CardType type) {
+        this(UUID.randomUUID(), tokenized, type);
     }
 
     public String getMasked() {

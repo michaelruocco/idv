@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.FakeEligibleDocument;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocumentMother;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocument;
 
 import java.time.Duration;
@@ -15,7 +15,7 @@ public class FakeVerificationMethodDocument extends VerificationMethodDocument {
 
     public FakeVerificationMethodDocument(final Collection<VerificationResultDocument> results) {
         setName("fake-method");
-        setEligibility(new FakeEligibleDocument());
+        setEligibility(EligibilityDocumentMother.eligible());
         setDuration(Duration.ofMinutes(5).toMillis());
         setMaxAttempts(2);
         setResults(results);

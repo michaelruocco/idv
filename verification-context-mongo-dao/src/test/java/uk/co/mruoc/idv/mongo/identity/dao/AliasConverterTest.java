@@ -16,7 +16,7 @@ class AliasConverterTest {
 
     @Test
     void shouldConvertDocumentToAlias() {
-        final AliasDocument document = new FakeCreditCardNumberAliasDocument();
+        final AliasDocument document = AliasDocumentMother.idvId();
         final Alias expectedAlias = mock(Alias.class);
         given(aliasFactory.build(document.getType(), document.getValue())).willReturn(expectedAlias);
 

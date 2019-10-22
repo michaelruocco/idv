@@ -8,5 +8,6 @@ public class CardNumberDocument {
 
     private String id;
     private String tokenized;
+    private String type;
 
 }

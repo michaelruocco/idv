@@ -9,7 +9,7 @@ import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptFailed;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasDocument;
-import uk.co.mruoc.idv.mongo.identity.dao.FakeCreditCardNumberAliasDocument;
+import uk.co.mruoc.idv.mongo.identity.dao.AliasDocumentMother;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -54,7 +54,7 @@ class VerificationAttemptConverterTest {
     @Test
     void shouldPopulateAliasOnDocument() {
         final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
-        final AliasDocument aliasDocument = new FakeCreditCardNumberAliasDocument();
+        final AliasDocument aliasDocument = AliasDocumentMother.creditCard();
         given(aliasConverter.toDocument(attempt.getAlias())).willReturn(aliasDocument);
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);

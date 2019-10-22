@@ -4,10 +4,10 @@ import org.meanbean.lang.Factory;
 
 import java.math.BigDecimal;
 
-public class NumberFactory implements Factory<Number> {
+public class BigDecimalFactory implements Factory<BigDecimal> {
 
     @Override
-    public Number create() {
+    public BigDecimal create() {
         return BigDecimal.ONE;
     }
 

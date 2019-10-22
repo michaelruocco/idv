@@ -4,45 +4,27 @@ import java.time.Instant;
 
 public class ActivityDocumentMother {
 
-    public static ActivityDocument buildDefault() {
-        return new DefaultActivityDocument();
-    }
-
-    public static OnlinePurchaseDocument buildOnlinePurchase() {
-        return new DefaultOnlinePurchaseActivityDocument();
-    }
-
-    public static ActivityDocument withName(final String name) {
-        final ActivityDocument document = buildDefault();
-        document.setName(name);
-        return document;
-    }
-
     public static ActivityDocument withTimestamp(final String timestamp) {
-        final ActivityDocument document = buildDefault();
+        final ActivityDocument document = fake();
         document.setTimestamp(timestamp);
         return document;
     }
 
-    private static class DefaultActivityDocument extends ActivityDocument {
-
-        private DefaultActivityDocument() {
-            setName("fake-activity");
-            setTimestamp(Instant.now().toString());
-        }
-
+    public static ActivityDocument fake() {
+        final ActivityDocument document = new ActivityDocument();
+        document.setName("fake-activity");
+        document.setTimestamp(Instant.now().toString());
+        return document;
     }
 
-    private static class DefaultOnlinePurchaseActivityDocument extends OnlinePurchaseDocument {
-
-        private DefaultOnlinePurchaseActivityDocument() {
-            setName("online-purchase");
-            setTimestamp(Instant.now().toString());
-            setMerchantName("fake-merchant-name");
-            setReference("fake-reference");
-            setCost(new FakeMonetaryAmountDocument());
-        }
-
+    public static OnlinePurchaseDocument onlinePurchase() {
+        final OnlinePurchaseDocument document = new OnlinePurchaseDocument();
+        document.setName("online-purchase");
+        document.setTimestamp(Instant.now().toString());
+        document.setMerchantName("fake-merchant-name");
+        document.setReference("fake-reference");
+        document.setCost(MonetaryAmountDocumentMother.build());
+        return document;
     }
 
 }

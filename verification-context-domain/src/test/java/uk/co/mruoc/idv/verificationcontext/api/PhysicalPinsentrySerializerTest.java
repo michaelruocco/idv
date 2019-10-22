@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.CreditCardNumberMother;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
@@ -15,7 +16,6 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResul
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.UUID;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction.RESPOND;
@@ -26,7 +26,7 @@ class PhysicalPinsentrySerializerTest {
 
     @Test
     void shouldSerializeEligiblePhysicalPinsentry() throws JsonProcessingException {
-        final Collection<CardNumber> cardNumbers = Collections.singleton(new CardNumber(UUID.fromString("6c880ce6-0d3c-4ac7-b419-8c2dce645cfa"), "4929991234567890"));
+        final Collection<CardNumber> cardNumbers = Collections.singleton(CreditCardNumberMother.build());
         final VerificationMethod method = new PhysicalPinsentryEligible(RESPOND, cardNumbers);
 
         final String json = MAPPER.writeValueAsString(method);
@@ -38,7 +38,7 @@ class PhysicalPinsentrySerializerTest {
     @Test
     void shouldSerializeEligiblePhysicalPinsentryWithResult() throws JsonProcessingException {
         final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(PhysicalPinsentry.NAME);
-        final Collection<CardNumber> cardNumbers = Collections.singleton(new CardNumber(UUID.fromString("6c880ce6-0d3c-4ac7-b419-8c2dce645cfa"), "4929991234567890"));
+        final Collection<CardNumber> cardNumbers = Collections.singleton(CreditCardNumberMother.build());
         final VerificationMethod method = new PhysicalPinsentryEligible(RESPOND, cardNumbers, result);
 
         final String json = MAPPER.writeValueAsString(method);

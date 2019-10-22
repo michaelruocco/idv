@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
-import org.meanbean.test.BeanTester;
+import uk.co.mruoc.idv.mongo.CustomBeanTester;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocument;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +14,7 @@ class VerificationMethodDocumentTest {
 
     @Test
     void shouldTestBean() {
-        new BeanTester().testBean(VerificationMethodDocument.class);
+        new CustomBeanTester().testBean(VerificationMethodDocument.class);
     }
 
     @Test

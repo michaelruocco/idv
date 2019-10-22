@@ -13,7 +13,7 @@ class EligibilityConverterTest {
 
     @Test
     void shouldConvertToIneligible() {
-        final EligibilityDocument document = new FakeIneligibleDocument();
+        final EligibilityDocument document = EligibilityDocumentMother.ineligible();
 
         final Eligibility ineligible = converter.toEligibility(document);
 
@@ -31,7 +31,7 @@ class EligibilityConverterTest {
 
     @Test
     void shouldConvertReasonToIneligible() {
-        final EligibilityDocument document = new FakeIneligibleDocument();
+        final EligibilityDocument document = EligibilityDocumentMother.ineligible();
 
         final Eligibility ineligible = converter.toEligibility(document);
 
@@ -44,12 +44,13 @@ class EligibilityConverterTest {
 
         final EligibilityDocument document = converter.toDocument(ineligible);
 
+        assertThat(ineligible.getReason().isPresent()).isTrue();
         assertThat(document.getReason()).isEqualTo(ineligible.getReason().get());
     }
 
     @Test
     void shouldConvertToEligible() {
-        final EligibilityDocument document = new FakeEligibleDocument();
+        final EligibilityDocument document = EligibilityDocumentMother.eligible();
 
         final Eligibility eligibility = converter.toEligibility(document);
 
@@ -67,7 +68,7 @@ class EligibilityConverterTest {
 
     @Test
     void shouldConvertEmptyReasonToEligible() {
-        final EligibilityDocument document = new FakeEligibleDocument();
+        final EligibilityDocument document = EligibilityDocumentMother.eligible();
 
         final Eligibility eligibility = converter.toEligibility(document);
 

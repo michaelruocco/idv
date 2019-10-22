@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.lockout.dao;
 
-import uk.co.mruoc.idv.mongo.identity.dao.FakeCreditCardNumberAliasDocument;
+import uk.co.mruoc.idv.mongo.identity.dao.AliasDocumentMother;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -41,7 +41,7 @@ public class VerificationAttemptDocumentMother {
             setContextId("b240b5fc-ce17-402e-95d2-b0948820f5e6");
             setChannelId("fake-channel");
             setActivityName("fake-activity");
-            setAlias(new FakeCreditCardNumberAliasDocument());
+            setAlias(AliasDocumentMother.creditCard());
             setIdvIdValue("f8a797c8-4e15-4460-8130-858ece628f8b");
             setMethodName(methodName);
             setVerificationId("524d0e6d-cead-49f3-b0f5-04e29e789681");

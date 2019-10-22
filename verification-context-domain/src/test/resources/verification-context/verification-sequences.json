@@ -35,7 +35,8 @@
           {
             "id": "${json-unit.ignore}",
             "tokenized": "4929991234567890",
-            "masked": "************7890"
+            "masked": "************7890",
+            "type": "CREDIT"
           }
         ]
       }

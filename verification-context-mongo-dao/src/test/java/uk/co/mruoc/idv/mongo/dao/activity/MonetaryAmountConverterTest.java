@@ -15,7 +15,7 @@ class MonetaryAmountConverterTest {
 
     @Test
     void shouldConvertNumberToAmount() {
-        final MonetaryAmountDocument document = new FakeMonetaryAmountDocument();
+        final MonetaryAmountDocument document = MonetaryAmountDocumentMother.build();
 
         final MonetaryAmount amount = converter.toMonetaryAmount(document);
 
@@ -24,7 +24,7 @@ class MonetaryAmountConverterTest {
 
     @Test
     void shouldConvertCurrencyCodeToAmount() {
-        final MonetaryAmountDocument document = new FakeMonetaryAmountDocument();
+        final MonetaryAmountDocument document = MonetaryAmountDocumentMother.build();
 
         final MonetaryAmount amount = converter.toMonetaryAmount(document);
 
