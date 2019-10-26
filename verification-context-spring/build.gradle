@@ -11,6 +11,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-dependencies:2.2.0.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.data:spring-data-mongodb'
 
     //the spring boot gradle plugin pulls on old versions of junit platform engine and commons (1.3.2)
@@ -26,4 +27,8 @@ dependencies {
 
     testCompile project(':verification-context-domain').sourceSets.test.output
     testCompile 'com.github.stefanbirkner:system-rules:1.19.0'
+}
+
+bootRun {
+    args = ["--spring.profiles.active=stub"]
 }
