@@ -14,7 +14,7 @@ class MobileNumberConverterTest {
 
     @Test
     void shouldPopulateIdOnMobileNumber() {
-        final MobileNumberDocument document = MobileNumberDocumentMother.build();
+        final MobileNumberDocument document = MobileNumberDocumentMother.primary();
 
         final MobileNumber number = converter.toMobileNumber(document);
 
@@ -23,7 +23,7 @@ class MobileNumberConverterTest {
 
     @Test
     void shouldPopulateNumberValueOnMobileNumber() {
-        final MobileNumberDocument document = MobileNumberDocumentMother.build();
+        final MobileNumberDocument document = MobileNumberDocumentMother.primary();
 
         final MobileNumber number = converter.toMobileNumber(document);
 
