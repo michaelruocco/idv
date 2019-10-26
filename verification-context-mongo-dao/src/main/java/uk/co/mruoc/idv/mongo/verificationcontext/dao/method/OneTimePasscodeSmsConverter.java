@@ -5,6 +5,7 @@ import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsEligible;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsIneligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 import java.util.Collection;
@@ -30,7 +31,7 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
         if (document.isEligible()) {
             return toEligible(document);
         }
-        return toIneligible(document);
+        return toIneligible();
     }
 
     private VerificationMethod toEligible(final OneTimePasscodeSmsDocument document) {
@@ -41,11 +42,8 @@ public class OneTimePasscodeSmsConverter implements VerificationMethodConverter 
         );
     }
 
-    private VerificationMethod toIneligible(final OneTimePasscodeSmsDocument document) {
-        return new OneTimePasscodeSmsEligible(
-                passcodeSettingsConverter.toPasscodeSettings(document.getPasscodeSettings()),
-                mobileNumbersConverter.toMobileNumbers(document.getMobileNumbers())
-        );
+    private VerificationMethod toIneligible() {
+        return new OneTimePasscodeSmsIneligible();
     }
 
     @Override

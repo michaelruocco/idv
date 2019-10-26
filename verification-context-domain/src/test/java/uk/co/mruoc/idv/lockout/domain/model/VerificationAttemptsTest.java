@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class VerificationAttemptsTest {
 
@@ -54,7 +53,7 @@ class VerificationAttemptsTest {
         final VerificationAttempts attempts = new VerificationAttempts(idvId);
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final UUID attemptIdvId = UUID.randomUUID();
-        when(attempt.getIdvIdValue()).thenReturn(attemptIdvId);
+        given(attempt.getIdvIdValue()).willReturn(attemptIdvId);
 
         final Throwable error = catchThrowable(() -> attempts.add(attempt));
 
