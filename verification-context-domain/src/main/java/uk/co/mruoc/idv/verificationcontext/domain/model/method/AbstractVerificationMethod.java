@@ -89,7 +89,7 @@ public abstract class AbstractVerificationMethod implements VerificationMethod {
             throw new CannotAddResultToMethodException(result.getMethodName(), name);
         }
         if (isComplete()) {
-            throw new CannotAddResultToCompleteMethodException(name);
+            throw new MethodAlreadyCompleteException(name);
         }
         return updateResults(results.add(result));
     }

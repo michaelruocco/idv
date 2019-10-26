@@ -103,11 +103,6 @@ public class MongoDaoConfig {
         return new MongoClientImpl(settingsBuilder.build(), driverInformation);
     }
 
-    private static Optional<ConnectionString> loadMongoConnectionString() {
-        return Optional.ofNullable(System.getenv("MONGO_CONNECTION_STRING"))
-                .map(ConnectionString::new);
-    }
-
     @Bean
     public MongoMappingContext mappingContext() {
         final MongoMappingContext context = new MongoMappingContext();
@@ -347,6 +342,11 @@ public class MongoDaoConfig {
             resolver.resolve();
         }
 
+    }
+
+    private static Optional<ConnectionString> loadMongoConnectionString() {
+        return Optional.ofNullable(System.getenv("MONGO_CONNECTION_STRING"))
+                .map(ConnectionString::new);
     }
 
 }

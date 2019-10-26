@@ -9,10 +9,15 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
 import uk.co.mruoc.idv.domain.exception.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;
+import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
+import uk.co.mruoc.idv.identity.domain.service.IdentityService.IdentityNotFoundException;
+import uk.co.mruoc.idv.identity.jsonapi.error.IdentityNotFoundErrorItem;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NotNextMethodInSequenceException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextNotFoundException;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedErrorItem;
@@ -20,6 +25,7 @@ import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedErrorI
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.LockedOutErrorItem;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.MethodAlreadyCompleteErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.NotNextMethodInSequenceErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextExpiredErrorItem;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextNotFoundErrorItem;
@@ -162,6 +168,32 @@ class ApplicationErrorHandlerTest {
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
                 .isEqualTo(toDocument(new VerificationContextExpiredErrorItem(exception.getMessage())));
+    }
+
+    @Test
+    void shouldReturnDocumentForMethodAlreadyCompleted() {
+        final String methodName = "method-name";
+        final MethodAlreadyCompleteException exception = new MethodAlreadyCompleteException(methodName);
+
+        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
+        assertThat(response.getBody())
+                .usingRecursiveComparison(comparisonConfiguration)
+                .isEqualTo(toDocument(new MethodAlreadyCompleteErrorItem(exception.getMessage())));
+    }
+
+    @Test
+    void shouldReturnDocumentForIdentityNotFoundCompleted() {
+        final Alias alias = AliasesMother.creditCardNumber();
+        final IdentityNotFoundException exception = new IdentityNotFoundException(alias);
+
+        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(response.getBody())
+                .usingRecursiveComparison(comparisonConfiguration)
+                .isEqualTo(toDocument(new IdentityNotFoundErrorItem(exception.getMessage())));
     }
 
     private static JsonApiErrorDocument toDocument(final JsonApiErrorItem item) {

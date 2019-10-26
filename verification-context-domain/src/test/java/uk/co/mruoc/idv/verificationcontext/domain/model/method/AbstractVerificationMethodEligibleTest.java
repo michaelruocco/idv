@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.CannotAddResultToCompleteMethodException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.CannotAddResultToMethodException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
@@ -145,7 +145,7 @@ class AbstractVerificationMethodEligibleTest {
         final Throwable error = catchThrowable(() -> completeMethod.addResult(result));
 
         assertThat(error)
-                .isInstanceOf(CannotAddResultToCompleteMethodException.class)
+                .isInstanceOf(MethodAlreadyCompleteException.class)
                 .hasMessage(result.getMethodName());
     }
 

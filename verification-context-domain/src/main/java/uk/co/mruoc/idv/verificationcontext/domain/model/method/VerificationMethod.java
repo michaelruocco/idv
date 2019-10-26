@@ -55,9 +55,9 @@ public interface VerificationMethod {
 
     }
 
-    class CannotAddResultToCompleteMethodException extends RuntimeException {
+    class MethodAlreadyCompleteException extends RuntimeException {
 
-        public CannotAddResultToCompleteMethodException(final String methodName) {
+        public MethodAlreadyCompleteException(final String methodName) {
             super(methodName);
         }
 
