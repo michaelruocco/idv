@@ -1,7 +1,10 @@
 plugins {
     id 'org.springframework.boot' version '2.2.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'com.bmuschko.docker-remote-api' version '5.2.0'
 }
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
 
 repositories {
     mavenCentral()
@@ -23,7 +26,7 @@ dependencies {
     compile project(':verification-context-domain')
     compile project(':verification-context-mongo-dao')
 
-    compile 'de.bwaldvogel:mongo-java-server:1.21.0'
+    compile 'de.bwaldvogel:mongo-java-server:1.22.0'
 
     testCompile project(':verification-context-domain').sourceSets.test.output
     testCompile 'com.github.stefanbirkner:system-rules:1.19.0'
@@ -31,4 +34,9 @@ dependencies {
 
 bootRun {
     args = ["--spring.profiles.active=stub"]
+}
+
+task buildImage(type: DockerBuildImage) {
+    inputDir = file('.')
+    tags.add('michaelruocco/verification-context')
 }
