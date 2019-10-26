@@ -22,8 +22,8 @@ public class PushNotificationConverter implements VerificationMethodConverter {
 
     @Override
     public VerificationMethod toMethod(final VerificationMethodDocument document) {
-        final VerificationResults results = resultsConverter.toResults(document.getResults());
         if (document.isEligible()) {
+            final VerificationResults results = resultsConverter.toResults(document.getResults());
             return new PushNotificationEligible(results);
         }
         return new PushNotificationIneligible();
