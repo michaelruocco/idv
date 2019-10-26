@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.config;
 
+import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoDriverInformation;
 import com.mongodb.ServerAddress;
@@ -70,6 +71,7 @@ import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Configuration
 @EnableAutoConfiguration
@@ -95,9 +97,15 @@ public class MongoDaoConfig {
     @Profile("!in-memory-mongo")
     public MongoClient mongo() {
         log.info("attempting to connect to running mongo server");
-        final MongoClientSettings settings = MongoClientSettings.builder().build();
+        final MongoClientSettings.Builder settingsBuilder = MongoClientSettings.builder();
+        loadMongoConnectionString().ifPresent(settingsBuilder::applyConnectionString);
         final MongoDriverInformation driverInformation = MongoDriverInformation.builder().build();
-        return new MongoClientImpl(settings, driverInformation);
+        return new MongoClientImpl(settingsBuilder.build(), driverInformation);
+    }
+
+    private static Optional<ConnectionString> loadMongoConnectionString() {
+        return Optional.ofNullable(System.getenv("MONGO_CONNECTION_STRING"))
+                .map(ConnectionString::new);
     }
 
     @Bean

@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.0.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'com.bmuschko.docker-remote-api' version '5.2.0'
+    id 'com.avast.gradle.docker-compose' version '0.9.5'
 }
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
@@ -33,10 +34,10 @@ dependencies {
 }
 
 bootRun {
-    args = ["--spring.profiles.active=stub"]
+    args = ["--spring.profiles.active=in-memory-mongo", "--server.port=8081"]
 }
 
 task buildImage(type: DockerBuildImage) {
     inputDir = file('.')
-    tags.add('michaelruocco/verification-context')
+    tags.add('michaelruocco/verification-context-app')
 }
