@@ -2,6 +2,10 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 public class PasscodeSettingsDocumentMother {
 
+    private PasscodeSettingsDocumentMother() {
+        // utility class
+    }
+
     public static PasscodeSettingsDocument build() {
         final PasscodeSettingsDocument document = new PasscodeSettingsDocument();
         document.setLength(8);
