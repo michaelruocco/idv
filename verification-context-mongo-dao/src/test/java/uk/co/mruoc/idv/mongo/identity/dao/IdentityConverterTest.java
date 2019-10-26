@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.identity.dao;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 
 import java.util.Collection;
@@ -31,7 +31,7 @@ class IdentityConverterTest {
 
     @Test
     void shouldConvertIdvIdValueToDocument() {
-        final FakeIdentity identity = new FakeIdentity();
+        final Identity identity = new Identity(AliasesMother.aliases());
 
         final IdentityDocument document = converter.toDocument(identity);
 
@@ -40,7 +40,7 @@ class IdentityConverterTest {
 
     @Test
     void shouldConvertAliasesToDocument() {
-        final FakeIdentity identity = new FakeIdentity();
+        final Identity identity = new Identity(AliasesMother.aliases());
         final Collection<AliasDocument> aliasDocuments = Collections.emptyList();
         given(aliasesConverter.toDocuments(identity.getAliases())).willReturn(aliasDocuments);
 

@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class FakeVerificationAttemptSuccessful extends VerificationAttemptSucces
         super(CONTEXT_ID,
                 "fake-channel",
                 "fake-activity",
-                new FakeCreditCardNumber(),
+                AliasesMother.creditCardNumber(),
                 idvId,
                 "fake-method",
                 VERIFICATION_ID,

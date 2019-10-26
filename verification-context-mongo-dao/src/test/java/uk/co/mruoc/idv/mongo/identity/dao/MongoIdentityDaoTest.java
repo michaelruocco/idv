@@ -1,10 +1,9 @@
 package uk.co.mruoc.idv.mongo.identity.dao;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
-import uk.co.mruoc.idv.identity.domain.model.CreditCardNumber;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao.MultipleIdentitiesFoundException;
 
@@ -31,7 +30,7 @@ class MongoIdentityDaoTest {
 
     @Test
     void shouldSaveConvertedDocument() {
-        final Identity identity = new FakeIdentity();
+        final Identity identity = new Identity(AliasesMother.aliases());
         final IdentityDocument document = new IdentityDocument();
         given(converter.toDocument(identity)).willReturn(document);
 
@@ -42,7 +41,7 @@ class MongoIdentityDaoTest {
 
     @Test
     void shouldLoadIdentityByAliasTypeAndValue() {
-        final CreditCardNumber alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         final Identity expectedIdentity = new Identity(Aliases.with(alias));
         final IdentityDocument document = new IdentityDocument();
         final Collection<IdentityDocument> singleDocument = Collections.singleton(document);
@@ -56,7 +55,7 @@ class MongoIdentityDaoTest {
 
     @Test
     void shouldReturnEmptyOptionalIfIdentityNotFound() {
-        final CreditCardNumber alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         final Collection<IdentityDocument> none = Collections.emptyList();
         given(repository.findByAliasesTypeAndAliasesValue(alias.getType(), alias.getValue())).willReturn(none);
 
@@ -67,7 +66,7 @@ class MongoIdentityDaoTest {
 
     @Test
     void shouldThrowExceptionIfMoreThanOneIdentityFound() {
-        final CreditCardNumber alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         final Collection<IdentityDocument> documents = Arrays.asList(
                 mock(IdentityDocument.class),
                 mock(IdentityDocument.class)
@@ -81,7 +80,7 @@ class MongoIdentityDaoTest {
 
     @Test
     void shouldPopulateAliasOnExceptionWhenMultipleIdentitiesFound() {
-        final CreditCardNumber alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         final Collection<IdentityDocument> documents = Arrays.asList(
                 mock(IdentityDocument.class),
                 mock(IdentityDocument.class)

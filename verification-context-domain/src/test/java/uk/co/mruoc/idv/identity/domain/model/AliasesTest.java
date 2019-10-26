@@ -12,8 +12,8 @@ class AliasesTest {
 
     @Test
     void shouldBeIterable() {
-        final Alias idvId = new FakeIdvId();
-        final Alias creditCardNumber = new FakeCreditCardNumber();
+        final Alias idvId = AliasesMother.idvId();
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
 
         final Aliases aliases = Aliases.with(idvId, creditCardNumber);
 
@@ -25,8 +25,8 @@ class AliasesTest {
 
     @Test
     void shouldReturnStream() {
-        final Alias idvId = new FakeIdvId();
-        final Alias creditCardNumber = new FakeCreditCardNumber();
+        final Alias idvId = AliasesMother.idvId();
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
 
         final Aliases aliases = Aliases.with(idvId, creditCardNumber);
 
@@ -45,7 +45,7 @@ class AliasesTest {
 
     @Test
     void shouldThrowExceptionIfIdvIdAliasNotPresent() {
-        final Alias creditCardNumber = new FakeCreditCardNumber();
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
         final Aliases aliases = Aliases.with(creditCardNumber);
 
         final Throwable error = catchThrowable(aliases::getIdvIdValue);
@@ -57,7 +57,7 @@ class AliasesTest {
 
     @Test
     void shouldReturnIdvIdAliasValueIfPresent() {
-        final IdvId idvId = new FakeIdvId();
+        final IdvId idvId = AliasesMother.idvId();
         final Aliases aliases = Aliases.with(idvId);
 
         final UUID value = aliases.getIdvIdValue();
@@ -67,7 +67,7 @@ class AliasesTest {
 
     @Test
     void shouldReturnTrueIfContainsAlias() {
-        final Alias idvId = new FakeIdvId();
+        final Alias idvId = AliasesMother.idvId();
 
         final Aliases aliases = Aliases.with(idvId);
 
@@ -76,11 +76,11 @@ class AliasesTest {
 
     @Test
     void shouldReturnFalseIfDoesNotContainAlias() {
-        final Alias idvId = new FakeIdvId();
+        final Alias idvId = AliasesMother.idvId();
 
         final Aliases aliases = Aliases.with(idvId);
 
-        final Alias creditCardNumber = new FakeCreditCardNumber();
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
         assertThat(aliases.contains(creditCardNumber)).isFalse();
     }
 

@@ -6,8 +6,7 @@ import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext.VerificationContextBuilder;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
@@ -71,7 +70,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnProvidedAlias() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
 
         final VerificationContext context = builder.providedAlias(providedAlias).build();
 
@@ -80,7 +79,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnIdentity() {
-        final Identity identity = new FakeIdentity();
+        final Identity identity = new Identity(AliasesMother.aliases());
 
         final VerificationContext context = builder.identity(identity).build();
 
@@ -89,7 +88,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnIdvIdValue() {
-        final Identity identity = new FakeIdentity();
+        final Identity identity = new Identity(AliasesMother.aliases());
 
         final VerificationContext context = builder.identity(identity).build();
 

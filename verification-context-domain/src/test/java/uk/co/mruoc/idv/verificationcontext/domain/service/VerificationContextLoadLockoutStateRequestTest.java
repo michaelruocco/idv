@@ -6,7 +6,7 @@ import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -39,7 +39,7 @@ class VerificationContextLoadLockoutStateRequestTest {
 
     @Test
     void shouldReturnAlias() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final VerificationContextLoadLockoutStateRequest request = builder.alias(alias).build();
 
@@ -49,7 +49,7 @@ class VerificationContextLoadLockoutStateRequestTest {
 
     @Test
     void shouldReturnAliasType() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final VerificationContextLoadLockoutStateRequest request = builder.alias(alias).build();
 

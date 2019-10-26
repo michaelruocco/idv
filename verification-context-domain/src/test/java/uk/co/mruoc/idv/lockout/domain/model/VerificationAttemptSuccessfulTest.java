@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful.VerificationAttemptSuccessfulBuilder;
 
 import java.time.Instant;
@@ -50,7 +50,7 @@ class VerificationAttemptSuccessfulTest {
 
     @Test
     void shouldReturnAlias() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final VerificationAttempt attempt = builder.alias(alias).build();
 

@@ -17,7 +17,7 @@ class IdentityTest {
 
     @Test
     void shouldReturnIdvIdAliasValue() {
-        final IdvId idvId = new FakeIdvId();
+        final IdvId idvId = AliasesMother.idvId();
 
         final Identity identity = new Identity(Aliases.with(idvId));
 
@@ -26,7 +26,7 @@ class IdentityTest {
 
     @Test
     void shouldReturnTrueIfHasAlias() {
-        final IdvId idvId = new FakeIdvId();
+        final IdvId idvId = AliasesMother.idvId();
 
         final Identity identity = new Identity(Aliases.with(idvId));
 
@@ -35,11 +35,11 @@ class IdentityTest {
 
     @Test
     void shouldReturnFalseIfDoesNotHaveAlias() {
-        final IdvId idvId = new FakeIdvId();
+        final IdvId idvId = AliasesMother.idvId();
 
         final Identity identity = new Identity(Aliases.with(idvId));
 
-        final Alias creditCardNumber = new FakeCreditCardNumber();
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
         assertThat(identity.hasAlias(creditCardNumber)).isFalse();
     }
 

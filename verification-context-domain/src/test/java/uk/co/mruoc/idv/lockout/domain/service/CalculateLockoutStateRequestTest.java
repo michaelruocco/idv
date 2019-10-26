@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest.CalculateLockoutStateRequestBuilder;
@@ -45,7 +45,7 @@ class CalculateLockoutStateRequestTest {
 
     @Test
     void shouldReturnAlias() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final CalculateLockoutStateRequest request = builder.alias(alias).build();
 
@@ -54,7 +54,7 @@ class CalculateLockoutStateRequestTest {
 
     @Test
     void shouldReturnAliasType() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final CalculateLockoutStateRequest request = builder.alias(alias).build();
 

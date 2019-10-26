@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.identity.domain.service;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService.IdentityNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,7 +11,7 @@ class IdentityNotFoundExceptionTest {
 
     @Test
     void shouldReturnMessage() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final Throwable error = new IdentityNotFoundException(alias);
 
@@ -20,7 +20,7 @@ class IdentityNotFoundExceptionTest {
 
     @Test
     void shouldReturnAlias() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final IdentityNotFoundException error = new IdentityNotFoundException(alias);
 

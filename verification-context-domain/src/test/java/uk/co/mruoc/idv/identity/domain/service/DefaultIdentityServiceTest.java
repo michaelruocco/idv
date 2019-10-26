@@ -7,7 +7,7 @@ import uk.co.mruoc.idv.domain.service.FakeIdGenerator;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.model.IdvId;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService.IdentityNotFoundException;
@@ -34,7 +34,7 @@ class DefaultIdentityServiceTest {
 
     @Test
     void shouldReturnNewIdentityWithGeneratedIdvIdIfIdentityNotFound() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
         final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
         given(dao.load(providedAlias)).willReturn(Optional.empty());
 
@@ -46,7 +46,7 @@ class DefaultIdentityServiceTest {
 
     @Test
     void shouldReturnNewIdentityWithProvidedAliasIfIdentityNotFound() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
         final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
         given(dao.load(providedAlias)).willReturn(Optional.empty());
 
@@ -58,7 +58,7 @@ class DefaultIdentityServiceTest {
 
     @Test
     void shouldReturnExistingIdentityIfIdentityFound() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
         final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
         final Identity existingIdentity = mock(Identity.class);
         given(dao.load(providedAlias)).willReturn(Optional.of(existingIdentity));
@@ -70,7 +70,7 @@ class DefaultIdentityServiceTest {
 
     @Test
     void shouldThrowExceptionIfIdentityNotFound() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         final LoadIdentityRequest request = buildLoadRequest(alias);
         given(dao.load(alias)).willReturn(Optional.empty());
 
@@ -83,7 +83,7 @@ class DefaultIdentityServiceTest {
 
     @Test
     void shouldLoadIdentity() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         final LoadIdentityRequest request = buildLoadRequest(alias);
         final Identity existingIdentity = mock(Identity.class);
         given(dao.load(alias)).willReturn(Optional.of(existingIdentity));

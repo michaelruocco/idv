@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.mongo.identity.dao;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -27,7 +27,7 @@ class AliasConverterTest {
 
     @Test
     void shouldPopulateTypeOnDocument() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final AliasDocument document = converter.toDocument(alias);
 
@@ -36,7 +36,7 @@ class AliasConverterTest {
 
     @Test
     void shouldPopulateValueOnDocument() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
 
         final AliasDocument document = converter.toDocument(alias);
 

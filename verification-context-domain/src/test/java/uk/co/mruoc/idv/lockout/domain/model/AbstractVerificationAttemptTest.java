@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -14,7 +14,7 @@ class AbstractVerificationAttemptTest {
     private static final UUID CONTEXT_ID = UUID.fromString("8f0afda8-df73-4ea9-b7b2-2ee45e667227");
     private static final String CHANNEL_ID = "channel-id";
     private static final String ACTIVITY_NAME = "activity-name";
-    private static final Alias PROVIDED_ALIAS = new FakeCreditCardNumber();
+    private static final Alias PROVIDED_ALIAS = AliasesMother.creditCardNumber();
     private static final UUID IDV_ID_VALUE = UUID.fromString("f8c33391-7d70-4abe-bd8a-8e41e64f446c");
     private static final String METHOD_NAME = "method-name";
     private static final UUID VERIFICATION_ID = UUID.fromString("ca0b47c5-4bac-4122-ba82-8cbf2713922e");

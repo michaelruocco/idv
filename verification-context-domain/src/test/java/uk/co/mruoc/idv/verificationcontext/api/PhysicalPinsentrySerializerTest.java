@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CreditCardNumberMother;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumberMother;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
@@ -26,7 +26,7 @@ class PhysicalPinsentrySerializerTest {
 
     @Test
     void shouldSerializeEligiblePhysicalPinsentry() throws JsonProcessingException {
-        final Collection<CardNumber> cardNumbers = Collections.singleton(CreditCardNumberMother.build());
+        final Collection<CardNumber> cardNumbers = Collections.singleton(CardNumberMother.credit());
         final VerificationMethod method = new PhysicalPinsentryEligible(RESPOND, cardNumbers);
 
         final String json = MAPPER.writeValueAsString(method);
@@ -38,7 +38,7 @@ class PhysicalPinsentrySerializerTest {
     @Test
     void shouldSerializeEligiblePhysicalPinsentryWithResult() throws JsonProcessingException {
         final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(PhysicalPinsentry.NAME);
-        final Collection<CardNumber> cardNumbers = Collections.singleton(CreditCardNumberMother.build());
+        final Collection<CardNumber> cardNumbers = Collections.singleton(CardNumberMother.credit());
         final VerificationMethod method = new PhysicalPinsentryEligible(RESPOND, cardNumbers, result);
 
         final String json = MAPPER.writeValueAsString(method);

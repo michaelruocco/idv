@@ -10,9 +10,7 @@ import uk.co.mruoc.idv.domain.service.FakeTimeService;
 import uk.co.mruoc.idv.domain.service.IdGenerator;
 import uk.co.mruoc.idv.domain.service.TimeService;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.Aliases;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdvId;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
@@ -42,7 +40,7 @@ class VerificationContextCreatorTest {
     private final IdGenerator idGenerator = new FakeIdGenerator(ID);
     private final TimeService timeService = new FakeTimeService(NOW);
 
-    private final Identity identity = new Identity(Aliases.with(new FakeIdvId()));
+    private final Identity identity = new Identity(AliasesMother.aliases());
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
 
     private final VerificationSequences sequences = new FakeVerificationSequencesEligible();
@@ -78,7 +76,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassProvidedAliasWhenUpsertingIdentity() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .providedAlias(providedAlias)
                 .build();
@@ -117,7 +115,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassProvidedAliasWhenValidatingLockoutState() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .providedAlias(providedAlias)
                 .build();
@@ -189,7 +187,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassProvidedAliasWhenLoadingSequences() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .providedAlias(providedAlias)
                 .build();
@@ -279,7 +277,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateProvidedAlias() {
-        final Alias providedAlias = new FakeCreditCardNumber();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
         final CreateContextRequest request = CreateContextRequest.builder()
                 .providedAlias(providedAlias)
                 .build();

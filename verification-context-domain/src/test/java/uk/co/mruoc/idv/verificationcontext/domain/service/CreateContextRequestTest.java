@@ -8,7 +8,7 @@ import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdvId;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest.CreateContextRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,7 +55,7 @@ class CreateContextRequestTest {
 
     @Test
     void shouldReturnCreated() {
-        final Alias providedAlias = new FakeIdvId();
+        final Alias providedAlias = AliasesMother.creditCardNumber();
 
         final CreateContextRequest request = builder.providedAlias(providedAlias).build();
 

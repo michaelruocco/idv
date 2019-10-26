@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts.CannotAddAttemptException;
 import uk.co.mruoc.idv.lockout.domain.service.PredicateMatchesActivityNames;
 
@@ -110,8 +110,9 @@ class VerificationAttemptsTest {
     void shouldCopyIdWhenResetByAlias() {
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
+        final Alias alias = AliasesMother.creditCardNumber();
 
-        final VerificationAttempts resetAttempts = attempts.resetByAlias(new FakeCreditCardNumber());
+        final VerificationAttempts resetAttempts = attempts.resetByAlias(alias);
 
         assertThat(resetAttempts.getId()).isEqualTo(attempts.getId());
     }
@@ -120,15 +121,16 @@ class VerificationAttemptsTest {
     void shouldCopyIdvIdWhenResetByAlias() {
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
+        final Alias alias = AliasesMother.creditCardNumber();
 
-        final VerificationAttempts resetAttempts = attempts.resetByAlias(new FakeCreditCardNumber());
+        final VerificationAttempts resetAttempts = attempts.resetByAlias(alias);
 
         assertThat(resetAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
     }
 
     @Test
     void shouldRemoveAllAttemptsWithAliasWhenResetByAlias() {
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         final VerificationAttempt attempt = mock(VerificationAttempt.class);
         final VerificationAttempt attemptWithAlias = mock(VerificationAttempt.class);
         given(attemptWithAlias.getAlias()).willReturn(alias);

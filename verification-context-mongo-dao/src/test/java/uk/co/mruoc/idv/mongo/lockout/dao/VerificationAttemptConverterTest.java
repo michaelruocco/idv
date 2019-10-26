@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.lockout.dao;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttemptSuccessful;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptFailed;
@@ -146,7 +146,7 @@ class VerificationAttemptConverterTest {
     @Test
     void shouldPopulateAliasOnSuccessfulAttempt() {
         final VerificationAttemptDocument document = VerificationAttemptDocumentMother.successful();
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         given(aliasConverter.toAlias(document.getAlias())).willReturn(alias);
 
         final VerificationAttempt attempt = converter.toAttempt(document);
@@ -229,7 +229,7 @@ class VerificationAttemptConverterTest {
     @Test
     void shouldPopulateAliasOnFailedAttempt() {
         final VerificationAttemptDocument document = VerificationAttemptDocumentMother.failed();
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         given(aliasConverter.toAlias(document.getAlias())).willReturn(alias);
 
         final VerificationAttempt attempt = converter.toAttempt(document);

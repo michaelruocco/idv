@@ -3,8 +3,7 @@ package uk.co.mruoc.idv.mongo.identity.dao;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdvId;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,8 +17,8 @@ class AliasesConverterTest {
     private final AliasDocument document1 = AliasDocumentMother.idvId();
     private final AliasDocument document2 = AliasDocumentMother.creditCard();
 
-    private final Alias alias1 = new FakeIdvId();
-    private final Alias alias2 = new FakeCreditCardNumber();
+    private final Alias alias1 = AliasesMother.idvId();
+    private final Alias alias2 = AliasesMother.creditCardNumber();
 
     private final AliasConverter aliasConverter = mock(AliasConverter.class);
 

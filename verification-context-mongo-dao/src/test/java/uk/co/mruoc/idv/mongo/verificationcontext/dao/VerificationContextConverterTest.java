@@ -6,8 +6,7 @@ import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
 import uk.co.mruoc.idv.domain.model.channel.Channel;
 import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.FakeCreditCardNumber;
-import uk.co.mruoc.idv.identity.domain.model.FakeIdentity;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityDocument;
@@ -89,7 +88,7 @@ class VerificationContextConverterTest {
     @Test
     void shouldProvidedAliasToContext() {
         final VerificationContextDocument document = VerificationContextDocumentMother.fake();
-        final Alias alias = new FakeCreditCardNumber();
+        final Alias alias = AliasesMother.creditCardNumber();
         given(aliasConverter.toAlias(document.getProvidedAlias())).willReturn(alias);
 
         final VerificationContext context = contextConverter.toContext(document);
@@ -111,7 +110,7 @@ class VerificationContextConverterTest {
     @Test
     void shouldIdentityToContext() {
         final VerificationContextDocument document = VerificationContextDocumentMother.fake();
-        final Identity identity = new FakeIdentity();
+        final Identity identity = new Identity(AliasesMother.aliases());
         given(identityConverter.toIdentity(document.getIdentity())).willReturn(identity);
 
         final VerificationContext context = contextConverter.toContext(document);

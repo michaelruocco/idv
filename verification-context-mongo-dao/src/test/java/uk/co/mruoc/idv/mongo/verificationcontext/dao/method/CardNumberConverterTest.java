@@ -2,8 +2,8 @@ package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumberMother;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.CreditCardNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CreditCardNumberMother;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.DebitCardNumber;
 
 import java.util.UUID;
@@ -82,7 +82,7 @@ class CardNumberConverterTest {
 
     @Test
     void shouldPopulateIdOnDocument() {
-        final CardNumber cardNumber = CreditCardNumberMother.build();
+        final CardNumber cardNumber = CardNumberMother.credit();
 
         final CardNumberDocument document = converter.toDocument(cardNumber);
 
@@ -91,7 +91,7 @@ class CardNumberConverterTest {
 
     @Test
     void shouldPopulateTokenizedOnDocument() {
-        final CardNumber cardNumber = CreditCardNumberMother.build();
+        final CardNumber cardNumber = CardNumberMother.credit();
 
         final CardNumberDocument document = converter.toDocument(cardNumber);
 
@@ -100,7 +100,7 @@ class CardNumberConverterTest {
 
     @Test
     void shouldPopulateTypeOnDocument() {
-        final CardNumber cardNumber = CreditCardNumberMother.build();
+        final CardNumber cardNumber = CardNumberMother.credit();
 
         final CardNumberDocument document = converter.toDocument(cardNumber);
 
