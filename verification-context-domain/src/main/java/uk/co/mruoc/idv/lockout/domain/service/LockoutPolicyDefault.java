@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -8,26 +9,31 @@ import java.util.function.Predicate;
 
 public class LockoutPolicyDefault implements LockoutPolicy {
 
+    private final LockoutPolicyParameters parameters;
     private final Predicate<LockoutRequest> appliesToPolicy;
     private final LockoutStateCalculator stateCalculator;
     private final RecordAttemptStrategy recordAttemptStrategy;
     private final LockoutStateRequestConverter requestConverter;
 
     @Builder
-    public LockoutPolicyDefault(final Predicate<LockoutRequest> appliesToPolicy,
+    public LockoutPolicyDefault(final LockoutPolicyParameters parameters,
+                                final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
-        this(appliesToPolicy,
+        this(parameters,
+                appliesToPolicy,
                 stateCalculator,
                 recordAttemptStrategy,
                 new LockoutStateRequestConverter()
         );
     }
 
-    public LockoutPolicyDefault(final Predicate<LockoutRequest> appliesToPolicy,
+    public LockoutPolicyDefault(final LockoutPolicyParameters parameters,
+                                final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy,
                                 final LockoutStateRequestConverter requestConverter) {
+        this.parameters = parameters;
         this.appliesToPolicy = appliesToPolicy;
         this.stateCalculator = stateCalculator;
         this.recordAttemptStrategy = recordAttemptStrategy;
@@ -62,6 +68,11 @@ public class LockoutPolicyDefault implements LockoutPolicy {
         final VerificationAttempts applicableAttempts = filterApplicableAttempts(request.getAttempts());
         final CalculateLockoutStateRequest calculateRequest = requestConverter.toCalculateRequest(request, applicableAttempts);
         return stateCalculator.calculate(calculateRequest);
+    }
+
+    @Override
+    public LockoutPolicyParameters getParameters() {
+        return null;
     }
 
     private VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts) {

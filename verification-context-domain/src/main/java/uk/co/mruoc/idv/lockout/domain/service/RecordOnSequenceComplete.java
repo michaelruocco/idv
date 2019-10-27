@@ -5,6 +5,13 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResul
 
 public class RecordOnSequenceComplete implements RecordAttemptStrategy {
 
+    public static final String TYPE = "on-sequence-complete";
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
     @Override
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
         final VerificationContext context = request.getContext();

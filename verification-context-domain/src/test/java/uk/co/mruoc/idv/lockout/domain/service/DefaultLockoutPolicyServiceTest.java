@@ -1,6 +1,8 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
@@ -9,6 +11,8 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService.LockoutPolicy
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
@@ -16,14 +20,22 @@ import static org.mockito.Mockito.mock;
 
 class DefaultLockoutPolicyServiceTest {
 
+    private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
+    private final LockoutPolicyFactory policyFactory = mock(LockoutPolicyFactory.class);
+
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
 
-    private final LockoutPolicyService service = new DefaultLockoutPolicyService(policy);
+    private final LockoutPolicyService service = new DefaultLockoutPolicyService(dao, policyFactory);
+
+    @BeforeEach
+    void setUp() {
+        service.addPolicy(policy);
+    }
 
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToRecordAttemptRequest() {
         final RecordAttemptRequest request = buildRecordAttemptRequest();
-        given(policy.appliesTo(request)).willReturn(false);
+        given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.shouldRecordAttempt(request));
 
@@ -33,7 +45,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToRecordAttemptRequest() {
         final RecordAttemptRequest request = buildRecordAttemptRequest();
-        given(policy.appliesTo(request)).willReturn(false);
+        given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.shouldRecordAttempt(request));
 
@@ -44,7 +56,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldReturnRecordAttemptFromPolicy() {
         final RecordAttemptRequest request = buildRecordAttemptRequest();
-        given(policy.appliesTo(request)).willReturn(true);
+        given(dao.load(request)).willReturn(Optional.of(policy));
         given(policy.shouldRecordAttempt(request)).willReturn(true);
 
         final boolean result = service.shouldRecordAttempt(request);
@@ -55,7 +67,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToCalculateStateRequest() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-        given(policy.appliesTo(request)).willReturn(false);
+        given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.calculateState(request));
 
@@ -65,7 +77,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToCalculateStateRequest() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-        given(policy.appliesTo(request)).willReturn(false);
+        given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.calculateState(request));
 
@@ -76,7 +88,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldCalculateStateFromPolicy() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-        given(policy.appliesTo(request)).willReturn(true);
+        given(dao.load(request)).willReturn(Optional.of(policy));
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
         given(policy.calculateLockoutState(request)).willReturn(expectedState);
 
@@ -88,7 +100,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToResetAttemptsRequest() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-        given(policy.appliesTo(request)).willReturn(false);
+        given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.resetAttempts(request));
 
@@ -98,7 +110,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToResetAttemptsRequest() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-        given(policy.appliesTo(request)).willReturn(false);
+        given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.resetAttempts(request));
 
@@ -109,7 +121,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldResetAttemptsUsingPolicy() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-        given(policy.appliesTo(request)).willReturn(true);
+        given(dao.load(request)).willReturn(Optional.of(policy));
         final VerificationAttempts expectedAttempts = new FakeVerificationAttempts();
         given(policy.reset(request.getAttempts())).willReturn(expectedAttempts);
 

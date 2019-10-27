@@ -1,22 +1,16 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
+import lombok.Builder;
+import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
-import java.util.Arrays;
-import java.util.Collection;
-
+@Builder
 public class DefaultLockoutPolicyService implements LockoutPolicyService {
 
-    private final Collection<LockoutPolicy> policies;
-
-    public DefaultLockoutPolicyService(final LockoutPolicy... policies) {
-        this(Arrays.asList(policies));
-    }
-
-    public DefaultLockoutPolicyService(final Collection<LockoutPolicy> policies) {
-        this.policies = policies;
-    }
+    private final LockoutPolicyDao dao;
+    private final LockoutPolicyFactory policyFactory;
 
     @Override
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
@@ -36,10 +30,19 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
         return policy.reset(request.getAttempts());
     }
 
+    @Override
+    public void addPolicy(final LockoutPolicyParameters parameters) {
+        final LockoutPolicy policy = policyFactory.build(parameters);
+        addPolicy(policy);
+    }
+
+    @Override
+    public void addPolicy(LockoutPolicy policy) {
+        dao.save(policy);
+    }
+
     private LockoutPolicy load(final LockoutRequest request) {
-        return policies.stream()
-                .filter(policy -> policy.appliesTo(request))
-                .findFirst()
+        return dao.load(request)
                 .orElseThrow(() -> new LockoutPolicyNotFoundException(request));
     }
 

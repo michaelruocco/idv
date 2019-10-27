@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -14,5 +15,7 @@ public interface LockoutPolicy {
     LockoutState reset(final CalculateLockoutStateRequest request);
 
     LockoutState calculateLockoutState(final CalculateLockoutStateRequest request);
+
+    LockoutPolicyParameters getParameters();
 
 }

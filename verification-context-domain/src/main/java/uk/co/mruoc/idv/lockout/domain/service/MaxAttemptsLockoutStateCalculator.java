@@ -5,11 +5,11 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 @Slf4j
-public class LockoutStateCalculatorMaxAttempts implements LockoutStateCalculator {
+public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator {
 
     private final int maxAttempts;
 
-    public LockoutStateCalculatorMaxAttempts(final int maxAttempts) {
+    public MaxAttemptsLockoutStateCalculator(final int maxAttempts) {
         this.maxAttempts = maxAttempts;
     }
 

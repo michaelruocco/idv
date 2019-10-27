@@ -14,11 +14,11 @@ import java.util.Collections;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-class LockoutStateCalculatorMaxAttemptsTest {
+class MaxAttemptsLockoutStateCalculatorTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
 
-    private final LockoutStateCalculator calculator = new LockoutStateCalculatorMaxAttempts(MAX_NUMBER_OF_ATTEMPTS);
+    private final LockoutStateCalculator calculator = new MaxAttemptsLockoutStateCalculator(MAX_NUMBER_OF_ATTEMPTS);
 
     @Test
     void shouldReturnNotLockedIfNumberOfAttemptsIsLessThanMaxNumberOfAttempts() {
