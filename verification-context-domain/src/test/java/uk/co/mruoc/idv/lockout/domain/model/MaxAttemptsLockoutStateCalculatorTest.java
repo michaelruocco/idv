@@ -1,11 +1,7 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
+import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;

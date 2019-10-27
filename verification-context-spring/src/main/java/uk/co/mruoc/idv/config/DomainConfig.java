@@ -18,6 +18,7 @@ import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.InMemoryLockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.RsaMaxAttemptsLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
@@ -25,7 +26,6 @@ import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultVerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutFacade;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyFactory;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
@@ -33,7 +33,6 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequestConverter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateResetter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequestConverter;
-import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptStrategyFactory;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptPersister;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.jsonapi.JsonApiLockoutStateModule;
@@ -95,29 +94,16 @@ public class DomainConfig {
         return new StubbedSequenceLoader();
     }
 
-    @Bean
-    public RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
-        return new RecordAttemptStrategyFactory();
-    }
-
-    @Bean
-    public LockoutPolicyFactory lockoutPolicyFactory(final RecordAttemptStrategyFactory recordAttemptStrategyFactory) {
-        return new LockoutPolicyFactory(recordAttemptStrategyFactory);
-    }
-
     @Bean // TODO create mongo bean and move this bean into in memory dao config
     public LockoutPolicyDao lockoutPolicyDao() {
         return new InMemoryLockoutPolicyDao();
     }
 
     @Bean
-    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao,
-                                                     final LockoutPolicyFactory policyFactory) {
-        final LockoutPolicyService policyService = DefaultLockoutPolicyService.builder()
-                .dao(dao)
-                .policyFactory(policyFactory)
-                .build();
-        policyService.addPolicy(new RsaMaxAttemptsLockoutPolicyParameters());
+    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao) {
+        final LockoutPolicyService policyService = new DefaultLockoutPolicyService(dao);
+        final LockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
+        policyService.addPolicy(parameters.toPolicy());
         return policyService;
     }
 

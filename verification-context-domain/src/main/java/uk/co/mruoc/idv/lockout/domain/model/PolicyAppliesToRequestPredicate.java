@@ -1,4 +1,6 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
+
+import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
 import java.util.Arrays;
 import java.util.Collection;

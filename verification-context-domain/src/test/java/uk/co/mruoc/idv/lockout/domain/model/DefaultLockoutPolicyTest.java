@@ -1,21 +1,20 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
-import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
+import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
+import uk.co.mruoc.idv.lockout.domain.service.FakeCalculateLockoutStateRequest;
+import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class LockoutPolicyDefaultTest {
+class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnTrueIfLockoutRequestAppliesToPolicy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> true)
                 .build();
 
@@ -27,7 +26,7 @@ class LockoutPolicyDefaultTest {
     @Test
     void shouldReturnFalseIfLockoutRequestDoesNotApplyToPolicy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> false)
                 .build();
 
@@ -40,7 +39,7 @@ class LockoutPolicyDefaultTest {
     void shouldReturnShouldRecordAttemptFromStrategy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
         final RecordAttemptStrategy strategy = mock(RecordAttemptStrategy.class);
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .recordAttemptStrategy(strategy)
                 .build();
         given(strategy.shouldRecordAttempt(request)).willReturn(true);
@@ -53,7 +52,7 @@ class LockoutPolicyDefaultTest {
     @Test
     void shouldRemoveAllApplicableAttemptsWhenResetting() {
         final VerificationAttempts attempts = new FakeVerificationAttempts();
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> true)
                 .build();
 
@@ -65,7 +64,7 @@ class LockoutPolicyDefaultTest {
     @Test
     void shouldNotRemoveAttemptsWhenResettingIfNoneAreApplicable() {
         final VerificationAttempts attempts = new FakeVerificationAttempts();
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> false)
                 .build();
 
@@ -77,7 +76,7 @@ class LockoutPolicyDefaultTest {
     @Test
     void shouldPassRemainingAttemptsAfterResetToStateCalculatorWhenResettingState() {
         final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> true)
                 .stateCalculator(stateCalculator)
                 .build();
@@ -94,7 +93,7 @@ class LockoutPolicyDefaultTest {
         final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
         stateCalculator.setLockoutStateToReturn(expectedState);
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> true)
                 .stateCalculator(stateCalculator)
                 .build();
@@ -108,7 +107,7 @@ class LockoutPolicyDefaultTest {
     @Test
     void shouldPassApplicableAttemptsWhenCalculatingState() {
         final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> false)
                 .stateCalculator(stateCalculator)
                 .build();
@@ -125,7 +124,7 @@ class LockoutPolicyDefaultTest {
         final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
         stateCalculator.setLockoutStateToReturn(expectedState);
-        final LockoutPolicy policy = LockoutPolicyDefault.builder()
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .appliesToPolicy(lockoutRequest -> false)
                 .stateCalculator(stateCalculator)
                 .build();

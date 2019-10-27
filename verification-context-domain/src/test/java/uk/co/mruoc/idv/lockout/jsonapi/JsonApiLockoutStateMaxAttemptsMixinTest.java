@@ -22,7 +22,7 @@ class JsonApiLockoutStateMaxAttemptsMixinTest {
 
         final String json = MAPPER.writeValueAsString(document);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/json-api/lockout-state-document.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/json-api/max-attempts-lockout-state-document.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

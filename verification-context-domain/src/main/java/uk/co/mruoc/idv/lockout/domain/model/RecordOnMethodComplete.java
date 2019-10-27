@@ -1,11 +1,12 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
+import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 
-public class RecordOnSequenceComplete implements RecordAttemptStrategy {
+public class RecordOnMethodComplete implements RecordAttemptStrategy {
 
-    public static final String TYPE = "on-sequence-complete";
+    public static final String TYPE = "on-method-complete";
 
     @Override
     public String getType() {
@@ -16,7 +17,7 @@ public class RecordOnSequenceComplete implements RecordAttemptStrategy {
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
         final VerificationContext context = request.getContext();
         final VerificationResult result = request.getResult();
-        return context.containsCompleteSequenceContainingMethod(result.getMethodName());
+        return context.containsCompleteMethod(result.getMethodName());
     }
 
 }

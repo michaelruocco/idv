@@ -1,13 +1,14 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
+import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequestConverter;
+import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 
 import java.util.function.Predicate;
 
-public class LockoutPolicyDefault implements LockoutPolicy {
+public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private final LockoutPolicyParameters parameters;
     private final Predicate<LockoutRequest> appliesToPolicy;
@@ -16,7 +17,7 @@ public class LockoutPolicyDefault implements LockoutPolicy {
     private final LockoutStateRequestConverter requestConverter;
 
     @Builder
-    public LockoutPolicyDefault(final LockoutPolicyParameters parameters,
+    public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
                                 final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
@@ -28,7 +29,7 @@ public class LockoutPolicyDefault implements LockoutPolicy {
         );
     }
 
-    public LockoutPolicyDefault(final LockoutPolicyParameters parameters,
+    public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
                                 final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy,
@@ -72,7 +73,7 @@ public class LockoutPolicyDefault implements LockoutPolicy {
 
     @Override
     public LockoutPolicyParameters getParameters() {
-        return null;
+        return parameters;
     }
 
     private VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts) {

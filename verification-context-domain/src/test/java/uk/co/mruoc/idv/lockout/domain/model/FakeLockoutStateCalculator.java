@@ -1,6 +1,6 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
-import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
+import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 
 public class FakeLockoutStateCalculator implements LockoutStateCalculator {
 

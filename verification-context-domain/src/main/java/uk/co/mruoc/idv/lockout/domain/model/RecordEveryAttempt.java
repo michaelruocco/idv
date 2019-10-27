@@ -1,4 +1,6 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
+
+import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 
 public class RecordEveryAttempt implements RecordAttemptStrategy {
 

@@ -1,16 +1,17 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
-@Builder
+import java.util.Collection;
+
+@RequiredArgsConstructor
 public class DefaultLockoutPolicyService implements LockoutPolicyService {
 
     private final LockoutPolicyDao dao;
-    private final LockoutPolicyFactory policyFactory;
 
     @Override
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
@@ -31,14 +32,13 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void addPolicy(final LockoutPolicyParameters parameters) {
-        final LockoutPolicy policy = policyFactory.build(parameters);
-        addPolicy(policy);
+    public void addPolicy(final LockoutPolicy policy) {
+        dao.save(policy);
     }
 
     @Override
-    public void addPolicy(LockoutPolicy policy) {
-        dao.save(policy);
+    public Collection<LockoutPolicy> loadPolicies() {
+        return dao.load();
     }
 
     private LockoutPolicy load(final LockoutRequest request) {

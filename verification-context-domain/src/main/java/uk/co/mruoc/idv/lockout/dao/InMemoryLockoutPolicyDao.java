@@ -1,10 +1,11 @@
 package uk.co.mruoc.idv.lockout.dao;
 
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicy;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 public class InMemoryLockoutPolicyDao implements LockoutPolicyDao {
@@ -21,6 +22,10 @@ public class InMemoryLockoutPolicyDao implements LockoutPolicyDao {
         return policies.stream()
                 .filter(policy -> policy.appliesTo(request))
                 .findFirst();
+    }
+
+    public Collection<LockoutPolicy> load() {
+        return Collections.unmodifiableCollection(policies);
     }
 
 }

@@ -1,6 +1,8 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 
 import java.util.function.Predicate;
 

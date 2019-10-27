@@ -1,8 +1,7 @@
-package uk.co.mruoc.idv.lockout.domain.service;
+package uk.co.mruoc.idv.lockout.domain.model;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
+import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 
 @Slf4j
 public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator {

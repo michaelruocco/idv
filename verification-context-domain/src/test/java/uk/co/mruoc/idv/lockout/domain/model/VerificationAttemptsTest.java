@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts.CannotAddAttemptException;
-import uk.co.mruoc.idv.lockout.domain.service.PredicateMatchesActivityNames;
 
 import java.util.Arrays;
 import java.util.Collections;

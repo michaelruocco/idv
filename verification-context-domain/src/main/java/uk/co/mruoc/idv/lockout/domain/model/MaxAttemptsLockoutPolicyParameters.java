@@ -20,7 +20,13 @@ public class MaxAttemptsLockoutPolicyParameters extends LockoutPolicyParameters 
                                               final Collection<String> activityNames,
                                               final Collection<String> aliasTypes,
                                               final int maxNumberOfAttempts) {
-        super(id, TYPE, recordAttemptStrategyType, channelIds, activityNames, aliasTypes);
+        super(id,
+                TYPE,
+                recordAttemptStrategyType,
+                channelIds,
+                activityNames,
+                aliasTypes,
+                new MaxAttemptsLockoutStateCalculator(maxNumberOfAttempts));
         this.maxNumberOfAttempts = maxNumberOfAttempts;
     }
 
