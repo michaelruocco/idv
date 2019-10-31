@@ -1,15 +1,15 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MethodAlreadyCompleteErrorItemTest {
+class VerificationContextExpiredErrorTest {
 
     private static final String DETAIL = "my detail";
 
-    private final JsonApiErrorItem error = new MethodAlreadyCompleteErrorItem(DETAIL);
+    private final ApiError error = new VerificationContextExpiredError(DETAIL);
 
     @Test
     void shouldReturnRandomId() {
@@ -18,7 +18,7 @@ class MethodAlreadyCompleteErrorItemTest {
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Method Already Complete");
+        assertThat(error.getTitle()).isEqualTo("Verification Context Expired");
     }
 
     @Test
@@ -28,7 +28,7 @@ class MethodAlreadyCompleteErrorItemTest {
 
     @Test
     void shouldReturnStatus() {
-        assertThat(error.getStatus()).isEqualTo(422);
+        assertThat(error.getStatus()).isEqualTo(410);
     }
 
 }

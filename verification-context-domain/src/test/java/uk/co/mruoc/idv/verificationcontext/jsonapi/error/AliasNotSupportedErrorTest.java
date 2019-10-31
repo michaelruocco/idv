@@ -1,15 +1,15 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VerificationContextNotFoundErrorItemTest {
+class AliasNotSupportedErrorTest {
 
     private static final String DETAIL = "my detail";
 
-    private final JsonApiErrorItem error = new VerificationContextNotFoundErrorItem(DETAIL);
+    private final ApiError error = new AliasNotSupportedError(DETAIL);
 
     @Test
     void shouldReturnRandomId() {
@@ -18,7 +18,7 @@ class VerificationContextNotFoundErrorItemTest {
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Verification Context Not Found");
+        assertThat(error.getTitle()).isEqualTo("Alias Not Supported");
     }
 
     @Test
@@ -28,7 +28,7 @@ class VerificationContextNotFoundErrorItemTest {
 
     @Test
     void shouldReturnStatus() {
-        assertThat(error.getStatus()).isEqualTo(404);
+        assertThat(error.getStatus()).isEqualTo(400);
     }
 
 }

@@ -3,22 +3,29 @@ package uk.co.mruoc.idv.lockout.jsonapi;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
-import uk.co.mruoc.jsonapi.AbstractJsonApiDocumentDeserializer;
+import uk.co.mruoc.jsonapi.ApiDocumentDeserializer;
+import uk.co.mruoc.jsonapi.ApiDataDocumentRequest;
+import uk.co.mruoc.jsonapi.ApiDocumentFactory;
 
 import java.io.IOException;
 
-public class ResetLockoutStateDocumentDeserializer extends AbstractJsonApiDocumentDeserializer<ResetLockoutStateDocument> {
+public class ResetLockoutStateDocumentDeserializer extends ApiDocumentDeserializer<ResetLockoutStateDocument> {
 
     protected ResetLockoutStateDocumentDeserializer() {
-        super(ResetLockoutStateDocument.class);
+        super(ResetLockoutStateDocument.class, new DocumentFactory());
     }
 
-    @Override
-    protected ResetLockoutStateDocument toDocument(final JsonParser parser,
-                                                   final JsonNode attributesNode,
-                                                   final String jsonApiType) throws IOException {
-        final LockoutRequest attributes = attributesNode.traverse(parser.getCodec()).readValueAs(LockoutRequest.class);
-        return new ResetLockoutStateDocument(attributes);
+    private static class DocumentFactory implements ApiDocumentFactory<ResetLockoutStateDocument> {
+
+        @Override
+        public ResetLockoutStateDocument build(final ApiDataDocumentRequest request) throws IOException {
+            final JsonNode dataNode = request.getDataNode();
+            final JsonNode attributesNode = ApiDocumentFactory.extractAttributesNode(dataNode);
+            final JsonParser parser = request.getParser();
+            final LockoutRequest attributes = attributesNode.traverse(parser.getCodec()).readValueAs(LockoutRequest.class);
+            return new ResetLockoutStateDocument(attributes);
+        }
+
     }
 
 }

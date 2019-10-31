@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
-import uk.co.mruoc.jsonapi.JsonApiModule;
+import uk.co.mruoc.jsonapi.ApiModule;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ class ResetLockoutStateDocumentDeserializerTest {
     private static ObjectMapper buildMapper() {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JsonApiLockoutStateModule());
-        mapper.registerModule(new JsonApiModule());
+        mapper.registerModule(new ApiModule());
         mapper.registerModule(new IdentityModule());
         return mapper;
     }

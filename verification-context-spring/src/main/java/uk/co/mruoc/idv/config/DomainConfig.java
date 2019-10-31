@@ -48,7 +48,7 @@ import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoa
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextResultRecorder;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
 import uk.co.mruoc.idv.verificationcontext.jsonapi.JsonApiVerificationContextModule;
-import uk.co.mruoc.jsonapi.JsonApiModule;
+import uk.co.mruoc.jsonapi.ApiModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
@@ -60,7 +60,7 @@ public class DomainConfig {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new IdvModule());
         mapper.registerModule(new IdentityModule());
-        mapper.registerModule(new JsonApiModule());
+        mapper.registerModule(new ApiModule());
         mapper.registerModule(new JsonApiVerificationContextModule());
         mapper.registerModule(new JsonApiLockoutStateModule());
         mapper.registerModule(new MoneyModule());

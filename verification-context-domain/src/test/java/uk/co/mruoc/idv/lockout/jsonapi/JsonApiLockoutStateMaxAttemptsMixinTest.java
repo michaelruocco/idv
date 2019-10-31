@@ -5,7 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
-import uk.co.mruoc.jsonapi.JsonApiModule;
+import uk.co.mruoc.jsonapi.ApiModule;
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ class JsonApiLockoutStateMaxAttemptsMixinTest {
     private static ObjectMapper buildMapper() {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JsonApiLockoutStateModule());
-        mapper.registerModule(new JsonApiModule());
+        mapper.registerModule(new ApiModule());
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(WRITE_DATES_AS_TIMESTAMPS);
         return mapper;

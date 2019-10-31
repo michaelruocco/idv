@@ -12,7 +12,7 @@ import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService.IdentityNotFoundException;
-import uk.co.mruoc.idv.identity.jsonapi.error.IdentityNotFoundErrorItem;
+import uk.co.mruoc.idv.identity.jsonapi.error.IdentityNotFoundError;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
@@ -20,20 +20,20 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.No
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextNotFoundException;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.LockedOutErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.MethodAlreadyCompleteErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.NotNextMethodInSequenceErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextExpiredErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextNotFoundErrorItem;
-import uk.co.mruoc.jsonapi.error.BadRequestErrorItem;
-import uk.co.mruoc.jsonapi.error.InternalServerErrorItem;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorDocument;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
-import uk.co.mruoc.jsonapi.error.JsonApiSingleErrorDocument;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.LockedOutError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.MethodAlreadyCompleteError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.NotNextMethodInSequenceError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextExpiredError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextNotFoundError;
+import uk.co.mruoc.jsonapi.error.ApiError;
+import uk.co.mruoc.jsonapi.error.ApiErrorDocument;
+import uk.co.mruoc.jsonapi.error.ApiSingleErrorDocument;
+import uk.co.mruoc.jsonapi.error.BadRequestError;
+import uk.co.mruoc.jsonapi.error.InternalServerError;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -52,84 +52,84 @@ class ApplicationErrorHandlerTest {
     void shouldReturnDocumentForUnexpectedException() {
         final Throwable exception = new Exception(MESSAGE);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new InternalServerErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new InternalServerError(exception.getMessage())));
     }
 
     @Test
     void shouldReturnDocumentForHttpMessageNotReadableException() {
         final HttpMessageNotReadableException exception = mock(HttpMessageNotReadableException.class);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new InvalidJsonRequestErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new InvalidJsonRequestError(exception.getMessage())));
     }
 
     @Test
     void shouldReturnDocumentForChannelNotSupportedException() {
         final ChannelNotSupportedException exception = new ChannelNotSupportedException(MESSAGE);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new ChannelNotSupportedErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new ChannelNotSupportedError(exception.getMessage())));
     }
 
     @Test
     void shouldReturnDocumentForActivityNotSupportedException() {
         final ActivityNotSupportedException exception = new ActivityNotSupportedException(MESSAGE);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new ActivityNotSupportedErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new ActivityNotSupportedError(exception.getMessage())));
     }
 
     @Test
     void shouldReturnDocumentForAliasNotSupportedException() {
         final AliasNotSupportedException exception = new AliasNotSupportedException(MESSAGE);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new AliasNotSupportedErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new AliasNotSupportedError(exception.getMessage())));
     }
 
     @Test
     void shouldReturnDocumentForNotNextMethodInSequenceException() {
         final NotNextMethodInSequenceException exception = new NotNextMethodInSequenceException(MESSAGE);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new NotNextMethodInSequenceErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new NotNextMethodInSequenceError(exception.getMessage())));
     }
 
     @Test
     void shouldReturnDocumentForMethodArgumentTypeMismatchException() {
         final MethodArgumentTypeMismatchException exception = mock(MethodArgumentTypeMismatchException.class);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new BadRequestErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new BadRequestError(exception.getMessage())));
     }
 
     @Test
@@ -137,24 +137,24 @@ class ApplicationErrorHandlerTest {
         final UUID contextId = UUID.randomUUID();
         final VerificationContextNotFoundException exception = new VerificationContextNotFoundException(contextId);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new VerificationContextNotFoundErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new VerificationContextNotFoundError(exception.getMessage())));
     }
 
     @Test
     void shouldReturnDocumentForLockedOutException() {
         final LockedOutException exception = new LockedOutException(mock(LockoutState.class));
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.LOCKED);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new LockedOutErrorItem(exception.getLockoutState())));
+                .isEqualTo(toDocument(new LockedOutError(exception.getLockoutState())));
     }
 
     @Test
@@ -162,12 +162,12 @@ class ApplicationErrorHandlerTest {
         final VerificationContext context = mock(VerificationContext.class);
         final VerificationContextExpiredException exception = new VerificationContextExpiredException(context, Instant.now());
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.GONE);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new VerificationContextExpiredErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new VerificationContextExpiredError(exception.getMessage())));
     }
 
     @Test
@@ -175,12 +175,12 @@ class ApplicationErrorHandlerTest {
         final String methodName = "method-name";
         final MethodAlreadyCompleteException exception = new MethodAlreadyCompleteException(methodName);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNPROCESSABLE_ENTITY);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new MethodAlreadyCompleteErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new MethodAlreadyCompleteError(exception.getMessage())));
     }
 
     @Test
@@ -188,16 +188,16 @@ class ApplicationErrorHandlerTest {
         final Alias alias = AliasesMother.creditCardNumber();
         final IdentityNotFoundException exception = new IdentityNotFoundException(alias);
 
-        final ResponseEntity<JsonApiErrorDocument> response = handler.handleException(exception);
+        final ResponseEntity<ApiErrorDocument> response = handler.handleException(exception);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody())
                 .usingRecursiveComparison(comparisonConfiguration)
-                .isEqualTo(toDocument(new IdentityNotFoundErrorItem(exception.getMessage())));
+                .isEqualTo(toDocument(new IdentityNotFoundError(exception.getMessage())));
     }
 
-    private static JsonApiErrorDocument toDocument(final JsonApiErrorItem item) {
-        return new JsonApiSingleErrorDocument(item);
+    private static ApiErrorDocument toDocument(final ApiError item) {
+        return new ApiSingleErrorDocument(item);
     }
 
     private static class JsonApiErrorDocumentComparisonConfiguration extends RecursiveComparisonConfiguration {

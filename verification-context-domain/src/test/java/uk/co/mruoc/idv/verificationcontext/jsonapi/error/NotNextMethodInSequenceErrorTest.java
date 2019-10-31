@@ -1,15 +1,15 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InvalidJsonRequestErrorItemTest {
+class NotNextMethodInSequenceErrorTest {
 
     private static final String DETAIL = "my detail";
 
-    private final JsonApiErrorItem error = new InvalidJsonRequestErrorItem(DETAIL);
+    private final ApiError error = new NotNextMethodInSequenceError(DETAIL);
 
     @Test
     void shouldReturnRandomId() {
@@ -18,7 +18,7 @@ class InvalidJsonRequestErrorItemTest {
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Invalid JSON Request");
+        assertThat(error.getTitle()).isEqualTo("Not Next Method in Sequence");
     }
 
     @Test
@@ -28,7 +28,7 @@ class InvalidJsonRequestErrorItemTest {
 
     @Test
     void shouldReturnStatus() {
-        assertThat(error.getStatus()).isEqualTo(400);
+        assertThat(error.getStatus()).isEqualTo(422);
     }
 
 }

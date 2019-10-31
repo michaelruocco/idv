@@ -3,16 +3,16 @@ package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttemptsLocked;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
-class LockedOutErrorItemTest {
+class LockedOutErrorTest {
 
     private static final LockoutStateMaxAttempts LOCKOUT_STATE_MAX_ATTEMPTS = new FakeLockoutStateMaxAttemptsLocked();
 
-    private final JsonApiErrorItem error = new LockedOutErrorItem(LOCKOUT_STATE_MAX_ATTEMPTS);
+    private final ApiError error = new LockedOutError(LOCKOUT_STATE_MAX_ATTEMPTS);
 
     @Test
     void shouldReturnRandomId() {

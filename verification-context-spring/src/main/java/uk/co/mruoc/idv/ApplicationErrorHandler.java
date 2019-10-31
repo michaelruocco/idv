@@ -11,94 +11,94 @@ import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
 import uk.co.mruoc.idv.domain.exception.ChannelNotSupportedException;
 import uk.co.mruoc.idv.identity.api.AliasDeserializer.AliasNotSupportedException;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService.IdentityNotFoundException;
-import uk.co.mruoc.idv.identity.jsonapi.error.IdentityNotFoundErrorItem;
+import uk.co.mruoc.idv.identity.jsonapi.error.IdentityNotFoundError;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator.LockedOutException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.NotNextMethodInSequenceException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextNotFoundException;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.LockedOutErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.MethodAlreadyCompleteErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.NotNextMethodInSequenceErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextExpiredErrorItem;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextNotFoundErrorItem;
-import uk.co.mruoc.jsonapi.error.BadRequestErrorItem;
-import uk.co.mruoc.jsonapi.error.InternalServerErrorItem;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorDocument;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
-import uk.co.mruoc.jsonapi.error.JsonApiSingleErrorDocument;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ActivityNotSupportedError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.AliasNotSupportedError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.ChannelNotSupportedError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.InvalidJsonRequestError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.LockedOutError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.MethodAlreadyCompleteError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.NotNextMethodInSequenceError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextExpiredError;
+import uk.co.mruoc.idv.verificationcontext.jsonapi.error.VerificationContextNotFoundError;
+import uk.co.mruoc.jsonapi.error.BadRequestError;
+import uk.co.mruoc.jsonapi.error.InternalServerError;
+import uk.co.mruoc.jsonapi.error.ApiErrorDocument;
+import uk.co.mruoc.jsonapi.error.ApiError;
+import uk.co.mruoc.jsonapi.error.ApiSingleErrorDocument;
 
 @ControllerAdvice
 @Slf4j
 public class ApplicationErrorHandler {
 
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final Throwable e) {
+    public ResponseEntity<ApiErrorDocument> handleException(final Throwable e) {
         log.error("internal server error", e);
-        return buildResponseEntity(new InternalServerErrorItem(e.getMessage()));
+        return buildResponseEntity(new InternalServerError(e.getMessage()));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final HttpMessageNotReadableException e) {
-        return buildResponseEntity(new InvalidJsonRequestErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final HttpMessageNotReadableException e) {
+        return buildResponseEntity(new InvalidJsonRequestError(e.getMessage()));
     }
 
     @ExceptionHandler(ChannelNotSupportedException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final ChannelNotSupportedException e) {
-        return buildResponseEntity(new ChannelNotSupportedErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final ChannelNotSupportedException e) {
+        return buildResponseEntity(new ChannelNotSupportedError(e.getMessage()));
     }
 
     @ExceptionHandler(ActivityNotSupportedException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final ActivityNotSupportedException e) {
-        return buildResponseEntity(new ActivityNotSupportedErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final ActivityNotSupportedException e) {
+        return buildResponseEntity(new ActivityNotSupportedError(e.getMessage()));
     }
 
     @ExceptionHandler(AliasNotSupportedException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final AliasNotSupportedException e) {
-        return buildResponseEntity(new AliasNotSupportedErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final AliasNotSupportedException e) {
+        return buildResponseEntity(new AliasNotSupportedError(e.getMessage()));
     }
 
     @ExceptionHandler(NotNextMethodInSequenceException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final NotNextMethodInSequenceException e) {
-        return buildResponseEntity(new NotNextMethodInSequenceErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final NotNextMethodInSequenceException e) {
+        return buildResponseEntity(new NotNextMethodInSequenceError(e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final MethodArgumentTypeMismatchException e) {
-        return buildResponseEntity(new BadRequestErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final MethodArgumentTypeMismatchException e) {
+        return buildResponseEntity(new BadRequestError(e.getMessage()));
     }
 
     @ExceptionHandler(VerificationContextNotFoundException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final VerificationContextNotFoundException e) {
-        return buildResponseEntity(new VerificationContextNotFoundErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final VerificationContextNotFoundException e) {
+        return buildResponseEntity(new VerificationContextNotFoundError(e.getMessage()));
     }
 
     @ExceptionHandler(LockedOutException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final LockedOutException e) {
-        return buildResponseEntity(new LockedOutErrorItem(e.getLockoutState()));
+    public ResponseEntity<ApiErrorDocument> handleException(final LockedOutException e) {
+        return buildResponseEntity(new LockedOutError(e.getLockoutState()));
     }
 
     @ExceptionHandler(VerificationContextExpiredException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final VerificationContextExpiredException e) {
-        return buildResponseEntity(new VerificationContextExpiredErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final VerificationContextExpiredException e) {
+        return buildResponseEntity(new VerificationContextExpiredError(e.getMessage()));
     }
 
     @ExceptionHandler(MethodAlreadyCompleteException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final MethodAlreadyCompleteException e) {
-        return buildResponseEntity(new MethodAlreadyCompleteErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final MethodAlreadyCompleteException e) {
+        return buildResponseEntity(new MethodAlreadyCompleteError(e.getMessage()));
     }
 
     @ExceptionHandler(IdentityNotFoundException.class)
-    public ResponseEntity<JsonApiErrorDocument> handleException(final IdentityNotFoundException e) {
-        return buildResponseEntity(new IdentityNotFoundErrorItem(e.getMessage()));
+    public ResponseEntity<ApiErrorDocument> handleException(final IdentityNotFoundException e) {
+        return buildResponseEntity(new IdentityNotFoundError(e.getMessage()));
     }
 
-    private ResponseEntity<JsonApiErrorDocument> buildResponseEntity(final JsonApiErrorItem error) {
-        final JsonApiErrorDocument document = new JsonApiSingleErrorDocument(error);
+    private ResponseEntity<ApiErrorDocument> buildResponseEntity(final ApiError error) {
+        final ApiErrorDocument document = new ApiSingleErrorDocument(error);
         return new ResponseEntity<>(document, HttpStatus.valueOf(error.getStatus()));
     }
 

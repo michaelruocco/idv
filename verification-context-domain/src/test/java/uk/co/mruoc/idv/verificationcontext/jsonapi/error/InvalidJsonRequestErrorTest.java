@@ -1,15 +1,15 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AliasNotSupportedErrorItemTest {
+class InvalidJsonRequestErrorTest {
 
     private static final String DETAIL = "my detail";
 
-    private final JsonApiErrorItem error = new AliasNotSupportedErrorItem(DETAIL);
+    private final ApiError error = new InvalidJsonRequestError(DETAIL);
 
     @Test
     void shouldReturnRandomId() {
@@ -18,7 +18,7 @@ class AliasNotSupportedErrorItemTest {
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Alias Not Supported");
+        assertThat(error.getTitle()).isEqualTo("Invalid JSON Request");
     }
 
     @Test

@@ -1,15 +1,15 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ActivityNotSupportedErrorItemTest {
+class VerificationContextNotFoundErrorTest {
 
     private static final String DETAIL = "my detail";
 
-    private final JsonApiErrorItem error = new ActivityNotSupportedErrorItem(DETAIL);
+    private final ApiError error = new VerificationContextNotFoundError(DETAIL);
 
     @Test
     void shouldReturnRandomId() {
@@ -18,7 +18,7 @@ class ActivityNotSupportedErrorItemTest {
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Activity Not Supported");
+        assertThat(error.getTitle()).isEqualTo("Verification Context Not Found");
     }
 
     @Test
@@ -28,7 +28,7 @@ class ActivityNotSupportedErrorItemTest {
 
     @Test
     void shouldReturnStatus() {
-        assertThat(error.getStatus()).isEqualTo(400);
+        assertThat(error.getStatus()).isEqualTo(404);
     }
 
 }

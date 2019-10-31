@@ -10,7 +10,7 @@ import uk.co.mruoc.idv.api.IdvModule;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.jsonapi.JsonApiModule;
+import uk.co.mruoc.jsonapi.ApiModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
@@ -27,12 +27,13 @@ class VerificationContextDocumentSerializerTest {
         final String json = MAPPER.writeValueAsString(document);
 
         final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/json-api/verification-context-document.json");
+        System.out.println(json);
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
     private static ObjectMapper buildMapper() {
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JsonApiModule());
+        mapper.registerModule(new ApiModule());
         mapper.registerModule(new JsonApiVerificationContextModule());
         mapper.registerModule(new IdvModule());
         mapper.registerModule(new IdentityModule());

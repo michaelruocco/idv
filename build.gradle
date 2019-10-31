@@ -12,6 +12,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
     }
 
     jacoco {
@@ -43,9 +44,10 @@ subprojects {
         compile 'org.zalando:jackson-datatype-money:1.1.1'
         compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0'
         compile 'org.apache.commons:commons-collections4:4.4'
-        compile 'com.github.michaelruocco:jackson-json-api:1.0.0'
+        //compile 'com.github.michaelruocco:jackson-json-api:1.0.0'
+        compile 'com.github.michaelruocco:jackson-json-api:1.0.0-SNAPSHOT'
 
-        testCompile 'org.assertj:assertj-core:3.13.2'
+        testCompile 'org.assertj:assertj-core:3.14.0'
         testCompile 'nl.jqno.equalsverifier:equalsverifier:3.1.10'
         testCompile 'com.github.michaelruocco:file-loader:5.0.1'
         testCompile 'net.javacrumbs.json-unit:json-unit-assertj:2.10.0'
@@ -90,6 +92,10 @@ subprojects {
             replaceRegex 'Too much space after while', 'while +\\(', 'while ('
         }
     }
+}
+
+jacoco {
+    toolVersion = '0.8.5'
 }
 
 task jacocoRootReport(type: JacocoReport) {

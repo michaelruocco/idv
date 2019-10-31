@@ -1,15 +1,15 @@
 package uk.co.mruoc.idv.verificationcontext.jsonapi.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NotNextMethodInSequenceErrorItemTest {
+class ChannelNotSupportedErrorTest {
 
     private static final String DETAIL = "my detail";
 
-    private final JsonApiErrorItem error = new NotNextMethodInSequenceErrorItem(DETAIL);
+    private final ApiError error = new ChannelNotSupportedError(DETAIL);
 
     @Test
     void shouldReturnRandomId() {
@@ -18,7 +18,7 @@ class NotNextMethodInSequenceErrorItemTest {
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Not Next Method in Sequence");
+        assertThat(error.getTitle()).isEqualTo("Channel Not Supported");
     }
 
     @Test
@@ -28,7 +28,7 @@ class NotNextMethodInSequenceErrorItemTest {
 
     @Test
     void shouldReturnStatus() {
-        assertThat(error.getStatus()).isEqualTo(422);
+        assertThat(error.getStatus()).isEqualTo(400);
     }
 
 }

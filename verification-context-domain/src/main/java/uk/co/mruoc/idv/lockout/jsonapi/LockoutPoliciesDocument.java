@@ -1,27 +1,30 @@
 package uk.co.mruoc.idv.lockout.jsonapi;
 
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
-import uk.co.mruoc.jsonapi.JsonApiDataItemWithId;
+import uk.co.mruoc.jsonapi.ApiDataWithId;
+import uk.co.mruoc.jsonapi.batch.ApiBatchDocumentWithId;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class LockoutPoliciesDocument extends BatchJsonApiDocumentWithIds<LockoutPolicyParameters> {
-
-    private static final String TYPE = "lockoutPolicies";
+public class LockoutPoliciesDocument extends ApiBatchDocumentWithId<LockoutPolicyParameters> {
 
     public LockoutPoliciesDocument(final Collection<LockoutPolicyParameters> parameters) {
-        super(TYPE, toDataItems(parameters));
+        super(toDataItems(parameters));
     }
 
-    private static Collection<JsonApiDataItemWithId<LockoutPolicyParameters>> toDataItems(final Collection<LockoutPolicyParameters> parameters) {
-        return parameters.stream()
-                .map(LockoutPoliciesDocument::toDataItem)
+    private static Collection<ApiDataWithId<LockoutPolicyParameters>> toDataItems(final Collection<LockoutPolicyParameters> collection) {
+        return collection.stream()
+                .map(Data::new)
                 .collect(Collectors.toList());
     }
 
-    private static JsonApiDataItemWithId<LockoutPolicyParameters> toDataItem(final LockoutPolicyParameters parameters) {
-        return new JsonApiDataItemWithId<>(parameters.getId(), TYPE, parameters);
+    private static class Data extends ApiDataWithId<LockoutPolicyParameters> {
+
+        private Data(final LockoutPolicyParameters attributes) {
+            super(attributes.getId(), "lockoutPolicies", attributes);
+        }
+
     }
 
 }

@@ -1,15 +1,15 @@
 package uk.co.mruoc.idv.identity.jsonapi.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.jsonapi.error.JsonApiErrorItem;
+import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IdentityNotFoundErrorItemTest {
+class IdentityNotFoundErrorTest {
 
     private static final String DETAIL = "my detail";
 
-    private final JsonApiErrorItem error = new IdentityNotFoundErrorItem(DETAIL);
+    private final ApiError error = new IdentityNotFoundError(DETAIL);
 
     @Test
     void shouldReturnRandomId() {
