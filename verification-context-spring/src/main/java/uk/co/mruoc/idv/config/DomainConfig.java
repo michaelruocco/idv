@@ -112,7 +112,7 @@ public class DomainConfig {
     public StateCalculatorFactory stateCalculatorFactory() {
         return new StateCalculatorFactory();
     }
-    
+
     @Bean
     public LockoutPolicyParametersConverter lockoutPolicyParametersConverter(final LockoutRequestPredicateFactory predicateFactory,
                                                                              final RecordAttemptStrategyFactory recordAttemptStrategyFactory,
