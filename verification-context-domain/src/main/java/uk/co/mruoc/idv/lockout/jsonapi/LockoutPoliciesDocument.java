@@ -4,10 +4,15 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.jsonapi.ApiDataWithId;
 import uk.co.mruoc.jsonapi.batch.ApiBatchDocumentWithId;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class LockoutPoliciesDocument extends ApiBatchDocumentWithId<LockoutPolicyParameters> {
+
+    public LockoutPoliciesDocument(final LockoutPolicyParameters... parameters) {
+        this(Arrays.asList(parameters));
+    }
 
     public LockoutPoliciesDocument(final Collection<LockoutPolicyParameters> parameters) {
         super(toDataItems(parameters));

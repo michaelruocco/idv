@@ -6,6 +6,7 @@ import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService.LockoutPolicyNotFoundException;
@@ -21,15 +22,21 @@ import static org.mockito.Mockito.mock;
 
 class DefaultLockoutPolicyServiceTest {
 
-    private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
-
+    private final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
 
-    private final LockoutPolicyService service = new DefaultLockoutPolicyService(dao);
+    private final LockoutPolicyParametersConverter parametersConverter = mock(LockoutPolicyParametersConverter.class);
+    private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
+
+    private final LockoutPolicyService service = DefaultLockoutPolicyService.builder()
+            .parametersConverter(parametersConverter)
+            .dao(dao)
+            .build();
 
     @BeforeEach
     void setUp() {
-        service.addPolicy(policy);
+        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
+        service.addPolicy(parameters);
     }
 
     @Test

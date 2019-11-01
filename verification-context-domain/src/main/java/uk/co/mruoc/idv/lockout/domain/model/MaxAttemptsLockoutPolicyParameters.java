@@ -25,8 +25,7 @@ public class MaxAttemptsLockoutPolicyParameters extends LockoutPolicyParameters 
                 recordAttemptStrategyType,
                 channelIds,
                 activityNames,
-                aliasTypes,
-                new MaxAttemptsLockoutStateCalculator(maxNumberOfAttempts));
+                aliasTypes);
         this.maxNumberOfAttempts = maxNumberOfAttempts;
     }
 

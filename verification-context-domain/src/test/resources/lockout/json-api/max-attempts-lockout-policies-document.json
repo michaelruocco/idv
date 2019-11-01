@@ -1,17 +1,17 @@
 {
   "data": [
     {
-      "id": "20a32973-2018-46e8-a93c-28892e71da64",
+      "id": "39374b21-e603-4408-9155-d122e3c1222a",
       "type": "lockoutPolicies",
       "attributes": {
-        "lockoutType": "max-attempts",
+        "type": "max-attempts",
         "maxNumberOfAttempts": 3,
-        "recordAttemptStrategy": "record-every-attempt",
+        "recordAttemptStrategy": "every-attempt",
         "channelIds": [
-          "RSA"
+          "fake-channel"
         ],
         "activityNames": [
-          "online-purchase"
+          "fake-activity"
         ],
         "aliasTypes": [
           "credit-card-number",

@@ -19,13 +19,17 @@ import uk.co.mruoc.idv.lockout.dao.InMemoryLockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutRequestPredicateFactory;
+import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RsaMaxAttemptsLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.StateCalculatorFactory;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultVerificationAttemptsLoader;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutAttemptRecorder;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutFacade;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateLoader;
@@ -94,16 +98,46 @@ public class DomainConfig {
         return new StubbedSequenceLoader();
     }
 
+    @Bean
+    public LockoutRequestPredicateFactory lockoutRequestPredicateFactory() {
+        return new LockoutRequestPredicateFactory();
+    }
+
+    @Bean
+    public RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
+        return new RecordAttemptStrategyFactory();
+    }
+
+    @Bean
+    public StateCalculatorFactory stateCalculatorFactory() {
+        return new StateCalculatorFactory();
+    }
+    
+    @Bean
+    public LockoutPolicyParametersConverter lockoutPolicyParametersConverter(final LockoutRequestPredicateFactory predicateFactory,
+                                                                             final RecordAttemptStrategyFactory recordAttemptStrategyFactory,
+                                                                             final StateCalculatorFactory stateCalculatorFactory) {
+        return LockoutPolicyParametersConverter.builder()
+                .predicateFactory(predicateFactory)
+                .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
+                .stateCalculatorFactory(stateCalculatorFactory)
+                .build();
+    }
+
     @Bean // TODO create mongo bean and move this bean into in memory dao config
     public LockoutPolicyDao lockoutPolicyDao() {
         return new InMemoryLockoutPolicyDao();
     }
 
     @Bean
-    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao) {
-        final LockoutPolicyService policyService = new DefaultLockoutPolicyService(dao);
+    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyParametersConverter parametersConverter,
+                                                     final LockoutPolicyDao dao) {
+        final LockoutPolicyService policyService = DefaultLockoutPolicyService.builder()
+                .parametersConverter(parametersConverter)
+                .dao(dao)
+                .build();
         final LockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
-        policyService.addPolicy(parameters.toPolicy());
+        policyService.addPolicy(parameters);
         return policyService;
     }
 

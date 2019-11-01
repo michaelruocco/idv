@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -12,7 +13,7 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     private CalculateLockoutStateRequest lastCalculateRequest;
     private VerificationAttempts resetAttemptsToReturn;
     private LockoutState stateToReturn;
-    private LockoutPolicy lastAddedPolicy;
+    private LockoutPolicyParameters lastAddedParameters;
     private Collection<LockoutPolicy> policiesToLoad;
 
     @Override
@@ -33,8 +34,8 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void addPolicy(final LockoutPolicy policy) {
-        this.lastAddedPolicy = policy;
+    public void addPolicy(final LockoutPolicyParameters parameters) {
+        this.lastAddedParameters = parameters;
     }
 
     @Override
@@ -50,8 +51,8 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
         return lastCalculateRequest;
     }
 
-    public LockoutPolicy getLastAddedPolicy() {
-        return lastAddedPolicy;
+    public LockoutPolicyParameters getLastAddedParameters() {
+        return lastAddedParameters;
     }
 
     public void setResetAttemptsToReturn(final VerificationAttempts attempts) {

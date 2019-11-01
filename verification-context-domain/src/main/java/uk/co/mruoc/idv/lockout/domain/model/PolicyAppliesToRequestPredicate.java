@@ -21,7 +21,7 @@ public class PolicyAppliesToRequestPredicate implements Predicate<LockoutRequest
     }
 
     @Override
-    public boolean test(LockoutRequest request) {
+    public boolean test(final LockoutRequest request) {
         return matchesChannel
                 .and(matchesActivityName)
                 .and(matchesAliasType)
