@@ -10,6 +10,11 @@ class RecordNeverTest {
     private final RecordAttemptStrategy strategy = new RecordNever();
 
     @Test
+    void shouldReturnType() {
+        assertThat(strategy.getType()).isEqualTo(RecordNever.TYPE);
+    }
+
+    @Test
     void shouldAlwaysReturnFalse() {
         final RecordAttemptRequest request = RecordAttemptRequest.builder().build();
 

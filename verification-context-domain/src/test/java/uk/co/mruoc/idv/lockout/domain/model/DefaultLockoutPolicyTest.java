@@ -135,4 +135,16 @@ class DefaultLockoutPolicyTest {
         assertThat(state).isEqualTo(expectedState);
     }
 
+    @Test
+    void shouldReturnParameters() {
+        final LockoutPolicyParameters expectedParameters = mock(LockoutPolicyParameters.class);
+        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
+                .parameters(expectedParameters)
+                .build();
+
+        final LockoutPolicyParameters parameters = policy.getParameters();
+
+        assertThat(parameters).isEqualTo(expectedParameters);
+    }
+
 }

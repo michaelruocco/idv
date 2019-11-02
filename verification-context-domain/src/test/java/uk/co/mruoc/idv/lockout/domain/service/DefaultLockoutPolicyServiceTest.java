@@ -1,6 +1,5 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
@@ -13,16 +12,18 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService.LockoutPolicy
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class DefaultLockoutPolicyServiceTest {
 
-    private final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
 
     private final LockoutPolicyParametersConverter parametersConverter = mock(LockoutPolicyParametersConverter.class);
@@ -32,12 +33,6 @@ class DefaultLockoutPolicyServiceTest {
             .parametersConverter(parametersConverter)
             .dao(dao)
             .build();
-
-    @BeforeEach
-    void setUp() {
-        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
-        service.addPolicy(parameters);
-    }
 
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToRecordAttemptRequest() {
@@ -135,6 +130,26 @@ class DefaultLockoutPolicyServiceTest {
         final VerificationAttempts attempts = service.resetAttempts(request);
 
         assertThat(attempts).isEqualTo(expectedAttempts);
+    }
+
+    @Test
+    void shouldSavePolicy() {
+        final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
+        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
+
+        service.addPolicy(parameters);
+
+        verify(dao).save(policy);
+    }
+
+    @Test
+    void shouldReturnAllPolicies() {
+        final Collection<LockoutPolicy> expectedPolicies = Collections.singleton(policy);
+        given(dao.load()).willReturn(expectedPolicies);
+
+        final Collection<LockoutPolicy> policies = service.loadPolicies();
+
+        assertThat(policies).isEqualTo(expectedPolicies);
     }
 
     private static RecordAttemptRequest buildRecordAttemptRequest() {

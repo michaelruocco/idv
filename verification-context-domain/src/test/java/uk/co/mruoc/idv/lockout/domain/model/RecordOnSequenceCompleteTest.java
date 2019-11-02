@@ -18,6 +18,11 @@ class RecordOnSequenceCompleteTest {
     private final RecordAttemptStrategy strategy = new RecordOnSequenceComplete();
 
     @Test
+    void shouldReturnType() {
+        assertThat(strategy.getType()).isEqualTo(RecordOnSequenceComplete.TYPE);
+    }
+
+    @Test
     void shouldReturnFalseIfContextDoesNotContainCompleteSequenceContainingResultMethod() {
         given(context.containsCompleteSequenceContainingMethod(result.getMethodName())).willReturn(false);
         final RecordAttemptRequest request = RecordAttemptRequest.builder()
