@@ -4,6 +4,7 @@ import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 
+
 public interface LockoutPolicy {
 
     boolean appliesTo(final LockoutRequest request);

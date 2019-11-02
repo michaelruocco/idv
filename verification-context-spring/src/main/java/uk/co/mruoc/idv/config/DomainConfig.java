@@ -125,8 +125,8 @@ public class DomainConfig {
     }
 
     @Bean // TODO create mongo bean and move this bean into in memory dao config
-    public LockoutPolicyDao lockoutPolicyDao() {
-        return new InMemoryLockoutPolicyDao();
+    public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyParametersConverter parametersConverter) {
+        return new InMemoryLockoutPolicyDao(parametersConverter);
     }
 
     @Bean

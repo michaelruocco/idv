@@ -1,6 +1,5 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
-import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Collection;
@@ -13,7 +12,6 @@ public class MaxAttemptsLockoutPolicyParameters extends LockoutPolicyParameters 
 
     private final int maxNumberOfAttempts;
 
-    @Builder
     public MaxAttemptsLockoutPolicyParameters(final UUID id,
                                               final String recordAttemptStrategyType,
                                               final Collection<String> channelIds,
