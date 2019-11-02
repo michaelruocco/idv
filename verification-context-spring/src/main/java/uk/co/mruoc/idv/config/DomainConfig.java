@@ -22,7 +22,7 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutRequestPredicateFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RsaMaxAttemptsLockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.model.StateCalculatorFactory;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
@@ -109,18 +109,18 @@ public class DomainConfig {
     }
 
     @Bean
-    public StateCalculatorFactory stateCalculatorFactory() {
-        return new StateCalculatorFactory();
+    public LockoutStateCalculatorFactory stateCalculatorFactory() {
+        return new LockoutStateCalculatorFactory();
     }
 
     @Bean
     public LockoutPolicyParametersConverter lockoutPolicyParametersConverter(final LockoutRequestPredicateFactory predicateFactory,
                                                                              final RecordAttemptStrategyFactory recordAttemptStrategyFactory,
-                                                                             final StateCalculatorFactory stateCalculatorFactory) {
+                                                                             final LockoutStateCalculatorFactory lockoutStateCalculatorFactory) {
         return LockoutPolicyParametersConverter.builder()
                 .predicateFactory(predicateFactory)
                 .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
-                .stateCalculatorFactory(stateCalculatorFactory)
+                .lockoutStateCalculatorFactory(lockoutStateCalculatorFactory)
                 .build();
     }
 

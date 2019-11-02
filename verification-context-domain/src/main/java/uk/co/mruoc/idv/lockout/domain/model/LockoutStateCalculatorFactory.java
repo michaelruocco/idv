@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
-public class StateCalculatorFactory {
+public class LockoutStateCalculatorFactory {
 
     public LockoutStateCalculator build(final LockoutPolicyParameters parameters) {
         final String type = parameters.getLockoutType();

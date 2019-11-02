@@ -8,7 +8,7 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculator;
 import uk.co.mruoc.idv.lockout.domain.model.PolicyAppliesToRequestPredicate;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategy;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
-import uk.co.mruoc.idv.lockout.domain.model.StateCalculatorFactory;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -16,16 +16,16 @@ import static org.mockito.Mockito.mock;
 
 class LockoutPolicyParametersConverterTest {
 
-    private final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
+    private final LockoutPolicyParameters parameters = new FakeLockoutPolicyParameters();
 
     private final LockoutRequestPredicateFactory predicateFactory = mock(LockoutRequestPredicateFactory.class);
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
-    private final StateCalculatorFactory stateCalculatorFactory = mock(StateCalculatorFactory.class);
+    private final LockoutStateCalculatorFactory lockoutStateCalculatorFactory = mock(LockoutStateCalculatorFactory.class);
 
     private final LockoutPolicyParametersConverter converter = LockoutPolicyParametersConverter.builder()
             .predicateFactory(predicateFactory)
             .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
-            .stateCalculatorFactory(stateCalculatorFactory)
+            .lockoutStateCalculatorFactory(lockoutStateCalculatorFactory)
             .build();
 
     @Test
@@ -47,10 +47,8 @@ class LockoutPolicyParametersConverterTest {
 
     @Test
     void shouldPopulateRecordAttemptStrategyOnPolicy() {
-        final String type = "record-attempt-strategy-type";
-        given(parameters.getRecordAttemptStrategyType()).willReturn(type);
         final RecordAttemptStrategy strategy = mock(RecordAttemptStrategy.class);
-        given(recordAttemptStrategyFactory.build(type)).willReturn(strategy);
+        given(recordAttemptStrategyFactory.build(parameters.getRecordAttemptStrategyType())).willReturn(strategy);
 
         final LockoutPolicy policy = converter.toPolicy(parameters);
 
@@ -60,7 +58,7 @@ class LockoutPolicyParametersConverterTest {
     @Test
     void shouldPopulateStateCalculatorOnPolicy() {
         final LockoutStateCalculator stateCalculator = mock(LockoutStateCalculator.class);
-        given(stateCalculatorFactory.build(parameters)).willReturn(stateCalculator);
+        given(lockoutStateCalculatorFactory.build(parameters)).willReturn(stateCalculator);
 
         final LockoutPolicy policy = converter.toPolicy(parameters);
 

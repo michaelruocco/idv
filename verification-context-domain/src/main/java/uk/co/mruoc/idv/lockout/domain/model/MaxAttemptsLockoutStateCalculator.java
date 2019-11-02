@@ -19,4 +19,8 @@ public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator
         return new LockoutStateMaxAttempts(attempts, maxAttempts);
     }
 
+    public int getMaxAttempts() {
+        return maxAttempts;
+    }
+
 }
