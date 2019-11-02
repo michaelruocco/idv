@@ -76,6 +76,21 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
         return parameters;
     }
 
+    @Override
+    public LockoutStateCalculator getStateCalculator() {
+        return stateCalculator;
+    }
+
+    @Override
+    public RecordAttemptStrategy getRecordAttemptStrategy() {
+        return recordAttemptStrategy;
+    }
+
+    @Override
+    public Predicate<LockoutRequest> getAppliesToPolicyPredicate() {
+        return appliesToPolicy;
+    }
+
     private VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts) {
         return attempts.filterBy(appliesToPolicy);
     }

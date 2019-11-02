@@ -4,6 +4,8 @@ import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 
+import java.util.function.Predicate;
+
 
 public interface LockoutPolicy {
 
@@ -18,5 +20,11 @@ public interface LockoutPolicy {
     LockoutState calculateLockoutState(final CalculateLockoutStateRequest request);
 
     LockoutPolicyParameters getParameters();
+
+    LockoutStateCalculator getStateCalculator();
+
+    RecordAttemptStrategy getRecordAttemptStrategy();
+
+    Predicate<LockoutRequest> getAppliesToPolicyPredicate();
 
 }
