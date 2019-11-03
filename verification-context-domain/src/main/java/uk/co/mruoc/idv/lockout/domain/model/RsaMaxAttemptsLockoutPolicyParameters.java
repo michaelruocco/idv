@@ -16,7 +16,11 @@ public class RsaMaxAttemptsLockoutPolicyParameters extends MaxAttemptsLockoutPol
     private static final int MAX_ATTEMPTS = 3;
 
     public RsaMaxAttemptsLockoutPolicyParameters() {
-        super(UUID.randomUUID(),
+        this(UUID.randomUUID());
+    }
+
+    public RsaMaxAttemptsLockoutPolicyParameters(final UUID id) {
+        super(id,
                 RecordEveryAttempt.TYPE,
                 Collections.singleton(Rsa.ID),
                 Collections.singleton(OnlinePurchase.NAME),
