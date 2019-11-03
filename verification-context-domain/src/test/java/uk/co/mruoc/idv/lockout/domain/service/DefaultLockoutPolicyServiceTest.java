@@ -144,12 +144,14 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldReturnAllPolicies() {
-        final Collection<LockoutPolicy> expectedPolicies = Collections.singleton(policy);
-        given(dao.load()).willReturn(expectedPolicies);
+        final Collection<LockoutPolicy> policies = Collections.singleton(policy);
+        given(dao.load()).willReturn(policies);
+        final LockoutPolicyParameters expectedParameters = LockoutPolicyParametersMother.fake();
+        given(policy.getParameters()).willReturn(expectedParameters);
 
-        final Collection<LockoutPolicy> policies = service.loadPolicies();
+        final Collection<LockoutPolicyParameters> policyParameters = service.loadPolicies();
 
-        assertThat(policies).isEqualTo(expectedPolicies);
+        assertThat(policyParameters).containsExactly(expectedParameters);
     }
 
     private static RecordAttemptRequest buildRecordAttemptRequest() {

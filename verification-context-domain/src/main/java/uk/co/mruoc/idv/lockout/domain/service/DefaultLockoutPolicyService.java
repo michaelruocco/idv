@@ -8,6 +8,7 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Builder
 public class DefaultLockoutPolicyService implements LockoutPolicyService {
@@ -40,8 +41,10 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public Collection<LockoutPolicy> loadPolicies() {
-        return dao.load();
+    public Collection<LockoutPolicyParameters> loadPolicies() {
+        return dao.load().stream()
+                .map(LockoutPolicy::getParameters)
+                .collect(Collectors.toList());
     }
 
     private LockoutPolicy load(final LockoutRequest request) {
