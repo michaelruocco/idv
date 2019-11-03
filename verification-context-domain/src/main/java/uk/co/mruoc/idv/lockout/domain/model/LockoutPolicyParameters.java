@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Getter
+@Builder
 public class LockoutPolicyParameters {
 
     private final UUID id;

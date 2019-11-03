@@ -8,8 +8,8 @@ import org.zalando.jackson.datatype.money.MoneyModule;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.api.IdvModule;
 import uk.co.mruoc.idv.identity.api.IdentityModule;
-import uk.co.mruoc.idv.lockout.domain.model.FakeMaxAttemptsLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 import uk.co.mruoc.jsonapi.ApiModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
@@ -21,7 +21,7 @@ class LockoutPoliciesDocumentSerializerTest {
 
     @Test
     void shouldSerializePolicies() throws JsonProcessingException {
-        final LockoutPolicyParameters parameters = new FakeMaxAttemptsLockoutPolicyParameters();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fakeMaxAttempts();
         final LockoutPoliciesDocument document = new LockoutPoliciesDocument(parameters);
 
         final String json = MAPPER.writeValueAsString(document);

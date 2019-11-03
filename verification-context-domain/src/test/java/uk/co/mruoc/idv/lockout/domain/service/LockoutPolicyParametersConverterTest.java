@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 
 class LockoutPolicyParametersConverterTest {
 
-    private final LockoutPolicyParameters parameters = new FakeLockoutPolicyParameters();
+    private final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fake();
 
     private final LockoutRequestPredicateFactory predicateFactory = mock(LockoutRequestPredicateFactory.class);
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);

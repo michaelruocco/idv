@@ -2,8 +2,8 @@
   "data": {
     "type": "lockoutStates",
     "attributes": {
-      "channelId": "RSA",
-      "activityName": "online-purchase",
+      "channelId": "fake-channel",
+      "activityName": "fake-activity",
       "alias": {
         "type": "credit-card-number",
         "value": "4929001111111111"
