@@ -6,6 +6,8 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class LockoutStateCalculatorFactoryTest {
 
@@ -13,9 +15,8 @@ class LockoutStateCalculatorFactoryTest {
 
     @Test
     void shouldThrowLockoutTypeNotSupportedExceptionForInvalidLockoutType() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fakeBuilder()
-                .lockoutType("invalid")
-                .build();
+        final AbstractLockoutPolicyParameters parameters = mock(AbstractLockoutPolicyParameters.class);
+        given(parameters.getLockoutType()).willReturn("invalid");
 
         final Throwable error = catchThrowable(() -> factory.build(parameters));
 
@@ -26,7 +27,7 @@ class LockoutStateCalculatorFactoryTest {
 
     @Test
     void shouldReturnMaxAttemptsLockoutStateCalculatorForMaxAttemptsParameters() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fakeMaxAttempts();
+        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutStateCalculator stateCalculator = factory.build(parameters);
 
@@ -35,7 +36,7 @@ class LockoutStateCalculatorFactoryTest {
 
     @Test
     void shouldPopulateMaxAttemptsOnStateCalculator() {
-        final MaxAttemptsLockoutPolicyParameters parameters = LockoutPolicyParametersMother.fakeMaxAttempts();
+        final MaxAttemptsLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) factory.build(parameters);
 

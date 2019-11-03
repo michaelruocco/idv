@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 
 public class LockoutRequestPredicateFactory {
 
-    public Predicate<LockoutRequest> build(final LockoutPolicyParameters parameters) {
+    public Predicate<LockoutRequest> build(final AbstractLockoutPolicyParameters parameters) {
         return new PolicyAppliesToRequestPredicateBuilder()
                 .channelIds(parameters.getChannelIds())
                 .activityNames(parameters.getActivityNames())

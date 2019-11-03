@@ -10,7 +10,6 @@
     "fake-activity"
   ],
   "aliasTypes": [
-    "credit-card-number",
-    "debit-card-number"
+    "fake-alias-type"
   ]
 }

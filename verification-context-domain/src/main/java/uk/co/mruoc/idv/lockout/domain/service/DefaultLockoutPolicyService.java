@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.lockout.domain.service;
 import lombok.Builder;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -35,13 +35,13 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void addPolicy(final LockoutPolicyParameters parameters) {
+    public void addPolicy(final AbstractLockoutPolicyParameters parameters) {
         final LockoutPolicy policy = parametersConverter.toPolicy(parameters);
         dao.save(policy);
     }
 
     @Override
-    public Collection<LockoutPolicyParameters> loadPolicies() {
+    public Collection<AbstractLockoutPolicyParameters> loadPolicies() {
         return dao.load().stream()
                 .map(LockoutPolicy::getParameters)
                 .collect(Collectors.toList());

@@ -15,10 +15,9 @@ import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.lockout.dao.InMemoryLockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutRequestPredicateFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RsaMaxAttemptsLockoutPolicyParameters;
@@ -124,11 +123,6 @@ public class DomainConfig {
                 .build();
     }
 
-    @Bean // TODO create mongo bean and move this bean into in memory dao config
-    public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyParametersConverter parametersConverter) {
-        return new InMemoryLockoutPolicyDao(parametersConverter);
-    }
-
     @Bean
     public LockoutPolicyService lockoutPolicyService(final LockoutPolicyParametersConverter parametersConverter,
                                                      final LockoutPolicyDao dao) {
@@ -136,7 +130,7 @@ public class DomainConfig {
                 .parametersConverter(parametersConverter)
                 .dao(dao)
                 .build();
-        final LockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
+        final AbstractLockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
         policyService.addPolicy(parameters);
         return policyService;
     }

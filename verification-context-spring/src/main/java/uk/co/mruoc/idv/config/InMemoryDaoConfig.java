@@ -9,8 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.dao.InMemoryIdentityDao;
+import uk.co.mruoc.idv.lockout.dao.InMemoryLockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
 import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 
@@ -36,6 +39,11 @@ public class InMemoryDaoConfig {
     @Bean
     public IdentityDao identityDao() {
         return new InMemoryIdentityDao();
+    }
+
+    @Bean
+    public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyParametersConverter parametersConverter) {
+        return new InMemoryLockoutPolicyDao(parametersConverter);
     }
 
 }

@@ -16,7 +16,9 @@ class LockoutRequestPredicateFactoryTest {
 
     @Test
     void shouldBuildPredicateThatReturnsTrueIfChannelIdActivityNamesAndAliasTypesMatch() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fake();
+        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttemptsBuilder()
+                .aliasTypes(Collections.singleton("credit-card-number"))
+                .build();
 
         final Predicate<LockoutRequest> predicate = factory.build(parameters);
 
@@ -26,7 +28,7 @@ class LockoutRequestPredicateFactoryTest {
 
     @Test
     void shouldBuildPredicateThatReturnsFalseIfChannelIdsDoNotMatch() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fakeBuilder()
+        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttemptsBuilder()
                 .channelIds(Collections.singleton("not-matching"))
                 .build();
 
@@ -38,7 +40,7 @@ class LockoutRequestPredicateFactoryTest {
 
     @Test
     void shouldBuildPredicateThatReturnsFalseIfActivityNamesDoNotMatch() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fakeBuilder()
+        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttemptsBuilder()
                 .activityNames(Collections.singleton("not-matching"))
                 .build();
 
@@ -50,7 +52,7 @@ class LockoutRequestPredicateFactoryTest {
 
     @Test
     void shouldBuildPredicateThatReturnsFalseIfAliasTypesDoNotMatch() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.fakeBuilder()
+        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttemptsBuilder()
                 .aliasTypes(Collections.singleton("not-matching"))
                 .build();
 

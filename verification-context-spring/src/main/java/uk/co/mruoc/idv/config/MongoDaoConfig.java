@@ -28,7 +28,9 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
+import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverter;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
 import uk.co.mruoc.idv.mongo.dao.activity.MonetaryAmountConverter;
@@ -38,8 +40,12 @@ import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasesConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
-import uk.co.mruoc.idv.mongo.identity.dao.MongoIndexResolver;
+import uk.co.mruoc.idv.mongo.MongoIndexResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
+import uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyParametersConverterDelegator;
+import uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyRepository;
+import uk.co.mruoc.idv.mongo.lockout.dao.MaxAttemptsLockoutPolicyParametersConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.MongoLockoutPolicyDao;
 import uk.co.mruoc.idv.mongo.lockout.dao.MongoVerificationAttemptsDao;
 import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptConverter;
 import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptsConverter;
@@ -305,6 +311,16 @@ public class MongoDaoConfig {
         return new VerificationAttemptsConverter(attemptConverter);
     }
 
+    @Bean //TODO rename converter bean name to reference mongo document type rather than domain type to avoid name clashes with domain converters
+    public uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyParametersConverter mongoLockoutPolicyParametersConverter() {
+        return new MaxAttemptsLockoutPolicyParametersConverter();
+    }
+
+    @Bean //TODO rename converter bean name to reference mongo document type rather than domain type to avoid name clashes with domain converters
+    public LockoutPolicyParametersConverterDelegator lockoutPolicyParametersConverterDelegator(final Collection<uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyParametersConverter> converters) {
+        return new LockoutPolicyParametersConverterDelegator(converters);
+    }
+
     @Bean
     public IdentityDao identityDao(final IdentityRepository repository,
                                    final IdentityConverter identityConverter) {
@@ -329,6 +345,17 @@ public class MongoDaoConfig {
         return MongoVerificationAttemptsDao.builder()
                 .repository(repository)
                 .converter(attemptsConverter)
+                .build();
+    }
+
+    @Bean
+    public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyRepository repository,
+                                             final LockoutPolicyParametersConverterDelegator documentConverter,
+                                             final LockoutPolicyParametersConverter parametersConverter) {
+        return MongoLockoutPolicyDao.builder()
+                .repository(repository)
+                .documentConverter(documentConverter)
+                .parametersConverter(parametersConverter)
                 .build();
     }
 
