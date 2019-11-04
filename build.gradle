@@ -44,8 +44,7 @@ subprojects {
         compile 'org.zalando:jackson-datatype-money:1.1.1'
         compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0'
         compile 'org.apache.commons:commons-collections4:4.4'
-        //compile 'com.github.michaelruocco:jackson-json-api:1.0.0'
-        compile 'com.github.michaelruocco:jackson-json-api:1.0.0-SNAPSHOT'
+        compile 'com.github.michaelruocco:jackson-json-api:2.0.2'
 
         testCompile 'org.assertj:assertj-core:3.14.0'
         testCompile 'nl.jqno.equalsverifier:equalsverifier:3.1.10'
@@ -53,8 +52,8 @@ subprojects {
         testCompile 'net.javacrumbs.json-unit:json-unit-assertj:2.10.0'
 
         testCompile('org.mockito:mockito-core:3.1.0') {
-            //mockito 3 is failing with version of byte buddy it brings automatically?!
-            //this line excludes it and then latest version is included below
+            // mockito 3 is failing with version of byte buddy it brings automatically?!
+            // this line excludes it and then latest version is included below
             exclude group: 'net.bytebuddy'
         }
         testCompile 'net.bytebuddy:byte-buddy:1.10.2'

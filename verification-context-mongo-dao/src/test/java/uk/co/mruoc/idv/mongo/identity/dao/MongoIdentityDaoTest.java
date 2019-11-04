@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 class MongoIdentityDaoTest {
 
     private final IdentityRepository repository = mock(IdentityRepository.class);
-    private final IdentityConverter converter = mock(IdentityConverter.class);
+    private final IdentityDocumentConverter converter = mock(IdentityDocumentConverter.class);
 
     private final MongoIdentityDao dao = MongoIdentityDao.builder()
             .repository(repository)

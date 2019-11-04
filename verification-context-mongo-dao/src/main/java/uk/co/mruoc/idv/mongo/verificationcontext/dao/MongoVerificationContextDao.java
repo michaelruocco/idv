@@ -11,7 +11,7 @@ import java.util.UUID;
 public class MongoVerificationContextDao implements VerificationContextDao {
 
     private final VerificationContextRepository repository;
-    private final VerificationContextConverter converter;
+    private final VerificationContextDocumentConverter converter;
 
     @Override
     public void save(final VerificationContext context) {

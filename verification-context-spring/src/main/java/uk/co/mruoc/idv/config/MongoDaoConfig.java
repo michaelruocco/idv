@@ -31,46 +31,47 @@ import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
-import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverter;
+import uk.co.mruoc.idv.mongo.dao.activity.ActivityDocumentConverter;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
-import uk.co.mruoc.idv.mongo.dao.activity.MonetaryAmountConverter;
-import uk.co.mruoc.idv.mongo.dao.activity.OnlinePurchaseConverter;
-import uk.co.mruoc.idv.mongo.dao.channel.ChannelConverter;
-import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
-import uk.co.mruoc.idv.mongo.identity.dao.AliasesConverter;
-import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
+import uk.co.mruoc.idv.mongo.dao.activity.MonetaryAmountDocumentConverter;
+import uk.co.mruoc.idv.mongo.dao.activity.OnlinePurchaseDocumentConverter;
+import uk.co.mruoc.idv.mongo.dao.channel.ChannelDocumentConverter;
+import uk.co.mruoc.idv.mongo.identity.dao.AliasDocumentConverter;
+import uk.co.mruoc.idv.mongo.identity.dao.AliasesDocumentConverter;
+import uk.co.mruoc.idv.mongo.identity.dao.IdentityDocumentConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
 import uk.co.mruoc.idv.mongo.MongoIndexResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
-import uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyParametersConverterDelegator;
-import uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyRepository;
-import uk.co.mruoc.idv.mongo.lockout.dao.MaxAttemptsLockoutPolicyParametersConverter;
-import uk.co.mruoc.idv.mongo.lockout.dao.MongoLockoutPolicyDao;
-import uk.co.mruoc.idv.mongo.lockout.dao.MongoVerificationAttemptsDao;
-import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptConverter;
-import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptsConverter;
-import uk.co.mruoc.idv.mongo.lockout.dao.VerificationAttemptsRepository;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyDocumentConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyDocumentConverterDelegator;
+import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyRepository;
+import uk.co.mruoc.idv.mongo.lockout.dao.policy.MaxAttemptsLockoutPolicyDocumentConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.policy.MongoLockoutPolicyDao;
+import uk.co.mruoc.idv.mongo.lockout.dao.attempt.MongoVerificationAttemptsDao;
+import uk.co.mruoc.idv.mongo.lockout.dao.attempt.VerificationAttemptDocumentConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.attempt.VerificationAttemptsDocumentConverter;
+import uk.co.mruoc.idv.mongo.lockout.dao.attempt.VerificationAttemptsRepository;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocumentConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequencesConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardCredentialsConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumberConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumbersConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumberConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumbersConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobilePinsentryConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.OneTimePasscodeSmsConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PasscodeSettingsConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PhysicalPinsentryConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PushNotificationConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardCredentialsDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumberDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumbersDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumberDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumbersDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobilePinsentryDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.OneTimePasscodeSmsDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PasscodeSettingsDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PhysicalPinsentryDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PushNotificationDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextDocumentConverter;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextRepository;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodConverterDelegator;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodsConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequenceConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocumentConverterDelegator;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodsDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequenceDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsDocumentConverter;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 
 import java.net.InetSocketAddress;
@@ -141,94 +142,94 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public ChannelConverter channelConverter() {
-        return new ChannelConverter();
+    public ChannelDocumentConverter channelConverter() {
+        return new ChannelDocumentConverter();
     }
 
     @Bean
-    public MonetaryAmountConverter amountConverter() {
-        return new MonetaryAmountConverter();
+    public MonetaryAmountDocumentConverter amountConverter() {
+        return new MonetaryAmountDocumentConverter();
     }
 
     @Bean
-    public OnlinePurchaseConverter onlinePurchaseConverter(final MonetaryAmountConverter amountConverter) {
-        return new OnlinePurchaseConverter(amountConverter);
+    public OnlinePurchaseDocumentConverter onlinePurchaseConverter(final MonetaryAmountDocumentConverter amountConverter) {
+        return new OnlinePurchaseDocumentConverter(amountConverter);
     }
 
     @Bean
-    public ActivityConverterDelegator activityConverterDelegator(final Collection<ActivityConverter> activityConverters) {
+    public ActivityConverterDelegator activityConverterDelegator(final Collection<ActivityDocumentConverter> activityConverters) {
         return new ActivityConverterDelegator(activityConverters);
     }
 
     @Bean
-    public AliasConverter aliasConverter(final AliasFactory aliasFactory) {
-        return new AliasConverter(aliasFactory);
+    public AliasDocumentConverter aliasConverter(final AliasFactory aliasFactory) {
+        return new AliasDocumentConverter(aliasFactory);
     }
 
     @Bean
-    public AliasesConverter aliasesConverter(final AliasConverter aliasConverter) {
-        return new AliasesConverter(aliasConverter);
+    public AliasesDocumentConverter aliasesConverter(final AliasDocumentConverter aliasConverter) {
+        return new AliasesDocumentConverter(aliasConverter);
     }
 
     @Bean
-    public IdentityConverter identityConverter(final AliasesConverter aliasesConverter) {
-        return new IdentityConverter(aliasesConverter);
+    public IdentityDocumentConverter identityConverter(final AliasesDocumentConverter aliasesConverter) {
+        return new IdentityDocumentConverter(aliasesConverter);
     }
 
     @Bean
-    public VerificationResultConverter resultConverter() {
-        return new VerificationResultConverter();
+    public VerificationResultDocumentConverter resultConverter() {
+        return new VerificationResultDocumentConverter();
     }
 
     @Bean
-    public VerificationResultsConverter resultsConverter(final VerificationResultConverter resultConverter) {
-        return new VerificationResultsConverter(resultConverter);
+    public VerificationResultsDocumentConverter resultsConverter(final VerificationResultDocumentConverter resultConverter) {
+        return new VerificationResultsDocumentConverter(resultConverter);
     }
 
     @Bean
-    public EligibilityConverter eligibilityConverter() {
-        return new EligibilityConverter();
+    public EligibilityDocumentConverter eligibilityConverter() {
+        return new EligibilityDocumentConverter();
     }
 
     @Bean
-    public CardNumberConverter cardNumberConverter() {
-        return new CardNumberConverter();
+    public CardNumberDocumentConverter cardNumberConverter() {
+        return new CardNumberDocumentConverter();
     }
 
     @Bean
-    public CardNumbersConverter cardNumbersConverter(final CardNumberConverter cardNumberConverter) {
-        return new CardNumbersConverter(cardNumberConverter);
+    public CardNumbersDocumentConverter cardNumbersConverter(final CardNumberDocumentConverter cardNumberConverter) {
+        return new CardNumbersDocumentConverter(cardNumberConverter);
     }
 
     @Bean
-    public MobileNumberConverter mobileNumberConverter() {
-        return new MobileNumberConverter();
+    public MobileNumberDocumentConverter mobileNumberConverter() {
+        return new MobileNumberDocumentConverter();
     }
 
     @Bean
-    public MobileNumbersConverter mobileNumbersConverter(final MobileNumberConverter mobileNumberConverter) {
-        return new MobileNumbersConverter(mobileNumberConverter);
+    public MobileNumbersDocumentConverter mobileNumbersConverter(final MobileNumberDocumentConverter mobileNumberConverter) {
+        return new MobileNumbersDocumentConverter(mobileNumberConverter);
     }
 
     @Bean
-    public PasscodeSettingsConverter passcodeSettingsConverter() {
-        return new PasscodeSettingsConverter();
+    public PasscodeSettingsDocumentConverter passcodeSettingsConverter() {
+        return new PasscodeSettingsDocumentConverter();
     }
 
     @Bean
-    public VerificationMethodConverter pushNotificationConverter(final VerificationResultsConverter resultsConverter,
-                                                                 final EligibilityConverter eligibilityConverter) {
-        return PushNotificationConverter.builder()
+    public VerificationMethodDocumentConverter pushNotificationConverter(final VerificationResultsDocumentConverter resultsConverter,
+                                                                         final EligibilityDocumentConverter eligibilityConverter) {
+        return PushNotificationDocumentConverter.builder()
                 .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .build();
     }
 
     @Bean
-    public VerificationMethodConverter physicalPinsentryConverter(final VerificationResultsConverter resultsConverter,
-                                                                  final EligibilityConverter eligibilityConverter,
-                                                                  final CardNumbersConverter cardNumbersConverter) {
-        return PhysicalPinsentryConverter.builder()
+    public VerificationMethodDocumentConverter physicalPinsentryConverter(final VerificationResultsDocumentConverter resultsConverter,
+                                                                          final EligibilityDocumentConverter eligibilityConverter,
+                                                                          final CardNumbersDocumentConverter cardNumbersConverter) {
+        return PhysicalPinsentryDocumentConverter.builder()
                 .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .cardNumbersConverter(cardNumbersConverter)
@@ -236,20 +237,20 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationMethodConverter mobilePinsentryConverter(final VerificationResultsConverter resultsConverter,
-                                                                final EligibilityConverter eligibilityConverter) {
-        return MobilePinsentryConverter.builder()
+    public VerificationMethodDocumentConverter mobilePinsentryConverter(final VerificationResultsDocumentConverter resultsConverter,
+                                                                        final EligibilityDocumentConverter eligibilityConverter) {
+        return MobilePinsentryDocumentConverter.builder()
                 .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .build();
     }
 
     @Bean
-    public VerificationMethodConverter oneTimePasscodeSmsConverter(final VerificationResultsConverter resultsConverter,
-                                                                   final EligibilityConverter eligibilityConverter,
-                                                                   final MobileNumbersConverter mobileNumbersConverter,
-                                                                   final PasscodeSettingsConverter passcodeSettingsConverter) {
-        return OneTimePasscodeSmsConverter.builder()
+    public VerificationMethodDocumentConverter oneTimePasscodeSmsConverter(final VerificationResultsDocumentConverter resultsConverter,
+                                                                           final EligibilityDocumentConverter eligibilityConverter,
+                                                                           final MobileNumbersDocumentConverter mobileNumbersConverter,
+                                                                           final PasscodeSettingsDocumentConverter passcodeSettingsConverter) {
+        return OneTimePasscodeSmsDocumentConverter.builder()
                 .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .mobileNumbersConverter(mobileNumbersConverter)
@@ -258,41 +259,41 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationMethodConverter cardCredentialsConverter(final VerificationResultsConverter resultsConverter,
-                                                                final EligibilityConverter eligibilityConverter) {
-        return CardCredentialsConverter.builder()
+    public VerificationMethodDocumentConverter cardCredentialsConverter(final VerificationResultsDocumentConverter resultsConverter,
+                                                                        final EligibilityDocumentConverter eligibilityConverter) {
+        return CardCredentialsDocumentConverter.builder()
                 .resultsConverter(resultsConverter)
                 .eligibilityConverter(eligibilityConverter)
                 .build();
     }
 
     @Bean
-    public VerificationMethodConverterDelegator methodConverterDelegator(final Collection<VerificationMethodConverter> methodConverters) {
-        return new VerificationMethodConverterDelegator(methodConverters);
+    public VerificationMethodDocumentConverterDelegator methodConverterDelegator(final Collection<VerificationMethodDocumentConverter> methodConverters) {
+        return new VerificationMethodDocumentConverterDelegator(methodConverters);
     }
 
     @Bean
-    public VerificationMethodsConverter methodsConverter(final VerificationMethodConverterDelegator methodConverter) {
-        return new VerificationMethodsConverter(methodConverter);
+    public VerificationMethodsDocumentConverter methodsConverter(final VerificationMethodDocumentConverterDelegator methodConverter) {
+        return new VerificationMethodsDocumentConverter(methodConverter);
     }
 
     @Bean
-    public VerificationSequenceConverter sequenceConverter(final VerificationMethodsConverter methodsConverter) {
-        return new VerificationSequenceConverter(methodsConverter);
+    public VerificationSequenceDocumentConverter sequenceConverter(final VerificationMethodsDocumentConverter methodsConverter) {
+        return new VerificationSequenceDocumentConverter(methodsConverter);
     }
 
     @Bean
-    public VerificationSequencesConverter sequencesConverter(final VerificationSequenceConverter sequenceConverter) {
+    public VerificationSequencesConverter sequencesConverter(final VerificationSequenceDocumentConverter sequenceConverter) {
         return new VerificationSequencesConverter(sequenceConverter);
     }
 
     @Bean
-    public VerificationContextConverter verificationContextConverter(final ChannelConverter channelConverter,
-                                                                     final AliasConverter aliasConverter,
-                                                                     final IdentityConverter identityConverter,
-                                                                     final ActivityConverterDelegator activityConverter,
-                                                                     final VerificationSequencesConverter sequencesConverter) {
-        return VerificationContextConverter.builder()
+    public VerificationContextDocumentConverter verificationContextConverter(final ChannelDocumentConverter channelConverter,
+                                                                             final AliasDocumentConverter aliasConverter,
+                                                                             final IdentityDocumentConverter identityConverter,
+                                                                             final ActivityConverterDelegator activityConverter,
+                                                                             final VerificationSequencesConverter sequencesConverter) {
+        return VerificationContextDocumentConverter.builder()
                 .channelConverter(channelConverter)
                 .aliasConverter(aliasConverter)
                 .identityConverter(identityConverter)
@@ -302,28 +303,28 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationAttemptConverter verificationAttemptConverter(final AliasConverter aliasConverter) {
-        return new VerificationAttemptConverter(aliasConverter);
+    public VerificationAttemptDocumentConverter verificationAttemptConverter(final AliasDocumentConverter aliasConverter) {
+        return new VerificationAttemptDocumentConverter(aliasConverter);
     }
 
     @Bean
-    public VerificationAttemptsConverter verificationAttemptsConverter(final VerificationAttemptConverter attemptConverter) {
-        return new VerificationAttemptsConverter(attemptConverter);
+    public VerificationAttemptsDocumentConverter verificationAttemptsConverter(final VerificationAttemptDocumentConverter attemptConverter) {
+        return new VerificationAttemptsDocumentConverter(attemptConverter);
     }
 
     @Bean //TODO rename converter bean name to reference mongo document type rather than domain type to avoid name clashes with domain converters
-    public uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyParametersConverter mongoLockoutPolicyParametersConverter() {
-        return new MaxAttemptsLockoutPolicyParametersConverter();
+    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersConverter() {
+        return new MaxAttemptsLockoutPolicyDocumentConverter();
     }
 
     @Bean //TODO rename converter bean name to reference mongo document type rather than domain type to avoid name clashes with domain converters
-    public LockoutPolicyParametersConverterDelegator lockoutPolicyParametersConverterDelegator(final Collection<uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyParametersConverter> converters) {
-        return new LockoutPolicyParametersConverterDelegator(converters);
+    public LockoutPolicyDocumentConverterDelegator lockoutPolicyParametersConverterDelegator(final Collection<LockoutPolicyDocumentConverter> converters) {
+        return new LockoutPolicyDocumentConverterDelegator(converters);
     }
 
     @Bean
     public IdentityDao identityDao(final IdentityRepository repository,
-                                   final IdentityConverter identityConverter) {
+                                   final IdentityDocumentConverter identityConverter) {
         return MongoIdentityDao.builder()
                 .repository(repository)
                 .converter(identityConverter)
@@ -332,7 +333,7 @@ public class MongoDaoConfig {
 
     @Bean
     public VerificationContextDao verificationContextDao(final VerificationContextRepository repository,
-                                                         final VerificationContextConverter contextConverter) {
+                                                         final VerificationContextDocumentConverter contextConverter) {
         return MongoVerificationContextDao.builder()
                 .repository(repository)
                 .converter(contextConverter)
@@ -341,7 +342,7 @@ public class MongoDaoConfig {
 
     @Bean
     public VerificationAttemptsDao verificationAttemptsDao(final VerificationAttemptsRepository repository,
-                                                           final VerificationAttemptsConverter attemptsConverter) {
+                                                           final VerificationAttemptsDocumentConverter attemptsConverter) {
         return MongoVerificationAttemptsDao.builder()
                 .repository(repository)
                 .converter(attemptsConverter)
@@ -350,7 +351,7 @@ public class MongoDaoConfig {
 
     @Bean
     public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyRepository repository,
-                                             final LockoutPolicyParametersConverterDelegator documentConverter,
+                                             final LockoutPolicyDocumentConverterDelegator documentConverter,
                                              final LockoutPolicyParametersConverter parametersConverter) {
         return MongoLockoutPolicyDao.builder()
                 .repository(repository)

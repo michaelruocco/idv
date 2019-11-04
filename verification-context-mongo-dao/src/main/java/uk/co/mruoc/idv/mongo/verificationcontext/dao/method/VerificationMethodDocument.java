@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import lombok.Data;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocument;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocument;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocument;
 
 import java.util.Collection;

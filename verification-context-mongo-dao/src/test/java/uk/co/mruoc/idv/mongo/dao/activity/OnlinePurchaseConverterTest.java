@@ -18,9 +18,9 @@ import static org.mockito.Mockito.mock;
 
 class OnlinePurchaseConverterTest {
 
-    private final MonetaryAmountConverter amountConverter = mock(MonetaryAmountConverter.class);
+    private final MonetaryAmountDocumentConverter amountConverter = mock(MonetaryAmountDocumentConverter.class);
 
-    private final OnlinePurchaseConverter converter = new OnlinePurchaseConverter(amountConverter);
+    private final OnlinePurchaseDocumentConverter converter = new OnlinePurchaseDocumentConverter(amountConverter);
 
     @Test
     void shouldOnlySupportOnlinePurchaseActivityName() {

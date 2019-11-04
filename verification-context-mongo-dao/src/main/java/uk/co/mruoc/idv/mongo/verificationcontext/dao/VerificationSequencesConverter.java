@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VerificationSequencesConverter {
 
-    private final VerificationSequenceConverter sequenceConverter;
+    private final VerificationSequenceDocumentConverter sequenceConverter;
 
     public VerificationSequences toSequences(final Collection<VerificationSequenceDocument> documents) {
         final Collection<VerificationSequence> sequences = documents.stream()

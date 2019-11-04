@@ -16,8 +16,8 @@ public class InMemoryIdentityDao implements IdentityDao {
 
     @Override
     public void save(final Identity identity) {
-        //TODO need to ensure all entries are removed correctly when an identity is
-        //deleted in future, or if an identity is saved with an alias removed
+        // TODO need to ensure all entries are removed correctly when an identity is
+        // deleted in future, or if an identity is saved with an alias removed
         final Collection<String> keys = toKeys(identity);
         keys.forEach(key -> identities.put(key, identity));
     }

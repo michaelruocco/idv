@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocumentMother;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocumentMother;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocument;
 
 import java.time.Duration;

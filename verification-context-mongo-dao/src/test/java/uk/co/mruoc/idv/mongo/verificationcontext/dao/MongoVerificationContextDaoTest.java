@@ -17,7 +17,7 @@ class MongoVerificationContextDaoTest {
     private final VerificationContextDocument document = mock(VerificationContextDocument.class);
 
     private final VerificationContextRepository repository = mock(VerificationContextRepository.class);
-    private final VerificationContextConverter converter = mock(VerificationContextConverter.class);
+    private final VerificationContextDocumentConverter converter = mock(VerificationContextDocumentConverter.class);
 
     private final MongoVerificationContextDao dao = MongoVerificationContextDao.builder()
             .repository(repository)

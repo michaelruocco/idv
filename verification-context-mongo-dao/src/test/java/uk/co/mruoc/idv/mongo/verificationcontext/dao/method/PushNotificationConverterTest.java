@@ -1,12 +1,12 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocument;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocumentMother;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocument;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocumentMother;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocument;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocumentMother;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsDocumentConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationIneligible;
@@ -23,10 +23,10 @@ import static org.mockito.Mockito.mock;
 
 class PushNotificationConverterTest {
 
-    private final VerificationResultsConverter resultsConverter = mock(VerificationResultsConverter.class);
-    private final EligibilityConverter eligibilityConverter = mock(EligibilityConverter.class);
+    private final VerificationResultsDocumentConverter resultsConverter = mock(VerificationResultsDocumentConverter.class);
+    private final EligibilityDocumentConverter eligibilityConverter = mock(EligibilityDocumentConverter.class);
 
-    private final PushNotificationConverter converter = PushNotificationConverter.builder()
+    private final PushNotificationDocumentConverter converter = PushNotificationDocumentConverter.builder()
             .resultsConverter(resultsConverter)
             .eligibilityConverter(eligibilityConverter)
             .build();

@@ -12,7 +12,7 @@ import java.util.Optional;
 public class MongoIdentityDao implements IdentityDao {
 
     private final IdentityRepository repository;
-    private final IdentityConverter converter;
+    private final IdentityDocumentConverter converter;
 
     @Override
     public void save(final Identity identity) {

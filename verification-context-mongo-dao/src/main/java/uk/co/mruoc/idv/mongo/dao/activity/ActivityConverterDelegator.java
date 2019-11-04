@@ -9,19 +9,19 @@ import java.util.Optional;
 
 public class ActivityConverterDelegator {
 
-    private final Collection<ActivityConverter> converters;
+    private final Collection<ActivityDocumentConverter> converters;
 
-    public ActivityConverterDelegator(final ActivityConverter... converters) {
+    public ActivityConverterDelegator(final ActivityDocumentConverter... converters) {
         this(Arrays.asList(converters));
     }
 
-    public ActivityConverterDelegator(final Collection<ActivityConverter> converters) {
+    public ActivityConverterDelegator(final Collection<ActivityDocumentConverter> converters) {
         this.converters = converters;
     }
 
     public Activity toActivity(final ActivityDocument document) {
         final String name = document.getName();
-        final Optional<ActivityConverter> activityConverter = findConverter(name);
+        final Optional<ActivityDocumentConverter> activityConverter = findConverter(name);
         return activityConverter
                 .map(converter -> converter.toActivity(document))
                 .orElseThrow(() -> new ActivityNotSupportedException(name));
@@ -29,13 +29,13 @@ public class ActivityConverterDelegator {
 
     public ActivityDocument toDocument(final Activity activity) {
         final String name = activity.getName();
-        final Optional<ActivityConverter> activityConverter = findConverter(name);
+        final Optional<ActivityDocumentConverter> activityConverter = findConverter(name);
         return activityConverter
                 .map(converter -> converter.toDocument(activity))
                 .orElseThrow(() -> new ActivityNotSupportedException(name));
     }
 
-    private Optional<ActivityConverter> findConverter(final String activityName) {
+    private Optional<ActivityDocumentConverter> findConverter(final String activityName) {
         return converters.stream()
                 .filter(converter -> converter.supportsActivity(activityName))
                 .findFirst();

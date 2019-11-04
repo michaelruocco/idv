@@ -1,12 +1,12 @@
 package uk.co.mruoc.idv.mongo.verificationcontext.dao.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocument;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.EligibilityDocumentMother;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocumentConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocument;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocumentMother;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocument;
 import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocumentMother;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsConverter;
+import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsDocumentConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryIneligible;
@@ -24,10 +24,10 @@ import static org.mockito.Mockito.mock;
 
 class MobilePinsentryConverterTest {
 
-    private final VerificationResultsConverter resultsConverter = mock(VerificationResultsConverter.class);
-    private final EligibilityConverter eligibilityConverter = mock(EligibilityConverter.class);
+    private final VerificationResultsDocumentConverter resultsConverter = mock(VerificationResultsDocumentConverter.class);
+    private final EligibilityDocumentConverter eligibilityConverter = mock(EligibilityDocumentConverter.class);
 
-    private final MobilePinsentryConverter converter = MobilePinsentryConverter.builder()
+    private final MobilePinsentryDocumentConverter converter = MobilePinsentryDocumentConverter.builder()
             .resultsConverter(resultsConverter)
             .eligibilityConverter(eligibilityConverter)
             .build();

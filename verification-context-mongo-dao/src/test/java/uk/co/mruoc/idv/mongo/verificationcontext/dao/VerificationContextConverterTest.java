@@ -10,11 +10,11 @@ import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
 import uk.co.mruoc.idv.mongo.dao.activity.ActivityDocument;
-import uk.co.mruoc.idv.mongo.dao.channel.ChannelConverter;
+import uk.co.mruoc.idv.mongo.dao.channel.ChannelDocumentConverter;
 import uk.co.mruoc.idv.mongo.dao.channel.ChannelDocument;
-import uk.co.mruoc.idv.mongo.identity.dao.AliasConverter;
+import uk.co.mruoc.idv.mongo.identity.dao.AliasDocumentConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.AliasDocument;
-import uk.co.mruoc.idv.mongo.identity.dao.IdentityConverter;
+import uk.co.mruoc.idv.mongo.identity.dao.IdentityDocumentConverter;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
@@ -31,13 +31,13 @@ import static org.mockito.Mockito.mock;
 
 class VerificationContextConverterTest {
 
-    private final ChannelConverter channelConverter = mock(ChannelConverter.class);
-    private final AliasConverter aliasConverter = mock(AliasConverter.class);
-    private final IdentityConverter identityConverter = mock(IdentityConverter.class);
+    private final ChannelDocumentConverter channelConverter = mock(ChannelDocumentConverter.class);
+    private final AliasDocumentConverter aliasConverter = mock(AliasDocumentConverter.class);
+    private final IdentityDocumentConverter identityConverter = mock(IdentityDocumentConverter.class);
     private final ActivityConverterDelegator activityConverter = mock(ActivityConverterDelegator.class);
     private final VerificationSequencesConverter sequencesConverter = mock(VerificationSequencesConverter.class);
 
-    private final VerificationContextConverter contextConverter = VerificationContextConverter.builder()
+    private final VerificationContextDocumentConverter contextConverter = VerificationContextDocumentConverter.builder()
             .channelConverter(channelConverter)
             .aliasConverter(aliasConverter)
             .identityConverter(identityConverter)

@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.index.IndexResolver;
 import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import uk.co.mruoc.idv.mongo.identity.dao.IdentityDocument;
-import uk.co.mruoc.idv.mongo.lockout.dao.LockoutPolicyDocument;
+import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyDocument;
 
 @Slf4j
 @RequiredArgsConstructor

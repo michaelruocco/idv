@@ -10,6 +10,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "cost"})
 public interface ActivityMixin {
 
-    //intentionally blank
+    // intentionally blank
 
 }

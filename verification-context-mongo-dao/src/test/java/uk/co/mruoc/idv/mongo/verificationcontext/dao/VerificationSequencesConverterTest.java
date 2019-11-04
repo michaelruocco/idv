@@ -19,7 +19,7 @@ class VerificationSequencesConverterTest {
     private final VerificationSequenceDocument document1 = mock(VerificationSequenceDocument.class);
     private final VerificationSequenceDocument document2 = mock(VerificationSequenceDocument.class);
 
-    private final VerificationSequenceConverter sequenceConverter = mock(VerificationSequenceConverter.class);
+    private final VerificationSequenceDocumentConverter sequenceConverter = mock(VerificationSequenceDocumentConverter.class);
 
     private final VerificationSequencesConverter sequencesConverter = new VerificationSequencesConverter(sequenceConverter);
 
