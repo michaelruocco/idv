@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.model;
 
 public class LockoutStateCalculatorFactory {
 
-    public LockoutStateCalculator build(final AbstractLockoutPolicyParameters parameters) {
+    public LockoutStateCalculator build(final LockoutPolicyParameters parameters) {
         final String type = parameters.getLockoutType();
         if (MaxAttemptsLockoutPolicyParameters.TYPE.equals(type)) {
             return toMaxAttemptsStateCalculator((MaxAttemptsLockoutPolicyParameters) parameters);

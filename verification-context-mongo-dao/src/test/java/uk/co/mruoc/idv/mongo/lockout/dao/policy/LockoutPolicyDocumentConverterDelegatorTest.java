@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 
@@ -27,7 +27,7 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
     @Test
     void shouldThrowExceptionIfNoConverterSupportingLockoutPolicyParameters() {
-        final AbstractLockoutPolicyParameters parameters = mock(AbstractLockoutPolicyParameters.class);
+        final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
         given(parameters.getLockoutType()).willReturn("not-supported");
 
         final Throwable error = catchThrowable(() -> delegator.toDocument(parameters));
@@ -38,19 +38,19 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
     @Test
     void shouldConvertLockoutPolicyDocument() {
-        final AbstractLockoutPolicyParameters expectedParameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters expectedParameters = LockoutPolicyParametersMother.maxAttempts();
         final LockoutPolicyDocument document = new LockoutPolicyDocument();
         given(converter.supportsType(document.getLockoutType())).willReturn(true);
         given(converter.toParameters(document)).willReturn(expectedParameters);
 
-        final AbstractLockoutPolicyParameters parameters = delegator.toParameters(document);
+        final LockoutPolicyParameters parameters = delegator.toParameters(document);
 
         assertThat(parameters).isEqualTo(expectedParameters);
     }
 
     @Test
     void shouldConvertLockoutPolicyParameters() {
-        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
         final LockoutPolicyDocument expectedDocument = new LockoutPolicyDocument();
         given(converter.supportsType(parameters.getLockoutType())).willReturn(true);
         given(converter.toDocument(parameters)).willReturn(expectedDocument);

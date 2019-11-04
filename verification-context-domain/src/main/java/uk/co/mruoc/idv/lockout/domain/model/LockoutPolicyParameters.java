@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Getter
-public abstract class AbstractLockoutPolicyParameters {
+public class LockoutPolicyParameters {
 
     private final UUID id;
     private final String lockoutType;

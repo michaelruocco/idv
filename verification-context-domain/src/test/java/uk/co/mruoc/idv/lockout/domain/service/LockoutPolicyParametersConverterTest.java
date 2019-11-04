@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutRequestPredicateFactory;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculator;
 import uk.co.mruoc.idv.lockout.domain.model.PolicyAppliesToRequestPredicate;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 
 class LockoutPolicyParametersConverterTest {
 
-    private final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+    private final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
     private final LockoutRequestPredicateFactory predicateFactory = mock(LockoutRequestPredicateFactory.class);
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);

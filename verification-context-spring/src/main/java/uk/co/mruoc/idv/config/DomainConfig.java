@@ -17,7 +17,7 @@ import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutRequestPredicateFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RsaMaxAttemptsLockoutPolicyParameters;
@@ -130,7 +130,7 @@ public class DomainConfig {
                 .parametersConverter(parametersConverter)
                 .dao(dao)
                 .build();
-        final AbstractLockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
+        final LockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
         policyService.addPolicy(parameters);
         return policyService;
     }

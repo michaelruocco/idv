@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.dao;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
@@ -18,11 +18,11 @@ import java.util.stream.Stream;
 public class InMemoryLockoutPolicyDao implements LockoutPolicyDao {
 
     private final LockoutPolicyParametersConverter parametersConverter;
-    private final Map<UUID, AbstractLockoutPolicyParameters> policies = new HashMap<>();
+    private final Map<UUID, LockoutPolicyParameters> policies = new HashMap<>();
 
     @Override
     public void save(final LockoutPolicy policy) {
-        final AbstractLockoutPolicyParameters parameters = policy.getParameters();
+        final LockoutPolicyParameters parameters = policy.getParameters();
         policies.put(parameters.getId(), parameters);
     }
 

@@ -137,12 +137,12 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnParameters() {
-        final AbstractLockoutPolicyParameters expectedParameters = mock(AbstractLockoutPolicyParameters.class);
+        final LockoutPolicyParameters expectedParameters = mock(LockoutPolicyParameters.class);
         final LockoutPolicy policy = DefaultLockoutPolicy.builder()
                 .parameters(expectedParameters)
                 .build();
 
-        final AbstractLockoutPolicyParameters parameters = policy.getParameters();
+        final LockoutPolicyParameters parameters = policy.getParameters();
 
         assertThat(parameters).isEqualTo(expectedParameters);
     }

@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @Getter
-public class MaxAttemptsLockoutPolicyParameters extends AbstractLockoutPolicyParameters {
+public class MaxAttemptsLockoutPolicyParameters extends LockoutPolicyParameters {
 
     public static final String TYPE = "max-attempts";
 

@@ -19,7 +19,7 @@ public interface LockoutPolicy {
 
     LockoutState calculateLockoutState(final CalculateLockoutStateRequest request);
 
-    AbstractLockoutPolicyParameters getParameters();
+    LockoutPolicyParameters getParameters();
 
     LockoutStateCalculator getStateCalculator();
 

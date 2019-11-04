@@ -10,14 +10,14 @@ import java.util.function.Predicate;
 
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
-    private final AbstractLockoutPolicyParameters parameters;
+    private final LockoutPolicyParameters parameters;
     private final Predicate<LockoutRequest> appliesToPolicy;
     private final LockoutStateCalculator stateCalculator;
     private final RecordAttemptStrategy recordAttemptStrategy;
     private final LockoutStateRequestConverter requestConverter;
 
     @Builder
-    public DefaultLockoutPolicy(final AbstractLockoutPolicyParameters parameters,
+    public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
                                 final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
@@ -29,7 +29,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
         );
     }
 
-    public DefaultLockoutPolicy(final AbstractLockoutPolicyParameters parameters,
+    public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
                                 final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy,
@@ -72,7 +72,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public AbstractLockoutPolicyParameters getParameters() {
+    public LockoutPolicyParameters getParameters() {
         return parameters;
     }
 

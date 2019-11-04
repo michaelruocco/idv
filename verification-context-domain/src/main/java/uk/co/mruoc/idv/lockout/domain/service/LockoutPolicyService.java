@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Getter;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -15,9 +15,9 @@ public interface LockoutPolicyService {
 
     VerificationAttempts resetAttempts(CalculateLockoutStateRequest request);
 
-    void addPolicy(AbstractLockoutPolicyParameters policy);
+    void addPolicy(LockoutPolicyParameters policy);
 
-    Collection<AbstractLockoutPolicyParameters> loadPolicies();
+    Collection<LockoutPolicyParameters> loadPolicies();
 
     @Getter
     class LockoutPolicyNotFoundException extends RuntimeException {

@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.MaxAttemptsLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 
@@ -21,7 +21,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateIdOnDocument() {
-        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
@@ -30,7 +30,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateLockoutTypeOnDocument() {
-        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
@@ -39,7 +39,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateRecordAttemptStrategyTypeOnDocument() {
-        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
@@ -48,7 +48,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateLookupDocumentsOnDocument() {
-        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
@@ -81,7 +81,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     void shouldPopulateIdOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
 
-        final AbstractLockoutPolicyParameters parameters = converter.toParameters(document);
+        final LockoutPolicyParameters parameters = converter.toParameters(document);
 
         assertThat(parameters.getId()).isEqualTo(UUID.fromString(document.getId()));
     }
@@ -90,7 +90,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     void shouldPopulateLockoutTypeOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
 
-        final AbstractLockoutPolicyParameters parameters = converter.toParameters(document);
+        final LockoutPolicyParameters parameters = converter.toParameters(document);
 
         assertThat(parameters.getLockoutType()).isEqualTo(document.getLockoutType());
     }
@@ -99,7 +99,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     void shouldPopulateRecordAttemptStrategyTypeOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
 
-        final AbstractLockoutPolicyParameters parameters = converter.toParameters(document);
+        final LockoutPolicyParameters parameters = converter.toParameters(document);
 
         assertThat(parameters.getRecordAttemptStrategyType()).isEqualTo(document.getRecordAttemptStrategyType());
     }
@@ -108,7 +108,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     void shouldPopulateChannelIdsOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
 
-        final AbstractLockoutPolicyParameters parameters = converter.toParameters(document);
+        final LockoutPolicyParameters parameters = converter.toParameters(document);
 
         final LockoutLookupDocument lookupDocument = document.getLookup(0);
         assertThat(parameters.getChannelIds()).containsExactly(lookupDocument.getChannelId());
@@ -118,7 +118,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     void shouldPopulateActivityNamesOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
 
-        final AbstractLockoutPolicyParameters parameters = converter.toParameters(document);
+        final LockoutPolicyParameters parameters = converter.toParameters(document);
 
         final LockoutLookupDocument lookupDocument = document.getLookup(0);
         assertThat(parameters.getActivityNames()).containsExactly(lookupDocument.getActivityName());
@@ -128,7 +128,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     void shouldPopulateAliasTypesOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
 
-        final AbstractLockoutPolicyParameters parameters = converter.toParameters(document);
+        final LockoutPolicyParameters parameters = converter.toParameters(document);
 
         final LockoutLookupDocument lookupDocument = document.getLookup(0);
         assertThat(parameters.getAliasTypes()).containsExactly(lookupDocument.getAliasType());
@@ -138,7 +138,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     void shouldConvertToMaxAttemptsLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
 
-        final AbstractLockoutPolicyParameters parameters = converter.toParameters(document);
+        final LockoutPolicyParameters parameters = converter.toParameters(document);
 
         assertThat(parameters).isInstanceOf(MaxAttemptsLockoutPolicyParameters.class);
     }

@@ -1,13 +1,13 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 
 public interface LockoutPolicyDocumentConverter {
 
     boolean supportsType(final String lockoutType);
 
-    AbstractLockoutPolicyParameters toParameters(final LockoutPolicyDocument document);
+    LockoutPolicyParameters toParameters(final LockoutPolicyDocument document);
 
-    LockoutPolicyDocument toDocument(final AbstractLockoutPolicyParameters parameters);
+    LockoutPolicyDocument toDocument(final LockoutPolicyParameters parameters);
 
 }

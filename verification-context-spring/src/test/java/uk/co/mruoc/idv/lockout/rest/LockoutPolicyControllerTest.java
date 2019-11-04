@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.lockout.rest;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 import uk.co.mruoc.idv.lockout.jsonapi.LockoutPoliciesDocument;
@@ -18,7 +18,7 @@ class LockoutPolicyControllerTest {
 
     @Test
     void shouldReturnLockoutPoliciesDocumentWithLockoutPolicies() {
-        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
         service.setPoliciesToLoad(Collections.singleton(parameters));
         final LockoutPoliciesDocument document = controller.getLockoutPolicies();
 

@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
 
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class LockoutPolicyDocumentConverterDelegator {
         this.converters = converters;
     }
 
-    public AbstractLockoutPolicyParameters toParameters(final LockoutPolicyDocument document) {
+    public LockoutPolicyParameters toParameters(final LockoutPolicyDocument document) {
         final String type = document.getLockoutType();
         final Optional<LockoutPolicyDocumentConverter> policyConverter = findConverter(type);
         return policyConverter
@@ -27,7 +27,7 @@ public class LockoutPolicyDocumentConverterDelegator {
                 .orElseThrow(() -> new LockoutTypeNotSupportedException(type));
     }
 
-    public LockoutPolicyDocument toDocument(final AbstractLockoutPolicyParameters parameters) {
+    public LockoutPolicyDocument toDocument(final LockoutPolicyParameters parameters) {
         final String type = parameters.getLockoutType();
         final Optional<LockoutPolicyDocumentConverter> activityConverter = findConverter(type);
         return activityConverter

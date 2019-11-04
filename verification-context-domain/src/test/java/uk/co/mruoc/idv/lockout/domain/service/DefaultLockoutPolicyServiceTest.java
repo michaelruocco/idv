@@ -5,7 +5,7 @@ import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyService.LockoutPolicyNotFoundException;
@@ -134,7 +134,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldSavePolicy() {
-        final AbstractLockoutPolicyParameters parameters = mock(AbstractLockoutPolicyParameters.class);
+        final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
         given(parametersConverter.toPolicy(parameters)).willReturn(policy);
 
         service.addPolicy(parameters);
@@ -146,10 +146,10 @@ class DefaultLockoutPolicyServiceTest {
     void shouldReturnAllPolicies() {
         final Collection<LockoutPolicy> policies = Collections.singleton(policy);
         given(dao.load()).willReturn(policies);
-        final AbstractLockoutPolicyParameters expectedParameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters expectedParameters = LockoutPolicyParametersMother.maxAttempts();
         given(policy.getParameters()).willReturn(expectedParameters);
 
-        final Collection<AbstractLockoutPolicyParameters> policyParameters = service.loadPolicies();
+        final Collection<LockoutPolicyParameters> policyParameters = service.loadPolicies();
 
         assertThat(policyParameters).containsExactly(expectedParameters);
     }

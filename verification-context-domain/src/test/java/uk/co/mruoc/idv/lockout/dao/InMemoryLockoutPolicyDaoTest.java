@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.dao;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
@@ -76,7 +76,7 @@ class InMemoryLockoutPolicyDaoTest {
 
     private LockoutPolicy createSavedPolicyWithId(final UUID id) {
         final LockoutPolicy policy = mock(LockoutPolicy.class);
-        final AbstractLockoutPolicyParameters parameters = mock(AbstractLockoutPolicyParameters.class);
+        final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
         given(policy.getParameters()).willReturn(parameters);
         given(parameters.getId()).willReturn(id);
         given(parametersConverter.toPolicy(parameters)).willReturn(policy);

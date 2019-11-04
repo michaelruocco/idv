@@ -312,13 +312,13 @@ public class MongoDaoConfig {
         return new VerificationAttemptsDocumentConverter(attemptConverter);
     }
 
-    @Bean //TODO rename converter bean name to reference mongo document type rather than domain type to avoid name clashes with domain converters
-    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersConverter() {
+    @Bean
+    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter() {
         return new MaxAttemptsLockoutPolicyDocumentConverter();
     }
 
-    @Bean //TODO rename converter bean name to reference mongo document type rather than domain type to avoid name clashes with domain converters
-    public LockoutPolicyDocumentConverterDelegator lockoutPolicyParametersConverterDelegator(final Collection<LockoutPolicyDocumentConverter> converters) {
+    @Bean
+    public LockoutPolicyDocumentConverterDelegator lockoutPolicyParametersDocumentConverterDelegator(final Collection<LockoutPolicyDocumentConverter> converters) {
         return new LockoutPolicyDocumentConverterDelegator(converters);
     }
 

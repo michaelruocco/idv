@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.MaxAttemptsLockoutPolicyParameters;
 
 import java.util.Collection;
@@ -20,7 +20,7 @@ public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyD
     }
 
     @Override
-    public AbstractLockoutPolicyParameters toParameters(final LockoutPolicyDocument policyDocument) {
+    public LockoutPolicyParameters toParameters(final LockoutPolicyDocument policyDocument) {
         final MaxAttemptsLockoutPolicyDocument document = (MaxAttemptsLockoutPolicyDocument) policyDocument;
         final Collection<LockoutLookupDocument> lookupDocuments = document.getLookups();
         return MaxAttemptsLockoutPolicyParameters.builder()
@@ -34,7 +34,7 @@ public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyD
     }
 
     @Override
-    public LockoutPolicyDocument toDocument(final AbstractLockoutPolicyParameters parameters) {
+    public LockoutPolicyDocument toDocument(final LockoutPolicyParameters parameters) {
         final MaxAttemptsLockoutPolicyParameters maxAttemptsParameters = (MaxAttemptsLockoutPolicyParameters) parameters;
         final MaxAttemptsLockoutPolicyDocument document = new MaxAttemptsLockoutPolicyDocument();
         document.setId(maxAttemptsParameters.getId().toString());
@@ -45,7 +45,7 @@ public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyD
         return document;
     }
 
-    private Collection<LockoutLookupDocument> toLookupDocuments(final AbstractLockoutPolicyParameters parameters) {
+    private Collection<LockoutLookupDocument> toLookupDocuments(final LockoutPolicyParameters parameters) {
         final Collection<LockoutLookupDocument> documents = new HashSet<>();
         for (final String channelId : parameters.getChannelIds()) {
             for (final String activityName : parameters.getActivityNames()) {

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
@@ -17,7 +17,7 @@ class LockoutPolicySerializerTest {
 
     @Test
     void shouldSerializeMaxAttemptsPolicyParameters() throws JsonProcessingException {
-        final AbstractLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final String json = MAPPER.writeValueAsString(parameters);
 

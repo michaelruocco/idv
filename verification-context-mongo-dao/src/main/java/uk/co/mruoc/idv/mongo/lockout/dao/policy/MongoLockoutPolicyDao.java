@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
-import uk.co.mruoc.idv.lockout.domain.model.AbstractLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
@@ -21,7 +21,7 @@ public class MongoLockoutPolicyDao implements LockoutPolicyDao {
 
     @Override
     public void save(final LockoutPolicy policy) {
-        final AbstractLockoutPolicyParameters parameters = policy.getParameters();
+        final LockoutPolicyParameters parameters = policy.getParameters();
         final LockoutPolicyDocument document = documentConverter.toDocument(parameters);
         repository.save(document);
     }
@@ -35,6 +35,15 @@ public class MongoLockoutPolicyDao implements LockoutPolicyDao {
     }
 
     @Override
+    public Collection<LockoutPolicy> load() {
+        final Collection<LockoutPolicyDocument> documents = repository.findAll();
+        return documents.stream()
+                .map(documentConverter::toParameters)
+                .map(parametersConverter::toPolicy)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<LockoutPolicy> load(final LockoutRequest request) {
         final String channelId = request.getChannelId();
         final String activityName = request.getActivityName();
@@ -44,40 +53,29 @@ public class MongoLockoutPolicyDao implements LockoutPolicyDao {
                 activityName,
                 aliasType
         );
+        return handleDocuments(request, documents);
+    }
+
+    private Optional<LockoutPolicy> handleDocuments(final LockoutRequest request,
+                                                    final Collection<LockoutPolicyDocument> documents) {
         if (documents.isEmpty()) {
             return Optional.empty();
         }
         if (documents.size() == 1) {
             return Optional.of(toPolicy(documents.iterator().next()));
         }
-        throw new MultipleLockoutPoliciesFoundForRequestException(request); // should never happen!
-    }
-
-    @Override
-    public Collection<LockoutPolicy> load() {
-        final Collection<LockoutPolicyDocument> documents = repository.findAll();
-        return documents.stream()
-                .map(documentConverter::toParameters)
-                .map(parametersConverter::toPolicy)
-                .collect(Collectors.toList());
+        throw new MultipleLockoutPoliciesFoundException(request); // should never happen!
     }
 
     private LockoutPolicy toPolicy(final LockoutPolicyDocument document) {
-        final AbstractLockoutPolicyParameters parameters = documentConverter.toParameters(document);
+        final LockoutPolicyParameters parameters = documentConverter.toParameters(document);
         return parametersConverter.toPolicy(parameters);
     }
 
-    public static class MultipleLockoutPoliciesFoundForRequestException extends RuntimeException {
+    public static class MultipleLockoutPoliciesFoundException extends RuntimeException {
 
-        private final LockoutRequest request;
-
-        public MultipleLockoutPoliciesFoundForRequestException(final LockoutRequest request) {
+        public MultipleLockoutPoliciesFoundException(final LockoutRequest request) {
             super(toMessage(request));
-            this.request = request;
-        }
-
-        public LockoutRequest getRequest() {
-            return request;
         }
 
         private static String toMessage(final LockoutRequest request) {
