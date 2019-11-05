@@ -2,6 +2,8 @@ package uk.co.mruoc.idv.lockout.rest;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.api.lockout.LockoutStateDocument;
+import uk.co.mruoc.idv.api.lockout.ResetLockoutStateDocument;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.identity.domain.model.IdvId;
@@ -10,8 +12,6 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutRequest;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
-import uk.co.mruoc.idv.lockout.jsonapi.LockoutStateDocument;
-import uk.co.mruoc.idv.lockout.jsonapi.ResetLockoutStateDocument;
 
 import java.util.UUID;
 

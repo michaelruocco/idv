@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.mruoc.idv.api.verificationcontext.CreateContextRequestDocument;
+import uk.co.mruoc.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
+import uk.co.mruoc.idv.api.verificationcontext.VerificationContextDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.service.LoadContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.CreateContextRequestDocument;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.UpdateContextResultsRequestDocument;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.VerificationContextDocument;
 
 import java.net.URI;
 import java.util.UUID;

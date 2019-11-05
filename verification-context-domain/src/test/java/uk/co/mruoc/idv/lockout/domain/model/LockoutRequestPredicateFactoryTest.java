@@ -3,7 +3,6 @@ package uk.co.mruoc.idv.lockout.domain.model;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
-import uk.co.mruoc.idv.lockout.jsonapi.LockoutRequestMother;
 
 import java.util.Collections;
 import java.util.function.Predicate;

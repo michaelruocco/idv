@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import uk.co.mruoc.idv.api.verificationcontext.CreateContextRequestDocument;
+import uk.co.mruoc.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
+import uk.co.mruoc.idv.api.verificationcontext.VerificationContextDocument;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.FakeVerificationContextService;
 import uk.co.mruoc.idv.verificationcontext.domain.service.LoadContextRequest;
 import uk.co.mruoc.idv.verificationcontext.domain.service.RecordResultRequest;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.CreateContextRequestDocument;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.UpdateContextResultsRequestDocument;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.VerificationContextDocument;
 
 import java.util.UUID;
 

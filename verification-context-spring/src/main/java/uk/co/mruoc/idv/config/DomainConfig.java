@@ -5,16 +5,19 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.zalando.jackson.datatype.money.MoneyModule;
-import uk.co.mruoc.idv.api.IdvModule;
+import uk.co.mruoc.idv.api.lockout.JsonApiLockoutStateModule;
+import uk.co.mruoc.idv.api.verificationcontext.JsonApiVerificationContextModule;
 import uk.co.mruoc.idv.domain.service.CurrentTimeService;
 import uk.co.mruoc.idv.domain.service.IdGenerator;
 import uk.co.mruoc.idv.domain.service.RandomIdGenerator;
 import uk.co.mruoc.idv.domain.service.TimeService;
-import uk.co.mruoc.idv.identity.api.IdentityModule;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
 import uk.co.mruoc.idv.identity.domain.service.IdentityService;
+import uk.co.mruoc.idv.json.activity.ActivityModule;
+import uk.co.mruoc.idv.json.channel.ChannelModule;
+import uk.co.mruoc.idv.json.identity.IdentityModule;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
@@ -38,7 +41,6 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutStateValidator;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequestConverter;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptPersister;
 import uk.co.mruoc.idv.lockout.domain.service.VerificationAttemptsLoader;
-import uk.co.mruoc.idv.lockout.jsonapi.JsonApiLockoutStateModule;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.DefaultVerificationContextService;
@@ -50,7 +52,6 @@ import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextCre
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextResultRecorder;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
-import uk.co.mruoc.idv.verificationcontext.jsonapi.JsonApiVerificationContextModule;
 import uk.co.mruoc.jsonapi.ApiModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
@@ -61,13 +62,14 @@ public class DomainConfig {
     @Bean
     public ObjectMapper objectMapper() {
         final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new IdvModule());
-        mapper.registerModule(new IdentityModule());
-        mapper.registerModule(new ApiModule());
-        mapper.registerModule(new JsonApiVerificationContextModule());
-        mapper.registerModule(new JsonApiLockoutStateModule());
         mapper.registerModule(new MoneyModule());
         mapper.registerModule(new JavaTimeModule());
+        mapper.registerModule(new ApiModule());
+        mapper.registerModule(new ChannelModule());
+        mapper.registerModule(new ActivityModule());
+        mapper.registerModule(new IdentityModule());
+        mapper.registerModule(new JsonApiVerificationContextModule());
+        mapper.registerModule(new JsonApiLockoutStateModule());
         mapper.disable(WRITE_DATES_AS_TIMESTAMPS);
         return mapper;
     }

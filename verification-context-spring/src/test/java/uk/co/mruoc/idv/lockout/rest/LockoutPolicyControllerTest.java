@@ -1,10 +1,10 @@
 package uk.co.mruoc.idv.lockout.rest;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.api.lockout.LockoutPoliciesDocument;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
-import uk.co.mruoc.idv.lockout.jsonapi.LockoutPoliciesDocument;
 
 import java.util.Collections;
 
