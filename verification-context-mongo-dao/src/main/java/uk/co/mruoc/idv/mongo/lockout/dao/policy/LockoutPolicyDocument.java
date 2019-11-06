@@ -15,9 +15,9 @@ public class LockoutPolicyDocument {
     private String id;
     private String lockoutType;
     private String recordAttemptStrategyType;
-    private Collection<LockoutLookupDocument> lookups;
+    private Collection<LockoutPolicyLookupDocument> lookups;
 
-    public LockoutLookupDocument getLookup(final int index) {
+    public LockoutPolicyLookupDocument getLookup(final int index) {
         return IterableUtils.get(lookups, index);
     }
 

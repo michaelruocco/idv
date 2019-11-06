@@ -44,6 +44,7 @@ import uk.co.mruoc.idv.mongo.MongoIndexResolver;
 import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
 import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyDocumentConverter;
 import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyDocumentConverterDelegator;
+import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyLookupDocumentConverter;
 import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyRepository;
 import uk.co.mruoc.idv.mongo.lockout.dao.policy.MaxAttemptsLockoutPolicyDocumentConverter;
 import uk.co.mruoc.idv.mongo.lockout.dao.policy.MongoLockoutPolicyDao;
@@ -313,8 +314,13 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter() {
-        return new MaxAttemptsLockoutPolicyDocumentConverter();
+    public LockoutPolicyLookupDocumentConverter lockoutPolicyLookupDocumentConverter() {
+        return new LockoutPolicyLookupDocumentConverter();
+    }
+
+    @Bean
+    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter(final LockoutPolicyLookupDocumentConverter lookupConverter) {
+        return new MaxAttemptsLockoutPolicyDocumentConverter(lookupConverter);
     }
 
     @Bean

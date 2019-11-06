@@ -10,7 +10,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyDocumentConverter {
 
-    private final LockoutLookupDocumentConverter lookupConverter;
+    private final LockoutPolicyLookupDocumentConverter lookupConverter;
 
     @Override
     public boolean supportsType(final String type) {
@@ -20,7 +20,7 @@ public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyD
     @Override
     public LockoutPolicyParameters toParameters(final LockoutPolicyDocument policyDocument) {
         final MaxAttemptsLockoutPolicyDocument document = (MaxAttemptsLockoutPolicyDocument) policyDocument;
-        final Collection<LockoutLookupDocument> lookupDocuments = document.getLookups();
+        final Collection<LockoutPolicyLookupDocument> lookupDocuments = document.getLookups();
         return MaxAttemptsLockoutPolicyParameters.builder()
                 .id(UUID.fromString(document.getId()))
                 .recordAttemptStrategyType(document.getRecordAttemptStrategyType())

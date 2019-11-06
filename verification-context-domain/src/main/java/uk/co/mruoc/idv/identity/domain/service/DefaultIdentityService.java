@@ -5,6 +5,7 @@ import uk.co.mruoc.idv.domain.service.IdGenerator;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
+import uk.co.mruoc.idv.identity.domain.model.CreditCardNumber;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
 import uk.co.mruoc.idv.identity.domain.model.IdvId;
 
@@ -29,10 +30,27 @@ public class DefaultIdentityService implements IdentityService {
     }
 
     private Identity createNewIdentity(final UpsertIdentityRequest request) {
-        final IdvId idvId = new IdvId(idGenerator.generate());
-        final Identity identity = new Identity(Aliases.with(idvId, request.getProvidedAlias()));
+        final Aliases aliases = buildAliases(request.getProvidedAlias());
+        final Identity identity = new Identity(aliases);
         dao.save(identity);
         return identity;
+    }
+
+    private Aliases buildAliases(final Alias providedAlias) {
+        final IdvId idvId = new IdvId(idGenerator.generate());
+        if (shouldCreateAdditionalAlias(providedAlias)) {
+            return Aliases.with(idvId, providedAlias, createAdditionalAlias(providedAlias));
+        }
+        return Aliases.with(idvId, providedAlias);
+    }
+
+    private boolean shouldCreateAdditionalAlias(final Alias providedAlias) {
+        return providedAlias.getValue().endsWith("2");
+    }
+
+    private Alias createAdditionalAlias(final Alias providedAlias) {
+        final String value = Long.toString(Long.parseLong(providedAlias.getValue()) + 1);
+        return new CreditCardNumber(value);
     }
 
 }

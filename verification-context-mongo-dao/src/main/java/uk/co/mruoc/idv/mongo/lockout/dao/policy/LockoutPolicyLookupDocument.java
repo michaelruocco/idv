@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LockoutLookupDocument {
+public class LockoutPolicyLookupDocument {
 
     private String channelId;
     private String activityName;

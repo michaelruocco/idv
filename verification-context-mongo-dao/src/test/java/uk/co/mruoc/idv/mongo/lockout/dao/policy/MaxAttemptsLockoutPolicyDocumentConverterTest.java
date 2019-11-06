@@ -5,13 +5,20 @@ import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.MaxAttemptsLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
-    private final LockoutPolicyDocumentConverter converter = new MaxAttemptsLockoutPolicyDocumentConverter();
+    private final LockoutPolicyLookupDocumentConverter lookupConverter = mock(LockoutPolicyLookupDocumentConverter.class);
+
+    private final LockoutPolicyDocumentConverter converter = new MaxAttemptsLockoutPolicyDocumentConverter(lookupConverter);
 
     @Test
     void shouldOnlySupportMaxAttemptsLockoutType() {
@@ -49,14 +56,15 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     @Test
     void shouldPopulateLookupDocumentsOnDocument() {
         final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final Collection<LockoutPolicyLookupDocument> expectedLookups = Arrays.asList(
+                new LockoutPolicyLookupDocument(),
+                new LockoutPolicyLookupDocument()
+        );
+        given(lookupConverter.toLookupDocuments(parameters)).willReturn(expectedLookups);
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
-        assertThat(document.getLookups()).containsExactly(new LockoutLookupDocument(
-                parameters.getChannelIds().iterator().next(),
-                parameters.getActivityNames().iterator().next(),
-                parameters.getAliasTypes().iterator().next()
-        ));
+        assertThat(document.getLookups()).isEqualTo(expectedLookups);
     }
 
     @Test
@@ -107,31 +115,34 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
     @Test
     void shouldPopulateChannelIdsOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
+        final Collection<String> channelIds = Collections.emptyList();
+        given(lookupConverter.toChannelIds(document.getLookups())).willReturn(channelIds);
 
         final LockoutPolicyParameters parameters = converter.toParameters(document);
 
-        final LockoutLookupDocument lookupDocument = document.getLookup(0);
-        assertThat(parameters.getChannelIds()).containsExactly(lookupDocument.getChannelId());
+        assertThat(parameters.getChannelIds()).isEqualTo(channelIds);
     }
 
     @Test
     void shouldPopulateActivityNamesOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
+        final Collection<String> activityNames = Collections.emptyList();
+        given(lookupConverter.toActivityNames(document.getLookups())).willReturn(activityNames);
 
         final LockoutPolicyParameters parameters = converter.toParameters(document);
 
-        final LockoutLookupDocument lookupDocument = document.getLookup(0);
-        assertThat(parameters.getActivityNames()).containsExactly(lookupDocument.getActivityName());
+        assertThat(parameters.getActivityNames()).isEqualTo(activityNames);
     }
 
     @Test
     void shouldPopulateAliasTypesOnLockoutPolicyParameters() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.maxAttempts();
+        final Collection<String> aliasTypes = Collections.emptyList();
+        given(lookupConverter.toAliasTypes(document.getLookups())).willReturn(aliasTypes);
 
         final LockoutPolicyParameters parameters = converter.toParameters(document);
 
-        final LockoutLookupDocument lookupDocument = document.getLookup(0);
-        assertThat(parameters.getAliasTypes()).containsExactly(lookupDocument.getAliasType());
+        assertThat(parameters.getAliasTypes()).isEqualTo(aliasTypes);
     }
 
     @Test

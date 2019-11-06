@@ -26,8 +26,8 @@ public class LockoutPolicyDocumentMother {
         document.setLookups(Collections.singleton(buildLookup()));
     }
 
-    private static LockoutLookupDocument buildLookup() {
-        final LockoutLookupDocument document = new LockoutLookupDocument();
+    private static LockoutPolicyLookupDocument buildLookup() {
+        final LockoutPolicyLookupDocument document = new LockoutPolicyLookupDocument();
         document.setChannelId("fake-channel");
         document.setActivityName("fake-activity");
         document.setAliasType("fake-alias-type");

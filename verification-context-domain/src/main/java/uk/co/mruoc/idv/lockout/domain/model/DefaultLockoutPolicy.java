@@ -51,6 +51,9 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
         return recordAttemptStrategy.shouldRecordAttempt(request);
     }
 
+    //TODO need to fix reset so resets by specific alias value not just alias type
+    //when an alias is used the locking should be managed by that specific alias not
+    //all aliases of that type
     @Override
     public VerificationAttempts reset(final VerificationAttempts attempts) {
         return attempts.resetBy(appliesToPolicy);
