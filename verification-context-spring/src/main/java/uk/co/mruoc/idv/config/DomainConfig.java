@@ -20,8 +20,7 @@ import uk.co.mruoc.idv.json.channel.ChannelModule;
 import uk.co.mruoc.idv.json.identity.IdentityModule;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutRequestPredicateFactory;
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RsaMaxAttemptsLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory;
@@ -100,11 +99,6 @@ public class DomainConfig {
     }
 
     @Bean
-    public LockoutRequestPredicateFactory lockoutRequestPredicateFactory() {
-        return new LockoutRequestPredicateFactory();
-    }
-
-    @Bean
     public RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
         return new RecordAttemptStrategyFactory();
     }
@@ -115,11 +109,9 @@ public class DomainConfig {
     }
 
     @Bean
-    public LockoutPolicyParametersConverter lockoutPolicyParametersConverter(final LockoutRequestPredicateFactory predicateFactory,
-                                                                             final RecordAttemptStrategyFactory recordAttemptStrategyFactory,
+    public LockoutPolicyParametersConverter lockoutPolicyParametersConverter(final RecordAttemptStrategyFactory recordAttemptStrategyFactory,
                                                                              final LockoutStateCalculatorFactory lockoutStateCalculatorFactory) {
         return LockoutPolicyParametersConverter.builder()
-                .predicateFactory(predicateFactory)
                 .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
                 .lockoutStateCalculatorFactory(lockoutStateCalculatorFactory)
                 .build();
@@ -132,7 +124,7 @@ public class DomainConfig {
                 .parametersConverter(parametersConverter)
                 .dao(dao)
                 .build();
-        final LockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
+        final DefaultLockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
         policyService.addPolicy(parameters);
         return policyService;
     }

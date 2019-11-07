@@ -1,9 +1,12 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.FakeCalculateLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -11,12 +14,20 @@ import static org.mockito.Mockito.mock;
 
 class DefaultLockoutPolicyTest {
 
+    private final RecordAttemptStrategy recordAttemptStrategy = mock(RecordAttemptStrategy.class);
+    private final FakeLockoutPolicyParameters parameters = new FakeLockoutPolicyParameters();
+    private final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
+
+    private final LockoutPolicy policy = DefaultLockoutPolicy.builder()
+            .recordAttemptStrategy(recordAttemptStrategy)
+            .parameters(parameters)
+            .stateCalculator(stateCalculator)
+            .build();
+
     @Test
     void shouldReturnTrueIfLockoutRequestAppliesToPolicy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> true)
-                .build();
+        parameters.setAppliesTo(true);
 
         final boolean result = policy.appliesTo(request);
 
@@ -26,9 +37,6 @@ class DefaultLockoutPolicyTest {
     @Test
     void shouldReturnFalseIfLockoutRequestDoesNotApplyToPolicy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> false)
-                .build();
 
         final boolean result = policy.appliesTo(request);
 
@@ -38,11 +46,7 @@ class DefaultLockoutPolicyTest {
     @Test
     void shouldReturnShouldRecordAttemptFromStrategy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
-        final RecordAttemptStrategy strategy = mock(RecordAttemptStrategy.class);
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .recordAttemptStrategy(strategy)
-                .build();
-        given(strategy.shouldRecordAttempt(request)).willReturn(true);
+        given(recordAttemptStrategy.shouldRecordAttempt(request)).willReturn(true);
 
         final boolean result = policy.shouldRecordAttempt(request);
 
@@ -50,37 +54,18 @@ class DefaultLockoutPolicyTest {
     }
 
     @Test
-    void shouldRemoveAllApplicableAttemptsWhenResetting() {
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> true)
-                .build();
-
-        final VerificationAttempts resetAttempts = policy.reset(attempts);
-
-        assertThat(resetAttempts).isEmpty();
-    }
-
-    @Test
     void shouldNotRemoveAttemptsWhenResettingIfNoneAreApplicable() {
         final VerificationAttempts attempts = new FakeVerificationAttempts();
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> false)
-                .build();
 
-        final VerificationAttempts resetAttempts = policy.reset(attempts);
+        final VerificationAttempts resetAttempts = policy.reset(attempts, null);
 
         assertThat(resetAttempts).containsExactlyElementsOf(attempts);
     }
 
     @Test
     void shouldPassRemainingAttemptsAfterResetToStateCalculatorWhenResettingState() {
-        final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> true)
-                .stateCalculator(stateCalculator)
-                .build();
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        parameters.setAppliesTo(true);
 
         policy.reset(request);
 
@@ -89,14 +74,36 @@ class DefaultLockoutPolicyTest {
     }
 
     @Test
+    void shouldResetAttemptsWhenTheyApplyToParameters() {
+        stateCalculator.setLockoutStateToReturn(new FakeLockoutStateMaxAttempts());
+        parameters.setAppliesTo(true);
+        final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest();
+
+        policy.reset(inputRequest);
+
+        final CalculateLockoutStateRequest resetRequest = stateCalculator.getLastCalculateStateRequest();
+        assertThat(resetRequest.getAttempts()).isEmpty();
+    }
+
+    @Test
+    void shouldResetAttemptsByAliasWhenLockingAtAliasLevelTheyApplyToParameters() {
+        stateCalculator.setLockoutStateToReturn(new FakeLockoutStateMaxAttempts());
+        parameters.setAppliesTo(true);
+        parameters.setAliasLevelLocking(true);
+        final VerificationAttempt matchingAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber());
+        final VerificationAttempt differentAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
+        final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest(new FakeVerificationAttempts(matchingAliasAttempt, differentAliasAttempt));
+
+        policy.reset(inputRequest);
+
+        final CalculateLockoutStateRequest resetRequest = stateCalculator.getLastCalculateStateRequest();
+        assertThat(resetRequest.getAttempts()).containsExactly(differentAliasAttempt);
+    }
+
+    @Test
     void shouldReturnCalculatedLockoutStateAfterReset() {
-        final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
         stateCalculator.setLockoutStateToReturn(expectedState);
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> true)
-                .stateCalculator(stateCalculator)
-                .build();
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
 
         final LockoutState state = policy.reset(request);
@@ -106,11 +113,6 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldPassApplicableAttemptsWhenCalculatingState() {
-        final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> false)
-                .stateCalculator(stateCalculator)
-                .build();
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
 
         policy.calculateLockoutState(request);
@@ -121,13 +123,8 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnCalculatedLockoutState() {
-        final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
         stateCalculator.setLockoutStateToReturn(expectedState);
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .appliesToPolicy(lockoutRequest -> false)
-                .stateCalculator(stateCalculator)
-                .build();
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
 
         final LockoutState state = policy.calculateLockoutState(request);
@@ -137,14 +134,23 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnParameters() {
-        final LockoutPolicyParameters expectedParameters = mock(LockoutPolicyParameters.class);
-        final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-                .parameters(expectedParameters)
-                .build();
+        final LockoutPolicyParameters result = policy.getParameters();
 
-        final LockoutPolicyParameters parameters = policy.getParameters();
+        assertThat(result).isEqualTo(parameters);
+    }
 
-        assertThat(parameters).isEqualTo(expectedParameters);
+    @Test
+    void shouldReturnStateCalculator() {
+        final LockoutStateCalculator result = policy.getStateCalculator();
+
+        assertThat(result).isEqualTo(stateCalculator);
+    }
+
+    @Test
+    void shouldReturnRecordAttemptStrategy() {
+        final RecordAttemptStrategy result = policy.getRecordAttemptStrategy();
+
+        assertThat(result).isEqualTo(recordAttemptStrategy);
     }
 
 }

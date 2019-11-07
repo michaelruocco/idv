@@ -2,6 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
@@ -125,7 +126,7 @@ class DefaultLockoutPolicyServiceTest {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
         given(dao.load(request)).willReturn(Optional.of(policy));
         final VerificationAttempts expectedAttempts = new FakeVerificationAttempts();
-        given(policy.reset(request.getAttempts())).willReturn(expectedAttempts);
+        given(policy.reset(request.getAttempts(), request)).willReturn(expectedAttempts);
 
         final VerificationAttempts attempts = service.resetAttempts(request);
 
@@ -134,7 +135,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldSavePolicy() {
-        final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
+        final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
         given(parametersConverter.toPolicy(parameters)).willReturn(policy);
 
         service.addPolicy(parameters);

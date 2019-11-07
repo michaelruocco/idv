@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.MaxAttemptsLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
@@ -28,7 +29,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateIdOnDocument() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
@@ -37,7 +38,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateLockoutTypeOnDocument() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
@@ -46,7 +47,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateRecordAttemptStrategyTypeOnDocument() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutPolicyDocument document = converter.toDocument(parameters);
 
@@ -55,7 +56,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateLookupDocumentsOnDocument() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
         final Collection<LockoutPolicyLookupDocument> expectedLookups = Arrays.asList(
                 new LockoutPolicyLookupDocument(),
                 new LockoutPolicyLookupDocument()

@@ -4,15 +4,14 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.UUID;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @ToString
 public class VerificationAttempts implements Iterable<VerificationAttempt> {
@@ -56,54 +55,12 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         if (idvId.equals(attempt.getIdvIdValue())) {
             final Collection<VerificationAttempt> newAttempts = new ArrayList<>(attempts);
             newAttempts.add(attempt);
-            return toAttempts(newAttempts);
+            return update(newAttempts);
         }
         throw new CannotAddAttemptException(idvId, attempt.getIdvIdValue());
     }
 
-    public VerificationAttempts reset() {
-        return toAttempts(Collections.emptyList());
-    }
-
-    public VerificationAttempts resetByAlias(final Alias alias) {
-        final VerificationAttempts attemptsWithAlias = getAttemptsWithAlias(alias);
-        final Collection<VerificationAttempt> remainingAttempts = CollectionUtils.subtract(attempts, attemptsWithAlias);
-        return toAttempts(remainingAttempts);
-    }
-
-    public VerificationAttempts resetBy(final Predicate<LockoutRequest> filter) {
-        final VerificationAttempts filteredAttempts = filterBy(filter);
-        final Collection<VerificationAttempt> remainingAttempts = CollectionUtils.subtract(attempts, filteredAttempts);
-        return toAttempts(remainingAttempts);
-    }
-
-    public VerificationAttempts filterBy(final Predicate<LockoutRequest> filter) {
-        final Collection<VerificationAttempt> filteredAttempts = attempts.stream()
-                .filter(filter)
-                .collect(Collectors.toList());
-        return toAttempts(filteredAttempts);
-    }
-
-    public VerificationAttempts getAttemptsWithAlias(final Alias alias) {
-        Collection<VerificationAttempt> attemptsWithAlias = attempts.stream()
-                .filter(attempt -> alias.equals(attempt.getAlias()))
-                .collect(Collectors.toList());
-        return toAttempts(attemptsWithAlias);
-    }
-
-    public VerificationAttempts resetByChannel(final String channelId) {
-        final VerificationAttempts attemptsWithChannel = getAttemptsWithChannel(channelId);
-        final Collection<VerificationAttempt> remainingAttempts = CollectionUtils.subtract(attempts, attemptsWithChannel);
-        return toAttempts(remainingAttempts);
-    }
-
-    public VerificationAttempts resetByActivity(final String activityName) {
-        final VerificationAttempts attemptsWithActivity = getAttemptsWithActivity(activityName);
-        final Collection<VerificationAttempt> remainingAttempts = CollectionUtils.subtract(attempts, attemptsWithActivity);
-        return toAttempts(remainingAttempts);
-    }
-
-    public Collection<VerificationAttempt> asCollection() {
+    public Collection<VerificationAttempt> collection() {
         return Collections.unmodifiableCollection(attempts);
     }
 
@@ -111,22 +68,31 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return attempts.size();
     }
 
-    private VerificationAttempts getAttemptsWithChannel(final String channelId) {
-        Collection<VerificationAttempt> attemptsWithAlias = attempts.stream()
-                .filter(attempt -> channelId.equals(attempt.getChannelId()))
-                .collect(Collectors.toList());
-        return toAttempts(attemptsWithAlias);
-    }
-
-    private VerificationAttempts getAttemptsWithActivity(final String activityName) {
-        Collection<VerificationAttempt> attemptsWithAlias = attempts.stream()
-                .filter(attempt -> activityName.equals(attempt.getActivityName()))
-                .collect(Collectors.toList());
-        return toAttempts(attemptsWithAlias);
-    }
-
-    private VerificationAttempts toAttempts(final Collection<VerificationAttempt> newAttempts) {
+    public VerificationAttempts update(final Collection<VerificationAttempt> newAttempts) {
         return new VerificationAttempts(id, idvId, newAttempts);
+    }
+
+    public VerificationAttempts filterMatching(final LockoutPolicyParameters parameters) {
+        final Collection<VerificationAttempt> applicableAttempts = attempts.stream()
+                .filter(parameters::appliesTo)
+                .collect(Collectors.toList());
+        return update(applicableAttempts);
+    }
+
+    public VerificationAttempts filterMatching(final Alias alias) {
+        final Collection<VerificationAttempt> applicableAttempts = attempts.stream()
+                .filter(attempt -> attempt.getAlias().equals(alias))
+                .collect(Collectors.toList());
+        return update(applicableAttempts);
+    }
+
+    public VerificationAttempts remove(final VerificationAttempts remove) {
+        final Collection<VerificationAttempt> updatedAttempts = CollectionUtils.removeAll(attempts, remove.attempts);
+        return update(updatedAttempts);
+    }
+
+    public Stream<VerificationAttempt> stream() {
+        return attempts.stream();
     }
 
     @Getter

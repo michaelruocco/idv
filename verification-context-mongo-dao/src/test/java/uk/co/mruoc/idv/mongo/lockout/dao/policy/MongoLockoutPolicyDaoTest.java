@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
@@ -25,7 +25,7 @@ class MongoLockoutPolicyDaoTest {
 
     private final LockoutPolicyDocument document = new LockoutPolicyDocument();
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
-    private final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
+    private final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
 
     private final LockoutPolicyRepository repository = mock(LockoutPolicyRepository.class);
     private final LockoutPolicyDocumentConverterDelegator documentConverter = mock(LockoutPolicyDocumentConverterDelegator.class);

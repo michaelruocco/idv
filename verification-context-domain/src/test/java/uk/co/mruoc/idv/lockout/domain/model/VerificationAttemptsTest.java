@@ -1,12 +1,9 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts.CannotAddAttemptException;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,157 +72,13 @@ class VerificationAttemptsTest {
     }
 
     @Test
-    void shouldCopyIdWhenReset() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.reset();
-
-        assertThat(resetAttempts.getId()).isEqualTo(attempts.getId());
-    }
-
-    @Test
-    void shouldCopyIdvIdWhenReset() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.reset();
-
-        assertThat(resetAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
-    }
-
-    @Test
-    void shouldRemoveAllAttemptsWhenReset() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.reset();
-
-        assertThat(resetAttempts).isEmpty();
-    }
-
-    @Test
-    void shouldCopyIdWhenResetByAlias() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-        final Alias alias = AliasesMother.creditCardNumber();
-
-        final VerificationAttempts resetAttempts = attempts.resetByAlias(alias);
-
-        assertThat(resetAttempts.getId()).isEqualTo(attempts.getId());
-    }
-
-    @Test
-    void shouldCopyIdvIdWhenResetByAlias() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-        final Alias alias = AliasesMother.creditCardNumber();
-
-        final VerificationAttempts resetAttempts = attempts.resetByAlias(alias);
-
-        assertThat(resetAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
-    }
-
-    @Test
-    void shouldRemoveAllAttemptsWithAliasWhenResetByAlias() {
-        final Alias alias = AliasesMother.creditCardNumber();
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempt attemptWithAlias = mock(VerificationAttempt.class);
-        given(attemptWithAlias.getAlias()).willReturn(alias);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetByAlias(alias);
-
-        assertThat(resetAttempts).containsExactly(attempt);
-    }
-
-    @Test
-    void shouldCopyIdWhenResetByChannelId() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetByChannel("channel-id");
-
-        assertThat(resetAttempts.getId()).isEqualTo(attempts.getId());
-    }
-
-    @Test
-    void shouldCopyIdvIdWhenResetByChannelId() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetByChannel("channel-id");
-
-        assertThat(resetAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
-    }
-
-    @Test
-    void shouldRemoveAllAttemptsWithAliasWhenResetByChannelId() {
-        final String channelId = "channel-id";
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempt attemptWithChannelId = mock(VerificationAttempt.class);
-        given(attemptWithChannelId.getChannelId()).willReturn(channelId);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetByChannel(channelId);
-
-        assertThat(resetAttempts).containsExactly(attempt);
-    }
-
-    @Test
-    void shouldCopyIdvIdWhenResetByActivityName() {
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetByActivity("activity-name");
-
-        assertThat(resetAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
-    }
-
-    @Test
-    void shouldRemoveAllAttemptsWithAliasWhenResetByActivityName() {
-        final UUID idvId = UUID.randomUUID();
-        final String activityName = "activity-name";
-        final VerificationAttempt attempt = mock(VerificationAttempt.class);
-        final VerificationAttempt attemptWithChannelId = mock(VerificationAttempt.class);
-        given(attemptWithChannelId.getActivityName()).willReturn(activityName);
-        final VerificationAttempts attempts = new VerificationAttempts(idvId, Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetByActivity(activityName);
-
-        assertThat(resetAttempts).containsExactly(attempt);
-    }
-
-    @Test
-    void shouldCopyIdvIdWhenResetByPredicate() {
-        final UUID idvId = UUID.randomUUID();
-        final VerificationAttempt attempt = new FakeVerificationAttemptFailed(idvId);
-        final VerificationAttempts attempts = new VerificationAttempts(idvId, Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetBy(new PredicateMatchesActivityNames(attempt.getActivityName()));
-
-        assertThat(resetAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
-    }
-
-    @Test
-    void shouldRemoveAllAttemptsMatchingPredicateWhenResetByPredicate() {
-        final UUID idvId = UUID.randomUUID();
-        final VerificationAttempt attempt = new FakeVerificationAttemptFailed(idvId);
-        final VerificationAttempts attempts = new VerificationAttempts(idvId, Collections.singleton(attempt));
-
-        final VerificationAttempts resetAttempts = attempts.resetBy(new PredicateMatchesActivityNames(attempt.getActivityName()));
-
-        assertThat(resetAttempts).isEmpty();
-    }
-
-    @Test
     void shouldReturnAttemptsAsCollection() {
         final VerificationAttempt attempt1 = mock(VerificationAttempt.class);
         final VerificationAttempt attempt2 = mock(VerificationAttempt.class);
 
         final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Arrays.asList(attempt1, attempt2));
 
-        assertThat(attempts.asCollection()).containsExactly(attempt1, attempt2);
+        assertThat(attempts.collection()).containsExactly(attempt1, attempt2);
     }
 
     @Test

@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.api.lockout;
 
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
+import uk .co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.jsonapi.ApiDataWithId;
 import uk.co.mruoc.jsonapi.batch.ApiBatchDocumentWithId;
 

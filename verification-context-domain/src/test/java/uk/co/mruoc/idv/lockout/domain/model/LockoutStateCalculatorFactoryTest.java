@@ -15,7 +15,7 @@ class LockoutStateCalculatorFactoryTest {
 
     @Test
     void shouldThrowLockoutTypeNotSupportedExceptionForInvalidLockoutType() {
-        final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
+        final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
         given(parameters.getLockoutType()).willReturn("invalid");
 
         final Throwable error = catchThrowable(() -> factory.build(parameters));
@@ -27,7 +27,7 @@ class LockoutStateCalculatorFactoryTest {
 
     @Test
     void shouldReturnMaxAttemptsLockoutStateCalculatorForMaxAttemptsParameters() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final LockoutStateCalculator stateCalculator = factory.build(parameters);
 

@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import lombok.RequiredArgsConstructor;
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.MaxAttemptsLockoutPolicyParameters;
 
@@ -18,7 +19,7 @@ public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyD
     }
 
     @Override
-    public LockoutPolicyParameters toParameters(final LockoutPolicyDocument policyDocument) {
+    public DefaultLockoutPolicyParameters toParameters(final LockoutPolicyDocument policyDocument) {
         final MaxAttemptsLockoutPolicyDocument document = (MaxAttemptsLockoutPolicyDocument) policyDocument;
         final Collection<LockoutPolicyLookupDocument> lookupDocuments = document.getLookups();
         return MaxAttemptsLockoutPolicyParameters.builder()

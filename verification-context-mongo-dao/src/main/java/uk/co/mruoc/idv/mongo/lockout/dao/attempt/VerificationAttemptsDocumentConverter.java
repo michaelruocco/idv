@@ -29,7 +29,7 @@ public class VerificationAttemptsDocumentConverter {
     }
 
     public VerificationAttemptsDocument toAttemptsDocument(final VerificationAttempts attempts) {
-       final Collection<VerificationAttemptDocument> attemptDocuments = toAttemptDocuments(attempts.asCollection());
+       final Collection<VerificationAttemptDocument> attemptDocuments = toAttemptDocuments(attempts.collection());
        final VerificationAttemptsDocument attemptsDocument = new VerificationAttemptsDocument();
        attemptsDocument.setId(attempts.getId().toString());
        attemptsDocument.setIdvId(attempts.getIdvId().toString());

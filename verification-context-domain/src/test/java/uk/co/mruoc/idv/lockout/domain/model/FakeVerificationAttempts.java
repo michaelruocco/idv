@@ -1,5 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -12,6 +14,11 @@ public class FakeVerificationAttempts extends VerificationAttempts {
     public FakeVerificationAttempts() {
         this(DEFAULT_IDV_ID);
     }
+
+    public FakeVerificationAttempts(final VerificationAttempt... attempts) {
+        this(Arrays.asList(attempts));
+    }
+
     public FakeVerificationAttempts(final Collection<VerificationAttempt> attempts) {
         super(ID, DEFAULT_IDV_ID, attempts);
     }

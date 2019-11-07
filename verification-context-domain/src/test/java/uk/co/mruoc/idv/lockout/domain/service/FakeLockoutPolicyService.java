@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
@@ -33,7 +34,7 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void addPolicy(final LockoutPolicyParameters parameters) {
+    public void addPolicy(final DefaultLockoutPolicyParameters parameters) {
         this.lastAddedParameters = parameters;
     }
 

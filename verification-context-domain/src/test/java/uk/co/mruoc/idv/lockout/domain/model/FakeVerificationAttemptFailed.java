@@ -1,5 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
+import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 
 import java.time.Instant;
@@ -16,10 +17,14 @@ public class FakeVerificationAttemptFailed extends VerificationAttemptFailed {
     }
 
     public FakeVerificationAttemptFailed(final UUID idvId) {
+        this(idvId, AliasesMother.creditCardNumber());
+    }
+
+    public FakeVerificationAttemptFailed(final UUID idvId, final Alias alias) {
         super(CONTEXT_ID,
                 "fake-channel",
                 "fake-activity",
-                AliasesMother.creditCardNumber(),
+                alias,
                 idvId,
                 "fake-method",
                 VERIFICATION_ID,

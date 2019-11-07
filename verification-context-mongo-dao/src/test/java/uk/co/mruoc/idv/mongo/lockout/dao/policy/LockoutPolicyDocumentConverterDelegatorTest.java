@@ -1,6 +1,7 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
@@ -27,7 +28,7 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
     @Test
     void shouldThrowExceptionIfNoConverterSupportingLockoutPolicyParameters() {
-        final LockoutPolicyParameters parameters = mock(LockoutPolicyParameters.class);
+        final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
         given(parameters.getLockoutType()).willReturn("not-supported");
 
         final Throwable error = catchThrowable(() -> delegator.toDocument(parameters));
@@ -50,7 +51,7 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
     @Test
     void shouldConvertLockoutPolicyParameters() {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
         final LockoutPolicyDocument expectedDocument = new LockoutPolicyDocument();
         given(converter.supportsType(parameters.getLockoutType())).willReturn(true);
         given(converter.toDocument(parameters)).willReturn(expectedDocument);

@@ -2,8 +2,8 @@ package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import lombok.Builder;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 

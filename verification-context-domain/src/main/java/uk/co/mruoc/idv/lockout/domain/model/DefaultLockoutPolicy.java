@@ -6,23 +6,18 @@ import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequestConverter;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;
 
-import java.util.function.Predicate;
-
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private final LockoutPolicyParameters parameters;
-    private final Predicate<LockoutRequest> appliesToPolicy;
     private final LockoutStateCalculator stateCalculator;
     private final RecordAttemptStrategy recordAttemptStrategy;
     private final LockoutStateRequestConverter requestConverter;
 
     @Builder
     public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
-                                final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
         this(parameters,
-                appliesToPolicy,
                 stateCalculator,
                 recordAttemptStrategy,
                 new LockoutStateRequestConverter()
@@ -30,12 +25,10 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
-                                final Predicate<LockoutRequest> appliesToPolicy,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy,
                                 final LockoutStateRequestConverter requestConverter) {
         this.parameters = parameters;
-        this.appliesToPolicy = appliesToPolicy;
         this.stateCalculator = stateCalculator;
         this.recordAttemptStrategy = recordAttemptStrategy;
         this.requestConverter = requestConverter;
@@ -43,7 +36,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
 
     @Override
     public boolean appliesTo(final LockoutRequest request) {
-        return appliesToPolicy.test(request);
+        return parameters.appliesTo(request);
     }
 
     @Override
@@ -51,25 +44,21 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
         return recordAttemptStrategy.shouldRecordAttempt(request);
     }
 
-    //TODO need to fix reset so resets by specific alias value not just alias type
-    //when an alias is used the locking should be managed by that specific alias not
-    //all aliases of that type
     @Override
-    public VerificationAttempts reset(final VerificationAttempts attempts) {
-        return attempts.resetBy(appliesToPolicy);
+    public VerificationAttempts reset(final VerificationAttempts attempts, final LockoutRequest request) {
+        return removeApplicableAttempts(attempts, request);
     }
 
     @Override
     public LockoutState reset(final CalculateLockoutStateRequest request) {
-        final VerificationAttempts attempts = request.getAttempts();
-        final VerificationAttempts resetAttempts = reset(attempts);
+        final VerificationAttempts resetAttempts = removeApplicableAttempts(request);
         final CalculateLockoutStateRequest calculateRequest = requestConverter.toCalculateRequest(request, resetAttempts);
         return stateCalculator.calculate(calculateRequest);
     }
 
     @Override
     public LockoutState calculateLockoutState(final CalculateLockoutStateRequest request) {
-        final VerificationAttempts applicableAttempts = filterApplicableAttempts(request.getAttempts());
+        final VerificationAttempts applicableAttempts = filterApplicableAttempts(request);
         final CalculateLockoutStateRequest calculateRequest = requestConverter.toCalculateRequest(request, applicableAttempts);
         return stateCalculator.calculate(calculateRequest);
     }
@@ -89,13 +78,27 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
         return recordAttemptStrategy;
     }
 
-    @Override
-    public Predicate<LockoutRequest> getAppliesToPolicyPredicate() {
-        return appliesToPolicy;
+    private VerificationAttempts removeApplicableAttempts(final CalculateLockoutStateRequest request) {
+        return removeApplicableAttempts(request.getAttempts(), request);
     }
 
-    private VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts) {
-        return attempts.filterBy(appliesToPolicy);
+    private VerificationAttempts removeApplicableAttempts(final VerificationAttempts attempts,
+                                                          final LockoutRequest request) {
+        final VerificationAttempts applicableAttempts = filterApplicableAttempts(attempts, request);
+        return attempts.remove(applicableAttempts);
+    }
+
+    private VerificationAttempts filterApplicableAttempts(final CalculateLockoutStateRequest request) {
+        return filterApplicableAttempts(request.getAttempts(), request);
+    }
+
+    private VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts,
+                                                          final LockoutRequest request) {
+        if (parameters.useAliasLevelLocking()) {
+            final VerificationAttempts aliasAttempts = attempts.filterMatching(request.getAlias());
+            return aliasAttempts.filterMatching(parameters);
+        }
+        return attempts.filterMatching(parameters);
     }
 
 }
