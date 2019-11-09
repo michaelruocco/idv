@@ -1,17 +1,17 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.domain.service.TimeService;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.identity.domain.service.LoadIdentityRequest;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.usecases.identity.IdentityService;
+import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
 
 @Builder
 public class DefaultLockoutFacade implements LockoutFacade {
 
-    private final TimeService timeService;
+    private final TimeGenerator timeGenerator;
     private final IdentityService identityService;
     private final LockoutService lockoutService;
 
@@ -46,7 +46,7 @@ public class DefaultLockoutFacade implements LockoutFacade {
     private LockoutStateRequest toLockoutStateRequest(final LockoutRequest request,
                                                       final Identity identity) {
         return DefaultLoadLockoutStateRequest.builder()
-                .timestamp(timeService.now())
+                .timestamp(timeGenerator.now())
                 .channelId(request.getChannelId())
                 .activityName(request.getActivityName())
                 .alias(request.getAlias())

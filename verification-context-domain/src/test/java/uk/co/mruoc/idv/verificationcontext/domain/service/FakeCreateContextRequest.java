@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
-import uk.co.mruoc.idv.domain.model.activity.FakeOnlinePurchase;
-import uk.co.mruoc.idv.domain.model.channel.Rsa;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
+import uk.co.idv.domain.entities.activity.FakeOnlinePurchase;
+import uk.co.idv.domain.entities.channel.Rsa;
+import uk.co.idv.domain.entities.identity.AliasesMother;
 
 public class FakeCreateContextRequest extends CreateContextRequest {
 

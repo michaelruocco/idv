@@ -67,8 +67,8 @@ import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.
 import uk.co.idv.repository.mongo.verificationcontext.method.pushnotification.PushNotificationDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.identity.dao.IdentityDao;
-import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
+import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.domain.entities.identity.AliasFactory;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;

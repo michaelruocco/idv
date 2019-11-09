@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.zalando.jackson.datatype.money.MoneyModule;
 import uk.co.mruoc.idv.api.lockout.JsonApiLockoutStateModule;
 import uk.co.mruoc.idv.api.verificationcontext.JsonApiVerificationContextModule;
-import uk.co.mruoc.idv.domain.service.CurrentTimeService;
-import uk.co.mruoc.idv.domain.service.IdGenerator;
-import uk.co.mruoc.idv.domain.service.RandomIdGenerator;
-import uk.co.mruoc.idv.domain.service.TimeService;
-import uk.co.mruoc.idv.identity.dao.IdentityDao;
-import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
-import uk.co.mruoc.idv.identity.domain.service.DefaultIdentityService;
-import uk.co.mruoc.idv.identity.domain.service.IdentityService;
+import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
+import uk.co.idv.domain.usecases.util.IdGenerator;
+import uk.co.idv.domain.usecases.util.RandomIdGenerator;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.domain.entities.identity.AliasFactory;
+import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
+import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.mruoc.idv.json.activity.ActivityModule;
 import uk.co.mruoc.idv.json.channel.ChannelModule;
 import uk.co.mruoc.idv.json.identity.IdentityModule;
@@ -79,8 +79,8 @@ public class DomainConfig {
     }
 
     @Bean
-    public TimeService timeService() {
-        return new CurrentTimeService();
+    public TimeGenerator timeService() {
+        return new CurrentTimeGenerator();
     }
 
     @Bean
@@ -231,11 +231,11 @@ public class DomainConfig {
     }
 
     @Bean
-    public VerificationContextLoader verificationContextLoader(final TimeService timeService,
+    public VerificationContextLoader verificationContextLoader(final TimeGenerator timeGenerator,
                                                                final LockoutService lockoutService,
                                                                final VerificationContextDao dao) {
         return DefaultVerificationContextLoader.builder()
-                .timeService(timeService)
+                .timeGenerator(timeGenerator)
                 .lockoutService(lockoutService)
                 .dao(dao)
                 .build();
@@ -254,7 +254,7 @@ public class DomainConfig {
 
     @Bean
     public VerificationContextCreator verificationContextCreator(final IdGenerator idGenerator,
-                                                                 final TimeService timeService,
+                                                                 final TimeGenerator timeGenerator,
                                                                  final IdentityService identityService,
                                                                  final SequenceLoader sequenceLoader,
                                                                  final ExpiryCalculator expiryCalculator,
@@ -262,7 +262,7 @@ public class DomainConfig {
                                                                  final VerificationContextDao dao) {
         return VerificationContextCreator.builder()
                 .idGenerator(idGenerator)
-                .timeService(timeService)
+                .timeGenerator(timeGenerator)
                 .identityService(identityService)
                 .sequenceLoader(sequenceLoader)
                 .expiryCalculator(expiryCalculator)
@@ -284,11 +284,11 @@ public class DomainConfig {
     }
 
     @Bean
-    public LockoutFacade lockoutFacade(final TimeService timeService,
+    public LockoutFacade lockoutFacade(final TimeGenerator timeGenerator,
                                        final IdentityService identityService,
                                        final LockoutService lockoutService) {
         return DefaultLockoutFacade.builder()
-                .timeService(timeService)
+                .timeGenerator(timeGenerator)
                 .identityService(identityService)
                 .lockoutService(lockoutService)
                 .build();

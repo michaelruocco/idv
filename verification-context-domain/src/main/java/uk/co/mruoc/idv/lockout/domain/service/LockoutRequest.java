@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
-import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.idv.domain.entities.identity.Alias;
 
 
 public interface LockoutRequest extends ChannelIdProvider, ActivityNameProvider, AliasTypeProvider {

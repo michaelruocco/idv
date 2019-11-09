@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
 import uk.co.mruoc.idv.verificationcontext.domain.service.CalculateExpiryRequest.CalculateExpiryRequestBuilder;
 

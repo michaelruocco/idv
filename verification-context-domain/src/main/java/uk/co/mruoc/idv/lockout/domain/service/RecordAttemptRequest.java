@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
 import lombok.Getter;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.idv.domain.entities.identity.Alias;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
 

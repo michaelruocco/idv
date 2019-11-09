@@ -1,12 +1,12 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.AliasesMother;
 
 import java.time.Instant;
 import java.util.UUID;

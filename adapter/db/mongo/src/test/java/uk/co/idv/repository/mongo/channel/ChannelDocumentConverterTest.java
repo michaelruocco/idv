@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.channel;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.exception.ChannelNotSupportedException;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.domain.model.channel.Rsa;
+import uk.co.idv.domain.usecases.exception.ChannelNotSupportedException;
+import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.channel.Rsa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

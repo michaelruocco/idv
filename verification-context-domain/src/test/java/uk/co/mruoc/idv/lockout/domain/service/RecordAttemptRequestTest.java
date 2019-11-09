@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.idv.domain.entities.identity.Alias;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest.RecordAttemptRequestBuilder;
 import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;

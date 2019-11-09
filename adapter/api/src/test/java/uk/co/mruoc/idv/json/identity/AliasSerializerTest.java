@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.AliasesMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

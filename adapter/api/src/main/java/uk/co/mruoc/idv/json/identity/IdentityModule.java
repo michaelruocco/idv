@@ -1,9 +1,9 @@
 package uk.co.mruoc.idv.json.identity;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.Aliases;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.Aliases;
+import uk.co.idv.domain.entities.identity.Identity;
 
 public class IdentityModule extends SimpleModule {
 

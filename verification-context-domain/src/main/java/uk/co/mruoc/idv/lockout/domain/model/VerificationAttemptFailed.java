@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.idv.domain.entities.identity.Alias;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -3,9 +3,9 @@ package uk.co.idv.repository.mongo.identity;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
 import uk.co.idv.repository.mongo.identity.alias.AliasesDocumentConverter;
-import uk.co.mruoc.idv.identity.domain.model.Aliases;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
+import uk.co.idv.domain.entities.identity.Aliases;
+import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.Identity;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
+import uk.co.idv.domain.entities.identity.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.service.CalculateLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.FakeCalculateLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.RecordAttemptRequest;

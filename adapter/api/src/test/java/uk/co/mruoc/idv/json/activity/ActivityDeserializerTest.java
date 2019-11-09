@@ -3,9 +3,9 @@ package uk.co.mruoc.idv.json.activity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.FakeOnlinePurchase;
+import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.FakeOnlinePurchase;
 
 import java.io.IOException;
 

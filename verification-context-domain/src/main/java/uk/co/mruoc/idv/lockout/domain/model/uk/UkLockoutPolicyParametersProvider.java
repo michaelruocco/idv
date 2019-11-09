@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.model.uk;
 
-import uk.co.mruoc.idv.identity.domain.model.CreditCardNumber;
-import uk.co.mruoc.idv.identity.domain.model.DebitCardNumber;
+import uk.co.idv.domain.entities.identity.CreditCardNumber;
+import uk.co.idv.domain.entities.identity.DebitCardNumber;
 import uk.co.mruoc.idv.lockout.domain.LockoutPolicyParametersProvider;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 

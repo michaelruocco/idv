@@ -1,13 +1,13 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.service.FakeTimeService;
-import uk.co.mruoc.idv.domain.service.TimeService;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
-import uk.co.mruoc.idv.identity.domain.service.LoadIdentityRequest;
+import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.usecases.identity.FakeIdentityService;
+import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.model.FakeLockoutStateMaxAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 
@@ -20,12 +20,12 @@ class DefaultLockoutFacadeTest {
     private final Instant now = Instant.now();
     private final Identity identity = new Identity(AliasesMother.aliases());
 
-    private final TimeService timeService = new FakeTimeService(now);
+    private final TimeGenerator timeGenerator = new FakeTimeGenerator(now);
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
     private final FakeLockoutService lockoutService = new FakeLockoutService();
 
     private final LockoutFacade facade = DefaultLockoutFacade.builder()
-            .timeService(timeService)
+            .timeGenerator(timeGenerator)
             .identityService(identityService)
             .lockoutService(lockoutService)
             .build();

@@ -3,9 +3,9 @@ package uk.co.mruoc.idv.json.channel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.domain.exception.ChannelNotSupportedException;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.domain.model.channel.Rsa;
+import uk.co.idv.domain.usecases.exception.ChannelNotSupportedException;
+import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.channel.Rsa;
 
 import java.io.IOException;
 

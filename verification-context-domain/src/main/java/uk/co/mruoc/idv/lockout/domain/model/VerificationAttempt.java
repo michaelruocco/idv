@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
-import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.idv.domain.entities.identity.Alias;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 
 import java.time.Instant;

@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.identity;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.identity.dao.IdentityDao;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
+import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.Identity;
 
 import java.util.Collection;
 import java.util.Optional;

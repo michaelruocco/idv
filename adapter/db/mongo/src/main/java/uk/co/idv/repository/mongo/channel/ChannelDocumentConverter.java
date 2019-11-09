@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.channel;
 
-import uk.co.mruoc.idv.domain.exception.ChannelNotSupportedException;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.domain.model.channel.Rsa;
+import uk.co.idv.domain.usecases.exception.ChannelNotSupportedException;
+import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.channel.Rsa;
 
 public class ChannelDocumentConverter {
 

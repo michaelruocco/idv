@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.activity;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
+import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.FakeActivity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

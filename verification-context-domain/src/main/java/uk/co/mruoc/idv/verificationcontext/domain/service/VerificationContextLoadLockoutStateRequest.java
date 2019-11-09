@@ -1,9 +1,9 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.identity.Alias;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 
 import java.time.Instant;

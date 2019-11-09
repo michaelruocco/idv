@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
+import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import java.io.IOException;
 import java.util.Collections;

@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.service.FakeTimeService;
-import uk.co.mruoc.idv.domain.service.TimeService;
+import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
@@ -26,14 +26,14 @@ class VerificationContextLoaderTest {
 
     private static final Instant NOW = Instant.parse("2019-09-21T20:46:32.233721Z");
 
-    private final TimeService timeService = new FakeTimeService(NOW);
+    private final TimeGenerator timeGenerator = new FakeTimeGenerator(NOW);
     private final FakeLockoutService lockoutService = new FakeLockoutService();
     private final VerificationContextDao dao = mock(VerificationContextDao.class);
 
     private final VerificationContextLoader loader = DefaultVerificationContextLoader.builder()
             .dao(dao)
             .lockoutService(lockoutService)
-            .timeService(timeService)
+            .timeGenerator(timeGenerator)
             .build();
 
     @Test

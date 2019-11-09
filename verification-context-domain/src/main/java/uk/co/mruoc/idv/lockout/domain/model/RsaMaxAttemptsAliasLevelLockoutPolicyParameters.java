@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.lockout.domain.model;
 
 import lombok.Getter;
-import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
-import uk.co.mruoc.idv.domain.model.channel.Rsa;
+import uk.co.idv.domain.entities.activity.OnlinePurchase;
+import uk.co.idv.domain.entities.channel.Rsa;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.activity;
 
-import uk.co.mruoc.idv.domain.exception.ActivityNotSupportedException;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
+import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
+import uk.co.idv.domain.entities.activity.Activity;
 
 import java.util.Arrays;
 import java.util.Collection;

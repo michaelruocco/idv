@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
+import uk.co.idv.domain.entities.identity.AliasesMother;
 import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutRequest;

@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.domain.service.IdGenerator;
+import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 

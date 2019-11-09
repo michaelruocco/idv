@@ -1,6 +1,6 @@
 package uk.co.idv.repository.mongo.activity;
 
-import uk.co.mruoc.idv.domain.model.activity.Activity;
+import uk.co.idv.domain.entities.activity.Activity;
 
 public interface ActivityDocumentConverter {
 

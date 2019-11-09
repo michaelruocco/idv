@@ -1,12 +1,12 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.service.IdGenerator;
-import uk.co.mruoc.idv.domain.service.TimeService;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.mruoc.idv.identity.domain.service.IdentityService;
-import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.usecases.util.IdGenerator;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.usecases.identity.IdentityService;
+import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
@@ -20,7 +20,7 @@ import java.util.UUID;
 public class VerificationContextCreator {
 
     private final IdGenerator idGenerator;
-    private final TimeService timeService;
+    private final TimeGenerator timeGenerator;
     private final IdentityService identityService;
     private final SequenceLoader sequenceLoader;
     private final ExpiryCalculator expiryCalculator;
@@ -35,7 +35,7 @@ public class VerificationContextCreator {
         final VerificationSequences sequences = loadVerificationSequences(request, identity);
 
         final UUID id = idGenerator.generate();
-        final Instant created = timeService.now();
+        final Instant created = timeGenerator.now();
         final Instant expiry = calculateExpiry(request, created, sequences);
 
         final VerificationContext context = VerificationContext.builder()
@@ -68,7 +68,7 @@ public class VerificationContextCreator {
                 .activity(createContextRequest.getActivity())
                 .alias(createContextRequest.getProvidedAlias())
                 .idvIdValue(identity.getIdvIdValue())
-                .timestamp(timeService.now())
+                .timestamp(timeGenerator.now())
                 .build();
         lockoutService.validateState(request);
     }

@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.verificationcontext.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.exception.MethodNotSupportedException;
+import uk.co.idv.domain.usecases.exception.MethodNotSupportedException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 

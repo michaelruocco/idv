@@ -1,19 +1,19 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
-import uk.co.mruoc.idv.domain.service.FakeIdGenerator;
-import uk.co.mruoc.idv.domain.service.FakeTimeService;
-import uk.co.mruoc.idv.domain.service.IdGenerator;
-import uk.co.mruoc.idv.domain.service.TimeService;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.mruoc.idv.identity.domain.service.FakeIdentityService;
-import uk.co.mruoc.idv.identity.domain.service.UpsertIdentityRequest;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.usecases.util.FakeIdGenerator;
+import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
+import uk.co.idv.domain.usecases.util.IdGenerator;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.usecases.identity.FakeIdentityService;
+import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.service.FakeLockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
@@ -38,7 +38,7 @@ class VerificationContextCreatorTest {
     private static final Duration EXPIRY_DURATION = Duration.ofMinutes(5);
 
     private final IdGenerator idGenerator = new FakeIdGenerator(ID);
-    private final TimeService timeService = new FakeTimeService(NOW);
+    private final TimeGenerator timeGenerator = new FakeTimeGenerator(NOW);
 
     private final Identity identity = new Identity(AliasesMother.aliases());
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
@@ -53,7 +53,7 @@ class VerificationContextCreatorTest {
 
     private final VerificationContextCreator creator = VerificationContextCreator.builder()
             .idGenerator(idGenerator)
-            .timeService(timeService)
+            .timeGenerator(timeGenerator)
             .identityService(identityService)
             .sequenceLoader(sequenceLoader)
             .expiryCalculator(expiryCalculator)

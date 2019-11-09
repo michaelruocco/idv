@@ -1,13 +1,13 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
-import uk.co.mruoc.idv.domain.model.channel.Channel;
-import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext.VerificationContextBuilder;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;

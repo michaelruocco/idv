@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.lockout.domain.model;
 import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
-import uk.co.mruoc.idv.identity.domain.model.Alias;
+import uk.co.idv.domain.entities.identity.Alias;
 
 import java.util.ArrayList;
 import java.util.Collection;

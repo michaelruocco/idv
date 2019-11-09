@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.activity;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import java.time.Instant;
 

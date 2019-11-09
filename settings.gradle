@@ -1,7 +1,6 @@
 rootProject.name = 'verification-context'
 
 include ':verification-context-domain'
-include ':verification-context-spring'
 
 //adapters
 include ':api'

@@ -2,10 +2,10 @@ package uk.co.idv.repository.mongo.activity;
 
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
-import uk.co.mruoc.idv.domain.model.activity.FakeOnlinePurchase;
-import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.activity.FakeOnlinePurchase;
+import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import javax.money.MonetaryAmount;
 import java.math.BigDecimal;

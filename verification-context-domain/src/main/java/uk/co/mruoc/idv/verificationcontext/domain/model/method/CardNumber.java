@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.idv.util.NumberMasker;
+import uk.co.idv.domain.usecases.util.NumberMasker;
 
 import java.util.UUID;
 

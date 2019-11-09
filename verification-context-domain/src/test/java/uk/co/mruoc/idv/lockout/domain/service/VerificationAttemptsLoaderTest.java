@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.domain.service.FakeIdGenerator;
-import uk.co.mruoc.idv.domain.service.IdGenerator;
+import uk.co.idv.domain.usecases.util.FakeIdGenerator;
+import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;

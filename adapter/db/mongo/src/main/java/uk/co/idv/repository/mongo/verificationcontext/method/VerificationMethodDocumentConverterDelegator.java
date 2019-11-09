@@ -1,6 +1,6 @@
 package uk.co.idv.repository.mongo.verificationcontext.method;
 
-import uk.co.mruoc.idv.domain.exception.MethodNotSupportedException;
+import uk.co.idv.domain.usecases.exception.MethodNotSupportedException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
 
 import java.util.Collection;

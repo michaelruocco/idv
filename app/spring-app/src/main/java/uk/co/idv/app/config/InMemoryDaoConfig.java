@@ -11,7 +11,7 @@ import uk.co.idv.repository.inmemory.identity.InMemoryIdentityDao;
 import uk.co.idv.repository.inmemory.lockout.InMemoryLockoutPolicyDao;
 import uk.co.idv.repository.inmemory.lockout.InMemoryVerificationAttemptsDao;
 import uk.co.idv.repository.inmemory.verificationcontext.InMemoryVerificationContextDao;
-import uk.co.mruoc.idv.identity.dao.IdentityDao;
+import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;

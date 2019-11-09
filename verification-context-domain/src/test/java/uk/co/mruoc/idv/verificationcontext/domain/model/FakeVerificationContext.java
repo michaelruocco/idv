@@ -1,9 +1,9 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model;
 
-import uk.co.mruoc.idv.domain.model.activity.FakeActivity;
-import uk.co.mruoc.idv.domain.model.channel.FakeChannel;
-import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
-import uk.co.mruoc.idv.identity.domain.model.Identity;
+import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
 
 import java.time.Instant;

@@ -2,8 +2,8 @@ package uk.co.mruoc.idv.json.activity;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import org.javamoney.moneta.Money;
-import uk.co.mruoc.idv.domain.model.activity.Activity;
-import uk.co.mruoc.idv.domain.model.activity.OnlinePurchase;
+import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;

@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.verificationcontext.domain.service;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.domain.service.TimeService;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLoadLockoutStateRequest;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutService;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutStateRequest;
@@ -16,7 +16,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
 
     private final VerificationContextDao dao;
     private final LockoutService lockoutService;
-    private final TimeService timeService;
+    private final TimeGenerator timeGenerator;
 
     @Override
     public VerificationContext load(final LoadContextRequest request) {
@@ -31,7 +31,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
     }
 
     private void validateExpiry(final VerificationContext context) {
-        final Instant now = timeService.now();
+        final Instant now = timeGenerator.now();
         if (context.hasExpired(now)) {
             throw new VerificationContextExpiredException(context, now);
         }
@@ -43,7 +43,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
                 .activityName(context.getActivityName())
                 .alias(context.getProvidedAlias())
                 .idvIdValue(context.getIdvIdValue())
-                .timestamp(timeService.now())
+                .timestamp(timeGenerator.now())
                 .build();
         lockoutService.validateState(request);
     }
