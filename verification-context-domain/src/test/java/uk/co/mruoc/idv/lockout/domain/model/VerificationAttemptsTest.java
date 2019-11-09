@@ -82,6 +82,16 @@ class VerificationAttemptsTest {
     }
 
     @Test
+    void shouldReturnAttemptsAsStream() {
+        final VerificationAttempt attempt1 = mock(VerificationAttempt.class);
+        final VerificationAttempt attempt2 = mock(VerificationAttempt.class);
+
+        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Arrays.asList(attempt1, attempt2));
+
+        assertThat(attempts.stream()).containsExactly(attempt1, attempt2);
+    }
+
+    @Test
     void shouldPrintDetails() {
         final UUID id = UUID.fromString("2a1d0080-df0d-42f7-a48e-5586ade9fbe4");
         final UUID idvId = UUID.fromString("cc0da921-c677-4ff7-8e4b-c7f72c8b944e");

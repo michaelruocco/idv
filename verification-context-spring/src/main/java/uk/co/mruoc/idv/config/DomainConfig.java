@@ -20,10 +20,10 @@ import uk.co.mruoc.idv.json.channel.ChannelModule;
 import uk.co.mruoc.idv.json.identity.IdentityModule;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
+import uk.co.mruoc.idv.lockout.domain.LockoutPolicyParametersProvider;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
-import uk.co.mruoc.idv.lockout.domain.model.RsaMaxAttemptsLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory;
+import uk.co.mruoc.idv.lockout.domain.model.uk.UkLockoutPolicyParametersProvider;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutFacade;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutPolicyService;
 import uk.co.mruoc.idv.lockout.domain.service.DefaultLockoutService;
@@ -118,14 +118,19 @@ public class DomainConfig {
     }
 
     @Bean
+    public LockoutPolicyParametersProvider lockoutPolicyParametersProvider() {
+        return new UkLockoutPolicyParametersProvider();
+    }
+
+    @Bean
     public LockoutPolicyService lockoutPolicyService(final LockoutPolicyParametersConverter parametersConverter,
-                                                     final LockoutPolicyDao dao) {
+                                                     final LockoutPolicyDao dao,
+                                                     final LockoutPolicyParametersProvider policiesProvider) {
         final LockoutPolicyService policyService = DefaultLockoutPolicyService.builder()
                 .parametersConverter(parametersConverter)
                 .dao(dao)
                 .build();
-        final DefaultLockoutPolicyParameters parameters = new RsaMaxAttemptsLockoutPolicyParameters();
-        policyService.addPolicy(parameters);
+        policyService.addPolicies(policiesProvider.getPolicies());
         return policyService;
     }
 

@@ -27,7 +27,7 @@ class LockoutPoliciesDocumentSerializerTest {
 
         final String json = MAPPER.writeValueAsString(document);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/json-api/max-attempts-lockout-policies-document.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/json-api/max-attempts-alias-level-lockout-policies-document.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

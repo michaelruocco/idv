@@ -45,46 +45,14 @@ public class MongoLockoutPolicyDao implements LockoutPolicyDao {
 
     @Override
     public Optional<LockoutPolicy> load(final LockoutRequest request) {
-        final String channelId = request.getChannelId();
-        final String activityName = request.getActivityName();
-        final String aliasType = request.getAliasType();
-        final Collection<LockoutPolicyDocument> documents = repository.findByLookupsChannelIdAndLookupsActivityNameAndLookupsAliasType(
-                channelId,
-                activityName,
-                aliasType
-        );
-        return handleDocuments(request, documents);
-    }
-
-    private Optional<LockoutPolicy> handleDocuments(final LockoutRequest request,
-                                                    final Collection<LockoutPolicyDocument> documents) {
-        if (documents.isEmpty()) {
-            return Optional.empty();
-        }
-        if (documents.size() == 1) {
-            return Optional.of(toPolicy(documents.iterator().next()));
-        }
-        throw new MultipleLockoutPoliciesFoundException(request); // should never happen!
+        final String key = LockoutPolicyDocumentKeyConverter.toKey(request);
+        final Optional<LockoutPolicyDocument> document = repository.findById(key);
+        return document.map(this::toPolicy);
     }
 
     private LockoutPolicy toPolicy(final LockoutPolicyDocument document) {
         final LockoutPolicyParameters parameters = documentConverter.toParameters(document);
         return parametersConverter.toPolicy(parameters);
-    }
-
-    public static class MultipleLockoutPoliciesFoundException extends RuntimeException {
-
-        public MultipleLockoutPoliciesFoundException(final LockoutRequest request) {
-            super(toMessage(request));
-        }
-
-        private static String toMessage(final LockoutRequest request) {
-            return String.format("channelId %s, activityName %s, aliasType %s",
-                    request.getChannelId(),
-                    request.getActivityName(),
-                    request.getAliasType());
-        }
-
     }
 
 }

@@ -2,7 +2,6 @@ package uk.co.mruoc.idv.lockout.domain.model;
 
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
-import java.util.Collection;
 import java.util.UUID;
 
 public class FakeLockoutPolicyParameters implements LockoutPolicyParameters {
@@ -31,22 +30,17 @@ public class FakeLockoutPolicyParameters implements LockoutPolicyParameters {
     }
 
     @Override
-    public boolean useAliasLevelLocking() {
+    public boolean isAliasLevel() {
         return aliasLevelLocking;
     }
 
     @Override
-    public Collection<String> getChannelIds() {
+    public String getChannelId() {
         return null;
     }
 
     @Override
-    public Collection<String> getActivityNames() {
-        return null;
-    }
-
-    @Override
-    public Collection<String> getAliasTypes() {
+    public String getActivityName() {
         return null;
     }
 

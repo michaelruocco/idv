@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "timestamp",
         "merchantName",
         "reference",
-        "cost"})
+        "cost"
+})
 public interface ActivityMixin {
 
     // intentionally blank

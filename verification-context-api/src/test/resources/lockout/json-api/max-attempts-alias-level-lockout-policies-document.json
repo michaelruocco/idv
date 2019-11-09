@@ -7,15 +7,9 @@
         "type": "max-attempts",
         "maxNumberOfAttempts": 3,
         "recordAttemptStrategy": "every-attempt",
-        "channelIds": [
-          "fake-channel"
-        ],
-        "activityNames": [
-          "fake-activity"
-        ],
-        "aliasTypes": [
-          "fake-alias-type"
-        ]
+        "channelId": "fake-channel",
+        "activityName": "fake-activity",
+        "aliasType": "fake-alias-type"
       }
     }
   ]

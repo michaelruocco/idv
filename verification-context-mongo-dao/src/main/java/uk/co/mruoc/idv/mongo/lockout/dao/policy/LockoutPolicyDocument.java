@@ -1,24 +1,18 @@
 package uk.co.mruoc.idv.mongo.lockout.dao.policy;
 
 import lombok.Data;
-import org.apache.commons.collections4.IterableUtils;
-import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.Collection;
 
 @Data
 @Document("lockoutPolicies")
-@CompoundIndex(def = "{'requests.channelId':1, 'requests.activityName':1, 'requests.aliasType':1}", name = "load-index", unique = true)
 public class LockoutPolicyDocument {
 
+    @Id
+    private String key;
     private String id;
     private String lockoutType;
     private String recordAttemptStrategyType;
-    private Collection<LockoutPolicyLookupDocument> lookups;
-
-    public LockoutPolicyLookupDocument getLookup(final int index) {
-        return IterableUtils.get(lookups, index);
-    }
+    private boolean aliasLevel;
 
 }

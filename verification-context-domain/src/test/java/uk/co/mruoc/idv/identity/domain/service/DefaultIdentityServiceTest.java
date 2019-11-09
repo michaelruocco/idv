@@ -41,7 +41,26 @@ class DefaultIdentityServiceTest {
         final Identity identity = service.upsert(request);
 
         final Aliases aliases = identity.getAliases();
-        assertThat(aliases).contains(new IdvId(VALUE));
+        assertThat(aliases).containsExactlyInAnyOrder(
+                new IdvId(VALUE),
+                providedAlias
+        );
+    }
+
+    @Test
+    void shouldReturnNewIdentityWithGeneratedIdvIdAndAdditionalAliasIfIdentityNotFoundAndAliasValueEndsWithTwo() {
+        final Alias providedAlias = AliasesMother.creditCardNumber("4929992222222222");
+        final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
+        given(dao.load(providedAlias)).willReturn(Optional.empty());
+
+        final Identity identity = service.upsert(request);
+
+        final Aliases aliases = identity.getAliases();
+        assertThat(aliases).containsExactlyInAnyOrder(
+                new IdvId(VALUE),
+                providedAlias,
+                AliasesMother.creditCardNumber("4929992222222223")
+        );
     }
 
     @Test

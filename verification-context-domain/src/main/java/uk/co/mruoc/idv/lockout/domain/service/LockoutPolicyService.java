@@ -1,7 +1,6 @@
 package uk.co.mruoc.idv.lockout.domain.service;
 
 import lombok.Getter;
-import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutState;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
@@ -16,7 +15,11 @@ public interface LockoutPolicyService {
 
     VerificationAttempts resetAttempts(CalculateLockoutStateRequest request);
 
-    void addPolicy(DefaultLockoutPolicyParameters policy);
+    default void addPolicies(Collection<LockoutPolicyParameters> policies) {
+        policies.forEach(this::addPolicy);
+    }
+
+    void addPolicy(LockoutPolicyParameters policy);
 
     Collection<LockoutPolicyParameters> loadPolicies();
 

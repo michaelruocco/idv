@@ -7,12 +7,12 @@ import uk.co.mruoc.idv.json.lockout.LockoutPolicyParametersMixin;
 import java.util.UUID;
 
 @JsonPropertyOrder({
+        "channelId",
+        "activityName",
+        "aliasType",
         "type",
-        "maxNumberOfAttempts",
         "recordAttemptStrategy",
-        "channelIds",
-        "activityNames",
-        "aliasTypes"
+        "maxNumberOfAttempts"
 })
 public interface JsonApiLockoutPolicyParametersMixin extends LockoutPolicyParametersMixin {
 

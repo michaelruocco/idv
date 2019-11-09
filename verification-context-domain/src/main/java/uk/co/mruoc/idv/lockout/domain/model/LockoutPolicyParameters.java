@@ -2,7 +2,6 @@ package uk.co.mruoc.idv.lockout.domain.model;
 
 import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
 
-import java.util.Collection;
 import java.util.UUID;
 
 public interface LockoutPolicyParameters {
@@ -15,12 +14,10 @@ public interface LockoutPolicyParameters {
 
     boolean appliesTo(LockoutRequest request);
 
-    boolean useAliasLevelLocking();
+    boolean isAliasLevel();
 
-    Collection<String> getChannelIds();
+    String getChannelId();
 
-    Collection<String> getActivityNames();
-
-    Collection<String> getAliasTypes();
+    String getActivityName();
 
 }

@@ -36,7 +36,7 @@ class LockoutStateCalculatorFactoryTest {
 
     @Test
     void shouldPopulateMaxAttemptsOnStateCalculator() {
-        final MaxAttemptsLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final MaxAttemptsAliasLevelLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) factory.build(parameters);
 
