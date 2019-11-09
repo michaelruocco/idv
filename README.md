@@ -29,5 +29,5 @@ useful commands:
 
 ```
 // stops and removes any running docker containers
-./gradlew clean build buildImage composeUp
+./gradlew composeDown
 ```

@@ -31,47 +31,47 @@ import uk.co.mruoc.idv.identity.domain.model.AliasFactory;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
-import uk.co.mruoc.idv.mongo.dao.activity.ActivityDocumentConverter;
-import uk.co.mruoc.idv.mongo.dao.activity.ActivityConverterDelegator;
-import uk.co.mruoc.idv.mongo.dao.activity.MonetaryAmountDocumentConverter;
-import uk.co.mruoc.idv.mongo.dao.activity.OnlinePurchaseDocumentConverter;
-import uk.co.mruoc.idv.mongo.dao.channel.ChannelDocumentConverter;
-import uk.co.mruoc.idv.mongo.identity.dao.AliasDocumentConverter;
-import uk.co.mruoc.idv.mongo.identity.dao.AliasesDocumentConverter;
-import uk.co.mruoc.idv.mongo.identity.dao.IdentityDocumentConverter;
-import uk.co.mruoc.idv.mongo.identity.dao.IdentityRepository;
-import uk.co.mruoc.idv.mongo.MongoIndexResolver;
-import uk.co.mruoc.idv.mongo.identity.dao.MongoIdentityDao;
-import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyDocumentConverter;
-import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyDocumentConverterDelegator;
-import uk.co.mruoc.idv.mongo.lockout.dao.policy.LockoutPolicyRepository;
-import uk.co.mruoc.idv.mongo.lockout.dao.policy.MaxAttemptsAliasLevelLockoutPolicyDocumentConverter;
-import uk.co.mruoc.idv.mongo.lockout.dao.policy.MongoLockoutPolicyDao;
-import uk.co.mruoc.idv.mongo.lockout.dao.attempt.MongoVerificationAttemptsDao;
-import uk.co.mruoc.idv.mongo.lockout.dao.attempt.VerificationAttemptDocumentConverter;
-import uk.co.mruoc.idv.mongo.lockout.dao.attempt.VerificationAttemptsDocumentConverter;
-import uk.co.mruoc.idv.mongo.lockout.dao.attempt.VerificationAttemptsRepository;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.eligibility.EligibilityDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.MongoVerificationContextDao;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequencesConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardCredentialsDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumberDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.CardNumbersDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumberDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobileNumbersDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.MobilePinsentryDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.OneTimePasscodeSmsDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PasscodeSettingsDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PhysicalPinsentryDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.PushNotificationDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationContextRepository;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodDocumentConverterDelegator;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.method.VerificationMethodsDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.VerificationSequenceDocumentConverter;
-import uk.co.mruoc.idv.mongo.verificationcontext.dao.result.VerificationResultsDocumentConverter;
+import uk.co.idv.repository.mongo.activity.ActivityDocumentConverter;
+import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
+import uk.co.idv.repository.mongo.activity.MonetaryAmountDocumentConverter;
+import uk.co.idv.repository.mongo.activity.OnlinePurchaseDocumentConverter;
+import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
+import uk.co.idv.repository.mongo.identity.alias.AliasesDocumentConverter;
+import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
+import uk.co.idv.repository.mongo.identity.IdentityRepository;
+import uk.co.idv.repository.mongo.MongoIndexResolver;
+import uk.co.idv.repository.mongo.identity.MongoIdentityDao;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
+import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsAliasLevelLockoutPolicyDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
+import uk.co.idv.repository.mongo.lockout.attempt.MongoVerificationAttemptsDao;
+import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsRepository;
+import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.MongoVerificationContextDao;
+import uk.co.idv.repository.mongo.verificationcontext.VerificationSequencesConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.cardcredentials.CardCredentialsDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.CardNumberDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.CardNumbersDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.MobileNumberDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.MobileNumbersDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.mobile.MobilePinsentryDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.PasscodeSettingsDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.PhysicalPinsentryDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.pushnotification.PushNotificationDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.VerificationContextDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.VerificationContextRepository;
+import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverterDelegator;
+import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodsDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.VerificationSequenceDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 
 import java.net.InetSocketAddress;
@@ -82,7 +82,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableAutoConfiguration
-@EnableMongoRepositories(basePackages = "uk.co.mruoc.idv.mongo")
+@EnableMongoRepositories(basePackages = "uk.co.idv.repository.mongo")
 @Profile("!stub")
 @Slf4j
 public class MongoDaoConfig {
