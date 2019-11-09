@@ -1,7 +1,15 @@
 rootProject.name = 'verification-context'
 
-include 'verification-context-domain'
-include 'verification-context-mongo-dao'
-include 'verification-context-spring'
-include 'verification-context-api'
-include 'verification-context-client'
+include ':verification-context-domain'
+include ':verification-context-spring'
+include ':verification-context-client'
+
+
+//adapters
+include ':api'
+include ':in-memory-db'
+include ':mongo-db'
+
+project(':api').projectDir = file("adapter/api")
+project(':in-memory-db').projectDir = file("adapter/db/in-memory")
+project(':mongo-db').projectDir = file("adapter/db/mongo")

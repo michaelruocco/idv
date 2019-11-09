@@ -25,8 +25,8 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-commons:1.5.2'
 
     compile project(':verification-context-domain')
-    compile project(':verification-context-mongo-dao')
-    compile project(':verification-context-api')
+    compile project(':mongo-db')
+    compile project(':api')
     compile 'de.bwaldvogel:mongo-java-server:1.22.0'
 
     testCompile project(':verification-context-domain').sourceSets.test.output
