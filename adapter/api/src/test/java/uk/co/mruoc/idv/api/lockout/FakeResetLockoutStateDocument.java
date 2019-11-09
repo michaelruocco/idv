@@ -1,7 +1,7 @@
 package uk.co.mruoc.idv.api.lockout;
 
 
-import uk.co.mruoc.idv.lockout.domain.model.LockoutRequestMother;
+import uk.co.idv.domain.entities.lockout.LockoutRequestMother;
 
 public class FakeResetLockoutStateDocument extends ResetLockoutStateDocument {
 

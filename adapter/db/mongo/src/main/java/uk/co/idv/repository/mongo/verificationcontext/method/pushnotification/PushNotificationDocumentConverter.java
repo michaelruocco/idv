@@ -5,11 +5,11 @@ import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDoc
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 @Builder
 public class PushNotificationDocumentConverter implements VerificationMethodDocumentConverter {

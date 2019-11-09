@@ -1,10 +1,10 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumberMother;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CreditCardNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.DebitCardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.CardNumberMother;
+import uk.co.idv.domain.entities.verificationcontext.method.CreditCardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.DebitCardNumber;
 
 import java.util.UUID;
 

@@ -8,13 +8,13 @@ import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodD
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocument;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentMother;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.method.CardCredentials;
+import uk.co.idv.domain.entities.verificationcontext.method.CardCredentialsEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.CardCredentialsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.util.Collection;
 import java.util.Collections;

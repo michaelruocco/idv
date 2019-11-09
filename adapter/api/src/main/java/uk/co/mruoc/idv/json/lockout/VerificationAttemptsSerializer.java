@@ -4,8 +4,8 @@ package uk.co.mruoc.idv.json.lockout;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.VerificationAttempts;
 
 import java.io.IOException;
 

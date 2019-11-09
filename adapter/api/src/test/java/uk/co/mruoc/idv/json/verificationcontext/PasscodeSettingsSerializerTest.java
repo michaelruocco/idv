@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

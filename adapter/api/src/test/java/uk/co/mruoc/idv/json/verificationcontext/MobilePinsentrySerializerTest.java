@@ -5,15 +5,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction.RESPOND;
+import static uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction.RESPOND;
 
 class MobilePinsentrySerializerTest {
 

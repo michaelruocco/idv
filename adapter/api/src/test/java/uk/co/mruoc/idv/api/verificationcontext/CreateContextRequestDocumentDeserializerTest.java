@@ -6,7 +6,7 @@ import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.json.activity.ActivityModule;
 import uk.co.mruoc.idv.json.channel.ChannelModule;
 import uk.co.mruoc.idv.json.identity.IdentityModule;
-import uk.co.mruoc.idv.verificationcontext.domain.service.FakeCreateContextRequest;
+import uk.co.idv.domain.usecases.verificationcontext.FakeCreateContextRequest;
 
 import java.io.IOException;
 

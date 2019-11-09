@@ -1,10 +1,10 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
+import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

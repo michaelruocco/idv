@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
+import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
 
 import java.io.IOException;
 

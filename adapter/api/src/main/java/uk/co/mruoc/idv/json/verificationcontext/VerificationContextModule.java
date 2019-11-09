@@ -6,18 +6,18 @@ import uk.co.mruoc.idv.api.verificationcontext.UpdateContextResultsRequestDocume
 import uk.co.mruoc.idv.json.verificationcontext.result.VerificationResultDeserializer;
 import uk.co.mruoc.idv.json.verificationcontext.result.VerificationResultSerializer;
 import uk.co.mruoc.idv.json.verificationcontext.result.VerificationResultsSerializer;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
-import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
+import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
 
 public class VerificationContextModule extends SimpleModule {
 

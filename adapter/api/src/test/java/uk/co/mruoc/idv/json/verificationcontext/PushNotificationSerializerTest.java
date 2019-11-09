@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

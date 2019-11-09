@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.idv.api.verificationcontext.CreateContextRequestDocument;
 import uk.co.mruoc.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
 import uk.co.mruoc.idv.api.verificationcontext.VerificationContextDocument;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.service.LoadContextRequest;
-import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextService;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.usecases.verificationcontext.LoadContextRequest;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
 import java.net.URI;
 import java.util.UUID;

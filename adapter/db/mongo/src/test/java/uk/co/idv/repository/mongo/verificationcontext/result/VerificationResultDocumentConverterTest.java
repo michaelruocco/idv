@@ -1,10 +1,10 @@
 package uk.co.idv.repository.mongo.verificationcontext.result;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResultFailed;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultFailed;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -3,8 +3,8 @@ package uk.co.mruoc.idv.json.verificationcontext.result;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.io.IOException;
 

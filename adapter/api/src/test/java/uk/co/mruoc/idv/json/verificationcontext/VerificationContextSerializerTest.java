@@ -9,8 +9,8 @@ import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.json.activity.ActivityModule;
 import uk.co.mruoc.idv.json.channel.ChannelModule;
 import uk.co.mruoc.idv.json.identity.IdentityModule;
-import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;

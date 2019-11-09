@@ -9,12 +9,12 @@ import org.springframework.http.ResponseEntity;
 import uk.co.mruoc.idv.api.verificationcontext.CreateContextRequestDocument;
 import uk.co.mruoc.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
 import uk.co.mruoc.idv.api.verificationcontext.VerificationContextDocument;
-import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
-import uk.co.mruoc.idv.verificationcontext.domain.service.FakeVerificationContextService;
-import uk.co.mruoc.idv.verificationcontext.domain.service.LoadContextRequest;
-import uk.co.mruoc.idv.verificationcontext.domain.service.RecordResultRequest;
+import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
+import uk.co.idv.domain.usecases.verificationcontext.FakeVerificationContextService;
+import uk.co.idv.domain.usecases.verificationcontext.LoadContextRequest;
+import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
 
 import java.util.UUID;
 

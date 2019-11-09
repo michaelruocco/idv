@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.verificationcontext.result;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.util.Arrays;
 import java.util.Collection;

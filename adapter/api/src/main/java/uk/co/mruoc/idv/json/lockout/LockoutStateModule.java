@@ -1,10 +1,10 @@
 package uk.co.mruoc.idv.json.lockout;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutStateMaxAttempts;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.LockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.VerificationAttempts;
 
 public class LockoutStateModule extends SimpleModule {
 

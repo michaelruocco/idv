@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

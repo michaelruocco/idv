@@ -1,11 +1,11 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutRequest;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.entities.lockout.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
+import uk.co.idv.domain.usecases.lockout.LockoutRequest;
 
 import java.util.Collection;
 import java.util.Optional;

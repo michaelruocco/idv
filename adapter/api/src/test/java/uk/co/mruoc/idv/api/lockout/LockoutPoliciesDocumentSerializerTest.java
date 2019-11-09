@@ -9,8 +9,8 @@ import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.json.activity.ActivityModule;
 import uk.co.mruoc.idv.json.channel.ChannelModule;
 import uk.co.mruoc.idv.json.identity.IdentityModule;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersMother;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersMother;
 import uk.co.mruoc.jsonapi.ApiModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;

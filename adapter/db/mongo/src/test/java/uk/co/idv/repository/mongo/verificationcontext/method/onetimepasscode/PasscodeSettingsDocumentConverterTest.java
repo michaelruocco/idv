@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

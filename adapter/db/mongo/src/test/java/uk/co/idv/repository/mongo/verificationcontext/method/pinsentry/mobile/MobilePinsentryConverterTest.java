@@ -8,13 +8,13 @@ import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodD
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocument;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentMother;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.util.Collection;
 import java.util.Collections;

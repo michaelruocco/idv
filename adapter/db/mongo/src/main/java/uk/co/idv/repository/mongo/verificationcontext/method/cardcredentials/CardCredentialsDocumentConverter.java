@@ -5,11 +5,11 @@ import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDoc
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentials;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardCredentialsIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.method.CardCredentials;
+import uk.co.idv.domain.entities.verificationcontext.method.CardCredentialsEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.CardCredentialsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 @Builder
 public class CardCredentialsDocumentConverter implements VerificationMethodDocumentConverter {

@@ -6,10 +6,10 @@ import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentMother;
 import uk.co.idv.domain.entities.identity.Alias;
 import uk.co.idv.domain.entities.identity.AliasesMother;
-import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttemptSuccessful;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptFailed;
-import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful;
+import uk.co.idv.domain.entities.lockout.FakeVerificationAttemptSuccessful;
+import uk.co.idv.domain.entities.lockout.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.VerificationAttemptFailed;
+import uk.co.idv.domain.entities.lockout.VerificationAttemptSuccessful;
 
 import java.time.Instant;
 import java.util.UUID;

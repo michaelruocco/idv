@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 
 import java.util.Arrays;
 import java.util.Collection;

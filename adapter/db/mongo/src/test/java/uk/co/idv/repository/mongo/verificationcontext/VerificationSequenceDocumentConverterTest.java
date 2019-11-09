@@ -3,11 +3,11 @@ package uk.co.idv.repository.mongo.verificationcontext;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.MultipleMethodSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.MultipleMethodSequence;
+import uk.co.idv.domain.entities.verificationcontext.SingleMethodSequence;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
+import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 import java.util.Arrays;
 import java.util.Collection;

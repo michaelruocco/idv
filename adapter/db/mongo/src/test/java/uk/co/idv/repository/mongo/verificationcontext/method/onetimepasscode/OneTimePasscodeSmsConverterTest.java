@@ -9,15 +9,15 @@ import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodD
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocument;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentMother;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.DefaultPasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSms;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.OneTimePasscodeSmsIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PasscodeSettings;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.method.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSmsEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSmsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.util.Collection;
 import java.util.Collections;

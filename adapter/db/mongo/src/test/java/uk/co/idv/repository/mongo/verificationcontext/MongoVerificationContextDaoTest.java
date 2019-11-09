@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
 import java.util.Optional;
 

@@ -2,8 +2,8 @@ package uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumberMother;
+import uk.co.idv.domain.entities.verificationcontext.method.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.MobileNumberMother;
 
 import java.util.Arrays;
 import java.util.Collection;

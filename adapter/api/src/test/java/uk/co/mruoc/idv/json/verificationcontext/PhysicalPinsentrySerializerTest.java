@@ -4,21 +4,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumberMother;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.NoEligibleCards;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.CardNumberMother;
+import uk.co.idv.domain.entities.verificationcontext.method.NoEligibleCards;
+import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
 
 import java.util.Collection;
 import java.util.Collections;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction.RESPOND;
+import static uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction.RESPOND;
 
 class PhysicalPinsentrySerializerTest {
 

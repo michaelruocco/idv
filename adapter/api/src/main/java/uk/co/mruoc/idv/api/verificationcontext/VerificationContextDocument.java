@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.api.verificationcontext;
 
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.mruoc.jsonapi.ApiDataWithId;
 import uk.co.mruoc.jsonapi.ApiDocumentWithId;
 

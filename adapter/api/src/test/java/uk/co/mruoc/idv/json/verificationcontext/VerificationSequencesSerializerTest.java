@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationSequencesEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.SingleMethodSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequence;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeVerificationMethodIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesEligible;
+import uk.co.idv.domain.entities.verificationcontext.SingleMethodSequence;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;

@@ -69,10 +69,10 @@ import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultD
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.entities.identity.AliasFactory;
-import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
-import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
-import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
-import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;

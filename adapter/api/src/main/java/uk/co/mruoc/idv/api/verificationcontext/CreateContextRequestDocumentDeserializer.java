@@ -2,7 +2,7 @@ package uk.co.mruoc.idv.api.verificationcontext;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
-import uk.co.mruoc.idv.verificationcontext.domain.service.CreateContextRequest;
+import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
 import uk.co.mruoc.jsonapi.ApiDataDocumentRequest;
 import uk.co.mruoc.jsonapi.ApiDocumentDeserializer;
 import uk.co.mruoc.jsonapi.ApiDocumentFactory;

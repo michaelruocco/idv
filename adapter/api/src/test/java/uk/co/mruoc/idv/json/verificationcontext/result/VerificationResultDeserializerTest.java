@@ -5,9 +5,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.mruoc.idv.json.verificationcontext.VerificationContextModule;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
+import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
 import java.io.IOException;
 

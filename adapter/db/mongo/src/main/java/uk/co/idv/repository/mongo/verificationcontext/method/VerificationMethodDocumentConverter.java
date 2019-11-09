@@ -1,6 +1,6 @@
 package uk.co.idv.repository.mongo.verificationcontext.method;
 
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 public interface VerificationMethodDocumentConverter {
 

@@ -5,7 +5,7 @@ import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import lombok.Builder;
-import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
 import java.util.Optional;
 import java.util.UUID;

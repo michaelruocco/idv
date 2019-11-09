@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.MobileNumber;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

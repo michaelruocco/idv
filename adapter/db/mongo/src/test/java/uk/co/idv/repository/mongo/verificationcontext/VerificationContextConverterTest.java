@@ -16,9 +16,9 @@ import uk.co.idv.domain.entities.channel.FakeChannel;
 import uk.co.idv.domain.entities.identity.Alias;
 import uk.co.idv.domain.entities.identity.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.mruoc.idv.verificationcontext.domain.model.FakeVerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
-import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 
 import java.time.Instant;
 import java.util.Collection;

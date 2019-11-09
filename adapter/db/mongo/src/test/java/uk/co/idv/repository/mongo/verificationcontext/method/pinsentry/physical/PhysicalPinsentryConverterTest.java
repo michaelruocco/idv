@@ -8,15 +8,15 @@ import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodD
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocument;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentMother;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.CardNumber;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.FakeIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PhysicalPinsentryIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.PinsentryFunction;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
-import uk.co.mruoc.idv.verificationcontext.domain.model.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.FakeIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.util.Collection;
 import java.util.Collections;

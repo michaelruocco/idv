@@ -5,10 +5,10 @@ import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDoc
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryIneligible;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 @Builder
 public class MobilePinsentryDocumentConverter implements VerificationMethodDocumentConverter {
