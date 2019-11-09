@@ -1,0 +1,5 @@
+dependencies {
+    compile project(':verification-context-domain')
+
+    testCompile project(':verification-context-domain').sourceSets.test.output
+}

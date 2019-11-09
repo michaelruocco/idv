@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.mruoc.idv.identity.dao.IdentityDao;
-import uk.co.mruoc.idv.identity.dao.InMemoryIdentityDao;
-import uk.co.mruoc.idv.lockout.dao.InMemoryLockoutPolicyDao;
-import uk.co.mruoc.idv.lockout.dao.InMemoryVerificationAttemptsDao;
+import uk.co.idv.repository.inmemory.identity.InMemoryIdentityDao;
+import uk.co.idv.repository.inmemory.lockout.InMemoryLockoutPolicyDao;
+import uk.co.idv.repository.inmemory.lockout.InMemoryVerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;
-import uk.co.mruoc.idv.verificationcontext.dao.InMemoryVerificationContextDao;
+import uk.co.idv.repository.inmemory.verificationcontext.InMemoryVerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 
 @Configuration

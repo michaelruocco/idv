@@ -1,6 +1,7 @@
-package uk.co.mruoc.idv.lockout.dao;
+package uk.co.idv.repository.inmemory.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.mruoc.idv.lockout.dao.VerificationAttemptsDao;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
 import java.util.Optional;

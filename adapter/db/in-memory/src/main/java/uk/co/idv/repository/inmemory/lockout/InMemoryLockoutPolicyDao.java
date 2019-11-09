@@ -1,6 +1,7 @@
-package uk.co.mruoc.idv.lockout.dao;
+package uk.co.idv.repository.inmemory.lockout;
 
 import lombok.RequiredArgsConstructor;
+import uk.co.mruoc.idv.lockout.dao.LockoutPolicyDao;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.service.LockoutPolicyParametersConverter;

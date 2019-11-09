@@ -1,5 +1,6 @@
-package uk.co.mruoc.idv.identity.dao;
+package uk.co.idv.repository.inmemory.identity;
 
+import uk.co.mruoc.idv.identity.dao.IdentityDao;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
 import uk.co.mruoc.idv.identity.domain.model.Identity;

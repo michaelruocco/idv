@@ -1,5 +1,6 @@
-package uk.co.mruoc.idv.verificationcontext.dao;
+package uk.co.idv.repository.inmemory.verificationcontext;
 
+import uk.co.mruoc.idv.verificationcontext.dao.VerificationContextDao;
 import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationContext;
 
 import java.util.HashMap;

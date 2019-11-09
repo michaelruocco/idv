@@ -2,6 +2,7 @@ package uk.co.mruoc.idv.lockout.domain.service;
 
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.dao.FakeVerificationAttemptsDao;
+import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttemptFailed;
 import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttempts;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempts;
 
@@ -16,8 +17,8 @@ class LockoutStateResetterTest {
     private final FakeLockoutPolicyService policyService = new FakeLockoutPolicyService();
 
     private final LockoutStateResetter resetter = LockoutStateResetter.builder()
-            .attemptsLoader(attemptsLoader)
             .requestConverter(new LockoutStateRequestConverter())
+            .attemptsLoader(attemptsLoader)
             .policyService(policyService)
             .dao(dao)
             .build();
@@ -52,6 +53,23 @@ class LockoutStateResetterTest {
 
         final CalculateLockoutStateRequest lastResetRequest = policyService.getLastResetRequest();
         assertThat(lastResetRequest.getAttempts()).isEqualTo(attempts);
+    }
+
+    @Test
+    void shouldSaveResetAttempts() {
+        final ResetAttemptsRequest resetRequest = buildResetRequest();
+        final VerificationAttempts attempts = new FakeVerificationAttempts(
+                new FakeVerificationAttemptFailed(),
+                new FakeVerificationAttemptFailed()
+        );
+        attemptsLoader.setAttemptsToLoad(attempts);
+        final VerificationAttempts expectedResetAttempts = new FakeVerificationAttempts(new FakeVerificationAttemptFailed());
+        policyService.setResetAttemptsToReturn(expectedResetAttempts);
+
+        resetter.reset(resetRequest);
+
+        final VerificationAttempts resetAttempts = dao.getLastSavedAttempts();
+        assertThat(resetAttempts).isEqualTo(expectedResetAttempts);
     }
 
     private static ResetAttemptsRequest buildResetRequest() {
