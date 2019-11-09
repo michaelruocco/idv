@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.usecases.lockout.DefaultLockoutRequest;
-import uk.co.idv.domain.usecases.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
 import java.io.IOException;
 

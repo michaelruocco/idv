@@ -1,11 +1,11 @@
 package uk.co.idv.repository.inmemory.lockout;
 
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.entities.lockout.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
-import uk.co.idv.domain.usecases.lockout.LockoutRequest;
 
 import java.util.Collection;
 import java.util.HashMap;

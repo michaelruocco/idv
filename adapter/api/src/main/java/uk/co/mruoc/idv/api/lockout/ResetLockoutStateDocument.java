@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.api.lockout;
 
-import uk.co.idv.domain.usecases.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.mruoc.jsonapi.ApiData;
 import uk.co.mruoc.jsonapi.ApiDocument;
 

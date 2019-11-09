@@ -1,11 +1,13 @@
 dependencies {
-    compile project(':verification-context-domain')
+    compile project(':entities')
+    compile project(':use-cases')
     compile 'org.slf4j:slf4j-api:1.7.28'
     compile 'org.zalando:jackson-datatype-money:1.1.1'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0'
     compile 'com.github.michaelruocco:jackson-json-api:2.0.2'
 
-    testCompile project(':verification-context-domain').sourceSets.test.output
+    testCompile project(':entities').sourceSets.test.output
+    testCompile project(':use-cases').sourceSets.test.output
     testCompile 'org.slf4j:slf4j-simple:1.7.28'
     testCompile 'com.github.michaelruocco:file-loader:5.0.1'
     testCompile 'net.javacrumbs.json-unit:json-unit-assertj:2.10.0'

@@ -2,6 +2,12 @@ rootProject.name = 'verification-context'
 
 include ':verification-context-domain'
 
+include ':entities'
+project(':entities').projectDir = file("domain/entities")
+
+include ':use-cases'
+project(':use-cases').projectDir = file("domain/use-cases")
+
 //adapters
 include ':api'
 project(':api').projectDir = file("adapter/api")

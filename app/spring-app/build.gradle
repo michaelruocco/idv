@@ -24,13 +24,15 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-engine:1.5.2'
     testImplementation 'org.junit.platform:junit-platform-commons:1.5.2'
 
-    compile project(':verification-context-domain')
+    compile project(':entities')
+    compile project(':use-cases')
     compile project(':mongo-db')
     compile project(':in-memory-db')
     compile project(':api')
     compile 'de.bwaldvogel:mongo-java-server:1.22.0'
 
-    testCompile project(':verification-context-domain').sourceSets.test.output
+    testCompile project(':entities').sourceSets.test.output
+    testCompile project(':use-cases').sourceSets.test.output
     testCompile 'com.github.stefanbirkner:system-rules:1.19.0'
 }
 

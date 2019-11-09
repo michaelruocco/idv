@@ -1,9 +1,9 @@
 package uk.co.mruoc.idv.api.lockout;
 
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.mruoc.idv.json.lockout.LockoutStateModule;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.LockoutStateMaxAttempts;
-import uk.co.idv.domain.usecases.lockout.LockoutRequest;
 
 public class JsonApiLockoutStateModule extends LockoutStateModule {
 

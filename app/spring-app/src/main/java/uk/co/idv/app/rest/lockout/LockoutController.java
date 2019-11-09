@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.mruoc.idv.api.lockout.LockoutStateDocument;
 import uk.co.mruoc.idv.api.lockout.ResetLockoutStateDocument;
 import uk.co.idv.domain.entities.identity.Alias;
 import uk.co.idv.domain.entities.identity.AliasFactory;
 import uk.co.idv.domain.entities.lockout.LockoutState;
-import uk.co.idv.domain.usecases.lockout.DefaultLockoutRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutFacade;
-import uk.co.idv.domain.usecases.lockout.LockoutRequest;
 
 @RestController
 @RequiredArgsConstructor

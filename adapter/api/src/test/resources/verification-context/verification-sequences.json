@@ -35,7 +35,6 @@
           {
             "id": "${json-unit.ignore}",
             "tokenized": "4929991234567890",
-            "masked": "************7890",
             "type": "CREDIT"
           }
         ]
@@ -82,8 +81,7 @@
         "mobileNumbers": [
           {
             "id": "${json-unit.ignore}",
-            "number": "07809385580",
-            "masked": "********580"
+            "number": "07809385580"
           }
         ]
       }

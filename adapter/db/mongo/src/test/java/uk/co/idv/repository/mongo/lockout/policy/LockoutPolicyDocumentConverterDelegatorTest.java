@@ -3,8 +3,8 @@ package uk.co.idv.repository.mongo.lockout.policy;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyParametersMother;
 import uk.co.idv.domain.entities.lockout.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

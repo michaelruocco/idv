@@ -1,5 +1,6 @@
 dependencies {
-    compile project(':verification-context-domain')
+    compile project(':entities')
+    compile project(':use-cases')
 
-    testCompile project(':verification-context-domain').sourceSets.test.output
+    testCompile project(':entities').sourceSets.test.output
 }

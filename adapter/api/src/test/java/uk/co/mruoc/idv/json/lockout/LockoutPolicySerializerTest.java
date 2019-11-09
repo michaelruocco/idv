@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyParametersMother;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersMother;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
