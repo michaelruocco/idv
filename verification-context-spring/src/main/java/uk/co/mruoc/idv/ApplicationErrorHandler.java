@@ -26,11 +26,11 @@ import uk.co.mruoc.idv.verificationcontext.domain.model.VerificationSequences.No
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.mruoc.idv.verificationcontext.domain.service.VerificationContextLoader.VerificationContextNotFoundException;
+import uk.co.mruoc.jsonapi.error.ApiError;
+import uk.co.mruoc.jsonapi.error.ApiErrorDocument;
+import uk.co.mruoc.jsonapi.error.ApiSingleErrorDocument;
 import uk.co.mruoc.jsonapi.error.BadRequestError;
 import uk.co.mruoc.jsonapi.error.InternalServerError;
-import uk.co.mruoc.jsonapi.error.ApiErrorDocument;
-import uk.co.mruoc.jsonapi.error.ApiError;
-import uk.co.mruoc.jsonapi.error.ApiSingleErrorDocument;
 
 @ControllerAdvice
 @Slf4j

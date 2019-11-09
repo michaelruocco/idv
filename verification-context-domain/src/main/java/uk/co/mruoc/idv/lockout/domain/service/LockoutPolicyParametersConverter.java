@@ -4,8 +4,8 @@ import lombok.Builder;
 import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;
-import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory;
+import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
 
 @Builder
 public class LockoutPolicyParametersConverter {

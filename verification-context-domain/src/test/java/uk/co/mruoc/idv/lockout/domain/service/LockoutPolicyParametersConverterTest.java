@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicy;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculator;
+import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategy;
 import uk.co.mruoc.idv.lockout.domain.model.RecordAttemptStrategyFactory;
-import uk.co.mruoc.idv.lockout.domain.model.LockoutStateCalculatorFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

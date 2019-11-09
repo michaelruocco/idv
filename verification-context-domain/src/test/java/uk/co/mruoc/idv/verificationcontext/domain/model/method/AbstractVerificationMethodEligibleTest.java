@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.verificationcontext.domain.model.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.CannotAddResultToMethodException;
+import uk.co.mruoc.idv.verificationcontext.domain.model.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.DefaultVerificationResults;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultFailed;
 import uk.co.mruoc.idv.verificationcontext.domain.model.result.FakeVerificationResultSuccessful;

@@ -4,9 +4,9 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import uk.co.idv.repository.mongo.activity.ActivityDocument;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
-import uk.co.idv.repository.mongo.identity.IdentityDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocument;
+import uk.co.idv.repository.mongo.identity.IdentityDocument;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
 
 import java.util.Collection;
 

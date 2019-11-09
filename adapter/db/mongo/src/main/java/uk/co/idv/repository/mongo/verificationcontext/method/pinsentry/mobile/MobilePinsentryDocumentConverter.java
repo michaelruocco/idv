@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.mobile;
 
 import lombok.Builder;
-import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
+import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentry;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.MobilePinsentryEligible;

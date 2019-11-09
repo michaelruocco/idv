@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.mobile;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocument;
+import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentMother;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocument;

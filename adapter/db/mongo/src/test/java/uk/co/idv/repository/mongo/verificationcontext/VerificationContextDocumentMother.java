@@ -2,8 +2,8 @@ package uk.co.idv.repository.mongo.verificationcontext;
 
 import uk.co.idv.repository.mongo.activity.ActivityDocumentMother;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentMother;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocumentMother;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentMother;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocumentMother;
 
 public class VerificationContextDocumentMother {
 

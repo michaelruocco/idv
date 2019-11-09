@@ -1,10 +1,10 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptFailed;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 
 import java.time.Instant;
 import java.util.UUID;

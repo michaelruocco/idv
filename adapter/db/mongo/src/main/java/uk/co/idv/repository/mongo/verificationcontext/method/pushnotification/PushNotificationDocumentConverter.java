@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.pushnotification;
 
 import lombok.Builder;
-import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentConverter;
+import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
+import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotification;
 import uk.co.mruoc.idv.verificationcontext.domain.model.method.PushNotificationEligible;

@@ -4,7 +4,6 @@ import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 
 import javax.money.MonetaryAmount;
-
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;

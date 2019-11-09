@@ -1,6 +1,8 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentMother;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
@@ -8,8 +10,6 @@ import uk.co.mruoc.idv.lockout.domain.model.FakeVerificationAttemptSuccessful;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttempt;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptFailed;
 import uk.co.mruoc.idv.lockout.domain.model.VerificationAttemptSuccessful;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
 
 import java.time.Instant;
 import java.util.UUID;

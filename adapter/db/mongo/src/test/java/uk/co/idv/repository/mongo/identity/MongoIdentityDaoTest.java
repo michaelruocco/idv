@@ -1,11 +1,11 @@
 package uk.co.idv.repository.mongo.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.repository.mongo.identity.MongoIdentityDao.MultipleIdentitiesFoundException;
 import uk.co.mruoc.idv.identity.domain.model.Alias;
 import uk.co.mruoc.idv.identity.domain.model.Aliases;
 import uk.co.mruoc.idv.identity.domain.model.AliasesMother;
 import uk.co.mruoc.idv.identity.domain.model.Identity;
-import uk.co.idv.repository.mongo.identity.MongoIdentityDao.MultipleIdentitiesFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;

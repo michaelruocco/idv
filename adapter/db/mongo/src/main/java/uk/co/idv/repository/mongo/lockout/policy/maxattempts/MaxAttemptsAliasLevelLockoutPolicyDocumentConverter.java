@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.lockout.policy.maxattempts;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentKeyConverter;
 import uk.co.mruoc.idv.lockout.domain.model.DefaultLockoutPolicyParameters;
 import uk.co.mruoc.idv.lockout.domain.model.LockoutPolicyParameters;

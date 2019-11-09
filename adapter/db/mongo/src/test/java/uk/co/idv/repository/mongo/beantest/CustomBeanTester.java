@@ -5,16 +5,16 @@ import org.meanbean.test.BeanTester;
 import uk.co.idv.repository.mongo.activity.ActivityDocument;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentFactory;
 import uk.co.idv.repository.mongo.activity.MonetaryAmountDocument;
-import uk.co.idv.repository.mongo.identity.IdentityDocumentFactory;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocumentFactory;
-import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.PasscodeSettingsDocumentFactory;
 import uk.co.idv.repository.mongo.channel.ChannelDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentFactory;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
 import uk.co.idv.repository.mongo.identity.IdentityDocument;
+import uk.co.idv.repository.mongo.identity.IdentityDocumentFactory;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
+import uk.co.idv.repository.mongo.identity.alias.AliasDocumentFactory;
 import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocument;
 import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentFactory;
 import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.PasscodeSettingsDocument;
+import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.PasscodeSettingsDocumentFactory;
 
 import java.math.BigDecimal;
 
