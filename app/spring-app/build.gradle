@@ -43,5 +43,5 @@ bootRun {
 
 task buildImage(type: DockerBuildImage) {
     inputDir = file('.')
-    tags.add('michaelruocco/verification-context-app')
+    tags.add('michaelruocco/verification-context-spring-app')
 }
