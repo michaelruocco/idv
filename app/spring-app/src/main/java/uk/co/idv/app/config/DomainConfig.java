@@ -5,7 +5,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.zalando.jackson.datatype.money.MoneyModule;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersProvider;
+import uk.co.idv.config.uk.UkLockoutPolicyProvider;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateRequestConverter;
 import uk.co.mruoc.idv.api.lockout.JsonApiLockoutStateModule;
 import uk.co.mruoc.idv.api.verificationcontext.JsonApiVerificationContextModule;
@@ -24,7 +25,6 @@ import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.uk.UkLockoutPolicyParametersProvider;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutFacade;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutPolicyService;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutService;
@@ -118,19 +118,15 @@ public class DomainConfig {
     }
 
     @Bean
-    public LockoutPolicyParametersProvider lockoutPolicyParametersProvider() {
-        return new UkLockoutPolicyParametersProvider();
+    public LockoutPolicyProvider lockoutPolicyParametersProvider(final IdGenerator idGenerator) {
+        return new UkLockoutPolicyProvider(idGenerator);
     }
 
     @Bean
-    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyParametersConverter parametersConverter,
-                                                     final LockoutPolicyDao dao,
-                                                     final LockoutPolicyParametersProvider policiesProvider) {
-        final LockoutPolicyService policyService = DefaultLockoutPolicyService.builder()
-                .parametersConverter(parametersConverter)
-                .dao(dao)
-                .build();
-        policyService.addPolicies(policiesProvider.getPolicies());
+    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao,
+                                                     final LockoutPolicyProvider policiesProvider) {
+        final LockoutPolicyService policyService = new DefaultLockoutPolicyService(dao);
+        policyService.savePolicies(policiesProvider.getPolicies());
         return policyService;
     }
 

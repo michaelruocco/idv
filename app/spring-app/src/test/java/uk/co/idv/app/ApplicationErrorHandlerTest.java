@@ -1,4 +1,4 @@
-package uk.co.mruoc.idv;
+package uk.co.idv.app;
 
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.Test;

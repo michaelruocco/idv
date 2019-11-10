@@ -14,7 +14,6 @@ import uk.co.idv.repository.inmemory.verificationcontext.InMemoryVerificationCon
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 
 @Configuration
@@ -42,8 +41,8 @@ public class InMemoryDaoConfig {
     }
 
     @Bean
-    public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyParametersConverter parametersConverter) {
-        return new InMemoryLockoutPolicyDao(parametersConverter);
+    public LockoutPolicyDao lockoutPolicyDao() {
+        return new InMemoryLockoutPolicyDao();
     }
 
 }

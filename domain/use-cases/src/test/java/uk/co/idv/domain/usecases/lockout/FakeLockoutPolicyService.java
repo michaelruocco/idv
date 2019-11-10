@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.lockout;
 
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -14,8 +14,8 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     private CalculateLockoutStateRequest lastCalculateRequest;
     private VerificationAttempts resetAttemptsToReturn;
     private LockoutState stateToReturn;
-    private LockoutPolicyParameters lastAddedParameters;
-    private Collection<LockoutPolicyParameters> policyParametersToLoad;
+    private LockoutPolicy lastAddedPolicy;
+    private Collection<LockoutPolicy> policiesToLoad;
 
     @Override
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
@@ -35,13 +35,13 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void addPolicy(final LockoutPolicyParameters parameters) {
-        this.lastAddedParameters = parameters;
+    public void savePolicy(final LockoutPolicy policy) {
+        this.lastAddedPolicy = policy;
     }
 
     @Override
-    public Collection<LockoutPolicyParameters> loadPolicies() {
-        return policyParametersToLoad;
+    public Collection<LockoutPolicy> loadPolicies() {
+        return policiesToLoad;
     }
 
     public CalculateLockoutStateRequest getLastResetRequest() {
@@ -52,8 +52,8 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
         return lastCalculateRequest;
     }
 
-    public LockoutPolicyParameters getLastAddedParameters() {
-        return lastAddedParameters;
+    public LockoutPolicy getLastAddedPolicy() {
+        return lastAddedPolicy;
     }
 
     public void setResetAttemptsToReturn(final VerificationAttempts attempts) {
@@ -64,8 +64,8 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
         this.stateToReturn = state;
     }
 
-    public void setPoliciesToLoad(final Collection<LockoutPolicyParameters> policies) {
-        this.policyParametersToLoad = policies;
+    public void setPoliciesToLoad(final Collection<LockoutPolicy> policies) {
+        this.policiesToLoad = policies;
     }
 
 }

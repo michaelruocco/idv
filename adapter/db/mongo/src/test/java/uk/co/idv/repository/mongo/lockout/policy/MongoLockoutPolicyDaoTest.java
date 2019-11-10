@@ -1,13 +1,11 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -22,22 +20,20 @@ class MongoLockoutPolicyDaoTest {
 
     private final LockoutPolicyDocument document = new LockoutPolicyDocument();
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
-    private final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
 
     private final LockoutPolicyRepository repository = mock(LockoutPolicyRepository.class);
     private final LockoutPolicyDocumentConverterDelegator documentConverter = mock(LockoutPolicyDocumentConverterDelegator.class);
-    private final LockoutPolicyParametersConverter parametersConverter = mock(LockoutPolicyParametersConverter.class);
+    private final LockoutPolicyDocumentKeyConverter keyConverter = mock(LockoutPolicyDocumentKeyConverter.class);
 
     private final MongoLockoutPolicyDao dao = MongoLockoutPolicyDao.builder()
             .repository(repository)
             .documentConverter(documentConverter)
-            .parametersConverter(parametersConverter)
+            .keyConverter(keyConverter)
             .build();
 
     @Test
     void shouldSavePolicy() {
-        given(policy.getParameters()).willReturn(parameters);
-        given(documentConverter.toDocument(parameters)).willReturn(document);
+        given(documentConverter.toDocument(policy)).willReturn(document);
 
         dao.save(policy);
 
@@ -58,8 +54,7 @@ class MongoLockoutPolicyDaoTest {
     void shouldLoadPolicyById() {
         final UUID id = UUID.randomUUID();
         given(repository.findById(id.toString())).willReturn(Optional.of(document));
-        given(documentConverter.toParameters(document)).willReturn(parameters);
-        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
+        given(documentConverter.toPolicy(document)).willReturn(policy);
 
         final Optional<LockoutPolicy> loadedPolicy = dao.load(id);
 
@@ -69,8 +64,7 @@ class MongoLockoutPolicyDaoTest {
     @Test
     void shouldLoadMultipleDocuments() {
         given(repository.findAll()).willReturn(Collections.singletonList(document));
-        given(documentConverter.toParameters(document)).willReturn(parameters);
-        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
+        given(documentConverter.toPolicy(document)).willReturn(policy);
 
         final Collection<LockoutPolicy> loadedPolicies = dao.load();
 
@@ -79,12 +73,10 @@ class MongoLockoutPolicyDaoTest {
 
     @Test
     void shouldReturnEmptyOptionalWhenLoadingPolicyByLockoutRequestIfNoPoliciesFound() {
-        final LockoutRequest request = DefaultLockoutRequest.builder()
-                .channelId("channel-id")
-                .activityName("activity-name")
-                .alias(AliasesMother.creditCardNumber())
-                .build();
-        given(repository.findById("channel-id*activity-name*credit-card-number")).willReturn(Optional.empty());
+        final LockoutRequest request = DefaultLockoutRequest.builder().build();
+        final String key = "fake-key";
+        given(keyConverter.toKeys(request)).willReturn(Collections.singleton(key));
+        given(repository.findById(key)).willReturn(Optional.empty());
 
         final Optional<LockoutPolicy> loadedPolicy = dao.load(request);
 
@@ -93,14 +85,11 @@ class MongoLockoutPolicyDaoTest {
 
     @Test
     void shouldReturnPolicyWhenLoadingPolicyByLockoutRequestIfPolicyFound() {
-        final LockoutRequest request = DefaultLockoutRequest.builder()
-                .channelId("channel-id")
-                .activityName("activity-name")
-                .alias(AliasesMother.creditCardNumber())
-                .build();
-        given(repository.findById("channel-id*activity-name*credit-card-number")).willReturn(Optional.of(document));
-        given(documentConverter.toParameters(document)).willReturn(parameters);
-        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
+        final LockoutRequest request = DefaultLockoutRequest.builder().build();
+        final String key = "fake-key";
+        given(keyConverter.toKeys(request)).willReturn(Arrays.asList("other-key", key));
+        given(repository.findById(key)).willReturn(Optional.of(document));
+        given(documentConverter.toPolicy(document)).willReturn(policy);
 
         final Optional<LockoutPolicy> loadedPolicy = dao.load(request);
 

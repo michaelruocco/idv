@@ -4,49 +4,38 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class InMemoryLockoutPolicyDao implements LockoutPolicyDao {
 
-    private final LockoutPolicyParametersConverter parametersConverter;
-    private final Map<UUID, LockoutPolicyParameters> policies = new HashMap<>();
+    private final Map<UUID, LockoutPolicy> policies = new HashMap<>();
 
     @Override
     public void save(final LockoutPolicy policy) {
-        final LockoutPolicyParameters parameters = policy.getParameters();
-        policies.put(parameters.getId(), parameters);
+        policies.put(policy.getId(), policy);
     }
 
     @Override
     public Optional<LockoutPolicy> load(final UUID id) {
-        return Optional.ofNullable(policies.get(id))
-                .map(parametersConverter::toPolicy);
+        return Optional.ofNullable(policies.get(id));
     }
 
     @Override
     public Optional<LockoutPolicy> load(final LockoutRequest request) {
-        return paramsAsPolicyStream()
+        return policies.values().stream()
                 .filter(policy -> policy.appliesTo(request))
                 .findFirst();
     }
 
     @Override
     public Collection<LockoutPolicy> load() {
-        return paramsAsPolicyStream().collect(Collectors.toList());
-    }
-
-    private Stream<LockoutPolicy> paramsAsPolicyStream() {
-        return policies.values().stream().map(parametersConverter::toPolicy);
+        return policies.values();
     }
 
 }

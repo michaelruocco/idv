@@ -26,6 +26,7 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.repository.mongo.MongoIndexResolver;
 import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverter;
@@ -43,9 +44,10 @@ import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsDocumentCo
 import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsRepository;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentKeyConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
-import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsAliasLevelLockoutPolicyDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsLockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.MongoVerificationContextDao;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationContextDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationContextRepository;
@@ -71,7 +73,6 @@ import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 
 import java.net.InetSocketAddress;
@@ -313,8 +314,17 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter() {
-        return new MaxAttemptsAliasLevelLockoutPolicyDocumentConverter();
+    public LockoutPolicyDocumentKeyConverter lockoutPolicyDocumentKeyConverter() {
+        return new LockoutPolicyDocumentKeyConverter();
+    }
+
+    @Bean
+    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter(final RecordAttemptStrategyFactory strategyFactory,
+                                                                                        final LockoutPolicyDocumentKeyConverter keyConverter) {
+        return MaxAttemptsLockoutPolicyDocumentConverter.builder()
+                .recordAttemptStrategyFactory(strategyFactory)
+                .keyConverter(keyConverter)
+                .build();
     }
 
     @Bean
@@ -352,11 +362,11 @@ public class MongoDaoConfig {
     @Bean
     public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyRepository repository,
                                              final LockoutPolicyDocumentConverterDelegator documentConverter,
-                                             final LockoutPolicyParametersConverter parametersConverter) {
+                                             final LockoutPolicyDocumentKeyConverter keyConverter) {
         return MongoLockoutPolicyDao.builder()
                 .repository(repository)
                 .documentConverter(documentConverter)
-                .parametersConverter(parametersConverter)
+                .keyConverter(keyConverter)
                 .build();
     }
 

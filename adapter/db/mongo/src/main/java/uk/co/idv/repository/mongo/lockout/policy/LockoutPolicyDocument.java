@@ -13,6 +13,5 @@ public class LockoutPolicyDocument {
     private String id;
     private String lockoutType;
     private String recordAttemptStrategyType;
-    private boolean aliasLevel;
 
 }

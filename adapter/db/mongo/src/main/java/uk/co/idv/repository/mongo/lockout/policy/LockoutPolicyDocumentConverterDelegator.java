@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,19 +19,19 @@ public class LockoutPolicyDocumentConverterDelegator {
         this.converters = converters;
     }
 
-    public LockoutPolicyParameters toParameters(final LockoutPolicyDocument document) {
+    public LockoutPolicy toPolicy(final LockoutPolicyDocument document) {
         final String type = document.getLockoutType();
         final Optional<LockoutPolicyDocumentConverter> policyConverter = findConverter(type);
         return policyConverter
-                .map(converter -> converter.toParameters(document))
+                .map(converter -> converter.toPolicy(document))
                 .orElseThrow(() -> new LockoutTypeNotSupportedException(type));
     }
 
-    public LockoutPolicyDocument toDocument(final LockoutPolicyParameters parameters) {
-        final String type = parameters.getLockoutType();
+    public LockoutPolicyDocument toDocument(final LockoutPolicy policy) {
+        final String type = policy.getLockoutType();
         final Optional<LockoutPolicyDocumentConverter> activityConverter = findConverter(type);
         return activityConverter
-                .map(converter -> converter.toDocument(parameters))
+                .map(converter -> converter.toDocument(policy))
                 .orElseThrow(() -> new LockoutTypeNotSupportedException(type));
     }
 

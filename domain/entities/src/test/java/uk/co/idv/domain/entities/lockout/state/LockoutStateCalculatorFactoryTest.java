@@ -1,9 +1,9 @@
 package uk.co.idv.domain.entities.lockout.state;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
-import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsAliasLevelLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +38,7 @@ class LockoutStateCalculatorFactoryTest {
 
     @Test
     void shouldPopulateMaxAttemptsOnStateCalculator() {
-        final MaxAttemptsAliasLevelLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final MaxAttemptsLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
 
         final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) factory.build(parameters);
 

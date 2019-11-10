@@ -3,9 +3,7 @@ package uk.co.idv.repository.inmemory.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -17,9 +15,7 @@ import static org.mockito.Mockito.mock;
 
 class InMemoryLockoutPolicyDaoTest {
 
-    private final LockoutPolicyParametersConverter parametersConverter = mock(LockoutPolicyParametersConverter.class);
-
-    private final LockoutPolicyDao dao = new InMemoryLockoutPolicyDao(parametersConverter);
+    private final LockoutPolicyDao dao = new InMemoryLockoutPolicyDao();
 
     @Test
     void shouldReturnEmptyOptionalIfPolicyNotFoundById() {
@@ -77,10 +73,7 @@ class InMemoryLockoutPolicyDaoTest {
 
     private LockoutPolicy createSavedPolicyWithId(final UUID id) {
         final LockoutPolicy policy = mock(LockoutPolicy.class);
-        final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
-        given(policy.getParameters()).willReturn(parameters);
-        given(parameters.getId()).willReturn(id);
-        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
+        given(policy.getId()).willReturn(id);
         return policy;
     }
 

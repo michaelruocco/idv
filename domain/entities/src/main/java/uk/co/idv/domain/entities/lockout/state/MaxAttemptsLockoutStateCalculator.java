@@ -6,10 +6,17 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 @Slf4j
 public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator {
 
+    public static final String TYPE = "max-attempts";
+
     private final int maxAttempts;
 
     public MaxAttemptsLockoutStateCalculator(final int maxAttempts) {
         this.maxAttempts = maxAttempts;
+    }
+
+    @Override
+    public String getType() {
+        return TYPE;
     }
 
     @Override

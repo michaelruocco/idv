@@ -26,10 +26,10 @@ class LockoutPolicyParametersConverterTest {
             .build();
 
     @Test
-    void shouldPopulateParametersOnPolicy() {
+    void shouldPopulateLockoutLevelOnPolicy() {
         final LockoutPolicy policy = converter.toPolicy(parameters);
 
-        assertThat(policy.getParameters()).isEqualTo(parameters);
+        assertThat(policy.getLockoutLevel()).isEqualTo(parameters.getLockoutLevel());
     }
 
     @Test

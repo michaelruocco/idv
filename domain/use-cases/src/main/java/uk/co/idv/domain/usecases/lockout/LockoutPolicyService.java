@@ -1,8 +1,8 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Getter;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
@@ -18,13 +18,13 @@ public interface LockoutPolicyService {
 
     VerificationAttempts resetAttempts(CalculateLockoutStateRequest request);
 
-    default void addPolicies(Collection<LockoutPolicyParameters> policies) {
-        policies.forEach(this::addPolicy);
+    default void savePolicies(Collection<LockoutPolicy> policies) {
+        policies.forEach(this::savePolicy);
     }
 
-    void addPolicy(LockoutPolicyParameters policy);
+    void savePolicy(LockoutPolicy policy);
 
-    Collection<LockoutPolicyParameters> loadPolicies();
+    Collection<LockoutPolicy> loadPolicies();
 
     @Getter
     class LockoutPolicyNotFoundException extends RuntimeException {

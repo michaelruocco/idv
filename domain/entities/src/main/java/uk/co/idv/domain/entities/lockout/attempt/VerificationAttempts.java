@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
 import uk.co.idv.domain.entities.identity.alias.Alias;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -73,9 +73,9 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return new VerificationAttempts(id, idvId, newAttempts);
     }
 
-    public VerificationAttempts filterMatching(final LockoutPolicyParameters parameters) {
+    public VerificationAttempts filterMatching(final LockoutLevel level) {
         final Collection<VerificationAttempt> applicableAttempts = attempts.stream()
-                .filter(parameters::appliesTo)
+                .filter(level::appliesTo)
                 .collect(Collectors.toList());
         return update(applicableAttempts);
     }

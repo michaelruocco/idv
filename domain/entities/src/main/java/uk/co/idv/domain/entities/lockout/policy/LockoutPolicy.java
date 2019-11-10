@@ -9,7 +9,17 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptReque
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
+import java.util.UUID;
+
 public interface LockoutPolicy {
+
+    UUID getId();
+
+    String getLockoutType();
+
+    String getLockoutLevelType();
+
+    String getRecordAttemptStrategyType();
 
     boolean appliesTo(final LockoutRequest request);
 
@@ -21,10 +31,10 @@ public interface LockoutPolicy {
 
     LockoutState calculateLockoutState(final CalculateLockoutStateRequest request);
 
-    LockoutPolicyParameters getParameters();
-
     LockoutStateCalculator getStateCalculator();
 
     RecordAttemptStrategy getRecordAttemptStrategy();
+
+    LockoutLevel getLockoutLevel();
 
 }

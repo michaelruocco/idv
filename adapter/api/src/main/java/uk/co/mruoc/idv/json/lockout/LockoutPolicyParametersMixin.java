@@ -1,17 +1,17 @@
 package uk.co.mruoc.idv.json.lockout;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 public interface LockoutPolicyParametersMixin {
 
-    @JsonProperty("type")
-    String getLockoutType();
+    @JsonProperty("level")
+    LockoutLevel getLockoutLevel();
 
     @JsonProperty("recordAttemptStrategy")
     String getRecordAttemptStrategyType();
 
-    @JsonIgnore
-    boolean isAliasLevel();
+    @JsonProperty("type")
+    String getLockoutType();
 
 }

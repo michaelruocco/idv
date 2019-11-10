@@ -7,6 +7,11 @@ public class FakeLockoutStateCalculator implements LockoutStateCalculator {
     private LockoutState stateToReturn;
 
     @Override
+    public String getType() {
+        return "fake-lockout-type";
+    }
+
+    @Override
     public LockoutState calculate(final CalculateLockoutStateRequest request) {
         this.lastCalculateStateRequest = request;
         return stateToReturn;

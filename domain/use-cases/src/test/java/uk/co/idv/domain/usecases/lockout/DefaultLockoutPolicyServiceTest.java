@@ -2,13 +2,10 @@ package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.state.FakeCalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
 import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -31,13 +28,9 @@ class DefaultLockoutPolicyServiceTest {
 
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
 
-    private final LockoutPolicyParametersConverter parametersConverter = mock(LockoutPolicyParametersConverter.class);
     private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
 
-    private final LockoutPolicyService service = DefaultLockoutPolicyService.builder()
-            .parametersConverter(parametersConverter)
-            .dao(dao)
-            .build();
+    private final LockoutPolicyService service = new DefaultLockoutPolicyService(dao);
 
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToRecordAttemptRequest() {
@@ -139,23 +132,16 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldSavePolicy() {
-        final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
-        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
-
-        service.addPolicy(parameters);
+        service.savePolicy(policy);
 
         verify(dao).save(policy);
     }
 
     @Test
     void shouldSaveMultiplePolicies() {
-        final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
-        given(parametersConverter.toPolicy(parameters)).willReturn(policy);
         final LockoutPolicy policy1 = mock(LockoutPolicy.class);
-        final DefaultLockoutPolicyParameters parameters1 = mock(DefaultLockoutPolicyParameters.class);
-        given(parametersConverter.toPolicy(parameters1)).willReturn(policy1);
 
-        service.addPolicies(Arrays.asList(parameters, parameters1));
+        service.savePolicies(Arrays.asList(policy, policy1));
 
         verify(dao).save(policy);
         verify(dao).save(policy1);
@@ -163,14 +149,12 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldReturnAllPolicies() {
-        final Collection<LockoutPolicy> policies = Collections.singleton(policy);
-        given(dao.load()).willReturn(policies);
-        final LockoutPolicyParameters expectedParameters = LockoutPolicyParametersMother.maxAttempts();
-        given(policy.getParameters()).willReturn(expectedParameters);
+        final Collection<LockoutPolicy> expectedPolicies = Collections.singleton(policy);
+        given(dao.load()).willReturn(expectedPolicies);
 
-        final Collection<LockoutPolicyParameters> policyParameters = service.loadPolicies();
+        final Collection<LockoutPolicy> policies = service.loadPolicies();
 
-        assertThat(policyParameters).containsExactly(expectedParameters);
+        assertThat(policies).isEqualTo(expectedPolicies);
     }
 
     private static RecordAttemptRequest buildRecordAttemptRequest() {

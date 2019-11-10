@@ -1,10 +1,9 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -20,43 +19,43 @@ class LockoutPolicyDocumentConverterDelegatorTest {
     void shouldThrowExceptionIfNoConverterSupportingLockoutPolicyDocument() {
         final LockoutPolicyDocument document = new LockoutPolicyDocument();
 
-        final Throwable error = catchThrowable(() -> delegator.toParameters(document));
+        final Throwable error = catchThrowable(() -> delegator.toPolicy(document));
 
         assertThat(error).isInstanceOf(LockoutTypeNotSupportedException.class);
         assertThat(error.getMessage()).isEqualTo(document.getLockoutType());
     }
 
     @Test
-    void shouldThrowExceptionIfNoConverterSupportingLockoutPolicyParameters() {
-        final DefaultLockoutPolicyParameters parameters = mock(DefaultLockoutPolicyParameters.class);
-        given(parameters.getLockoutType()).willReturn("not-supported");
+    void shouldThrowExceptionIfNoConverterSupportingLockoutPolicy() {
+        final LockoutPolicy policy = mock(LockoutPolicy.class);
+        given(policy.getLockoutType()).willReturn("not-supported");
 
-        final Throwable error = catchThrowable(() -> delegator.toDocument(parameters));
+        final Throwable error = catchThrowable(() -> delegator.toDocument(policy));
 
         assertThat(error).isInstanceOf(LockoutTypeNotSupportedException.class);
-        assertThat(error.getMessage()).isEqualTo(parameters.getLockoutType());
+        assertThat(error.getMessage()).isEqualTo(policy.getLockoutType());
     }
 
     @Test
     void shouldConvertLockoutPolicyDocument() {
-        final LockoutPolicyParameters expectedParameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicy expectedPolicy = LockoutPolicyMother.maxAttemptsPolicy();
         final LockoutPolicyDocument document = new LockoutPolicyDocument();
         given(converter.supportsType(document.getLockoutType())).willReturn(true);
-        given(converter.toParameters(document)).willReturn(expectedParameters);
+        given(converter.toPolicy(document)).willReturn(expectedPolicy);
 
-        final LockoutPolicyParameters parameters = delegator.toParameters(document);
+        final LockoutPolicy policy = delegator.toPolicy(document);
 
-        assertThat(parameters).isEqualTo(expectedParameters);
+        assertThat(policy).isEqualTo(expectedPolicy);
     }
 
     @Test
-    void shouldConvertLockoutPolicyParameters() {
-        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+    void shouldConvertLockoutPolicy() {
+        final LockoutPolicy policy = LockoutPolicyMother.maxAttemptsPolicy();
         final LockoutPolicyDocument expectedDocument = new LockoutPolicyDocument();
-        given(converter.supportsType(parameters.getLockoutType())).willReturn(true);
-        given(converter.toDocument(parameters)).willReturn(expectedDocument);
+        given(converter.supportsType(policy.getLockoutType())).willReturn(true);
+        given(converter.toDocument(policy)).willReturn(expectedDocument);
 
-        final LockoutPolicyDocument document = delegator.toDocument(parameters);
+        final LockoutPolicyDocument document = delegator.toDocument(policy);
 
         assertThat(document).isEqualTo(expectedDocument);
     }

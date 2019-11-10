@@ -10,37 +10,64 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptReque
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
+import java.util.UUID;
+
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
-    private final LockoutPolicyParameters parameters;
+    private final UUID id;
+    private final LockoutLevel level;
     private final LockoutStateCalculator stateCalculator;
     private final RecordAttemptStrategy recordAttemptStrategy;
     private final LockoutStateRequestConverter requestConverter;
 
     @Builder
-    public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
+    public DefaultLockoutPolicy(final UUID id,
+                                final LockoutLevel level,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
-        this(parameters,
+        this(id,
+                level,
                 stateCalculator,
                 recordAttemptStrategy,
                 new LockoutStateRequestConverter()
         );
     }
 
-    public DefaultLockoutPolicy(final LockoutPolicyParameters parameters,
+    public DefaultLockoutPolicy(final UUID id,
+                                final LockoutLevel level,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy,
                                 final LockoutStateRequestConverter requestConverter) {
-        this.parameters = parameters;
+        this.id = id;
+        this.level = level;
         this.stateCalculator = stateCalculator;
         this.recordAttemptStrategy = recordAttemptStrategy;
         this.requestConverter = requestConverter;
     }
 
     @Override
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public String getLockoutType() {
+        return stateCalculator.getType();
+    }
+
+    @Override
+    public String getLockoutLevelType() {
+        return level.getType();
+    }
+
+    @Override
+    public String getRecordAttemptStrategyType() {
+        return recordAttemptStrategy.getType();
+    }
+
+    @Override
     public boolean appliesTo(final LockoutRequest request) {
-        return parameters.appliesTo(request);
+        return level.appliesTo(request);
     }
 
     @Override
@@ -68,8 +95,8 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public LockoutPolicyParameters getParameters() {
-        return parameters;
+    public LockoutLevel getLockoutLevel() {
+        return level;
     }
 
     @Override
@@ -98,11 +125,11 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts,
                                                           final LockoutRequest request) {
-        if (parameters.isAliasLevel()) {
+        if (level.includesAlias()) {
             final VerificationAttempts aliasAttempts = attempts.filterMatching(request.getAlias());
-            return aliasAttempts.filterMatching(parameters);
+            return aliasAttempts.filterMatching(level);
         }
-        return attempts.filterMatching(parameters);
+        return attempts.filterMatching(level);
     }
 
 }

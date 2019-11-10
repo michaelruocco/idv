@@ -1,13 +1,8 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
-
 import java.util.UUID;
 
 public class FakeLockoutPolicyParameters implements LockoutPolicyParameters {
-
-    private boolean aliasLevelLocking;
-    private boolean appliesTo;
 
     @Override
     public UUID getId() {
@@ -25,31 +20,8 @@ public class FakeLockoutPolicyParameters implements LockoutPolicyParameters {
     }
 
     @Override
-    public boolean appliesTo(LockoutRequest request) {
-        return appliesTo;
-    }
-
-    @Override
-    public boolean isAliasLevel() {
-        return aliasLevelLocking;
-    }
-
-    @Override
-    public String getChannelId() {
+    public LockoutLevel getLockoutLevel() {
         return null;
-    }
-
-    @Override
-    public String getActivityName() {
-        return null;
-    }
-
-    public void setAliasLevelLocking(boolean aliasLevelLocking) {
-        this.aliasLevelLocking = aliasLevelLocking;
-    }
-
-    public void setAppliesTo(boolean appliesTo) {
-        this.appliesTo = appliesTo;
     }
 
 }

@@ -24,19 +24,19 @@ import static org.mockito.Mockito.mock;
 class DefaultLockoutPolicyTest {
 
     private final RecordAttemptStrategy recordAttemptStrategy = mock(RecordAttemptStrategy.class);
-    private final FakeLockoutPolicyParameters parameters = new FakeLockoutPolicyParameters();
+    private final FakeLockoutLevel level = new FakeLockoutLevel();
     private final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
 
     private final LockoutPolicy policy = DefaultLockoutPolicy.builder()
             .recordAttemptStrategy(recordAttemptStrategy)
-            .parameters(parameters)
+            .level(level)
             .stateCalculator(stateCalculator)
             .build();
 
     @Test
     void shouldReturnTrueIfLockoutRequestAppliesToPolicy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
-        parameters.setAppliesTo(true);
+        level.setAppliesTo(true);
 
         final boolean result = policy.appliesTo(request);
 
@@ -73,8 +73,8 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldPassRemainingAttemptsAfterResetToStateCalculatorWhenResettingState() {
+        level.setAppliesTo(true);
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-        parameters.setAppliesTo(true);
 
         policy.reset(request);
 
@@ -84,9 +84,10 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldResetAttemptsWhenTheyApplyToParameters() {
+        level.setAppliesTo(true);
         stateCalculator.setLockoutStateToReturn(new FakeLockoutStateMaxAttempts());
-        parameters.setAppliesTo(true);
         final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest();
+
 
         policy.reset(inputRequest);
 
@@ -96,9 +97,9 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldResetAttemptsByAliasWhenLockingAtAliasLevelTheyApplyToParameters() {
+        level.setAppliesTo(true);
+        level.setIncludesAlias(true);
         stateCalculator.setLockoutStateToReturn(new FakeLockoutStateMaxAttempts());
-        parameters.setAppliesTo(true);
-        parameters.setAliasLevelLocking(true);
         final VerificationAttempt matchingAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest(new FakeVerificationAttempts(matchingAliasAttempt, differentAliasAttempt));
@@ -142,10 +143,10 @@ class DefaultLockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnParameters() {
-        final LockoutPolicyParameters result = policy.getParameters();
+    void shouldReturnLockoutLevel() {
+        final LockoutLevel result = policy.getLockoutLevel();
 
-        assertThat(result).isEqualTo(parameters);
+        assertThat(result).isEqualTo(level);
     }
 
     @Test

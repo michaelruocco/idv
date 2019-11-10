@@ -6,6 +6,10 @@ project(':entities').projectDir = file("domain/entities")
 include ':use-cases'
 project(':use-cases').projectDir = file("domain/use-cases")
 
+//geography config
+include ':config-uk'
+project(':config-uk').projectDir = file("config/uk")
+
 //adapters
 include ':api'
 project(':api').projectDir = file("adapter/api")
