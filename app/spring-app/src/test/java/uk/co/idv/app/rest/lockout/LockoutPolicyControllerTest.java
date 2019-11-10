@@ -5,7 +5,7 @@ import uk.co.idv.domain.entities.lockout.policy.FakeLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
-import uk.co.mruoc.idv.api.lockout.LockoutPoliciesDocument;
+import uk.co.idv.api.lockout.LockoutPoliciesDocument;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutPolicyService;
 
