@@ -24,8 +24,9 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'com.diffplug.gradle.spotless'
 
-    group 'uk.co.mruoc'
+    group 'com.github.michaelruocco'
     version '1.0.0-SNAPSHOT'
+    archivesBaseName = "${rootProject.name}-${project.name}"
 
     sourceCompatibility = 11
     targetCompatibility = 11
