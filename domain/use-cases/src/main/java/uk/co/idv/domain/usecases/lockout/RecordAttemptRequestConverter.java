@@ -1,9 +1,9 @@
 package uk.co.idv.domain.usecases.lockout;
 
-import uk.co.idv.domain.entities.lockout.RecordAttemptRequest;
-import uk.co.idv.domain.entities.lockout.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.VerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.VerificationAttemptSuccessful;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 

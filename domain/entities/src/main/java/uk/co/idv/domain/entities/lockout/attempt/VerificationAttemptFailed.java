@@ -1,0 +1,34 @@
+package uk.co.idv.domain.entities.lockout.attempt;
+
+import lombok.Builder;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+
+import java.time.Instant;
+import java.util.UUID;
+
+public class VerificationAttemptFailed extends AbstractVerificationAttempt {
+
+    private static final boolean FAILED = false;
+
+    @Builder
+    public VerificationAttemptFailed(final UUID contextId,
+                                     final String channelId,
+                                     final String activityName,
+                                     final Alias alias,
+                                     final UUID idvIdValue,
+                                     final String methodName,
+                                     final UUID verificationId,
+                                     final Instant timestamp) {
+        super(contextId,
+                channelId,
+                activityName,
+                alias,
+                idvIdValue,
+                methodName,
+                verificationId,
+                timestamp,
+                FAILED
+        );
+    }
+
+}

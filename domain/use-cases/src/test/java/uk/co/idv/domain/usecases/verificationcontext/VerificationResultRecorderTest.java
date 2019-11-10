@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.RecordAttemptRequest;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;

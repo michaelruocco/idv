@@ -68,7 +68,7 @@ import uk.co.idv.repository.mongo.verificationcontext.method.pushnotification.Pu
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
-import uk.co.idv.domain.entities.identity.AliasFactory;
+import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;

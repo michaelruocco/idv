@@ -3,8 +3,8 @@ package uk.co.idv.repository.mongo.lockout.policy;
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
-import uk.co.idv.domain.entities.lockout.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyParametersConverter;
 
 import java.util.Collection;

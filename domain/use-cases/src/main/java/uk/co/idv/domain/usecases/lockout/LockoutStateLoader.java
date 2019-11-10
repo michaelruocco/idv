@@ -1,11 +1,11 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
-import uk.co.idv.domain.entities.lockout.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.LockoutState;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequestConverter;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequestConverter;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 @Builder
 public class LockoutStateLoader {

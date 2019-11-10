@@ -3,8 +3,8 @@ package uk.co.mruoc.idv.json.identity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.identity.Aliases;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Aliases;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 
 import java.io.IOException;
 

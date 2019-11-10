@@ -1,6 +1,6 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
-import uk.co.idv.domain.entities.lockout.AliasLevelLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.AliasLevelLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
 public class LockoutPolicyDocumentKeyConverter {

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.lockout.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
 import uk.co.mruoc.jsonapi.ApiModule;
 
 import java.io.IOException;

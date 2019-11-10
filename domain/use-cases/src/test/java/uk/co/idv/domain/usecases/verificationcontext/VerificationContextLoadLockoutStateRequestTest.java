@@ -5,8 +5,8 @@ import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.FakeActivity;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.FakeChannel;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 
 import java.time.Instant;
 import java.util.UUID;

@@ -1,8 +1,8 @@
 package uk.co.mruoc.idv.api.verificationcontext.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.FakeLockoutStateMaxAttemptsLocked;
-import uk.co.idv.domain.entities.lockout.LockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttemptsLocked;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateMaxAttempts;
 import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;

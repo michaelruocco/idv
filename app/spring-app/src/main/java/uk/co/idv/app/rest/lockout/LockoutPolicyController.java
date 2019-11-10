@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.mruoc.idv.api.lockout.LockoutPoliciesDocument;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService;
 
 import java.util.Collection;

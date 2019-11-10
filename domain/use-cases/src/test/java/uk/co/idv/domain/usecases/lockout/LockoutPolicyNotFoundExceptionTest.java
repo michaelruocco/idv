@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.FakeVerificationAttemptSuccessful;
+import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPolicyNotFoundException;
 

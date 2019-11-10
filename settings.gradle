@@ -1,7 +1,5 @@
 rootProject.name = 'verification-context'
 
-include ':verification-context-domain'
-
 include ':entities'
 project(':entities').projectDir = file("domain/entities")
 

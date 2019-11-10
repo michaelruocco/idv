@@ -2,10 +2,10 @@ package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequestConverter;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequestConverter;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.UUID;
 

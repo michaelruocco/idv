@@ -1,6 +1,6 @@
 package uk.co.idv.domain.entities.lockout;
 
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest.DefaultLockoutRequestBuilder;
 
 public class LockoutRequestMother {

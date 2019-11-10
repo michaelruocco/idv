@@ -2,8 +2,8 @@ package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 @Builder
 @Slf4j

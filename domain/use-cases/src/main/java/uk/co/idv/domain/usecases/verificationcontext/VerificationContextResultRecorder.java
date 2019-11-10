@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import lombok.Builder;
-import uk.co.idv.domain.entities.lockout.RecordAttemptRequest;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;

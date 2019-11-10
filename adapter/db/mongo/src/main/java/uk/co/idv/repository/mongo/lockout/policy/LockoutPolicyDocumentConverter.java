@@ -1,6 +1,6 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 
 public interface LockoutPolicyDocumentConverter {
 

@@ -1,9 +1,9 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.lockout.DefaultLoadLockoutStateRequest.DefaultLoadLockoutStateRequestBuilder;
 
 import java.time.Instant;

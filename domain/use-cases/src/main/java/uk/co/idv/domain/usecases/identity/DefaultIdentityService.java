@@ -2,11 +2,11 @@ package uk.co.idv.domain.usecases.identity;
 
 import lombok.Builder;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.Aliases;
-import uk.co.idv.domain.entities.identity.CreditCardNumber;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.Aliases;
+import uk.co.idv.domain.entities.identity.alias.CreditCardNumber;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.IdvId;
+import uk.co.idv.domain.entities.identity.alias.IdvId;
 
 import java.util.Optional;
 

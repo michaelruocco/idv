@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentKeyConverter;
-import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.MaxAttemptsAliasLevelLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsAliasLevelLockoutPolicyParameters;
 
 import java.util.UUID;
 

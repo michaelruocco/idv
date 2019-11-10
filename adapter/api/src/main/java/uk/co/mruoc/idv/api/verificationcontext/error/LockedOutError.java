@@ -1,6 +1,6 @@
 package uk.co.mruoc.idv.api.verificationcontext.error;
 
-import uk.co.idv.domain.entities.lockout.LockoutState;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.mruoc.jsonapi.error.ApiError;
 
 import java.util.Map;

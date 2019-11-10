@@ -1,13 +1,13 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
-import uk.co.idv.domain.entities.lockout.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
-import uk.co.idv.domain.entities.lockout.LockoutState;
-import uk.co.idv.domain.entities.lockout.RecordAttemptRequest;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

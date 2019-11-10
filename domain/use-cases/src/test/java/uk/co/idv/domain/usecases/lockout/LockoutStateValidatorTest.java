@@ -1,8 +1,8 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.LockoutState;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
 
 import static org.assertj.core.api.Assertions.assertThat;

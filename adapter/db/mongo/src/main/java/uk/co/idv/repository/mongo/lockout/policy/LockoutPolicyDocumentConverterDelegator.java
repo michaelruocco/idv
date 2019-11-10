@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory.LockoutTypeNotSupportedException;
 
 import java.util.Arrays;
 import java.util.Collection;

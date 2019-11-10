@@ -1,13 +1,13 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParametersMother;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
 import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsAliasLevelLockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsLockoutPolicyDocument;
-import uk.co.idv.domain.entities.lockout.AliasLevelLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.MaxAttemptsAliasLevelLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.AliasLevelLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsAliasLevelLockoutPolicyParameters;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.identity.alias;
 
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.Aliases;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.Aliases;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

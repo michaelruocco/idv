@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.alias.Alias;
 
 @Builder
 @Getter

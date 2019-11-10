@@ -1,9 +1,9 @@
 package uk.co.idv.domain.entities.lockout.uk;
 
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParametersProvider;
-import uk.co.idv.domain.entities.identity.CreditCardNumber;
-import uk.co.idv.domain.entities.identity.DebitCardNumber;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersProvider;
+import uk.co.idv.domain.entities.identity.alias.CreditCardNumber;
+import uk.co.idv.domain.entities.identity.alias.DebitCardNumber;
 
 import java.util.Arrays;
 import java.util.Collection;

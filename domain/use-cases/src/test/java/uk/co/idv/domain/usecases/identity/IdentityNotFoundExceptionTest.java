@@ -1,8 +1,8 @@
 package uk.co.idv.domain.usecases.identity;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.identity.IdentityService.IdentityNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;

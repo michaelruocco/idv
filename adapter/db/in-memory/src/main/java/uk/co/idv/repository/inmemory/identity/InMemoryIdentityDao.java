@@ -1,8 +1,8 @@
 package uk.co.idv.repository.inmemory.identity;
 
 import uk.co.idv.domain.usecases.identity.IdentityDao;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.Aliases;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.Identity;
 
 import java.util.Collection;

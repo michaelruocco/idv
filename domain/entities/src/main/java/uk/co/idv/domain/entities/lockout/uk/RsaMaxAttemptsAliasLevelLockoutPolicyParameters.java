@@ -1,8 +1,8 @@
 package uk.co.idv.domain.entities.lockout.uk;
 
 import lombok.Getter;
-import uk.co.idv.domain.entities.lockout.MaxAttemptsAliasLevelLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.RecordEveryAttempt;
+import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsAliasLevelLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
 import uk.co.idv.domain.entities.channel.Rsa;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 

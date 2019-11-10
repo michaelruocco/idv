@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.entities.identity.Identity;

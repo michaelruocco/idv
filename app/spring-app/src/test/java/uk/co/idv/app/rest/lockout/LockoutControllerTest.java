@@ -7,11 +7,11 @@ import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutFacade;
 import uk.co.mruoc.idv.api.lockout.LockoutStateDocument;
 import uk.co.mruoc.idv.api.lockout.ResetLockoutStateDocument;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasFactory;
-import uk.co.idv.domain.entities.identity.IdvId;
-import uk.co.idv.domain.entities.lockout.FakeLockoutStateMaxAttempts;
-import uk.co.idv.domain.entities.lockout.LockoutState;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasFactory;
+import uk.co.idv.domain.entities.identity.alias.IdvId;
+import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
 
 import java.util.UUID;
 

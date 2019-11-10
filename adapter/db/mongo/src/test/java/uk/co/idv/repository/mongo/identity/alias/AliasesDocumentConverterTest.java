@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.identity.alias;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.Aliases;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.Aliases;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 
 import java.util.Arrays;
 import java.util.Collection;

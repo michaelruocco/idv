@@ -2,7 +2,7 @@ package uk.co.idv.repository.mongo.identity;
 
 import lombok.Builder;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
-import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
 
 import java.util.Collection;

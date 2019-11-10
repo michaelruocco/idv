@@ -3,9 +3,8 @@ package uk.co.idv.domain.entities.lockout.uk;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 import uk.co.idv.domain.entities.channel.Rsa;
-import uk.co.idv.domain.entities.lockout.MaxAttemptsAliasLevelLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.RecordEveryAttempt;
-import uk.co.idv.domain.entities.lockout.RsaMaxAttemptsAliasLevelLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsAliasLevelLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
 
 import java.util.UUID;
 

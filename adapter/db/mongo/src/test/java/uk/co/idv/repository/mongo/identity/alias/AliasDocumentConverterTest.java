@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.identity.alias;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasFactory;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasFactory;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

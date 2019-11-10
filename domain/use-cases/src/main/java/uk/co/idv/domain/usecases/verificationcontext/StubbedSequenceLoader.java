@@ -1,6 +1,6 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
-import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesIneligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;

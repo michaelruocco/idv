@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.domain.entities.lockout.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Collection;
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package uk.co.idv.domain.usecases.identity;
 
-import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
 
 import java.util.Optional;

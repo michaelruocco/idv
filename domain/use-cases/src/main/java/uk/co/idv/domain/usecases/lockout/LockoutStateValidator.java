@@ -2,8 +2,8 @@ package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
 import lombok.Getter;
-import uk.co.idv.domain.entities.lockout.LockoutState;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
 
 @Builder
 public class LockoutStateValidator {

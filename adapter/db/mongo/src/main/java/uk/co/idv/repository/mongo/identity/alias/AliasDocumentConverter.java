@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.identity.alias;
 
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasFactory;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 
 
 public class AliasDocumentConverter {

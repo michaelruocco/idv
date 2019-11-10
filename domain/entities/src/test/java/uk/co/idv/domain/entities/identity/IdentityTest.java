@@ -1,6 +1,10 @@
 package uk.co.idv.domain.entities.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.Aliases;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.IdvId;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

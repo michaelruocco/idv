@@ -1,8 +1,8 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesIneligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;

@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.FakeChannel;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.Aliases;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.Aliases;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.IdvId;
+import uk.co.idv.domain.entities.identity.alias.IdvId;
 import uk.co.idv.domain.usecases.identity.IdentityService.IdentityNotFoundException;
 
 import java.util.Optional;

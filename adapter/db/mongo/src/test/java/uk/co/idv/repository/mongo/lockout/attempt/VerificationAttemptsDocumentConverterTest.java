@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.FakeVerificationAttempts;
-import uk.co.idv.domain.entities.lockout.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Arrays;
 import java.util.UUID;

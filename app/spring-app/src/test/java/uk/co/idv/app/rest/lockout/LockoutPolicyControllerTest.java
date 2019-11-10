@@ -1,9 +1,9 @@
 package uk.co.idv.app.rest.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParametersMother;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
 import uk.co.mruoc.idv.api.lockout.LockoutPoliciesDocument;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutPolicyService;
 
 import java.util.Collections;

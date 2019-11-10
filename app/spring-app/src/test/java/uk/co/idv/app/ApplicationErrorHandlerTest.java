@@ -18,11 +18,11 @@ import uk.co.mruoc.idv.api.verificationcontext.error.VerificationContextExpiredE
 import uk.co.mruoc.idv.api.verificationcontext.error.VerificationContextNotFoundError;
 import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
 import uk.co.idv.domain.usecases.exception.ChannelNotSupportedException;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.identity.IdentityService.IdentityNotFoundException;
 import uk.co.mruoc.idv.json.identity.AliasDeserializer.AliasNotSupportedException;
-import uk.co.idv.domain.entities.lockout.LockoutState;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.NotNextMethodInSequenceException;

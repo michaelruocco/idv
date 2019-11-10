@@ -3,16 +3,16 @@ package uk.co.idv.domain.usecases.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.identity.FakeIdentityService;
 import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
-import uk.co.idv.domain.entities.lockout.FakeLockoutStateMaxAttempts;
-import uk.co.idv.domain.entities.lockout.LockoutState;
+import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
 
 import java.time.Instant;
 

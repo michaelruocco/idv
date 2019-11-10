@@ -1,6 +1,6 @@
 package uk.co.idv.domain.usecases.lockout;
 
-import uk.co.idv.domain.entities.lockout.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
 import java.util.Collection;

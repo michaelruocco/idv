@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentMother;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
-import uk.co.idv.domain.entities.lockout.FakeVerificationAttemptSuccessful;
-import uk.co.idv.domain.entities.lockout.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.VerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.VerificationAttemptSuccessful;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptSuccessful;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptSuccessful;
 
 import java.time.Instant;
 import java.util.UUID;

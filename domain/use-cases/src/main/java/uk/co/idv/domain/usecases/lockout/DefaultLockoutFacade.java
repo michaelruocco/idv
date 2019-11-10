@@ -3,11 +3,11 @@ package uk.co.idv.domain.usecases.lockout;
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.lockout.LockoutStateRequest;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
-import uk.co.idv.domain.entities.lockout.LockoutState;
+import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 
 @Builder

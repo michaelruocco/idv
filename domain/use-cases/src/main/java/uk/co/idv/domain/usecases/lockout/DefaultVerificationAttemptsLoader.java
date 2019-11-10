@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.UUID;
 

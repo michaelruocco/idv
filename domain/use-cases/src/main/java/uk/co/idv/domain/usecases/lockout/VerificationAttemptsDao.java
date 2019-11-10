@@ -1,6 +1,6 @@
 package uk.co.idv.domain.usecases.lockout;
 
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Optional;
 import java.util.UUID;

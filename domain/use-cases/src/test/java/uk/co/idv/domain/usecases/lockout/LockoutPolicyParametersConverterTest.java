@@ -1,13 +1,13 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyParametersMother;
-import uk.co.idv.domain.entities.lockout.LockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.LockoutStateCalculatorFactory;
-import uk.co.idv.domain.entities.lockout.RecordAttemptStrategy;
-import uk.co.idv.domain.entities.lockout.RecordAttemptStrategyFactory;
+import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

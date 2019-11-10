@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.identity;
 
 import lombok.Getter;
-import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
 
 public interface IdentityService {

@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import uk.co.idv.domain.entities.activity.FakeActivity;
 import uk.co.idv.domain.entities.channel.FakeChannel;
-import uk.co.idv.domain.entities.identity.AliasesMother;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
 

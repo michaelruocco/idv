@@ -3,7 +3,7 @@ package uk.co.idv.domain.usecases.verificationcontext;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.verificationcontext.LoadSequencesRequest.LoadSequencesRequestBuilder;
 

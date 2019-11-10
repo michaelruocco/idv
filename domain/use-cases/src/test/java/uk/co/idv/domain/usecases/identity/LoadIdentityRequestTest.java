@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.identity;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Alias;
+import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.usecases.identity.LoadIdentityRequest.LoadIdentityRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,10 +1,10 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Alias;
-import uk.co.idv.domain.entities.identity.AliasesMother;
-import uk.co.idv.domain.entities.lockout.FakeVerificationAttempts;
-import uk.co.idv.domain.entities.lockout.VerificationAttempts;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.usecases.lockout.ResetAttemptsRequest.ResetAttemptsRequestBuilder;
 
 import java.time.Instant;
