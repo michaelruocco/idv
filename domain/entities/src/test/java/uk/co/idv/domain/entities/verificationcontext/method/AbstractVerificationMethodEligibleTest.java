@@ -3,6 +3,7 @@ package uk.co.idv.domain.entities.verificationcontext.method;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.CannotAddResultToMethodException;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.MethodAlreadyCompleteException;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;

@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.verificationcontext.eligibility;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verificationcontext.method.Eligibility;
-import uk.co.idv.domain.entities.verificationcontext.method.Eligible;
-import uk.co.idv.domain.entities.verificationcontext.method.FakeIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.FakeIneligible;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

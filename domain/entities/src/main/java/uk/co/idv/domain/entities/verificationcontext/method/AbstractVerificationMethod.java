@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext.method;
 
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 

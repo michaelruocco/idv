@@ -8,9 +8,9 @@ import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodD
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocument;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentMother;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.idv.domain.entities.verificationcontext.method.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;

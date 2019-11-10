@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.json.verificationcontext;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 
 import java.io.IOException;
 

@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.verificationcontext.eligibility;
 
-import uk.co.idv.domain.entities.verificationcontext.method.Eligibility;
-import uk.co.idv.domain.entities.verificationcontext.method.Eligible;
-import uk.co.idv.domain.entities.verificationcontext.method.Ineligible;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Ineligible;
 
 public class EligibilityDocumentConverter {
 

@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode;
 
-import uk.co.idv.domain.entities.verificationcontext.method.DefaultPasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 
 public class PasscodeSettingsDocumentConverter {
 

@@ -2,6 +2,7 @@ package uk.co.idv.domain.entities.verificationcontext.method;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.CannotAddResultToIneligibleMethodException;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.FakeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 

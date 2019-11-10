@@ -5,9 +5,9 @@ import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDoc
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSms;
-import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSmsEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSmsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 import java.util.Collection;

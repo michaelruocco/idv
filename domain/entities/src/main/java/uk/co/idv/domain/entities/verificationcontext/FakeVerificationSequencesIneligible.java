@@ -1,12 +1,12 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryIneligible;
-import uk.co.idv.domain.entities.verificationcontext.method.NoEligibleCards;
-import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSmsIneligible;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryIneligible;
-import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
 
 
 public class FakeVerificationSequencesIneligible extends VerificationSequences {

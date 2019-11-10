@@ -5,9 +5,9 @@ import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDoc
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 @Builder

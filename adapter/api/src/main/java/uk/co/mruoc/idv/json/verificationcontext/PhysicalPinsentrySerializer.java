@@ -3,8 +3,8 @@ package uk.co.mruoc.idv.json.verificationcontext;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 
 import java.io.IOException;
 

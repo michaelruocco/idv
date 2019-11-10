@@ -1,16 +1,16 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
-import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.CreditCardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.DefaultPasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.MobileNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSmsEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CreditCardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
 
 import java.util.Collection;
 import java.util.Collections;

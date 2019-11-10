@@ -2,11 +2,11 @@ package uk.co.mruoc.idv.json.verificationcontext;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.Eligibility;
-import uk.co.idv.domain.entities.verificationcontext.method.MobileNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.io.IOException;

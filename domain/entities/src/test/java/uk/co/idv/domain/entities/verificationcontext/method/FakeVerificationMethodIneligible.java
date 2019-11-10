@@ -1,6 +1,8 @@
 package uk.co.idv.domain.entities.verificationcontext.method;
 
 import lombok.ToString;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.FakeIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Ineligible;
 
 @ToString
 public class FakeVerificationMethodIneligible extends AbstractVerificationMethodIneligible implements FakeVerificationMethod {

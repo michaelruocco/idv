@@ -2,11 +2,11 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import uk.co.idv.domain.entities.verificationcontext.method.CardCredentialsEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSms;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.cardcredentials.CardCredentialsEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 

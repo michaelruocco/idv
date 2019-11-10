@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.CardNumberMother;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumberMother;
 
 import java.util.Arrays;
 import java.util.Collection;

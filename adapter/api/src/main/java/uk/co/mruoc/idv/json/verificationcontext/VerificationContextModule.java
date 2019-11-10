@@ -9,11 +9,11 @@ import uk.co.mruoc.idv.json.verificationcontext.result.VerificationResultsSerial
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.OneTimePasscodeSms;
-import uk.co.idv.domain.entities.verificationcontext.method.PasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;

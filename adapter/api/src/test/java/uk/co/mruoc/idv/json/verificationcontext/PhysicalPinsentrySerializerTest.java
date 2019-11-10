@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.CardNumberMother;
-import uk.co.idv.domain.entities.verificationcontext.method.NoEligibleCards;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumberMother;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static uk.co.idv.domain.entities.verificationcontext.method.PinsentryFunction.RESPOND;
+import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction.RESPOND;
 
 class PhysicalPinsentrySerializerTest {
 

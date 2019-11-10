@@ -3,7 +3,7 @@ package uk.co.mruoc.idv.json.verificationcontext;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import uk.co.idv.domain.entities.verificationcontext.method.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 
 import java.io.IOException;
 

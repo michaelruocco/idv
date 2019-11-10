@@ -1,13 +1,13 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical;
 
-import uk.co.idv.domain.entities.verificationcontext.method.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.CardType;
-import uk.co.idv.domain.entities.verificationcontext.method.CreditCardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.DebitCardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardType;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CreditCardNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.DebitCardNumber;
 
 import java.util.UUID;
 
-import static uk.co.idv.domain.entities.verificationcontext.method.CardType.CREDIT;
+import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardType.CREDIT;
 
 public class CardNumberDocumentConverter {
 

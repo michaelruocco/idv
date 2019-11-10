@@ -5,9 +5,9 @@ import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDoc
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocument;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.PhysicalPinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
 import java.util.Collection;

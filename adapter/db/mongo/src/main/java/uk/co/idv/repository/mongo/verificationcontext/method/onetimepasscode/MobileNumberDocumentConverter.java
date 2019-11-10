@@ -1,6 +1,6 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode;
 
-import uk.co.idv.domain.entities.verificationcontext.method.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
 
 import java.util.UUID;
 
