@@ -9,8 +9,6 @@ import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ActivityDeserializer extends StdDeserializer<Activity> {

@@ -23,11 +23,13 @@ import static org.mockito.Mockito.mock;
 
 class DefaultLockoutPolicyTest {
 
+    private final UUID id = UUID.randomUUID();
     private final RecordAttemptStrategy recordAttemptStrategy = mock(RecordAttemptStrategy.class);
     private final FakeLockoutLevel level = new FakeLockoutLevel();
     private final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
 
     private final LockoutPolicy policy = DefaultLockoutPolicy.builder()
+            .id(id)
             .recordAttemptStrategy(recordAttemptStrategy)
             .level(level)
             .stateCalculator(stateCalculator)
@@ -140,6 +142,31 @@ class DefaultLockoutPolicyTest {
         final LockoutState state = policy.calculateLockoutState(request);
 
         assertThat(state).isEqualTo(expectedState);
+    }
+
+    @Test
+    void shouldReturnId() {
+        assertThat(policy.getId()).isEqualTo(id);
+    }
+
+    @Test
+    void shouldReturnLockoutType() {
+        assertThat(policy.getLockoutType()).isEqualTo(stateCalculator.getType());
+    }
+
+    @Test
+    void shouldReturnLockoutLevelType() {
+        assertThat(policy.getLockoutLevelType()).isEqualTo(level.getType());
+    }
+
+    @Test
+    void shouldReturnRecordAttemptStrategyType() {
+        String expectedType = "record-attempt-strategy-type";
+        given(recordAttemptStrategy.getType()).willReturn(expectedType);
+
+        String type = policy.getRecordAttemptStrategyType();
+
+        assertThat(type).isEqualTo(expectedType);
     }
 
     @Test
