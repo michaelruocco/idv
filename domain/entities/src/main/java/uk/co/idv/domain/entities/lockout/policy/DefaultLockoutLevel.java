@@ -8,16 +8,18 @@ import uk.co.idv.domain.entities.lockout.LockoutRequest;
 @Getter
 public class DefaultLockoutLevel implements LockoutLevel {
 
+    public static final String TYPE = "channel-and-activity";
+
     private final String channelId;
     private final String activityName;
 
     @Override
     public String getType() {
-        return "channel-and-activity";
+        return TYPE;
     }
 
     @Override
-    public boolean appliesTo(LockoutRequest request) {
+    public boolean appliesTo(final LockoutRequest request) {
         return channelId.equals(request.getChannelId()) &&
                 activityName.equals(request.getActivityName());
     }
