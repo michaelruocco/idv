@@ -1,11 +1,8 @@
-package uk.co.idv.domain.usecases.lockout;
+package uk.co.idv.json.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 

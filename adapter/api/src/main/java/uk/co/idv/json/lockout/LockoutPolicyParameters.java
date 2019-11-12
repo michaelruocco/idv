@@ -1,4 +1,6 @@
-package uk.co.idv.domain.entities.lockout.policy;
+package uk.co.idv.json.lockout;
+
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 import java.util.UUID;
 

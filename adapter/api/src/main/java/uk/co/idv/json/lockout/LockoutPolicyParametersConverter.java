@@ -1,11 +1,8 @@
-package uk.co.idv.domain.usecases.lockout;
+package uk.co.idv.json.lockout;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculatorFactory;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
 

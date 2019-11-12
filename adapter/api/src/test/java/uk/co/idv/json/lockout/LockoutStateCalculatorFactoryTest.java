@@ -1,10 +1,9 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.json.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
-import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

@@ -10,7 +10,6 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt
 import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
 import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsLockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsLockoutPolicyDocument;
-import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicyParameters;
 
 import java.util.UUID;
 
@@ -30,7 +29,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldOnlySupportMaxAttemptsLockoutType() {
-        assertThat(converter.supportsType(MaxAttemptsLockoutPolicyParameters.TYPE)).isTrue();
+        assertThat(converter.supportsType(MaxAttemptsLockoutStateCalculator.TYPE)).isTrue();
         assertThat(converter.supportsType("other-type")).isFalse();
     }
 

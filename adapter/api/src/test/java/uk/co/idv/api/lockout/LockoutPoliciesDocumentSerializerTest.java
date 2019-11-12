@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.zalando.jackson.datatype.money.MoneyModule;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParametersMother;
+import uk.co.idv.json.lockout.LockoutPolicyParametersMother;
 import uk.co.idv.json.activity.ActivityModule;
 import uk.co.idv.json.channel.ChannelModule;
 import uk.co.idv.json.identity.IdentityModule;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
+import uk.co.idv.json.lockout.LockoutPolicyParameters;
 import uk.co.mruoc.jsonapi.ApiModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;

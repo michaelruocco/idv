@@ -1,6 +1,8 @@
-package uk.co.idv.domain.entities.lockout.policy;
+package uk.co.idv.json.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutLevel;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 import java.util.UUID;
 

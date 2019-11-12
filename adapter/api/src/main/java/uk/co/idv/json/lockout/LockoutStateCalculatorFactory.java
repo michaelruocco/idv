@@ -1,14 +1,14 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.json.lockout;
 
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
-import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyParameters;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
 
 public class LockoutStateCalculatorFactory {
 
     public LockoutStateCalculator build(final LockoutPolicyParameters parameters) {
         final String type = parameters.getLockoutType();
-        if (MaxAttemptsLockoutPolicyParameters.TYPE.equals(type)) {
+        if (MaxAttemptsLockoutStateCalculator.TYPE.equals(type)) {
             return toMaxAttemptsStateCalculator((MaxAttemptsLockoutPolicyParameters) parameters);
         }
         throw new LockoutTypeNotSupportedException(type);

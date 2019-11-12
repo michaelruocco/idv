@@ -1,7 +1,8 @@
-package uk.co.idv.domain.entities.lockout.policy;
+package uk.co.idv.json.lockout;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 import java.util.UUID;
 

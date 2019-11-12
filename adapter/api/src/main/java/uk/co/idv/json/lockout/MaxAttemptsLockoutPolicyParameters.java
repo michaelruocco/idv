@@ -1,14 +1,14 @@
-package uk.co.idv.domain.entities.lockout.policy;
+package uk.co.idv.json.lockout;
 
 import lombok.Builder;
 import lombok.Getter;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
 
 import java.util.UUID;
 
 @Getter
 public class MaxAttemptsLockoutPolicyParameters extends DefaultLockoutPolicyParameters {
-
-    public static final String TYPE = "max-attempts";
 
     private final int maxNumberOfAttempts;
 
@@ -18,7 +18,7 @@ public class MaxAttemptsLockoutPolicyParameters extends DefaultLockoutPolicyPara
                                               final LockoutLevel lockoutLevel,
                                               final int maxNumberOfAttempts) {
         super(id,
-                TYPE,
+                MaxAttemptsLockoutStateCalculator.TYPE,
                 recordAttemptStrategyType,
                 lockoutLevel);
         this.maxNumberOfAttempts = maxNumberOfAttempts;
