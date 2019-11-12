@@ -37,9 +37,7 @@ public class ActivityDeserializer extends StdDeserializer<Activity> {
     }
 
     private static Map<String, JsonNodeToActivityConverter> buildConverters() {
-        final Map<String, JsonNodeToActivityConverter> converters = new HashMap<>();
-        converters.put(OnlinePurchase.NAME, new JsonNodeToOnlinePurchaseConverter());
-        return Collections.unmodifiableMap(converters);
+        return Map.of(OnlinePurchase.NAME, new JsonNodeToOnlinePurchaseConverter());
     }
 
 }
