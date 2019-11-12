@@ -16,7 +16,7 @@ class MaxAttemptsLockoutStateCalculatorTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
 
-    private final LockoutStateCalculator calculator = new MaxAttemptsLockoutStateCalculator(MAX_NUMBER_OF_ATTEMPTS);
+    private final MaxAttemptsLockoutStateCalculator calculator = new MaxAttemptsLockoutStateCalculator(MAX_NUMBER_OF_ATTEMPTS);
 
     @Test
     void shouldReturnNotLockedIfNumberOfAttemptsIsLessThanMaxNumberOfAttempts() {
@@ -59,11 +59,11 @@ class MaxAttemptsLockoutStateCalculatorTest {
     }
 
     @Test
-    void shouldReturnMaxNumberOfAttempts() {
+    void shouldReturnMaxNumberOfAttemptsFromCalculatedState() {
         final VerificationAttempts oneAttempt = buildOneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
-        final LockoutStateMaxAttempts state = (LockoutStateMaxAttempts) calculator.calculate(request);
+        final LockoutStateMaxAttempts state = calculator.calculate(request);
 
         assertThat(state.getMaxNumberOfAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
     }
@@ -73,7 +73,7 @@ class MaxAttemptsLockoutStateCalculatorTest {
         final VerificationAttempts oneAttempt = buildOneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
-        final LockoutStateMaxAttempts state = (LockoutStateMaxAttempts) calculator.calculate(request);
+        final LockoutStateMaxAttempts state = calculator.calculate(request);
 
         assertThat(state.getNumberOfAttemptsRemaining()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS - oneAttempt.size());
     }
@@ -83,9 +83,19 @@ class MaxAttemptsLockoutStateCalculatorTest {
         final VerificationAttempts attempts = buildAttemptsOfSize(MAX_NUMBER_OF_ATTEMPTS);
         final CalculateLockoutStateRequest request = toCalculateRequest(attempts);
 
-        final LockoutStateMaxAttempts state = (LockoutStateMaxAttempts) calculator.calculate(request);
+        final LockoutStateMaxAttempts state = calculator.calculate(request);
 
         assertThat(state.getNumberOfAttemptsRemaining()).isEqualTo(0);
+    }
+
+    @Test
+    void shouldReturnType() {
+        assertThat(calculator.getType()).isEqualTo("max-attempts");
+    }
+
+    @Test
+    void shouldReturnMaxNumberOfAttempts() {
+        assertThat(calculator.getMaxAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
     }
 
     private static VerificationAttempts buildOneAttempt() {
