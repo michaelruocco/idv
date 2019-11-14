@@ -6,10 +6,6 @@ project(':entities').projectDir = file('domain/entities')
 include ':use-cases'
 project(':use-cases').projectDir = file('domain/use-cases')
 
-//geography config
-include ':config-uk'
-project(':config-uk').projectDir = file('config/uk')
-
 //adapters
 include ':api'
 project(':api').projectDir = file('adapter/api')
@@ -19,6 +15,16 @@ project(':in-memory-db').projectDir = file('adapter/db/in-memory')
 
 include ':mongo-db'
 project(':mongo-db').projectDir = file('adapter/db/mongo')
+
+//uk geography
+include ':uk-config'
+project(':uk-config').projectDir = file('geography/uk/config')
+
+include ':uk-api'
+project(':uk-api').projectDir = file('geography/uk/api')
+
+include ':uk-mongo'
+project(':uk-mongo').projectDir = file('geography/uk/mongo')
 
 //application
 include ':spring-app'
