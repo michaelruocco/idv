@@ -1,4 +1,4 @@
-package uk.co.idv.config.uk;
+package uk.co.idv.uk.config.lockout;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;

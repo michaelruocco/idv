@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChannelTest {
+class SimpleChannelTest {
 
     private static final String ID = "fake-channel";
 
-    private final Channel channel = new FakeChannel();
+    private final Channel channel = new SimpleChannel(ID);
 
     @Test
     void shouldReturnId() {

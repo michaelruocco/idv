@@ -5,7 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.zalando.jackson.datatype.money.MoneyModule;
-import uk.co.idv.config.uk.UkLockoutPolicyProvider;
+import uk.co.idv.uk.config.lockout.UkLockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateRequestConverter;
 import uk.co.idv.api.lockout.JsonApiLockoutStateModule;

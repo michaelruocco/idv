@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.identity;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
@@ -112,7 +112,7 @@ class DefaultIdentityServiceTest {
     }
 
     private static UpsertIdentityRequest buildUpsertRequest(final Alias providedAlias) {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
         return UpsertIdentityRequest.builder()
                 .channel(channel)
                 .providedAlias(providedAlias)

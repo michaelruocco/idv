@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.FakeActivity;
 import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -34,7 +34,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnChannel() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
 
         final VerificationContext context = builder.channel(channel).build();
 
@@ -43,7 +43,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnHasChannelIdTrueIfChannelIdMatches() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
 
         final VerificationContext context = builder.channel(channel).build();
 
@@ -51,8 +51,8 @@ class VerificationContextTest {
     }
 
     @Test
-    void shouldReturnHasChannelIFalseIfChannelIdDoesNotMatch() {
-        final Channel channel = new FakeChannel();
+    void shouldReturnHasChannelIdFalseIfChannelIdDoesNotMatch() {
+        final Channel channel = ChannelMother.fake();
 
         final VerificationContext context = builder.channel(channel).build();
 
@@ -61,7 +61,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnChannelId() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
 
         final VerificationContext context = builder.channel(channel).build();
 

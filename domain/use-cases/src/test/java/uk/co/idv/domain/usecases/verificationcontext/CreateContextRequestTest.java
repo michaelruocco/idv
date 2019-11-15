@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.FakeActivity;
 import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest.CreateContextRequestBuilder;
@@ -19,7 +19,7 @@ class CreateContextRequestTest {
 
     @Test
     void shouldReturnChannel() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
 
         final CreateContextRequest request = builder.channel(channel).build();
 
@@ -28,7 +28,7 @@ class CreateContextRequestTest {
 
     @Test
     void shouldReturnChannelId() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
 
         final CreateContextRequest request = builder.channel(channel).build();
 

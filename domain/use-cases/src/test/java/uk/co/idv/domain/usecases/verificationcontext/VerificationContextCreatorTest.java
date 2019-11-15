@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.FakeActivity;
 import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.channel.FakeChannel;
+import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
@@ -62,7 +62,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassChannelWhenUpsertingIdentity() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .channel(channel)
                 .build();
@@ -88,7 +88,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassChannelWhenValidatingLockoutState() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .channel(channel)
                 .build();
@@ -160,7 +160,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassChannelWhenLoadingSequences() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .channel(channel)
                 .build();
@@ -209,7 +209,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassChannelWhenCalculatingExpiry() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .channel(channel)
                 .build();
@@ -264,7 +264,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateChannel() {
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
         final CreateContextRequest request = CreateContextRequest.builder()
                 .channel(channel)
                 .build();

@@ -1,6 +1,7 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
 import uk.co.idv.repository.mongo.activity.ActivityDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocument;
@@ -12,7 +13,6 @@ import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.FakeActivity;
 import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.channel.FakeChannel;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -66,7 +66,7 @@ class VerificationContextConverterTest {
     @Test
     void shouldChannelToContext() {
         final VerificationContextDocument document = VerificationContextDocumentMother.fake();
-        final Channel channel = new FakeChannel();
+        final Channel channel = ChannelMother.fake();
         given(channelConverter.toChannel(document.getChannel())).willReturn(channel);
 
         final VerificationContext context = contextConverter.toContext(document);
