@@ -1,15 +1,30 @@
 package uk.co.idv.domain.entities.channel;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@EqualsAndHashCode
-public class Rsa implements Channel {
+import java.util.Optional;
+import java.util.UUID;
+
+@Getter
+@EqualsAndHashCode(callSuper = true)
+public class Rsa extends SimpleChannel {
 
     public static final String ID = "RSA";
 
-    @Override
-    public String getId() {
-        return ID;
+    private final UUID issuerSessionId;
+
+    public Rsa() {
+        this(null);
+    }
+
+    public Rsa(final UUID issuerSessionId) {
+        super(ID);
+        this.issuerSessionId = issuerSessionId;
+    }
+
+    public Optional<UUID> getIssuerSessionId() {
+        return Optional.ofNullable(issuerSessionId);
     }
 
 }

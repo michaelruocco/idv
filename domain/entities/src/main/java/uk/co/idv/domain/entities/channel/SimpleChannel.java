@@ -3,8 +3,8 @@ package uk.co.idv.domain.entities.channel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-@EqualsAndHashCode
 @Getter
+@EqualsAndHashCode
 public class SimpleChannel implements Channel {
 
     private final String id;
