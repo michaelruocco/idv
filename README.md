@@ -6,13 +6,20 @@ useful commands:
 ```
 
 ```
-
+// runs tests and builds code and applies rules to clean up code formatting etc
 ./gradlew clean spotlessApply build
 ```
 
 ```
 // builds docker image as well as code
 ./gradlew clean build buildImage
+```
+
+```
+// builds docker image as well as code and then pushes docker image
+// NOTE - requires environment variables to be set for DOCKER_USERNAME and DOCKER_PASSWORD
+// to be able to push to dockerhub
+./gradlew clean build buildImage pushImage
 ```
 
 ```
@@ -41,13 +48,12 @@ useful commands:
 
 TODO:
 
-* Update travis CI pipeline to build docker image and run docker compose task and then run postman against the running service
 * Change verification methods so there is one type per method but with a boolean flag
 * Refactor to create config modules they are geography specific and can be used by spring app
 * Change api module so it is not split into separate json and and api packages, the split is no longer needed / makes sense
 * Add lockout policy maintenance apis
-* Static api types so raml can be generated per geography api
 * Verification method policies
-* Deploy onto AWS
-* Pipeline publishing libraries to maven automatically
 * Client library
+* Pipeline publishing libraries to maven automatically from gradle / travis ci build pipeline
+* Deploy onto AWS (ideally would be automatic from travis ci pipeline)
+* Static api types so raml can be generated per geography api
