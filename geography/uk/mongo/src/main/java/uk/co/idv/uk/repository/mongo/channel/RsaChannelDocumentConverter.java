@@ -5,7 +5,6 @@ import uk.co.idv.repository.mongo.channel.ChannelDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
 import uk.co.idv.uk.domain.entities.channel.Rsa;
 
-import java.util.UUID;
 
 public class RsaChannelDocumentConverter implements ChannelDocumentConverter {
 
@@ -19,14 +18,14 @@ public class RsaChannelDocumentConverter implements ChannelDocumentConverter {
         final Rsa rsa = (Rsa) channel;
         final RsaChannelDocument document = new RsaChannelDocument();
         document.setId(rsa.getId());
-        document.setIssuerSessionId(rsa.getIssuerSessionId().toString());
+        rsa.getIssuerSessionId().ifPresent(id -> document.setIssuerSessionId(id.toString()));
         return document;
     }
 
     @Override
     public Channel toChannel(final ChannelDocument document) {
         final RsaChannelDocument rsaDocument = (RsaChannelDocument) document;
-        return new Rsa(UUID.fromString(rsaDocument.getIssuerSessionId()));
+        return new Rsa(rsaDocument.getIssuerSessionId());
     }
 
 }

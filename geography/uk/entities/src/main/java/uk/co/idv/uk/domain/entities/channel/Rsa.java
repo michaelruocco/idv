@@ -5,7 +5,6 @@ import lombok.Getter;
 import uk.co.idv.domain.entities.channel.SimpleChannel;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode(callSuper = true)
@@ -13,18 +12,18 @@ public class Rsa extends SimpleChannel {
 
     public static final String ID = "RSA";
 
-    private final UUID issuerSessionId;
+    private final String issuerSessionId;
 
     public Rsa() {
         this(null);
     }
 
-    public Rsa(final UUID issuerSessionId) {
+    public Rsa(final String issuerSessionId) {
         super(ID);
         this.issuerSessionId = issuerSessionId;
     }
 
-    public Optional<UUID> getIssuerSessionId() {
+    public Optional<String> getIssuerSessionId() {
         return Optional.ofNullable(issuerSessionId);
     }
 

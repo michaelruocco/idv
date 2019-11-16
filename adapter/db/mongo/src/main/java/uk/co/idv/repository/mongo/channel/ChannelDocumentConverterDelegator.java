@@ -1,5 +1,6 @@
 package uk.co.idv.repository.mongo.channel;
 
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.usecases.exception.ChannelNotSupportedException;
 import uk.co.idv.domain.entities.channel.Channel;
 
@@ -7,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
+@Slf4j
 public class ChannelDocumentConverterDelegator {
 
     private final Collection<ChannelDocumentConverter> converters;
@@ -21,8 +23,9 @@ public class ChannelDocumentConverterDelegator {
 
     public Channel toChannel(final ChannelDocument document) {
         final String id = document.getId();
-        return findConverter(id)
-                .map(converter -> converter.toChannel(document))
+        final Optional<ChannelDocumentConverter> documentConverter= findConverter(id);
+        log.info("found converter {} for channel id {}", documentConverter, id);
+        return documentConverter.map(converter -> converter.toChannel(document))
                 .orElseThrow(() -> new ChannelNotSupportedException(id));
     }
 

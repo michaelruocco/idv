@@ -32,9 +32,7 @@ import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverter;
 import uk.co.idv.repository.mongo.activity.MonetaryAmountDocumentConverter;
 import uk.co.idv.repository.mongo.activity.OnlinePurchaseDocumentConverter;
-import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
-import uk.co.idv.repository.mongo.channel.simple.AllSimpleChannelDocumentConverter;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.IdentityRepository;
 import uk.co.idv.repository.mongo.identity.MongoIdentityDao;
@@ -88,7 +86,7 @@ import java.util.Optional;
 @EnableMongoRepositories(basePackages = "uk.co.idv.repository.mongo")
 @Profile("!stub")
 @Slf4j
-public class MongoDaoConfig {
+public class DefaultMongoDaoConfig {
 
     @Bean
     @Profile("in-memory-mongo")
@@ -142,16 +140,6 @@ public class MongoDaoConfig {
     @Bean
     public IndiciesResolverListener indiciesResolverListener(final MongoIndexResolver resolver) {
         return new IndiciesResolverListener(resolver);
-    }
-
-    @Bean
-    public ChannelDocumentConverter channelDocumentConverter() {
-        return new AllSimpleChannelDocumentConverter();
-    }
-
-    @Bean
-    public ChannelDocumentConverterDelegator channelDocumentConverterDelegator(final Collection<ChannelDocumentConverter> converters) {
-        return new ChannelDocumentConverterDelegator(converters);
     }
 
     @Bean

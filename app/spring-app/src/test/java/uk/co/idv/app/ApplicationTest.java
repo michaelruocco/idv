@@ -15,7 +15,7 @@ class ApplicationTest {
 
     @Test
     void shouldStartupWithStubProfile() {
-        setSpringProfiles("stub");
+        setSpringProfiles("stub, uk");
         setRandomServerPort();
 
         Application.main(new String[0]);
@@ -23,7 +23,7 @@ class ApplicationTest {
 
     @Test
     void shouldStartupWithInMemoryMongoProfile() {
-        setSpringProfiles("in-memory-mongo");
+        setSpringProfiles("in-memory-mongo, uk");
         setRandomServerPort();
 
         Application.main(new String[0]);

@@ -4,6 +4,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.28'
     compile 'org.zalando:jackson-datatype-money:1.1.1'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.0'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.6'
     compile 'com.github.michaelruocco:jackson-json-api:2.0.2'
 
     testCompile project(':entities').sourceSets.test.output

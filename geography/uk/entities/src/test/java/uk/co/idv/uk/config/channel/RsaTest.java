@@ -5,7 +5,6 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.uk.domain.entities.channel.Rsa;
 
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +26,7 @@ class RsaTest {
 
     @Test
     void shouldReturnIssuerSessionIdIfProvided() {
-        final UUID issuerSessionId = UUID.randomUUID();
+        final String issuerSessionId = "1234567890";
 
         final Rsa channel = new Rsa(issuerSessionId);
 
