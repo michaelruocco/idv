@@ -11,6 +11,7 @@ plugins {
 }
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage;
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage;
 
 repositories {
     mavenCentral()
@@ -48,9 +49,21 @@ bootRun {
     args = ["--spring.profiles.active=in-memory-mongo", "--server.port=8081"]
 }
 
+docker {
+    registryCredentials {
+        username = System.getenv("DOCKER_USERNAME")
+        password = System.getenv("DOCKER_PASSWORD")
+    }
+}
+
 task buildImage(type: DockerBuildImage) {
     inputDir = file('.')
-    tags.add('michaelruocco/verification-context-spring-app')
+    tags.add('michaelruocco/verification-context-spring-app:latest')
+}
+
+task pushImage(type: DockerPushImage) {
+    tag = 'latest'
+    imageName = 'michaelruocco/verification-context-spring-app'
 }
 
 node {
