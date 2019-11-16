@@ -125,7 +125,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts,
                                                           final LockoutRequest request) {
-        if (level.includesAlias()) {
+        if (level.isAliasLevel()) {
             final VerificationAttempts aliasAttempts = attempts.filterMatching(request.getAlias());
             return aliasAttempts.filterMatching(level);
         }

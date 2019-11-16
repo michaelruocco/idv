@@ -2,10 +2,12 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
 @Builder
 @Getter
+@RequiredArgsConstructor
 public class AliasLockoutLevel implements LockoutLevel {
 
     public static final String TYPE = "channel-activity-and-alias";
@@ -27,7 +29,7 @@ public class AliasLockoutLevel implements LockoutLevel {
     }
 
     @Override
-    public boolean includesAlias() {
+    public boolean isAliasLevel() {
         return true;
     }
 

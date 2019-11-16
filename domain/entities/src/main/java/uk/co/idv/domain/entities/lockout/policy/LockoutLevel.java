@@ -12,6 +12,6 @@ public interface LockoutLevel {
 
     String getActivityName();
 
-    boolean includesAlias();
+    boolean isAliasLevel();
 
 }

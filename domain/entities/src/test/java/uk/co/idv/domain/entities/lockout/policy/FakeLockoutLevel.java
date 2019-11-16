@@ -28,7 +28,7 @@ public class FakeLockoutLevel implements LockoutLevel {
     }
 
     @Override
-    public boolean includesAlias() {
+    public boolean isAliasLevel() {
         return includesAlias;
     }
 

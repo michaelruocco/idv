@@ -24,7 +24,7 @@ class DefaultLockoutLevelTest {
     void shouldNotIncludeAlias() {
         final LockoutLevel level = DefaultLockoutLevel.builder().build();
 
-        final boolean includesAlias = level.includesAlias();
+        final boolean includesAlias = level.isAliasLevel();
 
         assertThat(includesAlias).isFalse();
     }

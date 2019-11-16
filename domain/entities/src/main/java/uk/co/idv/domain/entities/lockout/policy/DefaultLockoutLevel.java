@@ -25,7 +25,7 @@ public class DefaultLockoutLevel implements LockoutLevel {
     }
 
     @Override
-    public boolean includesAlias() {
+    public boolean isAliasLevel() {
         return false;
     }
 
