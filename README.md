@@ -28,14 +28,20 @@ useful commands:
 ```
 
 ```
+// runs application locally within docker as above, but also executes any postman
+// collections found within the spring app module against the running application
+// to verify that the collections and the application is working as expected
+./gradlew clean build buildImage composeUp postman
+```
+
+```
 // stops and removes any running docker containers
 ./gradlew composeDown
 ```
 
 TODO:
 
-* Change channel API to use API type provided by geography / fix issuerSessionId rendering as null in response when not provided
-* Add gradle postman plugin so that postman collections / tests can be run from build gradle build and build pipeline
+* Update travis CI pipeline to build docker image and run docker compose task and then run postman against the running service
 * Change verification methods so there is one type per method but with a boolean flag
 * Refactor to create config modules they are geography specific and can be used by spring app
 * Change api module so it is not split into separate json and and api packages, the split is no longer needed / makes sense
