@@ -17,14 +17,17 @@ include ':mongo-db'
 project(':mongo-db').projectDir = file('adapter/db/mongo')
 
 //uk geography
-include ':uk-config'
-project(':uk-config').projectDir = file('geography/uk/config')
+include ':uk-entities'
+project(':uk-entities').projectDir = file('geography/uk/entities')
 
 include ':uk-api'
 project(':uk-api').projectDir = file('geography/uk/api')
 
 include ':uk-mongo'
 project(':uk-mongo').projectDir = file('geography/uk/mongo')
+
+include ':uk-config'
+project(':uk-config').projectDir = file('geography/uk/config')
 
 //application
 include ':spring-app'

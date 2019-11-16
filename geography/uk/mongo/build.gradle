@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':mongo-db')
+    compile project(':uk-config')
+}

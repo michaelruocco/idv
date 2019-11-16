@@ -1,28 +1,16 @@
 package uk.co.idv.app.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.zalando.jackson.datatype.money.MoneyModule;
-import uk.co.idv.json.channel.ChannelDeserializer;
-import uk.co.idv.json.channel.simple.SingleSimpleChannelJsonNodeConverter;
-import uk.co.idv.uk.config.lockout.UkLockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateRequestConverter;
-import uk.co.idv.api.lockout.JsonApiLockoutStateModule;
-import uk.co.idv.api.verificationcontext.JsonApiVerificationContextModule;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.usecases.util.RandomIdGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
 import uk.co.idv.domain.usecases.identity.IdentityService;
-import uk.co.idv.json.activity.ActivityModule;
-import uk.co.idv.json.channel.ChannelModule;
-import uk.co.idv.json.identity.IdentityModule;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 import uk.co.idv.json.lockout.LockoutStateCalculatorFactory;
@@ -53,32 +41,9 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
-import uk.co.mruoc.jsonapi.ApiModule;
-
-import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 
 @Configuration
-public class DomainConfig {
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new MoneyModule());
-        mapper.registerModule(new JavaTimeModule());
-        mapper.registerModule(new ApiModule());
-        mapper.registerModule(new ChannelModule(new ChannelDeserializer(new SingleSimpleChannelJsonNodeConverter("RSA"))));
-        mapper.registerModule(new ActivityModule());
-        mapper.registerModule(new IdentityModule());
-        mapper.registerModule(new JsonApiVerificationContextModule());
-        mapper.registerModule(new JsonApiLockoutStateModule());
-        mapper.disable(WRITE_DATES_AS_TIMESTAMPS);
-        return mapper;
-    }
-
-    @Bean
-    public IdGenerator idGenerator() {
-        return new RandomIdGenerator();
-    }
+public class DefaultDomainConfig {
 
     @Bean
     public TimeGenerator timeService() {
@@ -117,11 +82,6 @@ public class DomainConfig {
                 .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
                 .lockoutStateCalculatorFactory(lockoutStateCalculatorFactory)
                 .build();
-    }
-
-    @Bean
-    public LockoutPolicyProvider lockoutPolicyParametersProvider(final IdGenerator idGenerator) {
-        return new UkLockoutPolicyProvider(idGenerator);
     }
 
     @Bean

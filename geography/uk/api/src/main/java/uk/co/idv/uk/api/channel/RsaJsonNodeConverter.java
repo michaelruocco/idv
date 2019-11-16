@@ -3,7 +3,7 @@ package uk.co.idv.uk.api.channel;
 import com.fasterxml.jackson.databind.JsonNode;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.json.channel.ChannelJsonNodeConverter;
-import uk.co.idv.uk.config.channel.Rsa;
+import uk.co.idv.uk.domain.entities.channel.Rsa;
 
 public class RsaJsonNodeConverter implements ChannelJsonNodeConverter {
 

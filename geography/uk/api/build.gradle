@@ -1,4 +1,4 @@
 dependencies {
     compile project(':api')
-    compile project(':uk-config')
+    compile project(':uk-entities')
 }

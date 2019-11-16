@@ -35,7 +35,7 @@ useful commands:
 TODO:
 
 * Extract channels / lockout policies so they can be provided by geography - in progress
-* add gradle postman plugin so that postman collections / tests can be run from build gradle build and build pipeline
+* Add gradle postman plugin so that postman collections / tests can be run from build gradle build and build pipeline
 * Change verification methods so there is one type per method but with a boolean flag
 * Refactor to create config modules they are geography specific and can be used by spring app
 * Add lockout policy maintenance apis

@@ -1,8 +1,8 @@
-package uk.co.idv.uk.config.lockout;
+package uk.co.idv.uk.domain.entities.lockout;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
-import uk.co.idv.uk.config.channel.Rsa;
+import uk.co.idv.uk.domain.entities.channel.Rsa;
 import uk.co.idv.domain.entities.lockout.policy.AliasLockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
@@ -14,30 +14,28 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrat
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
-import uk.co.idv.domain.usecases.util.IdGenerator;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class UkLockoutPolicyProvider implements LockoutPolicyProvider {
 
-    private final IdGenerator idGenerator;
-
     @Override
     public Collection<LockoutPolicy> getPolicies() {
         return Arrays.asList(
-                buildPolicy(CreditCardNumber.TYPE),
-                buildPolicy(DebitCardNumber.TYPE)
+                buildPolicy(CreditCardNumber.TYPE, UUID.fromString("d3bf531a-bdcd-45d5-b5b6-d7a213f3af7b")),
+                buildPolicy(DebitCardNumber.TYPE, UUID.fromString("455a23f9-6505-491b-aa0f-2d4bf06acbbe"))
         );
     }
 
-    private LockoutPolicy buildPolicy(final String aliasType) {
+    private LockoutPolicy buildPolicy(final String aliasType, final UUID id) {
         return DefaultLockoutPolicy.builder()
                 .level(buildLockoutLevel(aliasType))
                 .stateCalculator(buildStateCalculator())
                 .recordAttemptStrategy(buildRecordAttemptStrategy())
-                .id(idGenerator.generate())
+                .id(id)
                 .build();
     }
 
