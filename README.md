@@ -48,8 +48,10 @@ useful commands:
 
 TODO:
 
+* Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
+docker compose tasks in order, which will give a simple command to build and test before adding a commit
 * Change verification methods so there is one type per method but with a boolean flag
-* Refactor to create config modules they are geography specific and can be used by spring app
+* Refactor to create config modules that are geography specific and can be used by spring app
 * Change api module so it is not split into separate json and and api packages, the split is no longer needed / makes sense
 * Add lockout policy maintenance apis
 * Verification method policies
