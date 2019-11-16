@@ -46,6 +46,14 @@ useful commands:
 ./gradlew composeDown
 ```
 
+```
+// generates dependency graph diagrams in the build/reports/depdendency-graph folder
+// one is idv specific and is useful for understanding the project architecture
+// the other shows every project dependency and is a bit too busy to be useful, but is
+// still interesting to see
+./gradlew generateDependencyGraph
+```
+
 TODO:
 
 * Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
