@@ -2,8 +2,11 @@ sudo: false
 language: java
 jdk: openjdk11
 
+services:
+  - docker
+
 script:
-  - ./gradlew clean build
+  - ./gradlew clean spotlessCheck build buildImage composeUp postman composeDown
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
