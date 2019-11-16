@@ -2,7 +2,7 @@ package uk.co.idv.uk.config.lockout;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
-import uk.co.idv.domain.entities.channel.Rsa;
+import uk.co.idv.uk.config.channel.Rsa;
 import uk.co.idv.domain.entities.lockout.policy.AliasLockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;

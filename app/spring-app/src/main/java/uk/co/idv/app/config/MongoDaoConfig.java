@@ -33,6 +33,8 @@ import uk.co.idv.repository.mongo.activity.ActivityDocumentConverter;
 import uk.co.idv.repository.mongo.activity.MonetaryAmountDocumentConverter;
 import uk.co.idv.repository.mongo.activity.OnlinePurchaseDocumentConverter;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
+import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
+import uk.co.idv.repository.mongo.channel.simple.AllSimpleChannelDocumentConverter;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.IdentityRepository;
 import uk.co.idv.repository.mongo.identity.MongoIdentityDao;
@@ -143,8 +145,13 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public ChannelDocumentConverter channelConverter() {
-        return new ChannelDocumentConverter();
+    public ChannelDocumentConverter channelDocumentConverter() {
+        return new AllSimpleChannelDocumentConverter();
+    }
+
+    @Bean
+    public ChannelDocumentConverterDelegator channelDocumentConverterDelegator(final Collection<ChannelDocumentConverter> converters) {
+        return new ChannelDocumentConverterDelegator(converters);
     }
 
     @Bean
@@ -289,7 +296,7 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationContextDocumentConverter verificationContextConverter(final ChannelDocumentConverter channelConverter,
+    public VerificationContextDocumentConverter verificationContextConverter(final ChannelDocumentConverterDelegator channelConverter,
                                                                              final AliasDocumentConverter aliasConverter,
                                                                              final IdentityDocumentConverter identityConverter,
                                                                              final ActivityConverterDelegator activityConverter,

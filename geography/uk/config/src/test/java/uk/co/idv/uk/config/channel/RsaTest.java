@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.channel;
+package uk.co.idv.uk.config.channel;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;

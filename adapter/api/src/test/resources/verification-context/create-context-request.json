@@ -1,6 +1,6 @@
 {
   "channel": {
-    "id": "RSA"
+    "id": "fake-channel"
   },
   "activity": {
     "name": "online-purchase",

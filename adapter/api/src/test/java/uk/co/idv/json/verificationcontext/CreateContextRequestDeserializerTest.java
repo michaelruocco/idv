@@ -5,7 +5,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.zalando.jackson.datatype.money.MoneyModule;
 import uk.co.idv.json.activity.ActivityModule;
-import uk.co.idv.json.channel.ChannelModule;
+import uk.co.idv.json.channel.FakeChannelModule;
 import uk.co.idv.json.identity.IdentityModule;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
@@ -32,7 +32,7 @@ class CreateContextRequestDeserializerTest {
     private static ObjectMapper buildMapper() {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new VerificationContextModule());
-        mapper.registerModule(new ChannelModule());
+        mapper.registerModule(new FakeChannelModule());
         mapper.registerModule(new ActivityModule());
         mapper.registerModule(new IdentityModule());
         mapper.registerModule(new MoneyModule());

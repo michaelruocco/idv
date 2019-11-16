@@ -6,10 +6,6 @@ public class ChannelDocumentMother  {
         return build("fake-channel");
     }
 
-    public static ChannelDocument rsa() {
-        return build("RSA");
-    }
-
     public static ChannelDocument notSupported() {
         return build("not-supported");
     }

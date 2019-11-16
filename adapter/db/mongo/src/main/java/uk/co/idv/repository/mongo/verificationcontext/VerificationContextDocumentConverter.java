@@ -2,7 +2,7 @@ package uk.co.idv.repository.mongo.verificationcontext;
 
 import lombok.Builder;
 import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
-import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
+import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 public class VerificationContextDocumentConverter {
 
-    private final ChannelDocumentConverter channelConverter;
+    private final ChannelDocumentConverterDelegator channelConverter;
     private final AliasDocumentConverter aliasConverter;
     private final IdentityDocumentConverter identityConverter;
     private final ActivityConverterDelegator activityConverter;

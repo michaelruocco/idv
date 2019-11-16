@@ -5,6 +5,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.zalando.jackson.datatype.money.MoneyModule;
+import uk.co.idv.json.channel.ChannelDeserializer;
+import uk.co.idv.json.channel.simple.SingleSimpleChannelJsonNodeConverter;
 import uk.co.idv.uk.config.lockout.UkLockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateRequestConverter;
@@ -64,7 +66,7 @@ public class DomainConfig {
         mapper.registerModule(new MoneyModule());
         mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new ApiModule());
-        mapper.registerModule(new ChannelModule());
+        mapper.registerModule(new ChannelModule(new ChannelDeserializer(new SingleSimpleChannelJsonNodeConverter("RSA"))));
         mapper.registerModule(new ActivityModule());
         mapper.registerModule(new IdentityModule());
         mapper.registerModule(new JsonApiVerificationContextModule());

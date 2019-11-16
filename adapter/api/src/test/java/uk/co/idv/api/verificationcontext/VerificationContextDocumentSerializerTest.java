@@ -6,7 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import org.zalando.jackson.datatype.money.MoneyModule;
 import uk.co.idv.json.activity.ActivityModule;
-import uk.co.idv.json.channel.ChannelModule;
+import uk.co.idv.json.channel.FakeChannelModule;
 import uk.co.idv.json.identity.IdentityModule;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
@@ -36,7 +36,7 @@ class VerificationContextDocumentSerializerTest {
         mapper.registerModule(new MoneyModule());
         mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new ApiModule());
-        mapper.registerModule(new ChannelModule());
+        mapper.registerModule(new FakeChannelModule());
         mapper.registerModule(new ActivityModule());
         mapper.registerModule(new IdentityModule());
         mapper.registerModule(new JsonApiVerificationContextModule());

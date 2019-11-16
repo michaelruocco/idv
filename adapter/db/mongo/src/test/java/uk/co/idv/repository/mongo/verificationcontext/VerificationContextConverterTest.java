@@ -5,7 +5,7 @@ import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
 import uk.co.idv.repository.mongo.activity.ActivityDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocument;
-import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
+import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.identity.IdentityDocument;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
@@ -31,7 +31,7 @@ import static org.mockito.Mockito.mock;
 
 class VerificationContextConverterTest {
 
-    private final ChannelDocumentConverter channelConverter = mock(ChannelDocumentConverter.class);
+    private final ChannelDocumentConverterDelegator channelConverter = mock(ChannelDocumentConverterDelegator.class);
     private final AliasDocumentConverter aliasConverter = mock(AliasDocumentConverter.class);
     private final IdentityDocumentConverter identityConverter = mock(IdentityDocumentConverter.class);
     private final ActivityConverterDelegator activityConverter = mock(ActivityConverterDelegator.class);

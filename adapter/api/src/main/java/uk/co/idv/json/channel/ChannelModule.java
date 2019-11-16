@@ -5,8 +5,8 @@ import uk.co.idv.domain.entities.channel.Channel;
 
 public class ChannelModule extends SimpleModule {
 
-    public ChannelModule() {
-        addDeserializer(Channel.class, new ChannelDeserializer());
+    public ChannelModule(final ChannelDeserializer deserializer) {
+        addDeserializer(Channel.class, deserializer);
     }
 
 }

@@ -1,7 +1,8 @@
-package uk.co.idv.domain.entities.channel;
+package uk.co.idv.uk.config.channel;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import uk.co.idv.domain.entities.channel.SimpleChannel;
 
 import java.util.Optional;
 import java.util.UUID;
