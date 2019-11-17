@@ -7,10 +7,9 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 public class LockoutPolicyDocumentKeyConverter {
-
-    private static final String ALL_ALIASES = "ALL";
 
     public String toKey(final LockoutLevel level) {
         if (level instanceof AliasLockoutLevel) {
@@ -27,36 +26,36 @@ public class LockoutPolicyDocumentKeyConverter {
     }
 
     public LockoutLevel toLevel(final String key) {
-        String channelId = extractChannelId(key);
-        String activityName = extractActivityName(key);
-        String aliasType = extractAliasType(key);
-        if (aliasType.equals(ALL_ALIASES)) {
-            return DefaultLockoutLevel.builder()
+        final String channelId = extractChannelId(key);
+        final String activityName = extractActivityName(key);
+        final Optional<String> aliasType = extractAliasType(key);
+        if (aliasType.isPresent()) {
+            return AliasLockoutLevel.builder()
                     .channelId(channelId)
                     .activityName(activityName)
+                    .aliasType(aliasType.get())
                     .build();
         }
-        return AliasLockoutLevel.builder()
+        return DefaultLockoutLevel.builder()
                 .channelId(channelId)
                 .activityName(activityName)
-                .aliasType(aliasType)
                 .build();
     }
 
-    private static String toDefaultKey(DefaultLockoutLevel level) {
+    private static String toDefaultKey(final DefaultLockoutLevel level) {
         return toKey(level.getChannelId(), level.getActivityName());
     }
 
-    private static String toAliasKey(AliasLockoutLevel level) {
+    private static String toAliasKey(final AliasLockoutLevel level) {
         return toKey(level.getChannelId(), level.getActivityName(), level.getAliasType());
     }
 
-    private static String toKey(String channelId, String activityName) {
-        return toKey(channelId, activityName, ALL_ALIASES);
+    private static String toKey(final String channelId, final String activityName, final String aliasType) {
+        return String.format("%s*%s*%s", channelId, activityName, aliasType);
     }
 
-    private static String toKey(String channelId, String activityName, String aliasType) {
-        return String.format("%s*%s*%s", channelId, activityName, aliasType);
+    private static String toKey(final String channelId, final String activityName) {
+        return String.format("%s*%s", channelId, activityName);
     }
 
     private static String extractChannelId(final String key) {
@@ -67,8 +66,12 @@ public class LockoutPolicyDocumentKeyConverter {
         return splitKey(key)[1];
     }
 
-    private static String extractAliasType(final String key) {
-        return splitKey(key)[2];
+    private static Optional<String> extractAliasType(final String key) {
+        final String[] parts = splitKey(key);
+        if (parts.length > 2) {
+            return Optional.of(parts[2]);
+        }
+        return Optional.empty();
     }
 
     private static String[] splitKey(final String key) {

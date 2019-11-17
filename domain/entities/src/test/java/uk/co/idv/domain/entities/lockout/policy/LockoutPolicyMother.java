@@ -15,18 +15,10 @@ public class LockoutPolicyMother {
 
     public static LockoutPolicy maxAttemptsPolicy(final UUID id) {
         return DefaultLockoutPolicy.builder()
-                .level(buildLockoutLevel())
+                .level(LockoutLevelMother.aliasLockoutLevel())
                 .stateCalculator(buildStateCalculator())
                 .recordAttemptStrategy(buildRecordAttemptStrategy())
                 .id(id)
-                .build();
-    }
-
-    private static LockoutLevel buildLockoutLevel() {
-        return AliasLockoutLevel.builder()
-                .channelId("fake-channel")
-                .activityName("fake-activity")
-                .aliasType("fake-alias-type")
                 .build();
     }
 
@@ -37,4 +29,5 @@ public class LockoutPolicyMother {
     private static RecordAttemptStrategy buildRecordAttemptStrategy() {
         return new RecordEveryAttempt();
     }
+
 }

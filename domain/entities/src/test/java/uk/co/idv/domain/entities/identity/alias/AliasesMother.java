@@ -31,4 +31,27 @@ public class AliasesMother {
         return new DebitCardNumber("4929992222222222");
     }
 
+    public static Alias fake() {
+        return new FakeAlias();
+    }
+
+    private static class FakeAlias implements Alias {
+
+        @Override
+        public String getType() {
+            return "fake-alias-type";
+        }
+
+        @Override
+        public String getValue() {
+            return "fake-value";
+        }
+
+        @Override
+        public boolean isCardNumber() {
+            return false;
+        }
+
+    }
+
 }
