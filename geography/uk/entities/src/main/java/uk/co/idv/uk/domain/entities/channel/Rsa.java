@@ -1,5 +1,6 @@
 package uk.co.idv.uk.domain.entities.channel;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import uk.co.idv.domain.entities.channel.SimpleChannel;
@@ -18,6 +19,7 @@ public class Rsa extends SimpleChannel {
         this(null);
     }
 
+    @Builder
     public Rsa(final String issuerSessionId) {
         super(ID);
         this.issuerSessionId = issuerSessionId;

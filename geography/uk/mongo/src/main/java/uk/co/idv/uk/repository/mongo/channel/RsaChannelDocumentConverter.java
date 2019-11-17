@@ -25,7 +25,9 @@ public class RsaChannelDocumentConverter implements ChannelDocumentConverter {
     @Override
     public Channel toChannel(final ChannelDocument document) {
         final RsaChannelDocument rsaDocument = (RsaChannelDocument) document;
-        return new Rsa(rsaDocument.getIssuerSessionId());
+        return Rsa.builder()
+                .issuerSessionId(rsaDocument.getIssuerSessionId())
+                .build();
     }
 
 }

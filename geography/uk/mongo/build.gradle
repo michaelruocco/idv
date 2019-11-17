@@ -1,4 +1,9 @@
 dependencies {
     compile project(':mongo-db')
     compile project(':uk-entities')
+
+    testCompile project(':uk-entities').sourceSets.test.output
+    testCompile "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
+    testCompile "org.meanbean:meanbean:${meanBeanVersion}"
+    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
 }

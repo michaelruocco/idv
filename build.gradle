@@ -33,22 +33,25 @@ subprojects {
     sourceCompatibility = 11
     targetCompatibility = 11
 
+    ext {
+        junitVersion = '5.5.2'
+        lombokVersion = '1.18.10'
+        slf4jVersion = '1.7.29'
+        meanBeanVersion = '2.0.3'
+        equalsVerifierVersion = '3.1.10'
+        fileLoaderVersion = '5.0.1'
+    }
+
     dependencies {
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.2'
-        testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 
-        compileOnly 'org.projectlombok:lombok:1.18.10'
-        testCompileOnly 'org.projectlombok:lombok:1.18.10'
-        annotationProcessor 'org.projectlombok:lombok:1.18.10'
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.10'
-
-        compile 'org.apache.commons:commons-lang3:3.9'
-        compile 'org.javamoney:moneta:1.3'
-        compile 'org.apache.commons:commons-collections4:4.4'
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
         testCompile 'org.assertj:assertj-core:3.14.0'
-        testCompile 'nl.jqno.equalsverifier:equalsverifier:3.1.10'
-
         testCompile('org.mockito:mockito-core:3.1.0') {
             // mockito 3 is failing with version of byte buddy it brings automatically?!
             // this line excludes it and then latest version is included below
@@ -64,7 +67,7 @@ subprojects {
     jacocoTestReport {
         additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
         sourceDirectories = files(sourceSets.main.allSource.srcDirs)
-        classDirectories =  files(sourceSets.main.output)
+        classDirectories = files(sourceSets.main.output)
 
         reports {
             xml.enabled = true
@@ -143,5 +146,5 @@ def idvGenerator = new Generator(
 )
 
 dependencyGraphGenerator {
-    generators = [ Generator.ALL, idvGenerator ]
+    generators = [Generator.ALL, idvGenerator]
 }
