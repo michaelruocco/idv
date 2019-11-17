@@ -56,7 +56,10 @@ useful commands:
 
 TODO:
 
-* Add test coverage for uk modules and new RSA specific code in api, config and mongo modules
+* Unit test coverage for lockout policy coverter in API module
+* Unit test coverage for all simple channel document converter and lockout policy key converter in mongo db module
+* Unit test coverage for verification context package in entities module
+* Add test coverage for uk-config and uk-mongo modules
 * Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
 docker compose tasks in order, which will give a simple command to build and test before adding a commit
 * Change verification methods so there is one type per method but with a boolean flag
