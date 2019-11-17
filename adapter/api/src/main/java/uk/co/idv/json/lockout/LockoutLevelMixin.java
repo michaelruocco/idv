@@ -11,6 +11,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public interface LockoutLevelMixin {
 
     @JsonIgnore
-    String getType();
+    boolean isAliasLevel();
 
 }

@@ -5,6 +5,7 @@
       "type": "lockoutPolicies",
       "attributes": {
         "level": {
+          "type": "channel-activity-and-alias",
           "channelId": "fake-channel",
           "activityName": "fake-activity",
           "aliasType": "fake-alias-type"

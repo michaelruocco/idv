@@ -56,7 +56,7 @@ useful commands:
 
 TODO:
 
-* Add test coverage for uk modules and new RSA specific code
+* Add test coverage for uk modules and new RSA specific code in api, config and mongo modules
 * Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
 docker compose tasks in order, which will give a simple command to build and test before adding a commit
 * Change verification methods so there is one type per method but with a boolean flag

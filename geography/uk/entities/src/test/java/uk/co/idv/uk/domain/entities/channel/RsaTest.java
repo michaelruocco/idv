@@ -3,7 +3,6 @@ package uk.co.idv.uk.domain.entities.channel;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.uk.domain.entities.channel.Rsa;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
