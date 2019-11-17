@@ -1,4 +1,7 @@
 dependencies {
     compile project(':api')
     compile project(':uk-entities')
+
+    testCompile 'com.github.michaelruocco:file-loader:5.0.1'
+    testCompile 'org.slf4j:slf4j-simple:1.7.29'
 }
