@@ -59,8 +59,9 @@ TODO:
 * Unit test coverage for lockout policy converter in API module
 * Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
 docker compose tasks in order, which will give a simple command to build and test before adding a commit
-* Refactor to create config modules that are geography specific and can be used by spring app
+* Refactor to create config modules that are geography specific and can be used by spring app - partially complete
 * Change api module so it is not split into separate json and and api packages, the split is no longer needed / makes sense
+* Add new lockout policies for non locking, time based intervals and time based recurring
 * Add lockout policy maintenance apis
 * Verification method policies
 * Client library
