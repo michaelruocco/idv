@@ -12,6 +12,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContext.Verific
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -179,6 +180,28 @@ class VerificationContextTest {
         final boolean result = context.containsCompleteSequenceContainingMethod(methodName);
 
         assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void shouldReturnHasExpiredFalseIfCurrentTimeIsBeoreExpiry() {
+        final Instant expiry = Instant.parse("2019-11-16T20:10:25.903264Z");
+        final Instant currentTime = expiry.minus(Duration.ofHours(1));
+        final VerificationContext context = builder.expiry(expiry).build();
+
+        final boolean expired = context.hasExpired(currentTime);
+
+        assertThat(expired).isFalse();
+    }
+
+    @Test
+    void shouldReturnHasExpiredTrueIfCurrentTimeIsAfterExpiry() {
+        final Instant expiry = Instant.parse("2019-11-16T20:10:25.903264Z");
+        final Instant currentTime = expiry.plus(Duration.ofHours(1));
+        final VerificationContext context = builder.expiry(expiry).build();
+
+        final boolean expired = context.hasExpired(currentTime);
+
+        assertThat(expired).isTrue();
     }
 
 }

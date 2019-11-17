@@ -1,8 +1,8 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import uk.co.idv.domain.entities.identity.alias.Alias;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesEligible;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesIneligible;
+import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesEligible;
+import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesIneligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 
 public class StubbedSequenceLoader implements SequenceLoader {
@@ -11,9 +11,9 @@ public class StubbedSequenceLoader implements SequenceLoader {
     public VerificationSequences loadSequences(final LoadSequencesRequest request) {
         final Alias providedAlias = request.getProvidedAlias();
         if (valueEndsWithNine(providedAlias)) {
-            return new FakeVerificationSequencesIneligible();
+            return new StubVerificationSequencesIneligible();
         }
-        return new FakeVerificationSequencesEligible();
+        return new StubVerificationSequencesEligible();
     }
 
     private boolean valueEndsWithNine(final Alias alias) {

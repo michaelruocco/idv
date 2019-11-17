@@ -3,8 +3,8 @@ package uk.co.idv.domain.usecases.verificationcontext;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesEligible;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesIneligible;
+import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesEligible;
+import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesIneligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,7 +22,7 @@ class StubbedSequenceLoaderTest {
 
         assertThat(sequences)
                 .usingRecursiveFieldByFieldElementComparator()
-                .containsExactlyElementsOf(new FakeVerificationSequencesEligible());
+                .containsExactlyElementsOf(new StubVerificationSequencesEligible());
     }
 
     @Test
@@ -34,7 +34,7 @@ class StubbedSequenceLoaderTest {
 
         assertThat(sequences)
                 .usingRecursiveFieldByFieldElementComparator()
-                .containsExactlyElementsOf(new FakeVerificationSequencesIneligible());
+                .containsExactlyElementsOf(new StubVerificationSequencesIneligible());
     }
 
     private static LoadSequencesRequest toRequest(final Alias providedAlias) {

@@ -18,7 +18,7 @@ import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
 import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationSequencesEligible;
+import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 
@@ -42,7 +42,7 @@ class VerificationContextCreatorTest {
     private final Identity identity = new Identity(AliasesMother.aliases());
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
 
-    private final VerificationSequences sequences = new FakeVerificationSequencesEligible();
+    private final VerificationSequences sequences = new StubVerificationSequencesEligible();
     private final FakeSequenceLoader sequenceLoader = new FakeSequenceLoader(sequences);
 
     private final FakeExpiryCalculator expiryCalculator = new FakeExpiryCalculator(EXPIRY_DURATION);
