@@ -56,7 +56,6 @@ useful commands:
 
 TODO:
 
-* Fix version definitions for libraries used in more the one (but not all) submodules
 * Unit test coverage for lockout policy converter in API module
 * Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
 docker compose tasks in order, which will give a simple command to build and test before adding a commit
