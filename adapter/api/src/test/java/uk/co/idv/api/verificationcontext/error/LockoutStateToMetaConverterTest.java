@@ -1,9 +1,9 @@
 package uk.co.idv.api.verificationcontext.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttemptsLocked;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttemptsLocked;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.LockoutStateMaxAttempts;
 
 import java.util.Map;
 

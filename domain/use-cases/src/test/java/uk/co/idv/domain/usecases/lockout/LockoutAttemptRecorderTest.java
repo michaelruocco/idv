@@ -1,10 +1,10 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptFailed;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptSuccessful;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;

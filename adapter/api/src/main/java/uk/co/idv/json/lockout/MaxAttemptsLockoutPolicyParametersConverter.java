@@ -2,9 +2,9 @@ package uk.co.idv.json.lockout;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutStateCalculator;
 
 @RequiredArgsConstructor
 public class MaxAttemptsLockoutPolicyParametersConverter implements LockoutPolicyParametersConverter {

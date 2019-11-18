@@ -1,9 +1,9 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.domain.entities.lockout.policy.state;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest.CalculateLockoutStateRequestBuilder;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest.CalculateLockoutStateRequestBuilder;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 

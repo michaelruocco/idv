@@ -3,7 +3,7 @@ package uk.co.idv.api.lockout;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.json.lockout.LockoutStateModule;
 import uk.co.idv.json.lockout.DefaultLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.LockoutStateMaxAttempts;
 
 public class JsonApiLockoutStateModule extends LockoutStateModule {
 

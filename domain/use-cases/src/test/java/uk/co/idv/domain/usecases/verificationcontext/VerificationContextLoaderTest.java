@@ -1,10 +1,10 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
 import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;

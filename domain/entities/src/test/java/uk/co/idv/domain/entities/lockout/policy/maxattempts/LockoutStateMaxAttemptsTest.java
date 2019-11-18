@@ -1,8 +1,9 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.domain.entities.lockout.policy.maxattempts;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

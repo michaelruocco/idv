@@ -1,4 +1,5 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.domain.entities.lockout.policy.state;
+
 
 
 public class FakeLockoutStateCalculator implements LockoutStateCalculator {

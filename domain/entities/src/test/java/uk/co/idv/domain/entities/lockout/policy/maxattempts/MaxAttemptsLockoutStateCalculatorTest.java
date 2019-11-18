@@ -1,9 +1,11 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.domain.entities.lockout.policy.maxattempts;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import java.util.ArrayList;
 import java.util.Collection;

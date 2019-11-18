@@ -1,6 +1,6 @@
 package uk.co.idv.uk.domain.entities.lockout;
 
-import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutStateCalculator;
 
 public class RsaLockoutStateCalculator extends MaxAttemptsLockoutStateCalculator {
 

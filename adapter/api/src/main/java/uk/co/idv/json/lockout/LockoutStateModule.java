@@ -2,7 +2,7 @@ package uk.co.idv.json.lockout;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.LockoutStateMaxAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 

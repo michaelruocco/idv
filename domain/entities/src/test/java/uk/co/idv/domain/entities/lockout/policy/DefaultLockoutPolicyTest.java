@@ -2,16 +2,16 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.state.FakeCalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.FakeCalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.FakeLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptFailed;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
-import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 
 import java.util.UUID;
 

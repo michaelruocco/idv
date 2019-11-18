@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.domain.entities.lockout.policy.maxattempts;
 
 
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;

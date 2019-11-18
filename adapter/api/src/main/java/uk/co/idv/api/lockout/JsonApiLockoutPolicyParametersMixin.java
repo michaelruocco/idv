@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @JsonPropertyOrder({
         "level",
-        "recordAttemptStrategy",
+        "recordAttempts",
         "type",
         "maxNumberOfAttempts"
 })

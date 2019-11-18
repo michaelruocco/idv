@@ -1,7 +1,7 @@
 package uk.co.idv.uk.domain.entities.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutStateCalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

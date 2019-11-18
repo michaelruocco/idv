@@ -1,8 +1,8 @@
 package uk.co.idv.json.lockout;
 
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutStateCalculator;
 
 public class LockoutStateCalculatorFactory {
 

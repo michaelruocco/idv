@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.identity.alias.Alias;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 
 import java.time.Instant;
 import java.util.UUID;

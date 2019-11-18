@@ -1,7 +1,8 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.domain.entities.lockout.policy.maxattempts;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import java.util.UUID;
 

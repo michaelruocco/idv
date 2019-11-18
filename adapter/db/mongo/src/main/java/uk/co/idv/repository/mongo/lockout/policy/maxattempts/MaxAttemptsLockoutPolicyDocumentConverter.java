@@ -2,10 +2,10 @@ package uk.co.idv.repository.mongo.lockout.policy.maxattempts;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutStateCalculator;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentKeyConverter;

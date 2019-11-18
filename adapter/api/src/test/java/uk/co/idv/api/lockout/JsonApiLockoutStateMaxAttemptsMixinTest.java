@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.api.ObjectMapperSingleton;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
 
 import java.io.IOException;
 

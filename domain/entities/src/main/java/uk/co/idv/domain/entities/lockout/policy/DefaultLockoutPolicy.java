@@ -4,7 +4,7 @@ import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 import java.util.UUID;
 

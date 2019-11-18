@@ -3,7 +3,7 @@ package uk.co.idv.domain.entities.lockout.attempt;
 import java.time.Instant;
 import java.util.UUID;
 import uk.co.idv.domain.entities.identity.alias.Alias;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 
 public interface VerificationAttempt extends LockoutStateRequest {
 

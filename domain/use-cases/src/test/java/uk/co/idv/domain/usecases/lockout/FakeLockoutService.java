@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.lockout;
 
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
 

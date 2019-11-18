@@ -10,8 +10,8 @@ import uk.co.idv.api.lockout.ResetLockoutStateDocument;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import java.util.UUID;
 

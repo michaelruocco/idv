@@ -12,7 +12,7 @@ import uk.co.idv.api.lockout.LockoutStateDocument;
 import uk.co.idv.api.lockout.ResetLockoutStateDocument;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.LockoutFacade;
 
 @RestController

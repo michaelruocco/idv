@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.lockout.state;
+package uk.co.idv.domain.entities.lockout.policy.state;
 
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;

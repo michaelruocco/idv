@@ -2,9 +2,9 @@ package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Getter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 

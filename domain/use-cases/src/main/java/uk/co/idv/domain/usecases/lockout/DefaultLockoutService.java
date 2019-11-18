@@ -2,8 +2,8 @@ package uk.co.idv.domain.usecases.lockout;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 
 @Builder

@@ -2,9 +2,9 @@ package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;

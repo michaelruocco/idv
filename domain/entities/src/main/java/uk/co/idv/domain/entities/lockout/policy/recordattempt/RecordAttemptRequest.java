@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.lockout.policy.recordattempt;
 
 import lombok.Builder;
 import lombok.Getter;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.identity.alias.Alias;

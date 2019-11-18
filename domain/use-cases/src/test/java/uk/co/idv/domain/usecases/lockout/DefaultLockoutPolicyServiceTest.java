@@ -1,15 +1,15 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.state.FakeCalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.FakeCalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPolicyNotFoundException;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;

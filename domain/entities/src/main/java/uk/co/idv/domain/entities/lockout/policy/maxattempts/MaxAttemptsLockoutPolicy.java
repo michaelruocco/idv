@@ -1,7 +1,8 @@
-package uk.co.idv.domain.entities.lockout.policy;
+package uk.co.idv.domain.entities.lockout.policy.maxattempts;
 
+import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
-import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
 
 import java.util.UUID;
 

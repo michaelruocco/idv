@@ -3,7 +3,7 @@ package uk.co.idv.app.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateRequestConverter;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;

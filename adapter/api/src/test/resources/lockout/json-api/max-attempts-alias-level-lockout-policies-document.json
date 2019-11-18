@@ -10,7 +10,7 @@
           "activityName": "fake-activity",
           "aliasType": "fake-alias-type"
         },
-        "recordAttemptStrategy": "every-attempt",
+        "recordAttempts": "every-attempt",
         "type": "max-attempts",
         "maxNumberOfAttempts": 3
       }
