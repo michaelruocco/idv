@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockoutState;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
@@ -59,7 +59,7 @@ class LockoutStateLoaderTest {
     @Test
     void shouldReturnCalculatedLockoutState() {
         final LockoutStateRequest request = buildRequest();
-        final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
+        final LockoutState expectedState = new FakeMaxAttemptsLockoutState();
         policyService.setStateToReturn(expectedState);
 
         final LockoutState state = loader.load(request);

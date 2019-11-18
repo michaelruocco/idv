@@ -9,12 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class LockoutStateMaxAttemptsTest {
+class MaxAttemptsLockoutStateTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
     private final VerificationAttempts attempts = new FakeVerificationAttempts();
 
-    private final LockoutStateMaxAttempts state = new LockoutStateMaxAttempts(attempts, MAX_NUMBER_OF_ATTEMPTS);
+    private final MaxAttemptsLockoutState state = new MaxAttemptsLockoutState(attempts, MAX_NUMBER_OF_ATTEMPTS);
 
     @Test
     void shouldReturnIdFromAttempts() {
@@ -46,7 +46,7 @@ class LockoutStateMaxAttemptsTest {
         final VerificationAttempts threeAttempts = mock(VerificationAttempts.class);
         given(threeAttempts.size()).willReturn(3);
 
-        final LockoutState lockedState = new LockoutStateMaxAttempts(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
+        final LockoutState lockedState = new MaxAttemptsLockoutState(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
 
         assertThat(lockedState.isLocked()).isTrue();
     }
@@ -61,7 +61,7 @@ class LockoutStateMaxAttemptsTest {
         final VerificationAttempts threeAttempts = mock(VerificationAttempts.class);
         given(threeAttempts.size()).willReturn(MAX_NUMBER_OF_ATTEMPTS);
 
-        final LockoutState lockedState = new LockoutStateMaxAttempts(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
+        final LockoutState lockedState = new MaxAttemptsLockoutState(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
 
         final String expectedMessage = String.format("maximum number of attempts [%d] reached", MAX_NUMBER_OF_ATTEMPTS);
         assertThat(lockedState.getMessage()).isEqualTo(expectedMessage);

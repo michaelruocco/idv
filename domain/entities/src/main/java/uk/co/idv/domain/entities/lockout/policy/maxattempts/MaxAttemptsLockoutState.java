@@ -7,7 +7,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class LockoutStateMaxAttempts implements LockoutState {
+public class MaxAttemptsLockoutState implements LockoutState {
 
     private final VerificationAttempts attempts;
     private final int maxNumberOfAttempts;

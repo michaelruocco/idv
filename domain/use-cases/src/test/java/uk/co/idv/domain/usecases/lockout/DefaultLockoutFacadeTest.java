@@ -11,7 +11,7 @@ import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.identity.FakeIdentityService;
 import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import java.time.Instant;
@@ -107,7 +107,7 @@ class DefaultLockoutFacadeTest {
 
     @Test
     void shouldReturnLockoutStateWhenResettingLockoutState() {
-        final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
+        final LockoutState expectedState = new FakeMaxAttemptsLockoutState();
         lockoutService.setLockoutStateToReturn(expectedState);
         final LockoutRequest request = DefaultLockoutRequest.builder().build();
 
@@ -190,7 +190,7 @@ class DefaultLockoutFacadeTest {
 
     @Test
     void shouldReturnLockoutStateWhenLoadingLockoutState() {
-        final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
+        final LockoutState expectedState = new FakeMaxAttemptsLockoutState();
         lockoutService.setLockoutStateToReturn(expectedState);
         final LockoutRequest request = DefaultLockoutRequest.builder().build();
 

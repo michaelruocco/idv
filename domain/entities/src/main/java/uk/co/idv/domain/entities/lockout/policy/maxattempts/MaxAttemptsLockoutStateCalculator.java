@@ -22,10 +22,10 @@ public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator
     }
 
     @Override
-    public LockoutStateMaxAttempts calculate(final CalculateLockoutStateRequest request) {
+    public MaxAttemptsLockoutState calculate(final CalculateLockoutStateRequest request) {
         log.info("calculating lock from calculator {} with request {} and max number of attempts {}", this, request, maxNumberOfAttempts);
         final VerificationAttempts attempts = request.getAttempts();
-        return new LockoutStateMaxAttempts(attempts, maxNumberOfAttempts);
+        return new MaxAttemptsLockoutState(attempts, maxNumberOfAttempts);
     }
 
     public int getMaxNumberOfAttempts() {

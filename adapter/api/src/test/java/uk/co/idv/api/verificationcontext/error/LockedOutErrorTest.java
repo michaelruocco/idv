@@ -1,8 +1,8 @@
 package uk.co.idv.api.verificationcontext.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttemptsLocked;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.LockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockedLockoutState;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutState;
 import uk.co.mruoc.jsonapi.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.entry;
 
 class LockedOutErrorTest {
 
-    private static final LockoutStateMaxAttempts LOCKOUT_STATE_MAX_ATTEMPTS = new FakeLockoutStateMaxAttemptsLocked();
+    private static final MaxAttemptsLockoutState LOCKOUT_STATE_MAX_ATTEMPTS = new FakeMaxAttemptsLockedLockoutState();
 
     private final ApiError error = new LockedOutError(LOCKOUT_STATE_MAX_ATTEMPTS);
 

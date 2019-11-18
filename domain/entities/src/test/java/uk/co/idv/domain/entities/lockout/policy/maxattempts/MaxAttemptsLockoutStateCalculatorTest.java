@@ -57,7 +57,7 @@ class MaxAttemptsLockoutStateCalculatorTest {
 
         final LockoutState state = calculator.calculate(request);
 
-        assertThat(state).isInstanceOf(LockoutStateMaxAttempts.class);
+        assertThat(state).isInstanceOf(MaxAttemptsLockoutState.class);
     }
 
     @Test
@@ -65,7 +65,7 @@ class MaxAttemptsLockoutStateCalculatorTest {
         final VerificationAttempts oneAttempt = buildOneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
-        final LockoutStateMaxAttempts state = calculator.calculate(request);
+        final MaxAttemptsLockoutState state = calculator.calculate(request);
 
         assertThat(state.getMaxNumberOfAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
     }
@@ -75,7 +75,7 @@ class MaxAttemptsLockoutStateCalculatorTest {
         final VerificationAttempts oneAttempt = buildOneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
-        final LockoutStateMaxAttempts state = calculator.calculate(request);
+        final MaxAttemptsLockoutState state = calculator.calculate(request);
 
         assertThat(state.getNumberOfAttemptsRemaining()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS - oneAttempt.size());
     }
@@ -85,7 +85,7 @@ class MaxAttemptsLockoutStateCalculatorTest {
         final VerificationAttempts attempts = buildAttemptsOfSize(MAX_NUMBER_OF_ATTEMPTS);
         final CalculateLockoutStateRequest request = toCalculateRequest(attempts);
 
-        final LockoutStateMaxAttempts state = calculator.calculate(request);
+        final MaxAttemptsLockoutState state = calculator.calculate(request);
 
         assertThat(state.getNumberOfAttemptsRemaining()).isEqualTo(0);
     }

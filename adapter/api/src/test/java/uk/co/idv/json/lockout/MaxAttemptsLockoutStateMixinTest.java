@@ -5,19 +5,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class LockoutStateMaxAttemptsMixinTest {
+class MaxAttemptsLockoutStateMixinTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
     void shouldSerializeLockoutStateMaxAttempts() throws JsonProcessingException {
-        final LockoutState state = new FakeLockoutStateMaxAttempts();
+        final LockoutState state = new FakeMaxAttemptsLockoutState();
 
         final String json = MAPPER.writeValueAsString(state);
 

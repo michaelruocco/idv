@@ -10,7 +10,7 @@ import uk.co.idv.api.lockout.ResetLockoutStateDocument;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeLockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import java.util.UUID;
@@ -24,7 +24,7 @@ class LockoutControllerTest {
     private final Alias alias = new IdvId(UUID.randomUUID());
 
     private final FakeLockoutFacade facade = new FakeLockoutFacade();
-    private final LockoutState state = new FakeLockoutStateMaxAttempts();
+    private final LockoutState state = new FakeMaxAttemptsLockoutState();
 
     private final AliasFactory aliasFactory = new AliasFactory();
     private final LockoutController controller = new LockoutController(aliasFactory, facade);

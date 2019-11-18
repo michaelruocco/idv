@@ -3,12 +3,12 @@ package uk.co.idv.api.lockout;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.json.lockout.LockoutStateModule;
 import uk.co.idv.json.lockout.DefaultLockoutPolicyParameters;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.LockoutStateMaxAttempts;
+import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutState;
 
 public class JsonApiLockoutStateModule extends LockoutStateModule {
 
     public JsonApiLockoutStateModule() {
-        setMixInAnnotation(LockoutStateMaxAttempts.class, JsonApiLockoutStateMaxAttemptsMixin.class);
+        setMixInAnnotation(MaxAttemptsLockoutState.class, JsonApiLockoutStateMaxAttemptsMixin.class);
         setMixInAnnotation(DefaultLockoutPolicyParameters.class, JsonApiLockoutPolicyParametersMixin.class);
 
         addDeserializer(ResetLockoutStateDocument.class, new ResetLockoutStateDocumentDeserializer());
