@@ -13,6 +13,7 @@ import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
+import uk.co.idv.json.lockout.LockoutPolicyParametersConverterDelegator;
 import uk.co.idv.json.lockout.LockoutStateCalculatorFactory;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutFacade;
@@ -41,6 +42,9 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
+import uk.co.idv.json.lockout.MaxAttemptsLockoutPolicyParametersConverter;
+
+import java.util.Collection;
 
 @Configuration
 public class DefaultDomainConfig {
@@ -76,12 +80,13 @@ public class DefaultDomainConfig {
     }
 
     @Bean
-    public LockoutPolicyParametersConverter lockoutPolicyParametersConverter(final RecordAttemptStrategyFactory recordAttemptStrategyFactory,
-                                                                             final LockoutStateCalculatorFactory lockoutStateCalculatorFactory) {
-        return LockoutPolicyParametersConverter.builder()
-                .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
-                .lockoutStateCalculatorFactory(lockoutStateCalculatorFactory)
-                .build();
+    public LockoutPolicyParametersConverter maxAttemptLockoutPolicyParametersConverter(final RecordAttemptStrategyFactory recordAttemptStrategyFactory) {
+        return new MaxAttemptsLockoutPolicyParametersConverter(recordAttemptStrategyFactory);
+    }
+
+    @Bean
+    public LockoutPolicyParametersConverterDelegator lockoutPolicyParametersConverterDelegator(final Collection<LockoutPolicyParametersConverter> converters) {
+        return new LockoutPolicyParametersConverterDelegator(converters);
     }
 
     @Bean

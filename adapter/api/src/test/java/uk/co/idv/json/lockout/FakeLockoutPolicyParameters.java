@@ -12,7 +12,7 @@ public class FakeLockoutPolicyParameters implements LockoutPolicyParameters {
     }
 
     @Override
-    public String getRecordAttemptStrategyType() {
+    public String getRecordAttempts() {
         return null;
     }
 

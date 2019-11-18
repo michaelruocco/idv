@@ -1,13 +1,11 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
 
-import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 
 import java.util.UUID;
 
@@ -27,9 +25,7 @@ public interface LockoutPolicy {
 
     VerificationAttempts reset(final VerificationAttempts attempts, final LockoutRequest request);
 
-    LockoutState reset(final CalculateLockoutStateRequest request);
-
-    LockoutState calculateLockoutState(final CalculateLockoutStateRequest request);
+    VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts, final LockoutRequest request);
 
     LockoutStateCalculator getStateCalculator();
 

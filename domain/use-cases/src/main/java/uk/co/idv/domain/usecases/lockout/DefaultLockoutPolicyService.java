@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 
 import java.util.Collection;
 
@@ -24,7 +25,8 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     @Override
     public LockoutState calculateState(final CalculateLockoutStateRequest request) {
         final LockoutPolicy policy = load(request);
-        return policy.calculateLockoutState(request);
+        final LockoutStateCalculator stateCalculator = policy.getStateCalculator();
+        return stateCalculator.calculate(request);
     }
 
     @Override

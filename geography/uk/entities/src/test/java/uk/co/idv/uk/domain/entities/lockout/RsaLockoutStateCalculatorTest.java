@@ -11,7 +11,7 @@ class RsaLockoutStateCalculatorTest {
 
     @Test
     void shouldHaveMaximumNumberOfAttemptsOfThree() {
-        assertThat(stateCalculator.getMaxAttempts()).isEqualTo(3);
+        assertThat(stateCalculator.getMaxNumberOfAttempts()).isEqualTo(3);
     }
 
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.lockout.state.FakeCalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.state.FakeLockoutStateMaxAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptFailed;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
@@ -12,7 +11,6 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 
 import java.util.UUID;
@@ -28,12 +26,12 @@ class DefaultLockoutPolicyTest {
     private final FakeLockoutLevel level = new FakeLockoutLevel();
     private final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
 
-    private final LockoutPolicy policy = DefaultLockoutPolicy.builder()
-            .id(id)
-            .recordAttemptStrategy(recordAttemptStrategy)
-            .level(level)
-            .stateCalculator(stateCalculator)
-            .build();
+    private final LockoutPolicy policy = new DefaultLockoutPolicy(
+            id,
+            stateCalculator,
+            level,
+            recordAttemptStrategy
+    );
 
     @Test
     void shouldReturnTrueIfLockoutRequestAppliesToPolicy() {
@@ -66,82 +64,41 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldNotRemoveAttemptsWhenResettingIfNoneAreApplicable() {
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        final VerificationAttempt matchingAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber());
+        final VerificationAttempt differentAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
+        final VerificationAttempts attempts = new FakeVerificationAttempts(matchingAliasAttempt, differentAliasAttempt);
+        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
 
-        final VerificationAttempts resetAttempts = policy.reset(attempts, null);
+        final VerificationAttempts resetAttempts = policy.reset(attempts, request);
 
         assertThat(resetAttempts).containsExactlyElementsOf(attempts);
     }
 
     @Test
-    void shouldPassRemainingAttemptsAfterResetToStateCalculatorWhenResettingState() {
-        level.setAppliesTo(true);
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-
-        policy.reset(request);
-
-        final CalculateLockoutStateRequest resetCalculateStateRequest = stateCalculator.getLastCalculateStateRequest();
-        assertThat(resetCalculateStateRequest.getAttempts()).isEmpty();
-    }
-
-    @Test
     void shouldResetAttemptsWhenTheyApplyToParameters() {
         level.setAppliesTo(true);
-        stateCalculator.setLockoutStateToReturn(new FakeLockoutStateMaxAttempts());
+        final VerificationAttempt matchingAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber());
+        final VerificationAttempt differentAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
+        final VerificationAttempts attempts = new FakeVerificationAttempts(matchingAliasAttempt, differentAliasAttempt);
         final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest();
 
+        final VerificationAttempts resetAttempts = policy.reset(attempts, inputRequest);
 
-        policy.reset(inputRequest);
-
-        final CalculateLockoutStateRequest resetRequest = stateCalculator.getLastCalculateStateRequest();
-        assertThat(resetRequest.getAttempts()).isEmpty();
+        assertThat(resetAttempts).isEmpty();
     }
 
     @Test
     void shouldResetAttemptsByAliasWhenLockingAtAliasLevelTheyApplyToParameters() {
         level.setAppliesTo(true);
         level.setIncludesAlias(true);
-        stateCalculator.setLockoutStateToReturn(new FakeLockoutStateMaxAttempts());
         final VerificationAttempt matchingAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = new FakeVerificationAttemptFailed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
-        final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest(new FakeVerificationAttempts(matchingAliasAttempt, differentAliasAttempt));
+        final VerificationAttempts attempts = new FakeVerificationAttempts(matchingAliasAttempt, differentAliasAttempt);
+        final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest();
 
-        policy.reset(inputRequest);
+        final VerificationAttempts resetAttempts = policy.reset(attempts, inputRequest);
 
-        final CalculateLockoutStateRequest resetRequest = stateCalculator.getLastCalculateStateRequest();
-        assertThat(resetRequest.getAttempts()).containsExactly(differentAliasAttempt);
-    }
-
-    @Test
-    void shouldReturnCalculatedLockoutStateAfterReset() {
-        final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
-        stateCalculator.setLockoutStateToReturn(expectedState);
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-
-        final LockoutState state = policy.reset(request);
-
-        assertThat(state).isEqualTo(expectedState);
-    }
-
-    @Test
-    void shouldPassApplicableAttemptsWhenCalculatingState() {
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-
-        policy.calculateLockoutState(request);
-
-        final CalculateLockoutStateRequest calculateStateRequest = stateCalculator.getLastCalculateStateRequest();
-        assertThat(calculateStateRequest.getAttempts()).isEmpty();
-    }
-
-    @Test
-    void shouldReturnCalculatedLockoutState() {
-        final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
-        stateCalculator.setLockoutStateToReturn(expectedState);
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
-
-        final LockoutState state = policy.calculateLockoutState(request);
-
-        assertThat(state).isEqualTo(expectedState);
+        assertThat(resetAttempts).containsExactly(differentAliasAttempt);
     }
 
     @Test

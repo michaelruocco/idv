@@ -41,7 +41,7 @@ class LockoutStateCalculatorFactoryTest {
 
         final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) factory.build(parameters);
 
-        assertThat(stateCalculator.getMaxAttempts()).isEqualTo(parameters.getMaxNumberOfAttempts());
+        assertThat(stateCalculator.getMaxNumberOfAttempts()).isEqualTo(parameters.getMaxNumberOfAttempts());
     }
 
 }

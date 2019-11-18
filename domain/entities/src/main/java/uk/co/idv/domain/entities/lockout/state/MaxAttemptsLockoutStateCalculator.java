@@ -8,10 +8,10 @@ public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator
 
     public static final String TYPE = "max-attempts";
 
-    private final int maxAttempts;
+    private final int maxNumberOfAttempts;
 
-    public MaxAttemptsLockoutStateCalculator(final int maxAttempts) {
-        this.maxAttempts = maxAttempts;
+    public MaxAttemptsLockoutStateCalculator(final int maxNumberOfAttempts) {
+        this.maxNumberOfAttempts = maxNumberOfAttempts;
     }
 
     @Override
@@ -21,13 +21,13 @@ public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator
 
     @Override
     public LockoutStateMaxAttempts calculate(final CalculateLockoutStateRequest request) {
-        log.info("calculating lock from calculator {} with request {} and max attempts {}", this, request, maxAttempts);
+        log.info("calculating lock from calculator {} with request {} and max number of attempts {}", this, request, maxNumberOfAttempts);
         final VerificationAttempts attempts = request.getAttempts();
-        return new LockoutStateMaxAttempts(attempts, maxAttempts);
+        return new LockoutStateMaxAttempts(attempts, maxNumberOfAttempts);
     }
 
-    public int getMaxAttempts() {
-        return maxAttempts;
+    public int getMaxNumberOfAttempts() {
+        return maxNumberOfAttempts;
     }
 
 }

@@ -14,12 +14,12 @@ public class MaxAttemptsLockoutPolicyParameters extends DefaultLockoutPolicyPara
 
     @Builder
     public MaxAttemptsLockoutPolicyParameters(final UUID id,
-                                              final String recordAttemptStrategyType,
+                                              final String recordAttempts,
                                               final LockoutLevel lockoutLevel,
                                               final int maxNumberOfAttempts) {
         super(id,
                 MaxAttemptsLockoutStateCalculator.TYPE,
-                recordAttemptStrategyType,
+                recordAttempts,
                 lockoutLevel);
         this.maxNumberOfAttempts = maxNumberOfAttempts;
     }

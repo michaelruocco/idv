@@ -8,8 +8,8 @@ public interface LockoutPolicyParametersMixin {
     @JsonProperty("level")
     LockoutLevel getLockoutLevel();
 
-    @JsonProperty("recordAttemptStrategy")
-    String getRecordAttemptStrategyType();
+    @JsonProperty("recordAttempts")
+    String getRecordAttempts();
 
     @JsonProperty("type")
     String getLockoutType();

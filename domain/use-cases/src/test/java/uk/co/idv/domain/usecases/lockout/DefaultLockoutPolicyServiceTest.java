@@ -9,6 +9,7 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPolicyNotFoundException;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.verify;
 
 class DefaultLockoutPolicyServiceTest {
 
+    private final LockoutStateCalculator stateCalculator = mock(LockoutStateCalculator.class);
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
 
     private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
@@ -90,7 +92,8 @@ class DefaultLockoutPolicyServiceTest {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
         given(dao.load(request)).willReturn(Optional.of(policy));
         final LockoutState expectedState = new FakeLockoutStateMaxAttempts();
-        given(policy.calculateLockoutState(request)).willReturn(expectedState);
+        given(policy.getStateCalculator()).willReturn(stateCalculator);
+        given(stateCalculator.calculate(request)).willReturn(expectedState);
 
         final LockoutState state = service.calculateState(request);
 

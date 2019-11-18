@@ -16,7 +16,7 @@ public class LockoutPolicyParametersMother {
     public static MaxAttemptsLockoutPolicyParametersBuilder maxAttemptsBuilder() {
         return MaxAttemptsLockoutPolicyParameters.builder()
                 .id(UUID.fromString("39374b21-e603-4408-9155-d122e3c1222a"))
-                .recordAttemptStrategyType(RecordEveryAttempt.TYPE)
+                .recordAttempts(RecordEveryAttempt.TYPE)
                 .lockoutLevel(lockoutLevel())
                 .maxNumberOfAttempts(3);
     }

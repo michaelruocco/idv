@@ -1,11 +1,10 @@
 package uk.co.idv.repository.mongo.lockout.policy.maxattempts;
 
 import lombok.Builder;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.MaxAttemptsLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.state.MaxAttemptsLockoutStateCalculator;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
@@ -28,16 +27,12 @@ public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyD
     public LockoutPolicy toPolicy(final LockoutPolicyDocument policyDocument) {
         final String key = policyDocument.getKey();
         final MaxAttemptsLockoutPolicyDocument document = (MaxAttemptsLockoutPolicyDocument) policyDocument;
-        return DefaultLockoutPolicy.builder()
-                .level(keyConverter.toLevel(key))
-                .recordAttemptStrategy(toRecordAttemptStrategy(document))
-                .stateCalculator(toStateCalculator(document))
-                .id(UUID.fromString(document.getId()))
-                .build();
-    }
-
-    private static LockoutStateCalculator toStateCalculator(final MaxAttemptsLockoutPolicyDocument document) {
-        return new MaxAttemptsLockoutStateCalculator(document.getMaxNumberOfAttempts());
+        return new MaxAttemptsLockoutPolicy(
+                UUID.fromString(document.getId()),
+                keyConverter.toLevel(key),
+                toRecordAttemptStrategy(document),
+                document.getMaxNumberOfAttempts()
+        );
     }
 
     private RecordAttemptStrategy toRecordAttemptStrategy(final LockoutPolicyDocument document) {
@@ -52,7 +47,7 @@ public class MaxAttemptsLockoutPolicyDocumentConverter implements LockoutPolicyD
         document.setLockoutType(policy.getLockoutType());
         document.setRecordAttemptStrategyType(policy.getRecordAttemptStrategyType());
         final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) policy.getStateCalculator();
-        document.setMaxNumberOfAttempts(stateCalculator.getMaxAttempts());
+        document.setMaxNumberOfAttempts(stateCalculator.getMaxNumberOfAttempts());
         return document;
     }
 

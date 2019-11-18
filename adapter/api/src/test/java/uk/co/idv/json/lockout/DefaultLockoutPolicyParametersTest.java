@@ -24,7 +24,7 @@ class DefaultLockoutPolicyParametersTest {
 
     @Test
     void shouldReturnRecordAttemptStrategyType() {
-        assertThat(parameters.getRecordAttemptStrategyType()).isEqualTo(CustomLockoutPolicyParameters.RECORD_ATTEMPT_STRATEGY_TYPE);
+        assertThat(parameters.getRecordAttempts()).isEqualTo(CustomLockoutPolicyParameters.RECORD_ATTEMPTS);
     }
 
     @Test
@@ -36,13 +36,13 @@ class DefaultLockoutPolicyParametersTest {
 
         private static final UUID ID = UUID.fromString("0addd5b5-24ef-4298-9ebd-ed6f506f59c2");
         private static final String LOCKOUT_TYPE = "lockout-type";
-        private static final String RECORD_ATTEMPT_STRATEGY_TYPE = "record-attempt-strategy-type";
+        private static final String RECORD_ATTEMPTS = "record-attempt-strategy-type";
         private static final LockoutLevel LOCKOUT_LEVEL = lockoutLevel();
 
         private CustomLockoutPolicyParameters() {
             super(ID,
                     LOCKOUT_TYPE,
-                    RECORD_ATTEMPT_STRATEGY_TYPE,
+                    RECORD_ATTEMPTS,
                     LOCKOUT_LEVEL);
         }
 

@@ -88,7 +88,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
         final MaxAttemptsLockoutPolicyDocument document = (MaxAttemptsLockoutPolicyDocument) converter.toDocument(policy);
 
         final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) policy.getStateCalculator();
-        assertThat(document.getMaxNumberOfAttempts()).isEqualTo(stateCalculator.getMaxAttempts());
+        assertThat(document.getMaxNumberOfAttempts()).isEqualTo(stateCalculator.getMaxNumberOfAttempts());
     }
 
     @Test
@@ -146,7 +146,7 @@ class MaxAttemptsLockoutPolicyDocumentConverterTest {
         final LockoutPolicy policy = converter.toPolicy(document);
 
         final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) policy.getStateCalculator();
-        assertThat(stateCalculator.getMaxAttempts()).isEqualTo(document.getMaxNumberOfAttempts());
+        assertThat(stateCalculator.getMaxNumberOfAttempts()).isEqualTo(document.getMaxNumberOfAttempts());
     }
 
 }

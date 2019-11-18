@@ -12,7 +12,7 @@ public class DefaultLockoutPolicyParameters implements LockoutPolicyParameters {
 
     private final UUID id;
     private final String lockoutType;
-    private final String recordAttemptStrategyType;
+    private final String recordAttempts;
     private final LockoutLevel lockoutLevel;
 
 }

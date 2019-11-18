@@ -95,7 +95,7 @@ class MaxAttemptsLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnMaxNumberOfAttempts() {
-        assertThat(calculator.getMaxAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
+        assertThat(calculator.getMaxNumberOfAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
     }
 
     private static VerificationAttempts buildOneAttempt() {

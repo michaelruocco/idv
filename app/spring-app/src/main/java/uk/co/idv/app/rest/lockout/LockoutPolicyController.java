@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.json.lockout.LockoutPolicyParametersConverter;
 import uk.co.idv.api.lockout.LockoutPoliciesDocument;
 import uk.co.idv.json.lockout.LockoutPolicyParameters;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService;
+import uk.co.idv.json.lockout.LockoutPolicyParametersConverterDelegator;
 
 import java.util.Collection;
 
@@ -16,7 +16,7 @@ import java.util.Collection;
 public class LockoutPolicyController {
 
     private final LockoutPolicyService service;
-    private final LockoutPolicyParametersConverter parametersConverter;
+    private final LockoutPolicyParametersConverterDelegator parametersConverter;
 
     @GetMapping("/lockoutPolicies")
     public LockoutPoliciesDocument getLockoutPolicies() {
