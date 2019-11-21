@@ -42,7 +42,7 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
-import uk.co.idv.json.lockout.MaxAttemptsLockoutPolicyParametersConverter;
+import uk.co.idv.json.lockout.HardLockoutPolicyParametersConverter;
 
 import java.util.Collection;
 
@@ -80,8 +80,8 @@ public class DefaultDomainConfig {
     }
 
     @Bean
-    public LockoutPolicyParametersConverter maxAttemptLockoutPolicyParametersConverter(final RecordAttemptStrategyFactory recordAttemptStrategyFactory) {
-        return new MaxAttemptsLockoutPolicyParametersConverter(recordAttemptStrategyFactory);
+    public LockoutPolicyParametersConverter hardLockoutPolicyParametersConverter(final RecordAttemptStrategyFactory recordAttemptStrategyFactory) {
+        return new HardLockoutPolicyParametersConverter(recordAttemptStrategyFactory);
     }
 
     @Bean

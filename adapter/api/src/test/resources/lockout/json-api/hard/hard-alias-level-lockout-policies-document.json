@@ -11,7 +11,7 @@
           "aliasType": "fake-alias-type"
         },
         "recordAttempts": "every-attempt",
-        "type": "max-attempts",
+        "type": "hard-lock",
         "maxNumberOfAttempts": 3
       }
     }

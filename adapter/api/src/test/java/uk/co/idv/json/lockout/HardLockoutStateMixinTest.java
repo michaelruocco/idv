@@ -5,23 +5,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockoutState;
+import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class MaxAttemptsLockoutStateMixinTest {
+class HardLockoutStateMixinTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldSerializeLockoutStateMaxAttempts() throws JsonProcessingException {
-        final LockoutState state = new FakeMaxAttemptsLockoutState();
+    void shouldSerializeHardLockoutState() throws JsonProcessingException {
+        final LockoutState state = new FakeHardLockoutState();
 
         final String json = MAPPER.writeValueAsString(state);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/max-attempts-lockout-state.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/hard/hard-lockout-state.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.lockout.policy.maxattempts;
+package uk.co.idv.domain.entities.lockout.policy.hard;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -7,7 +7,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class MaxAttemptsLockoutState implements LockoutState {
+public class HardLockoutState implements LockoutState {
 
     private final VerificationAttempts attempts;
     private final int maxNumberOfAttempts;

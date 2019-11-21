@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockoutState;
+import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
@@ -29,7 +29,7 @@ class DefaultLockoutServiceTest {
     @Test
     void shouldRecordAttempt() {
         final RecordAttemptRequest request = RecordAttemptRequest.builder().build();
-        final LockoutState expectedState = new FakeMaxAttemptsLockoutState();
+        final LockoutState expectedState = new FakeHardLockoutState();
         given(attemptRecorder.recordAttempt(request)).willReturn(expectedState);
 
         final LockoutState state = service.recordAttempt(request);
@@ -40,7 +40,7 @@ class DefaultLockoutServiceTest {
     @Test
     void shouldLoadState() {
         final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
-        final LockoutState expectedState = new FakeMaxAttemptsLockoutState();
+        final LockoutState expectedState = new FakeHardLockoutState();
         given(stateLoader.load(request)).willReturn(expectedState);
 
         final LockoutState state = service.loadState(request);
@@ -62,7 +62,7 @@ class DefaultLockoutServiceTest {
     @Test
     void shouldResetStateThenLoadLockoutState() {
         final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder().build();
-        final LockoutState expectedState = new FakeMaxAttemptsLockoutState();
+        final LockoutState expectedState = new FakeHardLockoutState();
         given(stateLoader.load(request)).willReturn(expectedState);
 
         final LockoutState state = service.resetState(request);

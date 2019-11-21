@@ -25,7 +25,7 @@ class LockoutPolicyControllerTest {
 
     @Test
     void shouldReturnLockoutPoliciesDocumentWithLockoutPolicies() {
-        final LockoutPolicy policy = LockoutPolicyMother.maxAttemptsPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
         final Collection<LockoutPolicy> policies = Collections.singleton(policy);
         service.setPoliciesToLoad(policies);
         final LockoutPolicyParameters parameters = new FakeLockoutPolicyParameters();

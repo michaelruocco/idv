@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 
-import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsLockoutPolicyDocument;
+import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocument;
 
 public class LockoutPolicyDocumentMother {
 
@@ -12,10 +12,10 @@ public class LockoutPolicyDocumentMother {
         return document;
     }
 
-    public static MaxAttemptsLockoutPolicyDocument maxAttempts() {
-        final MaxAttemptsLockoutPolicyDocument document = new MaxAttemptsLockoutPolicyDocument();
+    public static HardLockoutPolicyDocument hardLock() {
+        final HardLockoutPolicyDocument document = new HardLockoutPolicyDocument();
         populateCommonFields(document);
-        document.setLockoutType("max-attempts");
+        document.setLockoutType("hard-lock");
         document.setMaxNumberOfAttempts(3);
         return document;
     }

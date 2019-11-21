@@ -47,7 +47,7 @@ import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterD
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentKeyConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
-import uk.co.idv.repository.mongo.lockout.policy.maxattempts.MaxAttemptsLockoutPolicyDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.MongoVerificationContextDao;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationContextDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationContextRepository;
@@ -316,7 +316,7 @@ public class DefaultMongoDaoConfig {
     @Bean
     public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter(final RecordAttemptStrategyFactory strategyFactory,
                                                                                         final LockoutPolicyDocumentKeyConverter keyConverter) {
-        return MaxAttemptsLockoutPolicyDocumentConverter.builder()
+        return HardLockoutPolicyDocumentConverter.builder()
                 .recordAttemptStrategyFactory(strategyFactory)
                 .keyConverter(keyConverter)
                 .build();

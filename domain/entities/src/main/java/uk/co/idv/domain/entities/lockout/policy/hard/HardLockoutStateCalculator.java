@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.lockout.policy.maxattempts;
+package uk.co.idv.domain.entities.lockout.policy.hard;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -6,13 +6,13 @@ import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateReque
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 @Slf4j
-public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator {
+public class HardLockoutStateCalculator implements LockoutStateCalculator {
 
-    public static final String TYPE = "max-attempts";
+    public static final String TYPE = "hard-lock";
 
     private final int maxNumberOfAttempts;
 
-    public MaxAttemptsLockoutStateCalculator(final int maxNumberOfAttempts) {
+    public HardLockoutStateCalculator(final int maxNumberOfAttempts) {
         this.maxNumberOfAttempts = maxNumberOfAttempts;
     }
 
@@ -22,10 +22,10 @@ public class MaxAttemptsLockoutStateCalculator implements LockoutStateCalculator
     }
 
     @Override
-    public MaxAttemptsLockoutState calculate(final CalculateLockoutStateRequest request) {
+    public HardLockoutState calculate(final CalculateLockoutStateRequest request) {
         log.info("calculating lock from calculator {} with request {} and max number of attempts {}", this, request, maxNumberOfAttempts);
         final VerificationAttempts attempts = request.getAttempts();
-        return new MaxAttemptsLockoutState(attempts, maxNumberOfAttempts);
+        return new HardLockoutState(attempts, maxNumberOfAttempts);
     }
 
     public int getMaxNumberOfAttempts() {

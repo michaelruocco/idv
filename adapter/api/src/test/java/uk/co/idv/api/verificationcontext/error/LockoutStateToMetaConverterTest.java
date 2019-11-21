@@ -1,9 +1,9 @@
 package uk.co.idv.api.verificationcontext.error;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockedLockoutState;
+import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockedLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutState;
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutState;
 
 import java.util.Map;
 
@@ -14,8 +14,8 @@ import static org.mockito.Mockito.mock;
 class LockoutStateToMetaConverterTest {
 
     @Test
-    void shouldConvertMaxAttemptsLockoutStateToMetaData() {
-        final MaxAttemptsLockoutState lockoutState = new FakeMaxAttemptsLockedLockoutState();
+    void shouldConvertHardLockoutStateToMetaData() {
+        final HardLockoutState lockoutState = new FakeHardLockedLockoutState();
 
         final Map<String, Object> meta = LockoutStateToMetaConverter.toMeta(lockoutState);
 

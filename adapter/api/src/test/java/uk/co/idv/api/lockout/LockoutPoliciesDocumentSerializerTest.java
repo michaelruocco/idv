@@ -16,12 +16,12 @@ class LockoutPoliciesDocumentSerializerTest {
 
     @Test
     void shouldSerializePolicies() throws JsonProcessingException {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.hardLock();
         final LockoutPoliciesDocument document = new LockoutPoliciesDocument(parameters);
 
         final String json = MAPPER.writeValueAsString(document);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/json-api/max-attempts-alias-level-lockout-policies-document.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/json-api/hard/hard-alias-level-lockout-policies-document.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

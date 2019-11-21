@@ -1,8 +1,8 @@
 package uk.co.idv.uk.domain.entities.lockout;
 
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 
-public class RsaLockoutStateCalculator extends MaxAttemptsLockoutStateCalculator {
+public class RsaLockoutStateCalculator extends HardLockoutStateCalculator {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
 

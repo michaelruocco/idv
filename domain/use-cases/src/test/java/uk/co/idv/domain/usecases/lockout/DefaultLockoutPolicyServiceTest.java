@@ -3,7 +3,7 @@ package uk.co.idv.domain.usecases.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.FakeCalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.FakeMaxAttemptsLockoutState;
+import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
@@ -91,7 +91,7 @@ class DefaultLockoutPolicyServiceTest {
     void shouldCalculateStateFromPolicy() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
         given(dao.load(request)).willReturn(Optional.of(policy));
-        final LockoutState expectedState = new FakeMaxAttemptsLockoutState();
+        final LockoutState expectedState = new FakeHardLockoutState();
         given(policy.getStateCalculator()).willReturn(stateCalculator);
         given(stateCalculator.calculate(request)).willReturn(expectedState);
 

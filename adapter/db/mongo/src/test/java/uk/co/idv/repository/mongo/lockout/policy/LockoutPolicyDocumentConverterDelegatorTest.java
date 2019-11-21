@@ -38,7 +38,7 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
     @Test
     void shouldConvertLockoutPolicyDocument() {
-        final LockoutPolicy expectedPolicy = LockoutPolicyMother.maxAttemptsPolicy();
+        final LockoutPolicy expectedPolicy = LockoutPolicyMother.hardLockoutPolicy();
         final LockoutPolicyDocument document = new LockoutPolicyDocument();
         given(converter.supportsType(document.getLockoutType())).willReturn(true);
         given(converter.toPolicy(document)).willReturn(expectedPolicy);
@@ -50,7 +50,7 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
     @Test
     void shouldConvertLockoutPolicy() {
-        final LockoutPolicy policy = LockoutPolicyMother.maxAttemptsPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
         final LockoutPolicyDocument expectedDocument = new LockoutPolicyDocument();
         given(converter.supportsType(policy.getLockoutType())).willReturn(true);
         given(converter.toDocument(policy)).willReturn(expectedDocument);

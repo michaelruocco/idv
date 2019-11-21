@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.lockout.policy.maxattempts;
+package uk.co.idv.domain.entities.lockout.policy.hard;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
@@ -9,12 +9,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class MaxAttemptsLockoutStateTest {
+class HardLockoutStateTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
     private final VerificationAttempts attempts = new FakeVerificationAttempts();
 
-    private final MaxAttemptsLockoutState state = new MaxAttemptsLockoutState(attempts, MAX_NUMBER_OF_ATTEMPTS);
+    private final HardLockoutState state = new HardLockoutState(attempts, MAX_NUMBER_OF_ATTEMPTS);
 
     @Test
     void shouldReturnIdFromAttempts() {
@@ -46,7 +46,7 @@ class MaxAttemptsLockoutStateTest {
         final VerificationAttempts threeAttempts = mock(VerificationAttempts.class);
         given(threeAttempts.size()).willReturn(3);
 
-        final LockoutState lockedState = new MaxAttemptsLockoutState(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
+        final LockoutState lockedState = new HardLockoutState(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
 
         assertThat(lockedState.isLocked()).isTrue();
     }
@@ -61,7 +61,7 @@ class MaxAttemptsLockoutStateTest {
         final VerificationAttempts threeAttempts = mock(VerificationAttempts.class);
         given(threeAttempts.size()).willReturn(MAX_NUMBER_OF_ATTEMPTS);
 
-        final LockoutState lockedState = new MaxAttemptsLockoutState(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
+        final LockoutState lockedState = new HardLockoutState(threeAttempts, MAX_NUMBER_OF_ATTEMPTS);
 
         final String expectedMessage = String.format("maximum number of attempts [%d] reached", MAX_NUMBER_OF_ATTEMPTS);
         assertThat(lockedState.getMessage()).isEqualTo(expectedMessage);

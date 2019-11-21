@@ -76,20 +76,6 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
         return stateCalculator;
     }
 
-    /*@Override
-    public LockoutState reset(final CalculateLockoutStateRequest request) {
-        final VerificationAttempts resetAttempts = removeApplicableAttempts(request);
-        final CalculateLockoutStateRequest calculateRequest = requestConverter.toCalculateRequest(request, resetAttempts);
-        return stateCalculator.calculate(calculateRequest);
-    }
-
-    @Override
-    public LockoutState calculateLockoutState(final CalculateLockoutStateRequest request) {
-        final VerificationAttempts applicableAttempts = filterApplicableAttempts(request);
-        final CalculateLockoutStateRequest calculateRequest = requestConverter.toCalculateRequest(request, applicableAttempts);
-        return stateCalculator.calculate(calculateRequest);
-    }*/
-
     @Override
     public LockoutLevel getLockoutLevel() {
         return level;

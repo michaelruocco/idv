@@ -3,7 +3,7 @@ package uk.co.idv.json.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.policy.maxattempts.MaxAttemptsLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -27,19 +27,19 @@ class LockoutStateCalculatorFactoryTest {
     }
 
     @Test
-    void shouldReturnMaxAttemptsLockoutStateCalculatorForMaxAttemptsParameters() {
-        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+    void shouldReturnHardLockoutStateCalculatorForHardLockoutParameters() {
+        final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.hardLock();
 
         final LockoutStateCalculator stateCalculator = factory.build(parameters);
 
-        assertThat(stateCalculator).isInstanceOf(MaxAttemptsLockoutStateCalculator.class);
+        assertThat(stateCalculator).isInstanceOf(HardLockoutStateCalculator.class);
     }
 
     @Test
     void shouldPopulateMaxAttemptsOnStateCalculator() {
-        final MaxAttemptsLockoutPolicyParameters parameters = LockoutPolicyParametersMother.maxAttempts();
+        final HardLockoutPolicyParameters parameters = LockoutPolicyParametersMother.hardLock();
 
-        final MaxAttemptsLockoutStateCalculator stateCalculator = (MaxAttemptsLockoutStateCalculator) factory.build(parameters);
+        final HardLockoutStateCalculator stateCalculator = (HardLockoutStateCalculator) factory.build(parameters);
 
         assertThat(stateCalculator.getMaxNumberOfAttempts()).isEqualTo(parameters.getMaxNumberOfAttempts());
     }
