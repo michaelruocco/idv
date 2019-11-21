@@ -6,21 +6,16 @@ import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import javax.money.MonetaryAmount;
-import java.time.Instant;
 
 public class JsonNodeToOnlinePurchaseConverter implements JsonNodeToActivityConverter {
 
     public Activity toActivity(final JsonNode node) {
         return OnlinePurchase.builder()
-                .timestamp(extractTimestamp(node))
+                .timestamp(JsonNodeToActivityConverter.extractTimestamp(node))
                 .merchantName(extractMerchantName(node))
                 .reference(extractReference(node))
                 .cost(extractCost(node))
                 .build();
-    }
-
-    private static Instant extractTimestamp(final JsonNode node) {
-        return Instant.parse(node.get("timestamp").asText());
     }
 
     private static String extractMerchantName(final JsonNode node) {

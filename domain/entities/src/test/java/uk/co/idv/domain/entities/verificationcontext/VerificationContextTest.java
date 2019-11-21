@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
@@ -98,7 +98,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnActivity() {
-        final Activity activity = new FakeActivity(Instant.now());
+        final Activity activity = ActivityMother.fake();
 
         final VerificationContext context = builder.activity(activity).build();
 
@@ -107,7 +107,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnActivityName() {
-        final Activity activity = new FakeActivity(Instant.now());
+        final Activity activity = ActivityMother.fake();
 
         final VerificationContext context = builder.activity(activity).build();
 

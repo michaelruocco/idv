@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
@@ -30,7 +30,7 @@ class VerificationContextLoadLockoutStateRequestTest {
 
     @Test
     void shouldReturnActivityName() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
 
         final VerificationContextLoadLockoutStateRequest request = builder.activity(activity).build();
 

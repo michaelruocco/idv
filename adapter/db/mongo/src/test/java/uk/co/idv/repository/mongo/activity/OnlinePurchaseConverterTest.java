@@ -3,8 +3,7 @@ package uk.co.idv.repository.mongo.activity;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeActivity;
-import uk.co.idv.domain.entities.activity.FakeOnlinePurchase;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import javax.money.MonetaryAmount;
@@ -39,7 +38,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldThrowExceptionIfNotOnlinePurchaseActivity() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
 
         final Throwable error = catchThrowable(() -> converter.toDocument(activity));
 
@@ -95,7 +94,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertToOnlinePurchaseDocument() {
-        final OnlinePurchase onlinePurchase = new FakeOnlinePurchase();
+        final OnlinePurchase onlinePurchase = ActivityMother.onlinePurchase();
 
         final ActivityDocument document = converter.toDocument(onlinePurchase);
 
@@ -104,7 +103,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertNameToDocument() {
-        final OnlinePurchase onlinePurchase = new FakeOnlinePurchase();
+        final OnlinePurchase onlinePurchase = ActivityMother.onlinePurchase();
 
         final OnlinePurchaseDocument document = (OnlinePurchaseDocument) converter.toDocument(onlinePurchase);
 
@@ -113,7 +112,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertTimestampToDocument() {
-        final OnlinePurchase onlinePurchase = new FakeOnlinePurchase();
+        final OnlinePurchase onlinePurchase = ActivityMother.onlinePurchase();
 
         final OnlinePurchaseDocument document = (OnlinePurchaseDocument) converter.toDocument(onlinePurchase);
 
@@ -122,7 +121,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertMerchantNameToDocument() {
-        final OnlinePurchase onlinePurchase = new FakeOnlinePurchase();
+        final OnlinePurchase onlinePurchase = ActivityMother.onlinePurchase();
 
         final OnlinePurchaseDocument document = (OnlinePurchaseDocument) converter.toDocument(onlinePurchase);
 
@@ -131,7 +130,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertReferenceToDocument() {
-        final OnlinePurchase onlinePurchase = new FakeOnlinePurchase();
+        final OnlinePurchase onlinePurchase = ActivityMother.onlinePurchase();
 
         final OnlinePurchaseDocument document = (OnlinePurchaseDocument) converter.toDocument(onlinePurchase);
 
@@ -140,7 +139,7 @@ class OnlinePurchaseConverterTest {
 
     @Test
     void shouldConvertCostToDocument() {
-        final OnlinePurchase onlinePurchase = new FakeOnlinePurchase();
+        final OnlinePurchase onlinePurchase = ActivityMother.onlinePurchase();
         final MonetaryAmountDocument expectedCostDocument = MonetaryAmountDocumentMother.build();
         given(amountConverter.toDocument(onlinePurchase.getCost())).willReturn(expectedCostDocument);
 

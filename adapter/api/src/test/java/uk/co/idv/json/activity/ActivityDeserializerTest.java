@@ -2,10 +2,10 @@ package uk.co.idv.json.activity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeOnlinePurchase;
 
 import java.io.IOException;
 
@@ -22,7 +22,16 @@ class ActivityDeserializerTest {
 
         final Activity activity = MAPPER.readValue(json, Activity.class);
 
-        assertThat(activity).isEqualToComparingFieldByField(new FakeOnlinePurchase());
+        assertThat(activity).isEqualToComparingFieldByField(ActivityMother.onlinePurchase());
+    }
+
+    @Test
+    void shouldDeserializeLogin() throws IOException {
+        final String json = ContentLoader.loadContentFromClasspath("activity/login.json");
+
+        final Activity activity = MAPPER.readValue(json, Activity.class);
+
+        assertThat(activity).isEqualToComparingFieldByField(ActivityMother.login());
     }
 
     @Test

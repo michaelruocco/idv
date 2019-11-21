@@ -1,6 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
-import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -16,7 +16,7 @@ public class FakeVerificationContext extends VerificationContext {
                 ChannelMother.fake(),
                 AliasesMother.creditCardNumber(),
                 new Identity(AliasesMother.aliases()),
-                new FakeActivity(Instant.parse("2019-09-21T20:40:29.061224Z")),
+                ActivityMother.fake(),
                 Instant.parse("2019-09-21T20:43:32.233721Z"),
                 Instant.parse("2019-09-21T20:48:32.233721Z"),
                 new VerificationSequences(new SingleMethodSequence(new FakeVerificationMethodEligible())));

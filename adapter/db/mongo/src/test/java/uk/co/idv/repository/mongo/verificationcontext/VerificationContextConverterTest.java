@@ -1,6 +1,7 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
 import uk.co.idv.repository.mongo.activity.ActivityDocument;
@@ -11,7 +12,6 @@ import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeActivity;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
@@ -132,7 +132,7 @@ class VerificationContextConverterTest {
     @Test
     void shouldActivityToContext() {
         final VerificationContextDocument document = VerificationContextDocumentMother.fake();
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
         given(activityConverter.toActivity(document.getActivity())).willReturn(activity);
 
         final VerificationContext context = contextConverter.toContext(document);

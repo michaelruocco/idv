@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
@@ -101,7 +101,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassActivityWhenValidatingLockoutState() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .activity(activity)
                 .build();
@@ -173,7 +173,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassActivityWhenLoadingSequences() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .activity(activity)
                 .build();
@@ -222,7 +222,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassActivityWhenCalculatingExpiry() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
         final CreateContextRequest createContextRequest = CreateContextRequest.builder()
                 .activity(activity)
                 .build();
@@ -288,7 +288,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateActivity() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
         final CreateContextRequest request = CreateContextRequest.builder()
                 .activity(activity)
                 .build();

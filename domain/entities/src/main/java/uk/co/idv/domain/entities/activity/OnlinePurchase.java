@@ -1,13 +1,13 @@
 package uk.co.idv.domain.entities.activity;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;
 
 @Builder
-@EqualsAndHashCode
+@Data
 public class OnlinePurchase implements Activity {
 
     public static final String NAME = "online-purchase";

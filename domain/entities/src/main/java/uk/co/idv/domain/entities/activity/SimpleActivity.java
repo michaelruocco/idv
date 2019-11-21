@@ -1,23 +1,20 @@
 package uk.co.idv.domain.entities.activity;
 
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.Instant;
 
-public class FakeActivity implements Activity {
+@Data
+@Builder
+public class SimpleActivity implements Activity {
 
+    private final String name;
     private final Instant timestamp;
-
-    public FakeActivity() {
-        this(Instant.now());
-    }
-
-    public FakeActivity(final Instant timestamp) {
-        this.timestamp = timestamp;
-    }
 
     @Override
     public String getName() {
-        return "fake-activity";
+        return name;
     }
 
     @Override

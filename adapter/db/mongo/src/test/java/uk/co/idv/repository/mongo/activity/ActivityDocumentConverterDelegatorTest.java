@@ -1,9 +1,9 @@
 package uk.co.idv.repository.mongo.activity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeActivity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -27,7 +27,7 @@ class ActivityDocumentConverterDelegatorTest {
 
     @Test
     void shouldThrowExceptionIfNoConverterSupportingActivity() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
 
         final Throwable error = catchThrowable(() -> delegator.toDocument(activity));
 
@@ -37,7 +37,7 @@ class ActivityDocumentConverterDelegatorTest {
 
     @Test
     void shouldConvertActivityDocument() {
-        final Activity expectedActivity = new FakeActivity();
+        final Activity expectedActivity = ActivityMother.fake();
         final ActivityDocument document = ActivityDocumentMother.fake();
         given(converter.supportsActivity(document.getName())).willReturn(true);
         given(converter.toActivity(document)).willReturn(expectedActivity);
@@ -49,7 +49,7 @@ class ActivityDocumentConverterDelegatorTest {
 
     @Test
     void shouldConvertActivity() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
         final ActivityDocument expectedDocument = ActivityDocumentMother.fake();
         given(converter.supportsActivity(activity.getName())).willReturn(true);
         given(converter.toDocument(activity)).willReturn(expectedDocument);

@@ -4,7 +4,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.FakeActivity;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
@@ -37,7 +37,7 @@ class CreateContextRequestTest {
 
     @Test
     void shouldReturnActivity() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
 
         final CreateContextRequest request = builder.activity(activity).build();
 
@@ -46,7 +46,7 @@ class CreateContextRequestTest {
 
     @Test
     void shouldReturnActivityName() {
-        final Activity activity = new FakeActivity();
+        final Activity activity = ActivityMother.fake();
 
         final CreateContextRequest request = builder.activity(activity).build();
 

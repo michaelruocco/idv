@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.idv.domain.entities.activity.Login;
 import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
@@ -35,7 +36,10 @@ public class ActivityDeserializer extends StdDeserializer<Activity> {
     }
 
     private static Map<String, JsonNodeToActivityConverter> buildConverters() {
-        return Map.of(OnlinePurchase.NAME, new JsonNodeToOnlinePurchaseConverter());
+        return Map.of(
+                OnlinePurchase.NAME, new JsonNodeToOnlinePurchaseConverter(),
+                Login.NAME, new JsonNodeToSimpleActivityConverter()
+        );
     }
 
 }
