@@ -3,7 +3,7 @@ package uk.co.idv.repository.mongo.verificationcontext;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.ChannelMother;
-import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
+import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.activity.ActivityDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
@@ -34,7 +34,7 @@ class VerificationContextConverterTest {
     private final ChannelDocumentConverterDelegator channelConverter = mock(ChannelDocumentConverterDelegator.class);
     private final AliasDocumentConverter aliasConverter = mock(AliasDocumentConverter.class);
     private final IdentityDocumentConverter identityConverter = mock(IdentityDocumentConverter.class);
-    private final ActivityConverterDelegator activityConverter = mock(ActivityConverterDelegator.class);
+    private final ActivityDocumentConverterDelegator activityConverter = mock(ActivityDocumentConverterDelegator.class);
     private final VerificationSequencesConverter sequencesConverter = mock(VerificationSequencesConverter.class);
 
     private final VerificationContextDocumentConverter contextConverter = VerificationContextDocumentConverter.builder()

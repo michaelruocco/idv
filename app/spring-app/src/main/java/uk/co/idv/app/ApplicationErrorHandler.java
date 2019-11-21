@@ -54,6 +54,7 @@ public class ApplicationErrorHandler {
 
     @ExceptionHandler(ActivityNotSupportedException.class)
     public ResponseEntity<ApiErrorDocument> handleException(final ActivityNotSupportedException e) {
+        log.error("activity not supported", e);
         return buildResponseEntity(new ActivityNotSupportedError(e.getMessage()));
     }
 

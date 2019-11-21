@@ -7,15 +7,15 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
-public class ActivityConverterDelegator {
+public class ActivityDocumentConverterDelegator {
 
     private final Collection<ActivityDocumentConverter> converters;
 
-    public ActivityConverterDelegator(final ActivityDocumentConverter... converters) {
+    public ActivityDocumentConverterDelegator(final ActivityDocumentConverter... converters) {
         this(Arrays.asList(converters));
     }
 
-    public ActivityConverterDelegator(final Collection<ActivityDocumentConverter> converters) {
+    public ActivityDocumentConverterDelegator(final Collection<ActivityDocumentConverter> converters) {
         this.converters = converters;
     }
 

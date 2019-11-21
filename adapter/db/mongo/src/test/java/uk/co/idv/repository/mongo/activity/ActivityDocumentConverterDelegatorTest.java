@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 class ActivityDocumentConverterDelegatorTest {
 
     private final ActivityDocumentConverter converter = mock(ActivityDocumentConverter.class);
-    private final ActivityConverterDelegator delegator = new ActivityConverterDelegator(converter);
+    private final ActivityDocumentConverterDelegator delegator = new ActivityDocumentConverterDelegator(converter);
 
     @Test
     void shouldThrowExceptionIfNoConverterSupportingActivityDocument() {

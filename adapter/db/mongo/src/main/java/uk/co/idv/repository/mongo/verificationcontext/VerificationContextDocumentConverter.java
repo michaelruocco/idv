@@ -1,7 +1,7 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import lombok.Builder;
-import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
+import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
@@ -16,7 +16,7 @@ public class VerificationContextDocumentConverter {
     private final ChannelDocumentConverterDelegator channelConverter;
     private final AliasDocumentConverter aliasConverter;
     private final IdentityDocumentConverter identityConverter;
-    private final ActivityConverterDelegator activityConverter;
+    private final ActivityDocumentConverterDelegator activityConverter;
     private final VerificationSequencesConverter sequencesConverter;
 
     public VerificationContext toContext(final VerificationContextDocument document) {

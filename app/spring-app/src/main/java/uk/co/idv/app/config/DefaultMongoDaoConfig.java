@@ -29,10 +29,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.repository.mongo.MongoIndexResolver;
-import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
-import uk.co.idv.repository.mongo.activity.ActivityDocumentConverter;
-import uk.co.idv.repository.mongo.activity.MonetaryAmountDocumentConverter;
-import uk.co.idv.repository.mongo.activity.OnlinePurchaseDocumentConverter;
+import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.IdentityRepository;
@@ -140,21 +137,6 @@ public class DefaultMongoDaoConfig {
     @Bean
     public IndiciesResolverListener indiciesResolverListener(final MongoIndexResolver resolver) {
         return new IndiciesResolverListener(resolver);
-    }
-
-    @Bean
-    public MonetaryAmountDocumentConverter amountConverter() {
-        return new MonetaryAmountDocumentConverter();
-    }
-
-    @Bean
-    public OnlinePurchaseDocumentConverter onlinePurchaseConverter(final MonetaryAmountDocumentConverter amountConverter) {
-        return new OnlinePurchaseDocumentConverter(amountConverter);
-    }
-
-    @Bean
-    public ActivityConverterDelegator activityConverterDelegator(final Collection<ActivityDocumentConverter> activityConverters) {
-        return new ActivityConverterDelegator(activityConverters);
     }
 
     @Bean
@@ -287,7 +269,7 @@ public class DefaultMongoDaoConfig {
     public VerificationContextDocumentConverter verificationContextConverter(final ChannelDocumentConverterDelegator channelConverter,
                                                                              final AliasDocumentConverter aliasConverter,
                                                                              final IdentityDocumentConverter identityConverter,
-                                                                             final ActivityConverterDelegator activityConverter,
+                                                                             final ActivityDocumentConverterDelegator activityConverter,
                                                                              final VerificationSequencesConverter sequencesConverter) {
         return VerificationContextDocumentConverter.builder()
                 .channelConverter(channelConverter)

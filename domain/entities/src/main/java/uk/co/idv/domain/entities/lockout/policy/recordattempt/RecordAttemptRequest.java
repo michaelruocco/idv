@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Builder
 @Getter
-public class gitRecordAttemptRequest implements LockoutStateRequest {
+public class RecordAttemptRequest implements LockoutStateRequest {
 
     private final VerificationResult result;
     private final VerificationContext context;
