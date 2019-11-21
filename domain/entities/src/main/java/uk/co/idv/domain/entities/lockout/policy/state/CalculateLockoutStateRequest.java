@@ -6,11 +6,13 @@ import lombok.RequiredArgsConstructor;
 import java.time.Instant;
 import java.util.UUID;
 
+import lombok.ToString;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 @Builder
 @RequiredArgsConstructor
+@ToString
 public class CalculateLockoutStateRequest implements LockoutStateRequest {
 
     private final String channelId;
@@ -52,6 +54,17 @@ public class CalculateLockoutStateRequest implements LockoutStateRequest {
 
     public VerificationAttempts getAttempts() {
         return attempts;
+    }
+
+    public CalculateLockoutStateRequest updateAttempts(final VerificationAttempts attempts) {
+        return CalculateLockoutStateRequest.builder()
+                .channelId(channelId)
+                .activityName(activityName)
+                .timestamp(timestamp)
+                .alias(alias)
+                .idvIdValue(idvIdValue)
+                .attempts(attempts)
+                .build();
     }
 
 }

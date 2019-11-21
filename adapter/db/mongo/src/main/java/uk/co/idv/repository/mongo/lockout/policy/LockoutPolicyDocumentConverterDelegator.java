@@ -6,6 +6,7 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class LockoutPolicyDocumentConverterDelegator {
 
@@ -17,6 +18,12 @@ public class LockoutPolicyDocumentConverterDelegator {
 
     public LockoutPolicyDocumentConverterDelegator(final Collection<LockoutPolicyDocumentConverter> converters) {
         this.converters = converters;
+    }
+
+    public Collection<LockoutPolicy> toPolicies(final Collection<LockoutPolicyDocument> documents) {
+        return documents.stream()
+                .map(this::toPolicy)
+                .collect(Collectors.toList());
     }
 
     public LockoutPolicy toPolicy(final LockoutPolicyDocument document) {

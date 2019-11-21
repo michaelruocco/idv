@@ -7,9 +7,9 @@ import java.util.UUID;
 
 public class RsaLockoutPolicy extends HardLockoutPolicy {
 
-    public RsaLockoutPolicy(final UUID id, final String aliasType) {
+    public RsaLockoutPolicy(final UUID id) {
         super(id,
-                new RsaLockoutLevel(aliasType),
+                new RsaLockoutLevel(),
                 new RecordEveryAttempt(),
                 new RsaLockoutStateCalculator()
         );

@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
@@ -8,6 +9,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 import java.util.UUID;
 
+@Slf4j
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private final UUID id;
@@ -36,13 +38,13 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public String getLockoutLevelType() {
-        return level.getType();
+    public String getRecordAttemptStrategyType() {
+        return recordAttemptStrategy.getType();
     }
 
     @Override
-    public String getRecordAttemptStrategyType() {
-        return recordAttemptStrategy.getType();
+    public boolean isAliasLevel() {
+        return level.isAliasLevel();
     }
 
     @Override
@@ -64,7 +66,9 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     @Override
     public VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts,
                                                          final LockoutRequest request) {
+        log.info("level {} is alias level {}", level, level.isAliasLevel());
         if (level.isAliasLevel()) {
+            log.info("filtering by alias {}", request.getAlias());
             final VerificationAttempts aliasAttempts = attempts.filterMatching(request.getAlias());
             return aliasAttempts.filterMatching(level);
         }

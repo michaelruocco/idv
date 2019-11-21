@@ -20,12 +20,8 @@ import static org.mockito.Mockito.mock;
 class HardLockoutPolicyDocumentConverterTest {
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
-    private final LockoutPolicyDocumentKeyConverter keyConverter = mock(LockoutPolicyDocumentKeyConverter.class);
 
-    private final LockoutPolicyDocumentConverter converter = HardLockoutPolicyDocumentConverter.builder()
-            .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
-            .keyConverter(keyConverter)
-            .build();
+    private final LockoutPolicyDocumentConverter converter = new HardLockoutPolicyDocumentConverter(recordAttemptStrategyFactory);
 
     @Test
     void shouldOnlySupportHardLockoutType() {
@@ -62,18 +58,37 @@ class HardLockoutPolicyDocumentConverterTest {
     }
 
     @Test
-    void shouldPopulateKeyOnDocument() {
-        final String expectedKey = "expected-key";
+    void shouldPopulateChannelIdOnDocument() {
         final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
-        given(keyConverter.toKey(policy.getLockoutLevel())).willReturn(expectedKey);
 
         final LockoutPolicyDocument document = converter.toDocument(policy);
 
-        assertThat(document.getKey()).isEqualTo(expectedKey);
+        final LockoutLevel level = policy.getLockoutLevel();
+        assertThat(document.getChannelId()).isEqualTo(level.getChannelId());
     }
 
     @Test
-    void shouldConvertToMaxAttemptsLockoutPolicyDocument() {
+    void shouldPopulateActivityNamesOnDocument() {
+        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+
+        final LockoutPolicyDocument document = converter.toDocument(policy);
+
+        final LockoutLevel level = policy.getLockoutLevel();
+        assertThat(document.getActivityNames()).containsExactlyElementsOf(level.getActivityNames());
+    }
+
+    @Test
+    void shouldPopulateAliasTypeOnDocument() {
+        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+
+        final LockoutPolicyDocument document = converter.toDocument(policy);
+
+        final LockoutLevel level = policy.getLockoutLevel();
+        assertThat(document.getAliasTypes()).containsExactlyElementsOf(level.getAliasTypes());
+    }
+
+    @Test
+    void shouldConvertToHardLockoutPolicyDocument() {
         final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
 
         final LockoutPolicyDocument document = converter.toDocument(policy);
@@ -120,14 +135,33 @@ class HardLockoutPolicyDocumentConverterTest {
     }
 
     @Test
-    void shouldPopulateLockoutLevelOnLockoutPolicy() {
-        final LockoutLevel expectedLevel = mock(LockoutLevel.class);
+    void shouldPopulateChannelIdOnLockoutLevelOnLockoutPolicy() {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
-        given(keyConverter.toLevel(document.getKey())).willReturn(expectedLevel);
 
         final LockoutPolicy policy = converter.toPolicy(document);
 
-        assertThat(policy.getLockoutLevel()).isEqualTo(expectedLevel);
+        final LockoutLevel level = policy.getLockoutLevel();
+        assertThat(level.getChannelId()).isEqualTo(document.getChannelId());
+    }
+
+    @Test
+    void shouldPopulateActivityNamesOnLockoutLevelOnLockoutPolicy() {
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+
+        final LockoutPolicy policy = converter.toPolicy(document);
+
+        final LockoutLevel level = policy.getLockoutLevel();
+        assertThat(level.getActivityNames()).containsExactlyElementsOf(document.getActivityNames());
+    }
+
+    @Test
+    void shouldPopulateAliasTypeOnLockoutLevelOnLockoutPolicy() {
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+
+        final LockoutPolicy policy = converter.toPolicy(document);
+
+        final LockoutLevel level = policy.getLockoutLevel();
+        assertThat(level.getAliasTypes()).containsExactlyElementsOf(document.getAliasTypes());
     }
 
     @Test

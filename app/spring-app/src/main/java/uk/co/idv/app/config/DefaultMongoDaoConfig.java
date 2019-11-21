@@ -27,6 +27,7 @@ import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
+import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.repository.mongo.MongoIndexResolver;
 import uk.co.idv.repository.mongo.activity.ActivityConverterDelegator;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverter;
@@ -44,7 +45,6 @@ import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsDocumentCo
 import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsRepository;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
-import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentKeyConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
 import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocumentConverter;
@@ -309,22 +309,18 @@ public class DefaultMongoDaoConfig {
     }
 
     @Bean
-    public LockoutPolicyDocumentKeyConverter lockoutPolicyDocumentKeyConverter() {
-        return new LockoutPolicyDocumentKeyConverter();
-    }
-
-    @Bean
-    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter(final RecordAttemptStrategyFactory strategyFactory,
-                                                                                        final LockoutPolicyDocumentKeyConverter keyConverter) {
-        return HardLockoutPolicyDocumentConverter.builder()
-                .recordAttemptStrategyFactory(strategyFactory)
-                .keyConverter(keyConverter)
-                .build();
+    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter(final RecordAttemptStrategyFactory strategyFactory) {
+        return new HardLockoutPolicyDocumentConverter(strategyFactory);
     }
 
     @Bean
     public LockoutPolicyDocumentConverterDelegator lockoutPolicyParametersDocumentConverterDelegator(final Collection<LockoutPolicyDocumentConverter> converters) {
         return new LockoutPolicyDocumentConverterDelegator(converters);
+    }
+
+    @Bean
+    public MultipleLockoutPoliciesHandler multipleLockoutPoliciesHandler() {
+        return new MultipleLockoutPoliciesHandler();
     }
 
     @Bean
@@ -357,11 +353,11 @@ public class DefaultMongoDaoConfig {
     @Bean
     public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyRepository repository,
                                              final LockoutPolicyDocumentConverterDelegator documentConverter,
-                                             final LockoutPolicyDocumentKeyConverter keyConverter) {
+                                             final MultipleLockoutPoliciesHandler multiplePoliciesHandler) {
         return MongoLockoutPolicyDao.builder()
                 .repository(repository)
                 .documentConverter(documentConverter)
-                .keyConverter(keyConverter)
+                .multiplePoliciesHandler(multiplePoliciesHandler)
                 .build();
     }
 

@@ -5,10 +5,13 @@
       "type": "lockoutPolicies",
       "attributes": {
         "level": {
-          "type": "channel-activity-and-alias",
           "channelId": "fake-channel",
-          "activityName": "fake-activity",
-          "aliasType": "fake-alias-type"
+          "activityNames": [
+            "fake-activity"
+          ],
+          "aliasTypes": [
+            "fake-alias-type"
+          ]
         },
         "recordAttempts": "every-attempt",
         "type": "hard-lock",

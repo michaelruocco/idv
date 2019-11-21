@@ -89,11 +89,17 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldCalculateStateFromPolicy() {
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest request = mock(CalculateLockoutStateRequest.class);
+        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        given(request.getAttempts()).willReturn(attempts);
         given(dao.load(request)).willReturn(Optional.of(policy));
-        final LockoutState expectedState = new FakeHardLockoutState();
+        final VerificationAttempts applicableAttempts = new FakeVerificationAttempts();
+        given(policy.filterApplicableAttempts(attempts, request)).willReturn(applicableAttempts);
+        final CalculateLockoutStateRequest updatedRequest = mock(CalculateLockoutStateRequest.class);
+        given(request.updateAttempts(applicableAttempts)).willReturn(updatedRequest);
         given(policy.getStateCalculator()).willReturn(stateCalculator);
-        given(stateCalculator.calculate(request)).willReturn(expectedState);
+        final LockoutState expectedState = new FakeHardLockoutState();
+        given(stateCalculator.calculate(updatedRequest)).willReturn(expectedState);
 
         final LockoutState state = service.calculateState(request);
 

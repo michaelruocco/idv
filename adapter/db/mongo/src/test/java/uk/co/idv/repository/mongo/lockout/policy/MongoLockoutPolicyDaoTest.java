@@ -1,13 +1,15 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutRequestMother;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,12 +25,12 @@ class MongoLockoutPolicyDaoTest {
 
     private final LockoutPolicyRepository repository = mock(LockoutPolicyRepository.class);
     private final LockoutPolicyDocumentConverterDelegator documentConverter = mock(LockoutPolicyDocumentConverterDelegator.class);
-    private final LockoutPolicyDocumentKeyConverter keyConverter = mock(LockoutPolicyDocumentKeyConverter.class);
+    private final MultipleLockoutPoliciesHandler multiplePoliciesHandler = mock(MultipleLockoutPoliciesHandler.class);
 
     private final MongoLockoutPolicyDao dao = MongoLockoutPolicyDao.builder()
             .repository(repository)
             .documentConverter(documentConverter)
-            .keyConverter(keyConverter)
+            .multiplePoliciesHandler(multiplePoliciesHandler)
             .build();
 
     @Test
@@ -63,20 +65,22 @@ class MongoLockoutPolicyDaoTest {
 
     @Test
     void shouldLoadMultipleDocuments() {
-        given(repository.findAll()).willReturn(Collections.singletonList(document));
-        given(documentConverter.toPolicy(document)).willReturn(policy);
+        final List<LockoutPolicyDocument> documents = Arrays.asList(document, document);
+        given(repository.findAll()).willReturn(documents);
+        final List<LockoutPolicy> policies = Arrays.asList(policy, policy);
+        given(documentConverter.toPolicies(documents)).willReturn(policies);
 
         final Collection<LockoutPolicy> loadedPolicies = dao.load();
 
-        assertThat(loadedPolicies).containsExactly(policy);
+        assertThat(loadedPolicies).containsExactlyElementsOf(policies);
     }
 
     @Test
     void shouldReturnEmptyOptionalWhenLoadingPolicyByLockoutRequestIfNoPoliciesFound() {
-        final LockoutRequest request = DefaultLockoutRequest.builder().build();
-        final String key = "fake-key";
-        given(keyConverter.toKeys(request)).willReturn(Collections.singleton(key));
-        given(repository.findById(key)).willReturn(Optional.empty());
+        final LockoutRequest request = LockoutRequestMother.fakeBuilder().build();
+        given(repository.findByChannelId(request.getChannelId())).willReturn(Collections.emptyList());
+        given(documentConverter.toPolicies(Collections.emptyList())).willReturn(Collections.emptyList());
+        given(multiplePoliciesHandler.extractPolicy(Collections.emptyList())).willReturn(Optional.empty());
 
         final Optional<LockoutPolicy> loadedPolicy = dao.load(request);
 
@@ -84,12 +88,43 @@ class MongoLockoutPolicyDaoTest {
     }
 
     @Test
-    void shouldReturnPolicyWhenLoadingPolicyByLockoutRequestIfPolicyFound() {
-        final LockoutRequest request = DefaultLockoutRequest.builder().build();
-        final String key = "fake-key";
-        given(keyConverter.toKeys(request)).willReturn(Arrays.asList("other-key", key));
-        given(repository.findById(key)).willReturn(Optional.of(document));
-        given(documentConverter.toPolicy(document)).willReturn(policy);
+    void shouldReturnPolicyFromMultiplePolicyHandlerIfIfMultipleApplicablePoliciesFound() {
+        final LockoutRequest request = LockoutRequestMother.fakeBuilder().build();
+        final Collection<LockoutPolicyDocument> documents = Arrays.asList(document, document);
+        given(repository.findByChannelId(request.getChannelId())).willReturn(documents);
+        final List<LockoutPolicy> policies = Arrays.asList(policy, policy);
+        given(documentConverter.toPolicies(documents)).willReturn(policies);
+        given(policy.appliesTo(request)).willReturn(true);
+        given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.of(policy));
+
+        final Optional<LockoutPolicy> loadedPolicy = dao.load(request);
+
+        assertThat(loadedPolicy).contains(policy);
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalWhenLoadingPolicyByLockoutRequestIfOnePolicyFoundAndDoesNotApplyToRequest() {
+        final LockoutRequest request = LockoutRequestMother.fakeBuilder().build();
+        final Collection<LockoutPolicyDocument> documents = Collections.singleton(document);
+        given(repository.findByChannelId(request.getChannelId())).willReturn(documents);
+        given(documentConverter.toPolicies(documents)).willReturn(Collections.singleton(policy));
+        given(policy.appliesTo(request)).willReturn(false);
+        given(multiplePoliciesHandler.extractPolicy(Collections.emptyList())).willReturn(Optional.empty());
+
+        final Optional<LockoutPolicy> loadedPolicy = dao.load(request);
+
+        assertThat(loadedPolicy).isEmpty();
+    }
+
+    @Test
+    void shouldReturnPolicyWhenLoadingPolicyByLockoutRequestIfOnePolicyFoundAndAppliesToRequest() {
+        final LockoutRequest request = LockoutRequestMother.fakeBuilder().build();
+        final Collection<LockoutPolicyDocument> documents = Collections.singleton(document);
+        given(repository.findByChannelId(request.getChannelId())).willReturn(documents);
+        final List<LockoutPolicy> policies = Collections.singletonList(policy);
+        given(documentConverter.toPolicies(documents)).willReturn(policies);
+        given(policy.appliesTo(request)).willReturn(true);
+        given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.of(policy));
 
         final Optional<LockoutPolicy> loadedPolicy = dao.load(request);
 

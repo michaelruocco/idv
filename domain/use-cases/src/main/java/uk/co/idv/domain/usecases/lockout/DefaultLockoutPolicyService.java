@@ -25,8 +25,10 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     @Override
     public LockoutState calculateState(final CalculateLockoutStateRequest request) {
         final LockoutPolicy policy = load(request);
+        final VerificationAttempts applicableAttempts = policy.filterApplicableAttempts(request.getAttempts(), request);
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(applicableAttempts);
         final LockoutStateCalculator stateCalculator = policy.getStateCalculator();
-        return stateCalculator.calculate(request);
+        return stateCalculator.calculate(updatedRequest);
     }
 
     @Override

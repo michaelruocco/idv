@@ -2,15 +2,13 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
+import java.util.Collection;
+import java.util.Collections;
+
 public class FakeLockoutLevel implements LockoutLevel {
 
     private boolean appliesTo;
     private boolean includesAlias;
-
-    @Override
-    public String getType() {
-        return "fake-type";
-    }
 
     @Override
     public String getChannelId() {
@@ -18,8 +16,13 @@ public class FakeLockoutLevel implements LockoutLevel {
     }
 
     @Override
-    public String getActivityName() {
-        return "fake-activity-name";
+    public Collection<String> getActivityNames() {
+        return Collections.singleton("fake-activity-name");
+    }
+
+    @Override
+    public Collection<String> getAliasTypes() {
+        return Collections.singleton("fake-alias-type");
     }
 
     @Override

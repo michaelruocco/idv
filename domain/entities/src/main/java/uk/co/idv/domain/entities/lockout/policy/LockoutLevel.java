@@ -2,15 +2,19 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
+import java.util.Collection;
+
 public interface LockoutLevel {
 
-    String getType();
+    String ALL = "ALL";
 
     boolean appliesTo(LockoutRequest request);
 
     String getChannelId();
 
-    String getActivityName();
+    Collection<String> getActivityNames();
+
+    Collection<String> getAliasTypes();
 
     boolean isAliasLevel();
 

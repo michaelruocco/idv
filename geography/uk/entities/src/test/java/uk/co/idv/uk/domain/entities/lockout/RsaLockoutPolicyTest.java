@@ -1,7 +1,6 @@
 package uk.co.idv.uk.domain.entities.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.AliasLockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
@@ -15,9 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RsaLockoutPolicyTest {
 
     private static final UUID ID = UUID.randomUUID();
-    private static final String ALIAS_TYPE = "alias-type";
 
-    private final LockoutPolicy policy = new RsaLockoutPolicy(ID, ALIAS_TYPE);
+    private final LockoutPolicy policy = new RsaLockoutPolicy(ID);
 
     @Test
     void shouldReturnId() {
@@ -25,17 +23,10 @@ class RsaLockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnLockoutLevelWithLockoutLevelTypeAtAliasLevel() {
+    void shouldReturnRsaLockoutLevel() {
         final LockoutLevel level = policy.getLockoutLevel();
 
-        assertThat(level).isInstanceOf(AliasLockoutLevel.class);
-    }
-
-    @Test
-    void shouldSetAliasTypeOnAliasLockoutLevel() {
-        final AliasLockoutLevel level = (AliasLockoutLevel) policy.getLockoutLevel();
-
-        assertThat(level.getAliasType()).isEqualTo(ALIAS_TYPE);
+        assertThat(level).isInstanceOf(RsaLockoutLevel.class);
     }
 
     @Test

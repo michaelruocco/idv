@@ -1,20 +1,30 @@
 package uk.co.idv.repository.inmemory.lockout;
 
-import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 public class InMemoryLockoutPolicyDao implements LockoutPolicyDao {
 
     private final Map<UUID, LockoutPolicy> policies = new HashMap<>();
+    private final MultipleLockoutPoliciesHandler multiplePoliciesHandler;
+
+    public InMemoryLockoutPolicyDao() {
+        this(new MultipleLockoutPoliciesHandler());
+    }
+
+    public InMemoryLockoutPolicyDao(final MultipleLockoutPoliciesHandler multiplePoliciesHandler) {
+        this.multiplePoliciesHandler = multiplePoliciesHandler;
+    }
 
     @Override
     public void save(final LockoutPolicy policy) {
@@ -28,9 +38,10 @@ public class InMemoryLockoutPolicyDao implements LockoutPolicyDao {
 
     @Override
     public Optional<LockoutPolicy> load(final LockoutRequest request) {
-        return policies.values().stream()
+        final List<LockoutPolicy> applicablePolicies = policies.values().stream()
                 .filter(policy -> policy.appliesTo(request))
-                .findFirst();
+                .collect(Collectors.toList());
+        return multiplePoliciesHandler.extractPolicy(applicablePolicies);
     }
 
     @Override

@@ -112,11 +112,6 @@ class DefaultLockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnLockoutLevelType() {
-        assertThat(policy.getLockoutLevelType()).isEqualTo(level.getType());
-    }
-
-    @Test
     void shouldReturnRecordAttemptStrategyType() {
         String expectedType = "record-attempt-strategy-type";
         given(recordAttemptStrategy.getType()).willReturn(expectedType);

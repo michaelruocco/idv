@@ -11,6 +11,15 @@ public class LockoutPolicyMother {
         return hardLockoutPolicy(UUID.randomUUID());
     }
 
+    public static LockoutPolicy hardLockoutPolicy(final LockoutLevel lockoutLevel) {
+        return new HardLockoutPolicy(
+                UUID.randomUUID(),
+                lockoutLevel,
+                new RecordEveryAttempt(),
+                3
+        );
+    }
+
     public static LockoutPolicy hardLockoutPolicy(final UUID id) {
         return new HardLockoutPolicy(
                 id,

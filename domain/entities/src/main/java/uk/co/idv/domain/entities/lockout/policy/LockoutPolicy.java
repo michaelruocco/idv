@@ -15,9 +15,9 @@ public interface LockoutPolicy {
 
     String getLockoutType();
 
-    String getLockoutLevelType();
-
     String getRecordAttemptStrategyType();
+
+    boolean isAliasLevel();
 
     boolean appliesTo(final LockoutRequest request);
 

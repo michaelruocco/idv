@@ -1,8 +1,8 @@
 package uk.co.idv.json.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevelMother;
 
 import java.util.UUID;
 
@@ -47,10 +47,7 @@ class DefaultLockoutPolicyParametersTest {
         }
 
         private static LockoutLevel lockoutLevel() {
-            return DefaultLockoutLevel.builder()
-                    .channelId("fake-channel")
-                    .activityName("fake-activity")
-                    .build();
+            return LockoutLevelMother.defaultLockoutLevel();
         }
 
     }

@@ -1,7 +1,7 @@
 package uk.co.idv.json.lockout;
 
-import uk.co.idv.domain.entities.lockout.policy.AliasLockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevelMother;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
 import uk.co.idv.json.lockout.HardLockoutPolicyParameters.HardLockoutPolicyParametersBuilder;
 
@@ -22,11 +22,7 @@ public class LockoutPolicyParametersMother {
     }
 
     private static LockoutLevel lockoutLevel() {
-        return AliasLockoutLevel.builder()
-                .channelId("fake-channel")
-                .activityName("fake-activity")
-                .aliasType("fake-alias-type")
-                .build();
+        return LockoutLevelMother.aliasLockoutLevel();
     }
 
 }
