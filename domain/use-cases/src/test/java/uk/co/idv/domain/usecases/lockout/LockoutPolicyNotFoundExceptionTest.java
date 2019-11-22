@@ -1,11 +1,10 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPolicyNotFoundException;
 
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +12,7 @@ class LockoutPolicyNotFoundExceptionTest {
 
     @Test
     void shouldReturnMessage() {
-        final LockoutRequest request = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutRequest request = VerificationAttemptsMother.successful();
 
         final Throwable exception = new LockoutPolicyNotFoundException(request);
 
@@ -26,7 +25,7 @@ class LockoutPolicyNotFoundExceptionTest {
 
     @Test
     void shouldReturnRequest() {
-        final LockoutRequest request = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutRequest request = VerificationAttemptsMother.successful();
 
         final LockoutPolicyNotFoundException exception = new LockoutPolicyNotFoundException(request);
 

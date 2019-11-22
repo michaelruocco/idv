@@ -6,9 +6,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -94,6 +96,15 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
 
     public Stream<VerificationAttempt> stream() {
         return attempts.stream();
+    }
+
+    public Instant getMostRecentTimestamp() {
+        final VerificationAttempt mostRecentAttempt = getMostRecent();
+        return mostRecentAttempt.getTimestamp();
+    }
+
+    public VerificationAttempt getMostRecent() {
+        return Collections.max(attempts, Comparator.comparing(attempt -> attempt.getTimestamp()));
     }
 
     @Getter

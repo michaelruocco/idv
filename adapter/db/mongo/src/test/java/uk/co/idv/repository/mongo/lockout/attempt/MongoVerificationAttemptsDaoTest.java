@@ -1,8 +1,8 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 
 import java.util.Optional;
 
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.verify;
 
 class MongoVerificationAttemptsDaoTest {
 
-    private final VerificationAttempts attempts = new FakeVerificationAttempts();
+    private final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
     private final VerificationAttemptsDocument document = mock(VerificationAttemptsDocument.class);
 
     private final VerificationAttemptsRepository repository = mock(VerificationAttemptsRepository.class);

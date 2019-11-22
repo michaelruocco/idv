@@ -3,8 +3,8 @@ package uk.co.idv.domain.usecases.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.usecases.lockout.ResetAttemptsRequest.ResetAttemptsRequestBuilder;
 
 import java.time.Instant;
@@ -72,7 +72,7 @@ class ResetAttemptsRequestTest {
 
     @Test
     void shouldReturnAttempts() {
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
 
         final ResetAttemptsRequest request = builder.attempts(attempts).build();
 

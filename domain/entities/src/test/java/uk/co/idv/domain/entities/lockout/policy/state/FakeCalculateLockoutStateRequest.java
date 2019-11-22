@@ -1,8 +1,8 @@
 package uk.co.idv.domain.entities.lockout.policy.state;
 
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -10,7 +10,7 @@ import java.util.UUID;
 public class FakeCalculateLockoutStateRequest extends CalculateLockoutStateRequest {
 
     public FakeCalculateLockoutStateRequest() {
-        this(new FakeVerificationAttempts());
+        this(VerificationAttemptsMother.oneAttempt());
     }
 
     public FakeCalculateLockoutStateRequest(final VerificationAttempts attempts) {

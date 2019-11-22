@@ -1,9 +1,8 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -37,7 +36,7 @@ class LockoutStateResetterTest {
     @Test
     void shouldPassRequestWhenResettingAttempts() {
         final ResetAttemptsRequest resetRequest = buildResetRequest();
-        attemptsLoader.setAttemptsToLoad(new FakeVerificationAttempts());
+        attemptsLoader.setAttemptsToLoad(VerificationAttemptsMother.oneAttempt());
 
         resetter.reset(resetRequest);
 
@@ -48,7 +47,7 @@ class LockoutStateResetterTest {
     @Test
     void shouldPassLoadedAttemptsWhenResettingAttempts() {
         final ResetAttemptsRequest resetRequest = buildResetRequest();
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
         attemptsLoader.setAttemptsToLoad(attempts);
 
         resetter.reset(resetRequest);
@@ -60,12 +59,9 @@ class LockoutStateResetterTest {
     @Test
     void shouldSaveResetAttempts() {
         final ResetAttemptsRequest resetRequest = buildResetRequest();
-        final VerificationAttempts attempts = new FakeVerificationAttempts(
-                new FakeVerificationAttemptFailed(),
-                new FakeVerificationAttemptFailed()
-        );
+        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(2);
         attemptsLoader.setAttemptsToLoad(attempts);
-        final VerificationAttempts expectedResetAttempts = new FakeVerificationAttempts(new FakeVerificationAttemptFailed());
+        final VerificationAttempts expectedResetAttempts = VerificationAttemptsMother.oneAttempt();
         policyService.setResetAttemptsToReturn(expectedResetAttempts);
 
         resetter.reset(resetRequest);

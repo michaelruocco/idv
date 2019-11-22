@@ -1,8 +1,8 @@
 package uk.co.idv.domain.entities.lockout.policy.state;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 
 import java.util.UUID;
 
@@ -17,7 +17,7 @@ class LockoutStateRequestConverterTest {
 
     @Test
     void shouldPopulateChannelIdFromRequest() {
-        final LockoutStateRequest lockoutRequest = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutStateRequest lockoutRequest = VerificationAttemptsMother.successful(UUID.randomUUID());
 
         final CalculateLockoutStateRequest calculateRequest = converter.toCalculateRequest(lockoutRequest, attempts);
 
@@ -26,7 +26,7 @@ class LockoutStateRequestConverterTest {
 
     @Test
     void shouldPopulateActivityNameFromRequest() {
-        final LockoutStateRequest lockoutRequest = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutStateRequest lockoutRequest = VerificationAttemptsMother.successful(UUID.randomUUID());
 
         final CalculateLockoutStateRequest calculateRequest = converter.toCalculateRequest(lockoutRequest, attempts);
 
@@ -35,7 +35,7 @@ class LockoutStateRequestConverterTest {
 
     @Test
     void shouldPopulateAliasFromRequest() {
-        final LockoutStateRequest lockoutRequest = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutStateRequest lockoutRequest = VerificationAttemptsMother.successful(UUID.randomUUID());
 
         final CalculateLockoutStateRequest calculateRequest = converter.toCalculateRequest(lockoutRequest, attempts);
 
@@ -44,7 +44,7 @@ class LockoutStateRequestConverterTest {
 
     @Test
     void shouldPopulateTimestampFromRequest() {
-        final LockoutStateRequest lockoutRequest = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutStateRequest lockoutRequest = VerificationAttemptsMother.successful(UUID.randomUUID());
 
         final CalculateLockoutStateRequest calculateRequest = converter.toCalculateRequest(lockoutRequest, attempts);
 
@@ -53,7 +53,7 @@ class LockoutStateRequestConverterTest {
 
     @Test
     void shouldPopulateIdvIdValueFromRequest() {
-        final LockoutStateRequest lockoutRequest = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutStateRequest lockoutRequest = VerificationAttemptsMother.successful(UUID.randomUUID());
 
         final CalculateLockoutStateRequest calculateRequest = converter.toCalculateRequest(lockoutRequest, attempts);
 
@@ -62,7 +62,7 @@ class LockoutStateRequestConverterTest {
 
     @Test
     void shouldPopulateAttempts() {
-        final LockoutStateRequest lockoutRequest = new FakeVerificationAttemptSuccessful(UUID.randomUUID());
+        final LockoutStateRequest lockoutRequest = VerificationAttemptsMother.successful(UUID.randomUUID());
 
         final CalculateLockoutStateRequest calculateRequest = converter.toCalculateRequest(lockoutRequest, attempts);
 

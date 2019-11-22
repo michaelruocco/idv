@@ -1,11 +1,10 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +25,7 @@ class VerificationAttemptsDocumentConverterTest {
 
     @Test
     void shouldConvertIdToDocument() {
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
 
         final VerificationAttemptsDocument documents = attemptsConverter.toAttemptsDocument(attempts);
 
@@ -35,7 +34,7 @@ class VerificationAttemptsDocumentConverterTest {
 
     @Test
     void shouldConvertIdvIdToDocument() {
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
 
         final VerificationAttemptsDocument documents = attemptsConverter.toAttemptsDocument(attempts);
 
@@ -46,7 +45,7 @@ class VerificationAttemptsDocumentConverterTest {
     void shouldConvertAttemptsToDocuments() {
         given(attemptConverter.toDocument(attempt1)).willReturn(document1);
         given(attemptConverter.toDocument(attempt2)).willReturn(document2);
-        final VerificationAttempts attempts = new FakeVerificationAttempts(Arrays.asList(attempt1, attempt2));
+        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(attempt1, attempt2);
 
         final VerificationAttemptsDocument documents = attemptsConverter.toAttemptsDocument(attempts);
 

@@ -1,9 +1,9 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Optional;
@@ -55,7 +55,7 @@ class VerificationAttemptsLoaderTest {
 
     @Test
     void shouldReturnLoadedAttempts() {
-        final VerificationAttempts expectedAttempts = new FakeVerificationAttempts();
+        final VerificationAttempts expectedAttempts = VerificationAttemptsMother.oneAttempt();
         given(dao.load(IDV_ID_VALUE)).willReturn(Optional.of(expectedAttempts));
 
         final VerificationAttempts attempts = loader.load(IDV_ID_VALUE);

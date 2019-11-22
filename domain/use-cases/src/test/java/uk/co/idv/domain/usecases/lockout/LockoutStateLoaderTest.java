@@ -1,9 +1,9 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
@@ -36,7 +36,7 @@ class LockoutStateLoaderTest {
     @Test
     void shouldPassRequestWhenResettingAttempts() {
         final LockoutStateRequest request = buildRequest();
-        attemptsLoader.setAttemptsToLoad(new FakeVerificationAttempts());
+        attemptsLoader.setAttemptsToLoad(VerificationAttemptsMother.oneAttempt());
 
         loader.load(request);
 
@@ -47,7 +47,7 @@ class LockoutStateLoaderTest {
     @Test
     void shouldPassLoadedAttemptsWhenResettingAttempts() {
         final LockoutStateRequest request = buildRequest();
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
         attemptsLoader.setAttemptsToLoad(attempts);
 
         loader.load(request);

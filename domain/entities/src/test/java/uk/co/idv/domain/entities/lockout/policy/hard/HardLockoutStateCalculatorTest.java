@@ -1,18 +1,12 @@
 package uk.co.idv.domain.entities.lockout.policy.hard;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class HardLockoutStateCalculatorTest {
 
@@ -22,7 +16,7 @@ class HardLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnNotLockedIfNumberOfAttemptsIsLessThanMaxNumberOfAttempts() {
-        final VerificationAttempts oneAttempt = buildOneAttempt();
+        final VerificationAttempts oneAttempt = VerificationAttemptsMother.oneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
         final LockoutState state = calculator.calculate(request);
@@ -32,7 +26,7 @@ class HardLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnLockedIfNumberOfAttemptsIsEqualToMaxNumberOfAttempts() {
-        final VerificationAttempts attempts = buildAttemptsOfSize(MAX_NUMBER_OF_ATTEMPTS);
+        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(MAX_NUMBER_OF_ATTEMPTS);
         final CalculateLockoutStateRequest request = toCalculateRequest(attempts);
 
         final LockoutState state = calculator.calculate(request);
@@ -42,7 +36,7 @@ class HardLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnLockedIfNumberOfAttemptsIsGreaterThanMaxNumberOfAttempts() {
-        final VerificationAttempts attempts = buildAttemptsOfSize(MAX_NUMBER_OF_ATTEMPTS + 1);
+        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(MAX_NUMBER_OF_ATTEMPTS + 1);
         final CalculateLockoutStateRequest request = toCalculateRequest(attempts);
 
         final LockoutState state = calculator.calculate(request);
@@ -52,7 +46,7 @@ class HardLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnHardLockoutState() {
-        final VerificationAttempts oneAttempt = buildOneAttempt();
+        final VerificationAttempts oneAttempt = VerificationAttemptsMother.oneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
         final LockoutState state = calculator.calculate(request);
@@ -62,7 +56,7 @@ class HardLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnMaxNumberOfAttemptsFromCalculatedState() {
-        final VerificationAttempts oneAttempt = buildOneAttempt();
+        final VerificationAttempts oneAttempt = VerificationAttemptsMother.oneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
         final HardLockoutState state = calculator.calculate(request);
@@ -72,7 +66,7 @@ class HardLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnNumberOfAttemptsRemaining() {
-        final VerificationAttempts oneAttempt = buildOneAttempt();
+        final VerificationAttempts oneAttempt = VerificationAttemptsMother.oneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
         final HardLockoutState state = calculator.calculate(request);
@@ -82,7 +76,7 @@ class HardLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnZeroAttemptsRemainingIfLocked() {
-        final VerificationAttempts attempts = buildAttemptsOfSize(MAX_NUMBER_OF_ATTEMPTS);
+        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(MAX_NUMBER_OF_ATTEMPTS);
         final CalculateLockoutStateRequest request = toCalculateRequest(attempts);
 
         final HardLockoutState state = calculator.calculate(request);
@@ -98,18 +92,6 @@ class HardLockoutStateCalculatorTest {
     @Test
     void shouldReturnMaxNumberOfAttempts() {
         assertThat(calculator.getMaxNumberOfAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
-    }
-
-    private static VerificationAttempts buildOneAttempt() {
-        return buildAttemptsOfSize(1);
-    }
-
-    private static VerificationAttempts buildAttemptsOfSize(final int numberOfAttempts) {
-        final Collection<VerificationAttempt> attempts = new ArrayList<>();
-        for (int i = 0; i < numberOfAttempts; i++) {
-            attempts.add(mock(VerificationAttempt.class));
-        }
-        return new FakeVerificationAttempts(Collections.unmodifiableCollection(attempts));
     }
 
     private static CalculateLockoutStateRequest toCalculateRequest(final VerificationAttempts attempts) {

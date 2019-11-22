@@ -1,8 +1,8 @@
 package uk.co.idv.domain.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import java.time.Duration;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SoftLockoutStateTest {
 
-    private final VerificationAttempts attempts = new FakeVerificationAttempts();
+    private final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
 
     private final SoftLockoutState.SoftLockoutStateBuilder builder = SoftLockoutState.builder()
         .attempts(attempts);

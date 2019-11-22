@@ -1,10 +1,10 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.FakeCalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
@@ -90,10 +90,10 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldCalculateStateFromPolicy() {
         final CalculateLockoutStateRequest request = mock(CalculateLockoutStateRequest.class);
-        final VerificationAttempts attempts = new FakeVerificationAttempts();
+        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
         given(request.getAttempts()).willReturn(attempts);
         given(dao.load(request)).willReturn(Optional.of(policy));
-        final VerificationAttempts applicableAttempts = new FakeVerificationAttempts();
+        final VerificationAttempts applicableAttempts = VerificationAttemptsMother.oneAttempt();
         given(policy.filterApplicableAttempts(attempts, request)).willReturn(applicableAttempts);
         final CalculateLockoutStateRequest updatedRequest = mock(CalculateLockoutStateRequest.class);
         given(request.updateAttempts(applicableAttempts)).willReturn(updatedRequest);
@@ -131,7 +131,7 @@ class DefaultLockoutPolicyServiceTest {
     void shouldResetAttemptsUsingPolicy() {
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
         given(dao.load(request)).willReturn(Optional.of(policy));
-        final VerificationAttempts expectedAttempts = new FakeVerificationAttempts();
+        final VerificationAttempts expectedAttempts = VerificationAttemptsMother.oneAttempt();
         given(policy.reset(request.getAttempts(), request)).willReturn(expectedAttempts);
 
         final VerificationAttempts attempts = service.resetAttempts(request);

@@ -1,8 +1,8 @@
 package uk.co.idv.domain.entities.lockout.policy.hard;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 class HardLockoutStateTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
-    private final VerificationAttempts attempts = new FakeVerificationAttempts();
+    private final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
 
     private final HardLockoutState state = new HardLockoutState(attempts, MAX_NUMBER_OF_ATTEMPTS);
 

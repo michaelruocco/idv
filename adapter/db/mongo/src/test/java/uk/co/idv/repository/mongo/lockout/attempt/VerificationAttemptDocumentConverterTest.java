@@ -1,12 +1,12 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocument;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptSuccessful;
@@ -26,7 +26,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateContextIdOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 
@@ -35,7 +35,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateChannelIdOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 
@@ -44,7 +44,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateActivityNameOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 
@@ -53,7 +53,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateAliasOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
         final AliasDocument aliasDocument = AliasDocumentMother.creditCard();
         given(aliasConverter.toDocument(attempt.getAlias())).willReturn(aliasDocument);
 
@@ -64,7 +64,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateIdvIdValueOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 
@@ -73,7 +73,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateMethodNameOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 
@@ -82,7 +82,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateVerificationIdOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 
@@ -91,7 +91,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateTimestampOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 
@@ -100,7 +100,7 @@ class VerificationAttemptDocumentConverterTest {
 
     @Test
     void shouldPopulateSuccessfulOnDocument() {
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
 
         final VerificationAttemptDocument document = converter.toDocument(attempt);
 

@@ -1,9 +1,8 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
@@ -36,7 +35,7 @@ class LockoutAttemptRecorderTest {
     @Test
     void shouldReturnLoadedLockoutStateIfShouldNotRecordAttempt() {
         final RecordAttemptRequest request = toRequest(new FakeVerificationResultSuccessful("method-name"));
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
         final LockoutState loadedState = new FakeHardLockoutState();
         given(requestConverter.toAttempt(request)).willReturn(attempt);
         given(policyService.shouldRecordAttempt(request)).willReturn(false);
@@ -50,7 +49,7 @@ class LockoutAttemptRecorderTest {
     @Test
     void shouldResetLockoutStateIfShouldRecordSuccessfulAttempt() {
         final RecordAttemptRequest request = toRequest(new FakeVerificationResultSuccessful("method-name"));
-        final VerificationAttempt attempt = new FakeVerificationAttemptSuccessful();
+        final VerificationAttempt attempt = VerificationAttemptsMother.successful();
         final LockoutState loadedState = new FakeHardLockoutState();
         given(requestConverter.toAttempt(request)).willReturn(attempt);
         given(policyService.shouldRecordAttempt(request)).willReturn(true);
@@ -65,7 +64,7 @@ class LockoutAttemptRecorderTest {
     @Test
     void shouldRecordFailedAttemptIfShouldRecordFailedAttempt() {
         final RecordAttemptRequest request = toRequest(new FakeVerificationResultFailed("method-name"));
-        final VerificationAttempt attempt = new FakeVerificationAttemptFailed();
+        final VerificationAttempt attempt = VerificationAttemptsMother.failed();
         final LockoutState loadedState = new FakeHardLockoutState();
         given(requestConverter.toAttempt(request)).willReturn(attempt);
         given(policyService.shouldRecordAttempt(request)).willReturn(true);

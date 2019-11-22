@@ -1,8 +1,8 @@
 package uk.co.idv.domain.entities.lockout.policy.nonlocking;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
@@ -15,7 +15,7 @@ class NonLockingLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnNotLocked() {
-        final VerificationAttempts oneAttempt = new FakeVerificationAttempts();
+        final VerificationAttempts oneAttempt = VerificationAttemptsMother.oneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
         final LockoutState state = calculator.calculate(request);
@@ -25,7 +25,7 @@ class NonLockingLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnNonLockingLockoutState() {
-        final VerificationAttempts oneAttempt = new FakeVerificationAttempts();
+        final VerificationAttempts oneAttempt = VerificationAttemptsMother.oneAttempt();
         final CalculateLockoutStateRequest request = toCalculateRequest(oneAttempt);
 
         final LockoutState state = calculator.calculate(request);

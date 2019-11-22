@@ -1,6 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy.hard;
 
-import uk.co.idv.domain.entities.lockout.attempt.FakeVerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 
 import java.util.UUID;
 
@@ -17,12 +17,8 @@ public class FakeHardLockoutState extends HardLockoutState {
         this(idvId, MAX_NUMBER_OF_ATTEMPTS);
     }
 
-    public FakeHardLockoutState(int maxNumberOfAttempts) {
-        this(IDV_ID, maxNumberOfAttempts);
-    }
-
     public FakeHardLockoutState(final UUID idvId, int maxNumberOfAttempts) {
-        super(new FakeVerificationAttempts(idvId), maxNumberOfAttempts);
+        super(VerificationAttemptsMother.oneAttempt(idvId), maxNumberOfAttempts);
     }
 
 }
