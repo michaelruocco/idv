@@ -14,18 +14,18 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SoftLockoutStateCalculatorTest {
+class RecurringSoftLockoutStateCalculatorTest {
 
     private final SoftLockInterval interval = new SoftLockInterval(2, Duration.ofMinutes(5));
-    private final LockoutStateCalculator calculator = new SoftLockoutStateCalculator(new SoftLockIntervals(interval));
+    private final LockoutStateCalculator calculator = new RecurringSoftLockoutStateCalculator(interval);
 
     @Test
     void shouldReturnType() {
-        assertThat(calculator.getType()).isEqualTo(SoftLockoutStateCalculator.TYPE);
+        assertThat(calculator.getType()).isEqualTo(RecurringSoftLockoutStateCalculator.TYPE);
     }
 
     @Test
-    void shouldReturnNotLockedStateIfNumberOfAttemptsDoesNotMatchIntervalAndIsNotHigherThanLastInterval() {
+    void shouldReturnNotLockedStateIfNumberOfAttemptsIsNotDivisableByIntervalNumberOfAttempts() {
         final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
 
@@ -45,8 +45,8 @@ class SoftLockoutStateCalculatorTest {
     }
 
     @Test
-    void shouldReturnSoftLockoutStateIfNumberOfAttemptsMatchesInterval() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
+    void shouldReturnSoftLockoutStateIfNumberOfAttemptsIsDivisableByIntervalNumberOfAttempts() {
+        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts() * 2);
         final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
 
         final LockoutState state = calculator.calculate(request);
@@ -83,26 +83,6 @@ class SoftLockoutStateCalculatorTest {
 
         final Instant mostRecentTimestamp = attempts.getMostRecentTimestamp();
         assertThat(state.getLockedUntil()).isEqualTo(mostRecentTimestamp.plus(interval.getDuration()));
-    }
-
-    @Test
-    void shouldReturnSoftLockoutStateIfNumberOfAttemptsIsGreaterThanLastInterval() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts() + 1);
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
-
-        final LockoutState state = calculator.calculate(request);
-
-        assertThat(state).isInstanceOf(SoftLockoutState.class);
-    }
-
-    @Test
-    void shouldReturnLastIntervalDurationOnLockoutStateIfNumberOfAttemptsIsGreaterThanLastInterval() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts() + 1);
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
-
-        final SoftLockoutState state = (SoftLockoutState) calculator.calculate(request);
-
-        assertThat(state.getDuration()).isEqualTo(interval.getDuration());
     }
 
 }

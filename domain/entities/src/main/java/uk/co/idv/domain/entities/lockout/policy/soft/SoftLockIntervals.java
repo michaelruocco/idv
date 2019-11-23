@@ -1,11 +1,14 @@
 package uk.co.idv.domain.entities.lockout.policy.soft;
 
+import lombok.ToString;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+@ToString
 public class SoftLockIntervals {
 
     private final SortedMap<Integer, SoftLockInterval> intervals = new TreeMap<>();

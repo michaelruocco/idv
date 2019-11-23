@@ -13,11 +13,11 @@ import java.time.Instant;
 
 @Slf4j
 @RequiredArgsConstructor
-public class SoftLockoutStateCalculator implements LockoutStateCalculator {
+public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculator {
 
-    public static final String TYPE = "soft-lock";
+    public static final String TYPE = "recurring-soft-lock";
 
-    private final SoftLockIntervals intervals;
+    private final SoftLockInterval interval;
 
     @Override
     public String getType() {
@@ -26,14 +26,20 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
 
     @Override
     public LockoutState calculate(final CalculateLockoutStateRequest request) {
-        log.info("calculating lock from calculator {} with request {} and intervals {}", this, request, intervals);
+        log.info("calculating lock from calculator {} with request {} and interval {}", this, request, interval);
         final VerificationAttempts attempts = request.getAttempts();
-        return intervals.findInterval(attempts.size())
-                .map(interval -> toLockoutState(interval, attempts))
-                .orElseGet(() -> new NotLockedState(attempts));
+        final boolean locked = isLocked(attempts);
+        if (locked) {
+            return toLockoutState(attempts);
+        }
+        return new NotLockedState(attempts);
     }
 
-    private LockoutState toLockoutState(final SoftLockInterval interval, final VerificationAttempts attempts) {
+    private boolean isLocked(final VerificationAttempts attempts) {
+        return attempts.size() % interval.getNumberOfAttempts() == 0;
+    }
+
+    private LockoutState toLockoutState(final VerificationAttempts attempts) {
         final Instant mostRecentTimestamp = attempts.getMostRecentTimestamp();
         final Duration duration = interval.getDuration();
         final Instant lockedUntil = mostRecentTimestamp.plus(duration);
