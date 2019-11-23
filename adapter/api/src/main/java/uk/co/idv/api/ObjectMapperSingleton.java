@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.zalando.jackson.datatype.money.MoneyModule;
-import uk.co.idv.api.lockout.JsonApiLockoutStateModule;
+import uk.co.idv.api.lockout.LockoutStateModule;
 import uk.co.idv.api.verificationcontext.JsonApiVerificationContextModule;
 import uk.co.idv.json.activity.ActivityModule;
 import uk.co.idv.json.channel.simple.SimpleChannelModule;
@@ -33,7 +33,7 @@ public class ObjectMapperSingleton {
                 new ActivityModule(),
                 new IdentityModule(),
                 new JsonApiVerificationContextModule(),
-                new JsonApiLockoutStateModule()
+                new LockoutStateModule()
         );
         mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
         mapper.disable(WRITE_DATES_AS_TIMESTAMPS);
