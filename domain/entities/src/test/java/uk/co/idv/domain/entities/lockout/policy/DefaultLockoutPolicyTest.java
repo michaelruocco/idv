@@ -89,7 +89,7 @@ class DefaultLockoutPolicyTest {
     @Test
     void shouldResetAttemptsByAliasWhenLockingAtAliasLevelTheyApplyToParameters() {
         level.setAppliesTo(true);
-        level.setIncludesAlias(true);
+        level.setAliasLevel(true);
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
@@ -139,6 +139,15 @@ class DefaultLockoutPolicyTest {
         final RecordAttemptStrategy result = policy.getRecordAttemptStrategy();
 
         assertThat(result).isEqualTo(recordAttemptStrategy);
+    }
+
+    @Test
+    void shouldReturnIsAliasLevel() {
+        level.setAliasLevel(true);
+
+        final boolean aliasLevel = policy.isAliasLevel();
+
+        assertThat(aliasLevel).isTrue();
     }
 
 }

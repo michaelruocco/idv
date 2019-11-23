@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
 
 import java.util.UUID;
@@ -27,6 +28,10 @@ public class LockoutPolicyMother {
                 new RecordEveryAttempt(),
                 3
         );
+    }
+
+    public static LockoutPolicy nonLockingPolicy() {
+        return new NonLockingLockoutPolicy(UUID.randomUUID(), LockoutLevelMother.aliasLockoutLevel());
     }
 
 }

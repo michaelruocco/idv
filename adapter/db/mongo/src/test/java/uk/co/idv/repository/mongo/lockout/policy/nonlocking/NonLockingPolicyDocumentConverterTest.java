@@ -1,31 +1,25 @@
-package uk.co.idv.repository.mongo.lockout.policy;
+package uk.co.idv.repository.mongo.lockout.policy.nonlocking;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
-import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocumentConverter;
-import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocument;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentMother;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
-class HardLockoutPolicyDocumentConverterTest {
+class NonLockingPolicyDocumentConverterTest {
 
-    private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
-
-    private final LockoutPolicyDocumentConverter converter = new HardLockoutPolicyDocumentConverter(recordAttemptStrategyFactory);
+    private final LockoutPolicyDocumentConverter converter = new NonLockingPolicyDocumentConverter();
 
     @Test
-    void shouldOnlySupportHardLockoutType() {
-        assertThat(converter.supportsType(HardLockoutStateCalculator.TYPE)).isTrue();
+    void shouldOnlySupportNonLockingLockoutType() {
+        assertThat(converter.supportsType(NonLockingLockoutStateCalculator.TYPE)).isTrue();
         assertThat(converter.supportsType("other-type")).isFalse();
     }
 
@@ -50,7 +44,7 @@ class HardLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateRecordAttemptStrategyTypeOnDocument() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.nonLockingPolicy();
 
         final LockoutPolicyDocument document = converter.toDocument(policy);
 
@@ -88,27 +82,17 @@ class HardLockoutPolicyDocumentConverterTest {
     }
 
     @Test
-    void shouldConvertToHardLockoutPolicyDocument() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+    void shouldConvertToLockoutPolicyDocument() {
+        final LockoutPolicy policy = LockoutPolicyMother.nonLockingPolicy();
 
         final LockoutPolicyDocument document = converter.toDocument(policy);
 
-        assertThat(document).isInstanceOf(HardLockoutPolicyDocument.class);
-    }
-
-    @Test
-    void shouldPopulateMaxAttemptsOnDocument() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
-
-        final HardLockoutPolicyDocument document = (HardLockoutPolicyDocument) converter.toDocument(policy);
-
-        final HardLockoutStateCalculator stateCalculator = (HardLockoutStateCalculator) policy.getStateCalculator();
-        assertThat(document.getMaxNumberOfAttempts()).isEqualTo(stateCalculator.getMaxNumberOfAttempts());
+        assertThat(document).isInstanceOf(LockoutPolicyDocument.class);
     }
 
     @Test
     void shouldPopulateIdOnLockoutPolicy() {
-        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.nonLocking();
 
         final LockoutPolicy policy = converter.toPolicy(document);
 
@@ -117,7 +101,7 @@ class HardLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateLockoutTypeOnLockoutPolicy() {
-        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.nonLocking();
 
         final LockoutPolicy policy = converter.toPolicy(document);
 
@@ -125,18 +109,8 @@ class HardLockoutPolicyDocumentConverterTest {
     }
 
     @Test
-    void shouldPopulateRecordAttemptStrategyTypeOnLockoutPolicy() {
-        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
-        final RecordAttemptStrategy strategy = new RecordEveryAttempt();
-        given(recordAttemptStrategyFactory.build(document.getRecordAttemptStrategyType())).willReturn(strategy);
-        final LockoutPolicy policy = converter.toPolicy(document);
-
-        assertThat(policy.getRecordAttemptStrategyType()).isEqualTo(strategy.getType());
-    }
-
-    @Test
     void shouldPopulateChannelIdOnLockoutLevelOnLockoutPolicy() {
-        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.nonLocking();
 
         final LockoutPolicy policy = converter.toPolicy(document);
 
@@ -146,7 +120,7 @@ class HardLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateActivityNamesOnLockoutLevelOnLockoutPolicy() {
-        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.nonLocking();
 
         final LockoutPolicy policy = converter.toPolicy(document);
 
@@ -156,7 +130,7 @@ class HardLockoutPolicyDocumentConverterTest {
 
     @Test
     void shouldPopulateAliasTypeOnLockoutLevelOnLockoutPolicy() {
-        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.nonLocking();
 
         final LockoutPolicy policy = converter.toPolicy(document);
 
@@ -165,22 +139,12 @@ class HardLockoutPolicyDocumentConverterTest {
     }
 
     @Test
-    void shouldConvertToLockoutPolicyWithMaxAttemptsStateCalculator() {
-        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
+    void shouldConvertToLockoutPolicyWithNonLockingStateCalculator() {
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.nonLocking();
 
         final LockoutPolicy policy = converter.toPolicy(document);
 
-        assertThat(policy.getStateCalculator()).isInstanceOf(HardLockoutStateCalculator.class);
-    }
-
-    @Test
-    void shouldPopulateMaxAttemptsOnLockoutStateCalculator() {
-        final HardLockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
-
-        final LockoutPolicy policy = converter.toPolicy(document);
-
-        final HardLockoutStateCalculator stateCalculator = (HardLockoutStateCalculator) policy.getStateCalculator();
-        assertThat(stateCalculator.getMaxNumberOfAttempts()).isEqualTo(document.getMaxNumberOfAttempts());
+        assertThat(policy.getStateCalculator()).isInstanceOf(NonLockingLockoutStateCalculator.class);
     }
 
 }

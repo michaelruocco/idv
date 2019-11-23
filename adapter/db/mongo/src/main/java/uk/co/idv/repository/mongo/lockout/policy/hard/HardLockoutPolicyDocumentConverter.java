@@ -1,7 +1,6 @@
 package uk.co.idv.repository.mongo.lockout.policy.hard;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
@@ -32,14 +31,6 @@ public class HardLockoutPolicyDocumentConverter implements LockoutPolicyDocument
                 toRecordAttemptStrategy(document),
                 document.getMaxNumberOfAttempts()
         );
-    }
-
-    private static LockoutLevel toLevel(final LockoutPolicyDocument document) {
-        return DefaultLockoutLevel.builder()
-                .activityNames(document.getActivityNames())
-                .channelId(document.getChannelId())
-                .aliasTypes(document.getAliasTypes())
-                .build();
     }
 
     private RecordAttemptStrategy toRecordAttemptStrategy(final LockoutPolicyDocument document) {

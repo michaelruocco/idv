@@ -8,7 +8,7 @@ import java.util.Collections;
 public class FakeLockoutLevel implements LockoutLevel {
 
     private boolean appliesTo;
-    private boolean includesAlias;
+    private boolean aliasLevel;
 
     @Override
     public String getChannelId() {
@@ -32,15 +32,15 @@ public class FakeLockoutLevel implements LockoutLevel {
 
     @Override
     public boolean isAliasLevel() {
-        return includesAlias;
+        return aliasLevel;
     }
 
     public void setAppliesTo(boolean appliesTo) {
         this.appliesTo = appliesTo;
     }
 
-    public void setIncludesAlias(boolean includesAlias) {
-        this.includesAlias = includesAlias;
+    public void setAliasLevel(boolean aliasLevel) {
+        this.aliasLevel = aliasLevel;
     }
 
 }

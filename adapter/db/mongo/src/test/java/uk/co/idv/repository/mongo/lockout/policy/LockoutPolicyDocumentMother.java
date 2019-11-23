@@ -22,6 +22,13 @@ public class LockoutPolicyDocumentMother {
         return document;
     }
 
+    public static LockoutPolicyDocument nonLocking() {
+        final LockoutPolicyDocument document = new LockoutPolicyDocument();
+        populateCommonFields(document);
+        document.setLockoutType("non-locking");
+        return document;
+    }
+
     private static void populateCommonFields(LockoutPolicyDocument document) {
         document.setId("0856d684-5038-409e-94e5-f415561c7226");
         document.setRecordAttemptStrategyType("fake-record-attempt-type");

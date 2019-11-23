@@ -1,9 +1,8 @@
-package uk.co.idv.repository.mongo.lockout.policy;
+package uk.co.idv.repository.mongo.lockout.policy.hard;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocument;
 
 class HardLockoutPolicyDocumentTest {
 
