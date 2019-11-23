@@ -10,13 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class HardLockoutPolicyParametersConverterTest {
+class HardLockoutPolicyDtoConverterTest {
 
-    private final DefaultLockoutPolicyParameters parameters = LockoutPolicyParametersMother.hardLock();
+    private final DefaultLockoutPolicyDto parameters = LockoutPolicyParametersMother.hardLock();
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
 
-    private final LockoutPolicyParametersConverter converter = new HardLockoutPolicyParametersConverter(recordAttemptStrategyFactory);
+    private final LockoutPolicyParametersConverter converter = new HardLockoutPolicyDtoConverter(recordAttemptStrategyFactory);
 
     @Test
     void shouldPopulateLockoutLevelOnPolicy() {

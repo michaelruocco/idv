@@ -5,7 +5,7 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import java.util.UUID;
 
 //TODO rename to LockoutPolicyDto
-public interface LockoutPolicyParameters {
+public interface LockoutPolicyDto {
 
     UUID getId();
 

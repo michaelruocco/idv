@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.api.lockout.LockoutPoliciesDocument;
-import uk.co.idv.json.lockout.LockoutPolicyParameters;
+import uk.co.idv.json.lockout.LockoutPolicyDto;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService;
-import uk.co.idv.json.lockout.LockoutPolicyParametersConverterDelegator;
+import uk.co.idv.json.lockout.LockoutPolicyParametersDtoDelegator;
 
 import java.util.Collection;
 
@@ -16,7 +16,7 @@ import java.util.Collection;
 public class LockoutPolicyController {
 
     private final LockoutPolicyService service;
-    private final LockoutPolicyParametersConverterDelegator parametersConverter;
+    private final LockoutPolicyParametersDtoDelegator parametersConverter;
 
     @GetMapping("/lockoutPolicies")
     public LockoutPoliciesDocument getLockoutPolicies() {
@@ -24,7 +24,7 @@ public class LockoutPolicyController {
         return toDocument(parametersConverter.toParameters(policies));
     }
 
-    private static LockoutPoliciesDocument toDocument(final Collection<LockoutPolicyParameters> policies) {
+    private static LockoutPoliciesDocument toDocument(final Collection<LockoutPolicyDto> policies) {
         return new LockoutPoliciesDocument(policies);
     }
 

@@ -10,38 +10,38 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Builder
-public class LockoutPolicyParametersConverterDelegator {
+public class LockoutPolicyParametersDtoDelegator {
 
     private final Collection<LockoutPolicyParametersConverter> converters;
 
-    public LockoutPolicyParametersConverterDelegator(final LockoutPolicyParametersConverter... converters) {
+    public LockoutPolicyParametersDtoDelegator(final LockoutPolicyParametersConverter... converters) {
         this(Arrays.asList(converters));
     }
 
-    public LockoutPolicyParametersConverterDelegator(final Collection<LockoutPolicyParametersConverter> converters) {
+    public LockoutPolicyParametersDtoDelegator(final Collection<LockoutPolicyParametersConverter> converters) {
         this.converters = converters;
     }
 
-    public Collection<LockoutPolicy> toPolicies(final Collection<LockoutPolicyParameters> collection) {
+    public Collection<LockoutPolicy> toPolicies(final Collection<LockoutPolicyDto> collection) {
         return collection.stream()
                 .map(this::toPolicy)
                 .collect(Collectors.toList());
     }
 
-    public LockoutPolicy toPolicy(final LockoutPolicyParameters parameters) {
+    public LockoutPolicy toPolicy(final LockoutPolicyDto parameters) {
         final String type = parameters.getLockoutType();
         return findConverter(type)
                 .map(converter -> converter.toPolicy(parameters))
                 .orElseThrow(() -> new LockoutTypeNotSupportedException(type));
     }
 
-    public Collection<LockoutPolicyParameters> toParameters(final Collection<LockoutPolicy> policies) {
+    public Collection<LockoutPolicyDto> toParameters(final Collection<LockoutPolicy> policies) {
         return policies.stream()
                 .map(this::toParameters)
                 .collect(Collectors.toList());
     }
 
-    public LockoutPolicyParameters toParameters(final LockoutPolicy policy) {
+    public LockoutPolicyDto toParameters(final LockoutPolicy policy) {
         final String type = policy.getLockoutType();
         return findConverter(type)
                 .map(converter -> converter.toParameters(policy))

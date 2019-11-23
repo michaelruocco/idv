@@ -8,15 +8,15 @@ import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 import java.util.UUID;
 
 @Getter
-public class HardLockoutPolicyParameters extends DefaultLockoutPolicyParameters {
+public class HardLockoutPolicyDto extends DefaultLockoutPolicyDto {
 
     private final int maxNumberOfAttempts;
 
     @Builder
-    public HardLockoutPolicyParameters(final UUID id,
-                                       final String recordAttempts,
-                                       final LockoutLevel lockoutLevel,
-                                       final int maxNumberOfAttempts) {
+    public HardLockoutPolicyDto(final UUID id,
+                                final String recordAttempts,
+                                final LockoutLevel lockoutLevel,
+                                final int maxNumberOfAttempts) {
         super(id,
                 HardLockoutStateCalculator.TYPE,
                 recordAttempts,

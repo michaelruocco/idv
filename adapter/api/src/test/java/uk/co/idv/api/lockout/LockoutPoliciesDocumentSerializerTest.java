@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.api.ObjectMapperSingleton;
 import uk.co.idv.json.lockout.LockoutPolicyParametersMother;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.json.lockout.LockoutPolicyParameters;
+import uk.co.idv.json.lockout.LockoutPolicyDto;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
@@ -16,7 +16,7 @@ class LockoutPoliciesDocumentSerializerTest {
 
     @Test
     void shouldSerializePolicies() throws JsonProcessingException {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.hardLock();
+        final LockoutPolicyDto parameters = LockoutPolicyParametersMother.hardLock();
         final LockoutPoliciesDocument document = new LockoutPoliciesDocument(parameters);
 
         final String json = MAPPER.writeValueAsString(document);

@@ -15,7 +15,7 @@ class LockoutPolicySerializerTest {
 
     @Test
     void shouldSerializeHardLockPolicyParameters() throws JsonProcessingException {
-        final LockoutPolicyParameters parameters = LockoutPolicyParametersMother.hardLock();
+        final LockoutPolicyDto parameters = LockoutPolicyParametersMother.hardLock();
 
         final String json = MAPPER.writeValueAsString(parameters);
 

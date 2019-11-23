@@ -4,7 +4,7 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 import java.util.UUID;
 
-public class FakeLockoutPolicyParameters implements LockoutPolicyParameters {
+public class FakeLockoutPolicyDto implements LockoutPolicyDto {
 
     @Override
     public UUID getId() {

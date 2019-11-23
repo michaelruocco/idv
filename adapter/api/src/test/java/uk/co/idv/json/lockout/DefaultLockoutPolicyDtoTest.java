@@ -8,38 +8,38 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultLockoutPolicyParametersTest {
+class DefaultLockoutPolicyDtoTest {
 
-    private final LockoutPolicyParameters parameters = new CustomLockoutPolicyParameters();
+    private final LockoutPolicyDto parameters = new CustomLockoutPolicyDto();
 
     @Test
     void shouldReturnId() {
-        assertThat(parameters.getId()).isEqualTo(CustomLockoutPolicyParameters.ID);
+        assertThat(parameters.getId()).isEqualTo(CustomLockoutPolicyDto.ID);
     }
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(parameters.getLockoutType()).isEqualTo(CustomLockoutPolicyParameters.LOCKOUT_TYPE);
+        assertThat(parameters.getLockoutType()).isEqualTo(CustomLockoutPolicyDto.LOCKOUT_TYPE);
     }
 
     @Test
     void shouldReturnRecordAttemptStrategyType() {
-        assertThat(parameters.getRecordAttempts()).isEqualTo(CustomLockoutPolicyParameters.RECORD_ATTEMPTS);
+        assertThat(parameters.getRecordAttempts()).isEqualTo(CustomLockoutPolicyDto.RECORD_ATTEMPTS);
     }
 
     @Test
     void shouldReturnLockoutLevel() {
-        assertThat(parameters.getLockoutLevel()).isEqualTo(CustomLockoutPolicyParameters.LOCKOUT_LEVEL);
+        assertThat(parameters.getLockoutLevel()).isEqualTo(CustomLockoutPolicyDto.LOCKOUT_LEVEL);
     }
 
-    private static class CustomLockoutPolicyParameters extends DefaultLockoutPolicyParameters {
+    private static class CustomLockoutPolicyDto extends DefaultLockoutPolicyDto {
 
         private static final UUID ID = UUID.fromString("0addd5b5-24ef-4298-9ebd-ed6f506f59c2");
         private static final String LOCKOUT_TYPE = "lockout-type";
         private static final String RECORD_ATTEMPTS = "record-attempt-strategy-type";
         private static final LockoutLevel LOCKOUT_LEVEL = lockoutLevel();
 
-        private CustomLockoutPolicyParameters() {
+        private CustomLockoutPolicyDto() {
             super(ID,
                     LOCKOUT_TYPE,
                     RECORD_ATTEMPTS,

@@ -11,7 +11,7 @@ public class LockoutStateModule extends SimpleModule {
     public LockoutStateModule() {
         setMixInAnnotation(HardLockoutState.class, HardLockoutStateMixin.class);
         setMixInAnnotation(VerificationAttempt.class, VerificationAttemptMixin.class);
-        setMixInAnnotation(DefaultLockoutPolicyParameters.class, LockoutPolicyParametersMixin.class);
+        setMixInAnnotation(DefaultLockoutPolicyDto.class, LockoutPolicyDtoMixin.class);
         setMixInAnnotation(LockoutLevel.class, LockoutLevelMixin.class);
 
         addSerializer(VerificationAttempts.class, new VerificationAttemptsSerializer());

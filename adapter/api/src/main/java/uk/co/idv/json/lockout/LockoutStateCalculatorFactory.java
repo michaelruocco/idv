@@ -6,15 +6,15 @@ import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 
 public class LockoutStateCalculatorFactory {
 
-    public LockoutStateCalculator build(final LockoutPolicyParameters parameters) {
+    public LockoutStateCalculator build(final LockoutPolicyDto parameters) {
         final String type = parameters.getLockoutType();
         if (HardLockoutStateCalculator.TYPE.equals(type)) {
-            return toHardLockoutStateCalculator((HardLockoutPolicyParameters) parameters);
+            return toHardLockoutStateCalculator((HardLockoutPolicyDto) parameters);
         }
         throw new LockoutTypeNotSupportedException(type);
     }
 
-    private static LockoutStateCalculator toHardLockoutStateCalculator(final HardLockoutPolicyParameters parameters) {
+    private static LockoutStateCalculator toHardLockoutStateCalculator(final HardLockoutPolicyDto parameters) {
         return new HardLockoutStateCalculator(parameters.getMaxNumberOfAttempts());
     }
 

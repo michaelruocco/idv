@@ -7,7 +7,7 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrat
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 
 @RequiredArgsConstructor
-public class HardLockoutPolicyParametersConverter implements LockoutPolicyParametersConverter {
+public class HardLockoutPolicyDtoConverter implements LockoutPolicyParametersConverter {
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory;
 
@@ -16,8 +16,8 @@ public class HardLockoutPolicyParametersConverter implements LockoutPolicyParame
         return HardLockoutStateCalculator.TYPE.equals(type);
     }
 
-    public LockoutPolicy toPolicy(final LockoutPolicyParameters parameters) {
-        final HardLockoutPolicyParameters hardLockoutParameters = (HardLockoutPolicyParameters) parameters;
+    public LockoutPolicy toPolicy(final LockoutPolicyDto parameters) {
+        final HardLockoutPolicyDto hardLockoutParameters = (HardLockoutPolicyDto) parameters;
         return new HardLockoutPolicy(
                 hardLockoutParameters.getId(),
                 hardLockoutParameters.getLockoutLevel(),
@@ -26,9 +26,9 @@ public class HardLockoutPolicyParametersConverter implements LockoutPolicyParame
         );
     }
 
-    public LockoutPolicyParameters toParameters(final LockoutPolicy policy) {
+    public LockoutPolicyDto toParameters(final LockoutPolicy policy) {
         final HardLockoutPolicy hardLockoutPolicy = (HardLockoutPolicy) policy;
-        return HardLockoutPolicyParameters.builder()
+        return HardLockoutPolicyDto.builder()
                 .id(hardLockoutPolicy.getId())
                 .recordAttempts(hardLockoutPolicy.getRecordAttemptStrategyType())
                 .maxNumberOfAttempts(hardLockoutPolicy.getMaxNumberOfAttempts())

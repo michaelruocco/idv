@@ -2,7 +2,7 @@ package uk.co.idv.api.lockout;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import uk.co.idv.json.lockout.LockoutPolicyParametersMixin;
+import uk.co.idv.json.lockout.LockoutPolicyDtoMixin;
 
 import java.util.UUID;
 
@@ -12,7 +12,7 @@ import java.util.UUID;
         "type",
         "maxNumberOfAttempts"
 })
-public interface JsonApiLockoutPolicyParametersMixin extends LockoutPolicyParametersMixin {
+public interface JsonApiLockoutPolicyDtoMixin extends LockoutPolicyDtoMixin {
 
     @JsonIgnore
     UUID getId();
