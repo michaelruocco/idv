@@ -12,7 +12,7 @@ public class UkObjectMapperSingleton {
     }
 
     private static ObjectMapper build() {
-        final ObjectMapper mapper = ObjectMapperSingleton.get();
+        final ObjectMapper mapper = ObjectMapperSingleton.instance();
         mapper.registerModule(new UkChannelModule());
         return mapper;
     }

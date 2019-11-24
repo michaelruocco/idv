@@ -12,7 +12,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class VerificationContextDocumentSerializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.get();
+    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
     void shouldSerializeContext() throws JsonProcessingException {

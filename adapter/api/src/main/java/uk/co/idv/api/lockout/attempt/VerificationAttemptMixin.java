@@ -23,4 +23,7 @@ public interface VerificationAttemptMixin {
     @JsonIgnore
     String getAliasType();
 
+    @JsonIgnore
+    boolean isCardNumber();
+
 }

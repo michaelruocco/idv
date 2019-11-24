@@ -2,17 +2,15 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 
 import java.util.Collection;
 import java.util.Collections;
 
 @Builder
-@Getter
+@Data
 @AllArgsConstructor
-@ToString
 public class DefaultLockoutLevel implements LockoutLevel {
 
     private final String channelId;

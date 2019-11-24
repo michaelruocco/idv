@@ -16,9 +16,12 @@ import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS
 
 public class ObjectMapperSingleton {
 
-    private static ObjectMapper MAPPER = build();
+    private static ObjectMapper MAPPER;
 
-    public static ObjectMapper get() {
+    public static ObjectMapper instance() {
+        if (MAPPER == null) {
+            MAPPER = build();
+        }
         return MAPPER;
     }
 

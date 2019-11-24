@@ -3,6 +3,8 @@ package uk.co.idv.api.lockout;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.api.lockout.attempt.VerificationAttemptMixin;
 import uk.co.idv.api.lockout.attempt.VerificationAttemptsSerializer;
+import uk.co.idv.api.lockout.policy.LockoutPolicyDocument;
+import uk.co.idv.api.lockout.policy.LockoutPolicyDocumentDeserializer;
 import uk.co.idv.api.lockout.policy.hard.HardLockoutStateMixin;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesMixin;
 import uk.co.idv.api.lockout.state.LockoutStateMixin;
@@ -27,6 +29,7 @@ public class LockoutStateModule extends SimpleModule {
 
         addDeserializer(ResetLockoutStateDocument.class, new ResetLockoutStateDocumentDeserializer());
         addDeserializer(LockoutRequest.class, new LockoutRequestDeserializer());
+        addDeserializer(LockoutPolicyDocument.class, new LockoutPolicyDocumentDeserializer());
 
         addSerializer(VerificationAttempts.class, new VerificationAttemptsSerializer());
     }

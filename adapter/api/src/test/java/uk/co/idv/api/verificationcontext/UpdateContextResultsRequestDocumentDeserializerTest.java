@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UpdateContextResultsRequestDocumentDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.get();
+    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
     void shouldDeserializeDocument() throws IOException {

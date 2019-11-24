@@ -10,7 +10,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class LockoutPoliciesDocumentSerializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.get();
+    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
     void shouldSerializePolicies() throws JsonProcessingException {

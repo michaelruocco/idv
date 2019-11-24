@@ -1,13 +1,13 @@
 package uk.co.idv.api.lockout.policy;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 
 import java.util.UUID;
 
 @RequiredArgsConstructor
-@Getter
+@Data
 public class DefaultLockoutPolicyAttributes implements LockoutPolicyAttributes {
 
     private final UUID id;
