@@ -79,4 +79,64 @@ class CalculateLockoutStateRequestTest {
         assertThat(request.getAttempts()).isEqualTo(attempts);
     }
 
+    @Test
+    void shouldCopyChannelIdWhenUpdatingAttempts() {
+        final String channelId = "channel-id";
+        final CalculateLockoutStateRequest request = builder.channelId(channelId).build();
+
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(VerificationAttemptsMother.oneAttempt());
+
+        assertThat(updatedRequest.getChannelId()).isEqualTo(channelId);
+    }
+
+    @Test
+    void shouldCopyActivityNameWhenUpdatingAttempts() {
+        final String activityName = "activity-name";
+        final CalculateLockoutStateRequest request = builder.activityName(activityName).build();
+
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(VerificationAttemptsMother.oneAttempt());
+
+        assertThat(updatedRequest.getActivityName()).isEqualTo(activityName);
+    }
+
+    @Test
+    void shouldCopyTimestampWhenUpdatingAttempts() {
+        final Instant timestamp = Instant.now();
+        final CalculateLockoutStateRequest request = builder.timestamp(timestamp).build();
+
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(VerificationAttemptsMother.oneAttempt());
+
+        assertThat(updatedRequest.getTimestamp()).isEqualTo(timestamp);
+    }
+
+    @Test
+    void shouldCopyAliasWhenUpdatingAttempts() {
+        final Alias alias = AliasesMother.creditCardNumber();
+        final CalculateLockoutStateRequest request = builder.alias(alias).build();
+
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(VerificationAttemptsMother.oneAttempt());
+
+        assertThat(updatedRequest.getAlias()).isEqualTo(alias);
+    }
+
+    @Test
+    void shouldCopyIdvIdValueWhenUpdatingAttempts() {
+        final UUID idvIdValue = UUID.randomUUID();
+        final CalculateLockoutStateRequest request = builder.idvIdValue(idvIdValue).build();
+
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(VerificationAttemptsMother.oneAttempt());
+
+        assertThat(updatedRequest.getIdvIdValue()).isEqualTo(idvIdValue);
+    }
+
+    @Test
+    void shouldUpdateAttempts() {
+        final CalculateLockoutStateRequest request = builder.attempts(VerificationAttemptsMother.oneAttempt()).build();
+
+        final VerificationAttempts updatedAttempts = VerificationAttemptsMother.withNumberOfAttempts(2);
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(updatedAttempts);
+
+        assertThat(updatedRequest.getAttempts()).isEqualTo(updatedAttempts);
+    }
+
 }

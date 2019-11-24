@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
@@ -170,6 +172,13 @@ class DefaultLockoutLevelTest {
         final boolean applies = level.appliesTo(request);
 
         assertThat(applies).isTrue();
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(DefaultLockoutLevel.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }
