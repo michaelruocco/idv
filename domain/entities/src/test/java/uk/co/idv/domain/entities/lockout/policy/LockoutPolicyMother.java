@@ -3,6 +3,7 @@ package uk.co.idv.domain.entities.lockout.policy;
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
+import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockIntervalMother;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
 
@@ -42,6 +43,19 @@ public class LockoutPolicyMother {
                 LockoutLevelMother.aliasLockoutLevel(),
                 new RecordEveryAttempt(),
                 SoftLockIntervalMother.intervals()
+        );
+    }
+
+    public static RecurringSoftLockoutPolicy recurringSoftLockoutPolicy() {
+        return recurringSoftLockoutPolicy(UUID.randomUUID());
+    }
+
+    public static RecurringSoftLockoutPolicy recurringSoftLockoutPolicy(UUID id) {
+        return new RecurringSoftLockoutPolicy(
+                id,
+                LockoutLevelMother.aliasLockoutLevel(),
+                new RecordEveryAttempt(),
+                SoftLockIntervalMother.oneAttempt()
         );
     }
 

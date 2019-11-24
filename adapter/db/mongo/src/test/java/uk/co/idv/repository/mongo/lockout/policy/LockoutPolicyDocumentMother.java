@@ -1,6 +1,10 @@
 package uk.co.idv.repository.mongo.lockout.policy;
 
 
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
 import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocument;
 import uk.co.idv.repository.mongo.lockout.policy.soft.RecurringSoftLockoutPolicyDocument;
 import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentMother;
@@ -20,7 +24,7 @@ public class LockoutPolicyDocumentMother {
     public static HardLockoutPolicyDocument hardLock() {
         final HardLockoutPolicyDocument document = new HardLockoutPolicyDocument();
         populateCommonFields(document);
-        document.setLockoutType("hard-lock");
+        document.setLockoutType(HardLockoutStateCalculator.TYPE);
         document.setMaxNumberOfAttempts(3);
         return document;
     }
@@ -28,14 +32,14 @@ public class LockoutPolicyDocumentMother {
     public static LockoutPolicyDocument nonLocking() {
         final LockoutPolicyDocument document = new LockoutPolicyDocument();
         populateCommonFields(document);
-        document.setLockoutType("non-locking");
+        document.setLockoutType(NonLockingLockoutStateCalculator.TYPE);
         return document;
     }
 
     public static SoftLockoutPolicyDocument softLock() {
         final SoftLockoutPolicyDocument document = new SoftLockoutPolicyDocument();
         populateCommonFields(document);
-        document.setLockoutType("soft-lock");
+        document.setLockoutType(SoftLockoutStateCalculator.TYPE);
         document.setIntervals(SoftLockIntervalDocumentMother.collection(1));
         return document;
     }
@@ -43,7 +47,7 @@ public class LockoutPolicyDocumentMother {
     public static RecurringSoftLockoutPolicyDocument recurringSoftLock() {
         final RecurringSoftLockoutPolicyDocument document = new RecurringSoftLockoutPolicyDocument();
         populateCommonFields(document);
-        document.setLockoutType("soft-lock");
+        document.setLockoutType(RecurringSoftLockoutStateCalculator.TYPE);
         document.setInterval(SoftLockIntervalDocumentMother.oneAttempt());
         return document;
     }
