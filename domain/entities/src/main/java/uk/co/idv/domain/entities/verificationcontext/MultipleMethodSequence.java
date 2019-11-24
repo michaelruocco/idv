@@ -13,6 +13,7 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -145,14 +146,7 @@ public class MultipleMethodSequence implements VerificationSequence {
     }
 
     private Duration calculateLongestMethodDuration() {
-        Duration longest = null;
-        for (final VerificationMethod method : methods) {
-            final Duration methodDuration = method.getDuration();
-            if (longest == null || methodDuration.toMillis() > longest.toMillis()) {
-                longest = methodDuration;
-            }
-        }
-        return longest;
+        return Collections.max(methods, Comparator.comparing(VerificationMethod::getDuration)).getDuration();
     }
 
     private Collection<String> getMethodNames() {
