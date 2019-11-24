@@ -28,7 +28,7 @@ class NonLockingLockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnNeverRecordAttemptStrategyType() {
+    void shouldReturnRecordAttemptStrategyType() {
         assertThat(policy.getRecordAttemptStrategyType()).isEqualTo(RecordNever.TYPE);
     }
 
@@ -38,12 +38,12 @@ class NonLockingLockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnNonLockingLockoutType() {
+    void shouldReturnLockoutType() {
         assertThat(policy.getLockoutType()).isEqualTo(NonLockingLockoutStateCalculator.TYPE);
     }
 
     @Test
-    void shouldReturnNonLockingStateCalculator() {
+    void shouldReturnStateCalculator() {
         assertThat(policy.getStateCalculator()).isInstanceOf(NonLockingLockoutStateCalculator.class);
     }
 

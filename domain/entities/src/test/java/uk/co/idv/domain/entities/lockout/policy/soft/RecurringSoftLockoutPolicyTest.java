@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.lockout.policy.hard;
+package uk.co.idv.domain.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
@@ -6,22 +6,23 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevelMother;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
 
+import java.time.Duration;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HardLockoutPolicyTest {
+class RecurringSoftLockoutPolicyTest {
 
     private static final UUID ID = UUID.randomUUID();
     private static final LockoutLevel LEVEL = LockoutLevelMother.defaultLockoutLevel();
     private static final RecordAttemptStrategy RECORD_ATTEMPT_STRATEGY = new RecordEveryAttempt();
-    private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
+    private static final SoftLockInterval INTERVAL = new SoftLockInterval(1, Duration.ofMinutes(1));
 
-    private final HardLockoutPolicy policy = new HardLockoutPolicy(
+    private final RecurringSoftLockoutPolicy policy = new RecurringSoftLockoutPolicy(
             ID,
             LEVEL,
             RECORD_ATTEMPT_STRATEGY,
-            MAX_NUMBER_OF_ATTEMPTS
+            INTERVAL
     );
 
     @Test
@@ -46,17 +47,17 @@ class HardLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(policy.getLockoutType()).isEqualTo(HardLockoutStateCalculator.TYPE);
+        assertThat(policy.getLockoutType()).isEqualTo(RecurringSoftLockoutStateCalculator.TYPE);
     }
 
     @Test
     void shouldReturnStateCalculator() {
-        assertThat(policy.getStateCalculator()).isInstanceOf(HardLockoutStateCalculator.class);
+        assertThat(policy.getStateCalculator()).isInstanceOf(RecurringSoftLockoutStateCalculator.class);
     }
 
     @Test
-    void shouldReturnMaxNumberOfAttempts() {
-        assertThat(policy.getMaxNumberOfAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
+    void shouldReturnInterval() {
+        assertThat(policy.getInterval()).isEqualTo(INTERVAL);
     }
 
 }

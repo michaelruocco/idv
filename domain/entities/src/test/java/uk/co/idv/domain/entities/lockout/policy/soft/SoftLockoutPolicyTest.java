@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.lockout.policy.hard;
+package uk.co.idv.domain.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
@@ -10,18 +10,18 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HardLockoutPolicyTest {
+class SoftLockoutPolicyTest {
 
     private static final UUID ID = UUID.randomUUID();
     private static final LockoutLevel LEVEL = LockoutLevelMother.defaultLockoutLevel();
     private static final RecordAttemptStrategy RECORD_ATTEMPT_STRATEGY = new RecordEveryAttempt();
-    private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
+    private static final SoftLockIntervals INTERVALS = new SoftLockIntervals();
 
-    private final HardLockoutPolicy policy = new HardLockoutPolicy(
+    private final SoftLockoutPolicy policy = new SoftLockoutPolicy(
             ID,
             LEVEL,
             RECORD_ATTEMPT_STRATEGY,
-            MAX_NUMBER_OF_ATTEMPTS
+            INTERVALS
     );
 
     @Test
@@ -46,17 +46,17 @@ class HardLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(policy.getLockoutType()).isEqualTo(HardLockoutStateCalculator.TYPE);
+        assertThat(policy.getLockoutType()).isEqualTo(SoftLockoutStateCalculator.TYPE);
     }
 
     @Test
     void shouldReturnStateCalculator() {
-        assertThat(policy.getStateCalculator()).isInstanceOf(HardLockoutStateCalculator.class);
+        assertThat(policy.getStateCalculator()).isInstanceOf(SoftLockoutStateCalculator.class);
     }
 
     @Test
-    void shouldReturnMaxNumberOfAttempts() {
-        assertThat(policy.getMaxNumberOfAttempts()).isEqualTo(MAX_NUMBER_OF_ATTEMPTS);
+    void shouldReturnIntervals() {
+        assertThat(policy.getIntervals()).isEqualTo(INTERVALS);
     }
 
 }
