@@ -29,7 +29,7 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
         log.info("calculating lock from calculator {} with request {} and intervals {}", this, request, intervals);
         final VerificationAttempts attempts = request.getAttempts();
         return intervals.findInterval(attempts.size())
-                .map(interval -> toLockoutState(interval, attempts))
+                .map(interval -> toLockoutState(interval, request))
                 .orElseGet(() -> new NotLockedState(attempts));
     }
 
@@ -37,10 +37,17 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
         return intervals;
     }
 
-    private LockoutState toLockoutState(final SoftLockInterval interval, final VerificationAttempts attempts) {
+    private LockoutState toLockoutState(final SoftLockInterval interval, final CalculateLockoutStateRequest request) {
+        final VerificationAttempts attempts = request.getAttempts();
         final Instant mostRecentTimestamp = attempts.getMostRecentTimestamp();
         final Duration duration = interval.getDuration();
         final Instant lockedUntil = mostRecentTimestamp.plus(duration);
+
+        final boolean isLocked = request.getTimestamp().isBefore(lockedUntil);
+        if (!isLocked) {
+            return new NotLockedState(attempts);
+        }
+
         return SoftLockoutState.builder()
                 .attempts(attempts)
                 .duration(duration)
