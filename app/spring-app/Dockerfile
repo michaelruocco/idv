@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11
+FROM adoptopenjdk/openjdk11:alpine-jre
 
 ENV SPRING_PROFILES_ACTIVE=stub
 USER 10001

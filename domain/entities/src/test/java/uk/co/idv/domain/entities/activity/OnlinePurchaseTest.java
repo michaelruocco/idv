@@ -59,7 +59,7 @@ class OnlinePurchaseTest {
     }
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(OnlinePurchase.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();

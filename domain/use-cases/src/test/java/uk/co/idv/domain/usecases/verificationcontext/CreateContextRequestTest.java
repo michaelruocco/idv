@@ -63,7 +63,7 @@ class CreateContextRequestTest {
     }
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(CreateContextRequest.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();

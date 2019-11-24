@@ -18,7 +18,7 @@ class As3Test {
     }
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(As3.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();

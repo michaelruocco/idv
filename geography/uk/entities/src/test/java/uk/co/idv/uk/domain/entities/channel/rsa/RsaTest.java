@@ -37,7 +37,7 @@ class RsaTest {
     }
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(Rsa.class)
                 .withRedefinedSuperclass()
                 .suppress(Warning.STRICT_INHERITANCE)

@@ -1,6 +1,5 @@
 package uk.co.idv.app.rest.verificationcontext;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -40,7 +39,7 @@ class VerificationContextControllerTest {
         controller.createContext(requestDocument);
 
         final CreateContextRequest request = service.getLastCreateRequest();
-        Assertions.assertThat(request).isEqualTo(requestDocument.getAttributes());
+        assertThat(request).isEqualTo(requestDocument.getAttributes());
     }
 
     @Test
@@ -100,7 +99,7 @@ class VerificationContextControllerTest {
         controller.updateContextResults(requestDocument);
 
         final RecordResultRequest request = service.getLastUpdateResultRequest();
-        Assertions.assertThat(request).isEqualTo(requestDocument.getAttributes());
+        assertThat(request).isEqualTo(requestDocument.getAttributes());
     }
 
     @Test

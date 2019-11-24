@@ -50,7 +50,7 @@ class DefaultLockoutRequestTest {
     }
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(DefaultLockoutRequest.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();

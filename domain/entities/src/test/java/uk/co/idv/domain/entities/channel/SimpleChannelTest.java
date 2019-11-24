@@ -24,7 +24,7 @@ class SimpleChannelTest {
     }
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(SimpleChannel.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();

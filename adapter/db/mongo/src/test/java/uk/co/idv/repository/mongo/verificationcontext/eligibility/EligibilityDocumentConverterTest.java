@@ -6,6 +6,8 @@ import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.FakeIneligible;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentMother.ineligible;
+import static uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentMother.eligible;
 
 class EligibilityDocumentConverterTest {
 
@@ -13,7 +15,7 @@ class EligibilityDocumentConverterTest {
 
     @Test
     void shouldConvertToIneligible() {
-        final EligibilityDocument document = uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentMother.ineligible();
+        final EligibilityDocument document = ineligible();
 
         final Eligibility ineligible = converter.toEligibility(document);
 
@@ -31,7 +33,7 @@ class EligibilityDocumentConverterTest {
 
     @Test
     void shouldConvertReasonToIneligible() {
-        final EligibilityDocument document = uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentMother.ineligible();
+        final EligibilityDocument document = ineligible();
 
         final Eligibility ineligible = converter.toEligibility(document);
 
@@ -50,7 +52,7 @@ class EligibilityDocumentConverterTest {
 
     @Test
     void shouldConvertToEligible() {
-        final EligibilityDocument document = uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentMother.eligible();
+        final EligibilityDocument document = eligible();
 
         final Eligibility eligibility = converter.toEligibility(document);
 
@@ -68,7 +70,7 @@ class EligibilityDocumentConverterTest {
 
     @Test
     void shouldConvertEmptyReasonToEligible() {
-        final EligibilityDocument document = EligibilityDocumentMother.eligible();
+        final EligibilityDocument document = eligible();
 
         final Eligibility eligibility = converter.toEligibility(document);
 

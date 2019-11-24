@@ -68,7 +68,7 @@ class IdvIdTest {
     }
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(IdvId.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .withNonnullFields("value")

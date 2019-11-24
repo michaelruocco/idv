@@ -1,6 +1,5 @@
 package uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumberMother;
@@ -41,7 +40,7 @@ class MobileNumbersDocumentConverterTest {
 
         final Collection<MobileNumberDocument> documents = mobileNumbersConverter.toDocuments(Arrays.asList(mobileNumber1, mobileNumber2));
 
-        Assertions.assertThat(documents).containsExactly(document1, document2);
+        assertThat(documents).containsExactly(document1, document2);
     }
 
 }

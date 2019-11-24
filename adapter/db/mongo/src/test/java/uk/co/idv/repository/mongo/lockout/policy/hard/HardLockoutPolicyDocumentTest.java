@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class HardLockoutPolicyDocumentTest {
 
     @Test
-    void shouldBeEqualIfAllValuesAreTheSame() {
+    void shouldTestEquals() {
         EqualsVerifier.forClass(HardLockoutPolicyDocument.class)
                 .suppress(Warning.STRICT_INHERITANCE, Warning.NONFINAL_FIELDS)
                 .withRedefinedSuperclass()

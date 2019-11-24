@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DebitCardNumberTest {
 
     private static final String TOKENIZED = "1234567890123456";
-    private static final String MASKED = "************3456";
 
     @Test
     void shouldReturnId() {
