@@ -8,6 +8,10 @@ import java.util.Map;
 
 public class LockoutStateToMetaConverter {
 
+    private LockoutStateToMetaConverter() {
+        // utility class
+    }
+
     public static Map<String, Object> toMeta(final LockoutState lockoutState) {
         if (lockoutState instanceof HardLockoutState) {
             return toMeta((HardLockoutState) lockoutState);

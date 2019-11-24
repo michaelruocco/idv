@@ -16,6 +16,10 @@ import java.util.Optional;
 
 class JsonFieldWriter {
 
+    private JsonFieldWriter() {
+        // utility class
+    }
+
     static void writeName(final String name, final JsonGenerator json) throws IOException {
         json.writeStringField("name", name);
     }

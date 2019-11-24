@@ -18,6 +18,10 @@ public class ObjectMapperSingleton {
 
     private static ObjectMapper MAPPER;
 
+    private ObjectMapperSingleton() {
+        // utility class
+    }
+
     public static ObjectMapper instance() {
         if (MAPPER == null) {
             MAPPER = build();

@@ -5,6 +5,7 @@ import uk.co.idv.api.lockout.policy.hard.HardLockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.soft.RecurringSoftLockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.soft.SoftLockIntervalDto;
 import uk.co.idv.api.lockout.policy.soft.SoftLockoutPolicyAttributes;
+import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
@@ -140,14 +141,6 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
 
         private static int extractMaxNumberOfAttempts(final JsonNode node) {
             return node.get("maxNumberOfAttempts").asInt();
-        }
-
-        public static class LockoutTypeNotSupportedException extends RuntimeException {
-
-            public LockoutTypeNotSupportedException(final String type) {
-                super(type);
-            }
-
         }
 
     }
