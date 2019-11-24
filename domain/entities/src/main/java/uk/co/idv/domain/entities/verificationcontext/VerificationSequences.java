@@ -39,7 +39,7 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
                 .map(VerificationSequence::getDuration)
                 .sorted()
                 .reduce((first, second) -> second)
-                .orElseThrow(CannotCalculateMaxDurationOfEmptySequencesException::new);
+                .orElse(Duration.ZERO);
     }
 
     public VerificationSequences addResultIfHasSequencesWithNextMethod(final VerificationResult result) {
@@ -83,14 +83,6 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
     public Stream<VerificationSequence> stream() {
         return sequences.stream();
-    }
-
-    public static class CannotCalculateMaxDurationOfEmptySequencesException extends RuntimeException {
-
-        public CannotCalculateMaxDurationOfEmptySequencesException() {
-            super();
-        }
-
     }
 
     public static class NotNextMethodInSequenceException extends RuntimeException {

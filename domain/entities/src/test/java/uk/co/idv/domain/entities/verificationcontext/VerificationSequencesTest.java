@@ -1,7 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.CannotCalculateMaxDurationOfEmptySequencesException;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.NotNextMethodInSequenceException;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodIneligible;
@@ -28,12 +27,12 @@ class VerificationSequencesTest {
     }
 
     @Test
-    void shouldThrowExceptionIfAttemptToCalculateMaxDurationOfEmptySequences() {
+    void shouldReturnZeroDurationIfAttemptToCalculateMaxDurationOfEmptySequences() {
         final VerificationSequences sequences = new VerificationSequences();
 
-        final Throwable error = catchThrowable(sequences::calculateMaxDuration);
+        final Duration duration = sequences.calculateMaxDuration();
 
-        assertThat(error).isInstanceOf(CannotCalculateMaxDurationOfEmptySequencesException.class);
+        assertThat(duration).isEqualTo(Duration.ZERO);
     }
 
     @Test
