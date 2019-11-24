@@ -33,6 +33,10 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
                 .orElseGet(() -> new NotLockedState(attempts));
     }
 
+    public SoftLockIntervals getIntervals() {
+        return intervals;
+    }
+
     private LockoutState toLockoutState(final SoftLockInterval interval, final VerificationAttempts attempts) {
         final Instant mostRecentTimestamp = attempts.getMostRecentTimestamp();
         final Duration duration = interval.getDuration();

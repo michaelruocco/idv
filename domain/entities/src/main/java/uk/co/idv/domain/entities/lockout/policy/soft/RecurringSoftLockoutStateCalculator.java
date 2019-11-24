@@ -35,6 +35,10 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
         return new NotLockedState(attempts);
     }
 
+    public SoftLockInterval getInterval() {
+        return interval;
+    }
+
     private boolean isLocked(final VerificationAttempts attempts) {
         return attempts.size() % interval.getNumberOfAttempts() == 0;
     }

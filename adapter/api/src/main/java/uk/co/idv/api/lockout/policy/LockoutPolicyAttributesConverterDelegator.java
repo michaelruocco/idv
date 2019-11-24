@@ -1,6 +1,7 @@
 package uk.co.idv.api.lockout.policy;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 
@@ -10,6 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Builder
+@Slf4j
 public class LockoutPolicyAttributesConverterDelegator {
 
     private final Collection<LockoutPolicyAttributesConverter> converters;
@@ -49,6 +51,7 @@ public class LockoutPolicyAttributesConverterDelegator {
     }
 
     private Optional<LockoutPolicyAttributesConverter> findConverter(final String type) {
+        log.info("finding lockout policy attributes converter for type {} from {}", type, converters);
         return converters.stream()
                 .filter(converter -> converter.supports(type))
                 .findFirst();

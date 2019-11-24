@@ -1,0 +1,29 @@
+{
+  "data": {
+    "id": "39374b21-e603-4408-9155-d122e3c1222a",
+    "type": "lockoutPolicies",
+    "attributes": {
+      "level": {
+        "channelId": "fake-channel",
+        "activityNames": [
+          "fake-activity"
+        ],
+        "aliasTypes": [
+          "fake-alias-type"
+        ]
+      },
+      "recordAttempts": "every-attempt",
+      "type": "soft-lock",
+      "intervals": [
+        {
+          "numberOfAttempts": 1,
+          "duration": 60000
+        },
+        {
+          "numberOfAttempts": 2,
+          "duration": 120000
+        }
+      ]
+    }
+  }
+}

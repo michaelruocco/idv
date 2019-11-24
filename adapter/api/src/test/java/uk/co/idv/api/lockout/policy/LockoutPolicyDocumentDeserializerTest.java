@@ -14,13 +14,49 @@ class LockoutPolicyDocumentDeserializerTest {
     private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
-    void shouldSerializePolicies() throws JsonProcessingException {
-        final String json = ContentLoader.loadContentFromClasspath("lockout/hard/create-hard-lockout-policy-document.json");
+    void shouldDeserializeHardLockoutPolicy() throws JsonProcessingException {
+        final String json = ContentLoader.loadContentFromClasspath("lockout/hard/hard-lockout-policy-document.json");
 
         final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
 
         final LockoutPolicyAttributes attributes = document.getAttributes();
         final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.hardLock();
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
+        LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+    }
+
+    @Test
+    void shouldDeserializeNonLockingPolicy() throws JsonProcessingException {
+        final String json = ContentLoader.loadContentFromClasspath("lockout/non-locking/non-locking-policy-document.json");
+
+        final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
+
+        final LockoutPolicyAttributes attributes = document.getAttributes();
+        final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.nonLocking();
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
+        LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+    }
+
+    @Test
+    void shouldDeserializeSoftLockoutPolicy() throws JsonProcessingException {
+        final String json = ContentLoader.loadContentFromClasspath("lockout/soft/soft-lockout-policy-document.json");
+
+        final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
+
+        final LockoutPolicyAttributes attributes = document.getAttributes();
+        final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.softLock();
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
+        LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+    }
+
+    @Test
+    void shouldDeserializeRecurringSoftLockoutPolicy() throws JsonProcessingException {
+        final String json = ContentLoader.loadContentFromClasspath("lockout/soft/recurring-soft-lockout-policy-document.json");
+
+        final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
+
+        final LockoutPolicyAttributes attributes = document.getAttributes();
+        final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.recurringSoftLock();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
         LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
     }
