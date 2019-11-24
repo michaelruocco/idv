@@ -3,14 +3,12 @@ plugins {
     id 'idea'
     id 'com.diffplug.gradle.spotless' version '3.26.0'
     id 'com.github.ben-manes.versions' version '0.27.0'
-    id 'com.github.kt3k.coveralls' version '2.8.4'
     id 'com.vanniktech.dependency.graph.generator' version '0.5.0'
 }
 
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'jacoco'
-    apply plugin: 'com.github.kt3k.coveralls'
 
     repositories {
         mavenCentral()
@@ -98,30 +96,23 @@ jacoco {
     toolVersion = '0.8.5'
 }
 
-task jacocoRootReport(type: JacocoReport) {
-    dependsOn = subprojects.test
-
-    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output)
+task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
     reports {
-        html.enabled = true
-        xml.enabled = true
-    }
-
-    doFirst {
-        executionData = files(executionData.findAll { it.exists() })
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
     }
 }
 
-coveralls {
-    sourceDirs = subprojects.sourceSets.main.allSource.srcDirs.flatten()
-    jacocoReportPath = "${buildDir}/reports/jacoco/jacocoRootReport/jacocoRootReport.xml"
-}
-
-tasks.coveralls {
-    dependsOn jacocoRootReport
+codeCoverageReport.dependsOn {
+    subprojects*.test
 }
 
 dependencyUpdates.resolutionStrategy {
