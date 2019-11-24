@@ -27,6 +27,7 @@ class LoginTest {
     @Test
     void shouldTestEquals() {
         EqualsVerifier.forClass(Login.class)
+                .withRedefinedSuperclass()
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }

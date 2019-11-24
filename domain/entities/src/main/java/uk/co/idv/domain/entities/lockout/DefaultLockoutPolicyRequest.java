@@ -1,14 +1,10 @@
 package uk.co.idv.domain.entities.lockout;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
 @Builder
-@Getter
-@RequiredArgsConstructor
-@EqualsAndHashCode
+@Data
 public class DefaultLockoutPolicyRequest implements LockoutPolicyRequest {
 
     private final String channelId;
