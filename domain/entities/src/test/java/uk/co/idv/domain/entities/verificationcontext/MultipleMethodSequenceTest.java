@@ -80,12 +80,13 @@ class MultipleMethodSequenceTest {
 
     @Test
     void shouldReturnDurationFromMethodWithLongestDuration() {
-        final VerificationMethod method1 = new FakeVerificationMethodEligible(Duration.ofMinutes(10));
-        final VerificationMethod method2 = new FakeVerificationMethodEligible(Duration.ofMinutes(3));
+        final VerificationMethod method1 = new FakeVerificationMethodEligible(Duration.ofMinutes(1));
+        final VerificationMethod method2 = new FakeVerificationMethodEligible(Duration.ofMinutes(2));
+        final VerificationMethod method3 = new FakeVerificationMethodEligible(Duration.ofMinutes(3));
 
-        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
+        final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2, method3));
 
-        assertThat(sequence.getDuration()).isEqualTo(method1.getDuration());
+        assertThat(sequence.getDuration()).isEqualTo(method3.getDuration());
     }
 
     @Test
