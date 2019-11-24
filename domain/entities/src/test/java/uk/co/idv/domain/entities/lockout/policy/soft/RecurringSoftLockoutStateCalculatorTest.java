@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.state.FakeCalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequestMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.state.NotLockedState;
@@ -26,8 +26,7 @@ class RecurringSoftLockoutStateCalculatorTest {
 
     @Test
     void shouldReturnNotLockedStateIfNumberOfAttemptsIsNotDivisableByIntervalNumberOfAttempts() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
 
         final LockoutState state = calculator.calculate(request);
 
@@ -36,8 +35,7 @@ class RecurringSoftLockoutStateCalculatorTest {
 
     @Test
     void shouldPopulateAttemptsOnNotLockedState() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
 
         final LockoutState state = calculator.calculate(request);
 
@@ -47,7 +45,9 @@ class RecurringSoftLockoutStateCalculatorTest {
     @Test
     void shouldReturnSoftLockoutStateIfNumberOfAttemptsIsDivisableByIntervalNumberOfAttempts() {
         final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts() * 2);
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
+                .attempts(attempts)
+                .build();
 
         final LockoutState state = calculator.calculate(request);
 
@@ -57,7 +57,9 @@ class RecurringSoftLockoutStateCalculatorTest {
     @Test
     void shouldPopulateAttemptsOnSoftLockState() {
         final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
+                .attempts(attempts)
+                .build();
 
         final LockoutState state = calculator.calculate(request);
 
@@ -67,7 +69,9 @@ class RecurringSoftLockoutStateCalculatorTest {
     @Test
     void shouldPopulateIntervalDurationOnSoftLockState() {
         final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
+                .attempts(attempts)
+                .build();
 
         final SoftLockoutState state = (SoftLockoutState) calculator.calculate(request);
 
@@ -77,7 +81,9 @@ class RecurringSoftLockoutStateCalculatorTest {
     @Test
     void shouldPopulateLockedUntilOnSoftLockState() {
         final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest(attempts);
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
+                .attempts(attempts)
+                .build();
 
         final SoftLockoutState state = (SoftLockoutState) calculator.calculate(request);
 

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,6 +42,16 @@ class SoftLockIntervalsTest {
 
         assertThat(interval.isPresent()).isTrue();
         assertThat(interval.get()).isEqualTo(interval1);
+    }
+
+    @Test
+    void shouldReturnIntervalsAsStream() {
+        final Stream<SoftLockInterval> stream = intervals.stream();
+
+        assertThat(stream).containsExactly(
+                interval1,
+                interval2
+        );
     }
 
 }

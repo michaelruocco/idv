@@ -6,7 +6,7 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevelConverter;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.state.FakeCalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequestMother;
 import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
@@ -75,7 +75,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToCalculateStateRequest() {
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
         given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.calculateState(request));
@@ -85,7 +85,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToCalculateStateRequest() {
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
         given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.calculateState(request));
@@ -115,7 +115,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToResetAttemptsRequest() {
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
         given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.resetAttempts(request));
@@ -125,7 +125,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToResetAttemptsRequest() {
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
         given(dao.load(request)).willReturn(Optional.empty());
 
         final Throwable error = catchThrowable(() -> service.resetAttempts(request));
@@ -136,7 +136,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldResetAttemptsUsingPolicy() {
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
         given(dao.load(request)).willReturn(Optional.of(policy));
         final VerificationAttempts expectedAttempts = VerificationAttemptsMother.oneAttempt();
         given(policy.reset(request.getAttempts(), request)).willReturn(expectedAttempts);

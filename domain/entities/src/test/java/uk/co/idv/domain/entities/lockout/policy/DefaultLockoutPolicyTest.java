@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
-import uk.co.idv.domain.entities.lockout.policy.state.FakeCalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequestMother;
 import uk.co.idv.domain.entities.lockout.policy.state.FakeLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
@@ -66,7 +66,7 @@ class DefaultLockoutPolicyTest {
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest request = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
 
         final VerificationAttempts resetAttempts = policy.reset(attempts, request);
 
@@ -79,7 +79,7 @@ class DefaultLockoutPolicyTest {
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest inputRequest = CalculateLockoutStateRequestMother.withOneAttempt();
 
         final VerificationAttempts resetAttempts = policy.reset(attempts, inputRequest);
 
@@ -93,7 +93,7 @@ class DefaultLockoutPolicyTest {
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest inputRequest = new FakeCalculateLockoutStateRequest();
+        final CalculateLockoutStateRequest inputRequest = CalculateLockoutStateRequestMother.withOneAttempt();
 
         final VerificationAttempts resetAttempts = policy.reset(attempts, inputRequest);
 

@@ -4,14 +4,13 @@ import lombok.ToString;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Stream;
 
 @ToString
-public class SoftLockIntervals implements Iterable<SoftLockInterval> {
+public class SoftLockIntervals {
 
     private final SortedMap<Integer, SoftLockInterval> intervals = new TreeMap<>();
 
@@ -21,11 +20,6 @@ public class SoftLockIntervals implements Iterable<SoftLockInterval> {
 
     public SoftLockIntervals(final Collection<SoftLockInterval> intervals) {
         intervals.forEach(this::add);
-    }
-
-    @Override
-    public Iterator<SoftLockInterval> iterator() {
-        return intervals.values().iterator();
     }
 
     public Stream<SoftLockInterval> stream() {
