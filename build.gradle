@@ -16,7 +16,7 @@ allprojects {
     }
 
     jacoco {
-        toolVersion = '0.8.3'
+        toolVersion = '0.8.5'
     }
 }
 
@@ -62,17 +62,6 @@ subprojects {
         useJUnitPlatform()
     }
 
-    jacocoTestReport {
-        additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
-        sourceDirectories = files(sourceSets.main.allSource.srcDirs)
-        classDirectories = files(sourceSets.main.output)
-
-        reports {
-            xml.enabled = true
-            html.enabled = true
-        }
-    }
-
     spotless {
         java {
             removeUnusedImports()
@@ -90,10 +79,6 @@ subprojects {
             replaceRegex 'Too much space after while', 'while +\\(', 'while ('
         }
     }
-}
-
-jacoco {
-    toolVersion = '0.8.5'
 }
 
 task codeCoverageReport(type: JacocoReport) {
