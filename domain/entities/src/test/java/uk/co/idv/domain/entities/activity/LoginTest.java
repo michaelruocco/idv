@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.activity;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -20,6 +22,13 @@ class LoginTest {
     @Test
     void shouldReturnTimestamp() {
         assertThat(login.getTimestamp()).isEqualTo(TIMESTAMP);
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(Login.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }
