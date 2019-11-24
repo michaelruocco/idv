@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverterDelegator;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
@@ -40,11 +39,6 @@ public class UkSpringConfig {
     @Bean
     public ActivityDocumentConverterDelegator activityDocumentConverterDelegator() {
         return ukConfig.activityDocumentConverterDelegator();
-    }
-
-    @Bean
-    public RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
-        return ukConfig.recordAttemptStrategyFactory();
     }
 
     @Bean

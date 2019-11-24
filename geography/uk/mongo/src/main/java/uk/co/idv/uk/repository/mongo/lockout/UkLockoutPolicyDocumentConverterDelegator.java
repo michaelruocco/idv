@@ -5,7 +5,7 @@ import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterD
 import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.nonlocking.NonLockingPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.soft.RecurringSoftLockoutPolicyDocumentConverter;
-import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentsConverter;
 import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockoutPolicyDocumentConverter;
 
 import java.util.Arrays;
@@ -13,12 +13,12 @@ import java.util.Arrays;
 public class UkLockoutPolicyDocumentConverterDelegator extends LockoutPolicyDocumentConverterDelegator {
 
     public UkLockoutPolicyDocumentConverterDelegator(final RecordAttemptStrategyFactory recordAttemptStrategyFactory,
-                                                     final SoftLockIntervalDocumentConverter softLockIntervalDocumentConverter) {
+                                                     final SoftLockIntervalDocumentsConverter softLockIntervalDocumentsConverter) {
         super(Arrays.asList(
                 new HardLockoutPolicyDocumentConverter(recordAttemptStrategyFactory),
                 new NonLockingPolicyDocumentConverter(recordAttemptStrategyFactory),
-                new SoftLockoutPolicyDocumentConverter(recordAttemptStrategyFactory, softLockIntervalDocumentConverter),
-                new RecurringSoftLockoutPolicyDocumentConverter(recordAttemptStrategyFactory, softLockIntervalDocumentConverter)
+                new SoftLockoutPolicyDocumentConverter(recordAttemptStrategyFactory, softLockIntervalDocumentsConverter),
+                new RecurringSoftLockoutPolicyDocumentConverter(recordAttemptStrategyFactory, softLockIntervalDocumentsConverter)
         ));
     }
 

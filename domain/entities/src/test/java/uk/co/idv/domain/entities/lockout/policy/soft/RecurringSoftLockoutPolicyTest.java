@@ -6,7 +6,6 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevelMother;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
 
-import java.time.Duration;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +15,7 @@ class RecurringSoftLockoutPolicyTest {
     private static final UUID ID = UUID.randomUUID();
     private static final LockoutLevel LEVEL = LockoutLevelMother.defaultLockoutLevel();
     private static final RecordAttemptStrategy RECORD_ATTEMPT_STRATEGY = new RecordEveryAttempt();
-    private static final SoftLockInterval INTERVAL = new SoftLockInterval(1, Duration.ofMinutes(1));
+    private static final SoftLockInterval INTERVAL = SoftLockIntervalMother.oneAttempt();
 
     private final RecurringSoftLockoutPolicy policy = new RecurringSoftLockoutPolicy(
             ID,

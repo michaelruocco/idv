@@ -11,6 +11,7 @@ import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentConverter;
+import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentsConverter;
 import uk.co.idv.uk.api.channel.UkObjectMapperSingleton;
 import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverterDelegator;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
@@ -19,10 +20,6 @@ import uk.co.idv.uk.repository.mongo.channel.UkChannelDocumentConverterDelegator
 import uk.co.idv.uk.repository.mongo.lockout.UkLockoutPolicyDocumentConverterDelegator;
 
 public class UkConfig {
-
-    private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = new RecordAttemptStrategyFactory();
-    private final SoftLockIntervalDtoConverter softLockIntervalDtoConverter = new SoftLockIntervalDtoConverter();
-    private final SoftLockIntervalDocumentConverter softLockIntervalDocumentConverter = new SoftLockIntervalDocumentConverter();
 
     public ObjectMapper objectMapper() {
         return UkObjectMapperSingleton.get();
@@ -44,22 +41,34 @@ public class UkConfig {
         return new UkActivityDocumentConverterDelegator();
     }
 
-    public RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
-        return recordAttemptStrategyFactory;
-    }
-
     public LockoutPolicyDocumentConverterDelegator lockoutPolicyDocumentConverterDelegator() {
         return new UkLockoutPolicyDocumentConverterDelegator(
-                recordAttemptStrategyFactory,
-                softLockIntervalDocumentConverter
+                recordAttemptStrategyFactory(),
+                softLockIntervalDocumentsConverter()
         );
     }
 
     public LockoutPolicyAttributesConverterDelegator lockoutPolicyAttributesConverterDelegator() {
         return new UkLockoutPolicyAttributesConverterDelegator(
-                recordAttemptStrategyFactory,
-                softLockIntervalDtoConverter
+                recordAttemptStrategyFactory(),
+                softLockIntervalDtoConverter()
         );
+    }
+
+    private RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
+        return new RecordAttemptStrategyFactory();
+    }
+
+    private SoftLockIntervalDtoConverter softLockIntervalDtoConverter() {
+        return new SoftLockIntervalDtoConverter();
+    }
+
+    private SoftLockIntervalDocumentsConverter softLockIntervalDocumentsConverter() {
+        return new SoftLockIntervalDocumentsConverter(softLockIntervalDocumentConverter());
+    }
+
+    private SoftLockIntervalDocumentConverter softLockIntervalDocumentConverter() {
+        return new SoftLockIntervalDocumentConverter();
     }
 
 }

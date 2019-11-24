@@ -16,7 +16,7 @@ import java.util.UUID;
 public class SoftLockoutPolicyDocumentConverter implements LockoutPolicyDocumentConverter {
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory;
-    private final SoftLockIntervalDocumentConverter intervalDocumentConverter;
+    private final SoftLockIntervalDocumentsConverter intervalDocumentsConverter;
 
     @Override
     public boolean supportsType(final String type) {
@@ -30,7 +30,7 @@ public class SoftLockoutPolicyDocumentConverter implements LockoutPolicyDocument
                 UUID.fromString(document.getId()),
                 toLevel(document),
                 toRecordAttemptStrategy(document),
-                intervalDocumentConverter.toIntervals(document.getIntervals())
+                intervalDocumentsConverter.toIntervals(document.getIntervals())
         );
     }
 
@@ -45,7 +45,7 @@ public class SoftLockoutPolicyDocumentConverter implements LockoutPolicyDocument
         document.setLockoutType(policy.getLockoutType());
         document.setRecordAttemptStrategyType(policy.getRecordAttemptStrategyType());
         final SoftLockoutStateCalculator stateCalculator = (SoftLockoutStateCalculator) policy.getStateCalculator();
-        document.setIntervals(intervalDocumentConverter.toDocuments(stateCalculator.getIntervals()));
+        document.setIntervals(intervalDocumentsConverter.toDocuments(stateCalculator.getIntervals()));
         return document;
     }
 

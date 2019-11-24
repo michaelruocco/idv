@@ -8,14 +8,13 @@ import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateReque
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.NotLockedState;
 
-import java.time.Duration;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SoftLockoutStateCalculatorTest {
 
-    private final SoftLockInterval interval = new SoftLockInterval(2, Duration.ofMinutes(5));
+    private final SoftLockInterval interval = SoftLockIntervalMother.build(2);
     private final SoftLockIntervals intervals = new SoftLockIntervals(interval);
     private final SoftLockoutStateCalculator calculator = new SoftLockoutStateCalculator(intervals);
 
