@@ -8,6 +8,10 @@ public class SoftLockIntervalMother {
         // utility class
     }
 
+    public static SoftLockIntervals intervals() {
+        return new SoftLockIntervals(oneAttempt());
+    }
+
     public static SoftLockInterval oneAttempt() {
         return build(1);
     }

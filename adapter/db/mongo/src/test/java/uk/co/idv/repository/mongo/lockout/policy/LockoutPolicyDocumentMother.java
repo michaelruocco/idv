@@ -2,6 +2,9 @@ package uk.co.idv.repository.mongo.lockout.policy;
 
 
 import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocument;
+import uk.co.idv.repository.mongo.lockout.policy.soft.RecurringSoftLockoutPolicyDocument;
+import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentMother;
+import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockoutPolicyDocument;
 
 import java.util.Collections;
 
@@ -26,6 +29,22 @@ public class LockoutPolicyDocumentMother {
         final LockoutPolicyDocument document = new LockoutPolicyDocument();
         populateCommonFields(document);
         document.setLockoutType("non-locking");
+        return document;
+    }
+
+    public static SoftLockoutPolicyDocument softLock() {
+        final SoftLockoutPolicyDocument document = new SoftLockoutPolicyDocument();
+        populateCommonFields(document);
+        document.setLockoutType("soft-lock");
+        document.setIntervals(SoftLockIntervalDocumentMother.collection(1));
+        return document;
+    }
+
+    public static RecurringSoftLockoutPolicyDocument recurringSoftLock() {
+        final RecurringSoftLockoutPolicyDocument document = new RecurringSoftLockoutPolicyDocument();
+        populateCommonFields(document);
+        document.setLockoutType("soft-lock");
+        document.setInterval(SoftLockIntervalDocumentMother.oneAttempt());
         return document;
     }
 
