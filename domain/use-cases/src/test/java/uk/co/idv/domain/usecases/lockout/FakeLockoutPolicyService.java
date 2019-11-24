@@ -14,7 +14,8 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     private CalculateLockoutStateRequest lastCalculateRequest;
     private VerificationAttempts resetAttemptsToReturn;
     private LockoutState stateToReturn;
-    private LockoutPolicy lastAddedPolicy;
+    private LockoutPolicy lastCreatedPolicy;
+    private LockoutPolicy lastUpdatedPolicy;
     private Collection<LockoutPolicy> policiesToLoad;
 
     @Override
@@ -36,7 +37,12 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
 
     @Override
     public void createPolicy(final LockoutPolicy policy) {
-        this.lastAddedPolicy = policy;
+        this.lastCreatedPolicy = policy;
+    }
+
+    @Override
+    public void updatePolicy(final LockoutPolicy policy) {
+        this.lastUpdatedPolicy = policy;
     }
 
     @Override
@@ -52,8 +58,12 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
         return lastCalculateRequest;
     }
 
-    public LockoutPolicy getLastAddedPolicy() {
-        return lastAddedPolicy;
+    public LockoutPolicy getLastCreatedPolicy() {
+        return lastCreatedPolicy;
+    }
+
+    public LockoutPolicy getLastUpdatedPolicy() {
+        return lastUpdatedPolicy;
     }
 
     public void setResetAttemptsToReturn(final VerificationAttempts attempts) {
