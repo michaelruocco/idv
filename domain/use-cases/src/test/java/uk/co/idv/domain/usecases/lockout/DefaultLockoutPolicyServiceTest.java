@@ -226,6 +226,28 @@ class DefaultLockoutPolicyServiceTest {
         assertThat(policies).isEqualTo(expectedPolicies);
     }
 
+    @Test
+    void shouldThrowExceptionIfPolicyNotFoundById() {
+        final UUID id = UUID.randomUUID();
+        given(dao.load(id)).willReturn(Optional.empty());
+
+        final Throwable error = catchThrowable(() -> service.loadPolicy(id));
+
+        assertThat(error)
+                .isInstanceOf(LockoutPolicyNotFoundException.class)
+                .hasMessage(id.toString());
+    }
+
+    @Test
+    void shouldReturnPolicyById() {
+        final UUID id = UUID.randomUUID();
+        given(dao.load(id)).willReturn(Optional.of(policy));
+
+        final LockoutPolicy loadedPolicy = service.loadPolicy(id);
+
+        assertThat(loadedPolicy).isEqualTo(policy);
+    }
+
     private static RecordAttemptRequest buildRecordAttemptRequest() {
         return RecordAttemptRequest.builder()
                 .context(new FakeVerificationContext())

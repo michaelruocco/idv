@@ -4,6 +4,10 @@ public class BinExtractor {
 
     private static final int BIN_LENGTH = 6;
 
+    private BinExtractor() {
+        // utility class
+    }
+
     public static String extractBin(final String cardNumber) {
         if (cardNumber.length() < BIN_LENGTH) {
             throw new CardNumberTooShortForBinException(cardNumber);
