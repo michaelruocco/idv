@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.lockout;
 
+import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -13,7 +13,7 @@ public interface LockoutPolicyDao {
 
     Optional<LockoutPolicy> load(final UUID id);
 
-    Optional<LockoutPolicy> load(final LockoutRequest request);
+    Optional<LockoutPolicy> load(final LockoutPolicyRequest request);
 
     Collection<LockoutPolicy> load();
 

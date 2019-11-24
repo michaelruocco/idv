@@ -38,7 +38,8 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void savePolicy(final LockoutPolicy policy) {
+    public void createPolicy(final LockoutPolicy policy) {
+
         // TODO add logic here to error if policy for same set of parameters already exists
         // TODO also need to add update method to this class
         dao.save(policy);

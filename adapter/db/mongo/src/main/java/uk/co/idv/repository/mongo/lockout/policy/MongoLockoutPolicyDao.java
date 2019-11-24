@@ -2,7 +2,7 @@ package uk.co.idv.repository.mongo.lockout.policy;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
@@ -40,7 +40,7 @@ public class MongoLockoutPolicyDao implements LockoutPolicyDao {
     }
 
     @Override
-    public Optional<LockoutPolicy> load(final LockoutRequest request) {
+    public Optional<LockoutPolicy> load(final LockoutPolicyRequest request) {
         final Collection<LockoutPolicyDocument> documents = repository.findByChannelId(request.getChannelId());
         final List<LockoutPolicy> applicablePolicies = documentConverter.toPolicies(documents)
                 .stream()

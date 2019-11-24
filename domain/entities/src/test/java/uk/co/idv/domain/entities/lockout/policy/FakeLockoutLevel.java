@@ -1,6 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -26,7 +26,7 @@ public class FakeLockoutLevel implements LockoutLevel {
     }
 
     @Override
-    public boolean appliesTo(LockoutRequest request) {
+    public boolean appliesTo(LockoutPolicyRequest request) {
         return appliesTo;
     }
 

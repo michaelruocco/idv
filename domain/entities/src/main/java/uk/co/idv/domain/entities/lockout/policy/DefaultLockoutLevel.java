@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class DefaultLockoutLevel implements LockoutLevel {
     private final Collection<String> aliasTypes = Collections.singleton(LockoutLevel.ALL);
 
     @Override
-    public boolean appliesTo(final LockoutRequest request) {
+    public boolean appliesTo(final LockoutPolicyRequest request) {
         return channelId.equals(request.getChannelId()) &&
                 appliesToActivity(request.getActivityName()) &&
                 appliesToAlias(request.getAliasType());

@@ -35,7 +35,7 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void savePolicy(final LockoutPolicy policy) {
+    public void createPolicy(final LockoutPolicy policy) {
         this.lastAddedPolicy = policy;
     }
 

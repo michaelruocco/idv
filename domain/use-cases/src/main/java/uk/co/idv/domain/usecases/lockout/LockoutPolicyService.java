@@ -18,11 +18,11 @@ public interface LockoutPolicyService {
 
     VerificationAttempts resetAttempts(CalculateLockoutStateRequest request);
 
-    default void savePolicies(Collection<LockoutPolicy> policies) {
-        policies.forEach(this::savePolicy);
+    default void createPolicies(Collection<LockoutPolicy> policies) {
+        policies.forEach(this::createPolicy);
     }
 
-    void savePolicy(LockoutPolicy policy);
+    void createPolicy(LockoutPolicy policy);
 
     Collection<LockoutPolicy> loadPolicies();
 

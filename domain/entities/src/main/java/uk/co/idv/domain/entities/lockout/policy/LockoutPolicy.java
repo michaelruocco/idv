@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
 
+import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
@@ -19,7 +20,7 @@ public interface LockoutPolicy {
 
     boolean isAliasLevel();
 
-    boolean appliesTo(final LockoutRequest request);
+    boolean appliesTo(final LockoutPolicyRequest request);
 
     boolean shouldRecordAttempt(final RecordAttemptRequest request);
 

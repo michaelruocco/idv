@@ -141,7 +141,7 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldSavePolicy() {
-        service.savePolicy(policy);
+        service.createPolicy(policy);
 
         verify(dao).save(policy);
     }
@@ -150,7 +150,7 @@ class DefaultLockoutPolicyServiceTest {
     void shouldSaveMultiplePolicies() {
         final LockoutPolicy policy1 = mock(LockoutPolicy.class);
 
-        service.savePolicies(Arrays.asList(policy, policy1));
+        service.createPolicies(Arrays.asList(policy, policy1));
 
         verify(dao).save(policy);
         verify(dao).save(policy1);

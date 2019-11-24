@@ -74,7 +74,7 @@ public class DefaultDomainConfig {
     public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao,
                                                      final LockoutPolicyProvider policiesProvider) {
         final LockoutPolicyService policyService = new DefaultLockoutPolicyService(dao);
-        policyService.savePolicies(policiesProvider.getPolicies());
+        policyService.createPolicies(policiesProvider.getPolicies());
         return policyService;
     }
 
