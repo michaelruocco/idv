@@ -14,21 +14,21 @@ public class HardLockoutPolicyAttributesConverter implements LockoutPolicyAttrib
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory;
 
     @Override
-    public boolean supports(String type) {
+    public boolean supports(final String type) {
         return HardLockoutStateCalculator.TYPE.equals(type);
     }
 
-    public LockoutPolicy toPolicy(final LockoutPolicyAttributes parameters) {
-        final HardLockoutPolicyAttributes hardLockoutParameters = (HardLockoutPolicyAttributes) parameters;
+    public LockoutPolicy toPolicy(final LockoutPolicyAttributes attributes) {
+        final HardLockoutPolicyAttributes hardLockoutAttributes = (HardLockoutPolicyAttributes) attributes;
         return new HardLockoutPolicy(
-                hardLockoutParameters.getId(),
-                hardLockoutParameters.getLockoutLevel(),
-                recordAttemptStrategyFactory.build(hardLockoutParameters.getRecordAttempts()),
-                hardLockoutParameters.getMaxNumberOfAttempts()
+                hardLockoutAttributes.getId(),
+                hardLockoutAttributes.getLockoutLevel(),
+                recordAttemptStrategyFactory.build(hardLockoutAttributes.getRecordAttempts()),
+                hardLockoutAttributes.getMaxNumberOfAttempts()
         );
     }
 
-    public LockoutPolicyAttributes toParameters(final LockoutPolicy policy) {
+    public LockoutPolicyAttributes toAttributes(final LockoutPolicy policy) {
         final HardLockoutPolicy hardLockoutPolicy = (HardLockoutPolicy) policy;
         return HardLockoutPolicyAttributes.builder()
                 .id(hardLockoutPolicy.getId())

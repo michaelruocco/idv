@@ -1,10 +1,10 @@
-package uk.co.idv.uk.domain.entities.lockout;
+package uk.co.idv.uk.domain.entities.lockout.rsa;
 
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 import uk.co.idv.domain.entities.identity.alias.CreditCardNumber;
 import uk.co.idv.domain.entities.identity.alias.DebitCardNumber;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutLevel;
-import uk.co.idv.uk.domain.entities.channel.Rsa;
+import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
 
 import java.util.Arrays;
 import java.util.Collections;

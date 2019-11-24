@@ -5,6 +5,9 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordNever;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentMother;
@@ -12,10 +15,14 @@ import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentMother;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class NonLockingPolicyDocumentConverterTest {
 
-    private final LockoutPolicyDocumentConverter converter = new NonLockingPolicyDocumentConverter();
+    private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
+
+    private final LockoutPolicyDocumentConverter converter = new NonLockingPolicyDocumentConverter(recordAttemptStrategyFactory);
 
     @Test
     void shouldOnlySupportNonLockingLockoutType() {
@@ -106,6 +113,17 @@ class NonLockingPolicyDocumentConverterTest {
         final LockoutPolicy policy = converter.toPolicy(document);
 
         assertThat(policy.getLockoutType()).isEqualTo(document.getLockoutType());
+    }
+
+    @Test
+    void shouldPopulateRecordAttemptStrategyTypeOnLockoutPolicy() {
+        final LockoutPolicyDocument document = LockoutPolicyDocumentMother.nonLocking();
+        final RecordAttemptStrategy strategy = new RecordNever();
+        given(recordAttemptStrategyFactory.build(document.getRecordAttemptStrategyType())).willReturn(strategy);
+
+        final LockoutPolicy policy = converter.toPolicy(document);
+
+        assertThat(policy.getRecordAttemptStrategyType()).isEqualTo(strategy.getType());
     }
 
     @Test

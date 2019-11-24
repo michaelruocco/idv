@@ -1,9 +1,7 @@
 package uk.co.idv.api.lockout.policy.hard;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import java.util.UUID;
+import uk.co.idv.api.lockout.state.LockoutStateMixin;
 
 @JsonPropertyOrder({
         "id",
@@ -11,15 +9,10 @@ import java.util.UUID;
         "locked",
         "maxNumberOfAttempts",
         "numberOfAttemptsRemaining",
-        "created",
-        "expiry"
+        "attempts"
 })
-public interface HardLockoutStateMixin {
+public interface HardLockoutStateMixin extends LockoutStateMixin {
 
-    @JsonIgnore
-    UUID getId();
-
-    @JsonIgnore
-    String getMessage();
+    // intentionally blank
 
 }

@@ -6,7 +6,7 @@ import java.util.Collection;
 
 public interface LockoutLevel {
 
-    String ALL = "ALL";
+    String ALL = "all";
 
     boolean appliesTo(LockoutRequest request);
 

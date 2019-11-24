@@ -1,4 +1,4 @@
-package uk.co.idv.uk.domain.entities.lockout;
+package uk.co.idv.uk.domain.entities.lockout.rsa;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;

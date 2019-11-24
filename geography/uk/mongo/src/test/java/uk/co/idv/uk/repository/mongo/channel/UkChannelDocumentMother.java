@@ -1,6 +1,7 @@
 package uk.co.idv.uk.repository.mongo.channel;
 
-import uk.co.idv.uk.domain.entities.channel.Rsa;
+import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
+import uk.co.idv.uk.repository.mongo.channel.rsa.RsaChannelDocument;
 
 public class UkChannelDocumentMother {
 

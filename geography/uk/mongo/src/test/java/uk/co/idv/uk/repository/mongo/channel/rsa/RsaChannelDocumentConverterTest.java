@@ -1,10 +1,11 @@
-package uk.co.idv.uk.repository.mongo.channel;
+package uk.co.idv.uk.repository.mongo.channel.rsa;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.repository.mongo.channel.ChannelDocument;
-import uk.co.idv.uk.domain.entities.channel.Rsa;
+import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
 import uk.co.idv.uk.domain.entities.channel.UkChannelMother;
+import uk.co.idv.uk.repository.mongo.channel.UkChannelDocumentMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

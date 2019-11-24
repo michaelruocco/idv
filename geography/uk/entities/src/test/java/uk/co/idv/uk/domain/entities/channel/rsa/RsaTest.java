@@ -1,9 +1,10 @@
-package uk.co.idv.uk.domain.entities.channel;
+package uk.co.idv.uk.domain.entities.channel.rsa;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.uk.domain.entities.channel.UkChannelMother;
 
 
 import static org.assertj.core.api.Assertions.assertThat;

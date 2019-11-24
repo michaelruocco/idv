@@ -4,9 +4,10 @@ import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
+import uk.co.idv.uk.domain.entities.lockout.as3.As3LockoutPolicy;
+import uk.co.idv.uk.domain.entities.lockout.rsa.RsaLockoutPolicy;
 
 import java.util.Collection;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,10 +16,10 @@ class UkLockoutPolicyProviderTest {
     private final LockoutPolicyProvider provider = new UkLockoutPolicyProvider();
 
     @Test
-    void shouldReturnOnePolicy() {
+    void shouldReturnPolicies() {
         final Collection<LockoutPolicy> policies = provider.getPolicies();
 
-        assertThat(policies).hasSize(1);
+        assertThat(policies).hasSize(2);
     }
 
     @Test
@@ -31,12 +32,12 @@ class UkLockoutPolicyProviderTest {
     }
 
     @Test
-    void shouldReturnRsaLockoutPolicyWithId() {
+    void shouldReturnAs3LockoutPolicy() {
         final Collection<LockoutPolicy> policies = provider.getPolicies();
 
-        final LockoutPolicy policy = IterableUtils.get(policies, 0);
+        final LockoutPolicy policy = IterableUtils.get(policies, 1);
 
-        assertThat(policy.getId()).isEqualTo(UUID.fromString("d3bf531a-bdcd-45d5-b5b6-d7a213f3af7b"));
+        assertThat(policy).isInstanceOf(As3LockoutPolicy.class);
     }
 
 }

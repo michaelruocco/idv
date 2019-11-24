@@ -1,4 +1,4 @@
-package uk.co.idv.uk.domain.entities.channel;
+package uk.co.idv.uk.domain.entities.channel.rsa;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

@@ -130,6 +130,7 @@ class HardLockoutPolicyDocumentConverterTest {
         final LockoutPolicyDocument document = LockoutPolicyDocumentMother.hardLock();
         final RecordAttemptStrategy strategy = new RecordEveryAttempt();
         given(recordAttemptStrategyFactory.build(document.getRecordAttemptStrategyType())).willReturn(strategy);
+
         final LockoutPolicy policy = converter.toPolicy(document);
 
         assertThat(policy.getRecordAttemptStrategyType()).isEqualTo(strategy.getType());

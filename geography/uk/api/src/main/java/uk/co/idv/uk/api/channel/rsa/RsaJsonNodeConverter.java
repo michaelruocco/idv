@@ -1,10 +1,10 @@
-package uk.co.idv.uk.api.channel;
+package uk.co.idv.uk.api.channel.rsa;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.json.channel.ChannelJsonNodeConverter;
-import uk.co.idv.uk.domain.entities.channel.Rsa;
+import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
 
 import java.util.Optional;
 

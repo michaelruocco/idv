@@ -13,16 +13,13 @@ import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverterDelegator;
 import uk.co.idv.api.lockout.state.LockoutStateCalculatorFactory;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutFacade;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutPolicyService;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutService;
 import uk.co.idv.domain.usecases.lockout.DefaultVerificationAttemptsLoader;
 import uk.co.idv.domain.usecases.lockout.LockoutAttemptRecorder;
 import uk.co.idv.domain.usecases.lockout.LockoutFacade;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverter;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.usecases.lockout.LockoutStateLoader;
@@ -42,9 +39,7 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
-import uk.co.idv.api.lockout.policy.hard.HardLockoutPolicyAttributesConverter;
 
-import java.util.Collection;
 
 @Configuration
 public class DefaultDomainConfig {
@@ -69,24 +64,10 @@ public class DefaultDomainConfig {
         return new StubbedSequenceLoader();
     }
 
-    @Bean
-    public RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
-        return new RecordAttemptStrategyFactory();
-    }
 
     @Bean
     public LockoutStateCalculatorFactory stateCalculatorFactory() {
         return new LockoutStateCalculatorFactory();
-    }
-
-    @Bean
-    public LockoutPolicyAttributesConverter hardLockoutPolicyParametersConverter(final RecordAttemptStrategyFactory recordAttemptStrategyFactory) {
-        return new HardLockoutPolicyAttributesConverter(recordAttemptStrategyFactory);
-    }
-
-    @Bean
-    public LockoutPolicyAttributesConverterDelegator lockoutPolicyParametersConverterDelegator(final Collection<LockoutPolicyAttributesConverter> converters) {
-        return new LockoutPolicyAttributesConverterDelegator(converters);
     }
 
     @Bean

@@ -6,8 +6,8 @@ public interface LockoutPolicyAttributesConverter {
 
     boolean supports(String type);
 
-    LockoutPolicy toPolicy(LockoutPolicyAttributes parameters);
+    LockoutPolicy toPolicy(LockoutPolicyAttributes attributes);
 
-    LockoutPolicyAttributes toParameters(LockoutPolicy policy);
+    LockoutPolicyAttributes toAttributes(LockoutPolicy policy);
 
 }

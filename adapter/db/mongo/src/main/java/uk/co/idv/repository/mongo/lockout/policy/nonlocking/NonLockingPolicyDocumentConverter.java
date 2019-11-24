@@ -5,6 +5,7 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 
@@ -12,6 +13,8 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 public class NonLockingPolicyDocumentConverter implements LockoutPolicyDocumentConverter {
+
+    private final RecordAttemptStrategyFactory recordAttemptStrategyFactory;
 
     @Override
     public boolean supportsType(final String type) {
@@ -22,7 +25,8 @@ public class NonLockingPolicyDocumentConverter implements LockoutPolicyDocumentC
     public LockoutPolicy toPolicy(final LockoutPolicyDocument document) {
         return new NonLockingLockoutPolicy(
                 UUID.fromString(document.getId()),
-                toLevel(document)
+                toLevel(document),
+                recordAttemptStrategyFactory.build(document.getRecordAttemptStrategyType())
         );
     }
 

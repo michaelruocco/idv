@@ -26,7 +26,6 @@ import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.repository.mongo.MongoIndexResolver;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
@@ -40,11 +39,9 @@ import uk.co.idv.repository.mongo.lockout.attempt.MongoVerificationAttemptsDao;
 import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsRepository;
-import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
-import uk.co.idv.repository.mongo.lockout.policy.hard.HardLockoutPolicyDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.MongoVerificationContextDao;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationContextDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationContextRepository;
@@ -288,16 +285,6 @@ public class DefaultMongoDaoConfig {
     @Bean
     public VerificationAttemptsDocumentConverter verificationAttemptsConverter(final VerificationAttemptDocumentConverter attemptConverter) {
         return new VerificationAttemptsDocumentConverter(attemptConverter);
-    }
-
-    @Bean
-    public LockoutPolicyDocumentConverter mongoLockoutPolicyParametersDocumentConverter(final RecordAttemptStrategyFactory strategyFactory) {
-        return new HardLockoutPolicyDocumentConverter(strategyFactory);
-    }
-
-    @Bean
-    public LockoutPolicyDocumentConverterDelegator lockoutPolicyParametersDocumentConverterDelegator(final Collection<LockoutPolicyDocumentConverter> converters) {
-        return new LockoutPolicyDocumentConverterDelegator(converters);
     }
 
     @Bean

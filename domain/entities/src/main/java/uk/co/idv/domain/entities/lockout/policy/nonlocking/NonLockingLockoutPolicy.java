@@ -9,9 +9,14 @@ import java.util.UUID;
 
 public class NonLockingLockoutPolicy extends DefaultLockoutPolicy {
 
+    public NonLockingLockoutPolicy(final UUID id, final LockoutLevel level) {
+        this(id, level, new RecordNever());
+    }
+
     public NonLockingLockoutPolicy(final UUID id,
-                                   final LockoutLevel level) {
-        this(id, level, new RecordNever(), new NonLockingLockoutStateCalculator());
+                                   final LockoutLevel level,
+                                   final RecordAttemptStrategy recordAttemptStrategy) {
+        this(id, level, recordAttemptStrategy, new NonLockingLockoutStateCalculator());
     }
 
     public NonLockingLockoutPolicy(final UUID id,

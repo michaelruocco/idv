@@ -1,9 +1,9 @@
-package uk.co.idv.uk.repository.mongo.channel;
+package uk.co.idv.uk.repository.mongo.channel.rsa;
 
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.repository.mongo.channel.ChannelDocument;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverter;
-import uk.co.idv.uk.domain.entities.channel.Rsa;
+import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
 
 
 public class RsaChannelDocumentConverter implements ChannelDocumentConverter {

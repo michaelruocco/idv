@@ -3,10 +3,13 @@ package uk.co.idv.app.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverterDelegator;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
+import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
 import uk.co.idv.uk.config.UkConfig;
 
 @Configuration
@@ -37,6 +40,21 @@ public class UkSpringConfig {
     @Bean
     public ActivityDocumentConverterDelegator activityDocumentConverterDelegator() {
         return ukConfig.activityDocumentConverterDelegator();
+    }
+
+    @Bean
+    public RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
+        return ukConfig.recordAttemptStrategyFactory();
+    }
+
+    @Bean
+    public LockoutPolicyDocumentConverterDelegator lockoutPolicyDocumentConverterDelegator() {
+        return ukConfig.lockoutPolicyDocumentConverterDelegator();
+    }
+
+    @Bean
+    public LockoutPolicyAttributesConverterDelegator lockoutPolicyAttributesConverterDelegator() {
+        return ukConfig.lockoutPolicyAttributesConverterDelegator();
     }
 
 }

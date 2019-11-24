@@ -1,21 +1,22 @@
-package uk.co.idv.uk.domain.entities.lockout;
+package uk.co.idv.uk.domain.entities.lockout.as3;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordNever;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RsaLockoutPolicyTest {
+class As3LockoutPolicyTest {
 
     private static final UUID ID = UUID.randomUUID();
 
-    private final LockoutPolicy policy = new RsaLockoutPolicy(ID);
+    private final LockoutPolicy policy = new As3LockoutPolicy(ID);
 
     @Test
     void shouldReturnId() {
@@ -23,24 +24,24 @@ class RsaLockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnRsaLockoutLevel() {
+    void shouldReturnAs3LockoutLevel() {
         final LockoutLevel level = policy.getLockoutLevel();
 
-        assertThat(level).isInstanceOf(RsaLockoutLevel.class);
+        assertThat(level).isInstanceOf(As3LockoutLevel.class);
     }
 
     @Test
-    void shouldReturnRsaLockoutStateCalculator() {
+    void shouldReturnNonLockingLockoutStateCalculator() {
         final LockoutStateCalculator stateCalculator = policy.getStateCalculator();
 
-        assertThat(stateCalculator).isInstanceOf(RsaLockoutStateCalculator.class);
+        assertThat(stateCalculator).isInstanceOf(NonLockingLockoutStateCalculator.class);
     }
 
     @Test
-    void shouldReturnRecordEveryAttemptStrategy() {
+    void shouldReturnRecordNeverStrategy() {
         final RecordAttemptStrategy strategy = policy.getRecordAttemptStrategy();
 
-        assertThat(strategy).isInstanceOf(RecordEveryAttempt.class);
+        assertThat(strategy).isInstanceOf(RecordNever.class);
     }
 
 }

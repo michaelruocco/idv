@@ -1,4 +1,4 @@
-package uk.co.idv.uk.repository.mongo.channel;
+package uk.co.idv.uk.repository.mongo.channel.rsa;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
