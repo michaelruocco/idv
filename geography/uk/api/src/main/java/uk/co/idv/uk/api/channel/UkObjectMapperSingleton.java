@@ -7,6 +7,10 @@ public class UkObjectMapperSingleton {
 
     private static final ObjectMapper MAPPER = build();
 
+    private UkObjectMapperSingleton() {
+        // utility class
+    }
+    
     public static ObjectMapper get() {
         return MAPPER;
     }
