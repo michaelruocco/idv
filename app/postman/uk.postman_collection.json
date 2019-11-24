@@ -391,6 +391,169 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "create-lockout-policy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "196876bc-69a4-49be-b878-5f571f8ddf26",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "33654285-266e-4bcb-a487-7b197f635f47",
+						"exec": [
+							"var json = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"lockoutPolicyId\", json.data.id);",
+							"",
+							"pm.test(\"should return created status\", function () {",
+							"    pm.response.to.have.status(201);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{$guid}}\",\n        \"type\": \"lockoutPolicies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"recordAttempts\": \"never\",\n            \"type\": \"non-locking\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/lockoutPolicies",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"lockoutPolicies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-lockout-policy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "196876bc-69a4-49be-b878-5f571f8ddf26",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "33654285-266e-4bcb-a487-7b197f635f47",
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/lockoutPolicies/{{lockoutPolicyId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"lockoutPolicies",
+						"{{lockoutPolicyId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-lockout-policy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "196876bc-69a4-49be-b878-5f571f8ddf26",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "33654285-266e-4bcb-a487-7b197f635f47",
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{lockoutPolicyId}}\",\n        \"type\": \"lockoutPolicies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"recordAttempts\": \"every-attempt\",\n            \"type\": \"hard-lock\",\n            \"maxNumberOfAttempts\": 3\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/lockoutPolicies",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"lockoutPolicies"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

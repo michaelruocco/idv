@@ -28,7 +28,11 @@ public interface LockoutPolicyService {
 
     void updatePolicy(LockoutPolicy policy);
 
+    LockoutPolicy loadPolicy(UUID id);
+
     Collection<LockoutPolicy> loadPolicies();
+
+
 
     @Getter
     class RequestedLockoutPolicyNotFoundException extends RuntimeException {

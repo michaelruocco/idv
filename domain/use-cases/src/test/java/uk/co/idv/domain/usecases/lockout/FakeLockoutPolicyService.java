@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptReque
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class FakeLockoutPolicyService implements LockoutPolicyService {
 
@@ -17,6 +18,7 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     private LockoutPolicy lastCreatedPolicy;
     private LockoutPolicy lastUpdatedPolicy;
     private Collection<LockoutPolicy> policiesToLoad;
+    private LockoutPolicy policyToLoad;
 
     @Override
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
@@ -43,6 +45,11 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     @Override
     public void updatePolicy(final LockoutPolicy policy) {
         this.lastUpdatedPolicy = policy;
+    }
+
+    @Override
+    public LockoutPolicy loadPolicy(final UUID id) {
+        return policyToLoad;
     }
 
     @Override
@@ -76,6 +83,10 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
 
     public void setPoliciesToLoad(final Collection<LockoutPolicy> policies) {
         this.policiesToLoad = policies;
+    }
+
+    public void setPolicyToLoad(final LockoutPolicy policy) {
+        this.policyToLoad = policy;
     }
 
 }

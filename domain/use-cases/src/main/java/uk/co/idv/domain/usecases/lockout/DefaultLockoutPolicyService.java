@@ -68,6 +68,12 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
+    public LockoutPolicy loadPolicy(final UUID id) {
+        return dao.load(id)
+                .orElseThrow(() -> new LockoutPolicyNotFoundException(id));
+    }
+
+    @Override
     public Collection<LockoutPolicy> loadPolicies() {
         return dao.load();
     }
