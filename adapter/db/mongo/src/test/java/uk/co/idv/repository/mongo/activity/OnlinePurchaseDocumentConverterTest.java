@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class OnlinePurchaseConverterTest {
+class OnlinePurchaseDocumentConverterTest {
 
     private final MonetaryAmountDocumentConverter amountConverter = mock(MonetaryAmountDocumentConverter.class);
 
