@@ -10,7 +10,7 @@ public class UkObjectMapperSingleton {
     private UkObjectMapperSingleton() {
         // utility class
     }
-    
+
     public static ObjectMapper get() {
         return MAPPER;
     }
