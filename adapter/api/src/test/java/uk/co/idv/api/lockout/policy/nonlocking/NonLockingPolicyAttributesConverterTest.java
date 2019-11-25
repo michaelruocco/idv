@@ -1,32 +1,25 @@
-package uk.co.idv.api.lockout.policy.hard;
+package uk.co.idv.api.lockout.policy.nonlocking;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesMother;
+import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverter;
+import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesMother;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class HardLockoutPolicyAttributesConverterTest {
+class NonLockingPolicyAttributesConverterTest {
 
-    private final HardLockoutPolicyAttributes parameters = LockoutPolicyAttributesMother.hardLock();
+    private final LockoutPolicyAttributes parameters = LockoutPolicyAttributesMother.nonLocking();
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
 
-    private final LockoutPolicyAttributesConverter converter = new HardLockoutPolicyAttributesConverter(recordAttemptStrategyFactory);
-
-    @Test
-    void shouldPopulateIdOnPolicy() {
-        final LockoutPolicy policy = converter.toPolicy(parameters);
-
-        assertThat(policy.getId()).isEqualTo(parameters.getId());
-    }
+    private final LockoutPolicyAttributesConverter converter = new NonLockingPolicyAttributesConverter(recordAttemptStrategyFactory);
 
     @Test
     void shouldPopulateLockoutLevelOnPolicy() {
@@ -49,14 +42,7 @@ class HardLockoutPolicyAttributesConverterTest {
     void shouldPopulateStateCalculatorOnPolicy() {
         final LockoutPolicy policy = converter.toPolicy(parameters);
 
-        assertThat(policy.getStateCalculator()).isInstanceOf(HardLockoutStateCalculator.class);
-    }
-
-    @Test
-    void shouldPopulateMaxAttemptsOnPolicy() {
-        final HardLockoutPolicy policy = (HardLockoutPolicy) converter.toPolicy(parameters);
-
-        assertThat(policy.getMaxNumberOfAttempts()).isEqualTo(parameters.getMaxNumberOfAttempts());
+        assertThat(policy.getStateCalculator()).isInstanceOf(NonLockingLockoutStateCalculator.class);
     }
 
 }
