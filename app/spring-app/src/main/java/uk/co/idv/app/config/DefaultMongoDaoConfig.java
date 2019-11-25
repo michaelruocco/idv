@@ -1,6 +1,5 @@
 package uk.co.idv.app.config;
 
-import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoDriverInformation;
 import com.mongodb.ServerAddress;
@@ -73,7 +72,6 @@ import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Configuration
 @EnableAutoConfiguration
@@ -100,7 +98,7 @@ public class DefaultMongoDaoConfig {
     public MongoClient mongo() {
         log.info("attempting to connect to running mongo server");
         final MongoClientSettings.Builder settingsBuilder = MongoClientSettings.builder();
-        loadMongoConnectionString().ifPresent(settingsBuilder::applyConnectionString);
+        MongoConnectionString.load().ifPresent(settingsBuilder::applyConnectionString);
         final MongoDriverInformation driverInformation = MongoDriverInformation.builder().build();
         return new MongoClientImpl(settingsBuilder.build(), driverInformation);
     }
@@ -340,11 +338,6 @@ public class DefaultMongoDaoConfig {
             resolver.resolve();
         }
 
-    }
-
-    private static Optional<ConnectionString> loadMongoConnectionString() {
-        return Optional.ofNullable(System.getenv("MONGO_CONNECTION_STRING"))
-                .map(ConnectionString::new);
     }
 
 }

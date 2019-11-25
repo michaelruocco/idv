@@ -19,6 +19,7 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     private LockoutPolicy lastUpdatedPolicy;
     private Collection<LockoutPolicy> policiesToLoad;
     private LockoutPolicy policyToLoad;
+    private UUID lastLoadedId;
 
     @Override
     public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
@@ -49,6 +50,7 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
 
     @Override
     public LockoutPolicy loadPolicy(final UUID id) {
+        lastLoadedId = id;
         return policyToLoad;
     }
 
@@ -87,6 +89,10 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
 
     public void setPolicyToLoad(final LockoutPolicy policy) {
         this.policyToLoad = policy;
+    }
+
+    public UUID getLastLoadedId() {
+        return lastLoadedId;
     }
 
 }

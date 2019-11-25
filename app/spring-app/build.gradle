@@ -3,8 +3,8 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'com.bmuschko.docker-remote-api' version '6.0.0'
     id 'com.avast.gradle.docker-compose' version '0.10.0'
-    // postman plugin only currently works against this and not any later versions of the node plugin
-    // i have raised this issue to see if support for later versions is intended to be added
+    // the postman plugin only currently works against 0.14 and not any later versions of the node plugin
+    // I have raised this issue to see if support for later versions is intended to be added
     // https://github.com/simomat/gradle-postman-runner/issues/10
     id 'com.moowork.node' version '0.14'
     id 'de.infonautika.postman' version '0.0.5'

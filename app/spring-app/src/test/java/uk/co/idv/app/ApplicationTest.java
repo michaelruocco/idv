@@ -1,7 +1,6 @@
 package uk.co.idv.app;
 
 import org.junit.Rule;
-import org.junit.contrib.java.lang.system.EnvironmentVariables;
 import org.junit.contrib.java.lang.system.RestoreSystemProperties;
 import org.junit.jupiter.api.Test;
 
@@ -9,9 +8,6 @@ class ApplicationTest {
 
     @Rule
     public final RestoreSystemProperties restore = new RestoreSystemProperties();
-
-    @Rule
-    public final EnvironmentVariables environmentVariables  = new EnvironmentVariables();
 
     @Test
     void shouldStartupWithStubProfile() {
