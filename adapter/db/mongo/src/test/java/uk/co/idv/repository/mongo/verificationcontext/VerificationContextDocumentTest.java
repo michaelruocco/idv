@@ -1,13 +1,13 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.repository.mongo.beantest.CustomBeanTester;
+import uk.co.idv.repository.mongo.beantest.DocumentBeanTester;
 
 class VerificationContextDocumentTest {
 
     @Test
     void shouldTestBean() {
-        new CustomBeanTester().testBean(VerificationContextDocument.class);
+        new DocumentBeanTester().testBean(VerificationContextDocument.class);
     }
 
 }

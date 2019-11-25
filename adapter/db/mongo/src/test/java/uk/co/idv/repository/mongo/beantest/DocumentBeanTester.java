@@ -18,9 +18,9 @@ import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.Pas
 
 import java.math.BigDecimal;
 
-public class CustomBeanTester extends BeanTester {
+public class DocumentBeanTester extends BeanTester {
 
-    public CustomBeanTester() {
+    public DocumentBeanTester() {
         final FactoryCollection factories = getFactoryCollection();
         factories.addFactory(BigDecimal.class, new BigDecimalFactory());
         factories.addFactory(MonetaryAmountDocument.class, new MonetaryAmountDocumentFactory());
