@@ -3,7 +3,7 @@ package uk.co.idv.app.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverterDelegator;
+import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
@@ -47,8 +47,8 @@ public class UkSpringConfig {
     }
 
     @Bean
-    public LockoutPolicyAttributesConverterDelegator lockoutPolicyAttributesConverterDelegator() {
-        return ukConfig.lockoutPolicyAttributesConverterDelegator();
+    public DefaultLockoutPolicyAttributesConverter lockoutPolicyAttributesConverter() {
+        return ukConfig.lockoutPolicyAttributesConverter();
     }
 
 }

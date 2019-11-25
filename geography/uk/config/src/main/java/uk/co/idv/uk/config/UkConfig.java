@@ -1,7 +1,7 @@
 package uk.co.idv.uk.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverterDelegator;
+import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.api.lockout.policy.soft.SoftLockIntervalDtoConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
@@ -13,7 +13,7 @@ import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterD
 import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.policy.soft.SoftLockIntervalDocumentsConverter;
 import uk.co.idv.uk.api.channel.UkObjectMapperSingleton;
-import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverterDelegator;
+import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
 import uk.co.idv.uk.repository.mongo.activity.UkActivityDocumentConverterDelegator;
 import uk.co.idv.uk.repository.mongo.channel.UkChannelDocumentConverterDelegator;
@@ -41,17 +41,17 @@ public class UkConfig {
         return new UkActivityDocumentConverterDelegator();
     }
 
+    public DefaultLockoutPolicyAttributesConverter lockoutPolicyAttributesConverter() {
+        return new UkLockoutPolicyAttributesConverter(
+                recordAttemptStrategyFactory(),
+                softLockIntervalDtoConverter()
+        );
+    }
+
     public LockoutPolicyDocumentConverterDelegator lockoutPolicyDocumentConverterDelegator() {
         return new UkLockoutPolicyDocumentConverterDelegator(
                 recordAttemptStrategyFactory(),
                 softLockIntervalDocumentsConverter()
-        );
-    }
-
-    public LockoutPolicyAttributesConverterDelegator lockoutPolicyAttributesConverterDelegator() {
-        return new UkLockoutPolicyAttributesConverterDelegator(
-                recordAttemptStrategyFactory(),
-                softLockIntervalDtoConverter()
         );
     }
 

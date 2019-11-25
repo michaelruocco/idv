@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesMother;
 import uk.co.idv.api.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
@@ -12,7 +13,6 @@ import uk.co.idv.api.lockout.policy.FakeLockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.LockoutPoliciesDocument;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutPolicyService;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverterDelegator;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.mock;
 class LockoutPolicyControllerTest {
 
     private final FakeLockoutPolicyService service = new FakeLockoutPolicyService();
-    private final LockoutPolicyAttributesConverterDelegator attributesConverter = mock(LockoutPolicyAttributesConverterDelegator.class);
+    private final DefaultLockoutPolicyAttributesConverter attributesConverter = mock(DefaultLockoutPolicyAttributesConverter.class);
 
     private final LockoutPolicyController controller = new LockoutPolicyController(service, attributesConverter);
 

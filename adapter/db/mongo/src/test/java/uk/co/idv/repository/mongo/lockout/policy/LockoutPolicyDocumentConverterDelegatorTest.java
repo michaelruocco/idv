@@ -21,8 +21,9 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
         final Throwable error = catchThrowable(() -> delegator.toPolicy(document));
 
-        assertThat(error).isInstanceOf(LockoutTypeNotSupportedException.class);
-        assertThat(error.getMessage()).isEqualTo(document.getLockoutType());
+        assertThat(error)
+                .isInstanceOf(LockoutTypeNotSupportedException.class)
+                .hasMessage(document.getLockoutType());
     }
 
     @Test
@@ -32,8 +33,9 @@ class LockoutPolicyDocumentConverterDelegatorTest {
 
         final Throwable error = catchThrowable(() -> delegator.toDocument(policy));
 
-        assertThat(error).isInstanceOf(LockoutTypeNotSupportedException.class);
-        assertThat(error.getMessage()).isEqualTo(policy.getLockoutType());
+        assertThat(error)
+                .isInstanceOf(LockoutTypeNotSupportedException.class)
+                .hasMessage(policy.getLockoutType());
     }
 
     @Test

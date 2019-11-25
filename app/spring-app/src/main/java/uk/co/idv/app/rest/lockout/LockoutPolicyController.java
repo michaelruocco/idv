@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.api.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.api.lockout.policy.LockoutPoliciesDocument;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverterDelegator;
 
 import java.net.URI;
 import java.util.Collection;
@@ -27,7 +27,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class LockoutPolicyController {
 
     private final LockoutPolicyService service;
-    private final LockoutPolicyAttributesConverterDelegator attributesConverter;
+    private final DefaultLockoutPolicyAttributesConverter attributesConverter;
 
     @GetMapping("/lockoutPolicies")
     public LockoutPoliciesDocument getLockoutPolicies() {
