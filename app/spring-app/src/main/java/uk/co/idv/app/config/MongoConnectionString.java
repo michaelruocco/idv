@@ -10,6 +10,10 @@ public class MongoConnectionString {
 
     private static final String NAME = "MONGO_CONNECTION_STRING";
 
+    private MongoConnectionString() {
+        // utility class
+    }
+
     public static Optional<ConnectionString> load() {
         final String value = System.getenv("MONGO_CONNECTION_STRING");
         log.info("loading environment variable {} using value {}", NAME, value);
