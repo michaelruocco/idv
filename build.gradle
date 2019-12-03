@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'com.diffplug.gradle.spotless' version '3.26.0'
+    id 'com.diffplug.gradle.spotless' version '3.26.1'
     id 'com.github.ben-manes.versions' version '0.27.0'
     id 'com.vanniktech.dependency.graph.generator' version '0.5.0'
 }
@@ -50,12 +50,12 @@ subprojects {
         testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
         testCompile 'org.assertj:assertj-core:3.14.0'
-        testCompile('org.mockito:mockito-core:3.1.0') {
+        testCompile('org.mockito:mockito-core:3.2.0') {
             // mockito 3 is failing with version of byte buddy it brings automatically?!
             // this line excludes it and then latest version is included below
             exclude group: 'net.bytebuddy'
         }
-        testCompile 'net.bytebuddy:byte-buddy:1.10.3'
+        testCompile 'net.bytebuddy:byte-buddy:1.10.4'
     }
 
     test {
