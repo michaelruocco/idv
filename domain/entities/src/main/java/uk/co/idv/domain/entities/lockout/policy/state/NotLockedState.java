@@ -8,7 +8,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NotLockedState implements LockoutState {
 
+    private final String message;
     private final VerificationAttempts attempts;
+
+    public NotLockedState(final VerificationAttempts attempts) {
+        this("not locked", attempts);
+    }
 
     @Override
     public UUID getId() {
@@ -32,7 +37,7 @@ public class NotLockedState implements LockoutState {
 
     @Override
     public String getMessage() {
-        return "not locked";
+        return message;
     }
 
 }
