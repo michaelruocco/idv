@@ -1,9 +1,8 @@
 package uk.co.idv.domain.usecases.lockout;
 
+import uk.co.idv.domain.entities.lockout.attempt.DefaultVerificationAttempt;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
@@ -21,7 +20,7 @@ public class RecordAttemptRequestConverter {
     }
 
     private VerificationAttempt toSuccessfulAttempt(final VerificationResult result, final VerificationContext context) {
-        return VerificationAttemptSuccessful.builder()
+        return DefaultVerificationAttempt.builder()
                 .methodName(result.getMethodName())
                 .verificationId(result.getVerificationId())
                 .timestamp(result.getTimestamp())
@@ -30,11 +29,11 @@ public class RecordAttemptRequestConverter {
                 .activityName(context.getActivityName())
                 .alias(context.getProvidedAlias())
                 .idvIdValue(context.getIdvIdValue())
-                .build();
+                .buildSuccessful();
     }
 
     private VerificationAttempt toFailedAttempt(final VerificationResult result, final VerificationContext context) {
-        return VerificationAttemptFailed.builder()
+        return DefaultVerificationAttempt.builder()
                 .methodName(result.getMethodName())
                 .verificationId(result.getVerificationId())
                 .timestamp(result.getTimestamp())
@@ -43,7 +42,7 @@ public class RecordAttemptRequestConverter {
                 .activityName(context.getActivityName())
                 .alias(context.getProvidedAlias())
                 .idvIdValue(context.getIdvIdValue())
-                .build();
+                .buildFailed();
     }
 
 }

@@ -1,17 +1,17 @@
 package uk.co.idv.domain.entities.lockout.attempt;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 
 import java.time.Instant;
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@Builder
 @Getter
 @ToString
-public abstract class AbstractVerificationAttempt implements VerificationAttempt {
+public class DefaultVerificationAttempt implements VerificationAttempt {
 
     private final UUID contextId;
     private final String channelId;
@@ -26,6 +26,20 @@ public abstract class AbstractVerificationAttempt implements VerificationAttempt
     @Override
     public String getAliasType() {
         return alias.getType();
+    }
+
+    public static class DefaultVerificationAttemptBuilder {
+
+        public VerificationAttempt buildSuccessful() {
+            successful(true);
+            return build();
+        }
+
+        public VerificationAttempt buildFailed() {
+            successful(false);
+            return build();
+        }
+
     }
 
 }

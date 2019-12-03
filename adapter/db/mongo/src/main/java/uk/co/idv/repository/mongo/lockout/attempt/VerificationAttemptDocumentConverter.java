@@ -1,10 +1,9 @@
 package uk.co.idv.repository.mongo.lockout.attempt;
 
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.domain.entities.lockout.attempt.DefaultVerificationAttempt;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptSuccessful;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -36,7 +35,7 @@ public class VerificationAttemptDocumentConverter {
     }
 
     private VerificationAttempt toSuccessfulAttempt(final VerificationAttemptDocument document) {
-        return VerificationAttemptSuccessful.builder()
+        return DefaultVerificationAttempt.builder()
                 .contextId(UUID.fromString(document.getContextId()))
                 .channelId(document.getChannelId())
                 .activityName(document.getActivityName())
@@ -45,11 +44,11 @@ public class VerificationAttemptDocumentConverter {
                 .methodName(document.getMethodName())
                 .verificationId(UUID.fromString(document.getVerificationId()))
                 .timestamp(Instant.parse(document.getTimestamp()))
-                .build();
+                .buildSuccessful();
     }
 
     private VerificationAttempt toFailedAttempt(final VerificationAttemptDocument document) {
-        return VerificationAttemptFailed.builder()
+        return DefaultVerificationAttempt.builder()
                 .contextId(UUID.fromString(document.getContextId()))
                 .channelId(document.getChannelId())
                 .activityName(document.getActivityName())
@@ -58,7 +57,7 @@ public class VerificationAttemptDocumentConverter {
                 .methodName(document.getMethodName())
                 .verificationId(UUID.fromString(document.getVerificationId()))
                 .timestamp(Instant.parse(document.getTimestamp()))
-                .build();
+                .buildFailed();
     }
 
 }

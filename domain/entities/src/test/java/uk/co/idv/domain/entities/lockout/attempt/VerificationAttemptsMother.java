@@ -2,6 +2,7 @@ package uk.co.idv.domain.entities.lockout.attempt;
 
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.lockout.attempt.DefaultVerificationAttempt.DefaultVerificationAttemptBuilder;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -47,14 +48,7 @@ public class VerificationAttemptsMother {
     }
 
     public static VerificationAttempt successful(final UUID idvId) {
-        return new VerificationAttemptSuccessful(CONTEXT_ID,
-                "fake-channel",
-                "fake-activity",
-                AliasesMother.creditCardNumber(),
-                idvId,
-                "fake-method",
-                VERIFICATION_ID,
-                TIMESTAMP);
+        return builder(idvId).buildSuccessful();
     }
 
     public static VerificationAttempt failed() {
@@ -66,14 +60,23 @@ public class VerificationAttemptsMother {
     }
 
     public static VerificationAttempt failed(final UUID idvId, final Alias alias) {
-        return new VerificationAttemptFailed(CONTEXT_ID,
-                "fake-channel",
-                "fake-activity",
-                alias,
-                idvId,
-                "fake-method",
-                VERIFICATION_ID,
-                TIMESTAMP);
+        return builder(idvId, alias).buildFailed();
+    }
+
+    public static DefaultVerificationAttemptBuilder builder(final UUID idvId) {
+        return builder(idvId, AliasesMother.creditCardNumber());
+    }
+
+    public static DefaultVerificationAttemptBuilder builder(final UUID idvId, final Alias alias) {
+        return DefaultVerificationAttempt.builder()
+                .contextId(CONTEXT_ID)
+                .channelId("fake-channel")
+                .activityName("fake-activity")
+                .alias(alias)
+                .idvIdValue(idvId)
+                .methodName("fake-method")
+                .verificationId(VERIFICATION_ID)
+                .timestamp(TIMESTAMP);
     }
 
     private static Collection<VerificationAttempt> buildAttemptsOfSize(final int numberOfAttempts, final UUID idvId) {

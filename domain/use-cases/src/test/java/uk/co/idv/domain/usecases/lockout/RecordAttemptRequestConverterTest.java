@@ -3,8 +3,6 @@ package uk.co.idv.domain.usecases.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
@@ -28,7 +26,6 @@ class RecordAttemptRequestConverterTest {
 
         final VerificationAttempt attempt = converter.toAttempt(request);
 
-        assertThat(attempt).isInstanceOf(VerificationAttemptSuccessful.class);
         assertThat(attempt.isSuccessful()).isTrue();
     }
 
@@ -119,7 +116,6 @@ class RecordAttemptRequestConverterTest {
 
         final VerificationAttempt attempt = converter.toAttempt(request);
 
-        assertThat(attempt).isInstanceOf(VerificationAttemptFailed.class);
         assertThat(attempt.isSuccessful()).isFalse();
     }
 

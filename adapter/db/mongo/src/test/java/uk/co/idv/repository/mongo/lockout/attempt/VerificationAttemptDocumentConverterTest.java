@@ -8,8 +8,6 @@ import uk.co.idv.repository.mongo.identity.alias.AliasDocumentMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptSuccessful;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -113,7 +111,7 @@ class VerificationAttemptDocumentConverterTest {
 
         final VerificationAttempt attempt = converter.toAttempt(document);
 
-        assertThat(attempt).isInstanceOf(VerificationAttemptSuccessful.class);
+        assertThat(attempt.isSuccessful()).isTrue();
     }
 
     @Test
@@ -196,7 +194,7 @@ class VerificationAttemptDocumentConverterTest {
 
         final VerificationAttempt attempt = converter.toAttempt(document);
 
-        assertThat(attempt).isInstanceOf(VerificationAttemptFailed.class);
+        assertThat(attempt.isSuccessful()).isFalse();
     }
 
     @Test

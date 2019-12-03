@@ -3,20 +3,27 @@ package uk.co.idv.domain.entities.lockout.attempt;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptFailed.VerificationAttemptFailedBuilder;
+import uk.co.idv.domain.entities.lockout.attempt.DefaultVerificationAttempt.DefaultVerificationAttemptBuilder;
 
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VerificationAttemptFailedTest {
+class DefaultVerificationAttemptTest {
 
-    private final VerificationAttemptFailedBuilder builder = VerificationAttemptFailed.builder();
+    private final DefaultVerificationAttemptBuilder builder = DefaultVerificationAttempt.builder();
 
     @Test
-    void shouldBeFailed() {
-        final VerificationAttempt attempt = builder.build();
+    void shouldBeSuccessful() {
+        final VerificationAttempt attempt = builder.buildSuccessful();
+
+        assertThat(attempt.isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldNotBeSuccessful() {
+        final VerificationAttempt attempt = builder.buildFailed();
 
         assertThat(attempt.isSuccessful()).isFalse();
     }
