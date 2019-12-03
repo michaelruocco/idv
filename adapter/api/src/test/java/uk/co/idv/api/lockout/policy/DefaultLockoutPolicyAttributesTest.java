@@ -1,6 +1,7 @@
 package uk.co.idv.api.lockout.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.beantest.ApiBeanTester;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevelMother;
 
@@ -30,6 +31,11 @@ class DefaultLockoutPolicyAttributesTest {
     @Test
     void shouldReturnLockoutLevel() {
         assertThat(parameters.getLockoutLevel()).isEqualTo(CustomLockoutPolicyAttributes.LOCKOUT_LEVEL);
+    }
+
+    @Test
+    void shouldTestBean() {
+        new ApiBeanTester().testBean(DefaultLockoutPolicyAttributes.class);
     }
 
     private static class CustomLockoutPolicyAttributes extends DefaultLockoutPolicyAttributes {

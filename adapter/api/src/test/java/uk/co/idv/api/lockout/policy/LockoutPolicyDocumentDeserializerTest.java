@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.api.ObjectMapperSingleton;
 import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
+import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class LockoutPolicyDocumentDeserializerTest {
 
@@ -59,6 +61,17 @@ class LockoutPolicyDocumentDeserializerTest {
         final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.recurringSoftLock();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
         LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+    }
+
+    @Test
+    void shouldThrowExceptionIfLockoutPolicyTypeIsInvalid() throws JsonProcessingException {
+        final String json = ContentLoader.loadContentFromClasspath("lockout/invalid-lockout-policy-document.json");
+
+        final Throwable error = catchThrowable(() -> MAPPER.readValue(json, LockoutPolicyDocument.class));
+
+        assertThat(error)
+                .isInstanceOf(LockoutTypeNotSupportedException.class)
+                .hasMessage("invalid-type");
     }
 
 }
