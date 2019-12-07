@@ -12,7 +12,7 @@ import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
 public class SoftLockoutPolicyAttributesConverter implements LockoutPolicyAttributesConverter {
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory;
-    private final SoftLockIntervalDtoConverter softLockIntervalDtoConverter;
+    private final SoftLockIntervalDtosConverter softLockIntervalDtosConverter;
 
     @Override
     public boolean supports(final String type) {
@@ -25,7 +25,7 @@ public class SoftLockoutPolicyAttributesConverter implements LockoutPolicyAttrib
                 softLockoutAttributes.getId(),
                 softLockoutAttributes.getLockoutLevel(),
                 recordAttemptStrategyFactory.build(softLockoutAttributes.getRecordAttempts()),
-                softLockIntervalDtoConverter.toIntervals(softLockoutAttributes.getIntervals())
+                softLockIntervalDtosConverter.toIntervals(softLockoutAttributes.getIntervals())
         );
     }
 
@@ -35,7 +35,7 @@ public class SoftLockoutPolicyAttributesConverter implements LockoutPolicyAttrib
                 .id(softLockoutPolicy.getId())
                 .recordAttempts(softLockoutPolicy.getRecordAttemptStrategyType())
                 .lockoutLevel(softLockoutPolicy.getLockoutLevel())
-                .intervals(softLockIntervalDtoConverter.toDtos(softLockoutPolicy.getIntervals()))
+                .intervals(softLockIntervalDtosConverter.toDtos(softLockoutPolicy.getIntervals()))
                 .build();
     }
 
