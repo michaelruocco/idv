@@ -1,29 +1,36 @@
-package uk.co.idv.api.lockout.policy.hard;
+package uk.co.idv.api.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesMother;
-import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockIntervals;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class HardLockoutPolicyAttributesConverterTest {
+class SoftLockoutPolicyAttributesConverterTest {
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
+    private final SoftLockIntervalDtosConverter softLockIntervalDtosConverter = mock(SoftLockIntervalDtosConverter.class);
 
-    private final LockoutPolicyAttributesConverter converter = new HardLockoutPolicyAttributesConverter(recordAttemptStrategyFactory);
+    private final SoftLockoutPolicyAttributesConverter converter = SoftLockoutPolicyAttributesConverter.builder()
+            .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
+            .softLockIntervalDtosConverter(softLockIntervalDtosConverter)
+            .build();
 
     @Test
-    void shouldSupportHardLockoutType() {
-        assertThat(converter.supports(HardLockoutStateCalculator.TYPE)).isTrue();
+    void shouldSupportSoftLockoutType() {
+        assertThat(converter.supports(SoftLockoutStateCalculator.TYPE)).isTrue();
     }
 
     @Test
@@ -33,7 +40,7 @@ class HardLockoutPolicyAttributesConverterTest {
 
     @Test
     void shouldPopulateIdOnPolicy() {
-        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.hardLock();
+        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.softLock();
 
         final LockoutPolicy policy = converter.toPolicy(attributes);
 
@@ -42,7 +49,7 @@ class HardLockoutPolicyAttributesConverterTest {
 
     @Test
     void shouldPopulateLockoutLevelOnPolicy() {
-        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.hardLock();
+        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.softLock();
 
         final LockoutPolicy policy = converter.toPolicy(attributes);
 
@@ -51,7 +58,7 @@ class HardLockoutPolicyAttributesConverterTest {
 
     @Test
     void shouldPopulateRecordAttemptStrategyOnPolicy() {
-        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.hardLock();
+        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.softLock();
         final RecordAttemptStrategy strategy = mock(RecordAttemptStrategy.class);
         given(recordAttemptStrategyFactory.build(attributes.getRecordAttempts())).willReturn(strategy);
 
@@ -62,25 +69,27 @@ class HardLockoutPolicyAttributesConverterTest {
 
     @Test
     void shouldPopulateStateCalculatorOnPolicy() {
-        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.hardLock();
+        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.softLock();
 
         final LockoutPolicy policy = converter.toPolicy(attributes);
 
-        assertThat(policy.getStateCalculator()).isInstanceOf(HardLockoutStateCalculator.class);
+        assertThat(policy.getStateCalculator()).isInstanceOf(SoftLockoutStateCalculator.class);
     }
 
     @Test
-    void shouldPopulateMaxAttemptsOnPolicy() {
-        final HardLockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.hardLock();
+    void shouldPopulateIntervalsOnPolicy() {
+        final SoftLockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.softLock();
+        final SoftLockIntervals intervals = mock(SoftLockIntervals.class);
+        given(softLockIntervalDtosConverter.toIntervals(attributes.getIntervals())).willReturn(intervals);
 
-        final HardLockoutPolicy policy = (HardLockoutPolicy) converter.toPolicy(attributes);
+        final SoftLockoutPolicy policy = (SoftLockoutPolicy) converter.toPolicy(attributes);
 
-        assertThat(policy.getMaxNumberOfAttempts()).isEqualTo(attributes.getMaxNumberOfAttempts());
+        assertThat(policy.getIntervals()).isEqualTo(intervals);
     }
 
     @Test
     void shouldPopulateIdOnAttributes() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.softLockoutPolicy();
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
@@ -89,7 +98,7 @@ class HardLockoutPolicyAttributesConverterTest {
 
     @Test
     void shouldPopulateLockoutLevelOnAttributes() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.softLockoutPolicy();
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
@@ -98,7 +107,7 @@ class HardLockoutPolicyAttributesConverterTest {
 
     @Test
     void shouldPopulateRecordAttemptStrategyTypeOnAttributes() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.softLockoutPolicy();
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
@@ -107,7 +116,7 @@ class HardLockoutPolicyAttributesConverterTest {
 
     @Test
     void shouldPopulateLockoutTypeOnAttributes() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.softLockoutPolicy();
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
@@ -115,12 +124,14 @@ class HardLockoutPolicyAttributesConverterTest {
     }
 
     @Test
-    void shouldPopulateMaxAttemptsOnAttributes() {
-        final HardLockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+    void shouldPopulateIntervalDtosOnAttributes() {
+        final SoftLockoutPolicy policy = LockoutPolicyMother.softLockoutPolicy();
+        final Collection<SoftLockIntervalDto> dtos = Collections.emptyList();
+        given(softLockIntervalDtosConverter.toDtos(policy.getIntervals())).willReturn(dtos);
 
-        final HardLockoutPolicyAttributes attributes = (HardLockoutPolicyAttributes) converter.toAttributes(policy);
+        final SoftLockoutPolicyAttributes attributes = (SoftLockoutPolicyAttributes) converter.toAttributes(policy);
 
-        assertThat(attributes.getMaxNumberOfAttempts()).isEqualTo(policy.getMaxNumberOfAttempts());
+        assertThat(attributes.getIntervals()).isEqualTo(dtos);
     }
 
 }

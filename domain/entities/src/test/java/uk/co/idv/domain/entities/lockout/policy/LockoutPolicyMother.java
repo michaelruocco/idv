@@ -11,11 +11,11 @@ import java.util.UUID;
 
 public class LockoutPolicyMother {
 
-    public static LockoutPolicy hardLockoutPolicy() {
+    public static HardLockoutPolicy hardLockoutPolicy() {
         return hardLockoutPolicy(UUID.randomUUID());
     }
 
-    public static LockoutPolicy hardLockoutPolicy(final LockoutLevel lockoutLevel) {
+    public static HardLockoutPolicy hardLockoutPolicy(final LockoutLevel lockoutLevel) {
         return new HardLockoutPolicy(
                 UUID.randomUUID(),
                 lockoutLevel,
@@ -24,7 +24,7 @@ public class LockoutPolicyMother {
         );
     }
 
-    public static LockoutPolicy hardLockoutPolicy(final UUID id) {
+    public static HardLockoutPolicy hardLockoutPolicy(final UUID id) {
         return new HardLockoutPolicy(
                 id,
                 LockoutLevelMother.aliasLockoutLevel(),

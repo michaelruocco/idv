@@ -1,5 +1,6 @@
 package uk.co.idv.api.lockout.policy.soft;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesConverter;
@@ -8,6 +9,7 @@ import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
 
+@Builder
 @RequiredArgsConstructor
 public class SoftLockoutPolicyAttributesConverter implements LockoutPolicyAttributesConverter {
 
