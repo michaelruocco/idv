@@ -5,8 +5,9 @@ jdk: openjdk11
 services:
   - docker
 
-script:
-  - ./gradlew clean spotlessCheck build codeCoverageReport buildImage composeUp postman composeDown pushImage
+before_install:
+  - sudo apt-get install jq
+  - curl -LSs $(curl -LSs https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r '.assets | map({name, browser_download_url} | select(.name | endswith(".jar"))) | .[0].browser_download_url')" -o codacy-coverage-reporter-assembly.jar
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -16,6 +17,9 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 
+script:
+  - ./gradlew clean spotlessCheck build codeCoverageReport buildImage composeUp postman composeDown pushImage
+
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-  - bash <(curl -Ls https://coverage.codacy.com/get.sh)
+  - java -jar codacy-coverage-reporter-assembly.jar report -l Java -r build/reports/jacoco/report.xml
