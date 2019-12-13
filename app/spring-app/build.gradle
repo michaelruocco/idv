@@ -22,11 +22,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.data:spring-data-mongodb:2.2.2.RELEASE'
+    implementation 'io.github.boostchicken:spring-data-dynamodb:5.2.1'
 
     compile project(':entities')
     compile project(':use-cases')
     compile project(':api')
 
+    compile project(':dynamo-db')
     compile project(':mongo-db')
     compile project(':in-memory-db')
     compile project(':uk-config')
@@ -36,6 +38,9 @@ dependencies {
     testCompile project(':use-cases').sourceSets.test.output
     testCompile project(':api').sourceSets.test.output
     testCompile 'com.github.stefanbirkner:system-rules:1.19.0'
+    testCompile 'org.testcontainers:testcontainers:1.12.4'
+    testCompile 'org.testcontainers:junit-jupiter:1.12.4'
+
 }
 
 bootRun {

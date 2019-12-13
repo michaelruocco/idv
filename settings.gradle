@@ -16,6 +16,9 @@ project(':in-memory-db').projectDir = file('adapter/db/in-memory')
 include ':mongo-db'
 project(':mongo-db').projectDir = file('adapter/db/mongo')
 
+include ':dynamo-db'
+project(':dynamo-db').projectDir = file('adapter/db/dynamo')
+
 //uk geography
 include ':uk-entities'
 project(':uk-entities').projectDir = file('geography/uk/entities')

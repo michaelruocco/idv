@@ -1,11 +1,17 @@
 version: '3'
 services:
 
-  verification-context-db:
+  verification-context-mongo-db:
     image: mongo:latest
-    container_name: verification-context-db
+    container_name: verification-context-mongo-db
     ports:
       - 27018:27017
+
+  verification-context-dynamo-db:
+    image: amazon/dynamodb-local:latest
+    container_name: verification-context-dynamo-db
+    ports:
+      - 8001:8000
 
   verification-context-app:
     image: michaelruocco/verification-context-spring-app
@@ -15,6 +21,10 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=default
       - SERVER_PORT=80
-      - MONGO_CONNECTION_STRING=mongodb://verification-context-db:27017/verification-context
+      - MONGO_CONNECTION_STRING=mongodb://verification-context-mongo-db:27017/verification-context
+      - AWS_ACCESS_KEY=abc
+      - AWS_SECRET_KEY=123
+      - DYNAMO_DB_URI=http://verification-context-dynamo-db:8000
     depends_on:
-      - verification-context-db
+      - verification-context-mongo-db
+      - verification-context-dynamo-db

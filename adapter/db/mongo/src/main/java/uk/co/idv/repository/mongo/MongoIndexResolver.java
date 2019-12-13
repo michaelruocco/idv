@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.index.IndexOperations;
 import org.springframework.data.mongodb.core.index.IndexResolver;
 import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
-import uk.co.idv.repository.mongo.identity.IdentityDocument;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocument;
 
 @Slf4j
@@ -26,7 +25,6 @@ public class MongoIndexResolver {
     }
 
     private void resolveIdentityIndicies() {
-        resolveIndicies(IdentityDocument.class);
         resolveIndicies(LockoutPolicyDocument.class);
     }
 

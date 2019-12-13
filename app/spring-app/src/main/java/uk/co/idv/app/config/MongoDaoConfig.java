@@ -13,7 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -30,8 +32,6 @@ import uk.co.idv.repository.mongo.MongoIndexResolver;
 import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
-import uk.co.idv.repository.mongo.identity.IdentityRepository;
-import uk.co.idv.repository.mongo.identity.MongoIdentityDao;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasesDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.attempt.MongoVerificationAttemptsDao;
@@ -62,7 +62,6 @@ import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.
 import uk.co.idv.repository.mongo.verificationcontext.method.pushnotification.PushNotificationDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
-import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
@@ -75,10 +74,13 @@ import java.util.List;
 
 @Configuration
 @EnableAutoConfiguration
-@EnableMongoRepositories(basePackages = "uk.co.idv.repository.mongo")
+@EnableMongoRepositories(
+        basePackages = "uk.co.idv.repository.mongo",
+        excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*IdentityRepository")}
+)
 @Profile("!stub")
 @Slf4j
-public class DefaultMongoDaoConfig {
+public class MongoDaoConfig {
 
     @Bean
     @Profile("in-memory-mongo")
@@ -290,14 +292,14 @@ public class DefaultMongoDaoConfig {
         return new MultipleLockoutPoliciesHandler();
     }
 
-    @Bean
+   /*@Bean
     public IdentityDao identityDao(final IdentityRepository repository,
                                    final IdentityDocumentConverter identityConverter) {
         return MongoIdentityDao.builder()
                 .repository(repository)
                 .converter(identityConverter)
                 .build();
-    }
+    }*/
 
     @Bean
     public VerificationContextDao verificationContextDao(final VerificationContextRepository repository,

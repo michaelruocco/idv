@@ -81,8 +81,13 @@
 						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
 						"exec": [
 							"var json = JSON.parse(responseBody);",
+							"var identity = json.data.attributes.identity;",
+							"var alias = identity.aliases[0];",
+							"",
 							"postman.setEnvironmentVariable(\"verificationContextId\", json.data.id);",
-							"postman.setEnvironmentVariable(\"idvId\", json.data.attributes.identity.id);",
+							"postman.setEnvironmentVariable(\"idvId\", identity.id);",
+							"postman.setEnvironmentVariable(\"aliasType\", alias.type);",
+							"postman.setEnvironmentVariable(\"aliasValue\", alias.value);",
 							"",
 							"pm.test(\"should return created status\", function () {",
 							"    pm.response.to.have.status(201)",
@@ -134,6 +139,103 @@
 					],
 					"path": [
 						"verificationContexts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-identity-by-alias",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "196876bc-69a4-49be-b878-5f571f8ddf26",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/identities?aliasType={{aliasType}}&aliasValue={{aliasValue}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"identities"
+					],
+					"query": [
+						{
+							"key": "aliasType",
+							"value": "{{aliasType}}"
+						},
+						{
+							"key": "aliasValue",
+							"value": "{{aliasValue}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-identity-by-id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "196876bc-69a4-49be-b878-5f571f8ddf26",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/identities/{{idvId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"identities",
+						"{{idvId}}"
 					]
 				}
 			},

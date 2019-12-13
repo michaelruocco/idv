@@ -38,4 +38,8 @@ public class IdvId implements Alias {
         return value;
     }
 
+    public static boolean isIdvId(final Alias alias) {
+        return TYPE.equals(alias.getType());
+    }
+
 }
