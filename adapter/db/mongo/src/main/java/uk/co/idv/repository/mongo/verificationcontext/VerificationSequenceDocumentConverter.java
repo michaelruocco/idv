@@ -1,6 +1,7 @@
 package uk.co.idv.repository.mongo.verificationcontext;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodsDocumentConverter;
 import uk.co.idv.domain.entities.verificationcontext.MultipleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.SingleMethodSequence;
@@ -17,7 +18,7 @@ public class VerificationSequenceDocumentConverter {
     public VerificationSequence toSequence(final VerificationSequenceDocument document) {
         final Collection<VerificationMethod> methods = methodsConverter.toMethods(document.getMethods());
         if (methods.size() == 1) {
-            return new SingleMethodSequence(methods.iterator().next());
+            return new SingleMethodSequence(IterableUtils.get(methods, 0));
         }
         return new MultipleMethodSequence(methods);
     }

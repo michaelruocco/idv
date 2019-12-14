@@ -37,6 +37,10 @@ public class Aliases implements Iterable<Alias> {
         return aliases.stream();
     }
 
+    public int size() {
+        return aliases.size();
+    }
+
     private IdvId getIdvId() {
         return (IdvId) getAliasByType(IdvId.TYPE);
     }

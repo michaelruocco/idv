@@ -37,6 +37,16 @@ class AliasesTest {
     }
 
     @Test
+    void shouldReturnSize() {
+        final Alias idvId = AliasesMother.idvId();
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
+
+        final Aliases aliases = Aliases.with(idvId, creditCardNumber);
+
+        assertThat(aliases.size()).isEqualTo(2);
+    }
+
+    @Test
     void shouldCreateEmptyInstance() {
         final Aliases aliases = Aliases.empty();
 

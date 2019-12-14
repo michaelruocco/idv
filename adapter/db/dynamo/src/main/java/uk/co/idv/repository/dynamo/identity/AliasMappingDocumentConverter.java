@@ -9,25 +9,25 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class IdentityDocumentConverter {
+public class AliasMappingDocumentConverter {
 
     private final AliasConverter aliasConverter;
 
-    public Collection<IdentityDocument> toDocuments(final Identity identity) {
+    public Collection<AliasMappingDocument> toDocuments(final Identity identity) {
         final Aliases aliases = identity.getAliases();
         return aliases.stream()
                 .map(alias -> toDocument(identity, alias))
                 .collect(Collectors.toList());
     }
 
-    private IdentityDocument toDocument(final Identity identity, final Alias alias) {
-        final IdentityDocument document = new IdentityDocument();
+    private AliasMappingDocument toDocument(final Identity identity, final Alias alias) {
+        final AliasMappingDocument document = new AliasMappingDocument();
         document.setIdvId(identity.getIdvIdValue().toString());
         document.setAlias(aliasConverter.toString(alias));
         return document;
     }
 
-    public Identity toIdentity(final Collection<IdentityDocument> documents) {
+    public Identity toIdentity(final Collection<AliasMappingDocument> documents) {
         final Collection<Alias> aliases = documents.stream()
                 .map(document -> aliasConverter.toAlias(document.getAlias()))
                 .collect(Collectors.toList());

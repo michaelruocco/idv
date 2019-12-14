@@ -11,18 +11,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
-import uk.co.idv.repository.dynamo.AwsEnvironmentVariables;
 import uk.co.idv.repository.dynamo.DynamoConfig;
-import uk.co.idv.repository.dynamo.DynamoConfig.DynamoConfigBuilder;
-import uk.co.idv.repository.dynamo.identity.IdentityRepository;
-import uk.co.idv.repository.dynamo.identity.TableCreator;
+import uk.co.idv.repository.dynamo.IdvTables;
+import uk.co.idv.repository.dynamo.identity.AliasMappingRepository;
 
 @Configuration
-@EnableDynamoDBRepositories(basePackages = "uk.co.idv.repository.dynamo")
+@EnableDynamoDBRepositories(
+        basePackages = "uk.co.idv.repository.dynamo",
+        dynamoDBMapperConfigRef = "dynamoDBMapperConfig"
+)
 @Profile("!stub")
 public class DynamoDaoConfig {
 
-    private final DynamoConfig config = buildConfig();
+    private final DynamoConfig config = DynamoConfig.standard();
 
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
@@ -35,39 +36,29 @@ public class DynamoDaoConfig {
     }
 
     @Bean
-    public IdentityDao identityDao(final IdentityRepository identityRepository) {
-        return config.identityDao(identityRepository);
+    public IdentityDao identityDao(final AliasMappingRepository aliasMappingRepository) {
+        return config.identityDao(aliasMappingRepository);
     }
 
     @Bean
-    public TableCreator tableCreator(final AmazonDynamoDB dynamoClient,
-                                     final DynamoDBMapper mapper) {
-        return TableCreator.builder()
-                .amazonDynamoDB(dynamoClient)
-                .mapper(mapper)
-                .build();
+    public IdvTables genericTableFactory(final AmazonDynamoDB dynamoDB,
+                                         final DynamoDBMapper mapper) {
+        return config.idvTables(dynamoDB, mapper);
     }
 
     @Bean
-    public CreateTablesListener createTablesListener(final TableCreator tableCreator) {
-        return new CreateTablesListener(tableCreator);
-    }
-
-    private static DynamoConfig buildConfig() {
-        final DynamoConfigBuilder configBuilder = DynamoConfig.builder()
-                .region(AwsEnvironmentVariables.loadRegion());
-        AwsEnvironmentVariables.loadDynamoDbEndpointConfiguration().ifPresent(configBuilder::endpointConfiguration);
-        return configBuilder.build();
+    public CreateTablesListener createTablesListener(final IdvTables tables) {
+        return new CreateTablesListener(tables);
     }
 
     @RequiredArgsConstructor
     private static class CreateTablesListener {
 
-        private final TableCreator tableCreator;
+        private final IdvTables tables;
 
         @EventListener(ApplicationReadyEvent.class)
         public void createTablesAfterStartup() {
-            tableCreator.create();
+            tables.create();
         }
 
     }

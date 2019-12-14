@@ -10,6 +10,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static uk.co.idv.app.environment.WithEnvironmentVariables.withEnvironmentVariable;
 
+
 @Testcontainers
 @Slf4j
 class ApplicationTest {
