@@ -6,13 +6,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultFailed;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.util.UUID;
 
 public class VerificationResultsDeserializer extends StdDeserializer<VerificationResults> {
 

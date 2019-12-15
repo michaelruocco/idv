@@ -12,7 +12,8 @@
         "complete": false,
         "successful": false,
         "duration": 300000,
-        "maxAttempts": 5
+        "maxAttempts": 5,
+        "results": []
       }
     ]
   },
@@ -37,7 +38,8 @@
             "tokenized": "4929991234567890",
             "type": "CREDIT"
           }
-        ]
+        ],
+        "results": []
       }
     ]
   },
@@ -55,7 +57,8 @@
         "complete": false,
         "successful": false,
         "duration": 300000,
-        "maxAttempts": 1
+        "maxAttempts": 1,
+        "results": []
       }
     ]
   },
@@ -83,7 +86,8 @@
             "id": "${json-unit.ignore}",
             "number": "07809385580"
           }
-        ]
+        ],
+        "results": []
       }
     ]
   }

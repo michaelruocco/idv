@@ -29,9 +29,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.repository.mongo.MongoIndexResolver;
-import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
-import uk.co.idv.repository.mongo.identity.alias.AliasesDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.attempt.MongoVerificationAttemptsDao;
 import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptDocumentConverter;
 import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsDocumentConverter;
@@ -39,30 +37,11 @@ import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsRepository
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
-import uk.co.idv.repository.mongo.verificationcontext.VerificationSequenceDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.VerificationSequencesConverter;
-import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodDocumentConverterDelegator;
-import uk.co.idv.repository.mongo.verificationcontext.method.VerificationMethodsDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.cardcredentials.CardCredentialsDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.MobileNumberDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.MobileNumbersDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.onetimepasscode.PasscodeSettingsDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.mobile.MobilePinsentryDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.CardNumberDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.CardNumbersDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.pinsentry.physical.PhysicalPinsentryDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.method.pushnotification.PushNotificationDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResultsDocumentConverter;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 
 import java.net.InetSocketAddress;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -136,127 +115,6 @@ public class MongoDaoConfig {
     @Bean
     public AliasDocumentConverter aliasConverter(final AliasFactory aliasFactory) {
         return new AliasDocumentConverter(aliasFactory);
-    }
-
-    @Bean
-    public AliasesDocumentConverter aliasesConverter(final AliasDocumentConverter aliasConverter) {
-        return new AliasesDocumentConverter(aliasConverter);
-    }
-
-    @Bean
-    public IdentityDocumentConverter identityConverter(final AliasesDocumentConverter aliasesConverter) {
-        return new IdentityDocumentConverter(aliasesConverter);
-    }
-
-    @Bean
-    public VerificationResultDocumentConverter resultConverter() {
-        return new VerificationResultDocumentConverter();
-    }
-
-    @Bean
-    public VerificationResultsDocumentConverter resultsConverter(final VerificationResultDocumentConverter resultConverter) {
-        return new VerificationResultsDocumentConverter(resultConverter);
-    }
-
-    @Bean
-    public EligibilityDocumentConverter eligibilityConverter() {
-        return new EligibilityDocumentConverter();
-    }
-
-    @Bean
-    public CardNumberDocumentConverter cardNumberConverter() {
-        return new CardNumberDocumentConverter();
-    }
-
-    @Bean
-    public CardNumbersDocumentConverter cardNumbersConverter(final CardNumberDocumentConverter cardNumberConverter) {
-        return new CardNumbersDocumentConverter(cardNumberConverter);
-    }
-
-    @Bean
-    public MobileNumberDocumentConverter mobileNumberConverter() {
-        return new MobileNumberDocumentConverter();
-    }
-
-    @Bean
-    public MobileNumbersDocumentConverter mobileNumbersConverter(final MobileNumberDocumentConverter mobileNumberConverter) {
-        return new MobileNumbersDocumentConverter(mobileNumberConverter);
-    }
-
-    @Bean
-    public PasscodeSettingsDocumentConverter passcodeSettingsConverter() {
-        return new PasscodeSettingsDocumentConverter();
-    }
-
-    @Bean
-    public VerificationMethodDocumentConverter pushNotificationConverter(final VerificationResultsDocumentConverter resultsConverter,
-                                                                         final EligibilityDocumentConverter eligibilityConverter) {
-        return PushNotificationDocumentConverter.builder()
-                .resultsConverter(resultsConverter)
-                .eligibilityConverter(eligibilityConverter)
-                .build();
-    }
-
-    @Bean
-    public VerificationMethodDocumentConverter physicalPinsentryConverter(final VerificationResultsDocumentConverter resultsConverter,
-                                                                          final EligibilityDocumentConverter eligibilityConverter,
-                                                                          final CardNumbersDocumentConverter cardNumbersConverter) {
-        return PhysicalPinsentryDocumentConverter.builder()
-                .resultsConverter(resultsConverter)
-                .eligibilityConverter(eligibilityConverter)
-                .cardNumbersConverter(cardNumbersConverter)
-                .build();
-    }
-
-    @Bean
-    public VerificationMethodDocumentConverter mobilePinsentryConverter(final VerificationResultsDocumentConverter resultsConverter,
-                                                                        final EligibilityDocumentConverter eligibilityConverter) {
-        return MobilePinsentryDocumentConverter.builder()
-                .resultsConverter(resultsConverter)
-                .eligibilityConverter(eligibilityConverter)
-                .build();
-    }
-
-    @Bean
-    public VerificationMethodDocumentConverter oneTimePasscodeSmsConverter(final VerificationResultsDocumentConverter resultsConverter,
-                                                                           final EligibilityDocumentConverter eligibilityConverter,
-                                                                           final MobileNumbersDocumentConverter mobileNumbersConverter,
-                                                                           final PasscodeSettingsDocumentConverter passcodeSettingsConverter) {
-        return OneTimePasscodeSmsDocumentConverter.builder()
-                .resultsConverter(resultsConverter)
-                .eligibilityConverter(eligibilityConverter)
-                .mobileNumbersConverter(mobileNumbersConverter)
-                .passcodeSettingsConverter(passcodeSettingsConverter)
-                .build();
-    }
-
-    @Bean
-    public VerificationMethodDocumentConverter cardCredentialsConverter(final VerificationResultsDocumentConverter resultsConverter,
-                                                                        final EligibilityDocumentConverter eligibilityConverter) {
-        return CardCredentialsDocumentConverter.builder()
-                .resultsConverter(resultsConverter)
-                .eligibilityConverter(eligibilityConverter)
-                .build();
-    }
-
-    @Bean
-    public VerificationMethodDocumentConverterDelegator methodConverterDelegator(final Collection<VerificationMethodDocumentConverter> methodConverters) {
-        return new VerificationMethodDocumentConverterDelegator(methodConverters);
-    }
-
-    @Bean
-    public VerificationMethodsDocumentConverter methodsConverter(final VerificationMethodDocumentConverterDelegator methodConverter) {
-        return new VerificationMethodsDocumentConverter(methodConverter);
-    }
-
-    @Bean
-    public VerificationSequenceDocumentConverter sequenceConverter(final VerificationMethodsDocumentConverter methodsConverter) {
-        return new VerificationSequenceDocumentConverter(methodsConverter);
-    }
-
-    @Bean
-    public VerificationSequencesConverter sequencesConverter(final VerificationSequenceDocumentConverter sequenceConverter) {
-        return new VerificationSequencesConverter(sequenceConverter);
     }
 
     @Bean
