@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardType;
 
 import java.io.IOException;
 import java.util.UUID;

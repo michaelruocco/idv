@@ -4,17 +4,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.alias.Alias;
-import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardType;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.UUID;
 
 public class CardNumberDeserializer extends StdDeserializer<CardNumber> {
