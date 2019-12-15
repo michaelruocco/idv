@@ -37,9 +37,7 @@ public class OneTimePasscodeSmsSerializer extends StdSerializer<OneTimePasscodeS
         JsonFieldWriter.writeMaxAttempts(method.getMaxAttempts(), json);
         JsonFieldWriter.writePasscodeSettings(method.getPasscodeSettings(), json, provider);
         JsonFieldWriter.writeMobileNumbersJson(method.getMobileNumbers(), json, provider);
-        if (method.hasResults()) {
-            JsonFieldWriter.writeResults(method.getResults(), json, provider);
-        }
+        JsonFieldWriter.writeResults(method.getResults(), json, provider);
         json.writeEndObject();
     }
 

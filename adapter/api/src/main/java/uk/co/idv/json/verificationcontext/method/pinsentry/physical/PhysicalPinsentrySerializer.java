@@ -36,9 +36,7 @@ public class PhysicalPinsentrySerializer extends StdSerializer<PhysicalPinsentry
         JsonFieldWriter.writeDuration(method.getDuration(), json);
         JsonFieldWriter.writeMaxAttempts(method.getMaxAttempts(), json);
         JsonFieldWriter.writeCardNumbersJson(method.getCardNumbers(), json, provider);
-        if (method.hasResults()) {
-            JsonFieldWriter.writeResults(method.getResults(), json, provider);
-        }
+        JsonFieldWriter.writeResults(method.getResults(), json, provider);
         json.writeEndObject();
     }
 

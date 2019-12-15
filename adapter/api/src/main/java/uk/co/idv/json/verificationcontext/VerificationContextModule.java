@@ -17,6 +17,7 @@ import uk.co.idv.json.verificationcontext.method.pinsentry.physical.PhysicalPins
 import uk.co.idv.json.verificationcontext.method.pushnotification.PushNotificationSerializer;
 import uk.co.idv.json.verificationcontext.result.VerificationResultDeserializer;
 import uk.co.idv.json.verificationcontext.result.VerificationResultSerializer;
+import uk.co.idv.json.verificationcontext.result.VerificationResultsDeserializer;
 import uk.co.idv.json.verificationcontext.result.VerificationResultsSerializer;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
@@ -54,6 +55,7 @@ public class VerificationContextModule extends SimpleModule {
         addDeserializer(VerificationSequences.class, new VerificationSequencesDeserializer());
         addDeserializer(VerificationSequence.class, new VerificationSequenceDeserializer());
         addDeserializer(VerificationMethod.class, new DefaultVerificationMethodDeserializer());
+        addDeserializer(VerificationResults.class, new VerificationResultsDeserializer());
         addDeserializer(CardNumber.class, new CardNumberDeserializer());
         addDeserializer(MobileNumber.class, new MobileNumberDeserializer());
         addDeserializer(PasscodeSettings.class, new PasscodeSettingsDeserializer());

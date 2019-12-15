@@ -11,6 +11,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.C
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ public class PhysicalPinsentryJsonNodeConverter implements VerificationMethodJso
             final boolean eligible = node.get("eligible").asBoolean();
             final PinsentryFunction function = PinsentryFunction.valueOf(node.get("function").asText().toUpperCase());
             if (eligible) {
+                final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
                 final Collection<CardNumber> cardNumbers = Arrays.asList(node.get("cardNumbers").traverse(parser.getCodec()).readValueAs(CardNumber[].class));
                 return new PhysicalPinsentryEligible(function, cardNumbers);
             }

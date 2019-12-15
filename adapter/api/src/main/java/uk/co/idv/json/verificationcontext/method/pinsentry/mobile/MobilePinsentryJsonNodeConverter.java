@@ -9,7 +9,11 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryF
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
 
 @Slf4j
 public class MobilePinsentryJsonNodeConverter implements VerificationMethodJsonNodeConverter {
@@ -25,12 +29,17 @@ public class MobilePinsentryJsonNodeConverter implements VerificationMethodJsonN
     public VerificationMethod toMethod(final JsonNode node,
                                        final JsonParser parser,
                                        final DeserializationContext context) {
-        final boolean eligible = node.get("eligible").asBoolean();
-        final PinsentryFunction function = PinsentryFunction.valueOf(node.get("function").asText().toUpperCase());
-        if (eligible) {
-            return new MobilePinsentryEligible(function);
+        try {
+            final boolean eligible = node.get("eligible").asBoolean();
+            final PinsentryFunction function = PinsentryFunction.valueOf(node.get("function").asText().toUpperCase());
+            if (eligible) {
+                final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
+                return new MobilePinsentryEligible(function, results);
+            }
+            return new MobilePinsentryIneligible(function);
+        } catch (final IOException e) {
+            throw new UncheckedIOException(e);
         }
-        return new MobilePinsentryIneligible(function);
     }
 
 }

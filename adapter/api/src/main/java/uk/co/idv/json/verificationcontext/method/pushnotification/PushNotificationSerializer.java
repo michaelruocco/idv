@@ -34,9 +34,7 @@ public class PushNotificationSerializer extends StdSerializer<PushNotification> 
         JsonFieldWriter.writeSuccessful(method.isSuccessful(), json);
         JsonFieldWriter.writeDuration(method.getDuration(), json);
         JsonFieldWriter.writeMaxAttempts(method.getMaxAttempts(), json);
-        if (method.hasResults()) {
-            JsonFieldWriter.writeResults(method.getResults(), json, provider);
-        }
+        JsonFieldWriter.writeResults(method.getResults(), json, provider);
         json.writeEndObject();
     }
 

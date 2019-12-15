@@ -8,7 +8,11 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
+
+import java.io.IOException;
+import java.io.UncheckedIOException;
 
 @Slf4j
 public class PushNotificationJsonNodeConverter implements VerificationMethodJsonNodeConverter {
@@ -24,11 +28,16 @@ public class PushNotificationJsonNodeConverter implements VerificationMethodJson
     public VerificationMethod toMethod(final JsonNode node,
                                        final JsonParser parser,
                                        final DeserializationContext context) {
-        final boolean eligible = node.get("eligible").asBoolean();
-        if (eligible) {
-            return new PushNotificationEligible();
+        try {
+            final boolean eligible = node.get("eligible").asBoolean();
+            if (eligible) {
+                final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
+                return new PushNotificationEligible(results);
+            }
+            return new PushNotificationIneligible();
+        } catch (final IOException e) {
+            throw new UncheckedIOException(e);
         }
-        return new PushNotificationIneligible();
     }
 
 }
