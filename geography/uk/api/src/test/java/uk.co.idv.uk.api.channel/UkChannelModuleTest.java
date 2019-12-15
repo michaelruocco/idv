@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UkChannelModuleTest {
 
-    private static final ObjectMapper MAPPER = UkObjectMapperSingleton.get();
+    private static final ObjectMapper MAPPER = UkObjectMapperSingleton.instance();
 
     @Test
     void shouldSerializeRsaChannelWithIssuerSessionId() throws IOException {

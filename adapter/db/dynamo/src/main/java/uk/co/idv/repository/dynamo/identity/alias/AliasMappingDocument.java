@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo.identity;
+package uk.co.idv.repository.dynamo.identity.alias;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;

@@ -35,10 +35,7 @@ class ApplicationTest {
         setSpringProfiles("in-memory-mongo, uk");
         setRandomServerPort();
         withEnvironmentVariable("DYNAMO_DB_URI", buildDynamoDbUri())
-                .execute(() -> {
-                            Application.main(new String[0]);
-                        }
-                );
+                .execute(() -> Application.main(new String[0]));
     }
 
     private String buildDynamoDbUri() {

@@ -1,5 +1,7 @@
 package uk.co.idv.repository.dynamo.identity;
 
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocument;
+
 public class AliasMappingDocumentMother {
 
     public static AliasMappingDocument build() {

@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo.identity;
+package uk.co.idv.repository.dynamo.identity.alias;
 
 import org.springframework.data.repository.CrudRepository;
 

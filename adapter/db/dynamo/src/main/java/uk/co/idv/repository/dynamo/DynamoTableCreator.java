@@ -23,9 +23,9 @@ public class DynamoTableCreator {
         }
     }
 
-    private static class DynamoTableCreationException extends RuntimeException {
+    public static class DynamoTableCreationException extends RuntimeException {
 
-        private DynamoTableCreationException(final Throwable cause) {
+        public DynamoTableCreationException(final Throwable cause) {
             super(cause);
         }
 

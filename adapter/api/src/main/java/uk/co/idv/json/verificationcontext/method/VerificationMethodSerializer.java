@@ -1,4 +1,4 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.method;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class VerificationMethodSerializer extends StdSerializer<VerificationMethod> {
 
-    VerificationMethodSerializer() {
+    public VerificationMethodSerializer() {
         super(VerificationMethod.class);
     }
 

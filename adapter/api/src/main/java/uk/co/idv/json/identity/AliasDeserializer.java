@@ -20,6 +20,7 @@ public class AliasDeserializer extends StdDeserializer<Alias> {
     @Override
     public Alias deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
+        System.out.println("ALIAS NODE: " + node);
         final String type = extractType(node);
         switch (type) {
             case CreditCardNumber.TYPE: return new CreditCardNumber(extractValue(node));

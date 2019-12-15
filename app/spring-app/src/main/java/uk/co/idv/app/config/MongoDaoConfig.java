@@ -29,8 +29,6 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.repository.mongo.MongoIndexResolver;
-import uk.co.idv.repository.mongo.activity.ActivityDocumentConverterDelegator;
-import uk.co.idv.repository.mongo.channel.ChannelDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.identity.IdentityDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
 import uk.co.idv.repository.mongo.identity.alias.AliasesDocumentConverter;
@@ -41,9 +39,6 @@ import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsRepository
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
-import uk.co.idv.repository.mongo.verificationcontext.MongoVerificationContextDao;
-import uk.co.idv.repository.mongo.verificationcontext.VerificationContextDocumentConverter;
-import uk.co.idv.repository.mongo.verificationcontext.VerificationContextRepository;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationSequenceDocumentConverter;
 import uk.co.idv.repository.mongo.verificationcontext.VerificationSequencesConverter;
 import uk.co.idv.repository.mongo.verificationcontext.eligibility.EligibilityDocumentConverter;
@@ -65,7 +60,6 @@ import uk.co.idv.repository.mongo.verificationcontext.result.VerificationResults
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
-import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
@@ -76,7 +70,10 @@ import java.util.List;
 @EnableAutoConfiguration
 @EnableMongoRepositories(
         basePackages = "uk.co.idv.repository.mongo",
-        excludeFilters = {@ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*IdentityRepository")}
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*IdentityRepository"),
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*VerificationContextRepository")
+        }
 )
 @Profile("!stub")
 @Slf4j
@@ -263,21 +260,6 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public VerificationContextDocumentConverter verificationContextConverter(final ChannelDocumentConverterDelegator channelConverter,
-                                                                             final AliasDocumentConverter aliasConverter,
-                                                                             final IdentityDocumentConverter identityConverter,
-                                                                             final ActivityDocumentConverterDelegator activityConverter,
-                                                                             final VerificationSequencesConverter sequencesConverter) {
-        return VerificationContextDocumentConverter.builder()
-                .channelConverter(channelConverter)
-                .aliasConverter(aliasConverter)
-                .identityConverter(identityConverter)
-                .activityConverter(activityConverter)
-                .sequencesConverter(sequencesConverter)
-                .build();
-    }
-
-    @Bean
     public VerificationAttemptDocumentConverter verificationAttemptConverter(final AliasDocumentConverter aliasConverter) {
         return new VerificationAttemptDocumentConverter(aliasConverter);
     }
@@ -290,24 +272,6 @@ public class MongoDaoConfig {
     @Bean
     public MultipleLockoutPoliciesHandler multipleLockoutPoliciesHandler() {
         return new MultipleLockoutPoliciesHandler();
-    }
-
-   /*@Bean
-    public IdentityDao identityDao(final IdentityRepository repository,
-                                   final IdentityDocumentConverter identityConverter) {
-        return MongoIdentityDao.builder()
-                .repository(repository)
-                .converter(identityConverter)
-                .build();
-    }*/
-
-    @Bean
-    public VerificationContextDao verificationContextDao(final VerificationContextRepository repository,
-                                                         final VerificationContextDocumentConverter contextConverter) {
-        return MongoVerificationContextDao.builder()
-                .repository(repository)
-                .converter(contextConverter)
-                .build();
     }
 
     @Bean

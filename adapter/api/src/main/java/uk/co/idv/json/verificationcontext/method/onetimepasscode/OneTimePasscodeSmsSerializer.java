@@ -1,53 +1,57 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.method.onetimepasscode;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsEligible;
+import uk.co.idv.json.verificationcontext.method.JsonFieldWriter;
 
 import java.io.IOException;
 
-public class PushNotificationSerializer extends StdSerializer<PushNotification> {
+public class OneTimePasscodeSmsSerializer extends StdSerializer<OneTimePasscodeSms> {
 
-    PushNotificationSerializer() {
-        super(PushNotification.class);
+    public OneTimePasscodeSmsSerializer() {
+        super(OneTimePasscodeSms.class);
     }
 
     @Override
-    public void serialize(final PushNotification method,
+    public void serialize(final OneTimePasscodeSms method,
                           final JsonGenerator json,
                           final SerializerProvider provider) throws IOException {
         if (method.isEligible()) {
-            writeEligibleJson(method, json, provider);
+            writeEligibleJson((OneTimePasscodeSmsEligible) method, json, provider);
             return;
         }
         writeIneligibleJson(method, json);
     }
 
-    private void writeEligibleJson(final PushNotification method,
+    private void writeEligibleJson(final OneTimePasscodeSmsEligible method,
                                    final JsonGenerator json,
                                    final SerializerProvider provider) throws IOException {
         json.writeStartObject();
-        writeNameAndEligibility(method, json);
+        writeCommonFields(method, json);
         JsonFieldWriter.writeComplete(method.isComplete(), json);
         JsonFieldWriter.writeSuccessful(method.isSuccessful(), json);
         JsonFieldWriter.writeDuration(method.getDuration(), json);
         JsonFieldWriter.writeMaxAttempts(method.getMaxAttempts(), json);
+        JsonFieldWriter.writePasscodeSettings(method.getPasscodeSettings(), json, provider);
+        JsonFieldWriter.writeMobileNumbersJson(method.getMobileNumbers(), json, provider);
         if (method.hasResults()) {
             JsonFieldWriter.writeResults(method.getResults(), json, provider);
         }
         json.writeEndObject();
     }
 
-    private void writeIneligibleJson(final PushNotification method,
+    private void writeIneligibleJson(final OneTimePasscodeSms method,
                                      final JsonGenerator json) throws IOException {
         json.writeStartObject();
-        writeNameAndEligibility(method, json);
+        writeCommonFields(method, json);
         json.writeEndObject();
     }
 
-    private void writeNameAndEligibility(final PushNotification method,
-                                         final JsonGenerator json) throws IOException {
+    private void writeCommonFields(final OneTimePasscodeSms method,
+                                   final JsonGenerator json) throws IOException {
         JsonFieldWriter.writeName(method.getName(), json);
         JsonFieldWriter.writeEligibility(method.getEligibility(), json);
     }

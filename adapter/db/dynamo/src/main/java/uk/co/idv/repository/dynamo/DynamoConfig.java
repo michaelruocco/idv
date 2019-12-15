@@ -11,13 +11,19 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverterFactory;
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
-import uk.co.idv.repository.dynamo.identity.AliasConverter;
+import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
+import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
 import uk.co.idv.repository.dynamo.identity.DynamoIdentityDao;
-import uk.co.idv.repository.dynamo.identity.AliasMappingDocumentConverter;
-import uk.co.idv.repository.dynamo.identity.AliasMappingRepository;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocumentConverter;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
+import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
+import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 
 import java.util.Optional;
 
@@ -66,12 +72,24 @@ public class DynamoConfig {
                 .build();
     }
 
-    public DynamoIdentityDao identityDao(final AliasMappingRepository repository) {
-        final AliasConverter aliasConverter = new AliasConverter(new AliasFactory());
+    private Optional<EndpointConfiguration> getEndpointConfiguration() {
+        return Optional.ofNullable(endpointConfiguration);
+    }
+
+    public IdentityDao identityDao(final AliasMappingRepository repository) {
+        final AliasConverter aliasConverter = aliasConverter();
         return DynamoIdentityDao.builder()
                 .aliasConverter(aliasConverter)
                 .documentConverter(new AliasMappingDocumentConverter(aliasConverter))
                 .repository(repository)
+                .build();
+    }
+
+    public VerificationContextDao verificationContextDao(final AmazonDynamoDB client,
+                                                         final ObjectMapper mapper) {
+        return DynamoVerificationContextDao.builder()
+                .converter(new JacksonJsonConverter(mapper))
+                .table(new DynamoDB(client).getTable(tablePrefix + "-verification-context"))
                 .build();
     }
 
@@ -82,8 +100,12 @@ public class DynamoConfig {
                 .build();
     }
 
-    private Optional<EndpointConfiguration> getEndpointConfiguration() {
-        return Optional.ofNullable(endpointConfiguration);
+    private AliasConverter aliasConverter() {
+        return new AliasConverter(aliasFactory());
+    }
+
+    private AliasFactory aliasFactory() {
+        return new AliasFactory();
     }
 
 }

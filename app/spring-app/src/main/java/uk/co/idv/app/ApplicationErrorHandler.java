@@ -49,6 +49,7 @@ public class ApplicationErrorHandler {
 
     @ExceptionHandler(ChannelNotSupportedException.class)
     public ResponseEntity<ApiErrorDocument> handleException(final ChannelNotSupportedException e) {
+        log.error("channel not supported", e);
         return buildResponseEntity(new ChannelNotSupportedError(e.getMessage()));
     }
 

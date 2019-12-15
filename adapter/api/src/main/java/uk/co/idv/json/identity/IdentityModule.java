@@ -15,6 +15,7 @@ public class IdentityModule extends SimpleModule {
 
         addDeserializer(Alias.class, new AliasDeserializer());
         addDeserializer(Aliases.class, new AliasesDeserializer());
+        addDeserializer(Identity.class, new IdentityDeserializer());
     }
 
 }

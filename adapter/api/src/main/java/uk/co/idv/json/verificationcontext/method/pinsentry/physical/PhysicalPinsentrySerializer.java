@@ -1,16 +1,17 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.method.pinsentry.physical;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
+import uk.co.idv.json.verificationcontext.method.JsonFieldWriter;
 
 import java.io.IOException;
 
 public class PhysicalPinsentrySerializer extends StdSerializer<PhysicalPinsentry> {
 
-    PhysicalPinsentrySerializer() {
+    public PhysicalPinsentrySerializer() {
         super(PhysicalPinsentry.class);
     }
 

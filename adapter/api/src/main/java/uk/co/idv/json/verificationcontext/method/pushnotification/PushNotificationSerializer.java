@@ -1,20 +1,21 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.method.pushnotification;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.json.verificationcontext.method.JsonFieldWriter;
 
 import java.io.IOException;
 
-public class MobilePinsentrySerializer extends StdSerializer<MobilePinsentry> {
+public class PushNotificationSerializer extends StdSerializer<PushNotification> {
 
-    MobilePinsentrySerializer() {
-        super(MobilePinsentry.class);
+    public PushNotificationSerializer() {
+        super(PushNotification.class);
     }
 
     @Override
-    public void serialize(final MobilePinsentry method,
+    public void serialize(final PushNotification method,
                           final JsonGenerator json,
                           final SerializerProvider provider) throws IOException {
         if (method.isEligible()) {
@@ -24,11 +25,11 @@ public class MobilePinsentrySerializer extends StdSerializer<MobilePinsentry> {
         writeIneligibleJson(method, json);
     }
 
-    private void writeEligibleJson(final MobilePinsentry method,
+    private void writeEligibleJson(final PushNotification method,
                                    final JsonGenerator json,
                                    final SerializerProvider provider) throws IOException {
         json.writeStartObject();
-        writeCommonFields(method, json);
+        writeNameAndEligibility(method, json);
         JsonFieldWriter.writeComplete(method.isComplete(), json);
         JsonFieldWriter.writeSuccessful(method.isSuccessful(), json);
         JsonFieldWriter.writeDuration(method.getDuration(), json);
@@ -39,17 +40,16 @@ public class MobilePinsentrySerializer extends StdSerializer<MobilePinsentry> {
         json.writeEndObject();
     }
 
-    private void writeIneligibleJson(final MobilePinsentry method,
+    private void writeIneligibleJson(final PushNotification method,
                                      final JsonGenerator json) throws IOException {
         json.writeStartObject();
-        writeCommonFields(method, json);
+        writeNameAndEligibility(method, json);
         json.writeEndObject();
     }
 
-    private void writeCommonFields(final MobilePinsentry method,
-                                   final JsonGenerator json) throws IOException {
+    private void writeNameAndEligibility(final PushNotification method,
+                                         final JsonGenerator json) throws IOException {
         JsonFieldWriter.writeName(method.getName(), json);
-        JsonFieldWriter.writeFunction(method.getFunction(), json);
         JsonFieldWriter.writeEligibility(method.getEligibility(), json);
     }
 

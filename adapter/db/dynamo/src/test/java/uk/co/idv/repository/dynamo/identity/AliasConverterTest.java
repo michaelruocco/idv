@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

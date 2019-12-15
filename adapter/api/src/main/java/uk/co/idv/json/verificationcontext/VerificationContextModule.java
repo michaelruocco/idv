@@ -3,6 +3,18 @@ package uk.co.idv.json.verificationcontext;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
 import uk.co.idv.api.verificationcontext.UpdateContextResultsRequestDocumentDeserializer;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
+import uk.co.idv.json.verificationcontext.method.DefaultVerificationMethodDeserializer;
+import uk.co.idv.json.verificationcontext.method.VerificationMethodSerializer;
+import uk.co.idv.json.verificationcontext.method.onetimepasscode.MobileNumberDeserializer;
+import uk.co.idv.json.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsSerializer;
+import uk.co.idv.json.verificationcontext.method.onetimepasscode.PasscodeSettingsDeserializer;
+import uk.co.idv.json.verificationcontext.method.onetimepasscode.PasscodeSettingsSerializer;
+import uk.co.idv.json.verificationcontext.method.pinsentry.mobile.MobilePinsentrySerializer;
+import uk.co.idv.json.verificationcontext.method.pinsentry.physical.CardNumberDeserializer;
+import uk.co.idv.json.verificationcontext.method.pinsentry.physical.PhysicalPinsentrySerializer;
+import uk.co.idv.json.verificationcontext.method.pushnotification.PushNotificationSerializer;
 import uk.co.idv.json.verificationcontext.result.VerificationResultDeserializer;
 import uk.co.idv.json.verificationcontext.result.VerificationResultSerializer;
 import uk.co.idv.json.verificationcontext.result.VerificationResultsSerializer;
@@ -38,6 +50,13 @@ public class VerificationContextModule extends SimpleModule {
         addDeserializer(CreateContextRequest.class, new CreateContextRequestDeserializer());
         addDeserializer(VerificationResult.class, new VerificationResultDeserializer());
         addDeserializer(UpdateContextResultsRequestDocument.class, new UpdateContextResultsRequestDocumentDeserializer());
+        addDeserializer(VerificationContext.class, new VerificationContextDeserializer());
+        addDeserializer(VerificationSequences.class, new VerificationSequencesDeserializer());
+        addDeserializer(VerificationSequence.class, new VerificationSequenceDeserializer());
+        addDeserializer(VerificationMethod.class, new DefaultVerificationMethodDeserializer());
+        addDeserializer(CardNumber.class, new CardNumberDeserializer());
+        addDeserializer(MobileNumber.class, new MobileNumberDeserializer());
+        addDeserializer(PasscodeSettings.class, new PasscodeSettingsDeserializer());
     }
 
 }

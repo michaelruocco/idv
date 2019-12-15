@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo.identity;
+package uk.co.idv.repository.dynamo.identity.alias;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.identity.Identity;

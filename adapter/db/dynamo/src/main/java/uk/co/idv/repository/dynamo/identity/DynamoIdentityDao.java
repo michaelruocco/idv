@@ -8,6 +8,10 @@ import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocument;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocumentConverter;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
 
 import java.util.Collection;
 import java.util.Collections;
