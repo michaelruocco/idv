@@ -7,6 +7,8 @@ import uk.co.idv.api.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.api.lockout.policy.LockoutPolicyDocumentDeserializer;
 import uk.co.idv.api.lockout.policy.hard.HardLockoutStateMixin;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesMixin;
+import uk.co.idv.api.lockout.state.LockoutStateDocument;
+import uk.co.idv.api.lockout.state.LockoutStateDocumentMixin;
 import uk.co.idv.api.lockout.state.LockoutStateMixin;
 import uk.co.idv.api.lockout.state.ResetLockoutStateDocument;
 import uk.co.idv.api.lockout.state.ResetLockoutStateDocumentDeserializer;
@@ -26,6 +28,7 @@ public class LockoutStateModule extends SimpleModule {
         setMixInAnnotation(DefaultLockoutPolicyAttributes.class, LockoutPolicyAttributesMixin.class);
         setMixInAnnotation(VerificationAttempt.class, VerificationAttemptMixin.class);
         setMixInAnnotation(LockoutLevel.class, LockoutLevelMixin.class);
+        setMixInAnnotation(LockoutStateDocument.class, LockoutStateDocumentMixin.class);
 
         addDeserializer(ResetLockoutStateDocument.class, new ResetLockoutStateDocumentDeserializer());
         addDeserializer(LockoutRequest.class, new LockoutRequestDeserializer());

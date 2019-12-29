@@ -1,9 +1,5 @@
 dependencies {
-    compile project(':entities')
-    compile project(':use-cases')
-    compile 'org.zalando:jackson-datatype-money:1.1.1'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1'
-    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.1'
+    compile project(':json')
     compile 'com.github.michaelruocco:jackson-json-api:2.0.2'
     compile "org.slf4j:slf4j-api:${slf4jVersion}"
 

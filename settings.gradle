@@ -7,6 +7,9 @@ include ':use-cases'
 project(':use-cases').projectDir = file('domain/use-cases')
 
 //adapters
+include ':json'
+project(':json').projectDir = file('adapter/json')
+
 include ':api'
 project(':api').projectDir = file('adapter/api')
 

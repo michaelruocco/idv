@@ -2,7 +2,7 @@ package uk.co.idv.api.lockout.policy.state;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.JsonApiObjectMapperSingleton;
+import uk.co.idv.api.ApiObjectMapperSingleton;
 import uk.co.idv.api.lockout.state.ResetLockoutStateDocument;
 import uk.co.mruoc.file.content.ContentLoader;
 
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ResetLockoutStateDocumentDeserializerTest {
 
-    private static final ObjectMapper MAPPER = JsonApiObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = ApiObjectMapperSingleton.instance();
 
     @Test
     void shouldDeserializeDocument() throws IOException {

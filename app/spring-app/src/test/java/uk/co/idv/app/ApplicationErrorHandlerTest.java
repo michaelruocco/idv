@@ -41,7 +41,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-class ApplicationErrorHandlerTest {
+class  ApplicationErrorHandlerTest {
 
     private static final String MESSAGE = "error message";
 

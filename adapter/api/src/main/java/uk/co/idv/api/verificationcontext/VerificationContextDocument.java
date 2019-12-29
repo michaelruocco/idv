@@ -1,5 +1,6 @@
 package uk.co.idv.api.verificationcontext;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.mruoc.jsonapi.ApiDataWithId;
 import uk.co.mruoc.jsonapi.ApiDocumentWithId;

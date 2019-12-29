@@ -1,7 +1,7 @@
 package uk.co.idv.uk.api.channel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.co.idv.api.JsonApiObjectMapperSingleton;
+import uk.co.idv.api.ApiObjectMapperSingleton;
 import uk.co.idv.json.ObjectMapperSingleton;
 
 public class UkObjectMapperSingleton {
@@ -22,7 +22,7 @@ public class UkObjectMapperSingleton {
     }
 
     private static ObjectMapper buildJsonApi() {
-        return customize(JsonApiObjectMapperSingleton.instance());
+        return customize(ApiObjectMapperSingleton.instance());
     }
 
     private static ObjectMapper build() {
