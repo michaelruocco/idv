@@ -15,6 +15,7 @@ import org.springframework.context.event.EventListener;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.DynamoConfig;
+import uk.co.idv.repository.dynamo.DynamoConfigFactory;
 import uk.co.idv.repository.dynamo.IdvTables;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
 
@@ -26,7 +27,7 @@ import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
 @Profile("!stub")
 public class DynamoDaoConfig {
 
-    private final DynamoConfig config = DynamoConfig.standard();
+    private final DynamoConfig config = DynamoConfigFactory.standard();
 
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {

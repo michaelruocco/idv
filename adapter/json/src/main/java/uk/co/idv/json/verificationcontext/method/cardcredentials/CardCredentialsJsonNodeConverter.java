@@ -32,7 +32,7 @@ public class CardCredentialsJsonNodeConverter implements VerificationMethodJsonN
             final boolean eligible = node.get("eligible").asBoolean();
             if (eligible) {
                 final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
-                return new CardCredentialsEligible();
+                return new CardCredentialsEligible(results);
             }
             return new CardCredentialsIneligible();
         } catch (final IOException e) {

@@ -27,8 +27,6 @@ import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContext
 
 import java.util.Optional;
 
-import static com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride.*;
-
 @Builder
 @Slf4j
 public class DynamoConfig {
@@ -44,29 +42,15 @@ public class DynamoConfig {
 
     private final EndpointConfiguration endpointConfiguration;
 
-    public static DynamoConfig standard() {
-        final DynamoConfigBuilder configBuilder = DynamoConfig.builder()
-                .region(AwsEnvironmentVariables.loadRegion());
-        AwsEnvironmentVariables.loadDynamoDbEndpointConfiguration().ifPresent(configBuilder::endpointConfiguration);
-        return configBuilder.build();
-    }
-
     public AmazonDynamoDB amazonDynamoDB() {
-        final AmazonDynamoDBClientBuilder builder = AmazonDynamoDBClientBuilder.standard()
-                .withCredentials(credentialsProvider);
-        final Optional<EndpointConfiguration> endpointConfiguration = getEndpointConfiguration();
-        if (endpointConfiguration.isPresent()) {
-            builder.withEndpointConfiguration(endpointConfiguration.get());
-        } else {
-            builder.withRegion(region);
-        }
-        return builder.build();
+        return getEndpointConfiguration()
+                .map(this::toDynamoDb)
+                .orElseGet(() -> toDynamoDb(region.getName()));
     }
 
     public DynamoDBMapperConfig dynamoDBMapperConfig() {
-        final TableNameOverride tableNameOverride = withTableNamePrefix(String.format("%s-", tablePrefix));
         return DynamoDBMapperConfig.builder()
-                .withTableNameOverride(tableNameOverride)
+                .withTableNameOverride(TableNameOverride.withTableNamePrefix(String.format("%s-", tablePrefix)))
                 .withConversionSchema(ConversionSchemas.V2)
                 .withTypeConverterFactory(DynamoDBTypeConverterFactory.standard())
                 .build();
@@ -98,6 +82,23 @@ public class DynamoConfig {
                 .mapper(mapper)
                 .tableCreator(new DynamoTableCreator(dynamoDB))
                 .build();
+    }
+
+    private AmazonDynamoDB toDynamoDb(final EndpointConfiguration endpointConfiguration) {
+        return amazonDynamoDBClientBuilder()
+                .withEndpointConfiguration(endpointConfiguration)
+                .build();
+    }
+
+    private AmazonDynamoDB toDynamoDb(final String region) {
+        return amazonDynamoDBClientBuilder()
+                .withRegion(region)
+                .build();
+    }
+
+    private AmazonDynamoDBClientBuilder amazonDynamoDBClientBuilder() {
+        return AmazonDynamoDBClientBuilder.standard()
+                .withCredentials(credentialsProvider);
     }
 
     private AliasConverter aliasConverter() {
