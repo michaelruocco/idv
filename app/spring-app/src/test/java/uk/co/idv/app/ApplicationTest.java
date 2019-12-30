@@ -35,6 +35,8 @@ class ApplicationTest {
         setSpringProfiles("in-memory-mongo, uk");
         setRandomServerPort();
         withEnvironmentVariable("DYNAMO_DB_URI", buildDynamoDbUri())
+                .and("AWS_ACCESS_KEY", "abc")
+                .and("AWS_SECRET_KEY", "123")
                 .execute(() -> Application.main(new String[0]));
     }
 
