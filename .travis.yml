@@ -6,7 +6,7 @@ services:
   - docker
 
 script:
-  - ./gradlew clean spotlessCheck build codeCoverageReport buildImage composeUp postman composeDown pushImage --stacktrace --info
+  - ./gradlew clean spotlessCheck build codeCoverageReport buildImage composeUp postman composeDown pushImage
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
