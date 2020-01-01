@@ -3,6 +3,7 @@ package uk.co.idv.repository.dynamo;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.repository.dynamo.DynamoConfig.DynamoConfigBuilder;
 
 @Builder
 @Slf4j
@@ -24,8 +25,10 @@ public class DynamoConfigFactory {
         return dynamoConfigBuilder().build();
     }
 
-    private static DynamoConfig.DynamoConfigBuilder dynamoConfigBuilder() {
-        return DynamoConfig.builder().region(AwsEnvironmentVariables.loadRegion());
+    private static DynamoConfigBuilder dynamoConfigBuilder() {
+        return DynamoConfig.builder()
+                .environment(AwsEnvironmentVariables.loadEnvironment())
+                .region(AwsEnvironmentVariables.loadRegion());
     }
 
 }

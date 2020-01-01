@@ -12,6 +12,7 @@ public class AwsEnvironmentVariables {
 
     private static final String REGION = "AWS_REGION";
     private static final String DYNAMO_DB_URI = "DYNAMO_DB_URI";
+    private static final String ENVIRONMENT = "ENVIRONMENT";
 
     private static final Regions DEFAULT_REGION = Regions.EU_WEST_1;
 
@@ -26,7 +27,12 @@ public class AwsEnvironmentVariables {
     }
 
     public static Optional<EndpointConfiguration> loadDynamoDbEndpointConfiguration() {
-        return loadDynamoDbEndpointUri().map(uri -> new EndpointConfiguration(uri, loadRegion().getName()));
+        return loadDynamoDbEndpointUri()
+                .map(uri -> new EndpointConfiguration(uri, loadRegion().getName()));
+    }
+
+    public static String loadEnvironment() {
+        return loadEnvironmentValue().orElse("dev");
     }
 
     private static Optional<String> loadRegionValue() {
@@ -40,6 +46,10 @@ public class AwsEnvironmentVariables {
 
     private static Optional<String> loadDynamoDbEndpointUri() {
         return loadEnvironmentVariable(DYNAMO_DB_URI);
+    }
+
+    private static Optional<String> loadEnvironmentValue() {
+        return loadEnvironmentVariable(ENVIRONMENT);
     }
 
     private static Optional<String> loadEnvironmentVariable(final String name) {

@@ -45,15 +45,15 @@ public class DynamoDaoConfig {
     }
 
     @Bean
-    public VerificationContextDao verificationContextDao(final AmazonDynamoDB amazonDynamoDB,
-                                                         @Qualifier("dynamoObjectMapper") final ObjectMapper objectMapper) {
-        return config.verificationContextDao(amazonDynamoDB, objectMapper);
+    public IdvTables idvTables(final AmazonDynamoDB dynamoDB,
+                               final DynamoDBMapper mapper) {
+        return config.idvTables(dynamoDB, mapper);
     }
 
     @Bean
-    public IdvTables genericTableFactory(final AmazonDynamoDB dynamoDB,
-                                         final DynamoDBMapper mapper) {
-        return config.idvTables(dynamoDB, mapper);
+    public VerificationContextDao verificationContextDao(@Qualifier("dynamoObjectMapper") final ObjectMapper objectMapper,
+                                                         final IdvTables idvTables) {
+        return config.verificationContextDao(objectMapper, idvTables);
     }
 
     @Bean

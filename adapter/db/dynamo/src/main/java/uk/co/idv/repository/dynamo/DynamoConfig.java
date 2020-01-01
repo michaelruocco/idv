@@ -11,7 +11,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverterFactory;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -31,16 +30,12 @@ import java.util.Optional;
 @Slf4j
 public class DynamoConfig {
 
-    @Builder.Default
-    private final String tablePrefix = "dev";
-
-    @Builder.Default
-    private final Regions region = Regions.EU_WEST_1;
+    private final String environment;
+    private final Regions region;
+    private final EndpointConfiguration endpointConfiguration;
 
     @Builder.Default
     private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
-
-    private final EndpointConfiguration endpointConfiguration;
 
     public AmazonDynamoDB amazonDynamoDB() {
         return getEndpointConfiguration()
@@ -50,7 +45,7 @@ public class DynamoConfig {
 
     public DynamoDBMapperConfig dynamoDBMapperConfig() {
         return DynamoDBMapperConfig.builder()
-                .withTableNameOverride(TableNameOverride.withTableNamePrefix(String.format("%s-", tablePrefix)))
+                .withTableNameOverride(TableNameOverride.withTableNamePrefix(toPrefix(environment)))
                 .withConversionSchema(ConversionSchemas.V2)
                 .withTypeConverterFactory(DynamoDBTypeConverterFactory.standard())
                 .build();
@@ -69,18 +64,19 @@ public class DynamoConfig {
                 .build();
     }
 
-    public VerificationContextDao verificationContextDao(final AmazonDynamoDB client,
-                                                         final ObjectMapper mapper) {
+    public VerificationContextDao verificationContextDao(final ObjectMapper mapper,
+                                                         final IdvTables tables) {
         return DynamoVerificationContextDao.builder()
                 .converter(new JacksonJsonConverter(mapper))
-                .table(new DynamoDB(client).getTable(tablePrefix + "-verification-context"))
+                .table(tables.getVerificationContext())
                 .build();
     }
 
     public IdvTables idvTables(final AmazonDynamoDB dynamoDB, final DynamoDBMapper mapper) {
         return IdvTables.builder()
+                .environment(environment)
                 .mapper(mapper)
-                .tableCreator(new DynamoTableCreator(dynamoDB))
+                .amazonDynamoDB(dynamoDB)
                 .build();
     }
 
@@ -107,6 +103,10 @@ public class DynamoConfig {
 
     private AliasFactory aliasFactory() {
         return new AliasFactory();
+    }
+
+    private static String toPrefix(final String environment) {
+        return String.format("%s-", environment);
     }
 
 }
