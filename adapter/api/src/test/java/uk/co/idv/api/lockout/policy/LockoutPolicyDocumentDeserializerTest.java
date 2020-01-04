@@ -64,7 +64,7 @@ class LockoutPolicyDocumentDeserializerTest {
     }
 
     @Test
-    void shouldThrowExceptionIfLockoutPolicyTypeIsInvalid() throws JsonProcessingException {
+    void shouldThrowExceptionIfLockoutPolicyTypeIsInvalid() {
         final String json = ContentLoader.loadContentFromClasspath("lockout/invalid-lockout-policy-document.json");
 
         final Throwable error = catchThrowable(() -> MAPPER.readValue(json, LockoutPolicyDocument.class));

@@ -1,18 +1,18 @@
-package uk.co.idv.api.lockout.attempts;
+package uk.co.idv.json.lockout.attempt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiObjectMapperSingleton;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
-import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
+import uk.co.idv.json.ObjectMapperSingleton;
+import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class VerificationAttemptsSerializerTest {
 
-    private static final ObjectMapper MAPPER = ApiObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
     void shouldSerializeAttempts() throws JsonProcessingException {
@@ -20,7 +20,7 @@ class VerificationAttemptsSerializerTest {
 
         final String json = MAPPER.writeValueAsString(attempts);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/verification-attempts.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/attempt/verification-attempts.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext.method;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
@@ -8,6 +9,7 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import java.time.Duration;
 
 @ToString
+@EqualsAndHashCode(callSuper = true)
 public class FakeVerificationMethodEligible extends AbstractVerificationMethodEligible implements FakeVerificationMethod {
 
     private static final int MAX_ATTEMPTS = 2;

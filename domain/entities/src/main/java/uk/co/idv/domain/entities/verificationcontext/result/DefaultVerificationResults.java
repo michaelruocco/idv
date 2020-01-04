@@ -1,5 +1,8 @@
 package uk.co.idv.domain.entities.verificationcontext.result;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,6 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@EqualsAndHashCode
+@ToString
 public class DefaultVerificationResults implements VerificationResults {
 
     private final List<VerificationResult> results;

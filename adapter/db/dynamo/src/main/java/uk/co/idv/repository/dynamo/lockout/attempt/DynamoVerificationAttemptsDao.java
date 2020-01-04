@@ -44,7 +44,7 @@ public class DynamoVerificationAttemptsDao implements VerificationAttemptsDao {
         final String json = converter.toJson(attempts);
         log.info("writing item with body {}", json);
         return new Item()
-                .withPrimaryKey("id", attempts.getIdvId())
+                .withPrimaryKey("id", attempts.getIdvId().toString())
                 .withJSON("body", json);
     }
 

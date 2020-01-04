@@ -4,7 +4,7 @@ import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public class FakeVerificationContext extends VerificationContext {
                 ActivityMother.fake(),
                 Instant.parse("2019-09-21T20:43:32.233721Z"),
                 Instant.parse("2019-09-21T20:48:32.233721Z"),
-                new VerificationSequences(new SingleMethodSequence(new FakeVerificationMethodEligible())));
+                new VerificationSequences(new SingleMethodSequence(new PushNotificationEligible())));
     }
 
 }

@@ -29,17 +29,10 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.repository.mongo.MongoIndexResolver;
-import uk.co.idv.repository.mongo.identity.alias.AliasDocumentConverter;
-import uk.co.idv.repository.mongo.lockout.attempt.MongoVerificationAttemptsDao;
-import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptDocumentConverter;
-import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsDocumentConverter;
-import uk.co.idv.repository.mongo.lockout.attempt.VerificationAttemptsRepository;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
 import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.repository.mongo.lockout.policy.MongoLockoutPolicyDao;
-import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 
 import java.net.InetSocketAddress;
 import java.util.Collections;
@@ -113,32 +106,8 @@ public class MongoDaoConfig {
     }
 
     @Bean
-    public AliasDocumentConverter aliasConverter(final AliasFactory aliasFactory) {
-        return new AliasDocumentConverter(aliasFactory);
-    }
-
-    @Bean
-    public VerificationAttemptDocumentConverter verificationAttemptConverter(final AliasDocumentConverter aliasConverter) {
-        return new VerificationAttemptDocumentConverter(aliasConverter);
-    }
-
-    @Bean
-    public VerificationAttemptsDocumentConverter verificationAttemptsConverter(final VerificationAttemptDocumentConverter attemptConverter) {
-        return new VerificationAttemptsDocumentConverter(attemptConverter);
-    }
-
-    @Bean
     public MultipleLockoutPoliciesHandler multipleLockoutPoliciesHandler() {
         return new MultipleLockoutPoliciesHandler();
-    }
-
-    @Bean
-    public VerificationAttemptsDao verificationAttemptsDao(final VerificationAttemptsRepository repository,
-                                                           final VerificationAttemptsDocumentConverter attemptsConverter) {
-        return MongoVerificationAttemptsDao.builder()
-                .repository(repository)
-                .converter(attemptsConverter)
-                .build();
     }
 
     @Bean

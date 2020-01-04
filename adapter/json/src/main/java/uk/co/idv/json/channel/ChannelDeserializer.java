@@ -28,7 +28,7 @@ public class ChannelDeserializer extends StdDeserializer<Channel> {
     @Override
     public Channel deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
-        final String id = ChannelIdExtractor.extractId(node);
+        final String id = ChannelJsonNodeConverter.extractId(node);
         return findConverter(id)
                 .map(converter -> converter.toChannel(node))
                 .orElseThrow(() -> new ChannelNotSupportedException(id));

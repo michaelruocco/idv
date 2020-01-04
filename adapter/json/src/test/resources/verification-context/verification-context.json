@@ -26,16 +26,20 @@
   },
   "sequences": [
     {
-      "name": "fake-method",
+      "name": "push-notification",
       "eligible": true,
       "complete": false,
       "successful": false,
       "duration": 300000,
       "methods": [
         {
-          "name": "fake-method",
+          "name": "push-notification",
           "eligible": true,
-          "duration": 300000
+          "complete": false,
+          "successful": false,
+          "duration": 300000,
+          "maxAttempts": 5,
+          "results": []
         }
       ]
     }

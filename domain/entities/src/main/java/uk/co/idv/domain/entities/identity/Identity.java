@@ -1,10 +1,12 @@
 package uk.co.idv.domain.entities.identity;
 
+import lombok.EqualsAndHashCode;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 
 import java.util.UUID;
 
+@EqualsAndHashCode
 public class Identity {
 
     private final Aliases aliases;

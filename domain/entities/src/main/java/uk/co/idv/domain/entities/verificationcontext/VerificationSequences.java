@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
@@ -13,6 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@EqualsAndHashCode
+@ToString
 public class VerificationSequences implements Iterable<VerificationSequence> {
 
     private final List<VerificationSequence> sequences;

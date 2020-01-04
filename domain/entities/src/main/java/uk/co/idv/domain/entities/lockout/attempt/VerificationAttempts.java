@@ -104,7 +104,7 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
     }
 
     public VerificationAttempt getMostRecent() {
-        return Collections.max(attempts, Comparator.comparing(attempt -> attempt.getTimestamp()));
+        return Collections.max(attempts, Comparator.comparing(VerificationAttempt::getTimestamp));
     }
 
     @Getter

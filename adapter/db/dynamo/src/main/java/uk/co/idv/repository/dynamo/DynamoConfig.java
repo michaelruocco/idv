@@ -16,12 +16,14 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
 import uk.co.idv.repository.dynamo.identity.DynamoIdentityDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocumentConverter;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
 import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
+import uk.co.idv.repository.dynamo.lockout.attempt.DynamoVerificationAttemptsDao;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 
 import java.util.Optional;
@@ -51,10 +53,6 @@ public class DynamoConfig {
                 .build();
     }
 
-    private Optional<EndpointConfiguration> getEndpointConfiguration() {
-        return Optional.ofNullable(endpointConfiguration);
-    }
-
     public IdentityDao identityDao(final AliasMappingRepository repository) {
         final AliasConverter aliasConverter = aliasConverter();
         return DynamoIdentityDao.builder()
@@ -72,12 +70,24 @@ public class DynamoConfig {
                 .build();
     }
 
+    public VerificationAttemptsDao verificationAttemptsDao(final ObjectMapper mapper,
+                                                           final IdvTables tables) {
+        return DynamoVerificationAttemptsDao.builder()
+                .converter(new JacksonJsonConverter(mapper))
+                .table(tables.getVerificationAttempts())
+                .build();
+    }
+
     public IdvTables idvTables(final AmazonDynamoDB dynamoDB, final DynamoDBMapper mapper) {
         return IdvTables.builder()
                 .environment(environment)
                 .mapper(mapper)
                 .amazonDynamoDB(dynamoDB)
                 .build();
+    }
+
+    private Optional<EndpointConfiguration> getEndpointConfiguration() {
+        return Optional.ofNullable(endpointConfiguration);
     }
 
     private AmazonDynamoDB toDynamoDb(final EndpointConfiguration endpointConfiguration) {

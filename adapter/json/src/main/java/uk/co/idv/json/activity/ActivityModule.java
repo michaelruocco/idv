@@ -6,8 +6,12 @@ import uk.co.idv.domain.entities.activity.Activity;
 public class ActivityModule extends SimpleModule {
 
     public ActivityModule() {
+        this(new DefaultActivityDeserializer());
+    }
+
+    public ActivityModule(final ActivityDeserializer activityDeserializer) {
         setMixInAnnotation(Activity.class, ActivityMixin.class);
-        addDeserializer(Activity.class, new ActivityDeserializer());
+        addDeserializer(Activity.class, activityDeserializer);
     }
 
 }

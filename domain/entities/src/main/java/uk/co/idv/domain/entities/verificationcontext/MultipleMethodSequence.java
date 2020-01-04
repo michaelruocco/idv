@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.cardcredentials.CardCredentialsEligible;
@@ -18,6 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
+@EqualsAndHashCode
 public class MultipleMethodSequence implements VerificationSequence {
 
     private final String name;

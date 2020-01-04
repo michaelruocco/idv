@@ -22,7 +22,6 @@ class HardLockoutStateMixinTest {
         final String json = MAPPER.writeValueAsString(document);
 
         final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/hard/hard-lockout-state-document.json");
-        System.out.println(json);
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

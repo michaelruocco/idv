@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.DynamoConfig;
 import uk.co.idv.repository.dynamo.DynamoConfigFactory;
@@ -40,25 +41,31 @@ public class DynamoDaoConfig {
     }
 
     @Bean
-    public IdentityDao identityDao(final AliasMappingRepository repository) {
-        return config.identityDao(repository);
-    }
-
-    @Bean
     public IdvTables idvTables(final AmazonDynamoDB dynamoDB,
                                final DynamoDBMapper mapper) {
         return config.idvTables(dynamoDB, mapper);
     }
 
     @Bean
-    public VerificationContextDao verificationContextDao(@Qualifier("dynamoObjectMapper") final ObjectMapper objectMapper,
-                                                         final IdvTables idvTables) {
-        return config.verificationContextDao(objectMapper, idvTables);
+    public CreateTablesListener createTablesListener(final IdvTables tables) {
+        return new CreateTablesListener(tables);
     }
 
     @Bean
-    public CreateTablesListener createTablesListener(final IdvTables tables) {
-        return new CreateTablesListener(tables);
+    public IdentityDao identityDao(final AliasMappingRepository repository) {
+        return config.identityDao(repository);
+    }
+
+    @Bean
+    public VerificationContextDao verificationContextDao(@Qualifier("dynamoObjectMapper") final ObjectMapper mapper,
+                                                         final IdvTables tables) {
+        return config.verificationContextDao(mapper, tables);
+    }
+
+    @Bean
+    public VerificationAttemptsDao verificationAttemptsDao(@Qualifier("dynamoObjectMapper") final ObjectMapper mapper,
+                                                           final IdvTables tables) {
+        return config.verificationAttemptsDao(mapper, tables);
     }
 
     @RequiredArgsConstructor

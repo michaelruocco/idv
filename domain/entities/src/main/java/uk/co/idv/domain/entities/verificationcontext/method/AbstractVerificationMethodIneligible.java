@@ -1,11 +1,15 @@
 package uk.co.idv.domain.entities.verificationcontext.method;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Ineligible;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsAlwaysEmpty;
 
 import java.time.Duration;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public abstract class AbstractVerificationMethodIneligible extends AbstractVerificationMethod {
 
     private static final VerificationResults RESULTS = new VerificationResultsAlwaysEmpty();

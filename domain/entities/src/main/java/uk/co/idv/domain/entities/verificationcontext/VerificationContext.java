@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.Builder;
+import lombok.ToString;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.identity.alias.Alias;
@@ -11,6 +12,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Builder
+@ToString
 public class VerificationContext {
 
     private final UUID id;

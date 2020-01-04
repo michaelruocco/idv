@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verificationcontext.method.cardcredentials.CardCredentialsEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
@@ -15,6 +17,8 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Slf4j
+@EqualsAndHashCode
+@ToString
 public class SingleMethodSequence implements VerificationSequence {
 
     private final VerificationMethod method;

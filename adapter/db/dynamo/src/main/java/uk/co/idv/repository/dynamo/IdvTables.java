@@ -34,15 +34,15 @@ public class IdvTables {
     }
 
     public Table getIdentityMapping() {
-        return getTable(prefixEnvironment("identity-mapping"));
+        return getTable(prefixEnvironment(Names.IDENTITY_MAPPING));
     }
 
     public Table getVerificationContext() {
-        return getTable(prefixEnvironment("verification-context"));
+        return getTable(prefixEnvironment(Names.VERIFICATION_CONTEXT));
     }
 
     public Table getVerificationAttempts() {
-        return getTable(prefixEnvironment("verification-attempts"));
+        return getTable(prefixEnvironment(Names.VERIFICATION_ATTEMPTS));
     }
 
     private void createIdentityMappingTable() {
@@ -105,6 +105,14 @@ public class IdvTables {
         public DynamoTableCreationException(final Throwable cause) {
             super(cause);
         }
+
+    }
+
+    public interface Names {
+
+        String IDENTITY_MAPPING = "identity-mapping";
+        String VERIFICATION_CONTEXT = "verification-context";
+        String VERIFICATION_ATTEMPTS = "verification-attempts";
 
     }
 

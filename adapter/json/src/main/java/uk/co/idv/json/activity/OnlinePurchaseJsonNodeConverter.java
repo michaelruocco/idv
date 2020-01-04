@@ -1,17 +1,26 @@
 package uk.co.idv.json.activity;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
 import org.javamoney.moneta.Money;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 
 import javax.money.MonetaryAmount;
 
-public class JsonNodeToOnlinePurchaseConverter implements JsonNodeToActivityConverter {
+@Slf4j
+public class OnlinePurchaseJsonNodeConverter implements ActivityJsonNodeConverter {
+
+    @Override
+    public boolean supportsActivity(String name) {
+        boolean supported = OnlinePurchase.NAME.equals(name);
+        log.info("returning supported {} for activity name {}", supported, name);
+        return supported;
+    }
 
     public Activity toActivity(final JsonNode node) {
         return OnlinePurchase.builder()
-                .timestamp(JsonNodeToActivityConverter.extractTimestamp(node))
+                .timestamp(ActivityJsonNodeConverter.extractTimestamp(node))
                 .merchantName(extractMerchantName(node))
                 .reference(extractReference(node))
                 .cost(extractCost(node))

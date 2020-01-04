@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
@@ -7,6 +9,8 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import java.time.Duration;
 import java.util.Optional;
 
+@EqualsAndHashCode
+@ToString
 public abstract class AbstractVerificationMethod implements VerificationMethod {
 
     private final String name;

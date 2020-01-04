@@ -7,21 +7,26 @@
       "locked": false,
       "maxNumberOfAttempts": 3,
       "numberOfAttemptsRemaining": 2,
-      "attempts": [
-        {
-          "contextId": "fb059cfd-5613-49fe-8f34-2264b5da8343",
-          "channelId": "fake-channel",
-          "activityName": "fake-activity",
-          "methodName": "fake-method",
-          "alias": {
-            "type": "credit-card-number",
-            "value": "4929001111111111"
-          },
-          "verificationId": "1fb7cd98-694d-4ba4-968a-9b86bbf52c01",
-          "timestamp": "2019-09-27T09:35:15.612Z",
-          "successful": false
-        }
-      ]
+      "attempts": {
+        "id": "20a32973-2018-46e8-a93c-28892e71da64",
+        "idvId": "49888d4b-36ac-4d1c-b529-3829869e5858",
+        "attempts": [
+          {
+            "contextId": "fb059cfd-5613-49fe-8f34-2264b5da8343",
+            "channelId": "fake-channel",
+            "activityName": "fake-activity",
+            "methodName": "fake-method",
+            "idvId": "49888d4b-36ac-4d1c-b529-3829869e5858",
+            "alias": {
+              "type": "credit-card-number",
+              "value": "4929001111111111"
+            },
+            "verificationId": "1fb7cd98-694d-4ba4-968a-9b86bbf52c01",
+            "timestamp": "2019-09-27T09:35:15.612Z",
+            "successful": false
+          }
+        ]
+      }
     }
   }
 }

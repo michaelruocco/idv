@@ -1,6 +1,7 @@
-package uk.co.idv.api.lockout.attempt;
+package uk.co.idv.json.lockout.attempt;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.UUID;
@@ -10,6 +11,7 @@ import java.util.UUID;
         "channelId",
         "activityName",
         "methodName",
+        "idvId",
         "alias",
         "verificationId",
         "timestamp",
@@ -17,7 +19,7 @@ import java.util.UUID;
 })
 public interface VerificationAttemptMixin {
 
-    @JsonIgnore
+    @JsonProperty("idvId")
     UUID getIdvIdValue();
 
     @JsonIgnore

@@ -1,4 +1,4 @@
-package uk.co.idv.api.lockout;
+package uk.co.idv.api.lockout.policy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

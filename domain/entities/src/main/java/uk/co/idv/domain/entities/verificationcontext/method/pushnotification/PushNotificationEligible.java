@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import uk.co.idv.domain.entities.verificationcontext.method.AbstractVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
@@ -8,6 +10,8 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.time.Duration;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class PushNotificationEligible extends AbstractVerificationMethodEligible implements PushNotification {
 
     private static final int MAX_ATTEMPTS = 5;

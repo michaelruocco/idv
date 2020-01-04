@@ -1,5 +1,5 @@
 
-package uk.co.idv.api.lockout.attempt;
+package uk.co.idv.json.lockout.attempt;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -21,6 +21,10 @@ public class VerificationAttemptsSerializer extends StdSerializer<VerificationAt
     }
 
     private void toJson(final VerificationAttempts attempts, final JsonGenerator json, final SerializerProvider provider) throws IOException {
+        json.writeStartObject();
+        json.writeStringField("id", attempts.getId().toString());
+        json.writeStringField("idvId", attempts.getIdvId().toString());
+        json.writeFieldName("attempts");
         json.writeStartArray();
         for (final VerificationAttempt attempt : attempts) {
             provider.defaultSerializeValue(attempt, json);

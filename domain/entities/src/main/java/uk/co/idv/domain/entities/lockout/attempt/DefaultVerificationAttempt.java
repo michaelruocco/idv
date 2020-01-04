@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.lockout.attempt;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import uk.co.idv.domain.entities.identity.alias.Alias;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @ToString
+@EqualsAndHashCode
 public class DefaultVerificationAttempt implements VerificationAttempt {
 
     private final UUID contextId;
