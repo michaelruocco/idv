@@ -6,7 +6,6 @@ import uk.co.idv.domain.usecases.util.RandomIdGenerator;
 import uk.co.idv.uk.api.channel.UkObjectMapperSingleton;
 import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
-import uk.co.idv.uk.repository.mongo.lockout.UkLockoutPolicyDocumentConverterDelegator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,11 +39,6 @@ class UkConfigTest {
     @Test
     void shouldReturnUkLockoutPolicyProvider() {
         assertThat(config.lockoutPolicyProvider()).isInstanceOf(UkLockoutPolicyProvider.class);
-    }
-
-    @Test
-    void lockoutPolicyDocumentConverterDelegator() {
-        assertThat(config.lockoutPolicyDocumentConverterDelegator()).isInstanceOf(UkLockoutPolicyDocumentConverterDelegator.class);
     }
 
     @Test

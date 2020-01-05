@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Primary;
 import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.repository.mongo.lockout.policy.LockoutPolicyDocumentConverterDelegator;
 import uk.co.idv.uk.config.UkConfig;
 
 @Configuration
@@ -34,11 +33,6 @@ public class UkSpringConfig {
     @Bean
     public LockoutPolicyProvider lockoutPolicyProvider() {
         return ukConfig.lockoutPolicyProvider();
-    }
-
-    @Bean
-    public LockoutPolicyDocumentConverterDelegator lockoutPolicyDocumentConverterDelegator() {
-        return ukConfig.lockoutPolicyDocumentConverterDelegator();
     }
 
     @Bean

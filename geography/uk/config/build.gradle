@@ -1,5 +1,4 @@
  dependencies {
      compile project(':uk-entities')
      compile project(':uk-api')
-     compile project(':uk-mongo')
  }

@@ -7,8 +7,6 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.json.lockout.policy.LockoutPolicyJsonNodeConverter;
 

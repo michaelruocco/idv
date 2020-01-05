@@ -47,7 +47,6 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRe
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
 import java.util.Collection;
-import java.util.concurrent.locks.Lock;
 
 @Configuration
 public class DefaultDomainConfig {

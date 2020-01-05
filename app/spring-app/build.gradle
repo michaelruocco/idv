@@ -29,7 +29,6 @@ dependencies {
     compile project(':api')
 
     compile project(':dynamo-db')
-    compile project(':mongo-db')
     compile project(':in-memory-db')
     compile project(':uk-config')
     compile 'de.bwaldvogel:mongo-java-server:1.23.0'
