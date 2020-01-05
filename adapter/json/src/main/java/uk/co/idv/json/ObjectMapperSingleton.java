@@ -9,6 +9,7 @@ import uk.co.idv.json.activity.ActivityModule;
 import uk.co.idv.json.channel.simple.SimpleChannelModule;
 import uk.co.idv.json.identity.IdentityModule;
 import uk.co.idv.json.lockout.attempt.VerificationAttemptsModule;
+import uk.co.idv.json.lockout.policy.LockoutPolicyModule;
 import uk.co.idv.json.verificationcontext.VerificationContextModule;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
@@ -37,7 +38,8 @@ public class ObjectMapperSingleton {
                 new ActivityModule(),
                 new IdentityModule(),
                 new VerificationContextModule(),
-                new VerificationAttemptsModule()
+                new VerificationAttemptsModule(),
+                new LockoutPolicyModule()
         );
         mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
         return mapper.disable(WRITE_DATES_AS_TIMESTAMPS);

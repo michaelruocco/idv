@@ -6,7 +6,7 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
 
 @RequiredArgsConstructor
-public abstract class AbstractLockoutPolicyDocumentConverter<T extends LockoutPolicy> implements LockoutPolicyItemConverter {
+public abstract class AbstractLockoutPolicyItemConverter<T extends LockoutPolicy> implements LockoutPolicyItemConverter {
 
     private final String supportedType;
     private final Class<T> policyType;

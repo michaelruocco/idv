@@ -3,11 +3,11 @@ package uk.co.idv.repository.dynamo.lockout.policy.nonlocking;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
-import uk.co.idv.repository.dynamo.lockout.policy.AbstractLockoutPolicyDocumentConverter;
+import uk.co.idv.repository.dynamo.lockout.policy.AbstractLockoutPolicyItemConverter;
 
-public class NonLockingPolicyDocumentConverter extends AbstractLockoutPolicyDocumentConverter<NonLockingLockoutPolicy> {
+public class NonLockingPolicyItemConverter extends AbstractLockoutPolicyItemConverter<NonLockingLockoutPolicy> {
 
-    public NonLockingPolicyDocumentConverter(final JsonConverter jsonConverter) {
+    public NonLockingPolicyItemConverter(final JsonConverter jsonConverter) {
         super(NonLockingLockoutStateCalculator.TYPE, NonLockingLockoutPolicy.class, jsonConverter);
     }
 
