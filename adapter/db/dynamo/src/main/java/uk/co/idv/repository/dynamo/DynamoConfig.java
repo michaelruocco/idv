@@ -26,16 +26,9 @@ import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
 import uk.co.idv.repository.dynamo.lockout.attempt.DynamoVerificationAttemptsDao;
 import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
-import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverterDelegator;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
-import uk.co.idv.repository.dynamo.lockout.policy.hard.HardLockoutPolicyItemConverter;
-import uk.co.idv.repository.dynamo.lockout.policy.nonlocking.NonLockingPolicyItemConverter;
-import uk.co.idv.repository.dynamo.lockout.policy.soft.RecurringSoftLockoutPolicyItemConverter;
-import uk.co.idv.repository.dynamo.lockout.policy.soft.SoftLockoutPolicyItemConverter;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Optional;
 
 @Builder
@@ -75,7 +68,7 @@ public class DynamoConfig {
     public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final IdvTables tables) {
         return DynamoLockoutPolicyDao.builder()
                 .multiplePoliciesHandler(new MultipleLockoutPoliciesHandler())
-                .converter(new LockoutPolicyItemConverterDelegator(lockoutPolicyItemConverters(jsonConverter)))
+                .converter(new LockoutPolicyItemConverter(jsonConverter))
                 .table(tables.getLockoutPolicies())
                 .channelIdIndex(tables.getLockoutPoliciesChannelIdIndex())
                 .build();
@@ -131,15 +124,6 @@ public class DynamoConfig {
 
     private AliasFactory aliasFactory() {
         return new AliasFactory();
-    }
-
-    private Collection<LockoutPolicyItemConverter> lockoutPolicyItemConverters(final JsonConverter jsonConverter) {
-        return Arrays.asList(
-                new NonLockingPolicyItemConverter(jsonConverter),
-                new HardLockoutPolicyItemConverter(jsonConverter),
-                new SoftLockoutPolicyItemConverter(jsonConverter),
-                new RecurringSoftLockoutPolicyItemConverter(jsonConverter)
-        );
     }
 
     private static String toPrefix(final String environment) {

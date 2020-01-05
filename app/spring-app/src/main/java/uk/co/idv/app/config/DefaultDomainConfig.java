@@ -1,11 +1,13 @@
 package uk.co.idv.app.config;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
@@ -43,6 +45,9 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
+
+import java.util.Collection;
+import java.util.concurrent.locks.Lock;
 
 @Configuration
 public class DefaultDomainConfig {
@@ -245,6 +250,7 @@ public class DefaultDomainConfig {
     }
 
     @RequiredArgsConstructor
+    @Slf4j
     private static class PopulateLockoutPoliciesListener {
 
         private final LockoutPolicyService policyService;
@@ -253,7 +259,17 @@ public class DefaultDomainConfig {
         @EventListener(ApplicationReadyEvent.class)
         @Order(2)
         public void populatePoliciesAfterStartup() {
-            policyService.createPolicies(policyProvider.getPolicies());
+            final Collection<LockoutPolicy> policies = policyProvider.getPolicies();
+            policies.forEach(this::createPolicy);
+        }
+
+        private void createPolicy(final LockoutPolicy policy) {
+            try {
+                policyService.createPolicy(policy);
+            } catch (final LockoutPolicyService.LockoutPoliciesAlreadyExistException e) {
+                log.warn(e.getMessage());
+                log.debug(e.getMessage(), e);
+            }
         }
 
     }

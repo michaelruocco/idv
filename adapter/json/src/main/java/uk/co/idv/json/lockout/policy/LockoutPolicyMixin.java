@@ -6,9 +6,6 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 public interface LockoutPolicyMixin {
 
     @JsonIgnore
-    LockoutStateCalculator getStateCalculator();
-
-    @JsonIgnore
     boolean isAliasLevel();
 
     @JsonIgnore

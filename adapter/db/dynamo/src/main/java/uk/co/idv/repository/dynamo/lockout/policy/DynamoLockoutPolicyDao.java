@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
 
-    private final LockoutPolicyItemConverterDelegator converter;
+    private final LockoutPolicyItemConverter converter;
     private final Table table;
     private final Index channelIdIndex;
     private final MultipleLockoutPoliciesHandler multiplePoliciesHandler;
