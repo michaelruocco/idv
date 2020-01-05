@@ -44,7 +44,8 @@ import java.util.List;
         basePackages = "uk.co.idv.repository.mongo",
         excludeFilters = {
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*IdentityRepository"),
-                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*VerificationContextRepository")
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*VerificationContextRepository"),
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*LockoutPolicyRepository")
         }
 )
 @Profile("!stub")
@@ -110,7 +111,7 @@ public class MongoDaoConfig {
         return new MultipleLockoutPoliciesHandler();
     }
 
-    @Bean
+    /*@Bean
     public LockoutPolicyDao lockoutPolicyDao(final LockoutPolicyRepository repository,
                                              final LockoutPolicyDocumentConverterDelegator documentConverter,
                                              final MultipleLockoutPoliciesHandler multiplePoliciesHandler) {
@@ -119,7 +120,7 @@ public class MongoDaoConfig {
                 .documentConverter(documentConverter)
                 .multiplePoliciesHandler(multiplePoliciesHandler)
                 .build();
-    }
+    }*/
 
     @RequiredArgsConstructor
     private static class IndiciesResolverListener {

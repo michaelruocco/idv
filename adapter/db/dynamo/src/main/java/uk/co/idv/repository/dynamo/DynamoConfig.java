@@ -11,21 +11,31 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverterFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
 import uk.co.idv.repository.dynamo.identity.DynamoIdentityDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocumentConverter;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
-import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
+import uk.co.idv.repository.dynamo.json.JsonConverter;
 import uk.co.idv.repository.dynamo.lockout.attempt.DynamoVerificationAttemptsDao;
+import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
+import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverterDelegator;
+import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
+import uk.co.idv.repository.dynamo.lockout.policy.hard.HardLockoutPolicyDocumentConverter;
+import uk.co.idv.repository.dynamo.lockout.policy.nonlocking.NonLockingPolicyDocumentConverter;
+import uk.co.idv.repository.dynamo.lockout.policy.soft.RecurringSoftLockoutPolicyItemConverter;
+import uk.co.idv.repository.dynamo.lockout.policy.soft.SoftLockoutPolicyItemConverter;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
 
 @Builder
@@ -62,18 +72,26 @@ public class DynamoConfig {
                 .build();
     }
 
-    public VerificationContextDao verificationContextDao(final ObjectMapper mapper,
-                                                         final IdvTables tables) {
+    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final IdvTables tables) {
+        return DynamoLockoutPolicyDao.builder()
+                .multiplePoliciesHandler(new MultipleLockoutPoliciesHandler())
+                .converter(new LockoutPolicyItemConverterDelegator(lockoutPolicyItemConverters(jsonConverter)))
+                .table(tables.getLockoutPolicies())
+                .channelIdIndex(tables.getLockoutPoliciesChannelIdIndex())
+                .build();
+    }
+
+    public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter, final IdvTables tables) {
         return DynamoVerificationContextDao.builder()
-                .converter(new JacksonJsonConverter(mapper))
+                .converter(jsonConverter)
                 .table(tables.getVerificationContext())
                 .build();
     }
 
-    public VerificationAttemptsDao verificationAttemptsDao(final ObjectMapper mapper,
+    public VerificationAttemptsDao verificationAttemptsDao(final JsonConverter jsonConverter,
                                                            final IdvTables tables) {
         return DynamoVerificationAttemptsDao.builder()
-                .converter(new JacksonJsonConverter(mapper))
+                .converter(jsonConverter)
                 .table(tables.getVerificationAttempts())
                 .build();
     }
@@ -113,6 +131,15 @@ public class DynamoConfig {
 
     private AliasFactory aliasFactory() {
         return new AliasFactory();
+    }
+
+    private Collection<LockoutPolicyItemConverter> lockoutPolicyItemConverters(final JsonConverter jsonConverter) {
+        return Arrays.asList(
+                new NonLockingPolicyDocumentConverter(jsonConverter),
+                new HardLockoutPolicyDocumentConverter(jsonConverter),
+                new SoftLockoutPolicyItemConverter(jsonConverter),
+                new RecurringSoftLockoutPolicyItemConverter(jsonConverter)
+        );
     }
 
     private static String toPrefix(final String environment) {

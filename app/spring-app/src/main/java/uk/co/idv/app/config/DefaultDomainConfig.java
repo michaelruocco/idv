@@ -1,7 +1,11 @@
 package uk.co.idv.app.config;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
@@ -40,7 +44,6 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
-
 @Configuration
 public class DefaultDomainConfig {
 
@@ -71,11 +74,8 @@ public class DefaultDomainConfig {
     }
 
     @Bean
-    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao,
-                                                     final LockoutPolicyProvider policiesProvider) {
-        final LockoutPolicyService policyService = new DefaultLockoutPolicyService(dao);
-        policyService.createPolicies(policiesProvider.getPolicies());
-        return policyService;
+    public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao) {
+        return new DefaultLockoutPolicyService(dao);
     }
 
     @Bean
@@ -236,6 +236,26 @@ public class DefaultDomainConfig {
                 .identityService(identityService)
                 .lockoutService(lockoutService)
                 .build();
+    }
+
+    @Bean
+    public PopulateLockoutPoliciesListener populateLockoutPoliciesListener(final LockoutPolicyService policyService,
+                                                                           final LockoutPolicyProvider policyProvider) {
+        return new PopulateLockoutPoliciesListener(policyService, policyProvider);
+    }
+
+    @RequiredArgsConstructor
+    private static class PopulateLockoutPoliciesListener {
+
+        private final LockoutPolicyService policyService;
+        private final LockoutPolicyProvider policyProvider;
+
+        @EventListener(ApplicationReadyEvent.class)
+        @Order(2)
+        public void populatePoliciesAfterStartup() {
+            policyService.createPolicies(policyProvider.getPolicies());
+        }
+
     }
 
 }

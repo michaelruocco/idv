@@ -3,11 +3,15 @@ package uk.co.idv.repository.dynamo;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
+import com.amazonaws.services.dynamodbv2.model.GlobalSecondaryIndex;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
+import com.amazonaws.services.dynamodbv2.model.Projection;
+import com.amazonaws.services.dynamodbv2.model.ProjectionType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import com.amazonaws.services.dynamodbv2.util.TableUtils;
@@ -15,6 +19,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocument;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Builder
@@ -31,10 +36,7 @@ public class IdvTables {
         createIdentityMappingTable();
         createVerificationContextTable();
         createVerificationAttemptsTable();
-    }
-
-    public Table getIdentityMapping() {
-        return getTable(prefixEnvironment(Names.IDENTITY_MAPPING));
+        createLockoutPolicyTable();
     }
 
     public Table getVerificationContext() {
@@ -43,6 +45,14 @@ public class IdvTables {
 
     public Table getVerificationAttempts() {
         return getTable(prefixEnvironment(Names.VERIFICATION_ATTEMPTS));
+    }
+
+    public Table getLockoutPolicies() {
+        return getTable(prefixEnvironment(Names.LOCKOUT_POLICIES));
+    }
+
+    public Index getLockoutPoliciesChannelIdIndex() {
+        return getLockoutPolicies().getIndex("channel-id-index");
     }
 
     private void createIdentityMappingTable() {
@@ -54,13 +64,47 @@ public class IdvTables {
     }
 
     private void createVerificationContextTable() {
-        final String name = String.format("%s-verification-context", environment);
+        final String name = String.format("%s-%s", environment, Names.VERIFICATION_CONTEXT);
         createStandardTable(name, "id");
     }
 
     private void createVerificationAttemptsTable() {
-        final String name = String.format("%s-verification-attempts", environment);
+        final String name = String.format("%s-%s", environment, Names.VERIFICATION_ATTEMPTS);
         createStandardTable(name, "id");
+    }
+
+    private void createLockoutPolicyTable() {
+        final String tableName = String.format("%s-%s", environment, Names.LOCKOUT_POLICIES);
+
+        final String idAttributeName = "id";
+        final KeySchemaElement key = new KeySchemaElement()
+                .withAttributeName(idAttributeName)
+                .withKeyType(KeyType.HASH);
+
+        final AttributeDefinition attribute = new AttributeDefinition()
+                .withAttributeName(idAttributeName)
+                .withAttributeType(ScalarAttributeType.S);
+
+        final GlobalSecondaryIndex index = new GlobalSecondaryIndex()
+                .withIndexName("channel-id-index")
+                .withKeySchema(new KeySchemaElement()
+                        .withAttributeName("channelId")
+                        .withKeyType(KeyType.HASH))
+                .withProjection(new Projection().withProjectionType(ProjectionType.KEYS_ONLY))
+                .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+
+        final AttributeDefinition channelAttribute = new AttributeDefinition()
+                .withAttributeName("channelId")
+                .withAttributeType(ScalarAttributeType.S);
+
+        final CreateTableRequest request = new CreateTableRequest()
+                .withTableName(tableName)
+                .withKeySchema(Collections.singleton(key))
+                .withAttributeDefinitions(Arrays.asList(attribute, channelAttribute))
+                .withGlobalSecondaryIndexes(index)
+                .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+
+        create(request);
     }
 
     private void createStandardTable(final String tableName, final String idAttributeName) {
@@ -113,6 +157,7 @@ public class IdvTables {
         String IDENTITY_MAPPING = "identity-mapping";
         String VERIFICATION_CONTEXT = "verification-context";
         String VERIFICATION_ATTEMPTS = "verification-attempts";
+        String LOCKOUT_POLICIES = "lockout-policies";
 
     }
 
