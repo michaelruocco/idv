@@ -58,11 +58,7 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
         final QuerySpec query = toQuery(request);
         final ItemCollection<QueryOutcome> items = channelIdIndex.query(query);
         final List<LockoutPolicy> applicablePolicies = IterableUtils.toList(items).stream()
-                .map(item -> item.getString("id"))
-                .map(UUID::fromString)
-                .map(this::load)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .map(converter::toPolicy)
                 .filter(policy -> policy.appliesTo(request))
                 .collect(Collectors.toList());
         log.info("found applicable policies {} for request {}", applicablePolicies, request);

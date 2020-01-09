@@ -21,6 +21,7 @@ import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocument;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Builder
 @Slf4j
@@ -52,7 +53,7 @@ public class IdvTables {
     }
 
     public Index getLockoutPoliciesChannelIdIndex() {
-        return getLockoutPolicies().getIndex("channel-id-index");
+        return getLockoutPolicies().getIndex("channelIdIndex");
     }
 
     private void createIdentityMappingTable() {
@@ -76,31 +77,19 @@ public class IdvTables {
     private void createLockoutPolicyTable() {
         final String tableName = String.format("%s-%s", environment, Names.LOCKOUT_POLICIES);
 
-        final String idAttributeName = "id";
-        final KeySchemaElement key = new KeySchemaElement()
-                .withAttributeName(idAttributeName)
-                .withKeyType(KeyType.HASH);
-
-        final AttributeDefinition attribute = new AttributeDefinition()
-                .withAttributeName(idAttributeName)
-                .withAttributeType(ScalarAttributeType.S);
+        final AttributeDefinition id = new AttributeDefinition("id", ScalarAttributeType.S);
+        final AttributeDefinition channelId = new AttributeDefinition("channelId", ScalarAttributeType.S);
 
         final GlobalSecondaryIndex index = new GlobalSecondaryIndex()
-                .withIndexName("channel-id-index")
-                .withKeySchema(new KeySchemaElement()
-                        .withAttributeName("channelId")
-                        .withKeyType(KeyType.HASH))
-                .withProjection(new Projection().withProjectionType(ProjectionType.KEYS_ONLY))
+                .withIndexName("channelIdIndex")
+                .withKeySchema(new KeySchemaElement(channelId.getAttributeName(), KeyType.HASH))
+                .withProjection(new Projection().withProjectionType(ProjectionType.INCLUDE).withNonKeyAttributes("body"))
                 .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
-
-        final AttributeDefinition channelAttribute = new AttributeDefinition()
-                .withAttributeName("channelId")
-                .withAttributeType(ScalarAttributeType.S);
 
         final CreateTableRequest request = new CreateTableRequest()
                 .withTableName(tableName)
-                .withKeySchema(Collections.singleton(key))
-                .withAttributeDefinitions(Arrays.asList(attribute, channelAttribute))
+                .withKeySchema(Collections.singleton(new KeySchemaElement(id.getAttributeName(), KeyType.HASH)))
+                .withAttributeDefinitions(Arrays.asList(id, channelId))
                 .withGlobalSecondaryIndexes(index)
                 .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
 
@@ -109,12 +98,12 @@ public class IdvTables {
 
     private void createStandardTable(final String tableName, final String idAttributeName) {
         final KeySchemaElement key = new KeySchemaElement()
-                        .withAttributeName(idAttributeName)
-                        .withKeyType(KeyType.HASH);
+                .withAttributeName(idAttributeName)
+                .withKeyType(KeyType.HASH);
 
         final AttributeDefinition attribute = new AttributeDefinition()
-                        .withAttributeName(idAttributeName)
-                        .withAttributeType(ScalarAttributeType.S);
+                .withAttributeName(idAttributeName)
+                .withAttributeType(ScalarAttributeType.S);
 
         final CreateTableRequest request = new CreateTableRequest()
                 .withTableName(tableName)
