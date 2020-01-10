@@ -1,11 +1,11 @@
-package uk.co.idv.repository.dynamo.verificationcontext;
+package uk.co.idv.repository.dynamo.lockout.attempt;
 
 import uk.co.idv.repository.dynamo.SimpleCreateTableRequestFactory;
 
-public class VerificationContextCreateTableRequestFactory extends SimpleCreateTableRequestFactory {
+public class VerificationAttemptCreateTableRequestFactory extends SimpleCreateTableRequestFactory {
 
-    public VerificationContextCreateTableRequestFactory(final String environment) {
-        super(environment + "-verification-context");
+    public VerificationAttemptCreateTableRequestFactory(final String environment) {
+        super(environment + "-verification-attempt");
     }
 
 }

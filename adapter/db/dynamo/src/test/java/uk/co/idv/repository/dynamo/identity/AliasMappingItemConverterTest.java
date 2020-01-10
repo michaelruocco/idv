@@ -1,5 +1,6 @@
 package uk.co.idv.repository.dynamo.identity;
 
+import com.amazonaws.services.dynamodbv2.document.Item;
 import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -7,8 +8,7 @@ import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocument;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocumentConverter;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingItemConverter;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,20 +17,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class AliasMappingDocumentConverterTest {
+class AliasMappingItemConverterTest {
 
     private final AliasConverter aliasConverter = mock(AliasConverter.class);
 
-    private final AliasMappingDocumentConverter converter = new AliasMappingDocumentConverter(aliasConverter);
+    private final AliasMappingItemConverter converter = new AliasMappingItemConverter(aliasConverter);
 
     @Test
     void shouldConvertIdentityToMappingDocumentForEachAlias() {
         final Aliases aliases = AliasesMother.aliases();
         final Identity identity = new Identity(aliases);
 
-        final Collection<AliasMappingDocument> documents = converter.toDocuments(identity);
+        final Collection<Item> items = converter.toItems(identity);
 
-        assertThat(documents).hasSize(aliases.size());
+        assertThat(items).hasSize(aliases.size());
     }
 
     @Test
@@ -40,10 +40,10 @@ class AliasMappingDocumentConverterTest {
         final String expectedAliasString = "alias-string";
         given(aliasConverter.toString(alias)).willReturn(expectedAliasString);
 
-        final Collection<AliasMappingDocument> documents = converter.toDocuments(identity);
+        final Collection<Item> items = converter.toItems(identity);
 
-        final AliasMappingDocument document = IterableUtils.get(documents, 0);
-        assertThat(document.getAlias()).isEqualTo(expectedAliasString);
+        final Item item = IterableUtils.get(items, 0);
+        assertThat(item.getString("alias")).isEqualTo(expectedAliasString);
     }
 
     @Test
@@ -52,32 +52,31 @@ class AliasMappingDocumentConverterTest {
         final Alias creditCardNumber = AliasesMother.creditCardNumber();
         final Identity identity = new Identity(Aliases.with(idvId, creditCardNumber));
 
-        final Collection<AliasMappingDocument> documents = converter.toDocuments(identity);
+        final Collection<Item> items = converter.toItems(identity);
 
-        documents.forEach(document -> assertThat(document.getIdvId()).isEqualTo(idvId.getValue()));
+        items.forEach(item -> assertThat(item.getString("idvId")).isEqualTo(idvId.getValue()));
     }
 
     @Test
     void shouldConvertMappingDocumentsToIdentity() {
-        final AliasMappingDocument document1 = toMappingDocument("alias1");
+        final Item item1 = toItem("alias1");
         final Alias alias1 = AliasesMother.idvId();
-        given(aliasConverter.toAlias(document1.getAlias())).willReturn(alias1);
+        given(aliasConverter.toAlias(item1.getString("alias"))).willReturn(alias1);
 
-        final AliasMappingDocument document2 = toMappingDocument("alias2");
+        final Item item2 = toItem("alias2");
         final Alias alias2 = AliasesMother.creditCardNumber();
-        given(aliasConverter.toAlias(document2.getAlias())).willReturn(alias2);
+        given(aliasConverter.toAlias(item2.getString("alias"))).willReturn(alias2);
 
-        final Identity identity = converter.toIdentity(Arrays.asList(document1, document2));
+        final Identity identity = converter.toIdentity(Arrays.asList(item1, item2));
 
         assertThat(identity.getAliases()).hasSize(2);
         assertThat(identity.hasAlias(alias1)).isTrue();
         assertThat(identity.hasAlias(alias2)).isTrue();
     }
 
-    private AliasMappingDocument toMappingDocument(final String alias) {
-        final AliasMappingDocument document = new AliasMappingDocument();
-        document.setAlias(alias);
-        return document;
+    private Item toItem(final String alias) {
+        return new Item()
+                .with("alias", alias);
     }
 
 }

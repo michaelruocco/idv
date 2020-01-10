@@ -1,5 +1,6 @@
 package uk.co.idv.repository.dynamo.identity.alias;
 
+import com.amazonaws.services.dynamodbv2.document.Item;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
@@ -9,27 +10,26 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class AliasMappingDocumentConverter {
+public class AliasMappingItemConverter {
 
     private final AliasConverter aliasConverter;
 
-    public Collection<AliasMappingDocument> toDocuments(final Identity identity) {
+    public Collection<Item> toItems(final Identity identity) {
         final Aliases aliases = identity.getAliases();
         return aliases.stream()
-                .map(alias -> toDocument(identity, alias))
+                .map(alias -> toItem(identity, alias))
                 .collect(Collectors.toList());
     }
 
-    private AliasMappingDocument toDocument(final Identity identity, final Alias alias) {
-        final AliasMappingDocument document = new AliasMappingDocument();
-        document.setIdvId(identity.getIdvIdValue().toString());
-        document.setAlias(aliasConverter.toString(alias));
-        return document;
+    private Item toItem(final Identity identity, final Alias alias) {
+        return new Item()
+                .withPrimaryKey("alias", aliasConverter.toString(alias))
+                .with("idvId", identity.getIdvIdValue().toString());
     }
 
-    public Identity toIdentity(final Collection<AliasMappingDocument> documents) {
-        final Collection<Alias> aliases = documents.stream()
-                .map(document -> aliasConverter.toAlias(document.getAlias()))
+    public Identity toIdentity(final Collection<Item> items) {
+        final Collection<Alias> aliases = items.stream()
+                .map(item -> aliasConverter.toAlias(item.getString("alias")))
                 .collect(Collectors.toList());
         return new Identity(Aliases.with(aliases));
     }

@@ -10,7 +10,7 @@ import java.util.UUID;
 public class DefaultVerificationAttemptsLoader implements VerificationAttemptsLoader {
 
     private final IdGenerator idGenerator;
-    private final VerificationAttemptsDao dao;
+    private final VerificationAttemptDao dao;
 
     @Override
     public VerificationAttempts load(final UUID idvId) {

@@ -5,7 +5,7 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import java.util.Optional;
 import java.util.UUID;
 
-public class FakeVerificationAttemptsDao implements VerificationAttemptsDao {
+public class FakeVerificationAttemptDao implements VerificationAttemptDao {
 
     private VerificationAttempts attemptsToLoad;
     private VerificationAttempts lastSavedAttempts;

@@ -1,38 +1,59 @@
 package uk.co.idv.repository.dynamo.identity;
 
-import com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException;
+import com.amazonaws.services.dynamodbv2.document.Index;
+import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocument;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocumentConverter;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingItemConverter;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
-@Builder
 @Slf4j
 public class DynamoIdentityDao implements IdentityDao {
 
-    private final AliasMappingDocumentConverter documentConverter;
+    private final Table table;
+    private final Index idvIdIndex;
+
+    private final AliasMappingItemConverter itemConverter;
     private final AliasConverter aliasConverter;
-    private final AliasMappingRepository repository;
+
+    @Builder
+    private DynamoIdentityDao(final Table table,
+                              final AliasMappingItemConverter itemConverter,
+                              final AliasConverter aliasConverter) {
+        this.table = table;
+        this.idvIdIndex = table.getIndex("idvIdIndex");
+        this.itemConverter = itemConverter;
+        this.aliasConverter = aliasConverter;
+    }
 
     @Override
     public void save(final Identity identity) {
-        final Collection<AliasMappingDocument> updateDocuments = documentConverter.toDocuments(identity);
-        final Collection<AliasMappingDocument> existingDocuments = getExistingDocuments(identity.getIdvIdValue());
-        final Collection<AliasMappingDocument> documentsToDelete = CollectionUtils.subtract(existingDocuments, updateDocuments);
-        repository.deleteAll(documentsToDelete);
-        repository.saveAll(updateDocuments);
+        final Collection<Item> updateItems = itemConverter.toItems(identity);
+        final Collection<Item> existingItems = loadItemsByIdvId(identity.getIdvIdValue());
+        final Collection<Item> itemsToDelete = CollectionUtils.subtract(existingItems, updateItems);
+        deleteAll(itemsToDelete);
+        saveAll(updateItems);
+    }
+
+    private void deleteAll(final Collection<Item> items) {
+        items.forEach(item -> table.deleteItem("alias", item.getString("alias")));
+    }
+
+    private void saveAll(final Collection<Item> items) {
+        items.forEach(table::putItem);
     }
 
     @Override
@@ -43,24 +64,15 @@ public class DynamoIdentityDao implements IdentityDao {
         return loadByAlias(alias);
     }
 
-    private Collection<AliasMappingDocument> getExistingDocuments(final UUID idvIdValue) {
-        try {
-            return repository.findByIdvId(idvIdValue.toString());
-        } catch (final ResourceNotFoundException e) {
-            log.debug("no existing documents found for idv id {}", idvIdValue, e);
-            return Collections.emptyList();
-        }
-    }
-
     private Optional<Identity> loadByAlias(final Alias alias) {
         final String key = aliasConverter.toString(alias);
         log.info("attempting to load mapping document using key {}", key);
-        final Optional<AliasMappingDocument> document = repository.findById(key);
-        return document.flatMap(this::loadByIdvId);
+        final Optional<Item> item = Optional.ofNullable(table.getItem("alias", key));
+        return item.flatMap(this::loadByIdvId);
     }
 
-    private Optional<Identity> loadByIdvId(final AliasMappingDocument document) {
-        return loadByIdvId(document.getIdvId());
+    private Optional<Identity> loadByIdvId(final Item item) {
+        return loadByIdvId(new IdvId(item.getString("idvId")));
     }
 
     private Optional<Identity> loadByIdvId(final Alias alias) {
@@ -68,13 +80,29 @@ public class DynamoIdentityDao implements IdentityDao {
     }
 
     private Optional<Identity> loadByIdvId(final String idvId) {
-        log.info("attempting to load mapping documents for idv id {}", idvId);
-        final Collection<AliasMappingDocument> documents = repository.findByIdvId(idvId);
-        if (documents.isEmpty()) {
-            log.info("no existing documents found for idv id {}", idvId);
+        final Collection<Item> items = loadItemsByIdvId(idvId);
+        if (items.isEmpty()) {
+            log.info("no existing items found for idv id {}", idvId);
             return Optional.empty();
         }
-        return Optional.of(documentConverter.toIdentity(documents));
+        return Optional.of(itemConverter.toIdentity(items));
+    }
+
+    private Collection<Item> loadItemsByIdvId(final UUID idvId) {
+        return loadItemsByIdvId(idvId.toString());
+    }
+
+    private Collection<Item> loadItemsByIdvId(final String idvId) {
+        log.info("attempting to load items for idv id {}", idvId);
+        final QuerySpec query = toQuery(idvId);
+        return IterableUtils.toList(idvIdIndex.query(query));
+    }
+
+    private QuerySpec toQuery(final String idvId) {
+        final ValueMap valueMap = new ValueMap().withString(":idvId", idvId);
+        return new QuerySpec()
+                .withKeyConditionExpression("idvId = :idvId")
+                .withValueMap(valueMap);
     }
 
 }

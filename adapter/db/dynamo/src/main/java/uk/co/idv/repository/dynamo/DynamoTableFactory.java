@@ -10,25 +10,18 @@ import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Slf4j
-public abstract class AbstractDynamoTableFactory implements DynamoTableFactory {
+public class DynamoTableFactory {
 
     private final AmazonDynamoDB amazonDynamoDB;
-    private final String environment;
+    private final CreateTableRequestFactory requestFactory;
 
     private Table table;
 
-    @Override
     public Table createOrGetTable() {
         if (table == null) {
-            table = create(buildCreateTableRequest());
+            table = create(requestFactory.build());
         }
         return table;
-    }
-
-    protected abstract CreateTableRequest buildCreateTableRequest();
-
-    protected String prefixEnvironment(final String name) {
-        return String.format("%s-%s", environment, name);
     }
 
     private Table create(final CreateTableRequest request) {
@@ -39,8 +32,16 @@ public abstract class AbstractDynamoTableFactory implements DynamoTableFactory {
             return new DynamoDB(amazonDynamoDB).getTable(request.getTableName());
         } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new IdvTables.DynamoTableCreationException(e);
+            throw new DynamoTableCreationException(e);
         }
+    }
+
+    public static class DynamoTableCreationException extends RuntimeException {
+
+        public DynamoTableCreationException(final Throwable cause) {
+            super(cause);
+        }
+
     }
 
 }

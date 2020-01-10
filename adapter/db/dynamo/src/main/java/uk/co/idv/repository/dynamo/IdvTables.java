@@ -1,153 +1,42 @@
 package uk.co.idv.repository.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
-import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import com.amazonaws.services.dynamodbv2.model.GlobalSecondaryIndex;
-import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
-import com.amazonaws.services.dynamodbv2.model.KeyType;
-import com.amazonaws.services.dynamodbv2.model.Projection;
-import com.amazonaws.services.dynamodbv2.model.ProjectionType;
-import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
-import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
-import com.amazonaws.services.dynamodbv2.util.TableUtils;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocument;
+import uk.co.idv.repository.dynamo.identity.IdentityMappingCreateTableRequestFactory;
+import uk.co.idv.repository.dynamo.lockout.attempt.VerificationAttemptCreateTableRequestFactory;
+import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyCreateTableRequestFactory;
+import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextCreateTableRequestFactory;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-@Builder
 @Slf4j
 public class IdvTables {
 
-    private final DynamoDBMapper mapper;
-    private final AmazonDynamoDB amazonDynamoDB;
+    private final DynamoTableFactory verificationContextFactory;
+    private final DynamoTableFactory verificationAttemptFactory;
+    private final DynamoTableFactory lockoutPolicyFactory;
+    private final DynamoTableFactory identityMappingFactory;
 
-    @Builder.Default
-    private final String environment = AwsEnvironmentVariables.loadEnvironment();
-
-    public void create() {
-        createIdentityMappingTable();
-        createVerificationContextTable();
-        createVerificationAttemptsTable();
-        createLockoutPolicyTable();
+    public IdvTables(final AmazonDynamoDB amazonDynamoDB, final String environment) {
+        this.verificationContextFactory = new DynamoTableFactory(amazonDynamoDB, new VerificationContextCreateTableRequestFactory(environment));
+        this.verificationAttemptFactory = new DynamoTableFactory(amazonDynamoDB, new VerificationAttemptCreateTableRequestFactory(environment));
+        this.lockoutPolicyFactory = new DynamoTableFactory(amazonDynamoDB, new LockoutPolicyCreateTableRequestFactory(environment));
+        this.identityMappingFactory = new DynamoTableFactory(amazonDynamoDB, new IdentityMappingCreateTableRequestFactory(environment));
     }
 
     public Table getVerificationContext() {
-        return getTable(prefixEnvironment(Names.VERIFICATION_CONTEXT));
+        return verificationContextFactory.createOrGetTable();
     }
 
-    public Table getVerificationAttempts() {
-        return getTable(prefixEnvironment(Names.VERIFICATION_ATTEMPTS));
+    public Table getVerificationAttempt() {
+        return verificationAttemptFactory.createOrGetTable();
     }
 
-    public Table getLockoutPolicies() {
-        return getTable(prefixEnvironment(Names.LOCKOUT_POLICIES));
+    public Table getLockoutPolicy() {
+        return lockoutPolicyFactory.createOrGetTable();
     }
 
-    public Index getLockoutPoliciesChannelIdIndex() {
-        return getLockoutPolicies().getIndex("channelIdIndex");
-    }
-
-    private void createIdentityMappingTable() {
-        final ProvisionedThroughput throughput = new ProvisionedThroughput(1L, 1L);
-        final CreateTableRequest request = mapper.generateCreateTableRequest(AliasMappingDocument.class)
-                .withProvisionedThroughput(throughput);
-        request.getGlobalSecondaryIndexes().get(0).setProvisionedThroughput(throughput);
-        create(request);
-    }
-
-    private void createVerificationContextTable() {
-        final String name = String.format("%s-%s", environment, Names.VERIFICATION_CONTEXT);
-        createStandardTable(name, "id");
-    }
-
-    private void createVerificationAttemptsTable() {
-        final String name = String.format("%s-%s", environment, Names.VERIFICATION_ATTEMPTS);
-        createStandardTable(name, "id");
-    }
-
-    private void createLockoutPolicyTable() {
-        final String tableName = String.format("%s-%s", environment, Names.LOCKOUT_POLICIES);
-
-        final AttributeDefinition id = new AttributeDefinition("id", ScalarAttributeType.S);
-        final AttributeDefinition channelId = new AttributeDefinition("channelId", ScalarAttributeType.S);
-
-        final GlobalSecondaryIndex index = new GlobalSecondaryIndex()
-                .withIndexName("channelIdIndex")
-                .withKeySchema(new KeySchemaElement(channelId.getAttributeName(), KeyType.HASH))
-                .withProjection(new Projection().withProjectionType(ProjectionType.INCLUDE).withNonKeyAttributes("body"))
-                .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
-
-        final CreateTableRequest request = new CreateTableRequest()
-                .withTableName(tableName)
-                .withKeySchema(Collections.singleton(new KeySchemaElement(id.getAttributeName(), KeyType.HASH)))
-                .withAttributeDefinitions(Arrays.asList(id, channelId))
-                .withGlobalSecondaryIndexes(index)
-                .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
-
-        create(request);
-    }
-
-    private void createStandardTable(final String tableName, final String idAttributeName) {
-        final KeySchemaElement key = new KeySchemaElement()
-                .withAttributeName(idAttributeName)
-                .withKeyType(KeyType.HASH);
-
-        final AttributeDefinition attribute = new AttributeDefinition()
-                .withAttributeName(idAttributeName)
-                .withAttributeType(ScalarAttributeType.S);
-
-        final CreateTableRequest request = new CreateTableRequest()
-                .withTableName(tableName)
-                .withKeySchema(Collections.singleton(key))
-                .withAttributeDefinitions(Collections.singleton(attribute))
-                .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
-
-        create(request);
-    }
-
-    private void create(final CreateTableRequest request) {
-        try {
-            log.info("creating table with request {}", request);
-            TableUtils.createTableIfNotExists(amazonDynamoDB, request);
-            TableUtils.waitUntilActive(amazonDynamoDB, request.getTableName());
-        } catch (final InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new DynamoTableCreationException(e);
-        }
-    }
-
-    private Table getTable(final String name) {
-        return new DynamoDB(amazonDynamoDB).getTable(name);
-    }
-
-    private String prefixEnvironment(final String name) {
-        return String.format("%s-%s", environment, name);
-    }
-
-    public static class DynamoTableCreationException extends RuntimeException {
-
-        public DynamoTableCreationException(final Throwable cause) {
-            super(cause);
-        }
-
-    }
-
-    public interface Names {
-
-        String IDENTITY_MAPPING = "identity-mapping";
-        String VERIFICATION_CONTEXT = "verification-context";
-        String VERIFICATION_ATTEMPTS = "verification-attempts";
-        String LOCKOUT_POLICIES = "lockout-policies";
-
+    public Table getIdentity() {
+        return identityMappingFactory.createOrGetTable();
     }
 
 }

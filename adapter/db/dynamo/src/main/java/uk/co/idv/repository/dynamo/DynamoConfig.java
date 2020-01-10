@@ -6,25 +6,19 @@ import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.datamodeling.ConversionSchemas;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig.TableNameOverride;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverterFactory;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
+import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
 import uk.co.idv.repository.dynamo.identity.DynamoIdentityDao;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingDocumentConverter;
-import uk.co.idv.repository.dynamo.identity.alias.AliasMappingRepository;
+import uk.co.idv.repository.dynamo.identity.alias.AliasMappingItemConverter;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
-import uk.co.idv.repository.dynamo.lockout.attempt.DynamoVerificationAttemptsDao;
+import uk.co.idv.repository.dynamo.lockout.attempt.DynamoVerificationAttemptDao;
 import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
@@ -48,20 +42,12 @@ public class DynamoConfig {
                 .orElseGet(() -> toDynamoDb(region.getName()));
     }
 
-    public DynamoDBMapperConfig dynamoDBMapperConfig() {
-        return DynamoDBMapperConfig.builder()
-                .withTableNameOverride(TableNameOverride.withTableNamePrefix(toPrefix(environment)))
-                .withConversionSchema(ConversionSchemas.V2)
-                .withTypeConverterFactory(DynamoDBTypeConverterFactory.standard())
-                .build();
-    }
-
-    public IdentityDao identityDao(final AliasMappingRepository repository) {
+    public IdentityDao identityDao(final IdvTables tables) {
         final AliasConverter aliasConverter = aliasConverter();
         return DynamoIdentityDao.builder()
                 .aliasConverter(aliasConverter)
-                .documentConverter(new AliasMappingDocumentConverter(aliasConverter))
-                .repository(repository)
+                .itemConverter(new AliasMappingItemConverter(aliasConverter))
+                .table(tables.getIdentity())
                 .build();
     }
 
@@ -69,8 +55,7 @@ public class DynamoConfig {
         return DynamoLockoutPolicyDao.builder()
                 .multiplePoliciesHandler(new MultipleLockoutPoliciesHandler())
                 .converter(new LockoutPolicyItemConverter(jsonConverter))
-                .table(tables.getLockoutPolicies())
-                .channelIdIndex(tables.getLockoutPoliciesChannelIdIndex())
+                .table(tables.getLockoutPolicy())
                 .build();
     }
 
@@ -81,20 +66,16 @@ public class DynamoConfig {
                 .build();
     }
 
-    public VerificationAttemptsDao verificationAttemptsDao(final JsonConverter jsonConverter,
-                                                           final IdvTables tables) {
-        return DynamoVerificationAttemptsDao.builder()
+    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter,
+                                                          final IdvTables tables) {
+        return DynamoVerificationAttemptDao.builder()
                 .converter(jsonConverter)
-                .table(tables.getVerificationAttempts())
+                .table(tables.getVerificationAttempt())
                 .build();
     }
 
-    public IdvTables idvTables(final AmazonDynamoDB dynamoDB, final DynamoDBMapper mapper) {
-        return IdvTables.builder()
-                .environment(environment)
-                .mapper(mapper)
-                .amazonDynamoDB(dynamoDB)
-                .build();
+    public IdvTables idvTables(final AmazonDynamoDB dynamoDB) {
+        return new IdvTables(dynamoDB, environment);
     }
 
     private Optional<EndpointConfiguration> getEndpointConfiguration() {
@@ -124,10 +105,6 @@ public class DynamoConfig {
 
     private AliasFactory aliasFactory() {
         return new AliasFactory();
-    }
-
-    private static String toPrefix(final String environment) {
-        return String.format("%s-", environment);
     }
 
 }

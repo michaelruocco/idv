@@ -22,14 +22,24 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Builder
 @Slf4j
 public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
 
-    private final LockoutPolicyItemConverter converter;
     private final Table table;
     private final Index channelIdIndex;
+
+    private final LockoutPolicyItemConverter converter;
     private final MultipleLockoutPoliciesHandler multiplePoliciesHandler;
+
+    @Builder
+    private DynamoLockoutPolicyDao(final Table table,
+                                   final LockoutPolicyItemConverter converter,
+                                   final MultipleLockoutPoliciesHandler multiplePoliciesHandler) {
+        this.table = table;
+        this.channelIdIndex = table.getIndex("channelIdIndex");
+        this.converter = converter;
+        this.multiplePoliciesHandler = multiplePoliciesHandler;
+    }
 
     @Override
     public void save(final LockoutPolicy policy) {
@@ -42,15 +52,8 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
     @Override
     public Optional<LockoutPolicy> load(final UUID id) {
         log.info("loading lockout policy by id {}", id);
-        final Item item = table.getItem("id", id.toString());
-        if (item == null) {
-            log.debug("lockout policy not found returning empty optional");
-            return Optional.empty();
-        }
-        log.info("loaded item {}", item);
-        final LockoutPolicy policy = converter.toPolicy(item);
-        log.info("returning lockout policy {}", policy);
-        return Optional.of(policy);
+        return Optional.ofNullable(table.getItem("id", id.toString()))
+                .map(converter::toPolicy);
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
+import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
 
 import java.util.Optional;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Builder
 @Slf4j
-public class DynamoVerificationAttemptsDao implements VerificationAttemptsDao {
+public class DynamoVerificationAttemptDao implements VerificationAttemptDao {
 
     private final JsonConverter converter;
     private final Table table;

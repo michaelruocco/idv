@@ -10,7 +10,7 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 public class VerificationAttemptPersister {
 
     private final VerificationAttemptsLoader attemptsLoader;
-    private final VerificationAttemptsDao dao;
+    private final VerificationAttemptDao dao;
 
     public void persist(final VerificationAttempt attempt) {
         final VerificationAttempts attempts = attemptsLoader.load(attempt.getIdvIdValue());

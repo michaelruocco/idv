@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo.verificationcontext;
+package uk.co.idv.repository.dynamo;
 
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
@@ -6,17 +6,14 @@ import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
-import uk.co.idv.repository.dynamo.CreateTableRequestFactory;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
 
-public class VerificationContextCreateTableRequestFactory implements CreateTableRequestFactory {
+@RequiredArgsConstructor
+public class SimpleCreateTableRequestFactory implements CreateTableRequestFactory {
 
     private final String tableName;
-
-    public VerificationContextCreateTableRequestFactory(final String environment) {
-        this.tableName = environment + "-verification-context";
-    }
 
     public CreateTableRequest build() {
         final KeySchemaElement key = new KeySchemaElement("id", KeyType.HASH);

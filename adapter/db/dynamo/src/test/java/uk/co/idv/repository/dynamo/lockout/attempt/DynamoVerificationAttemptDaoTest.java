@@ -13,11 +13,11 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class DynamoVerificationAttemptsDaoTest {
+class DynamoVerificationAttemptDaoTest {
 
     private final JsonConverter converter = mock(JsonConverter.class);
     private final Table table = mock(Table.class);
-    private final DynamoVerificationAttemptsDao dao = DynamoVerificationAttemptsDao.builder()
+    private final DynamoVerificationAttemptDao dao = DynamoVerificationAttemptDao.builder()
             .converter(converter)
             .table(table)
             .build();

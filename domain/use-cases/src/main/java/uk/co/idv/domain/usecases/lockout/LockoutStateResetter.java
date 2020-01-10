@@ -16,7 +16,7 @@ public class LockoutStateResetter {
     private final VerificationAttemptsLoader attemptsLoader;
     private final LockoutPolicyService policyService;
     private final LockoutStateRequestConverter requestConverter;
-    private final VerificationAttemptsDao dao;
+    private final VerificationAttemptDao dao;
 
     public void reset(final LockoutStateRequest lockoutRequest) {
         log.info("resetting lockout state for request {}", lockoutRequest);

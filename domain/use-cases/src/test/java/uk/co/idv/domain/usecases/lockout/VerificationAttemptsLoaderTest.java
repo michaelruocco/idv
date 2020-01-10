@@ -19,7 +19,7 @@ class VerificationAttemptsLoaderTest {
     private static final UUID IDV_ID_VALUE = UUID.randomUUID();
 
     private final IdGenerator idGenerator = new FakeIdGenerator(ATTEMPTS_ID);
-    private final VerificationAttemptsDao dao = mock(VerificationAttemptsDao.class);
+    private final VerificationAttemptDao dao = mock(VerificationAttemptDao.class);
 
     private final VerificationAttemptsLoader loader = DefaultVerificationAttemptsLoader.builder()
             .idGenerator(idGenerator)

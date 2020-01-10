@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class VerificationAttemptPersisterTest {
 
     private final FakeVerificationAttemptsLoader attemptsLoader = new FakeVerificationAttemptsLoader();
-    private final FakeVerificationAttemptsDao dao = new FakeVerificationAttemptsDao();
+    private final FakeVerificationAttemptDao dao = new FakeVerificationAttemptDao();
     private final VerificationAttempts existingAttempts = VerificationAttemptsMother.oneAttempt();
 
     private final VerificationAttemptPersister persister = VerificationAttemptPersister.builder()

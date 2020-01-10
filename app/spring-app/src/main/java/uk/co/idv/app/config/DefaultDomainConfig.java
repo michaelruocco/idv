@@ -18,7 +18,7 @@ import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptsDao;
+import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.api.lockout.state.LockoutStateCalculatorFactory;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutFacade;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutPolicyService;
@@ -103,7 +103,7 @@ public class DefaultDomainConfig {
 
     @Bean
     public VerificationAttemptsLoader verificationAttemptsLoader(final IdGenerator idGenerator,
-                                                                 final VerificationAttemptsDao dao) {
+                                                                 final VerificationAttemptDao dao) {
         return DefaultVerificationAttemptsLoader.builder()
                 .idGenerator(idGenerator)
                 .dao(dao)
@@ -112,7 +112,7 @@ public class DefaultDomainConfig {
 
     @Bean
     public VerificationAttemptPersister verificationAttemptPersister(final VerificationAttemptsLoader attemptLoader,
-                                                                     final VerificationAttemptsDao dao) {
+                                                                     final VerificationAttemptDao dao) {
         return VerificationAttemptPersister.builder()
                 .attemptsLoader(attemptLoader)
                 .dao(dao)
@@ -138,7 +138,7 @@ public class DefaultDomainConfig {
     public LockoutStateResetter lockoutStateResetter(final VerificationAttemptsLoader attemptsLoader,
                                                      final LockoutPolicyService policyService,
                                                      final LockoutStateRequestConverter requestConverter,
-                                                     final VerificationAttemptsDao dao) {
+                                                     final VerificationAttemptDao dao) {
         return LockoutStateResetter.builder()
                 .attemptsLoader(attemptsLoader)
                 .policyService(policyService)
