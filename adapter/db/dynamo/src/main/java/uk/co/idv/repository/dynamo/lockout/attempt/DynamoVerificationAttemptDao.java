@@ -21,37 +21,24 @@ public class DynamoVerificationAttemptDao implements VerificationAttemptDao {
     @Override
     public void save(final VerificationAttempts attempts) {
         log.info("saving verification attempts {}", attempts);
-        final Item item = toItem(attempts);
-        log.info("putting item {}", item);
-        table.putItem(item);
+        table.putItem(toItem(attempts));
     }
 
     @Override
     public Optional<VerificationAttempts> load(final UUID idvId) {
         log.info("loading verification attempts by idvId {}", idvId);
-        final Item item = table.getItem("id", idvId.toString());
-        if (item == null) {
-            log.debug("verification attempts not found returning empty optional");
-            return Optional.empty();
-        }
-        log.info("loaded item {}", item);
-        final VerificationAttempts attempts = toVerificationAttempts(item);
-        log.info("returning attempts {}", attempts);
-        return Optional.of(attempts);
+        return Optional.ofNullable(table.getItem("id", idvId.toString()))
+                .map(this::toVerificationAttempts);
     }
 
     private Item toItem(final VerificationAttempts attempts) {
-        final String json = converter.toJson(attempts);
-        log.info("writing item with body {}", json);
         return new Item()
                 .withPrimaryKey("id", attempts.getIdvId().toString())
-                .withJSON("body", json);
+                .withJSON("body", converter.toJson(attempts));
     }
 
     private VerificationAttempts toVerificationAttempts(final Item item) {
-        final String json = item.getJSON("body");
-        log.info("loaded json {}", json);
-        return converter.toObject(json, VerificationAttempts.class);
+        return converter.toObject(item.getJSON("body"), VerificationAttempts.class);
     }
 
 }

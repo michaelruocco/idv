@@ -1,7 +1,6 @@
 package uk.co.idv.repository.dynamo.lockout.policy;
 
 import com.amazonaws.services.dynamodbv2.document.Index;
-import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
@@ -44,9 +43,7 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
     @Override
     public void save(final LockoutPolicy policy) {
         log.info("saving lockout policy {}", policy);
-        final Item item = converter.toItem(policy);
-        log.info("putting item {}", item);
-        table.putItem(item);
+        table.putItem(converter.toItem(policy));
     }
 
     @Override

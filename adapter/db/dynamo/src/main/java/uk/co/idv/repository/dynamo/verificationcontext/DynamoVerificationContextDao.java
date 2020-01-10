@@ -21,37 +21,24 @@ public class DynamoVerificationContextDao implements VerificationContextDao {
     @Override
     public void save(final VerificationContext context) {
         log.info("saving verification context {}", context);
-        final Item item = toItem(context);
-        log.info("putting item {}", item);
-        table.putItem(item);
+        table.putItem(toItem(context));
     }
 
     @Override
     public Optional<VerificationContext> load(final UUID id) {
         log.info("loading verification context by id {}", id);
-        final Item item = table.getItem("id", id.toString());
-        if (item == null) {
-            log.debug("verification context not found returning empty optional");
-            return Optional.empty();
-        }
-        log.info("loaded item {}", item);
-        final VerificationContext context = toVerificationContext(item);
-        log.info("returning context {}", context);
-        return Optional.of(context);
+        return Optional.ofNullable(table.getItem("id", id.toString()))
+                .map(this::toVerificationContext);
     }
 
     private Item toItem(final VerificationContext context) {
-        final String json = converter.toJson(context);
-        log.info("writing item with body {}", json);
         return new Item()
                 .withPrimaryKey("id", context.getId().toString())
-                .withJSON("body", json);
+                .withJSON("body", converter.toJson(context));
     }
 
     private VerificationContext toVerificationContext(final Item item) {
-        final String json = item.getJSON("body");
-        log.info("loaded json {}", json);
-        return converter.toObject(json, VerificationContext.class);
+        return converter.toObject(item.getJSON("body"), VerificationContext.class);
     }
 
 }

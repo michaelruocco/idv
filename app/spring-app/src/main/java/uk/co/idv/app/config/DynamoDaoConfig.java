@@ -12,7 +12,6 @@ import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.DynamoConfig;
 import uk.co.idv.repository.dynamo.DynamoConfigFactory;
-import uk.co.idv.repository.dynamo.IdvTables;
 import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
 
@@ -28,28 +27,25 @@ public class DynamoDaoConfig {
     }
 
     @Bean
-    public IdvTables idvTables(final AmazonDynamoDB dynamoDB) {
-        return config.idvTables(dynamoDB);
+    public IdentityDao identityDao(final AmazonDynamoDB amazonDynamoDB) {
+        return config.identityDao(amazonDynamoDB);
     }
 
     @Bean
-    public IdentityDao identityDao(final IdvTables tables) {
-        return config.identityDao(tables);
+    public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
+                                                         final AmazonDynamoDB amazonDynamoDB) {
+        return config.verificationContextDao(jsonConverter, amazonDynamoDB);
     }
 
     @Bean
-    public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter, final IdvTables tables) {
-        return config.verificationContextDao(jsonConverter, tables);
+    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter,
+                                                          final AmazonDynamoDB amazonDynamoDB) {
+        return config.verificationAttemptsDao(jsonConverter, amazonDynamoDB);
     }
 
     @Bean
-    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter, final IdvTables tables) {
-        return config.verificationAttemptsDao(jsonConverter, tables);
-    }
-
-    @Bean
-    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final IdvTables tables) {
-        return config.lockoutPolicyDao(jsonConverter, tables);
+    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final AmazonDynamoDB amazonDynamoDB) {
+        return config.lockoutPolicyDao(jsonConverter, amazonDynamoDB);
     }
 
     @Bean

@@ -14,14 +14,18 @@ import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
+import uk.co.idv.repository.dynamo.identity.IdentityMappingTableFactory;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
 import uk.co.idv.repository.dynamo.identity.DynamoIdentityDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingItemConverter;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
 import uk.co.idv.repository.dynamo.lockout.attempt.DynamoVerificationAttemptDao;
+import uk.co.idv.repository.dynamo.lockout.attempt.VerificationAttemptTableFactory;
 import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
+import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyTableFactory;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
+import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextTableFactory;
 
 import java.util.Optional;
 
@@ -42,40 +46,41 @@ public class DynamoConfig {
                 .orElseGet(() -> toDynamoDb(region.getName()));
     }
 
-    public IdentityDao identityDao(final IdvTables tables) {
+    public IdentityDao identityDao(final AmazonDynamoDB amazonDynamoDB) {
+        final DynamoTableFactory tableFactory = new IdentityMappingTableFactory(amazonDynamoDB, environment);
         final AliasConverter aliasConverter = aliasConverter();
         return DynamoIdentityDao.builder()
                 .aliasConverter(aliasConverter)
                 .itemConverter(new AliasMappingItemConverter(aliasConverter))
-                .table(tables.getIdentity())
+                .table(tableFactory.createOrGetTable())
                 .build();
     }
 
-    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final IdvTables tables) {
+    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final AmazonDynamoDB amazonDynamoDB) {
+        final DynamoTableFactory tableFactory = new LockoutPolicyTableFactory(amazonDynamoDB, environment);
         return DynamoLockoutPolicyDao.builder()
                 .multiplePoliciesHandler(new MultipleLockoutPoliciesHandler())
                 .converter(new LockoutPolicyItemConverter(jsonConverter))
-                .table(tables.getLockoutPolicy())
+                .table(tableFactory.createOrGetTable())
                 .build();
     }
 
-    public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter, final IdvTables tables) {
+    public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
+                                                         final AmazonDynamoDB amazonDynamoDB) {
+        final DynamoTableFactory tableFactory = new VerificationContextTableFactory(amazonDynamoDB, environment);
         return DynamoVerificationContextDao.builder()
                 .converter(jsonConverter)
-                .table(tables.getVerificationContext())
+                .table(tableFactory.createOrGetTable())
                 .build();
     }
 
     public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter,
-                                                          final IdvTables tables) {
+                                                          final AmazonDynamoDB amazonDynamoDB) {
+        final DynamoTableFactory tableFactory = new VerificationAttemptTableFactory(amazonDynamoDB, environment);
         return DynamoVerificationAttemptDao.builder()
                 .converter(jsonConverter)
-                .table(tables.getVerificationAttempt())
+                .table(tableFactory.createOrGetTable())
                 .build();
-    }
-
-    public IdvTables idvTables(final AmazonDynamoDB dynamoDB) {
-        return new IdvTables(dynamoDB, environment);
     }
 
     private Optional<EndpointConfiguration> getEndpointConfiguration() {
