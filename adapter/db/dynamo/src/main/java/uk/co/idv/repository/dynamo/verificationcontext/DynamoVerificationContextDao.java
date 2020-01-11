@@ -5,9 +5,11 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
 
+import java.time.Duration;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,8 +17,11 @@ import java.util.UUID;
 @Slf4j
 public class DynamoVerificationContextDao implements VerificationContextDao {
 
+    private static final long TIME_TO_LIVE = Duration.ofHours(1).toSeconds();
+
     private final JsonConverter converter;
     private final Table table;
+    private final TimeGenerator timeGenerator;
 
     @Override
     public void save(final VerificationContext context) {
@@ -34,11 +39,16 @@ public class DynamoVerificationContextDao implements VerificationContextDao {
     private Item toItem(final VerificationContext context) {
         return new Item()
                 .withPrimaryKey("id", context.getId().toString())
+                .with("ttl", calculateTimeToLive())
                 .withJSON("body", converter.toJson(context));
     }
 
     private VerificationContext toVerificationContext(final Item item) {
         return converter.toObject(item.getJSON("body"), VerificationContext.class);
+    }
+
+    private long calculateTimeToLive() {
+        return timeGenerator.now().getEpochSecond() + TIME_TO_LIVE;
     }
 
 }
