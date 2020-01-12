@@ -62,6 +62,13 @@ class DefaultLockoutPolicyTest {
     }
 
     @Test
+    void shouldReturnChannelIdFromLockoutLevel() {
+        final String channelId = policy.getChannelId();
+
+        assertThat(channelId).isEqualTo(level.getChannelId());
+    }
+
+    @Test
     void shouldNotRemoveAttemptsWhenResettingIfNoneAreApplicable() {
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));

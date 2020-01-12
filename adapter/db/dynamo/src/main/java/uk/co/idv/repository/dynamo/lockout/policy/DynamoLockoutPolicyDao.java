@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
-import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IterableUtils;
@@ -27,12 +26,12 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
     private final Table table;
     private final Index channelIdIndex;
 
-    private final LockoutPolicyItemConverter converter;
+    private final LockoutPolicyItemsConverter converter;
     private final MultipleLockoutPoliciesHandler multiplePoliciesHandler;
 
     @Builder
     private DynamoLockoutPolicyDao(final Table table,
-                                   final LockoutPolicyItemConverter converter,
+                                   final LockoutPolicyItemsConverter converter,
                                    final MultipleLockoutPoliciesHandler multiplePoliciesHandler) {
         this.table = table;
         this.channelIdIndex = table.getIndex("channelIdIndex");
@@ -55,7 +54,7 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
 
     @Override
     public Optional<LockoutPolicy> load(final LockoutPolicyRequest request) {
-        final QuerySpec query = toQuery(request);
+        final QuerySpec query = new ChannelIdQuery(request.getChannelId());
         final ItemCollection<QueryOutcome> items = channelIdIndex.query(query);
         final List<LockoutPolicy> applicablePolicies = IterableUtils.toList(items).stream()
                 .map(converter::toPolicy)
@@ -68,14 +67,7 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
     @Override
     public Collection<LockoutPolicy> load() {
         final ItemCollection<ScanOutcome> items = table.scan();
-        return converter.toPolicies(items);
-    }
-
-    private QuerySpec toQuery(final LockoutPolicyRequest request) {
-        final ValueMap valueMap = new ValueMap().withString(":channelId", request.getChannelId());
-        return new QuerySpec()
-                .withKeyConditionExpression("channelId = :channelId")
-                .withValueMap(valueMap);
+        return converter.toPolicies(IterableUtils.toList(items));
     }
 
 }

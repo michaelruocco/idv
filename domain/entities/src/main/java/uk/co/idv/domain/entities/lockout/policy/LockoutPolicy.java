@@ -18,6 +18,8 @@ public interface LockoutPolicy {
 
     String getRecordAttemptStrategyType();
 
+    String getChannelId();
+
     boolean isAliasLevel();
 
     boolean appliesTo(final LockoutPolicyRequest request);

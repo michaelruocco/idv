@@ -44,6 +44,11 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
+    public String getChannelId() {
+        return level.getChannelId();
+    }
+
+    @Override
     public boolean isAliasLevel() {
         return level.isAliasLevel();
     }

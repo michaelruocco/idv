@@ -22,6 +22,7 @@ import uk.co.idv.repository.dynamo.lockout.attempt.VerificationAttemptTableReque
 import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyCreateTableRequest;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
+import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemsConverter;
 import uk.co.idv.repository.dynamo.table.DynamoTableCreator;
 import uk.co.idv.repository.dynamo.table.DynamoTableService;
 import uk.co.idv.repository.dynamo.table.DynamoTimeToLiveService;
@@ -59,7 +60,7 @@ public class DynamoConfig {
     public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter) {
         return DynamoLockoutPolicyDao.builder()
                 .multiplePoliciesHandler(new MultipleLockoutPoliciesHandler())
-                .converter(new LockoutPolicyItemConverter(jsonConverter))
+                .converter(new LockoutPolicyItemsConverter(new LockoutPolicyItemConverter(jsonConverter)))
                 .table(getOrCreateTable(new LockoutPolicyCreateTableRequest(environment)))
                 .build();
     }
