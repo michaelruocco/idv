@@ -2,6 +2,7 @@ package uk.co.idv.repository.dynamo.table;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.UpdateTimeToLiveRequest;
 import lombok.RequiredArgsConstructor;
@@ -35,8 +36,21 @@ public class DynamoTableService {
     }
 
     public void addTimeToLive(final UpdateTimeToLiveRequest request) {
-        log.info("adding time to live to table {}", request.getTableName());
-        amazonDynamoDB.updateTimeToLive(request);
+        try {
+            log.info("adding time to live to table {}", request.getTableName());
+            amazonDynamoDB.updateTimeToLive(request);
+        } catch (final AmazonDynamoDBException e) {
+            if (isTimeToLiveAlreadyExistsException(e)) {
+                log.warn(e.getErrorMessage());
+                log.debug(e.getErrorMessage(), e);
+                return;
+            }
+            throw e;
+        }
+    }
+
+    private boolean isTimeToLiveAlreadyExistsException(final AmazonDynamoDBException e) {
+        return e.getErrorMessage().equals("TimeToLive is already enabled");
     }
 
 }

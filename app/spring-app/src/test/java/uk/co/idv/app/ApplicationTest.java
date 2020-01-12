@@ -4,23 +4,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Rule;
 import org.junit.contrib.java.lang.system.RestoreSystemProperties;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import static uk.co.idv.app.environment.WithEnvironmentVariables.withEnvironmentVariable;
-
 
 @Testcontainers
 @Slf4j
 class ApplicationTest {
 
+    @Container
+    public static final DynamoDbLocalContainer DYNAMO_DB = new DynamoDbLocalContainer();
+
     @Rule
     public final RestoreSystemProperties restore = new RestoreSystemProperties();
-
-    @Container
-    public final GenericContainer dynamo = new GenericContainer<>("amazon/dynamodb-local:latest")
-            .withExposedPorts(8000);
 
     @Test
     void shouldStartupWithStubProfile() {
@@ -31,19 +26,12 @@ class ApplicationTest {
     }
 
     @Test
-    void shouldStartupWithInMemoryMongoProfile() {
-        setSpringProfiles("in-memory-mongo, uk");
+    void shouldStartupWithUkProfile() {
+        setSpringProfiles("uk");
         setRandomServerPort();
-        withEnvironmentVariable("DYNAMO_DB_URI", buildDynamoDbUri())
-                .and("AWS_ACCESS_KEY", "abc")
-                .and("AWS_SECRET_KEY", "123")
-                .execute(() -> Application.main(new String[0]));
-    }
+        setDynamoDbProperties();
 
-    private String buildDynamoDbUri() {
-        final String uri = String.format("http://%s:%s", dynamo.getContainerIpAddress(), dynamo.getFirstMappedPort());
-        log.info("connecting to dynamo db using uri {}", uri);
-        return uri;
+        Application.main(new String[0]);
     }
 
     private static void setSpringProfiles(final String profiles) {
@@ -52,6 +40,18 @@ class ApplicationTest {
 
     private static void setRandomServerPort() {
         System.setProperty("server.port", "0");
+    }
+
+    private void setDynamoDbProperties() {
+        System.setProperty("aws.dynamo.db.endpoint.uri", buildDynamoDbEndpointUri());
+        System.setProperty("aws.accessKeyId", "abc");
+        System.setProperty("aws.secretKey", "123");
+    }
+
+    private static String buildDynamoDbEndpointUri() {
+        final String uri = String.format("http://%s:%s", DYNAMO_DB.getContainerIpAddress(), DYNAMO_DB.getFirstMappedPort());
+        log.info("connecting to dynamo db using uri {}", uri);
+        return uri;
     }
 
 }

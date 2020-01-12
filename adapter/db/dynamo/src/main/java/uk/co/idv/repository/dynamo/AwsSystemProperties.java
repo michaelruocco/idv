@@ -8,22 +8,22 @@ import java.util.Optional;
 
 
 @Slf4j
-public class AwsEnvironmentVariables {
+public class AwsSystemProperties {
 
-    private static final String REGION = "AWS_REGION";
-    private static final String DYNAMO_DB_URI = "DYNAMO_DB_URI";
-    private static final String ENVIRONMENT = "ENVIRONMENT";
+    private static final String REGION = "aws.region";
+    private static final String DYNAMO_DB_ENDPOINT_URI = "aws.dynamo.db.endpoint.uri";
+    private static final String ENVIRONMENT = "environment";
 
     private static final Regions DEFAULT_REGION = Regions.EU_WEST_1;
 
-    private AwsEnvironmentVariables() {
+    private AwsSystemProperties() {
         // utility class
     }
 
     public static Regions loadRegion() {
         return loadRegionValue()
                 .map(Regions::fromName)
-                .orElseGet(AwsEnvironmentVariables::loadDefaultRegion);
+                .orElseGet(AwsSystemProperties::loadDefaultRegion);
     }
 
     public static Optional<EndpointConfiguration> loadDynamoDbEndpointConfiguration() {
@@ -32,29 +32,29 @@ public class AwsEnvironmentVariables {
     }
 
     public static String loadEnvironment() {
-        return loadEnvironmentValue().orElse("dev");
+        return loadSystemProperty().orElse("dev");
     }
 
     private static Optional<String> loadRegionValue() {
-        return loadEnvironmentVariable(REGION);
+        return loadSystemProperty(REGION);
     }
 
     private static Regions loadDefaultRegion() {
-        log.info("{} environment variable not set returning default value {}", REGION, DEFAULT_REGION);
+        log.info("{} system property not set returning default value {}", REGION, DEFAULT_REGION);
         return DEFAULT_REGION;
     }
 
     private static Optional<String> loadDynamoDbEndpointUri() {
-        return loadEnvironmentVariable(DYNAMO_DB_URI);
+        return loadSystemProperty(DYNAMO_DB_ENDPOINT_URI);
     }
 
-    private static Optional<String> loadEnvironmentValue() {
-        return loadEnvironmentVariable(ENVIRONMENT);
+    private static Optional<String> loadSystemProperty() {
+        return loadSystemProperty(ENVIRONMENT);
     }
 
-    private static Optional<String> loadEnvironmentVariable(final String name) {
-        final String value = System.getenv(name);
-        log.info("loaded environment variable {}={}", name, value);
+    private static Optional<String> loadSystemProperty(final String name) {
+        final String value = System.getProperty(name);
+        log.info("loaded system property {}={}", name, value);
         return Optional.ofNullable(value);
     }
 

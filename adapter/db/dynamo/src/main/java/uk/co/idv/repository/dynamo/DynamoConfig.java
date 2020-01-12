@@ -35,7 +35,7 @@ public class DynamoConfig {
     private final DynamoTableService tableService;
 
     public DynamoConfig(final AmazonDynamoDB client) {
-        this(AwsEnvironmentVariables.loadEnvironment(), new DynamoTableService(client));
+        this(AwsSystemProperties.loadEnvironment(), new DynamoTableService(client));
     }
 
     public DynamoConfig(final String environment, final AmazonDynamoDB client) {

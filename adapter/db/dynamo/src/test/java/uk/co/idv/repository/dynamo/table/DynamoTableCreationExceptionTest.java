@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo;
+package uk.co.idv.repository.dynamo.table;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.repository.dynamo.table.DynamoTableCreator.DynamoTableCreationException;

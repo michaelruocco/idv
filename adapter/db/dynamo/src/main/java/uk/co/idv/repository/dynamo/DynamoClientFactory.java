@@ -16,11 +16,11 @@ public class DynamoClientFactory {
     private final AWSCredentialsProvider credentialsProvider;
 
     public DynamoClientFactory() {
-        this(AwsEnvironmentVariables.loadRegion(), new DefaultAWSCredentialsProviderChain());
+        this(AwsSystemProperties.loadRegion(), new DefaultAWSCredentialsProviderChain());
     }
 
     public AmazonDynamoDB build() {
-        return AwsEnvironmentVariables.loadDynamoDbEndpointConfiguration()
+        return AwsSystemProperties.loadDynamoDbEndpointConfiguration()
                 .map(this::withEndpointConfiguration)
                 .orElse(standard());
     }
