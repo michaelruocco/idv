@@ -22,10 +22,15 @@ import uk.co.idv.repository.dynamo.lockout.attempt.VerificationAttemptTableReque
 import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyCreateTableRequest;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
+import uk.co.idv.repository.dynamo.table.DynamoTableCreator;
 import uk.co.idv.repository.dynamo.table.DynamoTableService;
+import uk.co.idv.repository.dynamo.table.DynamoTimeToLiveService;
 import uk.co.idv.repository.dynamo.table.IdvTimeToLiveRequest;
+import uk.co.idv.repository.dynamo.table.TimeToLiveCalculator;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextCreateTableRequest;
+import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextItemConverter;
+import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextTimeToLiveCalculator;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -33,9 +38,13 @@ public class DynamoConfig {
 
     private final String environment;
     private final DynamoTableService tableService;
+    final DynamoTimeToLiveService timeToLiveService;
 
     public DynamoConfig(final AmazonDynamoDB client) {
-        this(AwsSystemProperties.loadEnvironment(), new DynamoTableService(client));
+        this(AwsSystemProperties.loadEnvironment(),
+                new DynamoTableService(new DynamoTableCreator(client)),
+                new DynamoTimeToLiveService(client)
+        );
     }
 
     public IdentityDao identityDao() {
@@ -58,12 +67,12 @@ public class DynamoConfig {
     public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
                                                          final TimeGenerator timeGenerator) {
         final CreateTableRequest createTableRequest = new VerificationContextCreateTableRequest(environment);
+        final VerificationContextItemConverter itemConverter = itemConverter(jsonConverter, timeGenerator);
         final VerificationContextDao dao = DynamoVerificationContextDao.builder()
-                .converter(jsonConverter)
+                .itemConverter(itemConverter)
                 .table(getOrCreateTable(createTableRequest))
-                .timeGenerator(timeGenerator)
                 .build();
-        tableService.addTimeToLive(new IdvTimeToLiveRequest(createTableRequest.getTableName()));
+        timeToLiveService.updateTimeToLive(new IdvTimeToLiveRequest(createTableRequest.getTableName()));
         return dao;
     }
 
@@ -71,6 +80,15 @@ public class DynamoConfig {
         return DynamoVerificationAttemptDao.builder()
                 .converter(jsonConverter)
                 .table(getOrCreateTable(new VerificationAttemptTableRequest(environment)))
+                .build();
+    }
+
+    private VerificationContextItemConverter itemConverter(final JsonConverter jsonConverter,
+                                                           final TimeGenerator timeGenerator) {
+        final TimeToLiveCalculator timeToLiveCalculator = new VerificationContextTimeToLiveCalculator(timeGenerator);
+        return VerificationContextItemConverter.builder()
+                .jsonConverter(jsonConverter)
+                .timeToLiveCalculator(timeToLiveCalculator)
                 .build();
     }
 

@@ -10,11 +10,11 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AwsSystemPropertiesTest {
+class AwsSystemPropertiesTest {
 
     @Test
     @ClearSystemProperty(key = "aws.region")
-    public void shouldLoadDefaultRegionIfPropertyNotSet() {
+    void shouldLoadDefaultRegionIfPropertyNotSet() {
         final Regions region = AwsSystemProperties.loadRegion();
 
         assertThat(region).isEqualTo(Regions.EU_WEST_1);
@@ -22,7 +22,7 @@ public class AwsSystemPropertiesTest {
 
     @Test
     @SetSystemProperty(key = "aws.region", value = "us-west-2")
-    public void shouldLoadSpecifiedRegionIfPropertySet() {
+    void shouldLoadSpecifiedRegionIfPropertySet() {
         final Regions region = AwsSystemProperties.loadRegion();
 
         assertThat(region).isEqualTo(Regions.US_WEST_2);
@@ -30,7 +30,7 @@ public class AwsSystemPropertiesTest {
 
     @Test
     @ClearSystemProperty(key = "aws.dynamo.db.endpoint.uri")
-    public void shouldLoadEmptyDynamoDbEndpointConfigurationIfPropertyNotSet() {
+    void shouldLoadEmptyDynamoDbEndpointConfigurationIfPropertyNotSet() {
         final Optional<EndpointConfiguration> config = AwsSystemProperties.loadDynamoDbEndpointConfiguration();
 
         assertThat(config).isEmpty();
@@ -39,7 +39,7 @@ public class AwsSystemPropertiesTest {
     @Test
     @SetSystemProperty(key = "aws.dynamo.db.endpoint.uri", value = "http://localhost:8000")
     @SetSystemProperty(key = "aws.region", value = "us-west-2")
-    public void shouldLoadDynamoDbEndpointConfigurationIfPropertiesSet() {
+    void shouldLoadDynamoDbEndpointConfigurationIfPropertiesSet() {
         final Optional<EndpointConfiguration> result = AwsSystemProperties.loadDynamoDbEndpointConfiguration();
 
         assertThat(result.isPresent()).isTrue();
@@ -50,7 +50,7 @@ public class AwsSystemPropertiesTest {
 
     @Test
     @ClearSystemProperty(key = "environment")
-    public void shouldLoadDefaultEnvironmentIfPropertyNotSet() {
+    void shouldLoadDefaultEnvironmentIfPropertyNotSet() {
         final String environment = AwsSystemProperties.loadEnvironment();
 
         assertThat(environment).isEqualTo("dev");
@@ -58,7 +58,7 @@ public class AwsSystemPropertiesTest {
 
     @Test
     @SetSystemProperty(key = "environment", value = "sit")
-    public void shouldLoadEnvironmentIfPropertySet() {
+    void shouldLoadEnvironmentIfPropertySet() {
         final String environment = AwsSystemProperties.loadEnvironment();
 
         assertThat(environment).isEqualTo("sit");

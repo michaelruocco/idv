@@ -1,10 +1,7 @@
 package uk.co.idv.repository.dynamo.table;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;
-import com.amazonaws.services.dynamodbv2.model.AmazonDynamoDBException;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import com.amazonaws.services.dynamodbv2.model.UpdateTimeToLiveRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,14 +12,8 @@ import java.util.Map;
 @Slf4j
 public class DynamoTableService {
 
-    private static final Map<String, Table> tables = new HashMap<>();
-
-    private final AmazonDynamoDB amazonDynamoDB;
+    private final Map<String, Table> tables = new HashMap<>();
     private final DynamoTableCreator tableCreator;
-
-    public DynamoTableService(final AmazonDynamoDB amazonDynamoDB) {
-        this(amazonDynamoDB, new DynamoTableCreator(amazonDynamoDB));
-    }
 
     public Table getOrCreateTable(final CreateTableRequest request) {
         final String tableName = request.getTableName();
@@ -34,32 +25,5 @@ public class DynamoTableService {
         tables.put(request.getTableName(), table);
         return table;
     }
-
-    public void addTimeToLive(final UpdateTimeToLiveRequest request) {
-        try {
-            log.info("adding time to live to table {}", request.getTableName());
-            amazonDynamoDB.updateTimeToLive(request);
-        } catch (final AmazonDynamoDBException e) {
-            if (isTimeToLiveAlreadyExistsException(e)) {
-                log(e);
-                return;
-            }
-            throw e;
-        }
-    }
-
-    private boolean isTimeToLiveAlreadyExistsException(final AmazonDynamoDBException e) {
-        return e.getErrorMessage().equals("TimeToLive is already enabled");
-    }
-
-    private void log(final AmazonDynamoDBException e) {
-        if (log.isDebugEnabled()) {
-            log.debug(e.getErrorMessage(), e);
-            return;
-        }
-        log.warn(e.getErrorMessage());
-    }
-
-
 
 }

@@ -12,15 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DynamoTableCreator {
 
-    private final AmazonDynamoDB amazonDynamoDB;
+    private final AmazonDynamoDB client;
 
     public Table create(final CreateTableRequest request) {
         try {
             final String tableName = request.getTableName();
             log.info("creating table {}", tableName);
-            TableUtils.createTableIfNotExists(amazonDynamoDB, request);
-            TableUtils.waitUntilActive(amazonDynamoDB, tableName);
-            return new DynamoDB(amazonDynamoDB).getTable(tableName);
+            TableUtils.createTableIfNotExists(client, request);
+            TableUtils.waitUntilActive(client, tableName);
+            return new DynamoDB(client).getTable(tableName);
         } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new DynamoTableCreationException(e);
