@@ -19,4 +19,5 @@ dependencies {
     testCompile "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
     testCompile "org.meanbean:meanbean:${meanBeanVersion}"
     testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
+    testCompile 'org.junit-pioneer:junit-pioneer:0.5.1'
 }
