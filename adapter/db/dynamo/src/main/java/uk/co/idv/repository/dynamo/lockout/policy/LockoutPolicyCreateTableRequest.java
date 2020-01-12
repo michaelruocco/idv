@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
-import uk.co.idv.repository.dynamo.DefaultProvisionedThroughput;
+import uk.co.idv.repository.dynamo.table.DefaultProvisionedThroughput;
 
 import java.util.ArrayList;
 import java.util.Collection;

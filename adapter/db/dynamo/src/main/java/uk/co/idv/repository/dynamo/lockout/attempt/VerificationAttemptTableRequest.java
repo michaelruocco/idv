@@ -1,6 +1,6 @@
 package uk.co.idv.repository.dynamo.lockout.attempt;
 
-import uk.co.idv.repository.dynamo.SimpleCreateTableRequest;
+import uk.co.idv.repository.dynamo.table.SimpleCreateTableRequest;
 
 public class VerificationAttemptTableRequest extends SimpleCreateTableRequest {
 

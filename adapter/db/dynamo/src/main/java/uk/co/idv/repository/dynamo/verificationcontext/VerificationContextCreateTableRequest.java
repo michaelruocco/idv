@@ -1,6 +1,6 @@
 package uk.co.idv.repository.dynamo.verificationcontext;
 
-import uk.co.idv.repository.dynamo.SimpleCreateTableRequest;
+import uk.co.idv.repository.dynamo.table.SimpleCreateTableRequest;
 
 public class VerificationContextCreateTableRequest extends SimpleCreateTableRequest {
 

@@ -1,7 +1,7 @@
 package uk.co.idv.repository.dynamo;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.repository.dynamo.DynamoTableFactory.DynamoTableCreationException;
+import uk.co.idv.repository.dynamo.table.DynamoTableCreator.DynamoTableCreationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

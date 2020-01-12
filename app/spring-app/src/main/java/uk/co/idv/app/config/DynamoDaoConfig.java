@@ -1,6 +1,5 @@
 package uk.co.idv.app.config;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +10,8 @@ import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
+import uk.co.idv.repository.dynamo.DynamoClientFactory;
 import uk.co.idv.repository.dynamo.DynamoConfig;
-import uk.co.idv.repository.dynamo.DynamoConfigFactory;
-import uk.co.idv.repository.dynamo.DynamoTableFactory;
 import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
 import uk.co.idv.repository.dynamo.json.JsonConverter;
 
@@ -21,39 +19,27 @@ import uk.co.idv.repository.dynamo.json.JsonConverter;
 @Profile("!stub")
 public class DynamoDaoConfig {
 
-    private final DynamoConfig config = DynamoConfigFactory.standard();
+    private final DynamoConfig config = new DynamoConfig(new DynamoClientFactory().build());
 
     @Bean
-    public AmazonDynamoDB amazonDynamoDB() {
-        return config.amazonDynamoDB();
-    }
-
-    @Bean
-    public IdentityDao identityDao(final DynamoTableFactory tableFactory) {
-        return config.identityDao(tableFactory);
+    public IdentityDao identityDao() {
+        return config.identityDao();
     }
 
     @Bean
     public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
-                                                         final DynamoTableFactory tableFactory,
                                                          final TimeGenerator timeGenerator) {
-        return config.verificationContextDao(jsonConverter, tableFactory, timeGenerator);
+        return config.verificationContextDao(jsonConverter, timeGenerator);
     }
 
     @Bean
-    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter,
-                                                          final DynamoTableFactory tableFactory) {
-        return config.verificationAttemptsDao(jsonConverter, tableFactory);
+    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter) {
+        return config.verificationAttemptsDao(jsonConverter);
     }
 
     @Bean
-    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final DynamoTableFactory tableFactory) {
-        return config.lockoutPolicyDao(jsonConverter, tableFactory);
-    }
-
-    @Bean
-    public DynamoTableFactory tableFactory(final AmazonDynamoDB amazonDynamoDB) {
-        return config.tableFactory(amazonDynamoDB);
+    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter) {
+        return config.lockoutPolicyDao(jsonConverter);
     }
 
     @Bean

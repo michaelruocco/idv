@@ -3,7 +3,7 @@ package uk.co.idv.repository.dynamo.lockout.policy;
 import com.amazonaws.services.dynamodbv2.model.GlobalSecondaryIndex;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.KeyType;
-import uk.co.idv.repository.dynamo.DefaultProvisionedThroughput;
+import uk.co.idv.repository.dynamo.table.DefaultProvisionedThroughput;
 
 public class ChannelIdIndex extends GlobalSecondaryIndex {
 

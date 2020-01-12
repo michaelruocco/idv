@@ -1,13 +1,9 @@
 package uk.co.idv.repository.dynamo;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
@@ -26,89 +22,64 @@ import uk.co.idv.repository.dynamo.lockout.attempt.VerificationAttemptTableReque
 import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyCreateTableRequest;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
+import uk.co.idv.repository.dynamo.table.DynamoTableService;
+import uk.co.idv.repository.dynamo.table.IdvTimeToLiveRequest;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextCreateTableRequest;
 
-import java.util.Optional;
-
-@Builder
+@RequiredArgsConstructor
 @Slf4j
 public class DynamoConfig {
 
     private final String environment;
-    private final Regions region;
-    private final EndpointConfiguration endpointConfiguration;
+    private final DynamoTableService tableService;
 
-    @Builder.Default
-    private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
-
-    public AmazonDynamoDB amazonDynamoDB() {
-        return getEndpointConfiguration()
-                .map(this::toDynamoDb)
-                .orElseGet(() -> toDynamoDb(region.getName()));
+    public DynamoConfig(final AmazonDynamoDB client) {
+        this(AwsEnvironmentVariables.loadEnvironment(), new DynamoTableService(client));
     }
 
-    public IdentityDao identityDao(final DynamoTableFactory tableFactory) {
+    public DynamoConfig(final String environment, final AmazonDynamoDB client) {
+        this(environment, new DynamoTableService(client));
+    }
+
+    public IdentityDao identityDao() {
         final AliasConverter aliasConverter = aliasConverter();
         return DynamoIdentityDao.builder()
                 .aliasConverter(aliasConverter)
                 .itemConverter(new AliasMappingItemConverter(aliasConverter))
-                .table(tableFactory.createOrGetTable(new IdentityMappingCreateTableRequest(environment)))
+                .table(getOrCreateTable(new IdentityMappingCreateTableRequest(environment)))
                 .build();
     }
 
-    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter, final DynamoTableFactory tableFactory) {
+    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter) {
         return DynamoLockoutPolicyDao.builder()
                 .multiplePoliciesHandler(new MultipleLockoutPoliciesHandler())
                 .converter(new LockoutPolicyItemConverter(jsonConverter))
-                .table(tableFactory.createOrGetTable(new LockoutPolicyCreateTableRequest(environment)))
+                .table(getOrCreateTable(new LockoutPolicyCreateTableRequest(environment)))
                 .build();
     }
 
     public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
-                                                         final DynamoTableFactory tableFactory,
                                                          final TimeGenerator timeGenerator) {
         final CreateTableRequest createTableRequest = new VerificationContextCreateTableRequest(environment);
         final VerificationContextDao dao = DynamoVerificationContextDao.builder()
                 .converter(jsonConverter)
-                .table(tableFactory.createOrGetTable(createTableRequest))
+                .table(getOrCreateTable(createTableRequest))
                 .timeGenerator(timeGenerator)
                 .build();
-        tableFactory.addTimeToLive(new IdvTimeToLiveRequest(createTableRequest.getTableName()));
+        tableService.addTimeToLive(new IdvTimeToLiveRequest(createTableRequest.getTableName()));
         return dao;
     }
 
-    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter,
-                                                          final DynamoTableFactory tableFactory) {
+    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter) {
         return DynamoVerificationAttemptDao.builder()
                 .converter(jsonConverter)
-                .table(tableFactory.createOrGetTable(new VerificationAttemptTableRequest(environment)))
+                .table(getOrCreateTable(new VerificationAttemptTableRequest(environment)))
                 .build();
     }
 
-    public DynamoTableFactory tableFactory(final AmazonDynamoDB amazonDynamoDB) {
-        return new DynamoTableFactory(amazonDynamoDB);
-    }
-
-    private Optional<EndpointConfiguration> getEndpointConfiguration() {
-        return Optional.ofNullable(endpointConfiguration);
-    }
-
-    private AmazonDynamoDB toDynamoDb(final EndpointConfiguration endpointConfiguration) {
-        return amazonDynamoDBClientBuilder()
-                .withEndpointConfiguration(endpointConfiguration)
-                .build();
-    }
-
-    private AmazonDynamoDB toDynamoDb(final String region) {
-        return amazonDynamoDBClientBuilder()
-                .withRegion(region)
-                .build();
-    }
-
-    private AmazonDynamoDBClientBuilder amazonDynamoDBClientBuilder() {
-        return AmazonDynamoDBClientBuilder.standard()
-                .withCredentials(credentialsProvider);
+    private Table getOrCreateTable(final CreateTableRequest request) {
+        return tableService.getOrCreateTable(request);
     }
 
     private AliasConverter aliasConverter() {
