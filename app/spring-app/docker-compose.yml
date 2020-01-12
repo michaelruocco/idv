@@ -1,12 +1,6 @@
 version: '3'
 services:
 
-  verification-context-mongo-db:
-    image: mongo:latest
-    container_name: verification-context-mongo-db
-    ports:
-      - 27018:27017
-
   verification-context-dynamo-db:
     image: amazon/dynamodb-local:latest
     container_name: verification-context-dynamo-db
@@ -25,5 +19,4 @@ services:
       - AWS_SECRET_KEY=123
       - AWS_DYNAMO_DB_ENDPOINT_URI=http://verification-context-dynamo-db:8000
     depends_on:
-      - verification-context-mongo-db
       - verification-context-dynamo-db
