@@ -38,10 +38,6 @@ public class DynamoConfig {
         this(AwsSystemProperties.loadEnvironment(), new DynamoTableService(client));
     }
 
-    public DynamoConfig(final String environment, final AmazonDynamoDB client) {
-        this(environment, new DynamoTableService(client));
-    }
-
     public IdentityDao identityDao() {
         final AliasConverter aliasConverter = aliasConverter();
         return DynamoIdentityDao.builder()

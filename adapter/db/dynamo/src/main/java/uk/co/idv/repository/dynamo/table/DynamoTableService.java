@@ -41,8 +41,7 @@ public class DynamoTableService {
             amazonDynamoDB.updateTimeToLive(request);
         } catch (final AmazonDynamoDBException e) {
             if (isTimeToLiveAlreadyExistsException(e)) {
-                log.warn(e.getErrorMessage());
-                log.debug(e.getErrorMessage(), e);
+                log(e);
                 return;
             }
             throw e;
@@ -52,5 +51,15 @@ public class DynamoTableService {
     private boolean isTimeToLiveAlreadyExistsException(final AmazonDynamoDBException e) {
         return e.getErrorMessage().equals("TimeToLive is already enabled");
     }
+
+    private void log(final AmazonDynamoDBException e) {
+        if (log.isDebugEnabled()) {
+            log.debug(e.getErrorMessage(), e);
+            return;
+        }
+        log.warn(e.getErrorMessage());
+    }
+
+
 
 }

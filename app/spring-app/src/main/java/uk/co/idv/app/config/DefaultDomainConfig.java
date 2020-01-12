@@ -10,6 +10,7 @@ import org.springframework.core.annotation.Order;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
+import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPoliciesAlreadyExistException;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
@@ -70,7 +71,6 @@ public class DefaultDomainConfig {
     public SequenceLoader sequenceLoader() {
         return new StubbedSequenceLoader();
     }
-
 
     @Bean
     public LockoutStateCalculatorFactory stateCalculatorFactory() {
@@ -265,10 +265,17 @@ public class DefaultDomainConfig {
         private void createPolicy(final LockoutPolicy policy) {
             try {
                 policyService.createPolicy(policy);
-            } catch (final LockoutPolicyService.LockoutPoliciesAlreadyExistException e) {
-                log.warn(e.getMessage());
-                log.debug(e.getMessage(), e);
+            } catch (final LockoutPoliciesAlreadyExistException e) {
+                log(e);
             }
+        }
+
+        private void log(final LockoutPoliciesAlreadyExistException e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage(), e);
+                return;
+            }
+            log.warn(e.getMessage());
         }
 
     }
