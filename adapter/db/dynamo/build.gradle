@@ -12,7 +12,7 @@ dependencies {
     compile project(':entities')
     compile project(':use-cases')
 
-    compile 'com.amazonaws:aws-java-sdk-dynamodb:1.11.704'
+    compile 'com.amazonaws:aws-java-sdk-dynamodb:1.11.712'
 
     testCompile project(':entities').sourceSets.test.output
     testCompile project(':use-cases').sourceSets.test.output
