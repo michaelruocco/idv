@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.identity.alias;
 
 
+import java.util.UUID;
 
 public class AliasesMother {
 
@@ -15,8 +16,16 @@ public class AliasesMother {
         );
     }
 
+    public static IdvId randomIdvId() {
+        return idvId(UUID.randomUUID().toString());
+    }
+
     public static IdvId idvId() {
-        return new IdvId("ee69bf61-89a1-46c3-a0c6-ba44b747a286");
+        return idvId("ee69bf61-89a1-46c3-a0c6-ba44b747a286");
+    }
+
+    public static IdvId idvId(final String value) {
+        return new IdvId(value);
     }
 
     public static Alias creditCardNumber() {

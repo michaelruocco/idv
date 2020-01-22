@@ -6,6 +6,7 @@ import org.junit.contrib.java.lang.system.RestoreSystemProperties;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import uk.co.idv.repository.dynamo.DynamoDbLocalContainer;
 
 @Testcontainers
 @Slf4j
@@ -43,15 +44,9 @@ class ApplicationTest {
     }
 
     private void setDynamoDbProperties() {
-        System.setProperty("aws.dynamo.db.endpoint.uri", buildDynamoDbEndpointUri());
+        System.setProperty("aws.dynamo.db.endpoint.uri", DYNAMO_DB.getEndpointUri());
         System.setProperty("aws.accessKeyId", "abc");
         System.setProperty("aws.secretKey", "123");
-    }
-
-    private static String buildDynamoDbEndpointUri() {
-        final String uri = String.format("http://%s:%s", DYNAMO_DB.getContainerIpAddress(), DYNAMO_DB.getFirstMappedPort());
-        log.info("connecting to dynamo db using uri {}", uri);
-        return uri;
     }
 
 }

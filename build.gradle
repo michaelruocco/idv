@@ -37,6 +37,7 @@ subprojects {
         meanBeanVersion = '2.0.3'
         equalsVerifierVersion = '3.1.10'
         fileLoaderVersion = '5.0.1'
+        testContainersVersion = '1.12.4'
     }
 
     dependencies {

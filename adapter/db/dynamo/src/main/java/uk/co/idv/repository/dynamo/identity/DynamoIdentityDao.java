@@ -4,7 +4,6 @@ import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
-import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -48,20 +47,20 @@ public class DynamoIdentityDao implements IdentityDao {
         saveAll(updateItems);
     }
 
-    private void deleteAll(final Collection<Item> items) {
-        items.forEach(item -> table.deleteItem("alias", item.getString("alias")));
-    }
-
-    private void saveAll(final Collection<Item> items) {
-        items.forEach(table::putItem);
-    }
-
     @Override
     public Optional<Identity> load(final Alias alias) {
         if (IdvId.isIdvId(alias)) {
             return loadByIdvId(alias);
         }
         return loadByAlias(alias);
+    }
+
+    private void deleteAll(final Collection<Item> items) {
+        items.forEach(item -> table.deleteItem("alias", item.getString("alias")));
+    }
+
+    private void saveAll(final Collection<Item> items) {
+        items.forEach(table::putItem);
     }
 
     private Optional<Identity> loadByAlias(final Alias alias) {
@@ -94,15 +93,8 @@ public class DynamoIdentityDao implements IdentityDao {
 
     private Collection<Item> loadItemsByIdvId(final String idvId) {
         log.info("attempting to load items for idv id {}", idvId);
-        final QuerySpec query = toQuery(idvId);
+        final QuerySpec query = new IdentityByIdvIdQuery(idvId);
         return IterableUtils.toList(idvIdIndex.query(query));
-    }
-
-    private QuerySpec toQuery(final String idvId) {
-        final ValueMap valueMap = new ValueMap().withString(":idvId", idvId);
-        return new QuerySpec()
-                .withKeyConditionExpression("idvId = :idvId")
-                .withValueMap(valueMap);
     }
 
 }
