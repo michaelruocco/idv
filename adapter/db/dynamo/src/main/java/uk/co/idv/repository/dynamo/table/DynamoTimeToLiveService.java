@@ -20,7 +20,7 @@ public class DynamoTimeToLiveService {
             log.info("adding time to live to table {}", request.getTableName());
             return Optional.of(client.updateTimeToLive(request));
         } catch (final AmazonDynamoDBException e) {
-            if (isTimeToLiveAlreadyExistsException(e)) {
+            if (isAlreadyExistsException(e)) {
                 log(e);
                 return Optional.empty();
             }
@@ -28,7 +28,7 @@ public class DynamoTimeToLiveService {
         }
     }
 
-    private boolean isTimeToLiveAlreadyExistsException(final AmazonDynamoDBException e) {
+    private boolean isAlreadyExistsException(final AmazonDynamoDBException e) {
         return e.getErrorMessage().equals("TimeToLive is already enabled");
     }
 

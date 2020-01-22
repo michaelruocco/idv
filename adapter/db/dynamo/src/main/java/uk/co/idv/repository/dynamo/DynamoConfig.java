@@ -39,7 +39,7 @@ public class DynamoConfig {
 
     private final String environment;
     private final DynamoTableService tableService;
-    final DynamoTimeToLiveService timeToLiveService;
+    private final DynamoTimeToLiveService timeToLiveService;
 
     public DynamoConfig(final AmazonDynamoDB client) {
         this(AwsSystemProperties.loadEnvironment(),
