@@ -16,7 +16,11 @@ public class DynamoClientFactory {
     private final AWSCredentialsProvider credentialsProvider;
 
     public DynamoClientFactory() {
-        this(AwsSystemProperties.loadRegion(), new DefaultAWSCredentialsProviderChain());
+        this(new DefaultAWSCredentialsProviderChain());
+    }
+
+    public DynamoClientFactory(final AWSCredentialsProvider credentialsProvider) {
+        this(AwsSystemProperties.loadRegion(), credentialsProvider);
     }
 
     public AmazonDynamoDB build() {

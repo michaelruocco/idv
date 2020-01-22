@@ -1,5 +1,9 @@
 package uk.co.idv.repository.dynamo;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -22,9 +26,10 @@ public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContai
     }
 
     public DynamoConfig getConfig() {
-        final DynamoClientFactory factory = new DynamoClientFactory();
-        factory.withEndpointConfiguration(getEndpointConfiguration());
-        final AmazonDynamoDB client = factory.build();
+        final AWSCredentials credentials = new BasicAWSCredentials("abc", "123");
+        final AWSCredentialsProvider credentialsProvider = new AWSStaticCredentialsProvider(credentials);
+        final DynamoClientFactory factory = new DynamoClientFactory(credentialsProvider);
+        final AmazonDynamoDB client = factory.withEndpointConfiguration(getEndpointConfiguration());
         return new DynamoConfig(client);
     }
 
