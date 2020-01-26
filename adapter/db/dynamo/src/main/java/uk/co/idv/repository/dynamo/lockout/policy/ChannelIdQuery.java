@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class ChannelIdQuery extends QuerySpec {
 
     public ChannelIdQuery(final String channelId) {

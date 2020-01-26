@@ -1,6 +1,13 @@
+plugins {
+    id 'org.unbroken-dome.test-sets' version '2.2.1'
+}
 
 configurations {
     provided
+}
+
+testSets {
+    integrationTest
 }
 
 sourceSets {
@@ -21,5 +28,6 @@ dependencies {
     testCompile "org.meanbean:meanbean:${meanBeanVersion}"
     testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
     testCompile 'org.junit-pioneer:junit-pioneer:0.5.2'
-    testCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
+
+    integrationTestCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
 }

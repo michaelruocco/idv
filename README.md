@@ -18,6 +18,12 @@ useful commands:
 ```
 
 ```gradle
+// runs tests and builds code and applies rules to clean up code formatting etc
+// also runs integration tests (these are separated out as they are slower tests to run)
+./gradlew clean spotlessApply build integrationTest
+```
+
+```gradle
 // builds docker image as well as code
 ./gradlew clean build buildImage
 ```
@@ -51,6 +57,13 @@ useful commands:
 ```gradle
 // stops and removes any running docker containers
 ./gradlew composeDown
+```
+
+```gradle
+// perform all of the above tasks, useful before committing to ensure
+// that all tests are passing and code has had spotless rules applied to clean
+// up code.
+./gradlew clean spotlessCheck build integrationTest codeCoverageReport buildImage composeUp postman composeDown
 ```
 
 ```gradle

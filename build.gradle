@@ -53,8 +53,11 @@ subprojects {
         testCompile 'org.mockito:mockito-core:3.2.4'
     }
 
-    test {
+    tasks.withType(Test) {
         useJUnitPlatform()
+    }
+
+    test {
         testLogging {
             events "failed"
             exceptionFormat "full"
