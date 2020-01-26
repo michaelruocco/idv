@@ -1,7 +1,10 @@
 package uk.co.idv.repository.dynamo.identity.alias;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
@@ -25,6 +28,10 @@ public class AliasMappingItemConverter {
         return new Item()
                 .withPrimaryKey("alias", aliasConverter.toString(alias))
                 .with("idvId", identity.getIdvIdValue().toString());
+    }
+
+    public Collection<Item> queryOutcomesToItems(final ItemCollection<QueryOutcome> items) {
+        return IterableUtils.toList(items);
     }
 
     public Identity toIdentity(final Collection<Item> items) {

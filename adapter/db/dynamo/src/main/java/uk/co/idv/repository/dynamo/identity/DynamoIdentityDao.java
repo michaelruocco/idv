@@ -7,7 +7,6 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
@@ -40,9 +39,14 @@ public class DynamoIdentityDao implements IdentityDao {
 
     @Override
     public void save(final Identity identity) {
+        log.debug("saving identity {}", identity);
         final Collection<Item> updateItems = itemConverter.toItems(identity);
         final Collection<Item> existingItems = loadItemsByIdvId(identity.getIdvIdValue());
+        log.debug("updateItems {}", updateItems);
+        log.debug("exitingItems {}", existingItems);
         final Collection<Item> itemsToDelete = CollectionUtils.subtract(existingItems, updateItems);
+        log.debug("itemsToDelete {}", itemsToDelete);
+
         deleteAll(itemsToDelete);
         saveAll(updateItems);
     }
@@ -56,10 +60,12 @@ public class DynamoIdentityDao implements IdentityDao {
     }
 
     private void deleteAll(final Collection<Item> items) {
+        log.debug("deleting items {}", items);
         items.forEach(item -> table.deleteItem("alias", item.getString("alias")));
     }
 
     private void saveAll(final Collection<Item> items) {
+        log.debug("saving items {}", items);
         items.forEach(table::putItem);
     }
 
@@ -94,7 +100,7 @@ public class DynamoIdentityDao implements IdentityDao {
     private Collection<Item> loadItemsByIdvId(final String idvId) {
         log.info("attempting to load items for idv id {}", idvId);
         final QuerySpec query = new IdentityByIdvIdQuery(idvId);
-        return IterableUtils.toList(idvIdIndex.query(query));
+        return itemConverter.queryOutcomesToItems(idvIdIndex.query(query));
     }
 
 }
