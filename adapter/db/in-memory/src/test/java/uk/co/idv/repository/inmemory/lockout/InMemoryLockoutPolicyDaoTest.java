@@ -48,7 +48,7 @@ class InMemoryLockoutPolicyDaoTest {
         final LockoutPolicy policy = createSavedPolicyThatAppliesTo(request);
         dao.save(policy);
 
-        final Optional<LockoutPolicy> loadedPolicy = dao.load(request);
+        final Collection<LockoutPolicy> loadedPolicy = dao.load(request);
 
         assertThat(loadedPolicy).contains(policy);
     }

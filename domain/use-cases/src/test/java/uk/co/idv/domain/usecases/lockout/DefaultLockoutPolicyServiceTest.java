@@ -22,6 +22,7 @@ import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResu
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,15 +37,16 @@ class DefaultLockoutPolicyServiceTest {
     private final LockoutStateCalculator stateCalculator = mock(LockoutStateCalculator.class);
     private final LockoutPolicy policy = mock(LockoutPolicy.class);
     private final LockoutLevelConverter lockoutLevelConverter = mock(LockoutLevelConverter.class);
+    private final MultipleLockoutPoliciesHandler multiplePoliciesHandler = mock(MultipleLockoutPoliciesHandler.class);
 
     private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
 
-    private final LockoutPolicyService service = new DefaultLockoutPolicyService(dao, lockoutLevelConverter);
+    private final LockoutPolicyService service = new DefaultLockoutPolicyService(dao, lockoutLevelConverter, multiplePoliciesHandler);
 
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToRecordAttemptRequest() {
         final RecordAttemptRequest request = buildRecordAttemptRequest();
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
         final Throwable error = catchThrowable(() -> service.shouldRecordAttempt(request));
 
@@ -54,7 +56,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToRecordAttemptRequest() {
         final RecordAttemptRequest request = buildRecordAttemptRequest();
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
         final Throwable error = catchThrowable(() -> service.shouldRecordAttempt(request));
 
@@ -65,8 +67,11 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldReturnRecordAttemptFromPolicy() {
         final RecordAttemptRequest request = buildRecordAttemptRequest();
-        given(dao.load(request)).willReturn(Optional.of(policy));
+        final List<LockoutPolicy> policies = Collections.singletonList(policy);
+        given(dao.load(request)).willReturn(policies);
         given(policy.shouldRecordAttempt(request)).willReturn(true);
+        given(policy.appliesTo(request)).willReturn(true);
+        given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.of(policy));
 
         final boolean result = service.shouldRecordAttempt(request);
 
@@ -76,7 +81,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToCalculateStateRequest() {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
         final Throwable error = catchThrowable(() -> service.calculateState(request));
 
@@ -86,7 +91,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToCalculateStateRequest() {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
         final Throwable error = catchThrowable(() -> service.calculateState(request));
 
@@ -99,7 +104,10 @@ class DefaultLockoutPolicyServiceTest {
         final CalculateLockoutStateRequest request = mock(CalculateLockoutStateRequest.class);
         final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
         given(request.getAttempts()).willReturn(attempts);
-        given(dao.load(request)).willReturn(Optional.of(policy));
+        final List<LockoutPolicy> policies = Collections.singletonList(policy);
+        given(dao.load(request)).willReturn(policies);
+        given(policy.appliesTo(request)).willReturn(true);
+        given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.of(policy));
         final VerificationAttempts applicableAttempts = VerificationAttemptsMother.oneAttempt();
         given(policy.filterApplicableAttempts(attempts, request)).willReturn(applicableAttempts);
         final CalculateLockoutStateRequest updatedRequest = mock(CalculateLockoutStateRequest.class);
@@ -116,7 +124,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionIfNoPolicesThatApplyToResetAttemptsRequest() {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
         final Throwable error = catchThrowable(() -> service.resetAttempts(request));
 
@@ -126,7 +134,7 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldThrowExceptionWithRequestIfNoPolicesThatApplyToResetAttemptsRequest() {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
         final Throwable error = catchThrowable(() -> service.resetAttempts(request));
 
@@ -137,9 +145,12 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldResetAttemptsUsingPolicy() {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
-        given(dao.load(request)).willReturn(Optional.of(policy));
+        final List<LockoutPolicy> policies = Collections.singletonList(policy);
+        given(dao.load(request)).willReturn(policies);
         final VerificationAttempts expectedAttempts = VerificationAttemptsMother.oneAttempt();
         given(policy.reset(request.getAttempts(), request)).willReturn(expectedAttempts);
+        given(policy.appliesTo(request)).willReturn(true);
+        given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.of(policy));
 
         final VerificationAttempts attempts = service.resetAttempts(request);
 
@@ -152,9 +163,9 @@ class DefaultLockoutPolicyServiceTest {
         final LockoutLevel level = mock(LockoutLevel.class);
         given(policy.getLockoutLevel()).willReturn(level);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
-        service.createPolicy(policy);
+        service.create(policy);
 
         verify(dao).save(policy);
     }
@@ -166,10 +177,11 @@ class DefaultLockoutPolicyServiceTest {
         final UUID id = UUID.randomUUID();
         given(policy.getId()).willReturn(id);
         given(policy.getLockoutLevel()).willReturn(level);
+        given(policy.appliesTo(request)).willReturn(true);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
-        given(dao.load(request)).willReturn(Optional.of(policy));
+        given(dao.load(request)).willReturn(Collections.singleton(policy));
 
-        final Throwable error = catchThrowable(() -> service.createPolicy(policy));
+        final Throwable error = catchThrowable(() -> service.create(policy));
 
         assertThat(error)
                 .isInstanceOf(LockoutPoliciesAlreadyExistException.class)
@@ -184,9 +196,9 @@ class DefaultLockoutPolicyServiceTest {
         given(policy.getLockoutLevel()).willReturn(level);
         given(policy1.getLockoutLevel()).willReturn(level);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
-        given(dao.load(request)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(Collections.emptyList());
 
-        service.createPolicies(Arrays.asList(policy, policy1));
+        service.create(Arrays.asList(policy, policy1));
 
         verify(dao).save(policy);
         verify(dao).save(policy1);
@@ -198,7 +210,7 @@ class DefaultLockoutPolicyServiceTest {
         given(policy.getId()).willReturn(id);
         given(dao.load(id)).willReturn(Optional.empty());
 
-        final Throwable error = catchThrowable(() -> service.updatePolicy(policy));
+        final Throwable error = catchThrowable(() -> service.update(policy));
 
         assertThat(error)
                 .isInstanceOf(LockoutPolicyNotFoundException.class)
@@ -211,7 +223,7 @@ class DefaultLockoutPolicyServiceTest {
         given(policy.getId()).willReturn(id);
         given(dao.load(id)).willReturn(Optional.of(policy));
 
-        service.updatePolicy(policy);
+        service.update(policy);
 
         verify(dao).save(policy);
     }
@@ -221,7 +233,7 @@ class DefaultLockoutPolicyServiceTest {
         final Collection<LockoutPolicy> expectedPolicies = Collections.singleton(policy);
         given(dao.load()).willReturn(expectedPolicies);
 
-        final Collection<LockoutPolicy> policies = service.loadPolicies();
+        final Collection<LockoutPolicy> policies = service.loadAll();
 
         assertThat(policies).isEqualTo(expectedPolicies);
     }
@@ -231,7 +243,7 @@ class DefaultLockoutPolicyServiceTest {
         final UUID id = UUID.randomUUID();
         given(dao.load(id)).willReturn(Optional.empty());
 
-        final Throwable error = catchThrowable(() -> service.loadPolicy(id));
+        final Throwable error = catchThrowable(() -> service.load(id));
 
         assertThat(error)
                 .isInstanceOf(LockoutPolicyNotFoundException.class)
@@ -243,7 +255,7 @@ class DefaultLockoutPolicyServiceTest {
         final UUID id = UUID.randomUUID();
         given(dao.load(id)).willReturn(Optional.of(policy));
 
-        final LockoutPolicy loadedPolicy = service.loadPolicy(id);
+        final LockoutPolicy loadedPolicy = service.load(id);
 
         assertThat(loadedPolicy).isEqualTo(policy);
     }

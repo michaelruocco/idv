@@ -8,35 +8,26 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
-import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
 
     private final Table table;
     private final Index channelIdIndex;
-
     private final LockoutPolicyItemsConverter converter;
-    private final MultipleLockoutPoliciesHandler multiplePoliciesHandler;
 
     @Builder
-    private DynamoLockoutPolicyDao(final Table table,
-                                   final LockoutPolicyItemsConverter converter,
-                                   final MultipleLockoutPoliciesHandler multiplePoliciesHandler) {
+    private DynamoLockoutPolicyDao(final Table table, final LockoutPolicyItemsConverter converter) {
         this.table = table;
         this.channelIdIndex = table.getIndex("channelIdIndex");
         this.converter = converter;
-        this.multiplePoliciesHandler = multiplePoliciesHandler;
     }
 
     @Override
@@ -53,21 +44,16 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
     }
 
     @Override
-    public Optional<LockoutPolicy> load(final LockoutPolicyRequest request) {
+    public Collection<LockoutPolicy> load(final LockoutPolicyRequest request) {
         final QuerySpec query = new ChannelIdQuery(request.getChannelId());
         final ItemCollection<QueryOutcome> items = channelIdIndex.query(query);
-        final List<LockoutPolicy> applicablePolicies = IterableUtils.toList(items).stream()
-                .map(converter::toPolicy)
-                .filter(policy -> policy.appliesTo(request))
-                .collect(Collectors.toList());
-        log.info("found applicable policies {} for request {}", applicablePolicies, request);
-        return multiplePoliciesHandler.extractPolicy(applicablePolicies);
+        return converter.queryOutcomesToPolicies(items);
     }
 
     @Override
     public Collection<LockoutPolicy> load() {
         final ItemCollection<ScanOutcome> items = table.scan();
-        return converter.toPolicies(IterableUtils.toList(items));
+        return converter.scanOutcomesToPolicies(items);
     }
 
 }

@@ -13,7 +13,7 @@ public interface LockoutPolicyDao {
 
     Optional<LockoutPolicy> load(final UUID id);
 
-    Optional<LockoutPolicy> load(final LockoutPolicyRequest request);
+    Collection<LockoutPolicy> load(final LockoutPolicyRequest request);
 
     Collection<LockoutPolicy> load();
 

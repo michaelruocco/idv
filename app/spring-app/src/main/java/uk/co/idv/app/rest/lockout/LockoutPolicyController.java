@@ -31,20 +31,20 @@ public class LockoutPolicyController {
 
     @GetMapping("/lockoutPolicies")
     public LockoutPoliciesDocument getLockoutPolicies() {
-        final Collection<LockoutPolicy> policies = service.loadPolicies();
+        final Collection<LockoutPolicy> policies = service.loadAll();
         return toDocument(attributesConverter.toAttributes(policies));
     }
 
     @GetMapping("/lockoutPolicies/{id}")
     public LockoutPolicyDocument getLockoutPolicy(@PathVariable("id") final UUID id) {
-        final LockoutPolicy policy = service.loadPolicy(id);
+        final LockoutPolicy policy = service.load(id);
         return toDocument(attributesConverter.toAttributes(policy));
     }
 
     @PostMapping("/lockoutPolicies")
     public ResponseEntity<LockoutPolicyDocument> createLockoutPolicy(@RequestBody final LockoutPolicyDocument document) {
         final LockoutPolicy policy = attributesConverter.toPolicy(document.getAttributes());
-        service.createPolicy(policy);
+        service.create(policy);
         return ResponseEntity
                 .created(buildGetContextUri(policy.getId()))
                 .body(document);
@@ -53,7 +53,7 @@ public class LockoutPolicyController {
     @PutMapping("/lockoutPolicies")
     public LockoutPolicyDocument updateLockoutPolicy(@RequestBody final LockoutPolicyDocument document) {
         final LockoutPolicy policy = attributesConverter.toPolicy(document.getAttributes());
-        service.updatePolicy(policy);
+        service.update(policy);
         return document;
     }
 

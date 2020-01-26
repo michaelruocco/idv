@@ -39,23 +39,23 @@ public class FakeLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void createPolicy(final LockoutPolicy policy) {
+    public void create(final LockoutPolicy policy) {
         this.lastCreatedPolicy = policy;
     }
 
     @Override
-    public void updatePolicy(final LockoutPolicy policy) {
+    public void update(final LockoutPolicy policy) {
         this.lastUpdatedPolicy = policy;
     }
 
     @Override
-    public LockoutPolicy loadPolicy(final UUID id) {
+    public LockoutPolicy load(final UUID id) {
         lastLoadedId = id;
         return policyToLoad;
     }
 
     @Override
-    public Collection<LockoutPolicy> loadPolicies() {
+    public Collection<LockoutPolicy> loadAll() {
         return policiesToLoad;
     }
 

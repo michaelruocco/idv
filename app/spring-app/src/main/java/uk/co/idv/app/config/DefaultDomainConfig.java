@@ -264,7 +264,7 @@ public class DefaultDomainConfig {
 
         private void createPolicy(final LockoutPolicy policy) {
             try {
-                policyService.createPolicy(policy);
+                policyService.create(policy);
             } catch (final LockoutPoliciesAlreadyExistException e) {
                 log(e);
             }

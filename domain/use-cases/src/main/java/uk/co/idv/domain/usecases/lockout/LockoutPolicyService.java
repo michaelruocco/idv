@@ -20,19 +20,17 @@ public interface LockoutPolicyService {
 
     VerificationAttempts resetAttempts(CalculateLockoutStateRequest request);
 
-    default void createPolicies(Collection<LockoutPolicy> policies) {
-        policies.forEach(this::createPolicy);
+    default void create(Collection<LockoutPolicy> policies) {
+        policies.forEach(this::create);
     }
 
-    void createPolicy(LockoutPolicy policy);
+    void create(LockoutPolicy policy);
 
-    void updatePolicy(LockoutPolicy policy);
+    void update(LockoutPolicy policy);
 
-    LockoutPolicy loadPolicy(UUID id);
+    LockoutPolicy load(UUID id);
 
-    Collection<LockoutPolicy> loadPolicies();
-
-
+    Collection<LockoutPolicy> loadAll();
 
     @Getter
     class RequestedLockoutPolicyNotFoundException extends RuntimeException {

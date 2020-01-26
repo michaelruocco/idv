@@ -1,6 +1,7 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevelConverter;
@@ -13,18 +14,21 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Slf4j
 public class DefaultLockoutPolicyService implements LockoutPolicyService {
 
     private final LockoutPolicyDao dao;
     private final LockoutLevelConverter lockoutLevelConverter;
+    private final MultipleLockoutPoliciesHandler multiplePoliciesHandler;
 
     public DefaultLockoutPolicyService(final LockoutPolicyDao dao) {
-        this(dao, new LockoutLevelConverter());
+        this(dao, new LockoutLevelConverter(), new MultipleLockoutPoliciesHandler());
     }
 
     @Override
@@ -49,7 +53,7 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void createPolicy(final LockoutPolicy policy) {
+    public void create(final LockoutPolicy policy) {
         final Collection<LockoutPolicy> existingPolicies = loadPolicies(policy.getLockoutLevel());
         if (!existingPolicies.isEmpty()) {
             throw new LockoutPoliciesAlreadyExistException(existingPolicies);
@@ -58,7 +62,7 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public void updatePolicy(final LockoutPolicy policy) {
+    public void update(final LockoutPolicy policy) {
         final UUID id = policy.getId();
         final Optional<LockoutPolicy> loadedPolicy = dao.load(id);
         if (loadedPolicy.isEmpty()) {
@@ -68,27 +72,41 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     @Override
-    public LockoutPolicy loadPolicy(final UUID id) {
+    public Collection<LockoutPolicy> loadAll() {
+        return dao.load();
+    }
+
+    @Override
+    public LockoutPolicy load(final UUID id) {
         return dao.load(id)
                 .orElseThrow(() -> new LockoutPolicyNotFoundException(id));
     }
 
-    @Override
-    public Collection<LockoutPolicy> loadPolicies() {
-        return dao.load();
+    private LockoutPolicy load(final LockoutRequest request) {
+        return loadPolicy(request)
+                .orElseThrow(() -> new RequestedLockoutPolicyNotFoundException(request));
     }
 
-    private Collection<LockoutPolicy> loadPolicies(final LockoutLevel level) {
+    private Optional<LockoutPolicy> loadPolicy(final LockoutPolicyRequest request) {
+        final List<LockoutPolicy> policies = loadPolicies(request);
+        return multiplePoliciesHandler.extractPolicy(policies);
+    }
+
+    private List<LockoutPolicy> loadPolicies(final LockoutLevel level) {
         final Collection<LockoutPolicyRequest> requests = lockoutLevelConverter.toPolicyRequests(level);
         return requests.stream()
-                .map(dao::load)
-                .flatMap(Optional::stream)
+                .map(this::loadPolicies)
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
-    private LockoutPolicy load(final LockoutRequest request) {
-        return dao.load(request)
-                .orElseThrow(() -> new RequestedLockoutPolicyNotFoundException(request));
+    private List<LockoutPolicy> loadPolicies(final LockoutPolicyRequest request) {
+        final Collection<LockoutPolicy> policies = dao.load(request);
+        final List<LockoutPolicy> applicablePolicies = policies.stream()
+                .filter(policy -> policy.appliesTo(request))
+                .collect(Collectors.toList());
+        log.info("found applicable policies {} for request {}", applicablePolicies, request);
+        return applicablePolicies;
     }
 
 }

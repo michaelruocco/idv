@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
-import uk.co.idv.domain.usecases.lockout.MultipleLockoutPoliciesHandler;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
@@ -59,9 +58,8 @@ public class DynamoConfig {
 
     public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter) {
         return DynamoLockoutPolicyDao.builder()
-                .multiplePoliciesHandler(new MultipleLockoutPoliciesHandler())
-                .converter(new LockoutPolicyItemsConverter(new LockoutPolicyItemConverter(jsonConverter)))
                 .table(getOrCreateTable(new LockoutPolicyCreateTableRequest(environment)))
+                .converter(new LockoutPolicyItemsConverter(new LockoutPolicyItemConverter(jsonConverter)))
                 .build();
     }
 
