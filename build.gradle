@@ -100,7 +100,7 @@ task codeCoverageReport(type: JacocoReport) {
 
 codeCoverageReport.dependsOn {
     subprojects*.test
-    subprojects*.integrationTest
+    subprojects.findAll{ it.tasks.findByName('integrationTest') != null }.integrationTest
 }
 
 dependencyUpdates.resolutionStrategy {
