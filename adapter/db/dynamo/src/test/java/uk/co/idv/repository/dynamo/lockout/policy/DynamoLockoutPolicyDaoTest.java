@@ -3,10 +3,12 @@ package uk.co.idv.repository.dynamo.lockout.policy;
 import com.amazonaws.services.dynamodbv2.document.Index;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
@@ -82,6 +84,21 @@ class DynamoLockoutPolicyDaoTest {
         final Optional<LockoutPolicy> policy = dao.load(id);
 
         assertThat(policy).isEmpty();
+    }
+
+    @Test
+    void shouldLoadLockoutPoliciesByChannelId() {
+        final String channelId = "channel-id";
+        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        given(request.getChannelId()).willReturn(channelId);
+        final ItemCollection<QueryOutcome> items = mock(ItemCollection.class);
+        given(index.query(new ChannelIdQuery(channelId))).willReturn(items);
+        final LockoutPolicy expectedPolicy = LockoutPolicyMother.hardLockoutPolicy();
+        given(converter.queryOutcomesToPolicies(items)).willReturn(Collections.singleton(expectedPolicy));
+
+        final Collection<LockoutPolicy> policies = dao.load(request);
+
+        assertThat(policies).containsExactly(expectedPolicy);
     }
 
 }
