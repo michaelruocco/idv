@@ -1,6 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.1.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'org.springframework.boot' version '2.2.4.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'com.bmuschko.docker-remote-api' version '6.1.2'
     id 'com.avast.gradle.docker-compose' version '0.10.7'
     id 'com.moowork.node' version '1.3.1'
@@ -17,7 +17,7 @@ repositories {
 ext['junit-jupiter.version'] = ext.junitVersion
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-dependencies:2.2.1.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-dependencies:2.2.4.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
