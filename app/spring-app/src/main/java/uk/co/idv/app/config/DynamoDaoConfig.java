@@ -34,7 +34,7 @@ public class DynamoDaoConfig {
 
     @Bean
     public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter) {
-        return config.verificationAttemptsDao(jsonConverter);
+        return config.verificationAttemptDao(jsonConverter);
     }
 
     @Bean

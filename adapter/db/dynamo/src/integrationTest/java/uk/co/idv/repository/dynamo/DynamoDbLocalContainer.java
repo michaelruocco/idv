@@ -10,6 +10,10 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.containers.GenericContainer;
 
+import java.time.Duration;
+
+import static org.awaitility.Awaitility.await;
+
 @Slf4j
 public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContainer> {
 
@@ -26,6 +30,8 @@ public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContai
     }
 
     public DynamoConfig getConfig() {
+        withLogConsumer(outputFrame -> System.out.println(outputFrame.getUtf8String()));
+        await().atMost(Duration.ofSeconds(10)).until(this::isRunning);
         final AWSCredentials credentials = new BasicAWSCredentials("abc", "123");
         final AWSCredentialsProvider credentialsProvider = new AWSStaticCredentialsProvider(credentials);
         final DynamoClientFactory factory = new DynamoClientFactory(credentialsProvider);

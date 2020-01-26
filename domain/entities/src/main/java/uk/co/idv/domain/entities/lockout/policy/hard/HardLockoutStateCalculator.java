@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy.hard;
 
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -8,6 +9,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 @Slf4j
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class HardLockoutStateCalculator implements LockoutStateCalculator {
 
     public static final String TYPE = "hard-lock";

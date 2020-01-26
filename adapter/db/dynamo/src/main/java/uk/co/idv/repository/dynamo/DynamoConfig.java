@@ -75,7 +75,7 @@ public class DynamoConfig {
         return dao;
     }
 
-    public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter) {
+    public VerificationAttemptDao verificationAttemptDao(final JsonConverter jsonConverter) {
         return DynamoVerificationAttemptDao.builder()
                 .converter(jsonConverter)
                 .table(getOrCreateTable(new VerificationAttemptTableRequest(environment)))

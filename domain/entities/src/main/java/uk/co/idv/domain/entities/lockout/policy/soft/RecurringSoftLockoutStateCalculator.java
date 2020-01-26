@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy.soft;
 
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -13,6 +14,7 @@ import java.time.Instant;
 
 @Slf4j
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculator {
 
     public static final String TYPE = "recurring-soft-lock";

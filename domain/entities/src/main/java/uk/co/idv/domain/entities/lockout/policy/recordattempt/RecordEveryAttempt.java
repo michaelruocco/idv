@@ -1,5 +1,8 @@
 package uk.co.idv.domain.entities.lockout.policy.recordattempt;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class RecordEveryAttempt implements RecordAttemptStrategy {
 
     public static final String TYPE = "every-attempt";

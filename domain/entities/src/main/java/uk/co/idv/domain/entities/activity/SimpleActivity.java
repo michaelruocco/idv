@@ -2,11 +2,13 @@ package uk.co.idv.domain.entities.activity;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.Instant;
 
 @Data
 @Builder
+@EqualsAndHashCode
 public class SimpleActivity implements Activity {
 
     private final String name;
