@@ -63,6 +63,10 @@ public class DynamoConfig {
                 .build();
     }
 
+    public void clearLockoutPolicies() {
+        tableService.recreateTable(new LockoutPolicyCreateTableRequest(environment));
+    }
+
     public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
                                                          final TimeGenerator timeGenerator) {
         final CreateTableRequest createTableRequest = new VerificationContextCreateTableRequest(environment);

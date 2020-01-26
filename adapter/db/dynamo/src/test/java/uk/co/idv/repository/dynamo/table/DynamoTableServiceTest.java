@@ -30,7 +30,7 @@ public class DynamoTableServiceTest {
     }
 
     @Test
-    void shouldReturnNotCreateTableIfTableAlreadyCreated() {
+    void shouldNotCreateTableIfTableAlreadyCreated() {
         final String tableName = "table-name";
         final CreateTableRequest request = new CreateTableRequest()
                 .withTableName(tableName);
