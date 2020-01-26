@@ -30,6 +30,5 @@ dependencies {
     testCompile 'org.junit-pioneer:junit-pioneer:0.5.2'
 
     integrationTestCompile project(':json')
-    integrationTestCompile 'org.awaitility:awaitility:4.0.2'
     integrationTestCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
 }
