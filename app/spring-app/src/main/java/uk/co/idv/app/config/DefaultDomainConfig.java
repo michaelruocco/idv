@@ -1,16 +1,10 @@
 package uk.co.idv.app.config;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
-import org.springframework.core.annotation.Order;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPoliciesAlreadyExistException;
+import uk.co.idv.domain.usecases.lockout.InitialLockoutPolicyCreator;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
@@ -47,7 +41,6 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
-import java.util.Collection;
 
 @Configuration
 public class DefaultDomainConfig {
@@ -243,41 +236,14 @@ public class DefaultDomainConfig {
     }
 
     @Bean
-    public PopulateLockoutPoliciesListener populateLockoutPoliciesListener(final LockoutPolicyService policyService,
-                                                                           final LockoutPolicyProvider policyProvider) {
-        return new PopulateLockoutPoliciesListener(policyService, policyProvider);
+    public InitialLockoutPolicyCreator populateLockoutPoliciesListener(final LockoutPolicyProvider policyProvider,
+                                                                       final LockoutPolicyService policyService) {
+        return new InitialLockoutPolicyCreator(policyProvider, policyService);
     }
 
-    @RequiredArgsConstructor
-    @Slf4j
-    private static class PopulateLockoutPoliciesListener {
-
-        private final LockoutPolicyService policyService;
-        private final LockoutPolicyProvider policyProvider;
-
-        @EventListener(ApplicationReadyEvent.class)
-        @Order(2)
-        public void populatePoliciesAfterStartup() {
-            final Collection<LockoutPolicy> policies = policyProvider.getPolicies();
-            policies.forEach(this::createPolicy);
-        }
-
-        private void createPolicy(final LockoutPolicy policy) {
-            try {
-                policyService.create(policy);
-            } catch (final LockoutPoliciesAlreadyExistException e) {
-                log(e);
-            }
-        }
-
-        private void log(final LockoutPoliciesAlreadyExistException e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e.getMessage(), e);
-                return;
-            }
-            log.warn(e.getMessage());
-        }
-
+    @Bean
+    public CreateLockoutPoliciesListener createLockoutPoliciesListener(final InitialLockoutPolicyCreator policyCreator) {
+        return new CreateLockoutPoliciesListener(policyCreator);
     }
 
 }
