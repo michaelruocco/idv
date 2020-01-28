@@ -37,10 +37,7 @@ public class InitialLockoutPolicyCreator {
     }
 
     private void log(final LockoutPoliciesAlreadyExistException e) {
-        if (log.isDebugEnabled()) {
-            log.debug(e.getMessage(), e);
-            return;
-        }
+        log.debug(e.getMessage(), e);
         log.warn(e.getMessage());
     }
 

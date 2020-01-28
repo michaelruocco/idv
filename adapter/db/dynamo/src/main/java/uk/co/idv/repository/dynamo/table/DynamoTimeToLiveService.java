@@ -33,13 +33,9 @@ public class DynamoTimeToLiveService {
     }
 
     private void log(final AmazonDynamoDBException e) {
-        if (log.isDebugEnabled()) {
-            log.debug(e.getErrorMessage(), e);
-            return;
-        }
+        log.debug(e.getErrorMessage(), e);
         log.warn(e.getErrorMessage());
     }
-
 
 
 }
