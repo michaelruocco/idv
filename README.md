@@ -75,6 +75,15 @@ useful commands:
 ./gradlew generateDependencyGraphIdv
 ```
 
+
+```aws
+aws cloudformation create-stack --stack-name idv-dev-ecs --template-url https://idv-cloud-formation-templates.s3-eu-west-1.amazonaws.com/cluster-fargate-private-vpc.yml --parameters ParameterKey=EnvironmentName,ParameterValue=idv-dev --capabilities CAPABILITY_IAM --region eu-west-1
+
+aws cloudformation create-stack --stack-name idv-dev-alb --template-url https://idv-cloud-formation-templates.s3-eu-west-1.amazonaws.com/alb-external.yml --parameters ParameterKey=EnvironmentName,ParameterValue=idv-dev --region eu-west-1
+
+aws cloudformation create-stack --stack-name idv-dev-verification-context --template-url https://idv-cloud-formation-templates.s3-eu-west-1.amazonaws.com/service-fargate-private-subnet-public-lb.yml --parameters ParameterKey=EnvironmentName,ParameterValue=idv-dev ParameterKey=ServiceName,ParameterValue=verification-context ParameterKey=ImageUrl,ParameterValue=michaelruocco/verification-context-spring-app:latest ParameterKey=DesiredCount,ParameterValue=1 --region eu-west-1
+```
+
 TODO:
 
 *  Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
