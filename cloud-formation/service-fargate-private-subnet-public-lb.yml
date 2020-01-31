@@ -83,6 +83,11 @@ Resources:
           Image: !Ref 'ImageUrl'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
+          Environment:
+            - Name: AWS_DYNAMO_DB_ENDPOINT_URI
+              Value: https://dynamodb.eu-west-1.amazonaws.com
+            - Name: SPRING_PROFILES_ACTIVE
+              Value: default,aws
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:

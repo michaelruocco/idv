@@ -28,8 +28,10 @@ public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContai
     public DynamoConfig getConfig() {
         final AWSCredentials credentials = new BasicAWSCredentials("abc", "123");
         final AWSCredentialsProvider credentialsProvider = new AWSStaticCredentialsProvider(credentials);
-        final DynamoClientFactory factory = new DynamoClientFactory(credentialsProvider);
-        final AmazonDynamoDB client = factory.withEndpointConfiguration(getEndpointConfiguration());
+        final DynamoClientFactory factory = new DynamoClientFactory();
+        final AmazonDynamoDB client = factory.withEndpointConfiguration(getEndpointConfiguration())
+                .withCredentials(credentialsProvider)
+                .build();
         return new DynamoConfig(client);
     }
 

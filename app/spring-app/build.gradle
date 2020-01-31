@@ -45,7 +45,7 @@ dependencies {
 }
 
 bootRun {
-    args = ["--spring.profiles.active=in-memory-mongo", "--server.port=8081"]
+    args = ["--server.port=8081"]
 }
 
 docker {
