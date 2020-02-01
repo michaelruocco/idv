@@ -1,11 +1,11 @@
 package uk.co.idv.repository.dynamo;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import lombok.RequiredArgsConstructor;
-
-import java.util.Optional;
 
 import static com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 
@@ -13,24 +13,35 @@ import static com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguratio
 public class DynamoClientFactory {
 
     private final Regions region;
+    private final AWSCredentialsProvider credentialsProvider;
 
     public DynamoClientFactory() {
-        this(AwsSystemProperties.loadRegion());
+        this(new DefaultAWSCredentialsProviderChain());
     }
 
-    public AmazonDynamoDBClientBuilder standard() {
-        final AmazonDynamoDBClientBuilder builder = AmazonDynamoDBClientBuilder.standard();
-        final Optional<EndpointConfiguration> endpointConfig = AwsSystemProperties.loadDynamoDbEndpointConfiguration();
-        if (endpointConfig.isPresent()) {
-            builder.withEndpointConfiguration(endpointConfig.get());
-        } else {
-            builder.withRegion(region);
-        }
-        return builder;
+    public DynamoClientFactory(final AWSCredentialsProvider credentialsProvider) {
+        this(AwsSystemProperties.loadRegion(), credentialsProvider);
     }
 
-    public AmazonDynamoDBClientBuilder withCredentialsProvider(final AWSCredentialsProvider credentialsProvider) {
-        return standard().withCredentials(credentialsProvider);
+    public AmazonDynamoDB build() {
+        return AwsSystemProperties.loadDynamoDbEndpointConfiguration()
+                .map(this::withEndpointConfiguration)
+                .orElse(standard());
+    }
+
+    public AmazonDynamoDB standard() {
+        return builder().withRegion(region)
+                .build();
+    }
+
+    public AmazonDynamoDB withEndpointConfiguration(final EndpointConfiguration endpointConfiguration) {
+        return builder().withEndpointConfiguration(endpointConfiguration)
+                .build();
+    }
+
+    private AmazonDynamoDBClientBuilder builder() {
+        return AmazonDynamoDBClientBuilder.standard()
+                .withCredentials(credentialsProvider);
     }
 
 }
