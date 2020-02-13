@@ -1,7 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.Getter;
-import uk.co.idv.domain.entities.verificationcontext.method.cardcredentials.CardCredentialsEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
@@ -22,8 +21,6 @@ public interface VerificationSequence {
     Optional<PushNotification> getPushNotification();
 
     Optional<OneTimePasscodeSms> getOneTimePasscodeSms();
-
-    Optional<CardCredentialsEligible> getCardCredentials();
 
     Collection<VerificationMethod> getMethods();
 

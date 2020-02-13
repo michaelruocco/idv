@@ -1,6 +1,5 @@
 package uk.co.idv.json.verificationcontext.method;
 
-import uk.co.idv.json.verificationcontext.method.cardcredentials.CardCredentialsJsonNodeConverter;
 import uk.co.idv.json.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsJsonNodeConverter;
 import uk.co.idv.json.verificationcontext.method.pinsentry.mobile.MobilePinsentryJsonNodeConverter;
 import uk.co.idv.json.verificationcontext.method.pinsentry.physical.PhysicalPinsentryJsonNodeConverter;
@@ -13,8 +12,7 @@ public class DefaultVerificationMethodDeserializer extends VerificationMethodDes
                 new PushNotificationJsonNodeConverter(),
                 new PhysicalPinsentryJsonNodeConverter(),
                 new MobilePinsentryJsonNodeConverter(),
-                new OneTimePasscodeSmsJsonNodeConverter(),
-                new CardCredentialsJsonNodeConverter()
+                new OneTimePasscodeSmsJsonNodeConverter()
         );
     }
 

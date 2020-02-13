@@ -7,7 +7,7 @@ import uk.co.idv.domain.entities.channel.SimpleChannel;
 import uk.co.idv.json.channel.ChannelJsonNodeConverter;
 
 @Slf4j
-public class AllSimpleChannelJsonNodeConverter implements ChannelJsonNodeConverter {
+public class AllSimpleChannelJsonNodeConverter implements ChannxelJsonNodeConverter {
 
     @Override
     public boolean supportsChannel(final String id) {

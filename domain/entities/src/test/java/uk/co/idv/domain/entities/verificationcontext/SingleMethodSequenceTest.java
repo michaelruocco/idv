@@ -2,7 +2,6 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence.MethodNotFoundInSequenceException;
-import uk.co.idv.domain.entities.verificationcontext.method.cardcredentials.CardCredentialsEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
@@ -54,14 +53,6 @@ class SingleMethodSequenceTest {
     }
 
     @Test
-    void shouldReturnCardCredentials() {
-        final CardCredentialsEligible method = mock(CardCredentialsEligible.class);
-        final VerificationSequence sequence = new SingleMethodSequence(method);
-
-        assertThat(sequence.getCardCredentials()).contains(method);
-    }
-
-    @Test
     void shouldReturnEmptyIfMethodIsNotPresent() {
         final VerificationMethod method = new FakeVerificationMethodEligible();
         final VerificationSequence sequence = new SingleMethodSequence(method);
@@ -70,7 +61,6 @@ class SingleMethodSequenceTest {
         assertThat(sequence.getMobilePinsentry()).isEmpty();
         assertThat(sequence.getPushNotification()).isEmpty();
         assertThat(sequence.getOneTimePasscodeSms()).isEmpty();
-        assertThat(sequence.getCardCredentials()).isEmpty();
     }
 
     @Test
