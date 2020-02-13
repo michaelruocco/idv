@@ -19,7 +19,7 @@ class ChannelDeserializerTest {
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldDeserializeRsa() throws IOException {
+    void shouldDeserializeSimpleChannel() throws IOException {
         final String json = ContentLoader.loadContentFromClasspath("channel/simple-channel.json");
 
         final Channel channel = MAPPER.readValue(json, Channel.class);

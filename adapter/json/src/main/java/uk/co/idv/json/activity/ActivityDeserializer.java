@@ -39,15 +39,4 @@ public class ActivityDeserializer extends StdDeserializer<Activity> {
         return converters.stream().filter(converter -> converter.supportsActivity(name)).findFirst();
     }
 
-    private static String extractName(final JsonNode node) {
-        return node.get("name").asText();
-    }
-
-    /*private static Map<String, JsonNodeToActivityConverter> buildConverters() {
-        return Map.of(
-                OnlinePurchase.NAME, new JsonNodeToOnlinePurchaseConverter(),
-                Login.NAME, new JsonNodeToSimpleActivityConverter()
-        );
-    }*/
-
 }

@@ -26,7 +26,7 @@ public class VerificationSequenceDeserializer extends StdDeserializer<Verificati
         if (methods.size() == 1) {
             return new SingleMethodSequence(toMethod(parser, methods.get(0)));
         }
-        return new MultipleMethodSequence(toMethods(parser, methods));
+        return new MultipleMethodSequence(extractName(node), toMethods(parser, methods));
     }
 
     private static VerificationMethod toMethod(final JsonParser parser, final JsonNode node) throws IOException {
@@ -35,6 +35,10 @@ public class VerificationSequenceDeserializer extends StdDeserializer<Verificati
 
     private static Collection<VerificationMethod> toMethods(final JsonParser parser, final JsonNode node) throws IOException {
         return Arrays.asList(node.traverse(parser.getCodec()).readValueAs(VerificationMethod[].class));
+    }
+
+    private static String extractName(final JsonNode node) {
+        return node.get("name").asText();
     }
 
 }
