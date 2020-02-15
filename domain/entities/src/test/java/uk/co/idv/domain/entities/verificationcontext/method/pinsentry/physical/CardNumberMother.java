@@ -2,12 +2,18 @@ package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
 
 
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.UUID;
 
 public class CardNumberMother {
 
     private CardNumberMother() {
         // utility class
+    }
+
+    public static Collection<CardNumber> oneCredit() {
+        return Collections.singleton(credit());
     }
 
     public static CardNumber credit() {
