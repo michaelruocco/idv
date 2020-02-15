@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumberMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsIneligible;
@@ -16,8 +17,6 @@ import uk.co.idv.json.verificationcontext.VerificationContextModule;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.UUID;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
@@ -27,7 +26,7 @@ class OneTimePasscodeSmsSerializerTest {
 
     @Test
     void shouldSerializeEligibleOneTimePasscodeSms() throws JsonProcessingException {
-        final Collection<MobileNumber> mobileNumbers = Collections.singleton(new MobileNumber(UUID.fromString("2a82fcb5-19d4-469d-9c1b-4b2318c1e3f4"), "07809385580"));
+        final Collection<MobileNumber> mobileNumbers = MobileNumberMother.onePrimary();
         final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
         final VerificationMethod method = new OneTimePasscodeSmsEligible(passcodeSettings, mobileNumbers);
 
@@ -40,7 +39,7 @@ class OneTimePasscodeSmsSerializerTest {
     @Test
     void shouldSerializeEligibleOneTimePasscodeSmsWithResult() throws JsonProcessingException {
         final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(OneTimePasscodeSms.NAME);
-        final Collection<MobileNumber> mobileNumbers = Collections.singleton(new MobileNumber(UUID.fromString("2a82fcb5-19d4-469d-9c1b-4b2318c1e3f4"), "07809385580"));
+        final Collection<MobileNumber> mobileNumbers = MobileNumberMother.onePrimary();
         final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
         final VerificationMethod method = new OneTimePasscodeSmsEligible(passcodeSettings, mobileNumbers, result);
 
