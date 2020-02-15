@@ -30,19 +30,19 @@ public class ObjectMapperSingleton {
     }
 
     public static ObjectMapper customize(final ObjectMapper mapper) {
-        mapper.registerModules(
-                new Jdk8Module(),
-                new JavaTimeModule(),
-                new MoneyModule(),
-                new SimpleChannelModule(),
-                new ActivityModule(),
-                new IdentityModule(),
-                new VerificationContextModule(),
-                new VerificationAttemptsModule(),
-                new LockoutPolicyModule()
-        );
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT);
-        return mapper.disable(WRITE_DATES_AS_TIMESTAMPS);
+        return mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
+                .disable(WRITE_DATES_AS_TIMESTAMPS)
+                .registerModules(
+                        new Jdk8Module(),
+                        new JavaTimeModule(),
+                        new MoneyModule(),
+                        new SimpleChannelModule(),
+                        new ActivityModule(),
+                        new IdentityModule(),
+                        new VerificationContextModule(),
+                        new VerificationAttemptsModule(),
+                        new LockoutPolicyModule()
+                );
     }
 
     private static ObjectMapper build() {

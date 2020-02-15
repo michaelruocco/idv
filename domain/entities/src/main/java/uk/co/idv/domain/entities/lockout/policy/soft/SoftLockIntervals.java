@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy.soft;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.TreeMap;
 import java.util.stream.Stream;
 
 @ToString
+@EqualsAndHashCode
 public class SoftLockIntervals implements Iterable<SoftLockInterval> {
 
     private final SortedMap<Integer, SoftLockInterval> intervals = new TreeMap<>();

@@ -1,0 +1,32 @@
+{
+  "id": "36cae4d6-d007-4517-8863-ac8f04cc700a",
+  "stateCalculator": {
+    "intervals": [
+      {
+        "numberOfAttempts": 1,
+        "duration": 60000
+      }
+    ],
+    "type": "soft-lock"
+  },
+  "recordAttemptStrategy": {
+    "type": "every-attempt"
+  },
+  "intervals": [
+    {
+      "numberOfAttempts": 1,
+      "duration": 60000
+    }
+  ],
+  "lockoutType": "soft-lock",
+  "lockoutLevel": {
+    "channelId": "fake-channel",
+    "activityNames": [
+      "fake-activity"
+    ],
+    "aliasTypes": [
+      "fake-alias-type"
+    ]
+  },
+  "channelId": "fake-channel"
+}

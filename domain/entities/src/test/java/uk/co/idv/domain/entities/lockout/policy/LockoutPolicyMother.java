@@ -34,7 +34,7 @@ public class LockoutPolicyMother {
     }
 
     public static SoftLockoutPolicy softLockoutPolicy() {
-        return softLockoutPolicy(UUID.randomUUID());
+        return softLockoutPolicy(UUID.fromString("36cae4d6-d007-4517-8863-ac8f04cc700a"));
     }
 
     public static SoftLockoutPolicy softLockoutPolicy(UUID id) {
