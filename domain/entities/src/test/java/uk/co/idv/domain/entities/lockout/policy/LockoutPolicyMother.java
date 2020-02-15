@@ -12,7 +12,7 @@ import java.util.UUID;
 public class LockoutPolicyMother {
 
     public static HardLockoutPolicy hardLockoutPolicy() {
-        return hardLockoutPolicy(UUID.randomUUID());
+        return hardLockoutPolicy(UUID.fromString("08027524-b8fd-4df0-946d-056eb98f508f"));
     }
 
     public static HardLockoutPolicy hardLockoutPolicy(final LockoutLevel lockoutLevel) {
@@ -47,7 +47,7 @@ public class LockoutPolicyMother {
     }
 
     public static RecurringSoftLockoutPolicy recurringSoftLockoutPolicy() {
-        return recurringSoftLockoutPolicy(UUID.randomUUID());
+        return recurringSoftLockoutPolicy(UUID.fromString("1fc57cfa-6fff-411c-bc74-de71a938b30f"));
     }
 
     public static RecurringSoftLockoutPolicy recurringSoftLockoutPolicy(UUID id) {
@@ -60,7 +60,10 @@ public class LockoutPolicyMother {
     }
 
     public static LockoutPolicy nonLockingPolicy() {
-        return new NonLockingLockoutPolicy(UUID.randomUUID(), LockoutLevelMother.aliasLockoutLevel());
+        return new NonLockingLockoutPolicy(
+                UUID.fromString("3a6b7856-9909-4cf9-8f01-098890431ad1"),
+                LockoutLevelMother.aliasLockoutLevel()
+        );
     }
 
 }

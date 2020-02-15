@@ -11,17 +11,17 @@ import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SoftLockoutPolicyJsonNodeConverterTest {
+class RecurringSoftLockoutPolicyJsonNodeConverterTest {
 
     private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
     void shouldDeserializePolicy() throws JsonProcessingException {
-        final String json = ContentLoader.loadContentFromClasspath("lockout/policy/soft/soft-lockout-policy.json");
+        final String json = ContentLoader.loadContentFromClasspath("lockout/policy/soft/recurring-soft-lockout-policy.json");
 
         final LockoutPolicy policy = MAPPER.readValue(json, LockoutPolicy.class);
 
-        final LockoutPolicy expectedPolicy = LockoutPolicyMother.softLockoutPolicy();
+        final LockoutPolicy expectedPolicy = LockoutPolicyMother.recurringSoftLockoutPolicy();
         assertThat(policy).isEqualToIgnoringGivenFields(expectedPolicy, "level");
         LockoutAssertions.assertThat(policy.getLockoutLevel()).isEqualTo(expectedPolicy.getLockoutLevel());
     }

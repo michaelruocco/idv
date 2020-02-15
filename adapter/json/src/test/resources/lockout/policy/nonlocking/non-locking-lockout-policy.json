@@ -1,0 +1,20 @@
+{
+  "id": "3a6b7856-9909-4cf9-8f01-098890431ad1",
+  "stateCalculator": {
+    "type": "non-locking"
+  },
+  "recordAttemptStrategy": {
+    "type": "never"
+  },
+  "lockoutType": "non-locking",
+  "lockoutLevel": {
+    "channelId": "fake-channel",
+    "activityNames": [
+      "fake-activity"
+    ],
+    "aliasTypes": [
+      "fake-alias-type"
+    ]
+  },
+  "channelId": "fake-channel"
+}

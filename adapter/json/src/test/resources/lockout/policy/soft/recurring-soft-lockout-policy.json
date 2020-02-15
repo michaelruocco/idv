@@ -1,0 +1,28 @@
+{
+  "id": "1fc57cfa-6fff-411c-bc74-de71a938b30f",
+  "stateCalculator": {
+    "interval": {
+      "numberOfAttempts": 1,
+      "duration": 60000
+    },
+    "type": "recurring-soft-lock"
+  },
+  "recordAttemptStrategy": {
+    "type": "every-attempt"
+  },
+  "interval": {
+    "numberOfAttempts": 1,
+    "duration": 60000
+  },
+  "lockoutType": "recurring-soft-lock",
+  "lockoutLevel": {
+    "channelId": "fake-channel",
+    "activityNames": [
+      "fake-activity"
+    ],
+    "aliasTypes": [
+      "fake-alias-type"
+    ]
+  },
+  "channelId": "fake-channel"
+}

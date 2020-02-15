@@ -10,17 +10,17 @@ import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class SoftLockoutPolicySerializerTest {
+class RecurringSoftLockoutPolicySerializerTest {
 
     private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
     void shouldSerializePolicy() throws JsonProcessingException {
-        final LockoutPolicy policy = LockoutPolicyMother.softLockoutPolicy();
+        final LockoutPolicy policy = LockoutPolicyMother.recurringSoftLockoutPolicy();
 
         final String json = MAPPER.writeValueAsString(policy);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/policy/soft/soft-lockout-policy.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/policy/soft/recurring-soft-lockout-policy.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

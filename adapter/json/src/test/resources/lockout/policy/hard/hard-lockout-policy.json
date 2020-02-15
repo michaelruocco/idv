@@ -1,0 +1,22 @@
+{
+  "id": "08027524-b8fd-4df0-946d-056eb98f508f",
+  "stateCalculator": {
+    "maxNumberOfAttempts":3,
+    "type": "hard-lock"
+  },
+  "recordAttemptStrategy": {
+    "type": "every-attempt"
+  },
+  "maxNumberOfAttempts":3,
+  "lockoutType": "hard-lock",
+  "lockoutLevel": {
+    "channelId": "fake-channel",
+    "activityNames": [
+      "fake-activity"
+    ],
+    "aliasTypes": [
+      "fake-alias-type"
+    ]
+  },
+  "channelId": "fake-channel"
+}
