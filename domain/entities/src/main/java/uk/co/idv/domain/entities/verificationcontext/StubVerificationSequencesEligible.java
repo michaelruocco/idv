@@ -1,11 +1,12 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CreditCardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
@@ -21,13 +22,13 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     private static final VerificationSequence PUSH_AUTHENTICATION = buildPushNotificationSequence();
     private static final VerificationSequence PHYSICAL_PINSENTRY = buildPhysicalPinsentrySequence();
     private static final VerificationSequence MOBILE_PINSENTRY = buildMobilePinsentrySequence();
-    private static final VerificationSequence ONE_TIME_PASSCODE_SMS = buildOneTimePasscodeSmsSequence();
+    private static final VerificationSequence ONE_TIME_PASSCODE = buildOneTimePasscodeSequence();
 
     public StubVerificationSequencesEligible() {
         super(PUSH_AUTHENTICATION,
                 PHYSICAL_PINSENTRY,
                 MOBILE_PINSENTRY,
-                ONE_TIME_PASSCODE_SMS
+                ONE_TIME_PASSCODE
         );
     }
 
@@ -47,11 +48,11 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
         return new SingleMethodSequence(mobilePinsentry);
     }
 
-    private static VerificationSequence buildOneTimePasscodeSmsSequence() {
-        final Collection<MobileNumber> mobileNumbers = Collections.singleton(new MobileNumber("07809385580"));
+    private static VerificationSequence buildOneTimePasscodeSequence() {
+        final Collection<DeliveryMethod> deliveryMethods = Collections.singleton(new SmsDeliveryMethod("07809385580"));
         final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
-        final VerificationMethod oneTimePasscodeSms = new OneTimePasscodeSmsEligible(passcodeSettings, mobileNumbers);
-        return new SingleMethodSequence(oneTimePasscodeSms);
+        final VerificationMethod oneTimePasscode = new OneTimePasscodeEligible(passcodeSettings, deliveryMethods);
+        return new SingleMethodSequence(oneTimePasscode);
     }
 
 }

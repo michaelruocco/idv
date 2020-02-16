@@ -63,14 +63,14 @@
     ]
   },
   {
-    "name": "one-time-passcode-sms",
+    "name": "one-time-passcode",
     "eligible": true,
     "complete": false,
     "successful": false,
     "duration": 300000,
     "methods": [
       {
-        "name": "one-time-passcode-sms",
+        "name": "one-time-passcode",
         "eligible": true,
         "complete": false,
         "successful": false,
@@ -81,10 +81,11 @@
           "duration": 150000,
           "maxGenerationAttempts": 3
         },
-        "mobileNumbers": [
+        "deliveryMethods": [
           {
             "id": "${json-unit.ignore}",
-            "number": "07809385580"
+            "type": "sms",
+            "value": "07809385580"
           }
         ],
         "results": []

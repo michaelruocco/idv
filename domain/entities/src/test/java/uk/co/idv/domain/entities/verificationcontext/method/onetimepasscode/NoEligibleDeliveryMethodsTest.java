@@ -5,13 +5,13 @@ import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Ineligib
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NoEligibleMobileNumbersTest {
+class NoEligibleDeliveryMethodsTest {
 
-    private final Ineligible ineligible = new NoEligibleMobileNumbers();
+    private final Ineligible ineligible = new NoEligibleDeliveryMethods();
 
     @Test
     void shouldReturnReason() {
-        assertThat(ineligible.getReason()).contains("no eligible mobile numbers found");
+        assertThat(ineligible.getReason()).contains("no eligible delivery methods found");
     }
 
 }

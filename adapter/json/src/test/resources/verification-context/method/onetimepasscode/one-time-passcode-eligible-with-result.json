@@ -1,5 +1,5 @@
 {
-  "name": "one-time-passcode-sms",
+  "name": "one-time-passcode",
   "eligible": true,
   "complete": true,
   "successful": true,
@@ -10,15 +10,16 @@
     "duration": 150000,
     "maxGenerationAttempts": 3
   },
-  "mobileNumbers": [
+  "deliveryMethods": [
     {
       "id": "2a82fcb5-19d4-469d-9c1b-4b2318c1e3f4",
-      "number": "07819389980"
+      "type": "sms",
+      "value": "07819389980"
     }
   ],
   "results": [
     {
-      "methodName": "one-time-passcode-sms",
+      "methodName": "one-time-passcode",
       "verificationId": "524d0e6d-cead-49f3-b0f5-04e29e789681",
       "timestamp": "2019-09-24T15:52:49.569287Z",
       "successful": true

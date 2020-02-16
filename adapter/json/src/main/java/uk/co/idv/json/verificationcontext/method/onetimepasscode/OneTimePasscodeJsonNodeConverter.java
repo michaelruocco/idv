@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
@@ -18,11 +18,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Slf4j
-public class OneTimePasscodeSmsJsonNodeConverter implements VerificationMethodJsonNodeConverter {
+public class OneTimePasscodeJsonNodeConverter implements VerificationMethodJsonNodeConverter {
 
     @Override
     public boolean supportsMethod(final String name) {
-        boolean supported = OneTimePasscodeSms.NAME.equals(name);
+        boolean supported = OneTimePasscode.NAME.equals(name);
         log.info("returning supported {} for method name {}", supported, name);
         return supported;
     }
@@ -35,10 +35,10 @@ public class OneTimePasscodeSmsJsonNodeConverter implements VerificationMethodJs
         if (eligible) {
             final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
             final PasscodeSettings settings = node.get("passcodeSettings").traverse(parser.getCodec()).readValueAs(PasscodeSettings.class);
-            final Collection<MobileNumber> mobileNumbers = Arrays.asList(node.get("mobileNumbers").traverse(parser.getCodec()).readValueAs(MobileNumber[].class));
-            return new OneTimePasscodeSmsEligible(settings, mobileNumbers, results);
+            final Collection<DeliveryMethod> deliveryMethods = Arrays.asList(node.get("deliveryMethods").traverse(parser.getCodec()).readValueAs(DeliveryMethod[].class));
+            return new OneTimePasscodeEligible(settings, deliveryMethods, results);
         }
-        return new OneTimePasscodeSmsIneligible();
+        return new OneTimePasscodeIneligible();
     }
 
 }

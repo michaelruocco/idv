@@ -3,7 +3,7 @@ package uk.co.idv.json.verificationcontext.method;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
@@ -59,9 +59,9 @@ public class JsonFieldWriter {
         provider.defaultSerializeValue(results, json);
     }
 
-    public static void writeCardNumbersJson(final Collection<CardNumber> cardNumbers,
-                                     final JsonGenerator json,
-                                     final SerializerProvider provider) throws IOException {
+    public static void writeCardNumbers(final Collection<CardNumber> cardNumbers,
+                                        final JsonGenerator json,
+                                        final SerializerProvider provider) throws IOException {
         json.writeFieldName("cardNumbers");
         provider.defaultSerializeValue(cardNumbers, json);
     }
@@ -73,11 +73,11 @@ public class JsonFieldWriter {
         provider.defaultSerializeValue(passcode, json);
     }
 
-    public static void writeMobileNumbersJson(final Collection<MobileNumber> mobileNumbers,
-                                       final JsonGenerator json,
-                                       final SerializerProvider provider) throws IOException {
-        json.writeFieldName("mobileNumbers");
-        provider.defaultSerializeValue(mobileNumbers, json);
+    public static void writeDeliveryMethods(final Collection<DeliveryMethod> deliveryMethods,
+                                            final JsonGenerator json,
+                                            final SerializerProvider provider) throws IOException {
+        json.writeFieldName("deliveryMethods");
+        provider.defaultSerializeValue(deliveryMethods, json);
     }
 
 }

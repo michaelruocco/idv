@@ -9,15 +9,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class MobileNumber {
+public class SmsDeliveryMethod implements DeliveryMethod {
 
-    private static final int NUMBER_OF_UNMASKED_CHARS = 3;
+    public static final String TYPE = "sms";
 
     private final UUID id;
-    private final String number;
+    private final String value;
 
-    public MobileNumber(final String number) {
-        this(UUID.randomUUID(), number);
+    public SmsDeliveryMethod(final String value) {
+        this(UUID.randomUUID(), value);
+    }
+
+    public String getType() {
+        return TYPE;
     }
 
 }

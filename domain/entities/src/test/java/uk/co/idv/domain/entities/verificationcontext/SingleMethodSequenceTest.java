@@ -5,7 +5,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationSequence.Method
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -46,10 +46,10 @@ class SingleMethodSequenceTest {
 
     @Test
     void shouldReturnOneTimePasscodeSms() {
-        final OneTimePasscodeSms method = mock(OneTimePasscodeSms.class);
+        final OneTimePasscode method = mock(OneTimePasscode.class);
         final VerificationSequence sequence = new SingleMethodSequence(method);
 
-        assertThat(sequence.getOneTimePasscodeSms()).contains(method);
+        assertThat(sequence.getOneTimePasscode()).contains(method);
     }
 
     @Test
@@ -60,7 +60,7 @@ class SingleMethodSequenceTest {
         assertThat(sequence.getPhysicalPinsentry()).isEmpty();
         assertThat(sequence.getMobilePinsentry()).isEmpty();
         assertThat(sequence.getPushNotification()).isEmpty();
-        assertThat(sequence.getOneTimePasscodeSms()).isEmpty();
+        assertThat(sequence.getOneTimePasscode()).isEmpty();
     }
 
     @Test

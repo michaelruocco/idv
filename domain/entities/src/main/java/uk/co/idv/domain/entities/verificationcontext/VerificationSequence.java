@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.Getter;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -20,7 +20,7 @@ public interface VerificationSequence {
 
     Optional<PushNotification> getPushNotification();
 
-    Optional<OneTimePasscodeSms> getOneTimePasscodeSms();
+    Optional<OneTimePasscode> getOneTimePasscode();
 
     Collection<VerificationMethod> getMethods();
 

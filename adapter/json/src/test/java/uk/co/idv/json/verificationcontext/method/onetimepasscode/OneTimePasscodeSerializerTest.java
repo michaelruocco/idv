@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.MobileNumberMother;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
@@ -20,42 +20,42 @@ import java.util.Collection;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class OneTimePasscodeSmsSerializerTest {
+class OneTimePasscodeSerializerTest {
 
     private static final ObjectMapper MAPPER = buildMapper();
 
     @Test
-    void shouldSerializeEligibleOneTimePasscodeSms() throws JsonProcessingException {
-        final Collection<MobileNumber> mobileNumbers = MobileNumberMother.onePrimary();
+    void shouldSerializeEligibleOneTimePasscode() throws JsonProcessingException {
+        final Collection<DeliveryMethod> deliveryMethods = DeliveryMethodMother.oneSms();
         final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
-        final VerificationMethod method = new OneTimePasscodeSmsEligible(passcodeSettings, mobileNumbers);
+        final VerificationMethod method = new OneTimePasscodeEligible(passcodeSettings, deliveryMethods);
 
         final String json = MAPPER.writeValueAsString(method);
 
-        final String expectedJson = loadFileContent("one-time-passcode-sms-eligible.json");
+        final String expectedJson = loadFileContent("one-time-passcode-eligible.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
     @Test
-    void shouldSerializeEligibleOneTimePasscodeSmsWithResult() throws JsonProcessingException {
-        final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(OneTimePasscodeSms.NAME);
-        final Collection<MobileNumber> mobileNumbers = MobileNumberMother.onePrimary();
+    void shouldSerializeEligibleOneTimePasscodeWithResult() throws JsonProcessingException {
+        final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(OneTimePasscode.NAME);
+        final Collection<DeliveryMethod> deliveryMethods = DeliveryMethodMother.oneSms();
         final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
-        final VerificationMethod method = new OneTimePasscodeSmsEligible(passcodeSettings, mobileNumbers, result);
+        final VerificationMethod method = new OneTimePasscodeEligible(passcodeSettings, deliveryMethods, result);
 
         final String json = MAPPER.writeValueAsString(method);
 
-        final String expectedJson = loadFileContent("one-time-passcode-sms-eligible-with-result.json");
+        final String expectedJson = loadFileContent("one-time-passcode-eligible-with-result.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
     @Test
     void shouldSerializeIneligibleOneTimePasscodeSms() throws JsonProcessingException {
-        final VerificationMethod method = new OneTimePasscodeSmsIneligible();
+        final VerificationMethod method = new OneTimePasscodeIneligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
-        final String expectedJson = loadFileContent("one-time-passcode-sms-ineligible.json");
+        final String expectedJson = loadFileContent("one-time-passcode-ineligible.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

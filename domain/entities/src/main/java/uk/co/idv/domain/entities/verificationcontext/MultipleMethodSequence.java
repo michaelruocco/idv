@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSms;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -49,8 +49,8 @@ public class MultipleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public Optional<OneTimePasscodeSms> getOneTimePasscodeSms() {
-        return castMethodTo(OneTimePasscodeSms.class);
+    public Optional<OneTimePasscode> getOneTimePasscode() {
+        return castMethodTo(OneTimePasscode.class);
     }
 
     @Override

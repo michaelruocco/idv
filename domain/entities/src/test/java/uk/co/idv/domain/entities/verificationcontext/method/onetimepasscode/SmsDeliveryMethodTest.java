@@ -6,28 +6,28 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MobileNumberTest {
+class SmsDeliveryMethodTest {
 
     private static final UUID ID = UUID.randomUUID();
     private static final String NUMBER = "07809376680";
 
     @Test
     void shouldReturnId() {
-        final MobileNumber mobileNumber = new MobileNumber(ID, NUMBER);
+        final SmsDeliveryMethod mobileNumber = new SmsDeliveryMethod(ID, NUMBER);
 
         assertThat(mobileNumber.getId()).isEqualTo(ID);
     }
 
     @Test
     void shouldReturnNumberValue() {
-        final MobileNumber mobileNumber = new MobileNumber(ID, NUMBER);
+        final SmsDeliveryMethod mobileNumber = new SmsDeliveryMethod(ID, NUMBER);
 
-        assertThat(mobileNumber.getNumber()).isEqualTo(NUMBER);
+        assertThat(mobileNumber.getValue()).isEqualTo(NUMBER);
     }
 
     @Test
     void shouldPopulateRandomIdIfNotProvided() {
-        final MobileNumber mobileNumber = new MobileNumber(NUMBER);
+        final SmsDeliveryMethod mobileNumber = new SmsDeliveryMethod(NUMBER);
 
         assertThat(mobileNumber.getId()).isNotNull();
     }

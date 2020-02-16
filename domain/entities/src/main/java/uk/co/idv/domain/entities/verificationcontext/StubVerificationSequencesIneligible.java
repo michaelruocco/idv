@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeSmsIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -40,7 +40,7 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildOneTimePasscodeSmsSequence() {
-        final VerificationMethod oneTimePasscodeSms = new OneTimePasscodeSmsIneligible();
+        final VerificationMethod oneTimePasscodeSms = new OneTimePasscodeIneligible();
         return new SingleMethodSequence(oneTimePasscodeSms);
     }
 
