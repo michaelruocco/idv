@@ -8,6 +8,7 @@ import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedExcept
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -30,8 +31,19 @@ public class LockoutPolicyDeserializer extends StdDeserializer<LockoutPolicy> {
         final JsonNode node = parser.getCodec().readTree(parser);
         final String type = LockoutPolicyJsonNodeConverter.extractLockoutType(node);
         return findConverter(type)
-                .map(converter -> converter.toPolicy(node, parser, context))
+                .map(converter -> toPolicy(converter, node, parser, context))
                 .orElseThrow(() -> new LockoutTypeNotSupportedException(type));
+    }
+
+    private LockoutPolicy toPolicy(final LockoutPolicyJsonNodeConverter converter,
+                                   final JsonNode node,
+                                   final JsonParser parser,
+                                   final DeserializationContext context) {
+        try {
+            return converter.toPolicy(node, parser, context);
+        } catch (final IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     private Optional<LockoutPolicyJsonNodeConverter> findConverter(final String type) {

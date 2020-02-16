@@ -13,7 +13,6 @@ import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
 import uk.co.idv.json.lockout.policy.LockoutPolicyJsonNodeConverter;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -26,15 +25,9 @@ public class SoftLockoutPolicyJsonNodeConverter implements LockoutPolicyJsonNode
     }
 
     @Override
-    public LockoutPolicy toPolicy(final JsonNode node, final JsonParser parser, final DeserializationContext context) {
-        try {
-            return convert(node, parser);
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    private static LockoutPolicy convert(final JsonNode node, final JsonParser parser) throws IOException {
+    public LockoutPolicy toPolicy(final JsonNode node,
+                                  final JsonParser parser,
+                                  final DeserializationContext context) throws IOException {
         return new SoftLockoutPolicy(
                 UUID.fromString(node.get("id").asText()),
                 toLockoutLevel(parser, node.get("lockoutLevel")),
@@ -43,15 +36,18 @@ public class SoftLockoutPolicyJsonNodeConverter implements LockoutPolicyJsonNode
         );
     }
 
-    private static LockoutLevel toLockoutLevel(final JsonParser parser, final JsonNode node) throws IOException {
+    private static LockoutLevel toLockoutLevel(final JsonParser parser,
+                                               final JsonNode node) throws IOException {
         return node.traverse(parser.getCodec()).readValueAs(LockoutLevel.class);
     }
 
-    private static RecordAttemptStrategy toRecordAttemptStrategy(final JsonParser parser, final JsonNode node) throws IOException {
+    private static RecordAttemptStrategy toRecordAttemptStrategy(final JsonParser parser,
+                                                                 final JsonNode node) throws IOException {
         return node.traverse(parser.getCodec()).readValueAs(RecordAttemptStrategy.class);
     }
 
-    private static SoftLockIntervals toIntervals(final JsonParser parser, final JsonNode node) throws IOException {
+    private static SoftLockIntervals toIntervals(final JsonParser parser,
+                                                 final JsonNode node) throws IOException {
         final Collection<SoftLockInterval> intervals = new ArrayList<>();
         for (final JsonNode itemNode : node) {
             intervals.add(toInterval(parser, itemNode));
@@ -59,7 +55,8 @@ public class SoftLockoutPolicyJsonNodeConverter implements LockoutPolicyJsonNode
         return new SoftLockIntervals(intervals);
     }
 
-    private static SoftLockInterval toInterval(final JsonParser parser, final JsonNode node) throws IOException {
+    private static SoftLockInterval toInterval(final JsonParser parser,
+                                               final JsonNode node) throws IOException {
         return node.traverse(parser.getCodec()).readValueAs(SoftLockInterval.class);
     }
 
