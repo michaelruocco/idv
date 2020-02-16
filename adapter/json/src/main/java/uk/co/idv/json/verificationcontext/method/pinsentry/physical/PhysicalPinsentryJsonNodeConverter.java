@@ -15,7 +15,6 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -32,20 +31,16 @@ public class PhysicalPinsentryJsonNodeConverter implements VerificationMethodJso
     @Override
     public VerificationMethod toMethod(final JsonNode node,
                                        final JsonParser parser,
-                                       final DeserializationContext context) {
-        try {
-            final boolean eligible = node.get("eligible").asBoolean();
-            final PinsentryFunction function = PinsentryFunction.valueOf(node.get("function").asText().toUpperCase());
-            if (eligible) {
-                final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
-                final Collection<CardNumber> cardNumbers = Arrays.asList(node.get("cardNumbers").traverse(parser.getCodec()).readValueAs(CardNumber[].class));
-                return new PhysicalPinsentryEligible(function, cardNumbers, results);
-            }
-            final String reason = node.get("reason").asText();
-            return new PhysicalPinsentryIneligible(new Ineligible(reason), function);
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
+                                       final DeserializationContext context) throws IOException {
+        final boolean eligible = node.get("eligible").asBoolean();
+        final PinsentryFunction function = PinsentryFunction.valueOf(node.get("function").asText().toUpperCase());
+        if (eligible) {
+            final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
+            final Collection<CardNumber> cardNumbers = Arrays.asList(node.get("cardNumbers").traverse(parser.getCodec()).readValueAs(CardNumber[].class));
+            return new PhysicalPinsentryEligible(function, cardNumbers, results);
         }
+        final String reason = node.get("reason").asText();
+        return new PhysicalPinsentryIneligible(new Ineligible(reason), function);
     }
 
 }

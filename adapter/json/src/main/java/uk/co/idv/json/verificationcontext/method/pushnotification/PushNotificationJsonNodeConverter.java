@@ -12,7 +12,6 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 
 @Slf4j
 public class PushNotificationJsonNodeConverter implements VerificationMethodJsonNodeConverter {
@@ -27,17 +26,13 @@ public class PushNotificationJsonNodeConverter implements VerificationMethodJson
     @Override
     public VerificationMethod toMethod(final JsonNode node,
                                        final JsonParser parser,
-                                       final DeserializationContext context) {
-        try {
-            final boolean eligible = node.get("eligible").asBoolean();
-            if (eligible) {
-                final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
-                return new PushNotificationEligible(results);
-            }
-            return new PushNotificationIneligible();
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
+                                       final DeserializationContext context) throws IOException {
+        final boolean eligible = node.get("eligible").asBoolean();
+        if (eligible) {
+            final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
+            return new PushNotificationEligible(results);
         }
+        return new PushNotificationIneligible();
     }
 
 }

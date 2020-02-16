@@ -14,7 +14,6 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -31,19 +30,15 @@ public class OneTimePasscodeSmsJsonNodeConverter implements VerificationMethodJs
     @Override
     public VerificationMethod toMethod(final JsonNode node,
                                        final JsonParser parser,
-                                       final DeserializationContext context) {
-        try {
-            final boolean eligible = node.get("eligible").asBoolean();
-            if (eligible) {
-                final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
-                final PasscodeSettings settings = node.get("passcodeSettings").traverse(parser.getCodec()).readValueAs(PasscodeSettings.class);
-                final Collection<MobileNumber> mobileNumbers = Arrays.asList(node.get("mobileNumbers").traverse(parser.getCodec()).readValueAs(MobileNumber[].class));
-                return new OneTimePasscodeSmsEligible(settings, mobileNumbers, results);
-            }
-            return new OneTimePasscodeSmsIneligible();
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
+                                       final DeserializationContext context) throws IOException {
+        final boolean eligible = node.get("eligible").asBoolean();
+        if (eligible) {
+            final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
+            final PasscodeSettings settings = node.get("passcodeSettings").traverse(parser.getCodec()).readValueAs(PasscodeSettings.class);
+            final Collection<MobileNumber> mobileNumbers = Arrays.asList(node.get("mobileNumbers").traverse(parser.getCodec()).readValueAs(MobileNumber[].class));
+            return new OneTimePasscodeSmsEligible(settings, mobileNumbers, results);
         }
+        return new OneTimePasscodeSmsIneligible();
     }
 
 }

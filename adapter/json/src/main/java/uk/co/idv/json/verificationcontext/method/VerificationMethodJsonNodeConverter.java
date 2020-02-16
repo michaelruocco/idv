@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 
+import java.io.IOException;
+
 
 public interface VerificationMethodJsonNodeConverter {
 
     boolean supportsMethod(final String name);
 
-    VerificationMethod toMethod(final JsonNode node, final JsonParser parser, final DeserializationContext context);
+    VerificationMethod toMethod(final JsonNode node, final JsonParser parser, final DeserializationContext context) throws IOException;
 
 }
