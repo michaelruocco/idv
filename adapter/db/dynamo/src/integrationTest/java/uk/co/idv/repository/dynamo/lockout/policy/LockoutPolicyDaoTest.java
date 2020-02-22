@@ -15,8 +15,8 @@ import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.json.ObjectMapperSingleton;
 import uk.co.idv.repository.dynamo.DynamoConfig;
 import uk.co.idv.repository.dynamo.DynamoDbLocalContainer;
-import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
-import uk.co.idv.repository.dynamo.json.JsonConverter;
+import uk.co.idv.utils.json.converter.JacksonJsonConverter;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
 import java.util.Collection;
 import java.util.Optional;
