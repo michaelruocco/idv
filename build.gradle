@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'com.diffplug.gradle.spotless' version '3.27.1'
-    id 'com.github.ben-manes.versions' version '0.27.0'
+    id 'com.github.ben-manes.versions' version '0.28.0'
     id 'com.vanniktech.dependency.graph.generator' version '0.5.0'
 }
 
@@ -32,12 +32,13 @@ subprojects {
 
     ext {
         junitVersion = '5.6.0'
-        lombokVersion = '1.18.10'
+        lombokVersion = '1.18.12'
         slf4jVersion = '1.7.30'
         meanBeanVersion = '2.0.3'
-        equalsVerifierVersion = '3.1.11'
+        equalsVerifierVersion = '3.1.12'
         fileLoaderVersion = '5.0.1'
         testContainersVersion = '1.12.5'
+        jsonUnitVersion = '2.13.0'
     }
 
     dependencies {
@@ -49,8 +50,8 @@ subprojects {
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
-        testCompile 'org.assertj:assertj-core:3.14.0'
-        testCompile 'org.mockito:mockito-core:3.2.4'
+        testCompile 'org.assertj:assertj-core:3.15.0'
+        testCompile 'org.mockito:mockito-core:3.3.0'
     }
 
     tasks.withType(Test) {

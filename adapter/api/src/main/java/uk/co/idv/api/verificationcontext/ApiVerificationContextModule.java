@@ -11,6 +11,7 @@ public class ApiVerificationContextModule extends VerificationContextModule {
 
         addDeserializer(CreateContextRequestDocument.class, new CreateContextRequestDocumentDeserializer());
         addDeserializer(UpdateContextResultsRequestDocument.class, new UpdateContextResultsRequestDocumentDeserializer());
+        addDeserializer(VerificationContextDocument.class, new VerificationContextDocumentDeserializer());
     }
 
 }

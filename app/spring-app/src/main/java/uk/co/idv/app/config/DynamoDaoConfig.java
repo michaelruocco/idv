@@ -12,8 +12,8 @@ import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.DynamoClientFactory;
 import uk.co.idv.repository.dynamo.DynamoConfig;
-import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
-import uk.co.idv.repository.dynamo.json.JsonConverter;
+import uk.co.idv.utils.json.converter.JacksonJsonConverter;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
 @Configuration
 @Profile("!stub")

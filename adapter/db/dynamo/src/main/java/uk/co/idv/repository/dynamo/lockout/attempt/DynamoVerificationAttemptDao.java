@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
-import uk.co.idv.repository.dynamo.json.JsonConverter;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
 import java.util.Optional;
 import java.util.UUID;

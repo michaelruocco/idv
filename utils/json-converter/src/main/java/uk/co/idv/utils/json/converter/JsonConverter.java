@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo.json;
+package uk.co.idv.utils.json.converter;
 
 public interface JsonConverter {
 

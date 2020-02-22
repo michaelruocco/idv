@@ -1,0 +1,12 @@
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile project(':api')
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    compile 'com.github.michaelruocco:rest-client:0.1.4'
+
+    testCompile project(':entities').sourceSets.test.output
+    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
+}

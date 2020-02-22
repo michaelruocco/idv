@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
-import uk.co.idv.repository.dynamo.json.JsonConverter;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

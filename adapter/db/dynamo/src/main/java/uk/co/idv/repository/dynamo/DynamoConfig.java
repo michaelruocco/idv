@@ -15,7 +15,6 @@ import uk.co.idv.repository.dynamo.identity.IdentityMappingCreateTableRequest;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
 import uk.co.idv.repository.dynamo.identity.DynamoIdentityDao;
 import uk.co.idv.repository.dynamo.identity.alias.AliasMappingItemConverter;
-import uk.co.idv.repository.dynamo.json.JsonConverter;
 import uk.co.idv.repository.dynamo.lockout.attempt.DynamoVerificationAttemptDao;
 import uk.co.idv.repository.dynamo.lockout.attempt.VerificationAttemptTableRequest;
 import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
@@ -31,6 +30,7 @@ import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContext
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextCreateTableRequest;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextItemConverter;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextTimeToLiveCalculator;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
 @RequiredArgsConstructor
 @Slf4j

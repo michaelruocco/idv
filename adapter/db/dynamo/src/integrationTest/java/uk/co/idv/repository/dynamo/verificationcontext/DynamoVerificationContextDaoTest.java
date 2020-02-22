@@ -13,8 +13,8 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.json.ObjectMapperSingleton;
 import uk.co.idv.repository.dynamo.DynamoConfig;
 import uk.co.idv.repository.dynamo.DynamoDbLocalContainer;
-import uk.co.idv.repository.dynamo.json.JacksonJsonConverter;
-import uk.co.idv.repository.dynamo.json.JsonConverter;
+import uk.co.idv.utils.json.converter.JacksonJsonConverter;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
 import java.util.Optional;
 import java.util.UUID;

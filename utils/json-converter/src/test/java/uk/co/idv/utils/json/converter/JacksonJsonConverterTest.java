@@ -1,9 +1,9 @@
-package uk.co.idv.repository.dynamo.json;
+package uk.co.idv.utils.json.converter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.repository.dynamo.json.JsonConverter.JsonConversionException;
+import uk.co.idv.utils.json.converter.JsonConverter.JsonConversionException;
 
 import java.io.IOException;
 
@@ -33,13 +33,13 @@ class JacksonJsonConverterTest {
     @Test
     void shouldThrowExceptionIfJsonStringConversionFails() throws IOException {
         final String json = "json";
-        given(mapper.readValue(json, Object.class)).willThrow(IOException.class);
+        given(mapper.readValue(json, Object.class)).willThrow(JsonProcessingException.class);
 
         final Throwable error = catchThrowable(() -> converter.toObject(json, Object.class));
 
         assertThat(error)
                 .isInstanceOf(JsonConversionException.class)
-                .hasCauseInstanceOf(IOException.class);
+                .hasCauseInstanceOf(JsonProcessingException.class);
     }
 
     @Test

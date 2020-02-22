@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import lombok.Builder;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.repository.dynamo.table.TimeToLiveCalculator;
-import uk.co.idv.repository.dynamo.json.JsonConverter;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
 @Builder
 public class VerificationContextItemConverter {

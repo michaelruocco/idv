@@ -19,6 +19,9 @@ project(':in-memory-db').projectDir = file('adapter/db/in-memory')
 include ':dynamo-db'
 project(':dynamo-db').projectDir = file('adapter/db/dynamo')
 
+include ':client'
+project(':client').projectDir = file('adapter/client')
+
 //uk geography
 include ':uk-entities'
 project(':uk-entities').projectDir = file('geography/uk/entities')
@@ -32,3 +35,7 @@ project(':uk-config').projectDir = file('geography/uk/config')
 //application
 include ':spring-app'
 project(':spring-app').projectDir = file('app/spring-app')
+
+//utils
+include ':json-converter'
+project(':json-converter').projectDir = file('utils/json-converter')
