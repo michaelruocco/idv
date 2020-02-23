@@ -3,12 +3,14 @@ package uk.co.idv.client.verificationcontext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.api.ApiObjectMapperSingleton;
+import uk.co.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
 import uk.co.idv.api.verificationcontext.VerificationContextDocument;
 import uk.co.idv.client.verificationcontext.exception.VerificationContextClientExpiredException;
 import uk.co.idv.client.verificationcontext.exception.VerificationContextClientLockoutException;
 import uk.co.idv.client.verificationcontext.exception.VerificationContextClientNotFoundException;
 import uk.co.idv.client.verificationcontext.exception.VerificationContextClientException;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
 import uk.co.idv.utils.json.converter.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 import uk.co.mruoc.rest.client.RestClient;
@@ -32,6 +34,18 @@ public class VerificationContextClient {
 
     public VerificationContext getContext(final UUID id, final Headers headers) {
         final Response response = client.get(buildUri(id), headers);
+        return handleResponse(id, response);
+    }
+
+    public VerificationContext updateContext(final RecordResultRequest request, final Headers headers) {
+        final UpdateContextResultsRequestDocument document = new UpdateContextResultsRequestDocument(request);
+        final String body = converter.toJson(document);
+        final UUID id = request.getContextId();
+        final Response response = client.patch(buildUri(id), body, headers);
+        return handleResponse(id, response);
+    }
+
+    private VerificationContext handleResponse(final UUID id, final Response response) {
         if (response.is2xx()) {
             return handleSuccess(response);
         }
