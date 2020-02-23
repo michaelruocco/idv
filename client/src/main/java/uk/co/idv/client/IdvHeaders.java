@@ -1,4 +1,4 @@
-package uk.co.idv.client.verificationcontext;
+package uk.co.idv.client;
 
 import uk.co.mruoc.rest.client.header.Headers;
 

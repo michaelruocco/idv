@@ -1,4 +1,4 @@
-package uk.co.idv.client.verificationcontext;
+package uk.co.idv.client;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,13 +6,13 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VerificationContextHeadersTest {
+class DefaultIdvHeadersTest {
 
     @Test
     void shouldSetCorrelationId() {
         final String correlationId = UUID.randomUUID().toString();
 
-        final IdvHeaders headers = VerificationContextHeaders.builder()
+        final IdvHeaders headers = DefaultIdvHeaders.builder()
                 .correlationId(correlationId)
                 .build();
 
@@ -23,7 +23,7 @@ class VerificationContextHeadersTest {
     void shouldSetChannelId() {
         final String channelId = "channelId";
 
-        final IdvHeaders headers = VerificationContextHeaders.builder()
+        final IdvHeaders headers = DefaultIdvHeaders.builder()
                 .channelId(channelId)
                 .build();
 
