@@ -33,8 +33,6 @@ allprojects {
 subprojects {
     apply plugin: 'java'
     apply plugin: 'com.diffplug.gradle.spotless'
-    apply plugin: 'maven-publish'
-    apply plugin: 'com.jfrog.artifactory'
 
     group 'com.github.michaelruocco'
     version = rootProject.version
@@ -96,112 +94,125 @@ subprojects {
         }
     }
 
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        from sourceSets.main.allSource
-    }
+}
 
-    //required due to issues with annotation processors not being invoked in javadoc stage which causes build failures
-    //https://github.com/rzwitserloot/lombok/issues/2137
-    javadoc.failOnError = false
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        from javadoc.destinationDir
-    }
+def publishProjectNames = [
+        'verification-context.client',
+        'verification-context.spring-app',
+        'verification-context.entities'
+]
+allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
+    configure(publishProject) {
+        apply plugin: 'maven-publish'
+        apply plugin: 'com.jfrog.artifactory'
+        apply plugin: "com.jfrog.bintray"
 
-    artifacts {
-        archives sourcesJar
-        archives javadocJar
-    }
-
-    def pomConfig = {
-        licenses {
-            license {
-                name 'BSD License'
-                url 'http://www.opensource.org/licenses/bsd-license.php'
-                distribution 'repo'
-            }
-        }
-        developers {
-            developer {
-                id 'mruoc'
-                name 'Michael Ruocco'
-                email 'michael.ruocco@hotmail.com'
-            }
+        task sourcesJar(type: Jar, dependsOn: classes) {
+            from sourceSets.main.allSource
         }
 
-        scm {
-            url 'https://github.com/michaelruocco/verification-context'
+        //required due to issues with annotation processors not being invoked in javadoc stage which causes build failures
+        //https://github.com/rzwitserloot/lombok/issues/2137
+        javadoc.failOnError = false
+        task javadocJar(type: Jar, dependsOn: javadoc) {
+            from javadoc.destinationDir
         }
-    }
 
-    publishing {
-        publications {
-            mavenPublication(MavenPublication) {
-                from components.java
-                artifact sourcesJar {
-                    classifier "sources"
-                }
-                artifact javadocJar {
-                    classifier "javadoc"
-                }
-                groupId project.group
-                artifactId archivesBaseName
-                version project.version
-                pom.withXml {
-                    def root = asNode()
-                    root.appendNode('name', archivesBaseName)
-                    root.appendNode('url', 'https://github.com/michaelruocco/verification-context')
-                    root.children().last() + pomConfig
+        artifacts {
+            archives sourcesJar
+            archives javadocJar
+        }
+
+        def pomConfig = {
+            licenses {
+                license {
+                    name 'BSD License'
+                    url 'http://www.opensource.org/licenses/bsd-license.php'
+                    distribution 'repo'
                 }
             }
-        }
-    }
-
-    bintray {
-        user = System.getenv('BINTRAY_USER')
-        key = System.getenv('BINTRAY_KEY')
-        publications = ['mavenPublication']
-        publish = true
-
-        pkg {
-            repo = 'maven'
-            name = archivesBaseName
-            userOrg = 'michaelruocco'
-            licenses = ['bsd']
-            vcsUrl = 'https://github.com/michaelruocco/verification-context.git'
-            version {
-                name = project.version
-                desc = project.version
-                released = new Date()
-                gpg {
-                    sign = true
+            developers {
+                developer {
+                    id 'mruoc'
+                    name 'Michael Ruocco'
+                    email 'michael.ruocco@hotmail.com'
                 }
-                mavenCentralSync {
-                    sync = true
+            }
+
+            scm {
+                url 'https://github.com/michaelruocco/verification-context'
+            }
+        }
+
+        publishing {
+            publications {
+                mavenPublication(MavenPublication) {
+                    from components.java
+                    artifact sourcesJar {
+                        classifier "sources"
+                    }
+                    artifact javadocJar {
+                        classifier "javadoc"
+                    }
+                    groupId project.group
+                    artifactId archivesBaseName
+                    version project.version
+                    pom.withXml {
+                        def root = asNode()
+                        root.appendNode('name', archivesBaseName)
+                        root.appendNode('url', 'https://github.com/michaelruocco/verification-context')
+                        root.children().last() + pomConfig
+                    }
                 }
             }
         }
-    }
 
-    artifactory {
-        contextUrl = 'http://oss.jfrog.org'
-        publish {
-            repository {
-                repoKey = 'oss-snapshot-local'
-                username = System.getenv('BINTRAY_USER')
-                password = System.getenv('BINTRAY_KEY')
-            }
-            defaults {
-                publications('mavenPublication')
-                publishArtifacts = true
-                publishPom = true
+        bintray {
+            user = System.getenv('BINTRAY_USER')
+            key = System.getenv('BINTRAY_KEY')
+            publications = ['mavenPublication']
+            publish = true
+
+            pkg {
+                repo = 'maven'
+                name = archivesBaseName
+                userOrg = 'michaelruocco'
+                licenses = ['bsd']
+                vcsUrl = 'https://github.com/michaelruocco/verification-context.git'
+                version {
+                    name = project.version
+                    desc = project.version
+                    released = new Date()
+                    gpg {
+                        sign = true
+                    }
+                    //mavenCentralSync {
+                    //    sync = true
+                    //}
+                }
             }
         }
-        resolve {
-            repoKey = 'jcenter'
-        }
-        clientConfig.info.setBuildNumber(System.getProperty('build.number'))
-    }
 
+        artifactory {
+            contextUrl = 'http://oss.jfrog.org'
+            publish {
+                repository {
+                    repoKey = 'oss-snapshot-local'
+                    username = System.getenv('BINTRAY_USER')
+                    password = System.getenv('BINTRAY_KEY')
+                }
+                defaults {
+                    publications('mavenPublication')
+                    publishArtifacts = true
+                    publishPom = true
+                }
+            }
+            resolve {
+                repoKey = 'jcenter'
+            }
+            clientConfig.info.setBuildNumber(System.getProperty('build.number'))
+        }
+    }
 }
 
 task codeCoverageReport(type: JacocoReport) {
