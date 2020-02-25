@@ -10,6 +10,11 @@ plugins {
 }
 
 scmVersion {
+    localOnly = true
+    checks {
+        uncommittedChanges = false
+        aheadOfRemote = false
+    }
     versionCreator 'versionWithBranch'
     tag {
         prefix = 'verification-context'
@@ -20,6 +25,8 @@ project.version = scmVersion.version
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'jacoco'
+
+    group 'com.github.michaelruocco'
 
     repositories {
         mavenCentral()
@@ -34,7 +41,6 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'com.diffplug.gradle.spotless'
 
-    group 'com.github.michaelruocco'
     version = rootProject.version
     archivesBaseName = "${rootProject.name}-${project.name}"
 
@@ -97,12 +103,14 @@ subprojects {
 }
 
 def publishProjectNames = [
-        'verification-context.client',
-        'verification-context.spring-app',
-        'verification-context.entities'
+        'verification-context',
+        'client',
+        'spring-app',
+        'entities'
 ]
 allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
     configure(publishProject) {
+        println "publish project " + publishProject.name
         apply plugin: 'maven-publish'
         apply plugin: 'com.jfrog.artifactory'
         apply plugin: "com.jfrog.bintray"
@@ -172,6 +180,7 @@ allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
             key = System.getenv('BINTRAY_KEY')
             publications = ['mavenPublication']
             publish = true
+            dryRun = true
 
             pkg {
                 repo = 'maven'
@@ -186,9 +195,9 @@ allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
                     gpg {
                         sign = true
                     }
-                    //mavenCentralSync {
-                    //    sync = true
-                    //}
+                    mavenCentralSync {
+                        sync = true
+                    }
                 }
             }
         }
