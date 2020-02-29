@@ -99,8 +99,7 @@ subprojects {
 
 def publishProjectNames = [
         'verification-context',
-        'client',
-        'spring-app'
+        'client'
 ]
 allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
     configure(publishProject) {
