@@ -37,11 +37,11 @@ jobs:
       script: ./gradlew clean spotlessCheck build integrationTest codeCoverageReport buildImage composeUp postman composeDown pushImage
 
     - stage: snapshot
-      script: ./gradlew artifactoryPublish -Dbuild.number=$TRAVIS_BUILD_NUMBER
+      script: ./gradlew bootJar artifactoryPublish -Dbuild.number=$TRAVIS_BUILD_NUMBER
 
     - stage: release
       script:
         - >
           git checkout $TRAVIS_BRANCH;
           ./gradlew release -Prelease.customUsername=$GITHUB_TOKEN;
-          ./gradlew bintrayUpload -Dbuild.number=$TRAVIS_BUILD_NUMBER
+          ./gradlew bootJar bintrayUpload -Dbuild.number=$TRAVIS_BUILD_NUMBER
