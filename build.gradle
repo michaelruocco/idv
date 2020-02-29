@@ -105,12 +105,10 @@ subprojects {
 def publishProjectNames = [
         'verification-context',
         'client',
-        'spring-app',
-        'entities'
+        'spring-app'
 ]
 allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
     configure(publishProject) {
-        println "publish project " + publishProject.name
         apply plugin: 'maven-publish'
         apply plugin: 'com.jfrog.artifactory'
         apply plugin: "com.jfrog.bintray"
