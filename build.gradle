@@ -98,14 +98,13 @@ subprojects {
 }
 
 def publishProjectNames = [
-        'verification-context',
         'client'
 ]
-allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
+allprojects.findAll { it.name in publishProjectNames }.each { publishProject ->
     configure(publishProject) {
         apply plugin: 'maven-publish'
         apply plugin: 'com.jfrog.artifactory'
-        apply plugin: "com.jfrog.bintray"
+        apply plugin: 'com.jfrog.bintray'
 
         task sourcesJar(type: Jar, dependsOn: classes) {
             from sourceSets.main.allSource
@@ -233,7 +232,7 @@ task codeCoverageReport(type: JacocoReport) {
 
 codeCoverageReport.dependsOn {
     subprojects*.test
-    subprojects.findAll{ it.tasks.findByName('integrationTest') != null }.integrationTest
+    subprojects.findAll { it.tasks.findByName('integrationTest') != null }.integrationTest
 }
 
 dependencyUpdates.resolutionStrategy {
