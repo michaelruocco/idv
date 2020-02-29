@@ -10,11 +10,6 @@ plugins {
 }
 
 scmVersion {
-    localOnly = true
-    checks {
-        uncommittedChanges = false
-        aheadOfRemote = false
-    }
     versionCreator 'versionWithBranch'
     tag {
         prefix = 'verification-context'
@@ -178,7 +173,7 @@ allprojects.findAll { it.name in publishProjectNames }. each { publishProject ->
             key = System.getenv('BINTRAY_KEY')
             publications = ['mavenPublication']
             publish = true
-            dryRun = true
+            override = true
 
             pkg {
                 repo = 'maven'
