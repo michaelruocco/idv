@@ -1,6 +1,7 @@
 # IDV
 
 [![Build Status](https://travis-ci.org/michaelruocco/idv.svg?branch=master)](https://travis-ci.org/michaelruocco/idv)
+[![codecov](https://codecov.io/gh/michaelruocco/idv/branch/master/graph/badge.svg)](https://codecov.io/gh/michaelruocco/idv)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b07013490db7485fb7fc4b3ea542ed9d)](https://www.codacy.com/manual/michaelruocco/idv?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/idv&amp;utm_campaign=Badge_Grade)
 [![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/idv?branch=master)](https://bettercodehub.com/)
 
