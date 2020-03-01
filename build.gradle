@@ -4,8 +4,8 @@ plugins {
     id 'com.diffplug.gradle.spotless' version '3.27.1'
     id 'com.github.ben-manes.versions' version '0.28.0'
     id 'com.vanniktech.dependency.graph.generator' version '0.5.0'
-    id 'pl.allegro.tech.build.axion-release' version '1.10.2'
-    id 'com.jfrog.artifactory' version '4.10.0'
+    id 'pl.allegro.tech.build.axion-release' version '1.11.0'
+    id 'com.jfrog.artifactory' version '4.13.0'
     id 'com.jfrog.bintray' version '1.8.4'
 }
 
@@ -50,7 +50,7 @@ subprojects {
         equalsVerifierVersion = '3.1.12'
         fileLoaderVersion = '5.0.1'
         testContainersVersion = '1.12.5'
-        jsonUnitVersion = '2.13.0'
+        jsonUnitVersion = '2.14.0'
     }
 
     dependencies {
