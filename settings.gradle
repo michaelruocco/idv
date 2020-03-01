@@ -1,4 +1,4 @@
-rootProject.name = 'verification-context'
+rootProject.name = 'idv'
 
 include ':entities'
 project(':entities').projectDir = file('domain/entities')
@@ -32,10 +32,6 @@ project(':uk-config').projectDir = file('geography/uk/config')
 //application
 include ':spring-app'
 project(':spring-app').projectDir = file('app/spring-app')
-
-//client
-include ':client'
-project(':client').projectDir = file('client')
 
 //utils
 include ':json-converter'

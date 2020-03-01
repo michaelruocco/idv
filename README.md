@@ -1,9 +1,8 @@
-# Verification Context
+# IDV
 
-[![Build Status](https://travis-ci.org/michaelruocco/verification-context.svg?branch=master)](https://travis-ci.org/michaelruocco/verification-context)
-[![codecov](https://codecov.io/gh/michaelruocco/verification-context/branch/master/graph/badge.svg)](https://codecov.io/gh/michaelruocco/verification-context)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3cea44406f4141b487d8b13b19821734)](https://www.codacy.com/manual/michaelruocco/verification-context?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/verification-context&amp;utm_campaign=Badge_Grade)
-[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/verification-context?branch=master)](https://bettercodehub.com/)
+[![Build Status](https://travis-ci.org/michaelruocco/idv.svg?branch=master)](https://travis-ci.org/michaelruocco/idv)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b07013490db7485fb7fc4b3ea542ed9d)](https://www.codacy.com/manual/michaelruocco/idv?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/idv&amp;utm_campaign=Badge_Grade)
+[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/idv?branch=master)](https://bettercodehub.com/)
 
 useful commands:
 
@@ -86,21 +85,17 @@ aws cloudformation create-stack --stack-name idv-dev-verification-context --temp
 
 TODO:
 
+*  Add card number to online purchase activity
+
 *  Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
 docker compose tasks in order, which will give a simple command to build and test before adding a commit
 
-*  Refactor to create config modules that are geography specific and can be used by spring app - partially complete
-
-*  Change api module so it is not split into separate json and and api packages, the split is no longer needed / makes sense
-
 *  Verification method policies
 
-*  Client library
-
-*  Pipeline publishing libraries to maven automatically from gradle / travis ci build pipeline
+*  Verification method policies updatable on the fly
 
 *  Deploy onto AWS (ideally would be automatic from travis ci pipeline)
 
-*  Static api types so raml can be generated per geography api
+*  Use AWS API gateway (or add authentication module)
 
 *  Acceptance tests

@@ -4,7 +4,7 @@ jdk: openjdk11
 
 branches:
   except:
-    - /^verification-context-*/
+    - /^idv-*/
 
 services:
   - docker
@@ -25,23 +25,7 @@ after_success:
 stages:
   - name: build
 
-  - name: snapshot
-    if: branch != master
-
-  - name: release
-    if: branch = master
-
 jobs:
   include:
     - stage: build
       script: ./gradlew clean spotlessCheck build integrationTest codeCoverageReport buildImage composeUp postman composeDown pushImage
-
-    - stage: snapshot
-      script: ./gradlew artifactoryPublish -Dbuild.number=$TRAVIS_BUILD_NUMBER
-
-    - stage: release
-      script:
-        - >
-          git checkout $TRAVIS_BRANCH;
-          ./gradlew release -Prelease.customUsername=$GITHUB_TOKEN;
-          ./gradlew client:bintrayUpload -Dbuild.number=$TRAVIS_BUILD_NUMBER

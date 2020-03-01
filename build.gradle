@@ -5,14 +5,12 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.28.0'
     id 'com.vanniktech.dependency.graph.generator' version '0.5.0'
     id 'pl.allegro.tech.build.axion-release' version '1.11.0'
-    id 'com.jfrog.artifactory' version '4.13.0'
-    id 'com.jfrog.bintray' version '1.8.4'
 }
 
 scmVersion {
     versionCreator 'versionWithBranch'
     tag {
-        prefix = 'verification-context'
+        prefix = 'idv'
     }
 }
 project.version = scmVersion.version
@@ -97,124 +95,6 @@ subprojects {
 
 }
 
-def publishProjectNames = [
-        'client'
-]
-allprojects.findAll { it.name in publishProjectNames }.each { publishProject ->
-    configure(publishProject) {
-        apply plugin: 'maven-publish'
-        apply plugin: 'com.jfrog.artifactory'
-        apply plugin: 'com.jfrog.bintray'
-
-        task sourcesJar(type: Jar, dependsOn: classes) {
-            from sourceSets.main.allSource
-        }
-
-        //required due to issues with annotation processors not being invoked in javadoc stage which causes build failures
-        //https://github.com/rzwitserloot/lombok/issues/2137
-        javadoc.failOnError = false
-        task javadocJar(type: Jar, dependsOn: javadoc) {
-            from javadoc.destinationDir
-        }
-
-        artifacts {
-            archives sourcesJar
-            archives javadocJar
-        }
-
-        def pomConfig = {
-            licenses {
-                license {
-                    name 'BSD License'
-                    url 'http://www.opensource.org/licenses/bsd-license.php'
-                    distribution 'repo'
-                }
-            }
-            developers {
-                developer {
-                    id 'mruoc'
-                    name 'Michael Ruocco'
-                    email 'michael.ruocco@hotmail.com'
-                }
-            }
-
-            scm {
-                url 'https://github.com/michaelruocco/verification-context'
-            }
-        }
-
-        publishing {
-            publications {
-                mavenPublication(MavenPublication) {
-                    from components.java
-                    artifact sourcesJar {
-                        classifier "sources"
-                    }
-                    artifact javadocJar {
-                        classifier "javadoc"
-                    }
-                    groupId project.group
-                    artifactId archivesBaseName
-                    version project.version
-                    pom.withXml {
-                        def root = asNode()
-                        root.appendNode('name', archivesBaseName)
-                        root.appendNode('url', 'https://github.com/michaelruocco/verification-context')
-                        root.children().last() + pomConfig
-                    }
-                }
-            }
-        }
-
-        bintray {
-            user = System.getenv('BINTRAY_USER')
-            key = System.getenv('BINTRAY_KEY')
-            publications = ['mavenPublication']
-            publish = true
-            override = true
-
-            pkg {
-                repo = 'maven'
-                name = archivesBaseName
-                userOrg = 'michaelruocco'
-                licenses = ['bsd']
-                vcsUrl = 'https://github.com/michaelruocco/verification-context.git'
-                version {
-                    name = project.version
-                    desc = project.version
-                    released = new Date()
-                    gpg {
-                        sign = true
-                    }
-                    mavenCentralSync {
-                        sync = true
-                    }
-                }
-            }
-        }
-
-        artifactory {
-            contextUrl = 'http://oss.jfrog.org'
-            publish {
-                repository {
-                    repoKey = 'oss-snapshot-local'
-                    username = System.getenv('BINTRAY_USER')
-                    password = System.getenv('BINTRAY_KEY')
-                }
-                defaults {
-                    publications('mavenPublication')
-                    publishArtifacts = true
-                    publishPom = true
-                }
-            }
-            resolve {
-                repoKey = 'jcenter'
-            }
-            clientConfig.info.setBuildNumber(System.getProperty('build.number'))
-        }
-    }
-}
-
 task codeCoverageReport(type: JacocoReport) {
     executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
@@ -247,6 +127,7 @@ dependencyUpdates.resolutionStrategy {
         }
     }
 }
+
 
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 
