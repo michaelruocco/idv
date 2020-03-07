@@ -3,8 +3,8 @@ package uk.co.idv.domain.usecases.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
@@ -15,7 +15,7 @@ class RecordAttemptRequestConverterTest {
 
     private static final String METHOD_NAME = "method-name";
 
-    private final VerificationContext context = new FakeVerificationContext();
+    private final VerificationContext context = VerificationContextMother.fake();
 
     private final RecordAttemptRequestConverter converter = new RecordAttemptRequestConverter();
 

@@ -79,7 +79,7 @@
         "passcodeSettings": {
           "length": 8,
           "duration": 150000,
-          "maxGenerationAttempts": 3
+          "maxDeliveryAttempts": 3
         },
         "deliveryMethods": [
           {

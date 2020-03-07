@@ -13,10 +13,10 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPoliciesAlreadyExistException;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.LockoutPolicyNotFoundException;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.RequestedLockoutPolicyNotFoundException;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 
 import java.util.Arrays;
@@ -262,7 +262,7 @@ class DefaultLockoutPolicyServiceTest {
 
     private static RecordAttemptRequest buildRecordAttemptRequest() {
         return RecordAttemptRequest.builder()
-                .context(new FakeVerificationContext())
+                .context(VerificationContextMother.fake())
                 .result(new FakeVerificationResultSuccessful("method-name"))
                 .build();
     }

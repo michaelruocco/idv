@@ -3,6 +3,8 @@ package uk.co.idv.domain.usecases.verificationcontext;
 import lombok.Builder;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
+import java.util.UUID;
+
 @Builder
 public class DefaultVerificationContextService implements VerificationContextService {
 
@@ -16,8 +18,8 @@ public class DefaultVerificationContextService implements VerificationContextSer
     }
 
     @Override
-    public VerificationContext load(final LoadContextRequest request) {
-        return loader.load(request);
+    public VerificationContext load(final UUID id) {
+        return loader.load(id);
     }
 
     @Override

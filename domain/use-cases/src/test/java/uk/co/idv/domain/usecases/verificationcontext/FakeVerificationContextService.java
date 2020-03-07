@@ -2,12 +2,14 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
+import java.util.UUID;
+
 public class FakeVerificationContextService implements VerificationContextService {
 
     private VerificationContext context;
 
     private CreateContextRequest lastCreateRequest;
-    private LoadContextRequest lastLoadRequest;
+    private UUID lastLoadedId;
     private RecordResultRequest lastUpdateResultRequest;
 
     @Override
@@ -17,8 +19,8 @@ public class FakeVerificationContextService implements VerificationContextServic
     }
 
     @Override
-    public VerificationContext load(final LoadContextRequest request) {
-        this.lastLoadRequest = request;
+    public VerificationContext load(final UUID id) {
+        this.lastLoadedId = id;
         return context;
     }
 
@@ -36,8 +38,8 @@ public class FakeVerificationContextService implements VerificationContextServic
         return lastCreateRequest;
     }
 
-    public LoadContextRequest getLastLoadRequest() {
-        return lastLoadRequest;
+    public UUID getLastLoadedId() {
+        return lastLoadedId;
     }
 
     public RecordResultRequest getLastUpdateResultRequest() {

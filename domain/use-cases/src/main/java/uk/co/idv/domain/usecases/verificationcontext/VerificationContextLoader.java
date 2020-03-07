@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface VerificationContextLoader {
 
-    VerificationContext load(LoadContextRequest request);
+    VerificationContext load(UUID id);
 
     class VerificationContextNotFoundException extends RuntimeException {
 

@@ -3,6 +3,8 @@ package uk.co.idv.domain.usecases.verificationcontext;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -32,11 +34,11 @@ class DefaultVerificationContextServiceTest {
 
     @Test
     void shouldLoadContext() {
-        final LoadContextRequest request = LoadContextRequest.builder().build();
+        final UUID id = UUID.randomUUID();
         final VerificationContext context = mock(VerificationContext.class);
-        given(loader.load(request)).willReturn(context);
+        given(loader.load(id)).willReturn(context);
 
-        final VerificationContext loadedContext = contextService.load(request);
+        final VerificationContext loadedContext = contextService.load(id);
 
         assertThat(loadedContext).isEqualTo(context);
     }

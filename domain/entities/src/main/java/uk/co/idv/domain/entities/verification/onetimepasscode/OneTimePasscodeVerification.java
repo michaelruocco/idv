@@ -3,7 +3,7 @@ package uk.co.idv.domain.entities.verification.onetimepasscode;
 import lombok.Builder;
 import lombok.Getter;
 import uk.co.idv.domain.entities.verification.VerificationStatus;
-import uk.co.idv.domain.entities.verification.onetimepasscode.exception.NoGenerationsRemainingException;
+import uk.co.idv.domain.entities.verification.onetimepasscode.exception.NoDeliveryAttemptsRemainingException;
 import uk.co.idv.domain.entities.verification.onetimepasscode.exception.VerificationAlreadyCompleteException;
 
 import java.time.Instant;
@@ -19,15 +19,14 @@ public class OneTimePasscodeVerification {
     private final UUID id;
     private final Instant created;
     private final Instant expiry;
-    private final String passcode;
-    private final int maxGenerations;
+    private final int maxDeliveryAttempts;
     private final int maxAttempts;
 
     @Builder.Default
     private String status = VerificationStatus.PENDING;
 
     @Builder.Default
-    private Collection<OneTimePasscodeGeneration> generations = new ArrayList<>();
+    private Collection<OneTimePasscodeDelivery> deliveries = new ArrayList<>();
 
     @Builder.Default
     private Collection<OneTimePasscodeVerificationAttempt> attempts = new ArrayList<>();
@@ -46,16 +45,16 @@ public class OneTimePasscodeVerification {
         return Optional.ofNullable(completed);
     }
 
-    public void record(final OneTimePasscodeGeneration generation) {
+    public void record(final OneTimePasscodeDelivery delivery) {
         validateComplete();
-        if (!hasGenerationsRemaining()) {
-            throw new NoGenerationsRemainingException(id, getMaxGenerations());
+        if (!hasDeliveriesRemaining()) {
+            throw new NoDeliveryAttemptsRemainingException(id, getMaxDeliveryAttempts());
         }
-        this.generations.add(generation);
+        this.deliveries.add(delivery);
     }
 
-    public int getGenerationsRemaining() {
-        return maxGenerations - generations.size();
+    public int getDeliveryAttemptsRemaining() {
+        return maxDeliveryAttempts - deliveries.size();
     }
 
     public void verify(final OneTimePasscodeVerificationAttempt attempt) {
@@ -77,8 +76,8 @@ public class OneTimePasscodeVerification {
         }
     }
 
-    private boolean hasGenerationsRemaining() {
-        return getGenerationsRemaining() > 0;
+    private boolean hasDeliveriesRemaining() {
+        return getDeliveryAttemptsRemaining() > 0;
     }
 
     private boolean hasAttemptsRemaining() {
@@ -86,7 +85,7 @@ public class OneTimePasscodeVerification {
     }
 
     private boolean isValid(final OneTimePasscodeVerificationAttempt attempt) {
-        return generations.stream().anyMatch(generation -> generation.isValid(attempt.getPasscode()));
+        return deliveries.stream().anyMatch(delivery -> delivery.hasPasscode(attempt.getPasscode()));
     }
 
     private void handleSuccessful(final OneTimePasscodeVerificationAttempt attempt) {

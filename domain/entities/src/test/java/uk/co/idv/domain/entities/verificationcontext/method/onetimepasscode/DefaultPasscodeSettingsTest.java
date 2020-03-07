@@ -22,7 +22,7 @@ class DefaultPasscodeSettingsTest {
 
     @Test
     void shouldReturnMaxAttempts() {
-        assertThat(settings.getMaxGenerationAttempts()).isEqualTo(3);
+        assertThat(settings.getMaxDeliveryAttempts()).isEqualTo(3);
     }
 
 }

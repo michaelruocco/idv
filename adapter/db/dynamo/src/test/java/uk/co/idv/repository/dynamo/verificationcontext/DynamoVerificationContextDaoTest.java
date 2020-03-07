@@ -3,8 +3,8 @@ package uk.co.idv.repository.dynamo.verificationcontext;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -26,7 +26,7 @@ class DynamoVerificationContextDaoTest {
 
     @Test
     void shouldSaveContext() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         final Item item = new Item();
         given(itemConverter.toItem(context)).willReturn(item);
 
@@ -40,7 +40,7 @@ class DynamoVerificationContextDaoTest {
         final UUID id = UUID.randomUUID();
         final Item item = new Item();
         given(table.getItem("id", id.toString())).willReturn(item);
-        final VerificationContext expectedContext = new FakeVerificationContext();
+        final VerificationContext expectedContext = VerificationContextMother.fake();
         given(itemConverter.toContext(item)).willReturn(expectedContext);
 
         final Optional<VerificationContext> context = dao.load(id);

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.api.ApiObjectMapperSingleton;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.mruoc.file.content.ContentLoader;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
@@ -16,7 +16,7 @@ class VerificationContextDocumentSerializerTest {
 
     @Test
     void shouldSerializeContext() throws JsonProcessingException {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         final VerificationContextDocument document = new VerificationContextDocument(context);
 
         final String json = MAPPER.writeValueAsString(document);

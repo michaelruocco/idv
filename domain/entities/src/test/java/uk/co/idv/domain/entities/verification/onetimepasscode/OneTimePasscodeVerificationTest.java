@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.verification.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verification.VerificationStatus;
-import uk.co.idv.domain.entities.verification.onetimepasscode.exception.NoGenerationsRemainingException;
+import uk.co.idv.domain.entities.verification.onetimepasscode.exception.NoDeliveryAttemptsRemainingException;
 import uk.co.idv.domain.entities.verification.onetimepasscode.exception.VerificationAlreadyCompleteException;
 
 import java.time.Instant;
@@ -47,25 +47,14 @@ class OneTimePasscodeVerificationTest {
     }
 
     @Test
-    void shouldReturnPasscode() {
-        final String passcode = "12345678";
+    void shouldReturnMaxDeliveries() {
+        final int maxDeliveries = 3;
 
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .passcode(passcode)
+                .maxDeliveryAttempts(maxDeliveries)
                 .build();
 
-        assertThat(verification.getPasscode()).isEqualTo(passcode);
-    }
-
-    @Test
-    void shouldReturnMaxGenerations() {
-        final int maxGenerations = 3;
-
-        final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxGenerations(maxGenerations)
-                .build();
-
-        assertThat(verification.getMaxGenerations()).isEqualTo(maxGenerations);
+        assertThat(verification.getMaxDeliveryAttempts()).isEqualTo(maxDeliveries);
     }
 
     @Test
@@ -88,15 +77,15 @@ class OneTimePasscodeVerificationTest {
     }
 
     @Test
-    void shouldReturnEmptyGenerationsByDefault() {
+    void shouldReturnEmptyDeliveriesByDefault() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
                 .build();
 
-        assertThat(verification.getGenerations()).isEmpty();
+        assertThat(verification.getDeliveries()).isEmpty();
     }
 
     @Test
-    void shouldReturnEmptyAttmeptsByDefault() {
+    void shouldReturnEmptyAttemptsByDefault() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
                 .build();
 
@@ -125,53 +114,53 @@ class OneTimePasscodeVerificationTest {
     }
 
     @Test
-    void shouldThrowExceptionIfGenerationIsRecordedWhenVerificationIsComplete() {
+    void shouldThrowExceptionIfDeliveryIsRecordedWhenVerificationIsComplete() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
                 .completed(Instant.now())
                 .build();
-        final OneTimePasscodeGeneration generation = OneTimePasscodeGenerationMother.smsGeneration();
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
 
-        final Throwable error = catchThrowable(() -> verification.record(generation));
+        final Throwable error = catchThrowable(() -> verification.record(delivery));
 
         assertThat(error).isInstanceOf(VerificationAlreadyCompleteException.class);
     }
 
     @Test
-    void shouldThrowExceptionIfGenerationIsRecordedWhenNoGenerationsAreRemaining() {
+    void shouldThrowExceptionIfDeliveryIsRecordedWhenNoDeliveriesAreRemaining() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxGenerations(1)
+                .maxDeliveryAttempts(1)
                 .build();
-        final OneTimePasscodeGeneration generation = OneTimePasscodeGenerationMother.smsGeneration();
-        verification.record(generation);
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
+        verification.record(delivery);
 
-        final Throwable error = catchThrowable(() -> verification.record(generation));
+        final Throwable error = catchThrowable(() -> verification.record(delivery));
 
-        assertThat(error).isInstanceOf(NoGenerationsRemainingException.class);
+        assertThat(error).isInstanceOf(NoDeliveryAttemptsRemainingException.class);
     }
 
     @Test
-    void shouldDecrementGenerationsRemainingAfterGenerationIsRecorded() {
-        final int maxGenerations = 1;
+    void shouldDecrementDeliveriesRemainingAfterDeliveryIsRecorded() {
+        final int maxDeliveries = 1;
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxGenerations(maxGenerations)
+                .maxDeliveryAttempts(maxDeliveries)
                 .build();
-        final OneTimePasscodeGeneration generation = OneTimePasscodeGenerationMother.smsGeneration();
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
 
-        assertThat(verification.getGenerationsRemaining()).isEqualTo(maxGenerations);
-        verification.record(generation);
-        assertThat(verification.getGenerationsRemaining()).isEqualTo(maxGenerations - 1);
+        assertThat(verification.getDeliveryAttemptsRemaining()).isEqualTo(maxDeliveries);
+        verification.record(delivery);
+        assertThat(verification.getDeliveryAttemptsRemaining()).isEqualTo(maxDeliveries - 1);
     }
 
     @Test
-    void shouldReturnRecordedGenerations() {
+    void shouldReturnRecordedDeliveries() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxGenerations(1)
+                .maxDeliveryAttempts(1)
                 .build();
-        final OneTimePasscodeGeneration generation = OneTimePasscodeGenerationMother.smsGeneration();
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
 
-        verification.record(generation);
+        verification.record(delivery);
 
-        assertThat(verification.getGenerations()).containsExactly(generation);
+        assertThat(verification.getDeliveries()).containsExactly(delivery);
     }
 
     @Test
@@ -215,7 +204,7 @@ class OneTimePasscodeVerificationTest {
     void shouldCompleteVerificationIfAttemptIsNotSuccessfulAndNoAttemptsAreRemaining() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
                 .maxAttempts(1)
-                .generations(OneTimePasscodeGenerationMother.oneSmsGeneration("111111"))
+                .deliveries(OneTimePasscodeDeliveryMother.oneSmsDelivery("111111"))
                 .build();
         final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.attempt("222222");
 
@@ -231,7 +220,7 @@ class OneTimePasscodeVerificationTest {
         final String passcode = "12345678";
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
                 .maxAttempts(2)
-                .generations(OneTimePasscodeGenerationMother.oneSmsGeneration(passcode))
+                .deliveries(OneTimePasscodeDeliveryMother.oneSmsDelivery(passcode))
                 .build();
         final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.attempt(passcode);
 

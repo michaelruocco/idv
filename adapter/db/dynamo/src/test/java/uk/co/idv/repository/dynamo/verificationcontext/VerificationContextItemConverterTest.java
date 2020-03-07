@@ -2,8 +2,8 @@ package uk.co.idv.repository.dynamo.verificationcontext;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.repository.dynamo.table.TimeToLiveCalculator;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
@@ -23,7 +23,7 @@ class VerificationContextItemConverterTest {
 
     @Test
     void shouldSetIdOnItem() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         given(jsonConverter.toJson(context)).willReturn("{}");
 
         final Item item = converter.toItem(context);
@@ -33,7 +33,7 @@ class VerificationContextItemConverterTest {
 
     @Test
     void shouldSetTimeToLiveOnItem() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         final long expectedTimeToLive = 123;
         given(timeToLiveCalculator.calculate()).willReturn(expectedTimeToLive);
         given(jsonConverter.toJson(context)).willReturn("{}");
@@ -45,7 +45,7 @@ class VerificationContextItemConverterTest {
 
     @Test
     void shouldSetJsonBodyOnItem() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         final String expectedJson = "{}";
         given(jsonConverter.toJson(context)).willReturn(expectedJson);
 
@@ -58,7 +58,7 @@ class VerificationContextItemConverterTest {
     void shouldConvertJsonBodyToContext() {
         final String json = "{}";
         final Item item = new Item().withJSON("body", json);
-        final VerificationContext expectedContext = new FakeVerificationContext();
+        final VerificationContext expectedContext = VerificationContextMother.fake();
         given(jsonConverter.toObject(json, VerificationContext.class)).willReturn(expectedContext);
 
         final VerificationContext context = converter.toContext(item);

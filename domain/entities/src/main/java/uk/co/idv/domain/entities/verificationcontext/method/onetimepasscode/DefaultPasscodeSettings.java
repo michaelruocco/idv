@@ -18,7 +18,7 @@ public class DefaultPasscodeSettings implements PasscodeSettings {
     }
 
     @Override
-    public int getMaxGenerationAttempts() {
+    public int getMaxDeliveryAttempts() {
         return 3;
     }
 

@@ -2,6 +2,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
@@ -66,14 +67,7 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
         return method.getResults();
     }
 
-    private VerificationSequences addResult(final VerificationResult result) {
-        final Collection<VerificationSequence> updatedSequences = sequences.stream()
-                .map(sequence -> sequence.addResultIfHasNextMethod(result))
-                .collect(Collectors.toList());
-        return new VerificationSequences(updatedSequences);
-    }
-
-    private boolean hasSequencesWithNextMethod(final String methodName) {
+    public boolean hasSequencesWithNextMethod(final String methodName) {
         return sequences.stream().anyMatch(sequence -> sequence.hasNextMethod(methodName));
     }
 
@@ -87,6 +81,30 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
     public Stream<VerificationSequence> stream() {
         return sequences.stream();
+    }
+
+    //TODO test this method
+    public VerificationMethod getNextEligibleMethod(final String methodName) {
+        final Collection<VerificationSequence> methodSequences = sequences.stream()
+                .filter(sequence -> sequence.hasNextMethod(methodName))
+                .collect(Collectors.toList());
+        if (methodSequences.isEmpty()) {
+            throw new NotNextMethodInSequenceException(methodName);
+        }
+
+        if (methodSequences.size() == 1) {
+            return IterableUtils.get(methodSequences, 0).getMethod(methodName);
+        }
+        //TODO handle if next method in more than one sequence, if both the same should be okay, otherwise error
+        //(or decide something else to do)
+        throw new IllegalStateException(String.format("found more than one sequence with next method %s", methodName));
+    }
+
+    private VerificationSequences addResult(final VerificationResult result) {
+        final Collection<VerificationSequence> updatedSequences = sequences.stream()
+                .map(sequence -> sequence.addResultIfHasNextMethod(result))
+                .collect(Collectors.toList());
+        return new VerificationSequences(updatedSequences);
     }
 
     public static class NotNextMethodInSequenceException extends RuntimeException {

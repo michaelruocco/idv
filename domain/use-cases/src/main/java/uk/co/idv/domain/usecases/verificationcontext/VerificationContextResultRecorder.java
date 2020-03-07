@@ -25,10 +25,7 @@ public class VerificationContextResultRecorder {
     }
 
     private VerificationContext loadContext(final UUID id) {
-        final LoadContextRequest request = LoadContextRequest.builder()
-                .id(id)
-                .build();
-        return contextLoader.load(request);
+        return contextLoader.load(id);
     }
 
     private void recordAttempt(final VerificationResult result, final VerificationContext context) {

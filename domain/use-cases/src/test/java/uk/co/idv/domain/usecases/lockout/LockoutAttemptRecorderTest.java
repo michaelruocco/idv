@@ -6,7 +6,7 @@ import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
@@ -79,7 +79,7 @@ class LockoutAttemptRecorderTest {
     private static RecordAttemptRequest toRequest(final VerificationResult result) {
         return RecordAttemptRequest.builder()
                 .result(result)
-                .context(new FakeVerificationContext())
+                .context(VerificationContextMother.fake())
                 .build();
     }
 

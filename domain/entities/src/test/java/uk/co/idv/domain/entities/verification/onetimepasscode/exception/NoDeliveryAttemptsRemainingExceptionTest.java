@@ -6,17 +6,17 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NoGenerationsRemainingExceptionTest {
+class NoDeliveryAttemptsRemainingExceptionTest {
 
     @Test
     void shouldPopulateMessage() {
         final UUID id = UUID.randomUUID();
-        final int maxGenerations = 3;
-        final Throwable error = new NoGenerationsRemainingException(id, maxGenerations);
+        final int maxDeliveryAttempts = 3;
+        final Throwable error = new NoDeliveryAttemptsRemainingException(id, maxDeliveryAttempts);
 
         final String message = error.getMessage();
 
-        final String expectedMessage = String.format("verification id %s, max generations %d", id, maxGenerations);
+        final String expectedMessage = String.format("verification id %s, max delivery attempts %d", id, maxDeliveryAttempts);
         assertThat(message).isEqualTo(expectedMessage);
     }
 

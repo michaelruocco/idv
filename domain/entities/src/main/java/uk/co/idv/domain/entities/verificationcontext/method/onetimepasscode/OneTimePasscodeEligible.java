@@ -9,6 +9,7 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible implements OneTimePasscode {
 
@@ -45,9 +46,32 @@ public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible 
         return Collections.unmodifiableCollection(deliveryMethods);
     }
 
+    public DeliveryMethod getDeliveryMethod(final UUID id) {
+        return deliveryMethods.stream()
+                .filter(method -> method.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new DeliveryMethodNotFoundException(id));
+    }
+
+    public int getPasscodeLength() {
+        return passcodeSettings.getLength();
+    }
+
+    public int getMaxDeliveryAttempts() {
+        return passcodeSettings.getMaxDeliveryAttempts();
+    }
+
     @Override
     protected VerificationMethod updateResults(final VerificationResults results) {
         return new OneTimePasscodeEligible(passcodeSettings, deliveryMethods, results);
+    }
+
+    public static class DeliveryMethodNotFoundException extends RuntimeException {
+
+        public DeliveryMethodNotFoundException(final UUID id) {
+            super(id.toString());
+        }
+
     }
 
 }

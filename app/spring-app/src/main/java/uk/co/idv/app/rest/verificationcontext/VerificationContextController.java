@@ -12,7 +12,6 @@ import uk.co.idv.api.verificationcontext.CreateContextRequestDocument;
 import uk.co.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
 import uk.co.idv.api.verificationcontext.VerificationContextDocument;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
-import uk.co.idv.domain.usecases.verificationcontext.LoadContextRequest;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
 import java.net.URI;
@@ -39,8 +38,7 @@ public class VerificationContextController {
 
     @GetMapping("/verificationContexts/{id}")
     public VerificationContextDocument getContext(@PathVariable("id") final UUID id) {
-        final LoadContextRequest request = toGetContextRequest(id);
-        final VerificationContext context = contextService.load(request);
+        final VerificationContext context = contextService.load(id);
         return toDocument(context);
     }
 
@@ -48,12 +46,6 @@ public class VerificationContextController {
     public VerificationContextDocument updateContextResults(@RequestBody final UpdateContextResultsRequestDocument request) {
         final VerificationContext context = contextService.recordResult(request.getAttributes());
         return toDocument(context);
-    }
-
-    private static LoadContextRequest toGetContextRequest(final UUID id) {
-        return LoadContextRequest.builder()
-                .id(id)
-                .build();
     }
 
     private static VerificationContextDocument toDocument(final VerificationContext context) {

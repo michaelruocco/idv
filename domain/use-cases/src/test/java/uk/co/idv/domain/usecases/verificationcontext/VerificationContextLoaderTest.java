@@ -2,12 +2,12 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
 import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader.VerificationContextNotFoundException;
@@ -38,10 +38,9 @@ class VerificationContextLoaderTest {
     @Test
     void shouldThrowExceptionIfContextNotFound() {
         final UUID id = UUID.randomUUID();
-        final LoadContextRequest request = toLoadContextRequest(id);
         given(dao.load(id)).willReturn(Optional.empty());
 
-        final Throwable error = catchThrowable(() -> loader.load(request));
+        final Throwable error = catchThrowable(() -> loader.load(id));
 
         assertThat(error)
                 .isInstanceOf(VerificationContextNotFoundException.class)
@@ -51,14 +50,13 @@ class VerificationContextLoaderTest {
     @Test
     void shouldThrowExceptionIfContextHasExpired() {
         final UUID id = UUID.fromString("7d753825-4fc7-4eec-b6fe-43073884b778");
-        final LoadContextRequest request = toLoadContextRequest(id);
         final VerificationContext context = mock(VerificationContext.class);
         given(context.getId()).willReturn(id);
         given(context.hasExpired(NOW)).willReturn(true);
         given(context.getExpiry()).willReturn(NOW.minusSeconds(30));
         given(dao.load(id)).willReturn(Optional.of(context));
 
-        final Throwable error = catchThrowable(() -> loader.load(request));
+        final Throwable error = catchThrowable(() -> loader.load(id));
 
         assertThat(error)
                 .isInstanceOf(VerificationContextExpiredException.class)
@@ -67,11 +65,10 @@ class VerificationContextLoaderTest {
 
     @Test
     void shouldPassChannelWhenValidatingLockoutState() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         given(dao.load(context.getId())).willReturn(Optional.of(context));
-        final LoadContextRequest request = toLoadContextRequest(context.getId());
 
-        loader.load(request);
+        loader.load(context.getId());
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getChannelId()).isEqualTo(context.getChannelId());
@@ -79,11 +76,10 @@ class VerificationContextLoaderTest {
 
     @Test
     void shouldPassActivityWhenValidatingLockoutState() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         given(dao.load(context.getId())).willReturn(Optional.of(context));
-        final LoadContextRequest request = toLoadContextRequest(context.getId());
 
-        loader.load(request);
+        loader.load(context.getId());
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getActivityName()).isEqualTo(context.getActivityName());
@@ -91,11 +87,10 @@ class VerificationContextLoaderTest {
 
     @Test
     void shouldPassProvidedAliasWhenValidatingLockoutState() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         given(dao.load(context.getId())).willReturn(Optional.of(context));
-        final LoadContextRequest request = toLoadContextRequest(context.getId());
 
-        loader.load(request);
+        loader.load(context.getId());
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getAlias()).isEqualTo(context.getProvidedAlias());
@@ -103,11 +98,10 @@ class VerificationContextLoaderTest {
 
     @Test
     void shouldPassProvidedIdvIdValueWhenValidatingLockoutState() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         given(dao.load(context.getId())).willReturn(Optional.of(context));
-        final LoadContextRequest request = toLoadContextRequest(context.getId());
 
-        loader.load(request);
+        loader.load(context.getId());
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getIdvIdValue()).isEqualTo(context.getIdvIdValue());
@@ -115,11 +109,10 @@ class VerificationContextLoaderTest {
 
     @Test
     void shouldPassCurrentTimeWhenValidatingLockoutState() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         given(dao.load(context.getId())).willReturn(Optional.of(context));
-        final LoadContextRequest request = toLoadContextRequest(context.getId());
 
-        loader.load(request);
+        loader.load(context.getId());
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
         assertThat(validateStateRequest.getTimestamp()).isEqualTo(NOW);
@@ -132,9 +125,8 @@ class VerificationContextLoaderTest {
         final VerificationContext context = mock(VerificationContext.class);
         given(context.hasExpired(NOW)).willReturn(false);
         given(dao.load(context.getId())).willReturn(Optional.of(context));
-        final LoadContextRequest request = toLoadContextRequest(context.getId());
 
-        final LockedOutException error = (LockedOutException) catchThrowable(() -> loader.load(request));
+        final LockedOutException error = (LockedOutException) catchThrowable(() -> loader.load(context.getId()));
 
         assertThat(error).hasMessage("locked");
         assertThat(error.getLockoutState()).isEqualTo(lockedState);
@@ -142,19 +134,12 @@ class VerificationContextLoaderTest {
 
     @Test
     void shouldLoadContext() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
         given(dao.load(context.getId())).willReturn(Optional.of(context));
-        final LoadContextRequest request = toLoadContextRequest(context.getId());
 
-        final VerificationContext loadedContext = loader.load(request);
+        final VerificationContext loadedContext = loader.load(context.getId());
 
         assertThat(loadedContext).isEqualTo(context);
-    }
-
-    private static LoadContextRequest toLoadContextRequest(final UUID id) {
-        return LoadContextRequest.builder()
-                .id(id)
-                .build();
     }
 
 }

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.co.idv.domain.entities.activity.ActivityMother;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
@@ -39,7 +39,7 @@ class DynamoVerificationContextDaoTest {
 
     @Test
     void shouldLoadVerificationContextById() {
-        final VerificationContext context = new FakeVerificationContext(ActivityMother.onlinePurchase());
+        final VerificationContext context = VerificationContextMother.withActivity(ActivityMother.onlinePurchase());
         dao.save(context);
 
         final Optional<VerificationContext> loadedContext = dao.load(context.getId());

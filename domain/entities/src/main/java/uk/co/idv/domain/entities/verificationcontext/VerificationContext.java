@@ -98,4 +98,9 @@ public class VerificationContext {
         return sequences.containsCompleteMethod(methodName);
     }
 
+    //TODO test this method
+    public <T> T getNextEligibleMethod(final String methodName, final Class<T> type) {
+        return type.cast(sequences.getNextEligibleMethod(methodName));
+    }
+
 }

@@ -39,8 +39,7 @@ class VerificationResultRecorderTest {
 
         resultRecorder.recordResult(request);
 
-        final LoadContextRequest loadContextRequest = contextLoader.getLastLoadContextRequest();
-        assertThat(loadContextRequest.getId()).isEqualTo(contextId);
+        assertThat(contextLoader.getLastLoadedContextId()).isEqualTo(contextId);
     }
 
     @Test

@@ -2,24 +2,25 @@ package uk.co.idv.json.verificationcontext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.Module;
 import org.junit.jupiter.api.Test;
-import org.zalando.jackson.datatype.money.MoneyModule;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.idv.json.activity.ActivityDeserializer;
 import uk.co.idv.json.activity.ActivityModule;
+import uk.co.idv.json.activity.LoginJsonNodeConverter;
+import uk.co.idv.json.activity.OnlinePurchaseJsonNodeConverter;
 import uk.co.idv.json.activity.simple.AllSimpleActivityJsonNodeConverter;
-import uk.co.idv.json.channel.FakeChannelModule;
-import uk.co.idv.json.identity.IdentityModule;
 import uk.co.mruoc.file.content.ContentLoader;
 
-import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class VerificationContextDeserializerTest {
 
-    private static final ObjectMapper MAPPER = buildMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(modules()).build();
 
     @Test
     void shouldDeserializeContext() throws JsonProcessingException {
@@ -27,19 +28,19 @@ class VerificationContextDeserializerTest {
 
         final VerificationContext context =  MAPPER.readValue(json, VerificationContext.class);
 
-        assertThat(context).isEqualToComparingFieldByField(new FakeVerificationContext());
+        assertThat(context).isEqualToComparingFieldByField(VerificationContextMother.fake());
     }
 
-    private static ObjectMapper buildMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new VerificationContextModule());
-        mapper.registerModule(new FakeChannelModule());
-        mapper.registerModule(new ActivityModule(new ActivityDeserializer(new AllSimpleActivityJsonNodeConverter())));
-        mapper.registerModule(new IdentityModule());
-        mapper.registerModule(new MoneyModule());
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(WRITE_DATES_AS_TIMESTAMPS);
-        return mapper;
+    private static List<Module> modules() {
+        return ObjectMapperFactory.modules(new ActivityModule(buildActivityDeserializer()));
+    }
+
+    private static ActivityDeserializer buildActivityDeserializer() {
+        return new ActivityDeserializer(
+                new OnlinePurchaseJsonNodeConverter(),
+                new LoginJsonNodeConverter(),
+                new AllSimpleActivityJsonNodeConverter()
+        );
     }
 
 }

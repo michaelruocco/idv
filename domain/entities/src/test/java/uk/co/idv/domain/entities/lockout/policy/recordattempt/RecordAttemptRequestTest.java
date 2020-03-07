@@ -3,8 +3,8 @@ package uk.co.idv.domain.entities.lockout.policy.recordattempt;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest.RecordAttemptRequestBuilder;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
@@ -34,7 +34,7 @@ class RecordAttemptRequestTest {
 
     @Test
     void shouldReturnContext() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
 
         final RecordAttemptRequest request = builder.context(context).build();
 
@@ -43,7 +43,7 @@ class RecordAttemptRequestTest {
 
     @Test
     void shouldReturnIdvIdValueFromContext() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
 
         final RecordAttemptRequest request = builder.context(context).build();
 
@@ -52,7 +52,7 @@ class RecordAttemptRequestTest {
 
     @Test
     void shouldReturnActivityNameFromContext() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
 
         final RecordAttemptRequest request = builder.context(context).build();
 
@@ -61,7 +61,7 @@ class RecordAttemptRequestTest {
 
     @Test
     void shouldReturnAliasAsContextProvidedAlias() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
 
         final RecordAttemptRequest request = builder.context(context).build();
 
@@ -70,7 +70,7 @@ class RecordAttemptRequestTest {
 
     @Test
     void shouldReturnAliasTypeFromContextProvidedAlias() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
 
         final RecordAttemptRequest request = builder.context(context).build();
 
@@ -80,7 +80,7 @@ class RecordAttemptRequestTest {
 
     @Test
     void shouldReturnChannelIdFromContext() {
-        final VerificationContext context = new FakeVerificationContext();
+        final VerificationContext context = VerificationContextMother.fake();
 
         final RecordAttemptRequest request = builder.context(context).build();
 

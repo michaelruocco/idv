@@ -1,5 +1,6 @@
 package uk.co.idv.json.activity;
 
+
 import java.util.Arrays;
 import java.util.Collection;
 

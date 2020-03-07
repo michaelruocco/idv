@@ -18,11 +18,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
     private final TimeGenerator timeGenerator;
 
     @Override
-    public VerificationContext load(final LoadContextRequest request) {
-        return load(request.getId());
-    }
-
-    private VerificationContext load(final UUID id) {
+    public VerificationContext load(final UUID id) {
         final VerificationContext context = dao.load(id).orElseThrow(() -> new VerificationContextNotFoundException(id));
         validateExpiry(context);
         validateLockoutState(context);

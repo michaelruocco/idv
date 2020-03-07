@@ -8,11 +8,10 @@ import org.springframework.http.ResponseEntity;
 import uk.co.idv.api.verificationcontext.CreateContextRequestDocument;
 import uk.co.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
 import uk.co.idv.api.verificationcontext.VerificationContextDocument;
-import uk.co.idv.domain.entities.verificationcontext.FakeVerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
 import uk.co.idv.domain.usecases.verificationcontext.FakeVerificationContextService;
-import uk.co.idv.domain.usecases.verificationcontext.LoadContextRequest;
 import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
 
 import java.util.UUID;
@@ -21,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class VerificationContextControllerTest {
 
-    private final VerificationContext context = new FakeVerificationContext();
+    private final VerificationContext context = VerificationContextMother.fake();
 
     private final FakeVerificationContextService service = new FakeVerificationContextService();
 
@@ -74,13 +73,13 @@ class VerificationContextControllerTest {
     }
 
     @Test
-    void shouldPassLoadContextRequestToServiceWithProvidedId() {
+    void shouldPassProvidedIdToService() {
         final UUID id = UUID.randomUUID();
 
         controller.getContext(id);
 
-        final LoadContextRequest request = service.getLastLoadRequest();
-        assertThat(request.getId()).isEqualTo(id);
+        final UUID expectedId = service.getLastLoadedId();
+        assertThat(id).isEqualTo(expectedId);
     }
 
     @Test
