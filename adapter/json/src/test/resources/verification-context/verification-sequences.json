@@ -34,7 +34,6 @@
         "maxAttempts": 1,
         "cardNumbers": [
           {
-            "id": "${json-unit.ignore}",
             "tokenized": "4929991234567890",
             "type": "CREDIT"
           }

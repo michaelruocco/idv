@@ -8,7 +8,6 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.C
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardType;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class CardNumberDeserializer extends StdDeserializer<CardNumber> {
 
@@ -20,7 +19,6 @@ public class CardNumberDeserializer extends StdDeserializer<CardNumber> {
     public CardNumber deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
         return new CardNumber(
-                UUID.fromString(node.get("id").asText()),
                 node.get("tokenized").asText(),
                 CardType.valueOf(node.get("type").asText())
         );
