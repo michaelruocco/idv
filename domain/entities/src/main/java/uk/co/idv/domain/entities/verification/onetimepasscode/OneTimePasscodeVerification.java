@@ -17,6 +17,7 @@ import java.util.UUID;
 public class OneTimePasscodeVerification {
 
     private final UUID id;
+    private final UUID contextId;
     private final Instant created;
     private final Instant expiry;
     private final int maxDeliveryAttempts;

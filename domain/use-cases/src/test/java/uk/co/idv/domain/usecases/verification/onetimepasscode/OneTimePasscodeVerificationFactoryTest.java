@@ -2,6 +2,8 @@ package uk.co.idv.domain.usecases.verification.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
@@ -30,17 +32,29 @@ class OneTimePasscodeVerificationFactoryTest {
     @Test
     void shouldPopulateId() {
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
-        final OneTimePasscodeVerification verification = factory.build(method);
+        final OneTimePasscodeVerification verification = factory.build(context);
 
         assertThat(verification.getId()).isEqualTo(id);
     }
 
     @Test
+    void shouldPopulateContextId() {
+        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
+
+        final OneTimePasscodeVerification verification = factory.build(context);
+
+        assertThat(verification.getContextId()).isEqualTo(context.getId());
+    }
+
+    @Test
     void shouldPopulateCreated() {
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
-        final OneTimePasscodeVerification verification = factory.build(method);
+        final OneTimePasscodeVerification verification = factory.build(context);
 
         assertThat(verification.getCreated()).isEqualTo(now);
     }
@@ -48,8 +62,9 @@ class OneTimePasscodeVerificationFactoryTest {
     @Test
     void shouldPopulateExpired() {
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
-        final OneTimePasscodeVerification verification = factory.build(method);
+        final OneTimePasscodeVerification verification = factory.build(context);
 
         assertThat(verification.getExpiry()).isEqualTo(now.plus(method.getDuration()));
     }
@@ -57,8 +72,9 @@ class OneTimePasscodeVerificationFactoryTest {
     @Test
     void shouldPopulateMaxAttempts() {
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
-        final OneTimePasscodeVerification verification = factory.build(method);
+        final OneTimePasscodeVerification verification = factory.build(context);
 
         assertThat(verification.getMaxAttempts()).isEqualTo(method.getMaxAttempts());
     }
@@ -66,8 +82,9 @@ class OneTimePasscodeVerificationFactoryTest {
     @Test
     void shouldPopulateMaxDeliveryAttempts() {
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
-        final OneTimePasscodeVerification verification = factory.build(method);
+        final OneTimePasscodeVerification verification = factory.build(context);
 
         assertThat(verification.getMaxDeliveryAttempts()).isEqualTo(method.getMaxDeliveryAttempts());
     }

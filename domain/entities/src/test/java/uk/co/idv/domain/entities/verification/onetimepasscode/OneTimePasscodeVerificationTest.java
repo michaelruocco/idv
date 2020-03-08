@@ -25,6 +25,17 @@ class OneTimePasscodeVerificationTest {
     }
 
     @Test
+    void shouldReturnContextId() {
+        final UUID contextId = UUID.randomUUID();
+
+        final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
+                .contextId(contextId)
+                .build();
+
+        assertThat(verification.getContextId()).isEqualTo(contextId);
+    }
+
+    @Test
     void shouldReturnCreated() {
         final Instant created = Instant.now();
 

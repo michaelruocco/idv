@@ -51,7 +51,7 @@ class OneTimePasscodeServiceTest {
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
         given(contextLoader.load(contextId)).willReturn(context);
         final OneTimePasscodeVerification expectedVerification = mock(OneTimePasscodeVerification.class);
-        given(verificationFactory.build(method)).willReturn(expectedVerification);
+        given(verificationFactory.build(context)).willReturn(expectedVerification);
 
         final OneTimePasscodeVerification verification = service.sendPasscode(request);
 
@@ -72,7 +72,7 @@ class OneTimePasscodeServiceTest {
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
         given(contextLoader.load(contextId)).willReturn(context);
         final OneTimePasscodeVerification expectedVerification = mock(OneTimePasscodeVerification.class);
-        given(verificationFactory.build(method)).willReturn(expectedVerification);
+        given(verificationFactory.build(context)).willReturn(expectedVerification);
         final String passcode = "passcode";
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
 
@@ -101,7 +101,7 @@ class OneTimePasscodeServiceTest {
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
         given(contextLoader.load(contextId)).willReturn(context);
         final OneTimePasscodeVerification expectedVerification = mock(OneTimePasscodeVerification.class);
-        given(verificationFactory.build(method)).willReturn(expectedVerification);
+        given(verificationFactory.build(context)).willReturn(expectedVerification);
         final String passcode = "passcode";
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
 

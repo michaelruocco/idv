@@ -23,23 +23,21 @@ public class OneTimePasscodeService {
 
     public OneTimePasscodeVerification sendPasscode(final CreateOneTimePasscodeVerificationRequest request) {
         final VerificationContext context = contextLoader.load(request.getContextId());
-        final OneTimePasscodeEligible method = context.getNextEligibleMethod(OneTimePasscode.NAME, OneTimePasscodeEligible.class);
-        final OneTimePasscodeVerification verification = verificationFactory.build(method);
-        return sendPasscode(method, verification, request.getDeliveryMethodId(), context.getActivity());
+        final OneTimePasscodeVerification verification = verificationFactory.build(context);
+        return sendPasscode(context, verification, request.getDeliveryMethodId());
     }
 
     public OneTimePasscodeVerification sendPasscode(final UpdateOneTimePasscodeVerificationRequest request) {
         final VerificationContext context = contextLoader.load(request.getContextId());
-        final OneTimePasscodeEligible method = context.getNextEligibleMethod(OneTimePasscode.NAME, OneTimePasscodeEligible.class);
         final OneTimePasscodeVerification verification = verificationLoader.load(request.getId());
-        return sendPasscode(method, verification, request.getDeliveryMethodId(), context.getActivity());
+        return sendPasscode(context, verification, request.getDeliveryMethodId());
     }
 
-    private OneTimePasscodeVerification sendPasscode(final OneTimePasscodeEligible method,
+    private OneTimePasscodeVerification sendPasscode(final VerificationContext context,
                                                      final OneTimePasscodeVerification verification,
-                                                     final UUID deliveryMethodId,
-                                                     final Activity activity) {
-        final OneTimePasscodeDelivery delivery = toDelivery(deliveryMethodId, method, activity);
+                                                     final UUID deliveryMethodId) {
+        final OneTimePasscodeEligible method = context.getNextEligibleMethod(OneTimePasscode.NAME, OneTimePasscodeEligible.class);
+        final OneTimePasscodeDelivery delivery = toDelivery(deliveryMethodId, method, context.getActivity());
         sender.send(delivery);
         return update(verification, delivery);
     }
