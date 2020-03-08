@@ -48,7 +48,6 @@ class VerificationContextControllerTest {
         final ResponseEntity<VerificationContextDocument> response = controller.createContext(requestDocument);
 
         final VerificationContextDocument responseDocument = response.getBody();
-        assertThat(responseDocument).isNotNull();
         assertThat(responseDocument.getAttributes()).isEqualTo(context);
     }
 

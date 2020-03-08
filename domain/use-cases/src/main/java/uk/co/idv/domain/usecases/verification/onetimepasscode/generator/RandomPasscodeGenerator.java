@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.verification.onetimepasscode;
+package uk.co.idv.domain.usecases.verification.onetimepasscode.generator;
 
 import org.apache.commons.lang3.RandomStringUtils;
 

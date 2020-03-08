@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.verification.onetimepasscode;
+package uk.co.idv.domain.usecases.verification.onetimepasscode.generator;
 
 public interface PasscodeGenerator {
 

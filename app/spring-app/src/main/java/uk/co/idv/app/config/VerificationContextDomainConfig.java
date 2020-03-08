@@ -43,7 +43,7 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
 
 @Configuration
-public class DefaultDomainConfig {
+public class VerificationContextDomainConfig {
 
     @Bean
     public TimeGenerator timeService() {

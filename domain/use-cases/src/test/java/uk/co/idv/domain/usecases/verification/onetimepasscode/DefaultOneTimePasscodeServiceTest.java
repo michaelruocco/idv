@@ -5,12 +5,15 @@ import org.mockito.InOrder;
 import org.mockito.Mockito;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerificationMother;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.PasscodeGenerator;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeSender;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 
 import java.util.UUID;
@@ -20,7 +23,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class OneTimePasscodeServiceTest {
+class DefaultOneTimePasscodeServiceTest {
 
     private final VerificationContextLoader contextLoader = mock(VerificationContextLoader.class);
     private final OneTimePasscodeVerificationFactory verificationFactory = mock(OneTimePasscodeVerificationFactory.class);
@@ -29,7 +32,7 @@ class OneTimePasscodeServiceTest {
     private final OneTimePasscodeSender sender = mock(OneTimePasscodeSender.class);
     private final OneTimePasscodeVerificationDao dao = mock(OneTimePasscodeVerificationDao.class);
 
-    private final OneTimePasscodeService service = OneTimePasscodeService.builder()
+    private final OneTimePasscodeService service = DefaultOneTimePasscodeService.builder()
             .contextLoader(contextLoader)
             .verificationFactory(verificationFactory)
             .verificationLoader(verificationLoader)
@@ -200,6 +203,17 @@ class OneTimePasscodeServiceTest {
         final InOrder inOrder = Mockito.inOrder(sender, dao);
         inOrder.verify(sender).send(expectedDelivery);
         inOrder.verify(dao).save(verification);
+    }
+
+    @Test
+    void shouldLoadVerification() {
+        final UUID id = UUID.randomUUID();
+        final OneTimePasscodeVerification expectedVerification = OneTimePasscodeVerificationMother.pending();
+        given(verificationLoader.load(id)).willReturn(expectedVerification);
+
+        final OneTimePasscodeVerification verification = service.load(id);
+
+        assertThat(verification).isEqualTo(expectedVerification);
     }
 
 }

@@ -9,9 +9,11 @@ import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.DynamoClientFactory;
 import uk.co.idv.repository.dynamo.DynamoConfig;
+import uk.co.idv.repository.inmemory.verification.onetimepasscode.InMemoryOneTimePasscodeVerificationDao;
 import uk.co.idv.utils.json.converter.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
@@ -41,6 +43,13 @@ public class DynamoDaoConfig {
     public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter) {
         return config.lockoutPolicyDao(jsonConverter);
     }
+
+    //TODO replace this with dynamo dao once implemented
+    @Bean
+    public OneTimePasscodeVerificationDao oneTimePasscodeVerificationDao() {
+        return new InMemoryOneTimePasscodeVerificationDao();
+    }
+
 
     @Bean
     public JsonConverter jsonConverter(@Qualifier("dynamoObjectMapper") final ObjectMapper mapper) {

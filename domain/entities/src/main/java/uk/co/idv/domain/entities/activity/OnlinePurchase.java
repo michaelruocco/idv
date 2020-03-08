@@ -16,6 +16,7 @@ public class OnlinePurchase implements Activity {
     private final String merchantName;
     private final String reference;
     private final MonetaryAmount cost;
+    //TODO add card number
 
     @Override
     public String getName() {

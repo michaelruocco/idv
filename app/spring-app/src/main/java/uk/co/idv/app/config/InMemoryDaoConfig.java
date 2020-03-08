@@ -7,9 +7,11 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.repository.inmemory.identity.InMemoryIdentityDao;
 import uk.co.idv.repository.inmemory.lockout.InMemoryLockoutPolicyDao;
 import uk.co.idv.repository.inmemory.lockout.InMemoryVerificationAttemptDao;
+import uk.co.idv.repository.inmemory.verification.onetimepasscode.InMemoryOneTimePasscodeVerificationDao;
 import uk.co.idv.repository.inmemory.verificationcontext.InMemoryVerificationContextDao;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
@@ -43,6 +45,11 @@ public class InMemoryDaoConfig {
     @Bean
     public LockoutPolicyDao lockoutPolicyDao() {
         return new InMemoryLockoutPolicyDao();
+    }
+
+    @Bean
+    public OneTimePasscodeVerificationDao oneTimePasscodeVerificationDao() {
+        return new InMemoryOneTimePasscodeVerificationDao();
     }
 
 }
