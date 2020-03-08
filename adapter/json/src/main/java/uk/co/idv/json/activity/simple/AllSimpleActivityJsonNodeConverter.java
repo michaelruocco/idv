@@ -1,5 +1,7 @@
 package uk.co.idv.json.activity.simple;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +20,8 @@ public class AllSimpleActivityJsonNodeConverter implements ActivityJsonNodeConve
 
     }
 
-    public Activity toActivity(final JsonNode node) {
+    @Override
+    public Activity toActivity(final JsonNode node, final JsonParser parser, final DeserializationContext context) {
         final String name = ActivityJsonNodeConverter.extractName(node);
         log.info("converting {} to simple activity", name);
         return SimpleActivity.builder()

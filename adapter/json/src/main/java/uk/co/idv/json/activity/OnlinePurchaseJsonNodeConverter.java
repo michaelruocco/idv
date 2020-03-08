@@ -1,12 +1,16 @@
 package uk.co.idv.json.activity;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.javamoney.moneta.Money;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
+import uk.co.idv.domain.entities.cardnumber.CardNumber;
 
 import javax.money.MonetaryAmount;
+import java.io.IOException;
 
 @Slf4j
 public class OnlinePurchaseJsonNodeConverter implements ActivityJsonNodeConverter {
@@ -18,12 +22,16 @@ public class OnlinePurchaseJsonNodeConverter implements ActivityJsonNodeConverte
         return supported;
     }
 
-    public Activity toActivity(final JsonNode node) {
+    @Override
+    public Activity toActivity(final JsonNode node,
+                               final JsonParser parser,
+                               final DeserializationContext context) throws IOException {
         return OnlinePurchase.builder()
                 .timestamp(ActivityJsonNodeConverter.extractTimestamp(node))
                 .merchantName(extractMerchantName(node))
                 .reference(extractReference(node))
                 .cost(extractCost(node))
+                .cardNumber(extractCardNumber(node, parser))
                 .build();
     }
 
@@ -41,6 +49,10 @@ public class OnlinePurchaseJsonNodeConverter implements ActivityJsonNodeConverte
                 costNode.get("amount").numberValue(),
                 costNode.get("currency").asText()
         );
+    }
+
+    private static CardNumber extractCardNumber(final JsonNode node, final JsonParser parser) throws IOException {
+        return node.get("cardNumber").traverse(parser.getCodec()).readValueAs(CardNumber.class);
     }
 
 }

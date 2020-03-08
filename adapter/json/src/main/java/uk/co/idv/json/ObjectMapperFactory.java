@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.Module;
 import lombok.RequiredArgsConstructor;
 import org.zalando.jackson.datatype.money.MoneyModule;
 import uk.co.idv.json.activity.ActivityModule;
+import uk.co.idv.json.cardnumber.CardNumberModule;
 import uk.co.idv.json.channel.simple.SimpleChannelModule;
 import uk.co.idv.json.identity.IdentityModule;
 import uk.co.idv.json.lockout.attempt.VerificationAttemptsModule;
@@ -52,6 +53,7 @@ public class ObjectMapperFactory {
                 new Jdk8Module(),
                 new JavaTimeModule(),
                 new MoneyModule(),
+                new CardNumberModule(),
                 new SimpleChannelModule(),
                 activityModule,
                 new IdentityModule(),

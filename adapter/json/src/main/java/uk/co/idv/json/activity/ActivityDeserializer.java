@@ -9,6 +9,7 @@ import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -31,12 +32,23 @@ public class ActivityDeserializer extends StdDeserializer<Activity> {
         final JsonNode node = parser.getCodec().readTree(parser);
         final String name = ActivityJsonNodeConverter.extractName(node);
         return findConverter(name)
-                .map(converter -> converter.toActivity(node))
+                .map(converter -> toActivity(converter, node, parser, context))
                 .orElseThrow(() -> new ActivityNotSupportedException(name));
     }
 
     private Optional<ActivityJsonNodeConverter> findConverter(final String name) {
         return converters.stream().filter(converter -> converter.supportsActivity(name)).findFirst();
+    }
+
+    private Activity toActivity(final ActivityJsonNodeConverter converter,
+                                       final JsonNode node,
+                                       final JsonParser parser,
+                                       final DeserializationContext context) {
+        try {
+            return converter.toActivity(node, parser, context);
+        } catch (final IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
 }

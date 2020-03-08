@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.activity;
 
 import org.javamoney.moneta.Money;
+import uk.co.idv.domain.entities.cardnumber.CardNumberMother;
 
 import java.time.Instant;
 
@@ -19,6 +20,7 @@ public class ActivityMother {
                 .merchantName("Amazon")
                 .reference("ABC-123")
                 .cost(Money.of(10.99, "GBP"))
+                .cardNumber(CardNumberMother.credit())
                 .build();
     }
 

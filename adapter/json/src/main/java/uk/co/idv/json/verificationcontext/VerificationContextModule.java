@@ -2,7 +2,6 @@ package uk.co.idv.json.verificationcontext;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
 import uk.co.idv.json.verificationcontext.method.DefaultVerificationMethodDeserializer;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodSerializer;
 import uk.co.idv.json.verificationcontext.method.onetimepasscode.DeliveryMethodDeserializer;
@@ -10,7 +9,6 @@ import uk.co.idv.json.verificationcontext.method.onetimepasscode.OneTimePasscode
 import uk.co.idv.json.verificationcontext.method.onetimepasscode.PasscodeSettingsDeserializer;
 import uk.co.idv.json.verificationcontext.method.onetimepasscode.PasscodeSettingsSerializer;
 import uk.co.idv.json.verificationcontext.method.pinsentry.mobile.MobilePinsentrySerializer;
-import uk.co.idv.json.cardnumber.CardNumberDeserializer;
 import uk.co.idv.json.verificationcontext.method.pinsentry.physical.PhysicalPinsentrySerializer;
 import uk.co.idv.json.verificationcontext.method.pushnotification.PushNotificationSerializer;
 import uk.co.idv.json.verificationcontext.result.VerificationResultDeserializer;
@@ -53,7 +51,6 @@ public class VerificationContextModule extends SimpleModule {
         addDeserializer(VerificationSequence.class, new VerificationSequenceDeserializer());
         addDeserializer(VerificationMethod.class, new DefaultVerificationMethodDeserializer());
         addDeserializer(VerificationResults.class, new VerificationResultsDeserializer());
-        addDeserializer(CardNumber.class, new CardNumberDeserializer());
         addDeserializer(DeliveryMethod.class, new DeliveryMethodDeserializer());
         addDeserializer(PasscodeSettings.class, new PasscodeSettingsDeserializer());
     }

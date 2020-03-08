@@ -10,6 +10,10 @@
     "cost": {
       "amount": 10.99,
       "currency": "GBP"
+    },
+    "cardNumber": {
+      "tokenized": "4929991234567890",
+      "type": "CREDIT"
     }
   },
   "providedAlias": {

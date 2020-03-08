@@ -58,7 +58,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n    \t\"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\",\n                \"issuerSessionId\": \"08c1688e-02b0-47bb-9e3c-ed6aa1b0542b\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n            \t\"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111119\"\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\",\n                \"issuerSessionId\": \"08c1688e-02b0-47bb-9e3c-ed6aa1b0542b\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111119\"\n            }\n        }\n    }\n}"
 				},
 				"url": {
 					"raw": "{{host}}/verificationContexts",
@@ -81,13 +81,18 @@
 						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
 						"exec": [
 							"var json = JSON.parse(responseBody);",
-							"var identity = json.data.attributes.identity;",
+							"",
+							"var attributes = json.data.attributes;",
+							"var identity = attributes.identity;",
+							"",
 							"var alias = identity.aliases[0];",
+							"var otpMethod = attributes.sequences[3].methods[0];",
 							"",
 							"postman.setEnvironmentVariable(\"verificationContextId\", json.data.id);",
 							"postman.setEnvironmentVariable(\"idvId\", identity.id);",
 							"postman.setEnvironmentVariable(\"aliasType\", alias.type);",
 							"postman.setEnvironmentVariable(\"aliasValue\", alias.value);",
+							"postman.setEnvironmentVariable(\"optDeliveryMethodId\", otpMethod.deliveryMethods[0].id);",
 							"",
 							"pm.test(\"should return created status\", function () {",
 							"    pm.response.to.have.status(201)",
@@ -126,11 +131,16 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n    \t\"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
 				},
 				"url": {
 					"raw": "{{host}}/verificationContexts",
@@ -139,6 +149,63 @@
 					],
 					"path": [
 						"verificationContexts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post-otp-verification",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
+						"exec": [
+							"pm.test(\"should return created status\", function () {",
+							"    pm.response.to.have.status(201)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0fce8ef9-a85b-4bac-a81a-cfbc2deb2657",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n    \t\"type\": \"oneTimePasscodeVerifications\",\n        \"attributes\": {\n        \t\"contextId\": \"{{verificationContextId}}\",\n        \t\"deliveryMethodId\": \"{{optDeliveryMethodId}}\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/oneTimePasscodeVerifications",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"oneTimePasscodeVerifications"
 					]
 				}
 			},

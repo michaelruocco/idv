@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
+import uk.co.idv.json.ObjectMapperSingleton;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ActivityDeserializerTest {
 
-    private static final ObjectMapper MAPPER = buildMapper();
+    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
     void shouldDeserializeOnlinePurchase() throws IOException {
@@ -43,12 +44,6 @@ class ActivityDeserializerTest {
         assertThat(error)
                 .isInstanceOf(ActivityNotSupportedException.class)
                 .hasMessage("not-supported-activity");
-    }
-
-    private static ObjectMapper buildMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new ActivityModule());
-        return mapper;
     }
 
 }
