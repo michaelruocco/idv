@@ -5,9 +5,9 @@ import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVer
 import uk.co.idv.domain.usecases.verification.onetimepasscode.CreateOneTimePasscodeVerificationRequest;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.UpdateOneTimePasscodeVerificationRequest;
 
-public class OneTimePasscodeVerificationModule extends SimpleModule {
+public class OneTimePasscodeModule extends SimpleModule {
 
-    public OneTimePasscodeVerificationModule() {
+    public OneTimePasscodeModule() {
         setMixInAnnotation(OneTimePasscodeVerification.class, OneTimePasscodeVerificationMixin.class);
 
         addDeserializer(CreateOneTimePasscodeVerificationRequest.class, new CreateOneTimePasscodeVerificationRequestDeserializer());

@@ -1,5 +1,7 @@
 package uk.co.idv.domain.usecases.verification.onetimepasscode;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.UpdateOneTimePasscodeVerificationRequest.UpdateOneTimePasscodeVerificationRequestBuilder;
 
@@ -36,6 +38,13 @@ class UpdateOneTimePasscodeVerificationRequestTest {
         final UpdateOneTimePasscodeVerificationRequest request = builder.deliveryMethodId(deliveryMethodId).build();
 
         assertThat(request.getDeliveryMethodId()).isEqualTo(deliveryMethodId);
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(UpdateOneTimePasscodeVerificationRequest.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

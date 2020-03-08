@@ -12,7 +12,7 @@ import uk.co.idv.json.channel.simple.SimpleChannelModule;
 import uk.co.idv.json.identity.IdentityModule;
 import uk.co.idv.json.lockout.attempt.VerificationAttemptsModule;
 import uk.co.idv.json.lockout.policy.LockoutPolicyModule;
-import uk.co.idv.json.verification.onetimepasscode.OneTimePasscodeVerificationModule;
+import uk.co.idv.json.verification.onetimepasscode.OneTimePasscodeModule;
 import uk.co.idv.json.verificationcontext.VerificationContextModule;
 
 import java.util.List;
@@ -58,7 +58,7 @@ public class ObjectMapperFactory {
                 new VerificationContextModule(),
                 new VerificationAttemptsModule(),
                 new LockoutPolicyModule(),
-                new OneTimePasscodeVerificationModule()
+                new OneTimePasscodeModule()
         );
     }
 

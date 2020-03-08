@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.CreateOneTimePasscodeVerificationRequest;
+import uk.co.idv.json.util.JsonNodeConverter;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class CreateOneTimePasscodeVerificationRequestDeserializer extends StdDeserializer<CreateOneTimePasscodeVerificationRequest> {
 
@@ -19,13 +19,9 @@ public class CreateOneTimePasscodeVerificationRequestDeserializer extends StdDes
     public CreateOneTimePasscodeVerificationRequest deserialize(final JsonParser parser,final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
         return CreateOneTimePasscodeVerificationRequest.builder()
-                .contextId(toUuid(node.get("contextId")))
-                .deliveryMethodId(toUuid(node.get("deliveryMethodId")))
+                .contextId(JsonNodeConverter.toUUID(node.get("contextId")))
+                .deliveryMethodId(JsonNodeConverter.toUUID(node.get("deliveryMethodId")))
                 .build();
-    }
-
-    private static UUID toUuid(final JsonNode node) {
-        return UUID.fromString(node.asText());
     }
 
 }

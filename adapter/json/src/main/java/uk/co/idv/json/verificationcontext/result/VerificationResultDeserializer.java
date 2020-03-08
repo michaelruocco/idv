@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
+import uk.co.idv.json.util.JsonNodeConverter;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -49,7 +50,7 @@ public class VerificationResultDeserializer extends StdDeserializer<Verification
     }
 
     private static UUID extractVerificationId(final JsonNode node) {
-        return UUID.fromString(node.get("verificationId").asText());
+        return JsonNodeConverter.toUUID(node.get("verificationId"));
     }
 
     private static Instant extractTimetamp(final JsonNode node) {
