@@ -1,4 +1,5 @@
-package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
+package uk.co.idv.domain.entities.cardnumber;
+
 
 
 

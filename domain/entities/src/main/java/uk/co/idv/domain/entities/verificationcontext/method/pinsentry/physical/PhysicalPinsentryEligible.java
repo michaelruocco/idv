@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
 
 import lombok.Builder;
+import uk.co.idv.domain.entities.cardnumber.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.AbstractVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;

@@ -1,8 +1,8 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CreditCardNumber;
+import uk.co.idv.domain.entities.cardnumber.CardNumber;
+import uk.co.idv.domain.entities.cardnumber.CreditCardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;

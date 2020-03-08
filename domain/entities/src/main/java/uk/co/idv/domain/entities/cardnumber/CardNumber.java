@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
+package uk.co.idv.domain.entities.cardnumber;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

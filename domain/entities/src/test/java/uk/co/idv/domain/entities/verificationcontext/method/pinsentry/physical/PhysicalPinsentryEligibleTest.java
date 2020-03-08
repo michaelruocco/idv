@@ -1,6 +1,8 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.cardnumber.CardNumber;
+import uk.co.idv.domain.entities.cardnumber.CardNumberMother;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;

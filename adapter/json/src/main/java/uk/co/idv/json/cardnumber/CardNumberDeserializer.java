@@ -1,11 +1,11 @@
-package uk.co.idv.json.verificationcontext.method.pinsentry.physical;
+package uk.co.idv.json.cardnumber;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.CardType;
+import uk.co.idv.domain.entities.cardnumber.CardNumber;
+import uk.co.idv.domain.entities.cardnumber.CardType;
 
 import java.io.IOException;
 
