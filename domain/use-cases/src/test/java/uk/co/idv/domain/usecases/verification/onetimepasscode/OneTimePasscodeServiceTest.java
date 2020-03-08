@@ -39,11 +39,11 @@ class OneTimePasscodeServiceTest {
             .build();
 
     @Test
-    void shouldGenerateVerification() {
+    void shouldCreateVerification() {
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
-        final GenerateOneTimePasscodeVerificationRequest request = GenerateOneTimePasscodeVerificationRequest.builder()
+        final CreateOneTimePasscodeVerificationRequest request = CreateOneTimePasscodeVerificationRequest.builder()
                 .contextId(contextId)
                 .deliveryMethodId(deliveryMethod.getId())
                 .build();
@@ -60,11 +60,11 @@ class OneTimePasscodeServiceTest {
     }
 
     @Test
-    void shouldRecordDeliveryAgainstGeneratedVerificationBeforeSaving() {
+    void shouldRecordDeliveryAgainstCreatedVerificationBeforeSaving() {
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
-        final GenerateOneTimePasscodeVerificationRequest request = GenerateOneTimePasscodeVerificationRequest.builder()
+        final CreateOneTimePasscodeVerificationRequest request = CreateOneTimePasscodeVerificationRequest.builder()
                 .contextId(contextId)
                 .deliveryMethodId(deliveryMethod.getId())
                 .build();
@@ -89,11 +89,11 @@ class OneTimePasscodeServiceTest {
     }
 
     @Test
-    void shouldSendPasscodeForGeneratedVerification() {
+    void shouldSendPasscodeForCreatedVerification() {
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
-        final GenerateOneTimePasscodeVerificationRequest request = GenerateOneTimePasscodeVerificationRequest.builder()
+        final CreateOneTimePasscodeVerificationRequest request = CreateOneTimePasscodeVerificationRequest.builder()
                 .contextId(contextId)
                 .deliveryMethodId(deliveryMethod.getId())
                 .build();
@@ -118,7 +118,7 @@ class OneTimePasscodeServiceTest {
     }
 
     @Test
-    void shouldLoadVerification() {
+    void shouldLoadVerificationWhenUpdating() {
         final UUID id = UUID.randomUUID();
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();

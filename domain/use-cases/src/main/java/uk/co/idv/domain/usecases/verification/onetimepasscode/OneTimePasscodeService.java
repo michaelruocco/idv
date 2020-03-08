@@ -21,7 +21,7 @@ public class OneTimePasscodeService {
     private final OneTimePasscodeSender sender;
     private final OneTimePasscodeVerificationDao dao;
 
-    public OneTimePasscodeVerification sendPasscode(final GenerateOneTimePasscodeVerificationRequest request) {
+    public OneTimePasscodeVerification sendPasscode(final CreateOneTimePasscodeVerificationRequest request) {
         final VerificationContext context = contextLoader.load(request.getContextId());
         final OneTimePasscodeEligible method = context.getNextEligibleMethod(OneTimePasscode.NAME, OneTimePasscodeEligible.class);
         final OneTimePasscodeVerification verification = verificationFactory.build(method);

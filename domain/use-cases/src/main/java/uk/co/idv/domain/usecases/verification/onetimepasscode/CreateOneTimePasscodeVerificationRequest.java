@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Builder
 @Getter
-public class GenerateOneTimePasscodeVerificationRequest {
+public class CreateOneTimePasscodeVerificationRequest {
 
     private final UUID contextId;
     private final UUID deliveryMethodId;
