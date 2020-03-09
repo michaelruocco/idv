@@ -2,6 +2,7 @@ package uk.co.idv.domain.entities.verification.onetimepasscode;
 
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -21,6 +22,8 @@ public class OneTimePasscodeDeliveryMother {
         return OneTimePasscodeDelivery.builder()
                 .method(DeliveryMethodMother.sms())
                 .passcode(passcode)
+                .message(String.format("Your verification code is %s", passcode))
+                .sent(Instant.parse("2019-09-21T20:44:52.233721Z"))
                 .build();
     }
 

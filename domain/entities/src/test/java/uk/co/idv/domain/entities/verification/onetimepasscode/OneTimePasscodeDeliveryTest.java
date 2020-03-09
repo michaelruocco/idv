@@ -1,10 +1,10 @@
 package uk.co.idv.domain.entities.verification.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
+
+import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,14 +33,25 @@ class OneTimePasscodeDeliveryTest {
     }
 
     @Test
-    void shouldReturnActivity() {
-        final Activity activity = ActivityMother.login();
+    void shouldReturnMessage() {
+        final String message = "message";
 
         final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
-                .activity(activity)
+                .message(message)
                 .build();
 
-        assertThat(delivery.getActivity()).isEqualTo(activity);
+        assertThat(delivery.getMessage()).isEqualTo(message);
+    }
+
+    @Test
+    void shouldReturnSentTimestamp() {
+        final Instant sent = Instant.now();
+
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
+                .sent(sent)
+                .build();
+
+        assertThat(delivery.getSent()).isEqualTo(sent);
     }
 
     @Test

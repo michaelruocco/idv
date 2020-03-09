@@ -16,13 +16,12 @@ public class OneTimePasscodeVerificationRequestSerializerTest {
     private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
 
     @Test
-    void shouldDeserializePendingVerification() throws IOException {
+    void shouldSerializePendingVerification() throws IOException {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerificationMother.pending();
 
         final String json = MAPPER.writeValueAsString(verification);
 
         final String expectedJson = ContentLoader.loadContentFromClasspath("verification/onetimepasscode/one-time-passcode-verification-pending.json");
-        System.out.println(json);
         assertThatJson(json).isEqualTo(expectedJson);
     }
 

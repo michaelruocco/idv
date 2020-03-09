@@ -8,6 +8,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.PasscodeGenerator;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeSender;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 
@@ -20,6 +21,7 @@ public class DefaultOneTimePasscodeService implements OneTimePasscodeService {
     private final OneTimePasscodeVerificationFactory verificationFactory;
     private final OneTimePasscodeVerificationLoader verificationLoader;
     private final PasscodeGenerator passcodeGenerator;
+    private final OneTimePasscodeMessageBuilder messageBuilder;
     private final OneTimePasscodeSender sender;
     private final OneTimePasscodeVerificationDao dao;
 
@@ -54,10 +56,11 @@ public class DefaultOneTimePasscodeService implements OneTimePasscodeService {
     private OneTimePasscodeDelivery toDelivery(final UUID deliveryMethodId,
                                                final OneTimePasscodeEligible method,
                                                final Activity activity) {
+        final String passcode = passcodeGenerator.generate(method.getPasscodeLength());
         return OneTimePasscodeDelivery.builder()
-                .passcode(passcodeGenerator.generate(method.getPasscodeLength()))
+                .passcode(passcode)
                 .method(method.getDeliveryMethod(deliveryMethodId))
-                .activity(activity)
+                .message(messageBuilder.build(activity, passcode))
                 .build();
     }
 

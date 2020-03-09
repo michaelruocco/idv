@@ -13,6 +13,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.Deli
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.PasscodeGenerator;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeSender;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 
@@ -29,6 +30,7 @@ class DefaultOneTimePasscodeServiceTest {
     private final OneTimePasscodeVerificationFactory verificationFactory = mock(OneTimePasscodeVerificationFactory.class);
     private final OneTimePasscodeVerificationLoader verificationLoader = mock(OneTimePasscodeVerificationLoader.class);
     private final PasscodeGenerator passcodeGenerator = mock(PasscodeGenerator.class);
+    private final OneTimePasscodeMessageBuilder messageBuilder = mock(OneTimePasscodeMessageBuilder.class);
     private final OneTimePasscodeSender sender = mock(OneTimePasscodeSender.class);
     private final OneTimePasscodeVerificationDao dao = mock(OneTimePasscodeVerificationDao.class);
 
@@ -37,6 +39,7 @@ class DefaultOneTimePasscodeServiceTest {
             .verificationFactory(verificationFactory)
             .verificationLoader(verificationLoader)
             .passcodeGenerator(passcodeGenerator)
+            .messageBuilder(messageBuilder)
             .sender(sender)
             .dao(dao)
             .build();
@@ -78,13 +81,15 @@ class DefaultOneTimePasscodeServiceTest {
         given(verificationFactory.build(context)).willReturn(expectedVerification);
         final String passcode = "passcode";
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
+        final String message = "message";
+        given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
 
         final OneTimePasscodeVerification verification = service.sendPasscode(request);
 
         final OneTimePasscodeDelivery expectedDelivery = OneTimePasscodeDelivery.builder()
                 .method(deliveryMethod)
                 .passcode(passcode)
-                .activity(context.getActivity())
+                .message(message)
                 .build();
         final InOrder inOrder = Mockito.inOrder(verification, dao);
         inOrder.verify(verification).record(expectedDelivery);
@@ -107,13 +112,15 @@ class DefaultOneTimePasscodeServiceTest {
         given(verificationFactory.build(context)).willReturn(expectedVerification);
         final String passcode = "passcode";
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
+        final String message = "message";
+        given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
 
         final OneTimePasscodeVerification verification = service.sendPasscode(request);
 
         final OneTimePasscodeDelivery expectedDelivery = OneTimePasscodeDelivery.builder()
                 .method(deliveryMethod)
                 .passcode(passcode)
-                .activity(context.getActivity())
+                .message(message)
                 .build();
         final InOrder inOrder = Mockito.inOrder(sender, dao);
         inOrder.verify(sender).send(expectedDelivery);
@@ -161,13 +168,15 @@ class DefaultOneTimePasscodeServiceTest {
         given(verificationLoader.load(id)).willReturn(expectedVerification);
         final String passcode = "passcode";
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
+        final String message = "message";
+        given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
 
         final OneTimePasscodeVerification verification = service.sendPasscode(request);
 
         final OneTimePasscodeDelivery expectedDelivery = OneTimePasscodeDelivery.builder()
                 .method(deliveryMethod)
                 .passcode(passcode)
-                .activity(context.getActivity())
+                .message(message)
                 .build();
         final InOrder inOrder = Mockito.inOrder(verification, dao);
         inOrder.verify(verification).record(expectedDelivery);
@@ -192,13 +201,15 @@ class DefaultOneTimePasscodeServiceTest {
         given(verificationLoader.load(id)).willReturn(expectedVerification);
         final String passcode = "passcode";
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
+        final String message = "message";
+        given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
 
         final OneTimePasscodeVerification verification = service.sendPasscode(request);
 
         final OneTimePasscodeDelivery expectedDelivery = OneTimePasscodeDelivery.builder()
                 .method(deliveryMethod)
                 .passcode(passcode)
-                .activity(context.getActivity())
+                .message(message)
                 .build();
         final InOrder inOrder = Mockito.inOrder(sender, dao);
         inOrder.verify(sender).send(expectedDelivery);
