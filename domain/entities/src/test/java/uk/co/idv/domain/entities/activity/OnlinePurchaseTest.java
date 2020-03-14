@@ -70,6 +70,15 @@ class OnlinePurchaseTest {
     }
 
     @Test
+    void shouldReturnTokenizedCardNumber() {
+        final CardNumber cardNumber = CardNumberMother.credit();
+
+        final OnlinePurchase onlinePurchase = builder.cardNumber(cardNumber).build();
+
+        assertThat(onlinePurchase.getTokenizedCardNumber()).isEqualTo(cardNumber.getTokenized());
+    }
+
+    @Test
     void shouldTestEquals() {
         EqualsVerifier.forClass(OnlinePurchase.class)
                 .suppress(Warning.STRICT_INHERITANCE)

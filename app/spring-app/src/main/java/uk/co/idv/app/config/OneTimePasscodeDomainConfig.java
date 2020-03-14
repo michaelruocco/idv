@@ -5,8 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.DefaultOneTimePasscodeService;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.message.DefaultOneTimePasscodeMessageBuilder;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.message.DelegatingOneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeMessageBuilder;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeOnlinePurchaseMessageBuilder;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OnlinePurchaseOneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.InMemoryRecordingOneTimePasscodeSender;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeSender;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeService;
@@ -69,7 +71,10 @@ public class OneTimePasscodeDomainConfig {
 
     @Bean
     public OneTimePasscodeMessageBuilder messageBuilder() {
-        return new OneTimePasscodeOnlinePurchaseMessageBuilder();
+        return new DelegatingOneTimePasscodeMessageBuilder(
+                new OnlinePurchaseOneTimePasscodeMessageBuilder(),
+                new DefaultOneTimePasscodeMessageBuilder()
+        );
     }
 
 }

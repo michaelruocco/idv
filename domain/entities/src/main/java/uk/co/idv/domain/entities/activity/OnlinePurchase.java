@@ -45,4 +45,8 @@ public class OnlinePurchase implements Activity {
         return cardNumber;
     }
 
+    public String getTokenizedCardNumber() {
+        return cardNumber.getTokenized();
+    }
+
 }

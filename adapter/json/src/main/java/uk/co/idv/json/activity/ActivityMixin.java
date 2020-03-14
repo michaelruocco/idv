@@ -1,5 +1,6 @@
 package uk.co.idv.json.activity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public interface ActivityMixin {
 
-    // intentionally blank
+    @JsonIgnore
+    String getTokenizedCardNumber();
 
 }
