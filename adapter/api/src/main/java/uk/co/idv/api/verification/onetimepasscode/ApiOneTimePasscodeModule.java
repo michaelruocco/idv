@@ -9,7 +9,7 @@ public class ApiOneTimePasscodeModule extends OneTimePasscodeModule {
     public ApiOneTimePasscodeModule() {
         setMixInAnnotation(OneTimePasscodeVerification.class, ApiOneTimePasscodeVerificationMixin.class);
 
-        addDeserializer(CreateOneTimePasscodeVerificationRequestDocument.class, new CreateOneTimePasscodeVerificationRequestDocumentDeserializer());
+        addDeserializer(SendOneTimePasscodeRequestDocument.class, new SendOneTimePasscodeDocumentDeserializer());
         addDeserializer(UpdateOneTimePasscodeVerificationRequestDocument.class, new UpdateOneTimePasscodeVerificationRequestDocumentDeserializer());
     }
 

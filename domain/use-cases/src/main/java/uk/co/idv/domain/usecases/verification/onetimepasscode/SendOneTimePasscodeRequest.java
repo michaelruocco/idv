@@ -9,7 +9,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @EqualsAndHashCode
-public class CreateOneTimePasscodeVerificationRequest {
+public class SendOneTimePasscodeRequest {
 
     private final UUID contextId;
     private final UUID deliveryMethodId;

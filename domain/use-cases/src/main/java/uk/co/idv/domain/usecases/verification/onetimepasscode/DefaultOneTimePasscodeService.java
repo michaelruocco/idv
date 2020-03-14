@@ -26,7 +26,7 @@ public class DefaultOneTimePasscodeService implements OneTimePasscodeService {
     private final OneTimePasscodeVerificationDao dao;
 
     @Override
-    public OneTimePasscodeVerification sendPasscode(final CreateOneTimePasscodeVerificationRequest request) {
+    public OneTimePasscodeVerification sendPasscode(final SendOneTimePasscodeRequest request) {
         final VerificationContext context = contextLoader.load(request.getContextId());
         final OneTimePasscodeVerification verification = verificationFactory.build(context);
         return sendPasscode(context, verification, request.getDeliveryMethodId());

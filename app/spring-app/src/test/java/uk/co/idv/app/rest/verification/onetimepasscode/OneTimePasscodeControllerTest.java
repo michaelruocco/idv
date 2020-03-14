@@ -5,13 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.api.verification.onetimepasscode.CreateOneTimePasscodeVerificationRequestDocument;
+import uk.co.idv.api.verification.onetimepasscode.SendOneTimePasscodeRequestDocument;
 import uk.co.idv.api.verification.onetimepasscode.OneTimePasscodeVerificationDocument;
 import uk.co.idv.api.verification.onetimepasscode.UpdateOneTimePasscodeVerificationRequestDocument;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerificationMother;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.CreateOneTimePasscodeVerificationRequest;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.CreateOneTimePasscodeVerificationRequestMother;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequestMother;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.FakeOneTimePasscodeService;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.UpdateOneTimePasscodeVerificationRequest;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.UpdateOneTimePasscodeVerificationRequestMother;
@@ -34,17 +34,17 @@ class OneTimePasscodeControllerTest {
 
     @Test
     void shouldPassCreateContextRequestToService() {
-        final CreateOneTimePasscodeVerificationRequestDocument requestDocument = buildCreateVerificationRequestDocument();
+        final SendOneTimePasscodeRequestDocument requestDocument = buildCreateVerificationRequestDocument();
 
         controller.createVerification(requestDocument);
 
-        final CreateOneTimePasscodeVerificationRequest request = service.getLastCreateRequest();
+        final SendOneTimePasscodeRequest request = service.getLastCreateRequest();
         assertThat(request).isEqualTo(requestDocument.getAttributes());
     }
 
     @Test
     void shouldReturnCreatedContext() {
-        final CreateOneTimePasscodeVerificationRequestDocument requestDocument = buildCreateVerificationRequestDocument();
+        final SendOneTimePasscodeRequestDocument requestDocument = buildCreateVerificationRequestDocument();
 
         final ResponseEntity<OneTimePasscodeVerificationDocument> response = controller.createVerification(requestDocument);
 
@@ -55,7 +55,7 @@ class OneTimePasscodeControllerTest {
 
     @Test
     void shouldReturnCreatedStatus() {
-        final CreateOneTimePasscodeVerificationRequestDocument requestDocument = buildCreateVerificationRequestDocument();
+        final SendOneTimePasscodeRequestDocument requestDocument = buildCreateVerificationRequestDocument();
 
         final ResponseEntity<OneTimePasscodeVerificationDocument> response = controller.createVerification(requestDocument);
 
@@ -64,7 +64,7 @@ class OneTimePasscodeControllerTest {
 
     @Test
     void shouldReturnLocationHeader() {
-        final CreateOneTimePasscodeVerificationRequestDocument requestDocument = buildCreateVerificationRequestDocument();
+        final SendOneTimePasscodeRequestDocument requestDocument = buildCreateVerificationRequestDocument();
 
         final ResponseEntity<OneTimePasscodeVerificationDocument> response = controller.createVerification(requestDocument);
 
@@ -122,9 +122,9 @@ class OneTimePasscodeControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-    private static CreateOneTimePasscodeVerificationRequestDocument buildCreateVerificationRequestDocument() {
-        final CreateOneTimePasscodeVerificationRequest request = CreateOneTimePasscodeVerificationRequestMother.build();
-        return new CreateOneTimePasscodeVerificationRequestDocument(request);
+    private static SendOneTimePasscodeRequestDocument buildCreateVerificationRequestDocument() {
+        final SendOneTimePasscodeRequest request = SendOneTimePasscodeRequestMother.build();
+        return new SendOneTimePasscodeRequestDocument(request);
     }
 
     private static UpdateOneTimePasscodeVerificationRequestDocument buildUpdateVerificationRequestDocument() {

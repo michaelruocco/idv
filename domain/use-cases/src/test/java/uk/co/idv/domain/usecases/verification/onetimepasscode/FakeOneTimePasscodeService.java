@@ -6,14 +6,14 @@ import java.util.UUID;
 
 public class FakeOneTimePasscodeService implements OneTimePasscodeService {
 
-    private CreateOneTimePasscodeVerificationRequest lastCreateRequest;
+    private SendOneTimePasscodeRequest lastCreateRequest;
     private UpdateOneTimePasscodeVerificationRequest lastUpdateRequest;
     private UUID lastLoadedId;
 
     private OneTimePasscodeVerification verificationToReturn;
 
     @Override
-    public OneTimePasscodeVerification sendPasscode(final CreateOneTimePasscodeVerificationRequest request) {
+    public OneTimePasscodeVerification sendPasscode(final SendOneTimePasscodeRequest request) {
         this.lastCreateRequest = request;
         return verificationToReturn;
     }
@@ -30,7 +30,7 @@ public class FakeOneTimePasscodeService implements OneTimePasscodeService {
         return verificationToReturn;
     }
 
-    public CreateOneTimePasscodeVerificationRequest getLastCreateRequest() {
+    public SendOneTimePasscodeRequest getLastCreateRequest() {
         return lastCreateRequest;
     }
 
