@@ -33,7 +33,7 @@ public class DefaultOneTimePasscodeService implements OneTimePasscodeService {
     }
 
     @Override
-    public OneTimePasscodeVerification sendPasscode(final UpdateOneTimePasscodeVerificationRequest request) {
+    public OneTimePasscodeVerification sendPasscode(final ResendOneTimePasscodeRequest request) {
         final VerificationContext context = contextLoader.load(request.getContextId());
         final OneTimePasscodeVerification verification = verificationLoader.load(request.getId());
         return sendPasscode(context, verification, request.getDeliveryMethodId());

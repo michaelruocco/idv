@@ -8,7 +8,7 @@ public interface OneTimePasscodeService {
 
     OneTimePasscodeVerification sendPasscode(SendOneTimePasscodeRequest request);
 
-    OneTimePasscodeVerification sendPasscode(UpdateOneTimePasscodeVerificationRequest request);
+    OneTimePasscodeVerification sendPasscode(ResendOneTimePasscodeRequest request);
 
     OneTimePasscodeVerification load(UUID id);
 

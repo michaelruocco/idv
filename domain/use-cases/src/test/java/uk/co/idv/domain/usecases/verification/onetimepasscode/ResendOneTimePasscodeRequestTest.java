@@ -3,21 +3,21 @@ package uk.co.idv.domain.usecases.verification.onetimepasscode;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.UpdateOneTimePasscodeVerificationRequest.UpdateOneTimePasscodeVerificationRequestBuilder;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.ResendOneTimePasscodeRequest.ResendOneTimePasscodeRequestBuilder;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UpdateOneTimePasscodeVerificationRequestTest {
+class ResendOneTimePasscodeRequestTest {
 
-    private final UpdateOneTimePasscodeVerificationRequestBuilder builder = UpdateOneTimePasscodeVerificationRequest.builder();
+    private final ResendOneTimePasscodeRequestBuilder builder = ResendOneTimePasscodeRequest.builder();
 
     @Test
     void shouldReturnId() {
         final UUID id = UUID.randomUUID();
 
-        final UpdateOneTimePasscodeVerificationRequest request = builder.id(id).build();
+        final ResendOneTimePasscodeRequest request = builder.id(id).build();
 
         assertThat(request.getId()).isEqualTo(id);
     }
@@ -26,7 +26,7 @@ class UpdateOneTimePasscodeVerificationRequestTest {
     void shouldReturnContextId() {
         final UUID contextId = UUID.randomUUID();
 
-        final UpdateOneTimePasscodeVerificationRequest request = builder.contextId(contextId).build();
+        final ResendOneTimePasscodeRequest request = builder.contextId(contextId).build();
 
         assertThat(request.getContextId()).isEqualTo(contextId);
     }
@@ -35,14 +35,14 @@ class UpdateOneTimePasscodeVerificationRequestTest {
     void shouldReturnProvidedAlias() {
         final UUID deliveryMethodId = UUID.randomUUID();
 
-        final UpdateOneTimePasscodeVerificationRequest request = builder.deliveryMethodId(deliveryMethodId).build();
+        final ResendOneTimePasscodeRequest request = builder.deliveryMethodId(deliveryMethodId).build();
 
         assertThat(request.getDeliveryMethodId()).isEqualTo(deliveryMethodId);
     }
 
     @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(UpdateOneTimePasscodeVerificationRequest.class)
+        EqualsVerifier.forClass(ResendOneTimePasscodeRequest.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }
