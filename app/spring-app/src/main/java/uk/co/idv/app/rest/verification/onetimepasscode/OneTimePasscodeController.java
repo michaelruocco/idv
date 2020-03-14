@@ -3,12 +3,14 @@ package uk.co.idv.app.rest.verification.onetimepasscode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.api.verification.onetimepasscode.CreateOneTimePasscodeVerificationRequestDocument;
 import uk.co.idv.api.verification.onetimepasscode.OneTimePasscodeVerificationDocument;
+import uk.co.idv.api.verification.onetimepasscode.UpdateOneTimePasscodeVerificationRequestDocument;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeService;
 
@@ -31,6 +33,13 @@ public class OneTimePasscodeController {
         return ResponseEntity
                 .created(buildGetContextUri(verification.getId()))
                 .body(document);
+    }
+
+    @PatchMapping("/oneTimePasscodeVerifications/{id}")
+    public ResponseEntity<OneTimePasscodeVerificationDocument> updateVerification(@RequestBody final UpdateOneTimePasscodeVerificationRequestDocument request) {
+        final OneTimePasscodeVerification verification = service.sendPasscode(request.getAttributes());
+        final OneTimePasscodeVerificationDocument document = toDocument(verification);
+        return ResponseEntity.ok(document);
     }
 
     @GetMapping("/oneTimePasscodeVerifications/{id}")
