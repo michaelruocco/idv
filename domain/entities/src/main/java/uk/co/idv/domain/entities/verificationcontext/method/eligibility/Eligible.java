@@ -1,10 +1,12 @@
 package uk.co.idv.domain.entities.verificationcontext.method.eligibility;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.Optional;
 
 @EqualsAndHashCode
+@ToString
 public class Eligible implements Eligibility {
 
     @Override

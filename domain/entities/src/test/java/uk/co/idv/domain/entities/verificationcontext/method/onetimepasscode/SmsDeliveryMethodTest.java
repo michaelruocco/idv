@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -30,6 +32,13 @@ class SmsDeliveryMethodTest {
         final SmsDeliveryMethod mobileNumber = new SmsDeliveryMethod(NUMBER);
 
         assertThat(mobileNumber.getId()).isNotNull();
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(SmsDeliveryMethod.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

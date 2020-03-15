@@ -6,6 +6,8 @@ import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
 import java.time.Instant;
@@ -98,8 +100,11 @@ public class VerificationContext {
         return sequences.containsCompleteMethod(methodName);
     }
 
-    //TODO test this method
-    public <T> T getNextEligibleMethod(final String methodName, final Class<T> type) {
+    public OneTimePasscodeEligible getNextOneTimePasscodeEligibleMethod() {
+        return getNextEligibleMethod(OneTimePasscode.NAME, OneTimePasscodeEligible.class);
+    }
+
+    private <T> T getNextEligibleMethod(final String methodName, final Class<T> type) {
         return type.cast(sequences.getNextEligibleMethod(methodName));
     }
 

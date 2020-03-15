@@ -83,21 +83,19 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
         return sequences.stream();
     }
 
-    //TODO test this method
     public VerificationMethod getNextEligibleMethod(final String methodName) {
-        final Collection<VerificationSequence> methodSequences = sequences.stream()
+        final Collection<VerificationMethod> methods = sequences.stream()
                 .filter(sequence -> sequence.hasNextMethod(methodName))
-                .collect(Collectors.toList());
-        if (methodSequences.isEmpty()) {
-            throw new NotNextMethodInSequenceException(methodName);
+                .map(sequence -> sequence.getMethod(methodName))
+                .collect(Collectors.toSet());
+        switch (methods.size()) {
+            case 0:
+                throw new NotNextMethodInSequenceException(methodName);
+            case 1:
+                return IterableUtils.get(methods, 0);
+            default:
+                throw new CannotDetermineWhichNextMethodToUseException(methodName);
         }
-
-        if (methodSequences.size() == 1) {
-            return IterableUtils.get(methodSequences, 0).getMethod(methodName);
-        }
-        //TODO handle if next method in more than one sequence, if both the same should be okay, otherwise error
-        //(or decide something else to do)
-        throw new IllegalStateException(String.format("found more than one sequence with next method %s", methodName));
     }
 
     private VerificationSequences addResult(final VerificationResult result) {
@@ -119,6 +117,14 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
 
         public NoSequencesFoundWithNameException(final String sequenceName) {
             super(sequenceName);
+        }
+
+    }
+
+    public static class CannotDetermineWhichNextMethodToUseException extends RuntimeException {
+
+        public CannotDetermineWhichNextMethodToUseException(final String methodName) {
+            super(String.format("found multple instances of next method %s with different configurations", methodName));
         }
 
     }

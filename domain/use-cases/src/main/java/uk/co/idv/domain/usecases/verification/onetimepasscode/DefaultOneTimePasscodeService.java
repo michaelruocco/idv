@@ -5,7 +5,6 @@ import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeMessageBuilder;
@@ -47,7 +46,7 @@ public class DefaultOneTimePasscodeService implements OneTimePasscodeService {
     private OneTimePasscodeVerification sendPasscode(final VerificationContext context,
                                                      final OneTimePasscodeVerification verification,
                                                      final UUID deliveryMethodId) {
-        final OneTimePasscodeEligible method = context.getNextEligibleMethod(OneTimePasscode.NAME, OneTimePasscodeEligible.class);
+        final OneTimePasscodeEligible method = context.getNextOneTimePasscodeEligibleMethod();
         final OneTimePasscodeDelivery delivery = toDelivery(deliveryMethodId, method, context.getActivity());
         sender.send(delivery);
         return update(verification, delivery);

@@ -9,6 +9,8 @@ import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext.VerificationContextBuilder;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
@@ -202,6 +204,18 @@ class VerificationContextTest {
         final boolean expired = context.hasExpired(currentTime);
 
         assertThat(expired).isTrue();
+    }
+
+    @Test
+    void shouldReturnNextOneTimePasscodeEligibleMethod() {
+        final OneTimePasscodeEligible expectedMethod = OneTimePasscodeMother.eligible();
+        final VerificationSequences sequences = mock(VerificationSequences.class);
+        given(sequences.getNextEligibleMethod(expectedMethod.getName())).willReturn(expectedMethod);
+        final VerificationContext context = builder.sequences(sequences).build();
+
+        final OneTimePasscodeEligible method = context.getNextOneTimePasscodeEligibleMethod();
+
+        assertThat(method).isEqualTo(expectedMethod);
     }
 
 }

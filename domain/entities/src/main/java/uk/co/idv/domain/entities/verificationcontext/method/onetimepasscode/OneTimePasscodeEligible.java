@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import uk.co.idv.domain.entities.verificationcontext.method.AbstractVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
@@ -8,9 +10,10 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible implements OneTimePasscode {
 
     private static final int MAX_ATTEMPTS = 1;
@@ -43,7 +46,7 @@ public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible 
     }
 
     public Collection<DeliveryMethod> getDeliveryMethods() {
-        return Collections.unmodifiableCollection(deliveryMethods);
+        return deliveryMethods;
     }
 
     public DeliveryMethod getDeliveryMethod(final UUID id) {

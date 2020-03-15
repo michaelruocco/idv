@@ -82,8 +82,7 @@ class OneTimePasscodeEligibleTest {
 
         final OneTimePasscodeEligible methodWithResult = (OneTimePasscodeEligible) method.addResult(result);
 
-        assertThat(methodWithResult).isEqualToIgnoringGivenFields(method, "results", "deliveryMethods");
-        assertThat(methodWithResult.getDeliveryMethods()).containsExactlyElementsOf(deliveryMethods);
+        assertThat(methodWithResult).isEqualToIgnoringGivenFields(method, "results");
         assertThat(methodWithResult.getResults()).containsExactly(result);
     }
 

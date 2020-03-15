@@ -1,10 +1,12 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.Duration;
 
 @EqualsAndHashCode
+@ToString
 public class DefaultPasscodeSettings implements PasscodeSettings {
 
     @Override

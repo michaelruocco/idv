@@ -1,16 +1,21 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.CannotDetermineWhichNextMethodToUseException;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.NotNextMethodInSequenceException;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.CannotAddResultToIneligibleMethodException;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
 import java.time.Duration;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -148,6 +153,57 @@ class VerificationSequencesTest {
 
         assertThat(sequences.containsCompleteSequenceContainingMethod(completeMethod.getName())).isTrue();
         assertThat(sequences.containsCompleteSequenceContainingMethod(incompleteMethod.getName())).isFalse();
+    }
+
+    @Test
+    void shouldThrowExceptionIfMethodIsNotNextMethodInSequence() {
+        final String methodName = "method-name";
+        final VerificationSequences sequences = new VerificationSequences();
+
+        final Throwable error = catchThrowable(() -> sequences.getNextEligibleMethod(methodName));
+
+        final String expectedMessage = String.format("%s is not the next method in any sequences", methodName);
+        assertThat(error)
+                .isInstanceOf(NotNextMethodInSequenceException.class)
+                .hasMessage(expectedMessage);
+    }
+
+    @Test
+    void shouldReturnMethodIfMethodIsNextMethodInSequence() {
+        final VerificationMethod oneTimePasscode = OneTimePasscodeMother.eligible();
+        final VerificationSequence sequence = new SingleMethodSequence(oneTimePasscode);
+        final VerificationSequences sequences = new VerificationSequences(sequence);
+
+        final VerificationMethod method = sequences.getNextEligibleMethod(oneTimePasscode.getName());
+
+        assertThat(method).isEqualTo(oneTimePasscode);
+    }
+
+    @Test
+    void shouldReturnMethodIfMethodIsNextMethodInTwoSequencesAndMethodIsTheSame() {
+        final OneTimePasscodeEligible oneTimePasscode = OneTimePasscodeMother.eligible();
+        final VerificationSequence sequence1 = new SingleMethodSequence(oneTimePasscode);
+        final VerificationSequence sequence2 = new SingleMethodSequence(OneTimePasscodeMother.eligible());
+        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+
+        final VerificationMethod method = sequences.getNextEligibleMethod(oneTimePasscode.getName());
+
+        assertThat(method).isEqualTo(oneTimePasscode);
+    }
+
+    @Test
+    void shouldThrowExceptionIfMethodIsNextMethodInTwoSequencesAndMethodIsTheDifferent() {
+        final VerificationMethod oneTimePasscode = OneTimePasscodeMother.eligible();
+        final VerificationSequence sequence1 = new SingleMethodSequence(oneTimePasscode);
+        final VerificationSequence sequence2 = new SingleMethodSequence(OneTimePasscodeMother.eligible(DeliveryMethodMother.sms(UUID.randomUUID())));
+        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
+
+        final Throwable error = catchThrowable(() -> sequences.getNextEligibleMethod(oneTimePasscode.getName()));
+
+        final String expectedMessage = String.format("found multple instances of next method %s with different configurations", oneTimePasscode.getName());
+        assertThat(error)
+                .isInstanceOf(CannotDetermineWhichNextMethodToUseException.class)
+                .hasMessage(expectedMessage);
     }
 
 }
