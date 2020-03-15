@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import uk.co.idv.api.verification.onetimepasscode.SendOneTimePasscodeRequestDocument;
 import uk.co.idv.api.verification.onetimepasscode.OneTimePasscodeVerificationDocument;
 import uk.co.idv.api.verification.onetimepasscode.ResendOneTimePasscodeRequestDocument;
+import uk.co.idv.api.verification.onetimepasscode.VerifyOneTimePasscodeRequestDocument;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerificationMother;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequest;
@@ -15,6 +16,8 @@ import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscod
 import uk.co.idv.domain.usecases.verification.onetimepasscode.FakeOneTimePasscodeService;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.ResendOneTimePasscodeRequest;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.ResendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.VerifyOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.VerifyOneTimePasscodeRequestMother;
 
 import java.util.UUID;
 
@@ -103,23 +106,31 @@ class OneTimePasscodeControllerTest {
     }
 
     @Test
-    void shouldReturnUpdatedVerification() {
+    void shouldReturnUpdatedVerificationAfterResend() {
         final ResendOneTimePasscodeRequestDocument requestDocument = buildResendOneTimePasscodeRequestDocument();
 
-        final ResponseEntity<OneTimePasscodeVerificationDocument> response = controller.resendOtp(requestDocument);
+        final OneTimePasscodeVerificationDocument response = controller.resendOtp(requestDocument);
 
-        final OneTimePasscodeVerificationDocument responseDocument = response.getBody();
-        assertThat(responseDocument).isNotNull();
-        assertThat(responseDocument.getAttributes()).isEqualTo(verification);
+        assertThat(response.getAttributes()).isEqualTo(verification);
     }
 
     @Test
-    void shouldReturnOkStatus() {
-        final ResendOneTimePasscodeRequestDocument requestDocument = buildResendOneTimePasscodeRequestDocument();
+    void shouldPassVerifyOneTimePasscodeRequestToService() {
+        final VerifyOneTimePasscodeRequestDocument requestDocument = buildVerifyOneTimePasscodeRequestDocument();
 
-        final ResponseEntity<OneTimePasscodeVerificationDocument> response = controller.resendOtp(requestDocument);
+        controller.verifyOtp(requestDocument);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        final VerifyOneTimePasscodeRequest request = service.getLastVerifyRequest();
+        assertThat(request).isEqualTo(requestDocument.getAttributes());
+    }
+
+    @Test
+    void shouldReturnUpdatedVerificationAfterVerify() {
+        final VerifyOneTimePasscodeRequestDocument requestDocument = buildVerifyOneTimePasscodeRequestDocument();
+
+        final OneTimePasscodeVerificationDocument response = controller.verifyOtp(requestDocument);
+
+        assertThat(response.getAttributes()).isEqualTo(verification);
     }
 
     private static SendOneTimePasscodeRequestDocument buildSendOneTimePasscodeRequestDocument() {
@@ -130,6 +141,11 @@ class OneTimePasscodeControllerTest {
     private static ResendOneTimePasscodeRequestDocument buildResendOneTimePasscodeRequestDocument() {
         final ResendOneTimePasscodeRequest request = ResendOneTimePasscodeRequestMother.build();
         return new ResendOneTimePasscodeRequestDocument(request);
+    }
+
+    private static VerifyOneTimePasscodeRequestDocument buildVerifyOneTimePasscodeRequestDocument() {
+        final VerifyOneTimePasscodeRequest request = VerifyOneTimePasscodeRequestMother.build();
+        return new VerifyOneTimePasscodeRequestDocument(request);
     }
 
 }

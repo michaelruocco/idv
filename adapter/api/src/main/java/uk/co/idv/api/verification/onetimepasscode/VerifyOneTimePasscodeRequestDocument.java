@@ -2,9 +2,9 @@ package uk.co.idv.api.verification.onetimepasscode;
 
 import uk.co.idv.domain.usecases.verification.onetimepasscode.VerifyOneTimePasscodeRequest;
 import uk.co.mruoc.jsonapi.ApiDataWithId;
-import uk.co.mruoc.jsonapi.ApiDocument;
+import uk.co.mruoc.jsonapi.ApiDocumentWithId;
 
-public class VerifyOneTimePasscodeRequestDocument extends ApiDocument<VerifyOneTimePasscodeRequest> {
+public class VerifyOneTimePasscodeRequestDocument extends ApiDocumentWithId<VerifyOneTimePasscodeRequest> {
 
     public VerifyOneTimePasscodeRequestDocument(final VerifyOneTimePasscodeRequest attributes) {
         super(new Data(attributes));
