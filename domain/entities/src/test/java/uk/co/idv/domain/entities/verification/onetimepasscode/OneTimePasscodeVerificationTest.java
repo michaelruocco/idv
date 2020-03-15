@@ -242,4 +242,21 @@ class OneTimePasscodeVerificationTest {
         assertThat(verification.getStatus()).isEqualTo(VerificationStatus.SUCCESSFUL);
     }
 
+    @Test
+    void shouldNotCompleteVerificationOrUpdateStatusIfAttemptFailedAndHasAttemptRemaining() {
+        final String passcode = "12345678";
+        final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
+                .maxAttempts(3)
+                .deliveries(OneTimePasscodeDeliveryMother.oneSmsDelivery(passcode))
+                .build();
+        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.attempt("222222");
+
+        verification.verify(attempt);
+        verification.verify(attempt);
+
+        assertThat(verification.isComplete()).isFalse();
+        assertThat(verification.getCompleted()).isEmpty();
+        assertThat(verification.getStatus()).isEqualTo(VerificationStatus.PENDING);
+    }
+
 }

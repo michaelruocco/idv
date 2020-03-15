@@ -20,7 +20,6 @@ class LockoutStateDocumentSerializerTest {
 
         final String json = MAPPER.writeValueAsString(document);
 
-        System.out.println(json);
         final String expectedJson = ContentLoader.loadContentFromClasspath("lockout/lockout-state-document.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }

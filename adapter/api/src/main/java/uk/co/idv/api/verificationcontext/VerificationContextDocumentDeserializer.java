@@ -13,7 +13,6 @@ import uk.co.mruoc.jsonapi.ApiDocumentDeserializer;
 import uk.co.mruoc.jsonapi.ApiDocumentFactory;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -26,13 +25,9 @@ public class VerificationContextDocumentDeserializer extends ApiDocumentDeserial
     private static class DocumentFactory implements ApiDocumentFactory<VerificationContextDocument> {
 
         @Override
-        public VerificationContextDocument build(final ApiDataDocumentRequest request) {
-            try {
-                final VerificationContext attributes = toAttributes(request);
-                return new VerificationContextDocument(attributes);
-            } catch (final IOException e) {
-                throw new UncheckedIOException(e);
-            }
+        public VerificationContextDocument build(final ApiDataDocumentRequest request) throws IOException {
+            final VerificationContext attributes = toAttributes(request);
+            return new VerificationContextDocument(attributes);
         }
 
         private VerificationContext toAttributes(final ApiDataDocumentRequest request) throws IOException {
