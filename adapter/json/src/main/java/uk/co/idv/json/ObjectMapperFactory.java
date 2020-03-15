@@ -30,10 +30,6 @@ public class ObjectMapperFactory {
         this(defaultModules());
     }
 
-    public ObjectMapperFactory(final Module... modules) {
-        this(Arrays.asList(modules));
-    }
-
     public ObjectMapper build() {
         return customize(new ObjectMapper());
     }

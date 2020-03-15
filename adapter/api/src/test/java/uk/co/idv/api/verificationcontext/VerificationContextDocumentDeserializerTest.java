@@ -1,25 +1,34 @@
 package uk.co.idv.api.verificationcontext;
 
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiObjectMapperSingleton;
+import uk.co.idv.api.ApiObjectMapperFactory;
+import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
+import uk.co.idv.json.activity.AllowFakeActivityModule;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UpdateContextResultsRequestDocumentDeserializerTest {
+class VerificationContextDocumentDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ApiObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ApiObjectMapperFactory(modules()).build();
 
     @Test
     void shouldDeserializeDocument() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("verification-context/update-context-results-request-document.json");
+        final String json = ContentLoader.loadContentFromClasspath("verification-context/verification-context-document.json");
 
-        final UpdateContextResultsRequestDocument document = MAPPER.readValue(json, UpdateContextResultsRequestDocument.class);
+        final VerificationContextDocument document = MAPPER.readValue(json, VerificationContextDocument.class);
 
-        assertThat(document).usingRecursiveComparison().isEqualTo(new FakeUpdateContextResultsRequestDocument());
+        final VerificationContextDocument expectedDocument = new VerificationContextDocument(VerificationContextMother.fake());
+        assertThat(document.getAttributes()).isEqualToComparingFieldByField(expectedDocument.getAttributes());
+    }
+
+    private static List<Module> modules() {
+        return ApiObjectMapperFactory.modules(new AllowFakeActivityModule());
     }
 
 }

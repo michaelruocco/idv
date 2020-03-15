@@ -7,11 +7,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.json.ObjectMapperFactory;
-import uk.co.idv.json.activity.ActivityDeserializer;
-import uk.co.idv.json.activity.ActivityModule;
-import uk.co.idv.json.activity.LoginJsonNodeConverter;
-import uk.co.idv.json.activity.OnlinePurchaseJsonNodeConverter;
-import uk.co.idv.json.activity.simple.AllSimpleActivityJsonNodeConverter;
+import uk.co.idv.json.activity.AllowFakeActivityModule;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.util.List;
@@ -32,15 +28,7 @@ class VerificationContextDeserializerTest {
     }
 
     private static List<Module> modules() {
-        return ObjectMapperFactory.modules(new ActivityModule(buildActivityDeserializer()));
-    }
-
-    private static ActivityDeserializer buildActivityDeserializer() {
-        return new ActivityDeserializer(
-                new OnlinePurchaseJsonNodeConverter(),
-                new LoginJsonNodeConverter(),
-                new AllSimpleActivityJsonNodeConverter()
-        );
+        return ObjectMapperFactory.modules(new AllowFakeActivityModule());
     }
 
 }

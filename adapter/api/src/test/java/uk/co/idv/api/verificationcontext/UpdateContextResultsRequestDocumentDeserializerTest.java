@@ -19,7 +19,7 @@ class UpdateContextResultsRequestDocumentDeserializerTest {
 
         final UpdateContextResultsRequestDocument document = MAPPER.readValue(json, UpdateContextResultsRequestDocument.class);
 
-        assertThat(document).usingRecursiveComparison().isEqualTo(new FakeUpdateContextResultsRequestDocument());
+        assertThat(document).isEqualToComparingFieldByField(new FakeUpdateContextResultsRequestDocument());
     }
 
 }
