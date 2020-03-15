@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SendOneTimePasscodeDocumentDeserializerTest {
+class SendOneTimePasscodeRequestDocumentDeserializerTest {
 
     private static final ObjectMapper MAPPER = ApiObjectMapperSingleton.instance();
 

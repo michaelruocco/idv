@@ -9,9 +9,9 @@ import uk.co.mruoc.jsonapi.ApiDocumentFactory;
 
 import java.io.IOException;
 
-public class SendOneTimePasscodeDocumentDeserializer extends ApiDocumentDeserializer<SendOneTimePasscodeRequestDocument> {
+public class SendOneTimePasscodeRequestDocumentDeserializer extends ApiDocumentDeserializer<SendOneTimePasscodeRequestDocument> {
 
-    protected SendOneTimePasscodeDocumentDeserializer() {
+    protected SendOneTimePasscodeRequestDocumentDeserializer() {
         super(SendOneTimePasscodeRequestDocument.class, new DocumentFactory());
     }
 
