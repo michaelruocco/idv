@@ -6,9 +6,9 @@ import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDel
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InMemoryRecordingOneTimePasscodeSenderTest {
+class InMemoryRecordingOneTimePasscodeDeliverySenderTest {
 
-    private final InMemoryRecordingOneTimePasscodeSender sender = new InMemoryRecordingOneTimePasscodeSender();
+    private final InMemoryRecordingOneTimePasscodeDeliverySender sender = new InMemoryRecordingOneTimePasscodeDeliverySender();
 
     @Test
     public void shouldRecordAllSentDeliveries() {

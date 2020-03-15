@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.time.Instant;
 import java.util.UUID;
 
-public class VerificationResultFailed extends AbstractVerificationResult {
+public class VerificationResultFailed extends DefaultVerificationResult {
 
     private static final boolean FAILED = false;
 

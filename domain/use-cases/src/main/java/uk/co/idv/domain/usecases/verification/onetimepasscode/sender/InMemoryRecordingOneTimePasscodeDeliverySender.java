@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Slf4j
-public class InMemoryRecordingOneTimePasscodeSender implements OneTimePasscodeSender {
+public class InMemoryRecordingOneTimePasscodeDeliverySender implements OneTimePasscodeDeliverySender {
 
     private final Collection<OneTimePasscodeDelivery> deliveries = new ArrayList<>();
 

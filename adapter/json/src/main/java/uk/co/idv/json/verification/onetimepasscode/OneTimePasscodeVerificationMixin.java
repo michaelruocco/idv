@@ -24,4 +24,7 @@ public interface OneTimePasscodeVerificationMixin {
     @JsonIgnore
     int getAttemptsRemaining();
 
+    @JsonIgnore
+    boolean isSuccessful();
+
 }

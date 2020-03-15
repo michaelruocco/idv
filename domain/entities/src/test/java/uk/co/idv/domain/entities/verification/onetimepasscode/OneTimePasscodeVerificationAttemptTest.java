@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verification.onetimepasscode;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -28,6 +30,13 @@ class OneTimePasscodeVerificationAttemptTest {
                 .build();
 
         assertThat(attempt.getPasscode()).isEqualTo(passcode);
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(OneTimePasscodeVerificationAttempt.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

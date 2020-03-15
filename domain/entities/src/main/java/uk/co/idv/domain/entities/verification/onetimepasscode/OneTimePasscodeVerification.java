@@ -58,6 +58,10 @@ public class OneTimePasscodeVerification {
         return maxDeliveryAttempts - deliveries.size();
     }
 
+    public void verify(final Collection<OneTimePasscodeVerificationAttempt> attempts) {
+        attempts.forEach(this::verify);
+    }
+
     public void verify(final OneTimePasscodeVerificationAttempt attempt) {
         validateComplete();
         if (isValid(attempt)) {
@@ -65,6 +69,10 @@ public class OneTimePasscodeVerification {
             return;
         }
         handleFailed(attempt);
+    }
+
+    public boolean isSuccessful() {
+        return VerificationStatus.SUCCESSFUL.equals(status);
     }
 
     public int getAttemptsRemaining() {

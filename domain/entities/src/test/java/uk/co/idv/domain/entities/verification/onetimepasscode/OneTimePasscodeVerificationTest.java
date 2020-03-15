@@ -6,6 +6,7 @@ import uk.co.idv.domain.entities.verification.onetimepasscode.exception.NoDelive
 import uk.co.idv.domain.entities.verification.onetimepasscode.exception.VerificationAlreadyCompleteException;
 
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -251,12 +252,38 @@ class OneTimePasscodeVerificationTest {
                 .build();
         final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.attempt("222222");
 
-        verification.verify(attempt);
-        verification.verify(attempt);
+        verification.verify(Arrays.asList(attempt, attempt));
 
         assertThat(verification.isComplete()).isFalse();
         assertThat(verification.getCompleted()).isEmpty();
         assertThat(verification.getStatus()).isEqualTo(VerificationStatus.PENDING);
+    }
+
+    @Test
+    void shouldNotBeSuccessfulIfStatusIsPending() {
+        final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
+                .status(VerificationStatus.PENDING)
+                .build();
+
+        assertThat(verification.isSuccessful()).isFalse();
+    }
+
+    @Test
+    void shouldNotBeSuccessfulIfStatusIsFailed() {
+        final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
+                .status(VerificationStatus.FAILED)
+                .build();
+
+        assertThat(verification.isSuccessful()).isFalse();
+    }
+
+    @Test
+    void shouldBeSuccessfulIfStatusIsSuccessful() {
+        final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
+                .status(VerificationStatus.SUCCESSFUL)
+                .build();
+
+        assertThat(verification.isSuccessful()).isTrue();
     }
 
 }

@@ -27,7 +27,7 @@ public class OneTimePasscodeController {
 
     @PostMapping("/oneTimePasscodeVerifications")
     public ResponseEntity<OneTimePasscodeVerificationDocument> sendOtp(@RequestBody final SendOneTimePasscodeRequestDocument request) {
-        final OneTimePasscodeVerification verification = service.sendPasscode(request.getAttributes());
+        final OneTimePasscodeVerification verification = service.send(request.getAttributes());
         final OneTimePasscodeVerificationDocument document = toDocument(verification);
         return ResponseEntity
                 .created(buildGetContextUri(verification.getId()))
@@ -36,7 +36,7 @@ public class OneTimePasscodeController {
 
     @PostMapping("/oneTimePasscodeVerifications/{id}")
     public ResponseEntity<OneTimePasscodeVerificationDocument> resendOtp(@RequestBody final ResendOneTimePasscodeRequestDocument request) {
-        final OneTimePasscodeVerification verification = service.sendPasscode(request.getAttributes());
+        final OneTimePasscodeVerification verification = service.send(request.getAttributes());
         final OneTimePasscodeVerificationDocument document = toDocument(verification);
         return ResponseEntity.ok(document);
     }

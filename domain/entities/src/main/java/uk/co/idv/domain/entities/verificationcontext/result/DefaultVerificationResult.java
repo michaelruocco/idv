@@ -10,7 +10,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @Getter
-public abstract class AbstractVerificationResult implements VerificationResult {
+public class DefaultVerificationResult implements VerificationResult {
 
     private final String methodName;
     private final UUID verificationId;

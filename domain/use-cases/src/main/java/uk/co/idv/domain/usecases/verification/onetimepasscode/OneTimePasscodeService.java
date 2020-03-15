@@ -6,9 +6,11 @@ import java.util.UUID;
 
 public interface OneTimePasscodeService {
 
-    OneTimePasscodeVerification sendPasscode(SendOneTimePasscodeRequest request);
+    OneTimePasscodeVerification send(SendOneTimePasscodeRequest request);
 
-    OneTimePasscodeVerification sendPasscode(ResendOneTimePasscodeRequest request);
+    OneTimePasscodeVerification send(ResendOneTimePasscodeRequest request);
+
+    OneTimePasscodeVerification verify(VerifyOneTimePasscodeRequest request);
 
     OneTimePasscodeVerification load(UUID id);
 

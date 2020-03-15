@@ -8,19 +8,26 @@ public class FakeOneTimePasscodeService implements OneTimePasscodeService {
 
     private SendOneTimePasscodeRequest lastCreateRequest;
     private ResendOneTimePasscodeRequest lastUpdateRequest;
+    private VerifyOneTimePasscodeRequest lastVerifyRequest;
     private UUID lastLoadedId;
 
     private OneTimePasscodeVerification verificationToReturn;
 
     @Override
-    public OneTimePasscodeVerification sendPasscode(final SendOneTimePasscodeRequest request) {
+    public OneTimePasscodeVerification send(final SendOneTimePasscodeRequest request) {
         this.lastCreateRequest = request;
         return verificationToReturn;
     }
 
     @Override
-    public OneTimePasscodeVerification sendPasscode(final ResendOneTimePasscodeRequest request) {
+    public OneTimePasscodeVerification send(final ResendOneTimePasscodeRequest request) {
         this.lastUpdateRequest = request;
+        return verificationToReturn;
+    }
+
+    @Override
+    public OneTimePasscodeVerification verify(final VerifyOneTimePasscodeRequest request) {
+        this.lastVerifyRequest = request;
         return verificationToReturn;
     }
 
@@ -36,6 +43,10 @@ public class FakeOneTimePasscodeService implements OneTimePasscodeService {
 
     public ResendOneTimePasscodeRequest getLastUpdateRequest() {
         return lastUpdateRequest;
+    }
+
+    public VerifyOneTimePasscodeRequest getLastVerifyRequest() {
+        return lastVerifyRequest;
     }
 
     public UUID getLastLoadedId() {

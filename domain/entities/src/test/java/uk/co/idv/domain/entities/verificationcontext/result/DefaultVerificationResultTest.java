@@ -7,14 +7,14 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AbstractVerificationResultTest {
+class DefaultVerificationResultTest {
 
     private static final String METHOD_NAME = "method-name";
     private static final UUID VERIFICATION_ID = UUID.randomUUID();
     private static final Instant TIMESTAMP = Instant.now();
     private static final boolean SUCCESSFUL = true;
 
-    private final VerificationResult result = new FakeVerificationResult(
+    private final VerificationResult result = new DefaultVerificationResult(
             METHOD_NAME,
             VERIFICATION_ID,
             TIMESTAMP,
@@ -53,17 +53,6 @@ class AbstractVerificationResultTest {
         final boolean hasMethodName = result.hasMethodName("other-name");
 
         assertThat(hasMethodName).isFalse();
-    }
-
-    private static class FakeVerificationResult extends AbstractVerificationResult {
-
-        private FakeVerificationResult(final String methodName,
-                                      final UUID verificationId,
-                                      final Instant timestamp,
-                                      final boolean successful) {
-            super(methodName, verificationId, timestamp, successful);
-        }
-
     }
 
 }
