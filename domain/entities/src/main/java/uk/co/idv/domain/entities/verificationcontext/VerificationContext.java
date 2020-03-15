@@ -100,6 +100,10 @@ public class VerificationContext {
         return sequences.containsCompleteMethod(methodName);
     }
 
+    public boolean containsSequenceWithNextMethod(final String methodName) {
+        return sequences.hasSequencesWithNextMethod(methodName);
+    }
+
     public OneTimePasscodeEligible getNextOneTimePasscodeEligibleMethod() {
         return getNextEligibleMethod(OneTimePasscode.NAME, OneTimePasscodeEligible.class);
     }

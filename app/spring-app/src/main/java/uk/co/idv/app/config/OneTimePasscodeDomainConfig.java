@@ -6,6 +6,7 @@ import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.DefaultOneTimePasscodeService;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeSender;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationContextLoader;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationConverter;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerifier;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.VerifyOneTimePasscodeRequestConverter;
@@ -39,13 +40,13 @@ public class OneTimePasscodeDomainConfig {
     }
 
     @Bean
-    public OneTimePasscodeSender oneTimePasscodeSender(final VerificationContextLoader contextLoader,
-                                                         final OneTimePasscodeVerificationFactory verificationFactory,
-                                                         final OneTimePasscodeVerificationLoader verificationLoader,
-                                                         final PasscodeGenerator passcodeGenerator,
-                                                         final OneTimePasscodeMessageBuilder messageBuilder,
-                                                         final OneTimePasscodeDeliverySender sender,
-                                                         final OneTimePasscodeVerificationDao dao) {
+    public OneTimePasscodeSender oneTimePasscodeSender(final OneTimePasscodeVerificationContextLoader contextLoader,
+                                                       final OneTimePasscodeVerificationFactory verificationFactory,
+                                                       final OneTimePasscodeVerificationLoader verificationLoader,
+                                                       final PasscodeGenerator passcodeGenerator,
+                                                       final OneTimePasscodeMessageBuilder messageBuilder,
+                                                       final OneTimePasscodeDeliverySender sender,
+                                                       final OneTimePasscodeVerificationDao dao) {
         return OneTimePasscodeSender.builder()
                 .contextLoader(contextLoader)
                 .verificationFactory(verificationFactory)
@@ -88,6 +89,11 @@ public class OneTimePasscodeDomainConfig {
                 .timeGenerator(timeGenerator)
                 .idGenerator(idGenerator)
                 .build();
+    }
+
+    @Bean
+    public OneTimePasscodeVerificationContextLoader oneTimePasscodeVerificationContextLoader(final VerificationContextLoader contextLoader) {
+        return new OneTimePasscodeVerificationContextLoader(contextLoader);
     }
 
     @Bean

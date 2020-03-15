@@ -144,6 +144,17 @@ class VerificationContextTest {
     }
 
     @Test
+    void shouldReturnContainsSequenceWithNextMethodFromSequences() {
+        final String methodName = "method-name";
+        final VerificationSequences sequences = mock(VerificationSequences.class);
+        given(sequences.hasSequencesWithNextMethod(methodName)).willReturn(true);
+
+        final VerificationContext context = builder.sequences(sequences).build();
+
+        assertThat(context.containsSequenceWithNextMethod(methodName)).isTrue();
+    }
+
+    @Test
     void shouldAddResult() {
         final String methodName = "method-name";
         final VerificationSequences sequences = mock(VerificationSequences.class);

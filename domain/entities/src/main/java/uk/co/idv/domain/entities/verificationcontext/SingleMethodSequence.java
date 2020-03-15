@@ -104,7 +104,7 @@ public class SingleMethodSequence implements VerificationSequence {
 
     @Override
     public boolean hasNextMethod(final String methodName) {
-        return containsMethod(methodName);
+        return containsMethod(methodName) && !isComplete();
     }
 
     private <T> Optional<T> castMethodTo(final Class<T> type) {

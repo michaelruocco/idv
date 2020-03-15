@@ -14,7 +14,6 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
-import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 
 import java.util.UUID;
 
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.verify;
 
 class OneTimePasscodeSenderTest {
 
-    private final VerificationContextLoader contextLoader = mock(VerificationContextLoader.class);
+    private final OneTimePasscodeVerificationContextLoader contextLoader = mock(OneTimePasscodeVerificationContextLoader.class);
     private final OneTimePasscodeVerificationFactory verificationFactory = mock(OneTimePasscodeVerificationFactory.class);
     private final OneTimePasscodeVerificationLoader verificationLoader = mock(OneTimePasscodeVerificationLoader.class);
     private final PasscodeGenerator passcodeGenerator = mock(PasscodeGenerator.class);

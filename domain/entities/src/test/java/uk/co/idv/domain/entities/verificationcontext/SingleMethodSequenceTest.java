@@ -202,6 +202,16 @@ class SingleMethodSequenceTest {
     }
 
     @Test
+    void shouldReturnHasNextMethodFalseIfNextMethodIsComplete() {
+        final VerificationMethod method = new FakeVerificationMethodEligible();
+        final VerificationMethod completeMethod = method.addResult(new FakeVerificationResultSuccessful(method.getName()));
+
+        final VerificationSequence sequence = new SingleMethodSequence(completeMethod);
+
+        assertThat(sequence.hasNextMethod(completeMethod.getName())).isFalse();
+    }
+
+    @Test
     void shouldReturnMethodByName() {
         final VerificationMethod method = new FakeVerificationMethodEligible();
 

@@ -9,14 +9,13 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
-import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 
 import java.util.UUID;
 
 @Builder
 public class OneTimePasscodeSender {
 
-    private final VerificationContextLoader contextLoader;
+    private final OneTimePasscodeVerificationContextLoader contextLoader;
     private final OneTimePasscodeVerificationFactory verificationFactory;
     private final OneTimePasscodeVerificationLoader verificationLoader;
     private final PasscodeGenerator passcodeGenerator;
