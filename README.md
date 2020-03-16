@@ -5,7 +5,17 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b07013490db7485fb7fc4b3ea542ed9d)](https://www.codacy.com/manual/michaelruocco/idv?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/idv&amp;utm_campaign=Badge_Grade)
 [![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/idv?branch=master)](https://bettercodehub.com/)
 
-useful commands:
+## TODO list
+
+*  Add missing test coverage for: https://codecov.io/gh/michaelruocco/idv/src/master/domain/use-cases/src/main/java/uk/co/idv/domain/usecases/verification/onetimepasscode/OneTimePasscodeVerificationContextLoader.java
+*  Split postman collections so that OTP journeys are in a separate collection, add errors scenarios to OTP collection
+*  Split modules so that OTP entities / use cases / json / api are separated more clearly between verification context and OTP
+*  Add properly formatted error handling for OTP scenarios
+*  Implement SnsOneTimePasscodeDeliverySender
+*  Try removing NAT gateway from AWS templates as they are costly when you leave the ECS cluster running
+*  Implement token validation for access control and see if it is possible to format responses based on user profile
+
+## Useful commands
 
 ```gradle
 // runs tests and builds code
