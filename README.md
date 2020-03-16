@@ -8,12 +8,29 @@
 ## TODO list
 
 *  Add missing test coverage for: https://codecov.io/gh/michaelruocco/idv/src/master/domain/use-cases/src/main/java/uk/co/idv/domain/usecases/verification/onetimepasscode/OneTimePasscodeVerificationContextLoader.java
+
 *  Split postman collections so that OTP journeys are in a separate collection, add errors scenarios to OTP collection
+
 *  Split modules so that OTP entities / use cases / json / api are separated more clearly between verification context and OTP
+
 *  Add properly formatted error handling for OTP scenarios
+
 *  Implement SnsOneTimePasscodeDeliverySender
+
 *  Try removing NAT gateway from AWS templates as they are costly when you leave the ECS cluster running
+
 *  Implement token validation for access control and see if it is possible to format responses based on user profile
+
+*  Verification method policies
+
+*  Verification method policies updatable on the fly
+
+*  Deploy onto AWS (ideally would be automatic from travis ci pipeline)
+
+*  Acceptance tests (cucumber?)
+
+*  Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
+docker compose tasks in order, which will give a simple command to build and test before adding a commit
 
 ## Useful commands
 
@@ -93,20 +110,3 @@ aws cloudformation create-stack --stack-name idv-dev-alb --template-url https://
 
 aws cloudformation create-stack --stack-name idv-dev-verification-context --template-url https://idv-cloud-formation-templates.s3-eu-west-1.amazonaws.com/service-fargate-private-subnet-public-lb.yml --parameters ParameterKey=EnvironmentName,ParameterValue=idv-dev ParameterKey=ServiceName,ParameterValue=verification-context ParameterKey=ImageUrl,ParameterValue=michaelruocco/verification-context-spring-app:latest ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=Role,ParameterValue=ecsDynamoDb --region eu-west-1
 ```
-
-TODO:
-
-*  Add card number to online purchase activity
-
-*  Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
-docker compose tasks in order, which will give a simple command to build and test before adding a commit
-
-*  Verification method policies
-
-*  Verification method policies updatable on the fly
-
-*  Deploy onto AWS (ideally would be automatic from travis ci pipeline)
-
-*  Use AWS API gateway (or add authentication module)
-
-*  Acceptance tests
