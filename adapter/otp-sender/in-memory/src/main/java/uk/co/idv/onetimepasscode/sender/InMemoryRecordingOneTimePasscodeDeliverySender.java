@@ -1,7 +1,8 @@
-package uk.co.idv.domain.usecases.verification.onetimepasscode.sender;
+package uk.co.idv.onetimepasscode.sender;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
 
 import java.util.ArrayList;
 import java.util.Collection;

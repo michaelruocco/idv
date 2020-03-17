@@ -14,7 +14,6 @@ import uk.co.idv.domain.usecases.verification.onetimepasscode.message.DefaultOne
 import uk.co.idv.domain.usecases.verification.onetimepasscode.message.DelegatingOneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.message.OnlinePurchaseOneTimePasscodeMessageBuilder;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.InMemoryRecordingOneTimePasscodeDeliverySender;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeService;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationDao;
@@ -24,6 +23,7 @@ import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.Passcode
 import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.RandomPasscodeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
+import uk.co.idv.onetimepasscode.sender.InMemoryRecordingOneTimePasscodeDeliverySender;
 
 @Configuration
 public class OneTimePasscodeDomainConfig {

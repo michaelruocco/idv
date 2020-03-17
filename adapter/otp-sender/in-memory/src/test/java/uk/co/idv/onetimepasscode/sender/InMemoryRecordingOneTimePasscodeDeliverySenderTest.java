@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.verification.onetimepasscode.sender;
+package uk.co.idv.onetimepasscode.sender;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;

@@ -19,6 +19,12 @@ project(':in-memory-db').projectDir = file('adapter/db/in-memory')
 include ':dynamo-db'
 project(':dynamo-db').projectDir = file('adapter/db/dynamo')
 
+include ':in-memory-sender'
+project(':in-memory-sender').projectDir = file('adapter/otp-sender/in-memory')
+
+include ':sns-sender'
+project(':sns-sender').projectDir = file('adapter/otp-sender/sns')
+
 //uk geography
 include ':uk-entities'
 project(':uk-entities').projectDir = file('geography/uk/entities')

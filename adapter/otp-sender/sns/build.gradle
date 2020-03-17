@@ -1,0 +1,6 @@
+dependencies {
+    compile project(':entities')
+    compile project(':use-cases')
+
+    testCompile project(':entities').sourceSets.test.output
+}
