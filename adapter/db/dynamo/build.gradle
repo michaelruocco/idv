@@ -2,18 +2,8 @@ plugins {
     id 'org.unbroken-dome.test-sets' version '2.2.1'
 }
 
-configurations {
-    provided
-}
-
 testSets {
     integrationTest
-}
-
-sourceSets {
-    main.compileClasspath += configurations.provided
-    test.compileClasspath += configurations.provided
-    test.runtimeClasspath += configurations.provided
 }
 
 dependencies {

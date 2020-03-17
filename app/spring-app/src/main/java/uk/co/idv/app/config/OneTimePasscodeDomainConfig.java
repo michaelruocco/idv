@@ -102,8 +102,8 @@ public class OneTimePasscodeDomainConfig {
     }
 
     @Bean
-    public OneTimePasscodeDeliverySender oneTimePasscodeDeliverySender() {
-        return new InMemoryRecordingOneTimePasscodeDeliverySender();
+    public OneTimePasscodeDeliverySender oneTimePasscodeDeliverySender(final IdGenerator idGenerator) {
+        return new InMemoryRecordingOneTimePasscodeDeliverySender(idGenerator);
     }
 
     @Bean

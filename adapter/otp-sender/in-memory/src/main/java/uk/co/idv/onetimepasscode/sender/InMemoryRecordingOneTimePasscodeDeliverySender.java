@@ -1,21 +1,27 @@
 package uk.co.idv.onetimepasscode.sender;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
+import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+@RequiredArgsConstructor
 @Slf4j
 public class InMemoryRecordingOneTimePasscodeDeliverySender implements OneTimePasscodeDeliverySender {
 
     private final Collection<OneTimePasscodeDelivery> deliveries = new ArrayList<>();
 
+    private final IdGenerator idGenerator;
+
     @Override
-    public void send(OneTimePasscodeDelivery delivery) {
+    public String send(OneTimePasscodeDelivery delivery) {
         log.info("recording sent delivery {} in memory", delivery);
         deliveries.add(delivery);
+        return idGenerator.generate().toString();
     }
 
     public Collection<OneTimePasscodeDelivery> getDeliveries() {

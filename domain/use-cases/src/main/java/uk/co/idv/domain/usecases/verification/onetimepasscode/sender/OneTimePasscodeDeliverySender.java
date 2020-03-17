@@ -4,6 +4,6 @@ import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDel
 
 public interface OneTimePasscodeDeliverySender {
 
-    void send(final OneTimePasscodeDelivery delivery);
+    String send(final OneTimePasscodeDelivery delivery);
 
 }
