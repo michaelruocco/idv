@@ -1,4 +1,4 @@
-package uk.co.idv.onetimepasscode.sender;
+package uk.co.idv.onetimepasscode.sender.sns;
 
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.model.PublishRequest;

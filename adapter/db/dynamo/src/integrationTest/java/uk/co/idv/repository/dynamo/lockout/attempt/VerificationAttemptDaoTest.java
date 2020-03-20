@@ -28,7 +28,7 @@ public class VerificationAttemptDaoTest {
 
     @BeforeEach
     void setUp() {
-        final DynamoConfig config = DYNAMO_DB.getConfig();
+        final DynamoConfig config = DYNAMO_DB.buildConfig();
         final JsonConverter jsonConverter = new JacksonJsonConverter(ObjectMapperSingleton.instance());
         dao = config.verificationAttemptDao(jsonConverter);
     }

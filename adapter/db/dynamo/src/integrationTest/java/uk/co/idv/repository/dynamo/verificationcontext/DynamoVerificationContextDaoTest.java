@@ -31,7 +31,7 @@ class DynamoVerificationContextDaoTest {
 
     @BeforeEach
     void setUp() {
-        final DynamoConfig config = DYNAMO_DB.getConfig();
+        final DynamoConfig config = DYNAMO_DB.buildConfig();
         final JsonConverter jsonConverter = new JacksonJsonConverter(ObjectMapperSingleton.instance());
         final TimeGenerator timeGenerator = new CurrentTimeGenerator();
         dao = config.verificationContextDao(jsonConverter, timeGenerator);

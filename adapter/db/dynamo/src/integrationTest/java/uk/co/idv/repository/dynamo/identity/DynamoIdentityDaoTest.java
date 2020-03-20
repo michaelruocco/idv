@@ -25,7 +25,7 @@ class DynamoIdentityDaoTest {
 
     @BeforeEach
     void setUp() {
-        final DynamoConfig config = DYNAMO_DB.getConfig();
+        final DynamoConfig config = DYNAMO_DB.buildConfig();
         dao = config.identityDao();
     }
 

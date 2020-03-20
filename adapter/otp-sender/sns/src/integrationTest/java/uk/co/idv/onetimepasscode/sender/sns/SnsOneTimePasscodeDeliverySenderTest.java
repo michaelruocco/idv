@@ -1,25 +1,29 @@
-package uk.co.idv.onetimepasscode.sender;
+package uk.co.idv.onetimepasscode.sender.sns;
 
-import com.amazonaws.services.sns.AmazonSNS;
-import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import org.junit.jupiter.api.Test;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
+import uk.co.idv.onetimepasscode.sender.sns.attributes.MessageAttributeBuilder;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Testcontainers
 class SnsOneTimePasscodeDeliverySenderTest {
+
+    @Container
+    public static final SnsLocalContainer SNS = new SnsLocalContainer();
 
     private final MessageAttributeBuilder attributeBuilder = new MessageAttributeBuilder();
     private final OneTimePasscodeDeliveryConverter converter = new OneTimePasscodeDeliveryConverter(attributeBuilder);
-    private final AmazonSNS client = AmazonSNSClientBuilder.defaultClient();
 
     private final OneTimePasscodeDeliverySender sender = SnsOneTimePasscodeDeliverySender.builder()
             .converter(converter)
-            .client(client)
+            .client(SNS.buildSnsClient())
             .build();
 
     @Test

@@ -1,4 +1,4 @@
-package uk.co.idv.onetimepasscode.sender;
+package uk.co.idv.onetimepasscode.sender.sns.attributes;
 
 import com.amazonaws.services.sns.model.MessageAttributeValue;
 
