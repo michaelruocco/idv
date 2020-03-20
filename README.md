@@ -7,15 +7,9 @@
 
 ## TODO list
 
-*  Add missing test coverage for: https://codecov.io/gh/michaelruocco/idv/src/master/domain/use-cases/src/main/java/uk/co/idv/domain/usecases/verification/onetimepasscode/OneTimePasscodeVerificationContextLoader.java
-
-*  Split postman collections so that OTP journeys are in a separate collection, add errors scenarios to OTP collection
-
-*  Split modules so that OTP entities / use cases / json / api are separated more clearly between verification context and OTP
+*  Split modules so that OTP entities / use cases / json / api and config are separated more clearly between verification context and OTP
 
 *  Add properly formatted error handling for OTP scenarios
-
-*  Implement SnsOneTimePasscodeDeliverySender
 
 *  Try removing NAT gateway from AWS templates as they are costly when you leave the ECS cluster running
 

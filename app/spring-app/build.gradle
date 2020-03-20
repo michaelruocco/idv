@@ -70,6 +70,6 @@ node {
 }
 
 postman {
-    collections = fileTree(dir: '../postman', include: '*postman_collection.json')
+    collections = fileTree(dir: '../postman', include: '*.postman_collection.json')
     environment = file('../postman/local.postman_environment.json')
 }

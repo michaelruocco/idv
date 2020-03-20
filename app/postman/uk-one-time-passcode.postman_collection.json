@@ -1,0 +1,352 @@
+{
+	"info": {
+		"_postman_id": "7e623c0d-a3ca-4c33-b270-fbb6fc2bc863",
+		"name": "uk-one-time-passcode",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create-context-all-eligible",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
+						"exec": [
+							"var json = JSON.parse(responseBody);",
+							"",
+							"var attributes = json.data.attributes;",
+							"var identity = attributes.identity;",
+							"",
+							"var alias = identity.aliases[0];",
+							"var otpMethod = attributes.sequences[3].methods[0];",
+							"",
+							"postman.setEnvironmentVariable(\"verificationContextId\", json.data.id);",
+							"postman.setEnvironmentVariable(\"idvId\", identity.id);",
+							"postman.setEnvironmentVariable(\"aliasType\", alias.type);",
+							"postman.setEnvironmentVariable(\"aliasValue\", alias.value);",
+							"postman.setEnvironmentVariable(\"optDeliveryMethodId\", otpMethod.deliveryMethods[0].id);",
+							"",
+							"pm.test(\"should return created status\", function () {",
+							"    pm.response.to.have.status(201)",
+							"})",
+							"",
+							"pm.test(\"context should contain 4 sequences\", function () {",
+							"    pm.expect(json.data.attributes.sequences.length).to.equal(4)",
+							"})",
+							"",
+							"pm.test(\"all sequences should be eligible\", function () {",
+							"    var sequences = json.data.attributes.sequences",
+							"    sequences.find(sequence => {",
+							"        pm.expect(sequence.eligible).to.eql(true)",
+							"    }); ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0fce8ef9-a85b-4bac-a81a-cfbc2deb2657",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/verificationContexts",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"verificationContexts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "send-otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
+						"exec": [
+							"var json = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"otpVerificationId\", json.data.id);",
+							"postman.setEnvironmentVariable(\"otpPasscode\", json.data.attributes.deliveries[0].passcode);",
+							"",
+							"pm.test(\"should return created status\", function () {",
+							"    pm.response.to.have.status(201)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0fce8ef9-a85b-4bac-a81a-cfbc2deb2657",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n    \t\"type\": \"oneTimePasscodeVerifications\",\n        \"attributes\": {\n        \t\"contextId\": \"{{verificationContextId}}\",\n        \t\"deliveryMethodId\": \"{{optDeliveryMethodId}}\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/oneTimePasscodeVerifications",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"oneTimePasscodeVerifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "resend-otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0fce8ef9-a85b-4bac-a81a-cfbc2deb2657",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n    \t\"id\": \"{{otpVerificationId}}\",\n    \t\"type\": \"oneTimePasscodeVerifications\",\n        \"attributes\": {\n        \t\"contextId\": \"{{verificationContextId}}\",\n        \t\"deliveryMethodId\": \"{{optDeliveryMethodId}}\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/oneTimePasscodeVerifications/{{otpVerificationId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"oneTimePasscodeVerifications",
+						"{{otpVerificationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify-otp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0fce8ef9-a85b-4bac-a81a-cfbc2deb2657",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{otpVerificationId}}\",\n        \"type\": \"oneTimePasscodeVerifications\",\n        \"attributes\": {\n            \"passcodes\": [\n                \"{{otpPasscode}}\"\n            ]\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/oneTimePasscodeVerifications/{{otpVerificationId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"oneTimePasscodeVerifications",
+						"{{otpVerificationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-otp-verification",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e58fcaf-fdc9-4f3c-ab05-efb882d6d05b",
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0fce8ef9-a85b-4bac-a81a-cfbc2deb2657",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/oneTimePasscodeVerifications/{{otpVerificationId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"oneTimePasscodeVerifications",
+						"{{otpVerificationId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "91de98d5-90e7-4e19-959a-efd63628c8f8",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "1cf217e4-7f16-4f08-9763-80b8567f4d6f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
