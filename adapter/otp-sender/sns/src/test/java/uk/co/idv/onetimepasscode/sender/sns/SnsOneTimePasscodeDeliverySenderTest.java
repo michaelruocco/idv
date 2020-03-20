@@ -16,7 +16,7 @@ class SnsOneTimePasscodeDeliverySenderTest {
 
     private final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
     private final PublishRequest request = new PublishRequest();
-    private final PublishResult publishResult = new PublishResult().withMessageId("expected-id");
+    private final PublishResult publishResult = new PublishResult().withMessageId("id");
 
     private final OneTimePasscodeDeliveryConverter converter = mock(OneTimePasscodeDeliveryConverter.class);
     private final AmazonSNS client = mock(AmazonSNS.class);
