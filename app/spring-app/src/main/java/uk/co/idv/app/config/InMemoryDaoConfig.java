@@ -24,7 +24,7 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
         MongoDataAutoConfiguration.class,
         MongoRepositoriesAutoConfiguration.class
 })
-@Profile("stub")
+@Profile("stubbed")
 public class InMemoryDaoConfig {
 
     @Bean

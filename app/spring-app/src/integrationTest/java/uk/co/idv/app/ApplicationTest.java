@@ -24,7 +24,7 @@ class ApplicationTest {
 
     @Test
     void shouldStartupWithStubProfile() {
-        setSpringProfiles("stub, uk");
+        setSpringProfiles("stubbed, uk");
         setRandomServerPort();
 
         Application.main(new String[0]);

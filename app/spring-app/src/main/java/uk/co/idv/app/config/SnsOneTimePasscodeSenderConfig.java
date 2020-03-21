@@ -11,7 +11,7 @@ import uk.co.idv.onetimepasscode.sender.sns.SnsOneTimePasscodeDeliverySender;
 import uk.co.idv.onetimepasscode.sender.sns.attributes.MessageAttributeBuilder;
 
 @Configuration
-@Profile("!stub")
+@Profile("!stubbed")
 public class SnsOneTimePasscodeSenderConfig {
 
     private static final SnsClientFactory CLIENT_FACTORY = new SnsClientFactory();
@@ -37,7 +37,7 @@ public class SnsOneTimePasscodeSenderConfig {
 
     @Bean
     public AmazonSNS snsClient() {
-        return CLIENT_FACTORY.standard();
+        return CLIENT_FACTORY.build();
     }
 
 }

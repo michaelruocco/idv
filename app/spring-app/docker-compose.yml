@@ -9,6 +9,7 @@ services:
     image: localstack/localstack:latest
     container_name: aws-sns
     environment:
+      - DEFAULT_REGION=eu-west-1
       - SERVICES=sns
 
   verification-context-app:

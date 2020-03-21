@@ -18,10 +18,10 @@ public class SnsSystemProperties {
     }
 
     public static Optional<EndpointConfiguration> loadSnsEndpointConfiguration() {
-        return loadDynamoDbEndpointUri().map(AwsSystemProperties::toEndpointConfiguration);
+        return loadSnsEndpointUri().map(AwsSystemProperties::toEndpointConfiguration);
     }
 
-    private static Optional<String> loadDynamoDbEndpointUri() {
+    private static Optional<String> loadSnsEndpointUri() {
         return SystemPropertyLoader.load(SNS_ENDPOINT_URI);
     }
 

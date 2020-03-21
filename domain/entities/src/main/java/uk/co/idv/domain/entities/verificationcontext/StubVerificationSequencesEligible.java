@@ -57,7 +57,7 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static String loadPhoneNumber() {
-        final String phoneNumber = System.getProperty("stubbed.phone.number", "07809385580");
+        final String phoneNumber = System.getProperty("stubbed.phone.number", "07809386681");
         log.info("loaded system property stubbed.phone.number {}", phoneNumber);
         return phoneNumber;
     }

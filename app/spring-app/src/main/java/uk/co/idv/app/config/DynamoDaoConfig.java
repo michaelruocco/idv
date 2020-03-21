@@ -18,7 +18,7 @@ import uk.co.idv.utils.json.converter.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
 @Configuration
-@Profile("!stub")
+@Profile("!stubbed")
 public class DynamoDaoConfig {
 
     private final DynamoConfig config = new DynamoConfig(new DynamoClientFactory().build());

@@ -8,7 +8,7 @@ import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePass
 import uk.co.idv.onetimepasscode.sender.InMemoryRecordingOneTimePasscodeDeliverySender;
 
 @Configuration
-@Profile("stub")
+@Profile("stubbed")
 public class InMemoryOneTimePasscodeSenderConfig {
 
     @Bean

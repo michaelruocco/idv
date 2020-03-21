@@ -30,15 +30,15 @@ public class DynamoClientFactory {
                 .orElse(standard());
     }
 
-    public AmazonDynamoDB standard() {
-        return builder()
-                .withRegion(region)
-                .build();
-    }
-
     public AmazonDynamoDB withEndpointConfiguration(final EndpointConfiguration endpointConfiguration) {
         return builder()
                 .withEndpointConfiguration(endpointConfiguration)
+                .build();
+    }
+
+    private AmazonDynamoDB standard() {
+        return builder()
+                .withRegion(region)
                 .build();
     }
 
