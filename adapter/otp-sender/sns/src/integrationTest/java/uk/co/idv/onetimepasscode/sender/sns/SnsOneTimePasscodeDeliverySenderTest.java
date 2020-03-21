@@ -20,7 +20,6 @@ class SnsOneTimePasscodeDeliverySenderTest {
 
     private final MessageAttributeBuilder attributeBuilder = new MessageAttributeBuilder();
     private final OneTimePasscodeDeliveryConverter converter = new OneTimePasscodeDeliveryConverter(attributeBuilder);
-
     private final OneTimePasscodeDeliverySender sender = SnsOneTimePasscodeDeliverySender.builder()
             .converter(converter)
             .client(SNS.buildSnsClient())
