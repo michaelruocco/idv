@@ -23,7 +23,6 @@ import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.Passcode
 import uk.co.idv.domain.usecases.verification.onetimepasscode.generator.RandomPasscodeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
-import uk.co.idv.onetimepasscode.sender.InMemoryRecordingOneTimePasscodeDeliverySender;
 
 @Configuration
 public class OneTimePasscodeDomainConfig {
@@ -99,11 +98,6 @@ public class OneTimePasscodeDomainConfig {
     @Bean
     public PasscodeGenerator passcodeGenerator() {
         return new RandomPasscodeGenerator();
-    }
-
-    @Bean
-    public OneTimePasscodeDeliverySender oneTimePasscodeDeliverySender(final IdGenerator idGenerator) {
-        return new InMemoryRecordingOneTimePasscodeDeliverySender(idGenerator);
     }
 
     @Bean

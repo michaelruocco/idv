@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
 import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
 import uk.co.idv.onetimepasscode.sender.sns.attributes.MessageAttributeBuilder;
 
@@ -28,7 +28,7 @@ class SnsOneTimePasscodeDeliverySenderTest {
     @Test
     public void shouldSendSms() {
         final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
-                .method(new SmsDeliveryMethod("+447809385580"))
+                .method(DeliveryMethodMother.sms())
                 .message("Your IDV passcode is 12345678")
                 .passcode("12345678")
                 .sent(Instant.now())

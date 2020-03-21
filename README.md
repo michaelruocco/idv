@@ -59,6 +59,9 @@ docker compose tasks in order, which will give a simple command to build and tes
 ```gradle
 // runs application locally (on port 8081) using an in memory mongo database
 ./gradlew bootRun
+
+// does the same as above but also overrides the phone number used in the stubbed data returned
+./gradlew bootRun -Dstubbed.phone.number=+4407808123456
 ```
 
 ```gradle

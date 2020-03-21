@@ -34,6 +34,7 @@ dependencies {
     compile project(':dynamo-db')
     compile project(':in-memory-db')
     compile project(':uk-config')
+    compile project(':sns-sender')
     compile project(':in-memory-sender')
 
     testCompile project(':entities').sourceSets.test.output
@@ -54,6 +55,7 @@ integrationTest {
 }
 
 bootRun {
+    systemProperties = System.properties
     args = ["--server.port=8081"]
 }
 

@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.cardnumber.CardNumber;
 import uk.co.idv.domain.entities.cardnumber.CreditCardNumber;
@@ -16,7 +17,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryF
 import java.util.Collection;
 import java.util.Collections;
 
-
+@Slf4j
 public class StubVerificationSequencesEligible extends VerificationSequences {
 
     private static final VerificationSequence PUSH_AUTHENTICATION = buildPushNotificationSequence();
@@ -49,10 +50,16 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildOneTimePasscodeSequence() {
-        final Collection<DeliveryMethod> deliveryMethods = Collections.singleton(new SmsDeliveryMethod("07809385580"));
+        final Collection<DeliveryMethod> deliveryMethods = Collections.singleton(new SmsDeliveryMethod(loadPhoneNumber()));
         final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
         final VerificationMethod oneTimePasscode = new OneTimePasscodeEligible(passcodeSettings, deliveryMethods);
         return new SingleMethodSequence(oneTimePasscode);
+    }
+
+    private static String loadPhoneNumber() {
+        final String phoneNumber = System.getProperty("stubbed.phone.number", "07809385580");
+        log.info("loaded system property stubbed.phone.number {}", phoneNumber);
+        return phoneNumber;
     }
 
 }
