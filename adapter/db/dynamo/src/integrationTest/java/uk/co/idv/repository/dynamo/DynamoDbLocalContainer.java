@@ -20,8 +20,8 @@ public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContai
     }
 
     public DynamoDbLocalContainer(final Regions region) {
-        super("localstack/localstack:latest");
-        withExposedPorts(4569);
+        super("amazon/dynamodb-local:latest");
+        withExposedPorts(8000);
         this.region = region;
     }
 
@@ -33,14 +33,14 @@ public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContai
         return new DynamoConfig(client);
     }
 
-    private EndpointConfiguration buildEndpointConfiguration() {
-        return new EndpointConfiguration(buildEndpointUri(), region.getName());
-    }
-
-    private String buildEndpointUri() {
+    public String buildEndpointUri() {
         final String uri = String.format("http://%s:%s", getContainerIpAddress(), getFirstMappedPort());
         log.info("connecting to dynamo db using uri {}", uri);
         return uri;
+    }
+
+    private EndpointConfiguration buildEndpointConfiguration() {
+        return new EndpointConfiguration(buildEndpointUri(), region.getName());
     }
 
 }

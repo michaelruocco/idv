@@ -42,7 +42,15 @@ dependencies {
 
     integrationTestCompile 'com.github.stefanbirkner:system-rules:1.19.0'
     integrationTestCompile project(':dynamo-db').sourceSets.integrationTest.output
+    integrationTestCompile project(':sns-sender').sourceSets.integrationTest.output
     integrationTestCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
+}
+
+integrationTest {
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+    }
 }
 
 bootRun {

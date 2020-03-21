@@ -1,11 +1,15 @@
 version: '3'
 services:
 
-  verification-context-dynamo-db:
+  aws-dynamo-db:
     image: amazon/dynamodb-local:latest
-    container_name: verification-context-dynamo-db
-    ports:
-      - 8001:8000
+    container_name: aws-dynamo-db
+
+  aws-sns:
+    image: localstack/localstack:latest
+    container_name: aws-sns
+    environment:
+      - SERVICES=sns
 
   verification-context-app:
     image: michaelruocco/verification-context-spring-app
@@ -16,6 +20,8 @@ services:
       - SERVER_PORT=80
       - AWS_ACCESS_KEY=abc
       - AWS_SECRET_KEY=123
-      - AWS_DYNAMO_DB_ENDPOINT_URI=http://verification-context-dynamo-db:8000
+      - AWS_DYNAMO_DB_ENDPOINT_URI=http://aws-dynamo-db:8000
+      - AWS_SNS_ENDPOINT_URI=http://aws-sns:4575
     depends_on:
-      - verification-context-dynamo-db
+      - aws-dynamo-db
+      - aws-sns

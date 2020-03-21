@@ -1,49 +1,49 @@
-package uk.co.idv.repository.dynamo;
+package uk.co.idv.onetimepasscode.sender.sns;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.sns.AmazonSNS;
+import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.utils.aws.system.AwsSystemProperties;
 
 import static com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 
 @RequiredArgsConstructor
-public class DynamoClientFactory {
+public class SnsClientFactory {
 
     private final Regions region;
     private final AWSCredentialsProvider credentialsProvider;
 
-    public DynamoClientFactory() {
+    public SnsClientFactory() {
         this(new DefaultAWSCredentialsProviderChain());
     }
 
-    public DynamoClientFactory(final AWSCredentialsProvider credentialsProvider) {
+    public SnsClientFactory(final AWSCredentialsProvider credentialsProvider) {
         this(AwsSystemProperties.loadRegion(), credentialsProvider);
     }
 
-    public AmazonDynamoDB build() {
-        return DynamoDbSystemProperties.loadDynamoDbEndpointConfiguration()
+    public AmazonSNS build() {
+        return SnsSystemProperties.loadSnsEndpointConfiguration()
                 .map(this::withEndpointConfiguration)
                 .orElse(standard());
     }
 
-    public AmazonDynamoDB standard() {
+    public AmazonSNS standard() {
         return builder()
                 .withRegion(region)
                 .build();
     }
 
-    public AmazonDynamoDB withEndpointConfiguration(final EndpointConfiguration endpointConfiguration) {
+    public AmazonSNS withEndpointConfiguration(final EndpointConfiguration endpointConfiguration) {
         return builder()
                 .withEndpointConfiguration(endpointConfiguration)
                 .build();
     }
 
-    private AmazonDynamoDBClientBuilder builder() {
-        return AmazonDynamoDBClientBuilder.standard()
+    private AmazonSNSClientBuilder builder() {
+        return AmazonSNSClientBuilder.standard()
                 .withCredentials(credentialsProvider);
     }
 

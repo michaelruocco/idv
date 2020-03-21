@@ -10,6 +10,7 @@ dependencies {
     compile project(':entities')
     compile project(':use-cases')
     compile project(':json-converter')
+    compile project(':aws-system-properties')
 
     compile 'com.amazonaws:aws-java-sdk-dynamodb:1.11.748'
 
@@ -22,4 +23,11 @@ dependencies {
 
     integrationTestCompile project(':json')
     integrationTestCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
+}
+
+integrationTest {
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+    }
 }

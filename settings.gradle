@@ -42,3 +42,6 @@ project(':spring-app').projectDir = file('app/spring-app')
 //utils
 include ':json-converter'
 project(':json-converter').projectDir = file('utils/json-converter')
+
+include ':aws-system-properties'
+project(':aws-system-properties').projectDir = file('utils/aws-system-properties')
