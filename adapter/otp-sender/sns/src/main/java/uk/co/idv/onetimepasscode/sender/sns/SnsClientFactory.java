@@ -27,7 +27,6 @@ public class SnsClientFactory {
     }
 
     public AmazonSNS build() {
-        log.info("building sns client");
         return SnsSystemProperties.loadSnsEndpointConfiguration()
                 .map(this::withEndpointConfiguration)
                 .orElse(standard());

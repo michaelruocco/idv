@@ -7,9 +7,13 @@
 
 ## TODO list
 
+*  Persist one time passcode verifications to mongo rather than in memory
+
 *  Split modules so that OTP entities / use cases / json / api and config are separated more clearly between verification context and OTP
 
 *  Add properly formatted error handling for OTP scenarios
+
+*  Load phone number from database so we don't have use use stubbed environment variables to change phone numbers
 
 *  Try removing NAT gateway from AWS templates as they are costly when you leave the ECS cluster running
 
