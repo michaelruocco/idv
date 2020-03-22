@@ -1,6 +1,6 @@
 {
   "data": {
-    "type": "verificationContexts",
+    "type": "verification-contexts",
     "attributes": {
       "channel": {
         "id": "fake-channel"

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.api.lockout.policy.LockoutPolicyDocument;
@@ -24,24 +25,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/lockout-policies")
 public class LockoutPolicyController {
 
     private final LockoutPolicyService service;
     private final DefaultLockoutPolicyAttributesConverter attributesConverter;
 
-    @GetMapping("/lockoutPolicies")
-    public LockoutPoliciesDocument getLockoutPolicies() {
-        final Collection<LockoutPolicy> policies = service.loadAll();
-        return toDocument(attributesConverter.toAttributes(policies));
-    }
-
-    @GetMapping("/lockoutPolicies/{id}")
-    public LockoutPolicyDocument getLockoutPolicy(@PathVariable("id") final UUID id) {
-        final LockoutPolicy policy = service.load(id);
-        return toDocument(attributesConverter.toAttributes(policy));
-    }
-
-    @PostMapping("/lockoutPolicies")
+    @PostMapping
     public ResponseEntity<LockoutPolicyDocument> createLockoutPolicy(@RequestBody final LockoutPolicyDocument document) {
         final LockoutPolicy policy = attributesConverter.toPolicy(document.getAttributes());
         service.create(policy);
@@ -50,7 +40,19 @@ public class LockoutPolicyController {
                 .body(document);
     }
 
-    @PutMapping("/lockoutPolicies")
+    @GetMapping
+    public LockoutPoliciesDocument getLockoutPolicies() {
+        final Collection<LockoutPolicy> policies = service.loadAll();
+        return toDocument(attributesConverter.toAttributes(policies));
+    }
+
+    @GetMapping("/{id}")
+    public LockoutPolicyDocument getLockoutPolicy(@PathVariable("id") final UUID id) {
+        final LockoutPolicy policy = service.load(id);
+        return toDocument(attributesConverter.toAttributes(policy));
+    }
+
+    @PutMapping("/{id}")
     public LockoutPolicyDocument updateLockoutPolicy(@RequestBody final LockoutPolicyDocument document) {
         final LockoutPolicy policy = attributesConverter.toPolicy(document.getAttributes());
         service.update(policy);

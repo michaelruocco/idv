@@ -67,7 +67,7 @@ class VerificationContextControllerTest {
         final ResponseEntity<VerificationContextDocument> response = controller.createContext(requestDocument);
 
         final HttpHeaders headers = response.getHeaders();
-        final String expectedUri = String.format("/verificationContexts/%s", context.getId());
+        final String expectedUri = String.format("/verification-contexts/%s", context.getId());
         assertThat(headers.get("Location")).containsExactly(expectedUri);
     }
 

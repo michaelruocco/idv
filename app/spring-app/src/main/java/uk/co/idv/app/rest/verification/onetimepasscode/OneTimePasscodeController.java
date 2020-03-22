@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.api.verification.onetimepasscode.SendOneTimePasscodeRequestDocument;
 import uk.co.idv.api.verification.onetimepasscode.OneTimePasscodeVerificationDocument;
@@ -23,11 +24,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/one-time-passcode-verifications")
 public class OneTimePasscodeController {
 
     private final OneTimePasscodeService service;
 
-    @PostMapping("/oneTimePasscodeVerifications")
+    @PostMapping
     public ResponseEntity<OneTimePasscodeVerificationDocument> sendOtp(@RequestBody final SendOneTimePasscodeRequestDocument request) {
         final OneTimePasscodeVerification verification = service.send(request.getAttributes());
         final OneTimePasscodeVerificationDocument document = toDocument(verification);
@@ -36,19 +38,19 @@ public class OneTimePasscodeController {
                 .body(document);
     }
 
-    @PostMapping("/oneTimePasscodeVerifications/{id}")
+    @PostMapping("/{id}")
     public OneTimePasscodeVerificationDocument resendOtp(@RequestBody final ResendOneTimePasscodeRequestDocument request) {
         final OneTimePasscodeVerification verification = service.send(request.getAttributes());
         return toDocument(verification);
     }
 
-    @GetMapping("/oneTimePasscodeVerifications/{id}")
+    @GetMapping("/{id}")
     public OneTimePasscodeVerificationDocument getVerification(@PathVariable("id") final UUID id) {
         final OneTimePasscodeVerification verification = service.load(id);
         return toDocument(verification);
     }
 
-    @PatchMapping("/oneTimePasscodeVerifications/{id}")
+    @PatchMapping("/{id}")
     public OneTimePasscodeVerificationDocument verifyOtp(@RequestBody final VerifyOneTimePasscodeRequestDocument request) {
         final OneTimePasscodeVerification verification = service.verify(request.getAttributes());
         return toDocument(verification);

@@ -72,7 +72,7 @@ class OneTimePasscodeControllerTest {
         final ResponseEntity<OneTimePasscodeVerificationDocument> response = controller.sendOtp(requestDocument);
 
         final HttpHeaders headers = response.getHeaders();
-        final String expectedUri = String.format("/oneTimePasscodeVerifications/%s", verification.getId());
+        final String expectedUri = String.format("/one-time-passcode-verifications/%s", verification.getId());
         assertThat(headers.get("Location")).containsExactly(expectedUri);
     }
 

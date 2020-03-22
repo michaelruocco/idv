@@ -13,7 +13,7 @@ public class LockoutStateDocument extends ApiDocumentWithId<LockoutState> {
     private static class Data extends ApiDataWithId<LockoutState> {
 
         public Data(final LockoutState attributes) {
-            super(attributes.getId(), "lockoutStates", attributes);
+            super(attributes.getId(), "lockout-states", attributes);
         }
 
     }

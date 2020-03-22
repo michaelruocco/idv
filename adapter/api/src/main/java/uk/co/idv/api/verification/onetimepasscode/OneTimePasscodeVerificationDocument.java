@@ -13,7 +13,7 @@ public class OneTimePasscodeVerificationDocument extends ApiDocumentWithId<OneTi
     private static class Data extends ApiDataWithId<OneTimePasscodeVerification> {
 
         private Data(final OneTimePasscodeVerification attributes) {
-            super(attributes.getId(), "oneTimePasscodeVerifications", attributes);
+            super(attributes.getId(), "one-time-passcode-verifications", attributes);
         }
 
     }

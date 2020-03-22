@@ -58,15 +58,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\",\n                \"issuerSessionId\": \"08c1688e-02b0-47bb-9e3c-ed6aa1b0542b\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111119\"\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"type\": \"verification-contexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\",\n                \"issuerSessionId\": \"08c1688e-02b0-47bb-9e3c-ed6aa1b0542b\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111119\"\n            }\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/verificationContexts",
+					"raw": "{{host}}/verification-contexts",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"verificationContexts"
+						"verification-contexts"
 					]
 				}
 			},
@@ -140,15 +140,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"type\": \"verification-contexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/verificationContexts",
+					"raw": "{{host}}/verification-contexts",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"verificationContexts"
+						"verification-contexts"
 					]
 				}
 			},
@@ -271,12 +271,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/verificationContexts/{{verificationContextId}}",
+					"raw": "{{host}}/verification-contexts/{{verificationContextId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"verificationContexts",
+						"verification-contexts",
 						"{{verificationContextId}}"
 					]
 				}
@@ -321,15 +321,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"id\": \"{{verificationContextId}}\",\n        \"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"result\": {\n                \"methodName\": \"push-notification\",\n                \"verificationId\": \"{{$guid}}\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"successful\": true\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{verificationContextId}}\",\n        \"type\": \"verification-contexts\",\n        \"attributes\": {\n            \"result\": {\n                \"methodName\": \"push-notification\",\n                \"verificationId\": \"{{$guid}}\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"successful\": true\n            }\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/verificationContexts/{{verificationContextId}}",
+					"raw": "{{host}}/verification-contexts/{{verificationContextId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"verificationContexts",
+						"verification-contexts",
 						"{{verificationContextId}}"
 					]
 				}
@@ -368,12 +368,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{host}}/lockoutStates?channelId=RSA&activityName=online-purchase&aliasType=credit-card-number&aliasValue=4929001111111112",
+					"raw": "{{host}}/lockout-states?channelId=RSA&activityName=online-purchase&aliasType=credit-card-number&aliasValue=4929001111111112",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"lockoutStates"
+						"lockout-states"
 					],
 					"query": [
 						{
@@ -435,15 +435,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"lockoutStates\",\n        \"attributes\": {\n            \"channelId\": \"RSA\",\n            \"activityName\": \"online-purchase\",\n            \"alias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"type\": \"lockout-states\",\n        \"attributes\": {\n            \"channelId\": \"RSA\",\n            \"activityName\": \"online-purchase\",\n            \"alias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/lockoutStates",
+					"raw": "{{host}}/lockout-states",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"lockoutStates"
+						"lockout-states"
 					]
 				}
 			},
@@ -493,12 +493,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{host}}/lockoutPolicies",
+					"raw": "{{host}}/lockout-policies",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"lockoutPolicies"
+						"lockout-policies"
 					]
 				}
 			},
@@ -545,15 +545,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"id\": \"{{$guid}}\",\n        \"type\": \"lockoutPolicies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"recordAttempts\": \"never\",\n            \"type\": \"non-locking\"\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{$guid}}\",\n        \"type\": \"lockout-policies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"recordAttempts\": \"never\",\n            \"type\": \"non-locking\"\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/lockoutPolicies",
+					"raw": "{{host}}/lockout-policies",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"lockoutPolicies"
+						"lockout-policies"
 					]
 				}
 			},
@@ -603,12 +603,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{host}}/lockoutPolicies/{{lockoutPolicyId}}",
+					"raw": "{{host}}/lockout-policies/{{lockoutPolicyId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"lockoutPolicies",
+						"lockout-policies",
 						"{{lockoutPolicyId}}"
 					]
 				}
@@ -653,15 +653,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"id\": \"{{lockoutPolicyId}}\",\n        \"type\": \"lockoutPolicies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"recordAttempts\": \"every-attempt\",\n            \"type\": \"hard-lock\",\n            \"maxNumberOfAttempts\": 3\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{lockoutPolicyId}}\",\n        \"type\": \"lockout-policies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"recordAttempts\": \"every-attempt\",\n            \"type\": \"hard-lock\",\n            \"maxNumberOfAttempts\": 3\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/lockoutPolicies",
+					"raw": "{{host}}/lockout-policies/{{lockoutPolicyId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"lockoutPolicies"
+						"lockout-policies",
+						"{{lockoutPolicyId}}"
 					]
 				}
 			},

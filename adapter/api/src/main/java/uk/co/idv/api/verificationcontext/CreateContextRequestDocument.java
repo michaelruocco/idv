@@ -13,7 +13,7 @@ public class CreateContextRequestDocument extends ApiDocument<CreateContextReque
     private static class Data extends ApiData<CreateContextRequest> {
 
         private Data(final CreateContextRequest request) {
-            super("verificationContexts", request);
+            super("verification-contexts", request);
         }
 
     }

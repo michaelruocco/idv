@@ -73,15 +73,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"type\": \"verificationContexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"type\": \"verification-contexts\",\n        \"attributes\": {\n            \"channel\": {\n                \"id\": \"RSA\"\n            },\n            \"activity\": {\n                \"name\": \"online-purchase\",\n                \"timestamp\": \"{{timestampUtc}}\",\n                \"merchantName\": \"Amazon\",\n                \"reference\": \"ABC-123\",\n                \"cost\": {\n                    \"amount\": 10.99,\n                    \"currency\": \"GBP\"\n                },\n                \"cardNumber\": {\n                    \"tokenized\": \"4929001111111119\",\n                    \"type\": \"CREDIT\"\n                }\n            },\n            \"providedAlias\": {\n                \"type\": \"credit-card-number\",\n                \"value\": \"4929001111111112\"\n            }\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/verificationContexts",
+					"raw": "{{host}}/verification-contexts",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"verificationContexts"
+						"verification-contexts"
 					]
 				}
 			},
@@ -134,15 +134,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n    \t\"type\": \"oneTimePasscodeVerifications\",\n        \"attributes\": {\n        \t\"contextId\": \"{{verificationContextId}}\",\n        \t\"deliveryMethodId\": \"{{optDeliveryMethodId}}\"\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n    \t\"type\": \"one-time-passcode-verifications\",\n        \"attributes\": {\n        \t\"contextId\": \"{{verificationContextId}}\",\n        \t\"deliveryMethodId\": \"{{optDeliveryMethodId}}\"\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/oneTimePasscodeVerifications",
+					"raw": "{{host}}/one-time-passcode-verifications",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"oneTimePasscodeVerifications"
+						"one-time-passcode-verifications"
 					]
 				}
 			},
@@ -191,15 +191,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n    \t\"id\": \"{{otpVerificationId}}\",\n    \t\"type\": \"oneTimePasscodeVerifications\",\n        \"attributes\": {\n        \t\"contextId\": \"{{verificationContextId}}\",\n        \t\"deliveryMethodId\": \"{{optDeliveryMethodId}}\"\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n    \t\"id\": \"{{otpVerificationId}}\",\n    \t\"type\": \"one-time-passcode-verifications\",\n        \"attributes\": {\n        \t\"contextId\": \"{{verificationContextId}}\",\n        \t\"deliveryMethodId\": \"{{optDeliveryMethodId}}\"\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/oneTimePasscodeVerifications/{{otpVerificationId}}",
+					"raw": "{{host}}/one-time-passcode-verifications/{{otpVerificationId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"oneTimePasscodeVerifications",
+						"one-time-passcode-verifications",
 						"{{otpVerificationId}}"
 					]
 				}
@@ -249,15 +249,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"id\": \"{{otpVerificationId}}\",\n        \"type\": \"oneTimePasscodeVerifications\",\n        \"attributes\": {\n            \"passcodes\": [\n                \"{{otpPasscode}}\"\n            ]\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{otpVerificationId}}\",\n        \"type\": \"one-time-passcode-verifications\",\n        \"attributes\": {\n            \"passcodes\": [\n                \"{{otpPasscode}}\"\n            ]\n        }\n    }\n}"
 				},
 				"url": {
-					"raw": "{{host}}/oneTimePasscodeVerifications/{{otpVerificationId}}",
+					"raw": "{{host}}/one-time-passcode-verifications/{{otpVerificationId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"oneTimePasscodeVerifications",
+						"one-time-passcode-verifications",
 						"{{otpVerificationId}}"
 					]
 				}
@@ -313,12 +313,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{host}}/oneTimePasscodeVerifications/{{otpVerificationId}}",
+					"raw": "{{host}}/one-time-passcode-verifications/{{otpVerificationId}}",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"oneTimePasscodeVerifications",
+						"one-time-passcode-verifications",
 						"{{otpVerificationId}}"
 					]
 				}

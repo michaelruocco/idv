@@ -13,7 +13,7 @@ public class SendOneTimePasscodeRequestDocument extends ApiDocument<SendOneTimeP
     private static class Data extends ApiData<SendOneTimePasscodeRequest> {
 
         private Data(final SendOneTimePasscodeRequest request) {
-            super("oneTimePasscodeVerifications", request);
+            super("one-time-passcode-verifications", request);
         }
 
     }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
@@ -17,12 +18,13 @@ import uk.co.idv.domain.usecases.lockout.LockoutFacade;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/lockout-states")
 public class LockoutController {
 
     private final AliasFactory aliasFactory;
     private final LockoutFacade lockoutFacade;
 
-    @GetMapping("/lockoutStates")
+    @GetMapping
     public LockoutStateDocument getLockoutState(@RequestParam final String channelId,
                                                 @RequestParam final String activityName,
                                                 @RequestParam final String aliasType,
@@ -32,7 +34,7 @@ public class LockoutController {
         return toDocument(state);
     }
 
-    @PatchMapping("/lockoutStates")
+    @PatchMapping
     public LockoutStateDocument resetLockoutState(@RequestBody final ResetLockoutStateDocument document) {
         final LockoutRequest request = document.getAttributes();
         final LockoutState state = lockoutFacade.resetLockoutState(request);

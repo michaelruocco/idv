@@ -112,7 +112,7 @@ class LockoutPolicyControllerTest {
         final ResponseEntity<LockoutPolicyDocument> response = controller.createLockoutPolicy(document);
 
         final HttpHeaders headers = response.getHeaders();
-        final String expectedUri = String.format("/lockoutPolicies/%s", policy.getId());
+        final String expectedUri = String.format("/lockout-policies/%s", policy.getId());
         assertThat(headers.get("Location")).containsExactly(expectedUri);
     }
 

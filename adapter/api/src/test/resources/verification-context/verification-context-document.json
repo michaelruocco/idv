@@ -1,7 +1,7 @@
 {
   "data": {
     "id": "eaca769b-c8ac-42fc-ba6a-97e6f1be36f8",
-    "type": "verificationContexts",
+    "type": "verification-contexts",
     "attributes": {
       "channel": {
         "id": "fake-channel"

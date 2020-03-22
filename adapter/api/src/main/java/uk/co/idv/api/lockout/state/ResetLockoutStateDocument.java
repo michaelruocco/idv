@@ -13,7 +13,7 @@ public class ResetLockoutStateDocument extends ApiDocument<LockoutRequest> {
     private static class Data extends ApiData<LockoutRequest> {
 
         private Data(final LockoutRequest attributes) {
-            super("lockoutStates", attributes);
+            super("lockout-states", attributes);
         }
 
     }

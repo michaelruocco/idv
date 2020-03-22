@@ -1,7 +1,7 @@
 {
   "data": {
     "id": "20a32973-2018-46e8-a93c-28892e71da64",
-    "type": "lockoutStates",
+    "type": "lockout-states",
     "attributes": {
       "idvId": "49888d4b-36ac-4d1c-b529-3829869e5858",
       "locked": false,

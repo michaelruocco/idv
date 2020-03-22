@@ -15,7 +15,7 @@ public class VerificationContextDocument extends ApiDocumentWithId<VerificationC
     private static class Data extends ApiDataWithId<VerificationContext> {
 
         private Data(final VerificationContext attributes) {
-            super(attributes.getId(), "verificationContexts", attributes);
+            super(attributes.getId(), "verification-contexts", attributes);
         }
 
     }

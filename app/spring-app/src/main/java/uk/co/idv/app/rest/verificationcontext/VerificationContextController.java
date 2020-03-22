@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.api.verificationcontext.CreateContextRequestDocument;
 import uk.co.idv.api.verificationcontext.UpdateContextResultsRequestDocument;
@@ -23,11 +24,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/verification-contexts")
 public class VerificationContextController {
 
     private final VerificationContextService contextService;
 
-    @PostMapping("/verificationContexts")
+    @PostMapping
     public ResponseEntity<VerificationContextDocument> createContext(@RequestBody final CreateContextRequestDocument request) {
         final VerificationContext context = contextService.create(request.getAttributes());
         final VerificationContextDocument document = toDocument(context);
@@ -36,13 +38,13 @@ public class VerificationContextController {
                 .body(document);
     }
 
-    @GetMapping("/verificationContexts/{id}")
+    @GetMapping("/{id}")
     public VerificationContextDocument getContext(@PathVariable("id") final UUID id) {
         final VerificationContext context = contextService.load(id);
         return toDocument(context);
     }
 
-    @PatchMapping("/verificationContexts/{id}")
+    @PatchMapping("/{id}")
     public VerificationContextDocument updateContextResults(@RequestBody final UpdateContextResultsRequestDocument request) {
         final VerificationContext context = contextService.recordResult(request.getAttributes());
         return toDocument(context);

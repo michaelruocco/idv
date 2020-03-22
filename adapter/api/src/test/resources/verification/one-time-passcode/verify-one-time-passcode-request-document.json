@@ -1,7 +1,7 @@
 {
   "data": {
     "id": "c5b9f6f8-c45f-4d0e-a5eb-c5e344024db1",
-    "type": "oneTimePasscodeVerifications",
+    "type": "one-time-passcode-verifications",
     "attributes": {
       "passcodes": [
         "12345678"

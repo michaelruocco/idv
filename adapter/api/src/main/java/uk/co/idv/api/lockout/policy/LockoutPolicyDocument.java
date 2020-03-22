@@ -14,7 +14,7 @@ public class LockoutPolicyDocument extends ApiDocumentWithId<LockoutPolicyAttrib
     private static class Data extends ApiDataWithId<LockoutPolicyAttributes> {
 
         private Data(final LockoutPolicyAttributes attributes) {
-            super(attributes.getId(),"lockoutPolicies", attributes);
+            super(attributes.getId(),"lockout-policies", attributes);
         }
 
     }

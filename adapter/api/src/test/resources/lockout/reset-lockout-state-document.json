@@ -1,6 +1,6 @@
 {
   "data": {
-    "type": "lockoutStates",
+    "type": "lockout-states",
     "attributes": {
       "channelId": "fake-channel",
       "activityName": "fake-activity",

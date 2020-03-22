@@ -13,7 +13,7 @@ public class UpdateContextResultsRequestDocument extends ApiDocumentWithId<Recor
     private static class Data extends ApiDataWithId<RecordResultRequest> {
 
         public Data(final RecordResultRequest attributes) {
-            super(attributes.getContextId(), "verificationContexts", attributes);
+            super(attributes.getContextId(), "verification-contexts", attributes);
         }
 
     }

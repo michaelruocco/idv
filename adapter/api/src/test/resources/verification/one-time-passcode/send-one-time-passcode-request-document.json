@@ -1,6 +1,6 @@
 {
   "data": {
-    "type": "oneTimePasscodeVerifications",
+    "type": "one-time-passcode-verifications",
     "attributes": {
       "contextId": "61152e11-3513-40be-bf11-a0c13a8cbbbe",
       "deliveryMethodId": "53acd147-ff5b-48fc-a12b-ed38dcff6a26"
