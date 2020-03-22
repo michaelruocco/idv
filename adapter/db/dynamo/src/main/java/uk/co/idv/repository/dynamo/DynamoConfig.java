@@ -10,6 +10,7 @@ import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.repository.dynamo.identity.IdentityMappingCreateTableRequest;
 import uk.co.idv.repository.dynamo.identity.alias.AliasConverter;
@@ -25,11 +26,12 @@ import uk.co.idv.repository.dynamo.table.DynamoTableCreator;
 import uk.co.idv.repository.dynamo.table.DynamoTableService;
 import uk.co.idv.repository.dynamo.table.DynamoTimeToLiveService;
 import uk.co.idv.repository.dynamo.table.IdvTimeToLiveRequest;
-import uk.co.idv.repository.dynamo.table.TimeToLiveCalculator;
+import uk.co.idv.repository.dynamo.verification.onetimepasscode.DynamoOneTimePasscodeVerificationDao;
+import uk.co.idv.repository.dynamo.verification.onetimepasscode.OneTimePasscodeVerificationCreateTableRequest;
+import uk.co.idv.repository.dynamo.verification.onetimepasscode.OneTimePasscodeVerificationItemConverter;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextCreateTableRequest;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextItemConverter;
-import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextTimeToLiveCalculator;
 import uk.co.idv.utils.aws.system.AwsSystemProperties;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
@@ -64,14 +66,10 @@ public class DynamoConfig {
                 .build();
     }
 
-    public void clearLockoutPolicies() {
-        tableService.recreateTable(new LockoutPolicyCreateTableRequest(environment));
-    }
-
     public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
                                                          final TimeGenerator timeGenerator) {
         final CreateTableRequest createTableRequest = new VerificationContextCreateTableRequest(environment);
-        final VerificationContextItemConverter itemConverter = itemConverter(jsonConverter, timeGenerator);
+        final VerificationContextItemConverter itemConverter = verificationContextItemConverter(jsonConverter, timeGenerator);
         final VerificationContextDao dao = DynamoVerificationContextDao.builder()
                 .itemConverter(itemConverter)
                 .table(getOrCreateTable(createTableRequest))
@@ -80,6 +78,19 @@ public class DynamoConfig {
         return dao;
     }
 
+    public OneTimePasscodeVerificationDao oneTimePasscodeVerificationDao(final JsonConverter jsonConverter,
+                                                                         final TimeGenerator timeGenerator) {
+        final CreateTableRequest createTableRequest = new OneTimePasscodeVerificationCreateTableRequest(environment);
+        final OneTimePasscodeVerificationItemConverter itemConverter = oneTimePasscodeVerificationItemConverter(jsonConverter, timeGenerator);
+        final OneTimePasscodeVerificationDao dao = DynamoOneTimePasscodeVerificationDao.builder()
+                .itemConverter(itemConverter)
+                .table(getOrCreateTable(createTableRequest))
+                .build();
+        timeToLiveService.updateTimeToLive(new IdvTimeToLiveRequest(createTableRequest.getTableName()));
+        return dao;
+    }
+
+
     public VerificationAttemptDao verificationAttemptDao(final JsonConverter jsonConverter) {
         return DynamoVerificationAttemptDao.builder()
                 .converter(jsonConverter)
@@ -87,12 +98,23 @@ public class DynamoConfig {
                 .build();
     }
 
-    private VerificationContextItemConverter itemConverter(final JsonConverter jsonConverter,
-                                                           final TimeGenerator timeGenerator) {
-        final TimeToLiveCalculator timeToLiveCalculator = new VerificationContextTimeToLiveCalculator(timeGenerator);
+    public void clearLockoutPolicies() {
+        tableService.recreateTable(new LockoutPolicyCreateTableRequest(environment));
+    }
+
+    private VerificationContextItemConverter verificationContextItemConverter(final JsonConverter jsonConverter,
+                                                                              final TimeGenerator timeGenerator) {
         return VerificationContextItemConverter.builder()
                 .jsonConverter(jsonConverter)
-                .timeToLiveCalculator(timeToLiveCalculator)
+                .timeToLiveCalculator(new OneHourTimeToLiveCalculator(timeGenerator))
+                .build();
+    }
+
+    private OneTimePasscodeVerificationItemConverter oneTimePasscodeVerificationItemConverter(final JsonConverter jsonConverter,
+                                                                                              final TimeGenerator timeGenerator) {
+        return OneTimePasscodeVerificationItemConverter.builder()
+                .jsonConverter(jsonConverter)
+                .timeToLiveCalculator(new OneHourTimeToLiveCalculator(timeGenerator))
                 .build();
     }
 

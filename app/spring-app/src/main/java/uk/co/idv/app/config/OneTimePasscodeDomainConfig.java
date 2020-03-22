@@ -44,6 +44,7 @@ public class OneTimePasscodeDomainConfig {
                                                        final OneTimePasscodeVerificationLoader verificationLoader,
                                                        final PasscodeGenerator passcodeGenerator,
                                                        final OneTimePasscodeMessageBuilder messageBuilder,
+                                                       final TimeGenerator timeGenerator,
                                                        final OneTimePasscodeDeliverySender sender,
                                                        final OneTimePasscodeVerificationDao dao) {
         return OneTimePasscodeSender.builder()
@@ -52,6 +53,7 @@ public class OneTimePasscodeDomainConfig {
                 .verificationLoader(verificationLoader)
                 .passcodeGenerator(passcodeGenerator)
                 .messageBuilder(messageBuilder)
+                .timeGenerator(timeGenerator)
                 .sender(sender)
                 .dao(dao)
                 .build();

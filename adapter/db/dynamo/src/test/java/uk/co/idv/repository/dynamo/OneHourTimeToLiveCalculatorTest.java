@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo.verificationcontext;
+package uk.co.idv.repository.dynamo;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
@@ -11,11 +11,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class VerificationContextTimeToLiveCalculatorTest {
+class OneHourTimeToLiveCalculatorTest {
 
     private final TimeGenerator timeGenerator = mock(TimeGenerator.class);
 
-    private final TimeToLiveCalculator calculator = new VerificationContextTimeToLiveCalculator(timeGenerator);
+    private final TimeToLiveCalculator calculator = new OneHourTimeToLiveCalculator(timeGenerator);
 
     @Test
     void shouldReturnCurrentEpochSecondPlusTimeToLiveSecondsOfOneHourInSeconds() {
