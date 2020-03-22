@@ -13,7 +13,7 @@ Parameters:
     Type: String
     Default: nginx
     Description: The url of a docker image that contains the application process that
-                 will handle the traffic for this service
+      will handle the traffic for this service
   ContainerPort:
     Type: Number
     Default: 80
@@ -30,14 +30,14 @@ Parameters:
     Type: String
     Default: "*"
     Description: A path on the load balancer that this service
-                 should be connected to. Use * to send all load balancer
-                 traffic to this service.
+      should be connected to. Use * to send all load balancer
+      traffic to this service.
   Priority:
     Type: Number
     Default: 1
     Description: The priority for the routing rule added to the load balancer.
-                 This only applies if your have multiple services which have been
-                 assigned to different paths on the load balancer.
+      This only applies if your have multiple services which have been
+      assigned to different paths on the load balancer.
   DesiredCount:
     Type: Number
     Default: 1
@@ -46,7 +46,7 @@ Parameters:
     Type: String
     Default: ""
     Description: (Optional) An IAM role to give the service's containers if the code within needs to
-                 access other AWS resources like S3 buckets, DynamoDB tables, etc
+      access other AWS resources like S3 buckets, DynamoDB tables, etc
 
 Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
@@ -83,6 +83,11 @@ Resources:
           Image: !Ref 'ImageUrl'
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
+          Environment:
+            - Name: AWS_DYNAMO_DB_ENDPOINT_URI
+              Value: https://dynamodb.eu-west-1.amazonaws.com
+            - Name: AWS_SNS_ENDPOINT_URI
+              Value: https://sns.eu-west-1.amazonaws.com
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
