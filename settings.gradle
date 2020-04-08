@@ -6,6 +6,12 @@ project(':entities').projectDir = file('domain/entities')
 include ':use-cases'
 project(':use-cases').projectDir = file('domain/use-cases')
 
+include ':one-time-passcode-entities'
+project(':one-time-passcode-entities').projectDir = file('services/one-time-passcode/domain/entities')
+
+include ':one-time-passcode-use-cases'
+project(':one-time-passcode-use-cases').projectDir = file('services/one-time-passcode/domain/use-cases')
+
 //adapters
 include ':json'
 project(':json').projectDir = file('adapter/json')

@@ -1,6 +1,6 @@
 package uk.co.idv.api.verification.onetimepasscode;
 
-import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequest;
 import uk.co.mruoc.jsonapi.ApiData;
 import uk.co.mruoc.jsonapi.ApiDocument;
 

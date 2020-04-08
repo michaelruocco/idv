@@ -2,8 +2,8 @@ package uk.co.idv.json.verification.onetimepasscode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerificationMother;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
 import uk.co.idv.json.ObjectMapperSingleton;
 import uk.co.mruoc.file.content.ContentLoader;
 

@@ -1,7 +1,7 @@
 package uk.co.idv.repository.inmemory.verification.onetimepasscode;
 
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationDao;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 
 import java.util.HashMap;
 import java.util.Map;

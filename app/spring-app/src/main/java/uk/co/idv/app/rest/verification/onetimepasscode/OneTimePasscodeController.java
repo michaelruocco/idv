@@ -13,8 +13,8 @@ import uk.co.idv.api.verification.onetimepasscode.SendOneTimePasscodeRequestDocu
 import uk.co.idv.api.verification.onetimepasscode.OneTimePasscodeVerificationDocument;
 import uk.co.idv.api.verification.onetimepasscode.ResendOneTimePasscodeRequestDocument;
 import uk.co.idv.api.verification.onetimepasscode.VerifyOneTimePasscodeRequestDocument;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeService;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeService;
 
 import java.net.URI;
 import java.util.UUID;

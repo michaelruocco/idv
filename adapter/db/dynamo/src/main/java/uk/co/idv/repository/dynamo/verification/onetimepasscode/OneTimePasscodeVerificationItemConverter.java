@@ -2,7 +2,7 @@ package uk.co.idv.repository.dynamo.verification.onetimepasscode;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
 import lombok.Builder;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.repository.dynamo.table.TimeToLiveCalculator;
 import uk.co.idv.utils.json.converter.JsonConverter;
 

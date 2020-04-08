@@ -5,8 +5,8 @@ import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeDeliverySender;
 
 @Builder
 @Slf4j

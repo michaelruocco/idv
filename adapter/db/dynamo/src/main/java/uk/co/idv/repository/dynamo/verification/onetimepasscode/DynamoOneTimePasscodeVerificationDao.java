@@ -3,8 +3,8 @@ package uk.co.idv.repository.dynamo.verification.onetimepasscode;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationDao;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 
 import java.util.Optional;
 import java.util.UUID;

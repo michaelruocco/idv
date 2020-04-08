@@ -7,6 +7,14 @@
 
 ## TODO list
 
+*  Try gradle java library plugin
+
+*  Put object mothers in separate module
+
+*  Get rid of fake time generator and just use a mock, also rename time generator to clock or something similar
+
+*  Update main build.gradle to add slf4j dependencies to all projects except spring app ones rather than duplicating into all modules
+
 *  All eligible flag against delivery method (for otp) and card (for pinsentry)
 
 *  Split modules so that OTP entities / use cases / json / api and config are separated more clearly between verification context and OTP

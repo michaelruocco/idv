@@ -1,9 +1,9 @@
 package uk.co.idv.repository.inmemory.verification.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerificationMother;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.OneTimePasscodeVerificationDao;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 
 import java.util.Optional;
 import java.util.UUID;

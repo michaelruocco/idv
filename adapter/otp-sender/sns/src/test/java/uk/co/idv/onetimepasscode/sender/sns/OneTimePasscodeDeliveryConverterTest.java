@@ -3,8 +3,8 @@ package uk.co.idv.onetimepasscode.sender.sns;
 import com.amazonaws.services.sns.model.MessageAttributeValue;
 import com.amazonaws.services.sns.model.PublishRequest;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDeliveryMother;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDeliveryMother;
 import uk.co.idv.onetimepasscode.sender.sns.attributes.MessageAttributeBuilder;
 
 import java.util.Collections;

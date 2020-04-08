@@ -9,15 +9,15 @@ import uk.co.idv.api.verification.onetimepasscode.SendOneTimePasscodeRequestDocu
 import uk.co.idv.api.verification.onetimepasscode.OneTimePasscodeVerificationDocument;
 import uk.co.idv.api.verification.onetimepasscode.ResendOneTimePasscodeRequestDocument;
 import uk.co.idv.api.verification.onetimepasscode.VerifyOneTimePasscodeRequestDocument;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerificationMother;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequestMother;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.FakeOneTimePasscodeService;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.ResendOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.ResendOneTimePasscodeRequestMother;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.VerifyOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.VerifyOneTimePasscodeRequestMother;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
+import uk.co.idv.domain.usecases.onetimepasscode.FakeOneTimePasscodeService;
+import uk.co.idv.domain.usecases.onetimepasscode.ResendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.ResendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.VerifyOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.VerifyOneTimePasscodeRequestMother;
 
 import java.util.UUID;
 

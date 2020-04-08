@@ -3,9 +3,9 @@ package uk.co.idv.onetimepasscode.sender.sns;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.sender.OneTimePasscodeDeliverySender;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeDeliverySender;
 import uk.co.idv.onetimepasscode.sender.sns.attributes.MessageAttributeBuilder;
 
 import java.time.Instant;

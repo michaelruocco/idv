@@ -29,6 +29,8 @@ dependencies {
 
     compile project(':entities')
     compile project(':use-cases')
+    compile project(':one-time-passcode-entities')
+    compile project(':one-time-passcode-use-cases')
     compile project(':api')
 
     compile project(':dynamo-db')
@@ -39,6 +41,8 @@ dependencies {
 
     testCompile project(':entities').sourceSets.test.output
     testCompile project(':use-cases').sourceSets.test.output
+    testCompile project(':one-time-passcode-entities').sourceSets.test.output
+    testCompile project(':one-time-passcode-use-cases').sourceSets.test.output
     testCompile project(':api').sourceSets.test.output
 
     integrationTestCompile 'com.github.stefanbirkner:system-rules:1.19.0'

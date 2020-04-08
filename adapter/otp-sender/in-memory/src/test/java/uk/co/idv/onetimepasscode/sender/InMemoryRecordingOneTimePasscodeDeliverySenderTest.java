@@ -1,8 +1,8 @@
 package uk.co.idv.onetimepasscode.sender;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDeliveryMother;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDeliveryMother;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 

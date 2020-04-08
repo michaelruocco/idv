@@ -2,7 +2,7 @@ package uk.co.idv.api.verification.onetimepasscode;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequest;
 import uk.co.mruoc.jsonapi.ApiDataDocumentRequest;
 import uk.co.mruoc.jsonapi.ApiDocumentDeserializer;
 import uk.co.mruoc.jsonapi.ApiDocumentFactory;

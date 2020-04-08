@@ -1,12 +1,12 @@
 package uk.co.idv.json.verification.onetimepasscode;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeDelivery;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.entities.verification.onetimepasscode.OneTimePasscodeVerificationAttempt;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.SendOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.ResendOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.verification.onetimepasscode.VerifyOneTimePasscodeRequest;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;
+import uk.co.idv.domain.usecases.onetimepasscode.ResendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.VerifyOneTimePasscodeRequest;
 
 public class OneTimePasscodeModule extends SimpleModule {
 
