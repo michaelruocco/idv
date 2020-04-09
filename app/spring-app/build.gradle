@@ -36,8 +36,8 @@ dependencies {
     compile project(':dynamo-db')
     compile project(':in-memory-db')
     compile project(':uk-config')
-    compile project(':sns-sender')
-    compile project(':in-memory-sender')
+    compile project(':one-time-passcode-sns-delivery')
+    compile project(':one-time-passcode-in-memory-delivery')
 
     testCompile project(':entities').sourceSets.test.output
     testCompile project(':use-cases').sourceSets.test.output
@@ -47,7 +47,7 @@ dependencies {
 
     integrationTestCompile 'com.github.stefanbirkner:system-rules:1.19.0'
     integrationTestCompile project(':dynamo-db').sourceSets.integrationTest.output
-    integrationTestCompile project(':sns-sender').sourceSets.integrationTest.output
+    integrationTestCompile project(':one-time-passcode-sns-delivery').sourceSets.integrationTest.output
     integrationTestCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
 }
 

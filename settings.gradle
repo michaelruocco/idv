@@ -6,12 +6,6 @@ project(':entities').projectDir = file('domain/entities')
 include ':use-cases'
 project(':use-cases').projectDir = file('domain/use-cases')
 
-include ':one-time-passcode-entities'
-project(':one-time-passcode-entities').projectDir = file('services/one-time-passcode/domain/entities')
-
-include ':one-time-passcode-use-cases'
-project(':one-time-passcode-use-cases').projectDir = file('services/one-time-passcode/domain/use-cases')
-
 //adapters
 include ':json'
 project(':json').projectDir = file('adapter/json')
@@ -24,12 +18,6 @@ project(':in-memory-db').projectDir = file('adapter/db/in-memory')
 
 include ':dynamo-db'
 project(':dynamo-db').projectDir = file('adapter/db/dynamo')
-
-include ':in-memory-sender'
-project(':in-memory-sender').projectDir = file('adapter/otp-sender/in-memory')
-
-include ':sns-sender'
-project(':sns-sender').projectDir = file('adapter/otp-sender/sns')
 
 //uk geography
 include ':uk-entities'
@@ -51,3 +39,25 @@ project(':json-converter').projectDir = file('utils/json-converter')
 
 include ':aws-system-properties'
 project(':aws-system-properties').projectDir = file('utils/aws-system-properties')
+
+include ':dynamo-db-test'
+project(':dynamo-db-test').projectDir = file('utils/dynamo-db-test')
+
+
+include ':one-time-passcode-entities'
+project(':one-time-passcode-entities').projectDir = file('services/one-time-passcode/domain/entities')
+
+include ':one-time-passcode-use-cases'
+project(':one-time-passcode-use-cases').projectDir = file('services/one-time-passcode/domain/use-cases')
+
+include ':one-time-passcode-sns-delivery'
+project(':one-time-passcode-sns-delivery').projectDir = file('services/one-time-passcode/adapter/delivery/sns')
+
+include ':one-time-passcode-in-memory-delivery'
+project(':one-time-passcode-in-memory-delivery').projectDir = file('services/one-time-passcode/adapter/delivery/in-memory')
+
+include ':one-time-passcode-in-memory-db'
+project(':one-time-passcode-in-memory-db').projectDir = file('services/one-time-passcode/adapter/db/in-memory')
+
+include ':one-time-passcode-dynamo-db'
+project(':one-time-passcode-dynamo-db').projectDir = file('services/one-time-passcode/adapter/db/dynamo')

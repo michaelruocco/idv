@@ -10,9 +10,9 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
 import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
+import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.json.ObjectMapperSingleton;
 import uk.co.idv.repository.dynamo.DynamoConfig;
-import uk.co.idv.repository.dynamo.DynamoDbLocalContainer;
 import uk.co.idv.utils.json.converter.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
@@ -31,7 +31,7 @@ class DynamoVerificationContextDaoTest {
 
     @BeforeEach
     void setUp() {
-        final DynamoConfig config = DYNAMO_DB.buildConfig();
+        final DynamoConfig config = new DynamoConfig(DYNAMO_DB.buildClient());
         final JsonConverter jsonConverter = new JacksonJsonConverter(ObjectMapperSingleton.instance());
         final TimeGenerator timeGenerator = new CurrentTimeGenerator();
         dao = config.verificationContextDao(jsonConverter, timeGenerator);

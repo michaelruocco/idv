@@ -1,4 +1,4 @@
-package uk.co.idv.repository.dynamo;
+package uk.co.idv.dynamo.test;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -7,6 +7,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.containers.GenericContainer;
 
@@ -25,12 +26,11 @@ public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContai
         this.region = region;
     }
 
-    public DynamoConfig buildConfig() {
-        final AWSCredentials credentials = new BasicAWSCredentials("abc", "123");
-        final AWSCredentialsProvider credentialsProvider = new AWSStaticCredentialsProvider(credentials);
-        final DynamoClientFactory factory = new DynamoClientFactory(credentialsProvider);
-        final AmazonDynamoDB client = factory.withEndpointConfiguration(buildEndpointConfiguration());
-        return new DynamoConfig(client);
+    public AmazonDynamoDB buildClient() {
+        return AmazonDynamoDBClientBuilder.standard()
+                .withCredentials(buildCredentialsProvider())
+                .withEndpointConfiguration(buildEndpointConfiguration())
+                .build();
     }
 
     public String buildEndpointUri() {
@@ -41,6 +41,11 @@ public class DynamoDbLocalContainer extends GenericContainer<DynamoDbLocalContai
 
     private EndpointConfiguration buildEndpointConfiguration() {
         return new EndpointConfiguration(buildEndpointUri(), region.getName());
+    }
+
+    private AWSCredentialsProvider buildCredentialsProvider() {
+        final AWSCredentials credentials = new BasicAWSCredentials("abc", "123");
+        return new AWSStaticCredentialsProvider(credentials);
     }
 
 }
