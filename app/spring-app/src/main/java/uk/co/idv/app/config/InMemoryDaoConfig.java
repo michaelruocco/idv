@@ -11,7 +11,7 @@ import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.repository.inmemory.identity.InMemoryIdentityDao;
 import uk.co.idv.repository.inmemory.lockout.InMemoryLockoutPolicyDao;
 import uk.co.idv.repository.inmemory.lockout.InMemoryVerificationAttemptDao;
-import uk.co.idv.repository.inmemory.verification.onetimepasscode.InMemoryOneTimePasscodeVerificationDao;
+import uk.co.idv.repository.inmemory.onetimepasscode.InMemoryOneTimePasscodeVerificationDao;
 import uk.co.idv.repository.inmemory.verificationcontext.InMemoryVerificationContextDao;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;

@@ -1,4 +1,4 @@
-package uk.co.idv.repository.inmemory.verification.onetimepasscode;
+package uk.co.idv.repository.inmemory.onetimepasscode;
 
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;

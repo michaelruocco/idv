@@ -1,4 +1,4 @@
-package uk.co.idv.repository.inmemory.verification.onetimepasscode;
+package uk.co.idv.repository.inmemory.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;

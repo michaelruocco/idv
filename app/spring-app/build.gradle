@@ -36,6 +36,7 @@ dependencies {
     compile project(':dynamo-db')
     compile project(':in-memory-db')
     compile project(':uk-config')
+    compile project(':one-time-passcode-in-memory-db')
     compile project(':one-time-passcode-sns-delivery')
     compile project(':one-time-passcode-in-memory-delivery')
 
