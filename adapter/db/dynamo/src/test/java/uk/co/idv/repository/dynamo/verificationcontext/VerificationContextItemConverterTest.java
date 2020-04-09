@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
-import uk.co.idv.repository.dynamo.table.TimeToLiveCalculator;
+import uk.co.idv.dynamo.ttl.TimeToLiveCalculator;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;

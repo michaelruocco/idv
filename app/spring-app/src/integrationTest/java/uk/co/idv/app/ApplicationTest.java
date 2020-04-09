@@ -6,7 +6,7 @@ import org.junit.contrib.java.lang.system.RestoreSystemProperties;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import uk.co.idv.repository.dynamo.DynamoDbLocalContainer;
+import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.onetimepasscode.sender.sns.SnsLocalContainer;
 
 @Testcontainers

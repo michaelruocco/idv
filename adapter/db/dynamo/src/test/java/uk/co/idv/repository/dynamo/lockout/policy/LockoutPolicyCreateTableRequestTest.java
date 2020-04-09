@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import com.amazonaws.services.dynamodbv2.model.ScalarAttributeType;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.repository.dynamo.table.DefaultProvisionedThroughput;
+import uk.co.idv.dynamo.table.DefaultProvisionedThroughput;
 
 import java.util.List;
 

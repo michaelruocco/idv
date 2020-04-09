@@ -6,7 +6,7 @@ import com.amazonaws.services.dynamodbv2.model.KeyType;
 import com.amazonaws.services.dynamodbv2.model.Projection;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.repository.dynamo.table.DefaultProvisionedThroughput;
+import uk.co.idv.dynamo.table.DefaultProvisionedThroughput;
 
 import java.util.Collection;
 

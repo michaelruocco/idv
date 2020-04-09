@@ -40,8 +40,8 @@ project(':json-converter').projectDir = file('utils/json-converter')
 include ':aws-system-properties'
 project(':aws-system-properties').projectDir = file('utils/aws-system-properties')
 
-include ':dynamo-db-test'
-project(':dynamo-db-test').projectDir = file('utils/dynamo-db-test')
+include ':dynamo-db-utils'
+project(':dynamo-db-utils').projectDir = file('utils/dynamo-db-utils')
 
 
 include ':one-time-passcode-entities'

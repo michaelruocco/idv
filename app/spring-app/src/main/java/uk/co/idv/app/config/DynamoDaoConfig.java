@@ -9,8 +9,9 @@ import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
+import uk.co.idv.dynamo.ttl.CurrentEpochSecondProvider;
+import uk.co.idv.dynamo.ttl.EpochSecondProvider;
 import uk.co.idv.repository.dynamo.DynamoClientFactory;
 import uk.co.idv.repository.dynamo.DynamoConfig;
 import uk.co.idv.utils.json.converter.JacksonJsonConverter;
@@ -23,14 +24,19 @@ public class DynamoDaoConfig {
     private final DynamoConfig config = new DynamoConfig(new DynamoClientFactory().build());
 
     @Bean
+    public EpochSecondProvider epochSecondProvider() {
+        return new CurrentEpochSecondProvider();
+    }
+
+    @Bean
     public IdentityDao identityDao() {
         return config.identityDao();
     }
 
     @Bean
     public VerificationContextDao verificationContextDao(final JsonConverter jsonConverter,
-                                                         final TimeGenerator timeGenerator) {
-        return config.verificationContextDao(jsonConverter, timeGenerator);
+                                                         final EpochSecondProvider epochSecondProvider) {
+        return config.verificationContextDao(jsonConverter, epochSecondProvider);
     }
 
     @Bean
@@ -45,8 +51,8 @@ public class DynamoDaoConfig {
 
     @Bean
     public OneTimePasscodeVerificationDao oneTimePasscodeVerificationDao(final JsonConverter jsonConverter,
-                                                                         final TimeGenerator timeGenerator) {
-        return config.oneTimePasscodeVerificationDao(jsonConverter, timeGenerator);
+                                                                         final EpochSecondProvider epochSecondProvider) {
+        return config.oneTimePasscodeVerificationDao(jsonConverter, epochSecondProvider);
     }
 
     @Bean
