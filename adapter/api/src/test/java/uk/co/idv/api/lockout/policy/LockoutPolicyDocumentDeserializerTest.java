@@ -3,9 +3,10 @@ package uk.co.idv.api.lockout.policy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiObjectMapperSingleton;
+import uk.co.idv.api.ApiModuleProvider;
 import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class LockoutPolicyDocumentDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ApiObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new ApiModuleProvider()).build();
 
     @Test
     void shouldDeserializeHardLockoutPolicy() throws JsonProcessingException {

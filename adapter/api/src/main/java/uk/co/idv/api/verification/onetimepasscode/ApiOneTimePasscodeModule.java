@@ -2,7 +2,7 @@
 package uk.co.idv.api.verification.onetimepasscode;
 
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.json.verification.onetimepasscode.OneTimePasscodeModule;
+import uk.co.idv.json.onetimepasscode.OneTimePasscodeModule;
 
 public class ApiOneTimePasscodeModule extends OneTimePasscodeModule {
 

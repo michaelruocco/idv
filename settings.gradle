@@ -61,3 +61,6 @@ project(':one-time-passcode-in-memory-db').projectDir = file('services/one-time-
 
 include ':one-time-passcode-dynamo-db'
 project(':one-time-passcode-dynamo-db').projectDir = file('services/one-time-passcode/adapter/db/dynamo')
+
+include ':one-time-passcode-json'
+project(':one-time-passcode-json').projectDir = file('services/one-time-passcode/adapter/json')

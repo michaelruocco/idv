@@ -1,10 +1,9 @@
-package uk.co.idv.json.verification.onetimepasscode;
+package uk.co.idv.json.onetimepasscode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
-import uk.co.idv.json.ObjectMapperSingleton;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
@@ -13,11 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class OneTimePasscodeVerificationDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new OneTimePasscodeObjectMapperFactory().build();
 
     @Test
     void shouldDeserializeVerification() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("verification/onetimepasscode/one-time-passcode-verification-pending.json");
+        final String json = ContentLoader.loadContentFromClasspath("one-time-passcode-verification-pending.json");
 
         final OneTimePasscodeVerification verification = MAPPER.readValue(json, OneTimePasscodeVerification.class);
 

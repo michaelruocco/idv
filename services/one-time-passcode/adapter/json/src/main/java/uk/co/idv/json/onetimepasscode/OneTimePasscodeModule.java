@@ -1,4 +1,4 @@
-package uk.co.idv.json.verification.onetimepasscode;
+package uk.co.idv.json.onetimepasscode;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;

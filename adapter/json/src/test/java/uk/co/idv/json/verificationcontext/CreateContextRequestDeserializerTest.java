@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
 import uk.co.idv.domain.usecases.verificationcontext.FakeCreateContextRequest;
-import uk.co.idv.json.ObjectMapperSingleton;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateContextRequestDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory().build();
 
     @Test
     void shouldDeserializeRequest() throws IOException {

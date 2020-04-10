@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.json.ObjectMapperSingleton;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IdentityDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory().build();
 
     @Test
     void shouldDeserializeIdentity() throws JsonProcessingException {

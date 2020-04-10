@@ -2,8 +2,9 @@ package uk.co.idv.api.lockout.policy.hard;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiObjectMapperSingleton;
+import uk.co.idv.api.ApiModuleProvider;
 import uk.co.idv.api.lockout.state.LockoutStateDocument;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 
@@ -13,7 +14,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class HardLockoutStateMixinTest {
 
-    private static final ObjectMapper MAPPER = ApiObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new ApiModuleProvider()).build();
 
     @Test
     void shouldSerializeDocument() throws IOException {

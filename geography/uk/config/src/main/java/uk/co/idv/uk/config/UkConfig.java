@@ -8,18 +8,18 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.RandomIdGenerator;
-import uk.co.idv.uk.api.channel.UkObjectMapperSingleton;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
 
 public class UkConfig {
 
     public ObjectMapper jsonApiObjectMapper() {
-        return UkObjectMapperSingleton.jsonApiInstance();
+        return new ObjectMapperFactory(new UkApiModuleProvider()).build();
     }
 
     public ObjectMapper objectMapper() {
-        return UkObjectMapperSingleton.instance();
+        return new ObjectMapperFactory(new UkModuleProvider()).build();
     }
 
     public IdGenerator idGenerator() {

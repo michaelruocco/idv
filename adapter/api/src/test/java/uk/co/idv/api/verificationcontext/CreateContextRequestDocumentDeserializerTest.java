@@ -2,7 +2,8 @@ package uk.co.idv.api.verificationcontext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiObjectMapperSingleton;
+import uk.co.idv.api.ApiModuleProvider;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.usecases.verificationcontext.FakeCreateContextRequest;
 
@@ -12,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateContextRequestDocumentDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ApiObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new ApiModuleProvider()).build();
 
     @Test
     void shouldDeserializeDocument() throws IOException {

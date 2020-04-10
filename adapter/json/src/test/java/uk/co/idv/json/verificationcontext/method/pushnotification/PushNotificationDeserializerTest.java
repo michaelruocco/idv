@@ -8,14 +8,14 @@ import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.Pus
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.json.ObjectMapperSingleton;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PushNotificationDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory().build();
 
     @Test
     void shouldDeserializeIneligible() throws JsonProcessingException {

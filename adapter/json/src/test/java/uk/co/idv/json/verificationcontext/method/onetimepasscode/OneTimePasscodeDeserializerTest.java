@@ -12,7 +12,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.json.ObjectMapperSingleton;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.util.Collection;
@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class OneTimePasscodeDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory().build();
 
     @Test
     void shouldDeserializeIneligible() throws JsonProcessingException {

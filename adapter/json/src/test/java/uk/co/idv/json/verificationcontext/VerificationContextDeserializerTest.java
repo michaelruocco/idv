@@ -2,21 +2,17 @@ package uk.co.idv.json.verificationcontext;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.Module;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.json.ObjectMapperFactory;
-import uk.co.idv.json.activity.AllowFakeActivityModule;
 import uk.co.mruoc.file.content.ContentLoader;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class VerificationContextDeserializerTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapperFactory(modules()).build();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new AllowFakeActivityModuleProvider()).build();
 
     @Test
     void shouldDeserializeContext() throws JsonProcessingException {
@@ -25,10 +21,6 @@ class VerificationContextDeserializerTest {
         final VerificationContext context =  MAPPER.readValue(json, VerificationContext.class);
 
         assertThat(context).isEqualToComparingFieldByField(VerificationContextMother.fake());
-    }
-
-    private static List<Module> modules() {
-        return ObjectMapperFactory.modules(new AllowFakeActivityModule());
     }
 
 }

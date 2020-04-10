@@ -1,11 +1,16 @@
 package uk.co.idv.uk.config;
 
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.usecases.util.RandomIdGenerator;
-import uk.co.idv.uk.api.channel.UkObjectMapperSingleton;
 import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
+
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,21 +19,21 @@ class UkConfigTest {
     private final UkConfig config = new UkConfig();
 
     @Test
-    void shouldReturnUkJsonApiObjectMapper() {
-        final ObjectMapper expectedMapper = UkObjectMapperSingleton.jsonApiInstance();
+    void shouldReturnObjectMapperWithUkApiModules() {
+        final Collection<Module> expectedModules = new UkApiModuleProvider().getModules();
 
         final ObjectMapper mapper = config.jsonApiObjectMapper();
 
-        assertThat(mapper).isEqualTo(expectedMapper);
+        assertThat(mapper.getRegisteredModuleIds()).isEqualTo(toIds(expectedModules));
     }
 
     @Test
-    void shouldReturnUkObjectMapper() {
-        final ObjectMapper expectedMapper = UkObjectMapperSingleton.instance();
+    void shouldReturnObjectMapperWithUkModules() {
+        final Collection<Module> expectedModules = new UkModuleProvider().getModules();
 
         final ObjectMapper mapper = config.objectMapper();
 
-        assertThat(mapper).isEqualTo(expectedMapper);
+        assertThat(mapper.getRegisteredModuleIds()).isEqualTo(toIds(expectedModules));
     }
 
     @Test
@@ -44,6 +49,12 @@ class UkConfigTest {
     @Test
     void lockoutPolicyAttributesConverter() {
         assertThat(config.lockoutPolicyAttributesConverter()).isInstanceOf(UkLockoutPolicyAttributesConverter.class);
+    }
+
+    private static Set<Object> toIds(final Collection<Module> modules) {
+        return modules.stream()
+                .map(Module::getTypeId)
+                .collect(Collectors.toSet());
     }
 
 }

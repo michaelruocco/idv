@@ -9,6 +9,7 @@ testSets {
 dependencies {
     compile project(':one-time-passcode-entities')
     compile project(':one-time-passcode-use-cases')
+    compile project(':one-time-passcode-json')
     compile project(':json-converter')
     compile project(':aws-system-properties')
     compile project(':dynamo-db-utils')

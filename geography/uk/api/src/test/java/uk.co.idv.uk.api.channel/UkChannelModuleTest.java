@@ -3,6 +3,7 @@ package uk.co.idv.uk.api.channel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
 import uk.co.mruoc.file.content.ContentLoader;
 
@@ -12,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UkChannelModuleTest {
 
-    private static final ObjectMapper MAPPER = UkObjectMapperSingleton.instance();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new UkChannelModule()).build();
 
     @Test
     void shouldSerializeRsaChannelWithIssuerSessionId() throws IOException {

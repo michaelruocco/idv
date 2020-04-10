@@ -1,5 +1,6 @@
 dependencies {
     compile project(':json')
+    compile project(':one-time-passcode-json')
     compile 'com.github.michaelruocco:jackson-json-api:2.0.2'
     compile "org.slf4j:slf4j-api:${slf4jVersion}"
 
@@ -7,6 +8,7 @@ dependencies {
     testCompile project(':use-cases').sourceSets.test.output
     testCompile project(':one-time-passcode-entities').sourceSets.test.output
     testCompile project(':one-time-passcode-use-cases').sourceSets.test.output
+
     testCompile project(':json').sourceSets.test.output
     testCompile "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitVersion}"
     testCompile "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
