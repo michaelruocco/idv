@@ -5,14 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
-import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class OneTimePasscodeVerificationDocumentSerializerTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new ApiOneTimePasscodeModuleProvider()).build();
+    private static final ObjectMapper MAPPER = ApiOneTimePasscodeObjectMapperFactory.build();
 
     @Test
     void shouldSerializeDocument() throws JsonProcessingException {

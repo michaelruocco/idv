@@ -1,3 +1,6 @@
 dependencies {
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.10.3'
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+
+    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
 }

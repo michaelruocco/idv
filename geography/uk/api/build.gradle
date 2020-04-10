@@ -1,5 +1,5 @@
 dependencies {
-    compile project(':api')
+    compile project(':verification-context-api')
     compile project(':one-time-passcode-api')
     compile project(':uk-entities')
 

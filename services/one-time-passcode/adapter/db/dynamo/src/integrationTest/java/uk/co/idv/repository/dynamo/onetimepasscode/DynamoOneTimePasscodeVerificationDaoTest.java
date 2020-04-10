@@ -10,9 +10,8 @@ import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.dynamo.ttl.CurrentEpochSecondProvider;
 import uk.co.idv.dynamo.ttl.EpochSecondProvider;
-import uk.co.idv.json.ObjectMapperFactory;
 import uk.co.idv.json.onetimepasscode.OneTimePasscodeObjectMapperFactory;
-import uk.co.idv.utils.json.converter.JacksonJsonConverter;
+import uk.co.idv.utils.json.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
 import java.util.Optional;
@@ -31,8 +30,7 @@ class DynamoOneTimePasscodeVerificationDaoTest {
     @BeforeEach
     void setUp() {
         final OneTimePasscodeDynamoConfig config = new OneTimePasscodeDynamoConfig(DYNAMO_DB.buildClient());
-        final ObjectMapperFactory factory = new OneTimePasscodeObjectMapperFactory();
-        final JsonConverter jsonConverter = new JacksonJsonConverter(factory.build());
+        final JsonConverter jsonConverter = new JacksonJsonConverter(new OneTimePasscodeObjectMapperFactory().build());
         final EpochSecondProvider epochSecondProvider = new CurrentEpochSecondProvider();
         dao = config.verificationDao(jsonConverter, epochSecondProvider);
     }

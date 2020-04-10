@@ -1,0 +1,29 @@
+package uk.co.idv.json.lockout.policy.nonlocking;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
+import uk.co.idv.json.TestObjectMapperFactory;
+import uk.co.mruoc.file.content.ContentLoader;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class NonLockingLockoutPolicyJsonNodeConverterTest {
+
+    private static final ObjectMapper MAPPER = TestObjectMapperFactory.build();
+
+    @Test
+    void shouldDeserializePolicy() throws JsonProcessingException {
+        final String json = ContentLoader.loadContentFromClasspath("lockout/policy/nonlocking/non-locking-lockout-policy.json");
+
+        final LockoutPolicy policy = MAPPER.readValue(json, LockoutPolicy.class);
+
+        final LockoutPolicy expectedPolicy = LockoutPolicyMother.nonLockingPolicy();
+        assertThat(policy).isEqualToIgnoringGivenFields(expectedPolicy, "level");
+        LockoutAssertions.assertThat(policy.getLockoutLevel()).isEqualTo(expectedPolicy.getLockoutLevel());
+    }
+
+}

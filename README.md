@@ -7,6 +7,8 @@
 
 ## TODO list
 
+*  Maybe try decorator pattern for module providers
+
 *  Try gradle java library plugin
 
 *  Put object mothers in separate module

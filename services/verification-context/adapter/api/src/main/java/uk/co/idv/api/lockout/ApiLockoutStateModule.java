@@ -1,0 +1,40 @@
+package uk.co.idv.api.lockout;
+
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import uk.co.idv.api.lockout.attempt.VerificationAttemptMixin;
+import uk.co.idv.api.lockout.attempt.VerificationAttemptsSerializer;
+import uk.co.idv.api.lockout.policy.LockoutLevelMixin;
+import uk.co.idv.api.lockout.policy.LockoutPolicyDocument;
+import uk.co.idv.api.lockout.policy.LockoutPolicyDocumentDeserializer;
+import uk.co.idv.api.lockout.policy.hard.HardLockoutStateMixin;
+import uk.co.idv.api.lockout.policy.LockoutPolicyAttributesMixin;
+import uk.co.idv.api.lockout.state.LockoutStateDocument;
+import uk.co.idv.api.lockout.state.LockoutStateDocumentMixin;
+import uk.co.idv.api.lockout.state.LockoutStateMixin;
+import uk.co.idv.api.lockout.state.ResetLockoutStateDocument;
+import uk.co.idv.api.lockout.state.ResetLockoutStateDocumentDeserializer;
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributes;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutState;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
+
+public class ApiLockoutStateModule extends SimpleModule {
+
+    public ApiLockoutStateModule() {
+        setMixInAnnotation(LockoutState.class, LockoutStateMixin.class);
+        setMixInAnnotation(HardLockoutState.class, HardLockoutStateMixin.class);
+        setMixInAnnotation(DefaultLockoutPolicyAttributes.class, LockoutPolicyAttributesMixin.class);
+        setMixInAnnotation(LockoutStateDocument.class, LockoutStateDocumentMixin.class);
+        setMixInAnnotation(LockoutLevel.class, LockoutLevelMixin.class);
+        setMixInAnnotation(VerificationAttempt.class, VerificationAttemptMixin.class);
+
+        addDeserializer(ResetLockoutStateDocument.class, new ResetLockoutStateDocumentDeserializer());
+        addDeserializer(LockoutRequest.class, new LockoutRequestDeserializer());
+        addDeserializer(LockoutPolicyDocument.class, new LockoutPolicyDocumentDeserializer());
+
+        addSerializer(new VerificationAttemptsSerializer());
+    }
+
+}

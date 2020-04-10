@@ -3,7 +3,7 @@ dependencies {
     compile 'com.github.michaelruocco:jackson-json-api:2.0.2'
     compile "org.slf4j:slf4j-api:${slf4jVersion}"
 
-    testCompile project(':entities').sourceSets.test.output
+    testCompile project(':verification-context-entities').sourceSets.test.output
     testCompile project(':one-time-passcode-entities').sourceSets.test.output
     testCompile project(':one-time-passcode-use-cases').sourceSets.test.output
 

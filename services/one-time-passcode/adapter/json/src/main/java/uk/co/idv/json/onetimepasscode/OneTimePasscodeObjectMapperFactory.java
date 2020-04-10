@@ -1,6 +1,6 @@
 package uk.co.idv.json.onetimepasscode;
 
-import uk.co.idv.json.ObjectMapperFactory;
+import uk.co.idv.utils.json.jackson.ObjectMapperFactory;
 
 public class OneTimePasscodeObjectMapperFactory extends ObjectMapperFactory {
 

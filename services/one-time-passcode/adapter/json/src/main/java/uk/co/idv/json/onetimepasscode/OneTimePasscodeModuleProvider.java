@@ -1,11 +1,23 @@
 package uk.co.idv.json.onetimepasscode;
 
-import uk.co.idv.json.DefaultModuleProvider;
+import com.fasterxml.jackson.databind.Module;
+import uk.co.idv.json.VerificationContextModuleProvider;
+import uk.co.idv.utils.json.jackson.ModuleProvider;
 
-public class OneTimePasscodeModuleProvider extends DefaultModuleProvider {
+import java.util.Collection;
+import java.util.Collections;
 
-    public OneTimePasscodeModuleProvider() {
-        super(new OneTimePasscodeModule());
+public class OneTimePasscodeModuleProvider extends VerificationContextModuleProvider {
+
+    private static final Collection<Module> MODULES = buildModules();
+
+    @Override
+    public Collection<Module> getModules() {
+        return ModuleProvider.merge(super.getModules(), MODULES);
+    }
+
+    private static Collection<Module> buildModules() {
+        return Collections.singleton(new OneTimePasscodeModule());
     }
 
 }

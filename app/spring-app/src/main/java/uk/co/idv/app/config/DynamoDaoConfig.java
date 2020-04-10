@@ -14,7 +14,7 @@ import uk.co.idv.dynamo.ttl.CurrentEpochSecondProvider;
 import uk.co.idv.dynamo.ttl.EpochSecondProvider;
 import uk.co.idv.repository.dynamo.DynamoClientFactory;
 import uk.co.idv.repository.dynamo.DynamoConfig;
-import uk.co.idv.utils.json.converter.JacksonJsonConverter;
+import uk.co.idv.utils.json.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
 @Configuration

@@ -1,24 +1,5 @@
 rootProject.name = 'idv'
 
-include ':entities'
-project(':entities').projectDir = file('domain/entities')
-
-include ':use-cases'
-project(':use-cases').projectDir = file('domain/use-cases')
-
-//adapters
-include ':json'
-project(':json').projectDir = file('adapter/json')
-
-include ':api'
-project(':api').projectDir = file('adapter/api')
-
-include ':in-memory-db'
-project(':in-memory-db').projectDir = file('adapter/db/in-memory')
-
-include ':dynamo-db'
-project(':dynamo-db').projectDir = file('adapter/db/dynamo')
-
 //uk geography
 include ':uk-entities'
 project(':uk-entities').projectDir = file('geography/uk/entities')
@@ -43,18 +24,31 @@ project(':aws-system-properties').projectDir = file('utils/aws-system-properties
 include ':dynamo-db-utils'
 project(':dynamo-db-utils').projectDir = file('utils/dynamo-db-utils')
 
+//verification context service
+include ':verification-context-entities'
+project(':verification-context-entities').projectDir = file('services/verification-context/domain/entities')
 
+include ':verification-context-use-cases'
+project(':verification-context-use-cases').projectDir = file('services/verification-context/domain/use-cases')
+
+include ':verification-context-in-memory-db'
+project(':verification-context-in-memory-db').projectDir = file('services/verification-context/adapter/db/in-memory')
+
+include ':verification-context-dynamo-db'
+project(':verification-context-dynamo-db').projectDir = file('services/verification-context/adapter/db/dynamo')
+
+include ':verification-context-json'
+project(':verification-context-json').projectDir = file('services/verification-context/adapter/json')
+
+include ':verification-context-api'
+project(':verification-context-api').projectDir = file('services/verification-context/adapter/api')
+
+//one-time-passcode service
 include ':one-time-passcode-entities'
 project(':one-time-passcode-entities').projectDir = file('services/one-time-passcode/domain/entities')
 
 include ':one-time-passcode-use-cases'
 project(':one-time-passcode-use-cases').projectDir = file('services/one-time-passcode/domain/use-cases')
-
-include ':one-time-passcode-sns-delivery'
-project(':one-time-passcode-sns-delivery').projectDir = file('services/one-time-passcode/adapter/delivery/sns')
-
-include ':one-time-passcode-in-memory-delivery'
-project(':one-time-passcode-in-memory-delivery').projectDir = file('services/one-time-passcode/adapter/delivery/in-memory')
 
 include ':one-time-passcode-in-memory-db'
 project(':one-time-passcode-in-memory-db').projectDir = file('services/one-time-passcode/adapter/db/in-memory')
@@ -67,3 +61,9 @@ project(':one-time-passcode-json').projectDir = file('services/one-time-passcode
 
 include ':one-time-passcode-api'
 project(':one-time-passcode-api').projectDir = file('services/one-time-passcode/adapter/api')
+
+include ':one-time-passcode-sns-delivery'
+project(':one-time-passcode-sns-delivery').projectDir = file('services/one-time-passcode/adapter/delivery/sns')
+
+include ':one-time-passcode-in-memory-delivery'
+project(':one-time-passcode-in-memory-delivery').projectDir = file('services/one-time-passcode/adapter/delivery/in-memory')

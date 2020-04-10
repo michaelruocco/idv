@@ -2,7 +2,7 @@ dependencies {
     compile project(':one-time-passcode-entities')
     compile project(':one-time-passcode-use-cases')
 
-    testCompile project(':entities').sourceSets.test.output
+    testCompile project(':verification-context-entities').sourceSets.test.output
     testCompile project(':one-time-passcode-entities').sourceSets.test.output
     testCompile project(':one-time-passcode-use-cases').sourceSets.test.output
 

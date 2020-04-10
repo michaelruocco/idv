@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.utils.json.converter.JsonConverter.JsonConversionException;
+import uk.co.idv.utils.json.jackson.JacksonJsonConverter;
 
 import java.io.IOException;
 
