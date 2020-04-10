@@ -1,4 +1,4 @@
-package uk.co.idv.api.verification.onetimepasscode;
+package uk.co.idv.api.onetimepasscode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import uk.co.idv.json.onetimepasscode.OneTimePasscodeVerificationMixin;

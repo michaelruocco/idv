@@ -1,4 +1,6 @@
  dependencies {
      compile project(':uk-entities')
      compile project(':uk-api')
+
+     testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
  }

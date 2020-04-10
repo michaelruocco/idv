@@ -1,10 +1,10 @@
 
-package uk.co.idv.api.verification.onetimepasscode;
+package uk.co.idv.api.onetimepasscode;
 
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.json.onetimepasscode.OneTimePasscodeModule;
+import uk.co.mruoc.jsonapi.ApiModule;
 
-public class ApiOneTimePasscodeModule extends OneTimePasscodeModule {
+public class ApiOneTimePasscodeModule extends ApiModule {
 
     public ApiOneTimePasscodeModule() {
         setMixInAnnotation(OneTimePasscodeVerification.class, ApiOneTimePasscodeVerificationMixin.class);

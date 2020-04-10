@@ -2,7 +2,6 @@ package uk.co.idv.api;
 
 import com.fasterxml.jackson.databind.Module;
 import uk.co.idv.api.lockout.LockoutStateModule;
-import uk.co.idv.api.verification.onetimepasscode.ApiOneTimePasscodeModule;
 import uk.co.idv.api.verificationcontext.ApiVerificationContextModule;
 import uk.co.idv.json.DefaultModuleProvider;
 import uk.co.idv.json.activity.ActivityModule;
@@ -34,7 +33,6 @@ public class ApiModuleProvider extends DefaultModuleProvider {
                 new ActivityModule(),
                 new ApiModule(),
                 new ApiVerificationContextModule(),
-                new ApiOneTimePasscodeModule(),
                 new LockoutStateModule()
         ));
     }

@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.idv.api.verification.onetimepasscode.SendOneTimePasscodeRequestDocument;
-import uk.co.idv.api.verification.onetimepasscode.OneTimePasscodeVerificationDocument;
-import uk.co.idv.api.verification.onetimepasscode.ResendOneTimePasscodeRequestDocument;
-import uk.co.idv.api.verification.onetimepasscode.VerifyOneTimePasscodeRequestDocument;
+import uk.co.idv.api.onetimepasscode.OneTimePasscodeVerificationDocument;
+import uk.co.idv.api.onetimepasscode.ResendOneTimePasscodeRequestDocument;
+import uk.co.idv.api.onetimepasscode.SendOneTimePasscodeRequestDocument;
+import uk.co.idv.api.onetimepasscode.VerifyOneTimePasscodeRequestDocument;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeService;
 
