@@ -13,13 +13,11 @@ dependencies {
     implementation project(':verification-context-use-cases')
     implementation project(':json-converter')
     implementation project(':aws-system-properties')
-
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
     testImplementation project(':verification-context-entities').sourceSets.test.output
     testImplementation project(':verification-context-use-cases').sourceSets.test.output
     testImplementation project(':dynamo-db-utils')
-
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
     testImplementation "org.meanbean:meanbean:${meanBeanVersion}"
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"

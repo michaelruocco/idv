@@ -7,23 +7,21 @@ testSets {
 }
 
 dependencies {
-    compile project(':one-time-passcode-entities')
-    compile project(':one-time-passcode-use-cases')
-    compile project(':one-time-passcode-json')
-    compile project(':json-converter')
-    compile project(':aws-system-properties')
-    compile project(':dynamo-db-utils')
+    api project(':dynamo-db-utils')
+    api project(':json-converter')
+    api project(':one-time-passcode-use-cases')
 
-    testCompile project(':verification-context-entities').sourceSets.test.output
-    testCompile project(':one-time-passcode-entities').sourceSets.test.output
-    testCompile project(':one-time-passcode-use-cases').sourceSets.test.output
+    implementation project(':one-time-passcode-json')
+    implementation project(':aws-system-properties')
 
-    testCompile "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
-    testCompile "org.meanbean:meanbean:${meanBeanVersion}"
-    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
-    testCompile 'org.junit-pioneer:junit-pioneer:0.5.4'
+    testImplementation project(':verification-context-entities').sourceSets.test.output
+    testImplementation project(':one-time-passcode-entities').sourceSets.test.output
+    testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
+    testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
+    testImplementation "org.meanbean:meanbean:${meanBeanVersion}"
+    testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 
-    integrationTestCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    integrationTestImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
 }
 
 integrationTest {

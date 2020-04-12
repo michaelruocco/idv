@@ -1,8 +1,6 @@
 dependencies {
-    compile project(':verification-context-entities')
-    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation project(':verification-context-entities')
 
-    testCompile project(':verification-context-entities').sourceSets.test.output
-    testCompile "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
-    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
+    testImplementation project(':verification-context-entities').sourceSets.test.output
+    testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
 }

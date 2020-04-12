@@ -1,7 +1,7 @@
 dependencies {
-    implementation project(':verification-context-entities')
-    implementation project(':verification-context-use-cases')
-    implementation project(':json-converter')
+    api project(':verification-context-entities')
+    api project(':verification-context-use-cases')
+    api project(':json-converter')
 
     implementation 'org.zalando:jackson-datatype-money:1.1.1'
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDataTypeJsrVersion}"

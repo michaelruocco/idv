@@ -1,14 +1,12 @@
 dependencies {
-    compile project(':one-time-passcode-entities')
-    compile project(':verification-context-use-cases')
-    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    api project(':one-time-passcode-entities')
+    api project(':verification-context-entities')
 
+    implementation project(':verification-context-use-cases')
     implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
 
-    testCompile project(':verification-context-entities').sourceSets.test.output
-    testCompile project(':one-time-passcode-entities').sourceSets.test.output
-    testCompile project(':verification-context-use-cases').sourceSets.test.output
-
-    testCompile "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
-    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
+    testImplementation project(':one-time-passcode-entities').sourceSets.test.output
+    testImplementation project(':verification-context-entities').sourceSets.test.output
+    testImplementation project(':verification-context-use-cases').sourceSets.test.output
+    testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
 }

@@ -7,23 +7,18 @@
 
 ## TODO list
 
-*  Maybe try decorator pattern for module providers
-
-*  Try gradle java library plugin
+*  Split out use case utils so that one-time-passcode sender modules dont need to depdend on
+verification-context-use-case for id generator interfaces
 
 *  Put object mothers in separate module
 
 *  Get rid of fake time generator and just use a mock, also rename time generator to clock or something similar
 
-*  Update main build.gradle to add slf4j dependencies to all projects except spring app ones rather than duplicating into all modules
-
 *  All eligible flag against delivery method (for otp) and card (for pinsentry)
-
-*  Split modules so that OTP entities / use cases / json / api and config are separated more clearly between verification context and OTP
 
 *  Add properly formatted error handling for OTP scenarios
 
-*  Load phone number from database so we don't have use stubbed environment variables to change phone numbers
+*  Load phone numbers from database so we don't have use stubbed environment variables to change phone numbers
 
 *  Try removing NAT gateway from AWS templates as they are costly when you leave the ECS cluster running
 
