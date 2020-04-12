@@ -49,6 +49,8 @@ subprojects {
         fileLoaderVersion = '5.0.1'
         testContainersVersion = '1.13.0'
         jsonUnitVersion = '2.14.0'
+        junitPioneerVersion = '0.5.4'
+        awsSdkVersion = '1.11.748'
     }
 
     dependencies {

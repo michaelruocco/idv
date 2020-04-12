@@ -1,7 +1,5 @@
 dependencies {
-    compile 'com.amazonaws:aws-java-sdk-core:1.11.747'
-    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "com.amazonaws:aws-java-sdk-core:${awsSdkVersion}"
 
-    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
-    testCompile 'org.junit-pioneer:junit-pioneer:0.5.4'
+    testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 }
