@@ -9,7 +9,7 @@ import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
-import uk.co.idv.repository.dynamo.DynamoConfig;
+import uk.co.idv.repository.dynamo.VerificationContextDynamoConfig;
 
 import java.util.Optional;
 
@@ -25,7 +25,7 @@ class DynamoIdentityDaoTest {
 
     @BeforeEach
     void setUp() {
-        final DynamoConfig config = new DynamoConfig(DYNAMO_DB.buildClient());
+        final VerificationContextDynamoConfig config = new VerificationContextDynamoConfig(DYNAMO_DB.buildClient());
         dao = config.identityDao();
     }
 

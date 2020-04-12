@@ -9,7 +9,7 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.json.lockout.attempt.VerificationAttemptsModule;
-import uk.co.idv.repository.dynamo.DynamoConfig;
+import uk.co.idv.repository.dynamo.VerificationContextDynamoConfig;
 import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
@@ -29,7 +29,7 @@ public class VerificationAttemptDaoTest {
 
     @BeforeEach
     void setUp() {
-        final DynamoConfig config = new DynamoConfig(DYNAMO_DB.buildClient());
+        final VerificationContextDynamoConfig config = new VerificationContextDynamoConfig(DYNAMO_DB.buildClient());
         final ObjectMapperFactory factory = new ObjectMapperFactory(new VerificationAttemptsModule());
         final JsonConverter jsonConverter = new JacksonJsonConverter(factory.build());
         dao = config.verificationAttemptDao(jsonConverter);

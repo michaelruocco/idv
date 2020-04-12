@@ -36,12 +36,16 @@ dependencies {
 
     compile project(':verification-context-entities')
     compile project(':verification-context-use-cases')
+
     compile project(':verification-context-dynamo-db')
     compile project(':verification-context-in-memory-db')
 
     compile project(':one-time-passcode-entities')
     compile project(':one-time-passcode-use-cases')
+
+    compile project(':one-time-passcode-dynamo-db')
     compile project(':one-time-passcode-in-memory-db')
+
     compile project(':one-time-passcode-sns-delivery')
     compile project(':one-time-passcode-in-memory-delivery')
 

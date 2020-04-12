@@ -8,7 +8,6 @@ import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
-import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.dynamo.table.DynamoTableCreator;
 import uk.co.idv.dynamo.table.DynamoTableService;
@@ -26,7 +25,6 @@ import uk.co.idv.repository.dynamo.lockout.policy.DynamoLockoutPolicyDao;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyCreateTableRequest;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemConverter;
 import uk.co.idv.repository.dynamo.lockout.policy.LockoutPolicyItemsConverter;
-import uk.co.idv.repository.dynamo.onetimepasscode.OneTimePasscodeDynamoConfig;
 import uk.co.idv.repository.dynamo.verificationcontext.DynamoVerificationContextDao;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextCreateTableRequest;
 import uk.co.idv.repository.dynamo.verificationcontext.VerificationContextItemConverter;
@@ -35,18 +33,16 @@ import uk.co.idv.utils.json.converter.JsonConverter;
 
 @RequiredArgsConstructor
 @Slf4j
-public class DynamoConfig {
+public class VerificationContextDynamoConfig {
 
     private final String environment;
     private final DynamoTableService tableService;
     private final DynamoTimeToLiveService timeToLiveService;
-    private final OneTimePasscodeDynamoConfig oneTimePasscodeDynamoConfig;
 
-    public DynamoConfig(final AmazonDynamoDB client) {
+    public VerificationContextDynamoConfig(final AmazonDynamoDB client) {
         this(AwsSystemProperties.loadEnvironment(),
                 new DynamoTableService(new DynamoTableCreator(client)),
-                new DynamoTimeToLiveService(client),
-                new OneTimePasscodeDynamoConfig(client)
+                new DynamoTimeToLiveService(client)
         );
     }
 
@@ -77,12 +73,6 @@ public class DynamoConfig {
         timeToLiveService.updateTimeToLive(new DefaultTimeToLiveRequest(createTableRequest.getTableName()));
         return dao;
     }
-
-    public OneTimePasscodeVerificationDao oneTimePasscodeVerificationDao(final JsonConverter jsonConverter,
-                                                                         final EpochSecondProvider epochSecondProvider) {
-        return oneTimePasscodeDynamoConfig.verificationDao(jsonConverter, epochSecondProvider);
-    }
-
 
     public VerificationAttemptDao verificationAttemptDao(final JsonConverter jsonConverter) {
         return DynamoVerificationAttemptDao.builder()

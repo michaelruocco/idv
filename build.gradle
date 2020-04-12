@@ -53,6 +53,7 @@ subprojects {
         awsSdkVersion = '1.11.748'
         commonsCollectionsVersion = '4.4'
         commonsLangVersion = '3.9'
+        jacksonDataTypeJsrVersion = '2.10.3'
     }
 
     dependencies {

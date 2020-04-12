@@ -12,7 +12,7 @@ import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.dynamo.ttl.CurrentEpochSecondProvider;
 import uk.co.idv.dynamo.ttl.EpochSecondProvider;
 import uk.co.idv.json.verificationcontext.VerificationContextModule;
-import uk.co.idv.repository.dynamo.DynamoConfig;
+import uk.co.idv.repository.dynamo.VerificationContextDynamoConfig;
 import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
@@ -32,7 +32,7 @@ class DynamoVerificationContextDaoTest {
 
     @BeforeEach
     void setUp() {
-        final DynamoConfig config = new DynamoConfig(DYNAMO_DB.buildClient());
+        final VerificationContextDynamoConfig config = new VerificationContextDynamoConfig(DYNAMO_DB.buildClient());
         final ObjectMapperFactory factory = new ObjectMapperFactory(new VerificationContextModule());
         final JsonConverter jsonConverter = new JacksonJsonConverter(factory.build());
         final EpochSecondProvider epochSecondProvider = new CurrentEpochSecondProvider();
