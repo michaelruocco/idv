@@ -1,6 +1,8 @@
  dependencies {
      compile project(':verification-context-entities')
 
+     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+
      testCompile "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
      testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
  }

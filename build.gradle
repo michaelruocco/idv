@@ -51,6 +51,8 @@ subprojects {
         jsonUnitVersion = '2.14.0'
         junitPioneerVersion = '0.5.4'
         awsSdkVersion = '1.11.748'
+        commonsCollectionsVersion = '4.4'
+        commonsLangVersion = '3.9'
     }
 
     dependencies {
