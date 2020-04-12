@@ -21,11 +21,16 @@ repositories {
 
 ext['junit-jupiter.version'] = ext.junitVersion
 
+configurations {
+    compile.exclude module: 'spring-boot-starter-logging'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-dependencies:2.2.5.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
 
     compile project(':uk-config')
 

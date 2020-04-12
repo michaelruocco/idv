@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.TextNode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.json.channel.ChannelJsonNodeConverter;
+import uk.co.idv.json.channel.converter.AllSimpleChannelJsonNodeConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

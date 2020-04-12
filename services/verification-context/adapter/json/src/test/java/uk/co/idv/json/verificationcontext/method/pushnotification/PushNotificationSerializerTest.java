@@ -9,14 +9,14 @@ import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.Pus
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
-import uk.co.idv.json.verificationcontext.VerificationContextModule;
+import uk.co.idv.json.verificationcontext.VerificationContextObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class PushNotificationSerializerTest {
 
-    private static final ObjectMapper MAPPER = buildMapper();
+    private static final ObjectMapper MAPPER = new VerificationContextObjectMapperFactory().build();
 
     @Test
     void shouldSerializeEligiblePushNotification() throws JsonProcessingException {
@@ -47,12 +47,6 @@ class PushNotificationSerializerTest {
 
         final String expectedJson = loadFileContent("push-notification-ineligible.json");
         assertThatJson(json).isEqualTo(expectedJson);
-    }
-
-    private static ObjectMapper buildMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new VerificationContextModule());
-        return mapper;
     }
 
     private static String loadFileContent(final String name) {

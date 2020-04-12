@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.cardnumber.CardNumber;
 import uk.co.idv.domain.entities.cardnumber.CardNumberMother;
-import uk.co.idv.json.TestObjectMapperFactory;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CardNumberDeserializerTest {
 
-    private static final ObjectMapper MAPPER = TestObjectMapperFactory.build();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new CardNumberModule()).build();
 
     @Test
     void shouldDeserializeCreditCardNumber() throws JsonProcessingException {

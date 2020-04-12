@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AliasesDeserializerTest {
 
-    private static final ObjectMapper MAPPER = buildMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new AliasModule()).build();
 
     @Test
     void shouldDeserializeAliases() throws IOException {
@@ -22,12 +23,6 @@ class AliasesDeserializerTest {
 
         final Aliases expectedAliases = AliasesMother.aliases();
         assertThat(aliases).containsExactlyElementsOf(expectedAliases);
-    }
-
-    private static ObjectMapper buildMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new IdentityModule());
-        return mapper;
     }
 
 }

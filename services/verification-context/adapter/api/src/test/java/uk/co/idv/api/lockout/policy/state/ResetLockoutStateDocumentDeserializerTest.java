@@ -2,7 +2,7 @@ package uk.co.idv.api.lockout.policy.state;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiTestObjectMapperFactory;
+import uk.co.idv.api.verificationcontext.ApiVerificationContextObjectMapperFactory;
 import uk.co.idv.api.lockout.state.ResetLockoutStateDocument;
 import uk.co.mruoc.file.content.ContentLoader;
 
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ResetLockoutStateDocumentDeserializerTest {
 
-    private static final ObjectMapper MAPPER = ApiTestObjectMapperFactory.build();
+    private static final ObjectMapper MAPPER = new ApiVerificationContextObjectMapperFactory().build();
 
     @Test
     void shouldDeserializeDocument() throws IOException {

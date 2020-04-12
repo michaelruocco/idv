@@ -1,0 +1,48 @@
+[
+  {
+    "name": "push-notification",
+    "eligible": false,
+    "methods": [
+      {
+        "name": "push-notification",
+        "eligible": false,
+        "reason": "no mobile application"
+      }
+    ]
+  },
+  {
+    "name": "physical-pinsentry",
+    "eligible": false,
+    "methods": [
+      {
+        "name": "physical-pinsentry",
+        "function": "respond",
+        "eligible": false,
+        "reason": "no eligible cards found"
+      }
+    ]
+  },
+  {
+    "name": "mobile-pinsentry",
+    "eligible": false,
+    "methods": [
+      {
+        "name": "mobile-pinsentry",
+        "function": "respond",
+        "eligible": false,
+        "reason": "no mobile application"
+      }
+    ]
+  },
+  {
+    "name": "one-time-passcode",
+    "eligible": false,
+    "methods": [
+      {
+        "name": "one-time-passcode",
+        "eligible": false,
+        "reason": "no eligible delivery methods found"
+      }
+    ]
+  }
+]

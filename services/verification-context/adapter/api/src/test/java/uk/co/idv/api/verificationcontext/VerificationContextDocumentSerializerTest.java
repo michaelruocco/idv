@@ -3,7 +3,6 @@ package uk.co.idv.api.verificationcontext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiTestObjectMapperFactory;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.mruoc.file.content.ContentLoader;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
@@ -12,7 +11,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class VerificationContextDocumentSerializerTest {
 
-    private static final ObjectMapper MAPPER = ApiTestObjectMapperFactory.build();
+    private static final ObjectMapper MAPPER = new ApiVerificationContextObjectMapperFactory().build();
 
     @Test
     void shouldSerializeContext() throws JsonProcessingException {

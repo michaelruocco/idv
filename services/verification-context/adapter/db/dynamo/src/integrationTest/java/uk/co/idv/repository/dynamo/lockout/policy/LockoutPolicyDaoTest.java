@@ -13,11 +13,11 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
-import uk.co.idv.json.VerificationContextModuleProvider;
+import uk.co.idv.json.lockout.policy.LockoutPolicyModule;
 import uk.co.idv.repository.dynamo.DynamoConfig;
-import uk.co.idv.utils.json.jackson.JacksonJsonConverter;
+import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
-import uk.co.idv.utils.json.jackson.ObjectMapperFactory;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public class LockoutPolicyDaoTest {
     @BeforeEach
     void setUp() {
         final DynamoConfig config = new DynamoConfig(DYNAMO_DB.buildClient());
-        final ObjectMapperFactory factory = new ObjectMapperFactory(new VerificationContextModuleProvider());
+        final ObjectMapperFactory factory = new ObjectMapperFactory(new LockoutPolicyModule());
         final JsonConverter jsonConverter = new JacksonJsonConverter(factory.build());
         dao = config.lockoutPolicyDao(jsonConverter);
         config.clearLockoutPolicies();

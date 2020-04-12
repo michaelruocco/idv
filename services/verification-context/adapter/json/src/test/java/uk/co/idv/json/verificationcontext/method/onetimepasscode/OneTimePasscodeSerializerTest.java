@@ -13,7 +13,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
-import uk.co.idv.json.verificationcontext.VerificationContextModule;
+import uk.co.idv.json.verificationcontext.VerificationContextObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.util.Collection;
@@ -22,7 +22,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class OneTimePasscodeSerializerTest {
 
-    private static final ObjectMapper MAPPER = buildMapper();
+    private static final ObjectMapper MAPPER = new VerificationContextObjectMapperFactory().build();
 
     @Test
     void shouldSerializeEligibleOneTimePasscode() throws JsonProcessingException {
@@ -57,12 +57,6 @@ class OneTimePasscodeSerializerTest {
 
         final String expectedJson = loadFileContent("one-time-passcode-ineligible.json");
         assertThatJson(json).isEqualTo(expectedJson);
-    }
-
-    private static ObjectMapper buildMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new VerificationContextModule());
-        return mapper;
     }
 
     private static String loadFileContent(final String name) {

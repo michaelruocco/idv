@@ -11,11 +11,11 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.dynamo.ttl.CurrentEpochSecondProvider;
 import uk.co.idv.dynamo.ttl.EpochSecondProvider;
-import uk.co.idv.json.VerificationContextModuleProvider;
+import uk.co.idv.json.verificationcontext.VerificationContextModule;
 import uk.co.idv.repository.dynamo.DynamoConfig;
-import uk.co.idv.utils.json.jackson.JacksonJsonConverter;
+import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
-import uk.co.idv.utils.json.jackson.ObjectMapperFactory;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +33,7 @@ class DynamoVerificationContextDaoTest {
     @BeforeEach
     void setUp() {
         final DynamoConfig config = new DynamoConfig(DYNAMO_DB.buildClient());
-        final ObjectMapperFactory factory = new ObjectMapperFactory(new VerificationContextModuleProvider());
+        final ObjectMapperFactory factory = new ObjectMapperFactory(new VerificationContextModule());
         final JsonConverter jsonConverter = new JacksonJsonConverter(factory.build());
         final EpochSecondProvider epochSecondProvider = new CurrentEpochSecondProvider();
         dao = config.verificationContextDao(jsonConverter, epochSecondProvider);

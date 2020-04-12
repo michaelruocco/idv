@@ -7,10 +7,10 @@ import uk.co.idv.domain.usecases.util.RandomIdGenerator;
 import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
 
-
 import java.util.Collection;
-import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,20 +20,20 @@ class UkConfigTest {
 
     @Test
     void shouldReturnObjectMapperWithUkApiModules() {
-        final Collection<Module> expectedModules = new UkApiModuleProvider().getModules();
+        final Collection<Object> expectedModuleIds = toIds(new UkApiIdvModule());
 
         final ObjectMapper mapper = config.jsonApiObjectMapper();
 
-        assertThat(mapper.getRegisteredModuleIds()).isEqualTo(toIds(expectedModules));
+        assertThat(mapper.getRegisteredModuleIds()).containsExactlyInAnyOrderElementsOf(expectedModuleIds);
     }
 
     @Test
     void shouldReturnObjectMapperWithUkModules() {
-        final Collection<Module> expectedModules = new UkModuleProvider().getModules();
+        final Collection<Object> expectedModuleIds = toIds( new UkIdvModule());
 
         final ObjectMapper mapper = config.objectMapper();
 
-        assertThat(mapper.getRegisteredModuleIds()).isEqualTo(toIds(expectedModules));
+        assertThat(mapper.getRegisteredModuleIds()).containsExactlyInAnyOrderElementsOf(expectedModuleIds);
     }
 
     @Test
@@ -51,10 +51,17 @@ class UkConfigTest {
         assertThat(config.lockoutPolicyAttributesConverter()).isInstanceOf(UkLockoutPolicyAttributesConverter.class);
     }
 
-    private static Set<Object> toIds(final Collection<Module> modules) {
-        return modules.stream()
+    private static Collection<Object> toIds(final Module module) {
+        return toDependencyStream(module)
                 .map(Module::getTypeId)
                 .collect(Collectors.toSet());
+    }
+
+    private static Stream<Module> toDependencyStream(final Module module) {
+        final Iterable<? extends Module> iterable = module.getDependencies();
+        final Stream<? extends Module> dependencyStream = StreamSupport.stream(iterable.spliterator(), false)
+                .flatMap(UkConfigTest::toDependencyStream);
+        return Stream.concat(dependencyStream, Stream.of(module));
     }
 
 }

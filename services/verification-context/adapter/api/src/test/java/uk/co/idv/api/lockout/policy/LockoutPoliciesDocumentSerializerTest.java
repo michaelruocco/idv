@@ -3,14 +3,14 @@ package uk.co.idv.api.lockout.policy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.api.ApiTestObjectMapperFactory;
+import uk.co.idv.api.verificationcontext.ApiVerificationContextObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 class LockoutPoliciesDocumentSerializerTest {
 
-    private static final ObjectMapper MAPPER = ApiTestObjectMapperFactory.build();
+    private static final ObjectMapper MAPPER = new ApiVerificationContextObjectMapperFactory().build();
 
     @Test
     void shouldSerializePolicies() throws JsonProcessingException {

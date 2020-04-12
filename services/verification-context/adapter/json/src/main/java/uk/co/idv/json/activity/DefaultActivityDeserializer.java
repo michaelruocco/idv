@@ -1,6 +1,9 @@
 package uk.co.idv.json.activity;
 
 
+import uk.co.idv.json.activity.converter.LoginJsonNodeConverter;
+import uk.co.idv.json.activity.converter.OnlinePurchaseJsonNodeConverter;
+
 import java.util.Arrays;
 import java.util.Collection;
 

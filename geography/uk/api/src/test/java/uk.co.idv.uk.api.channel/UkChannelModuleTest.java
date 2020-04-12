@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
-import uk.co.idv.utils.json.jackson.ObjectMapperFactory;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;

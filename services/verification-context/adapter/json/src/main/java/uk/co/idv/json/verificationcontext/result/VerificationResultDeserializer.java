@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
-import uk.co.idv.json.util.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 
 import java.io.IOException;
 import java.time.Instant;

@@ -10,16 +10,16 @@ import uk.co.idv.domain.usecases.util.IdGenerator;
 import uk.co.idv.domain.usecases.util.RandomIdGenerator;
 import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
-import uk.co.idv.utils.json.jackson.ObjectMapperFactory;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 
 public class UkConfig {
 
     public ObjectMapper jsonApiObjectMapper() {
-        return new ObjectMapperFactory(new UkApiModuleProvider()).build();
+        return new ObjectMapperFactory(new UkApiIdvModule()).build();
     }
 
     public ObjectMapper objectMapper() {
-        return new ObjectMapperFactory(new UkModuleProvider()).build();
+        return new ObjectMapperFactory(new UkIdvModule()).build();
     }
 
     public IdGenerator idGenerator() {

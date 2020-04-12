@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequenceMother;
-import uk.co.idv.json.TestObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class VerificationSequenceDeserializerTest {
 
-    private static final ObjectMapper MAPPER = TestObjectMapperFactory.build();
+    private static final ObjectMapper MAPPER = new VerificationContextObjectMapperFactory().build();
 
     @Test
     void shouldDeserializeSequenceWithSingleMethod() throws IOException {

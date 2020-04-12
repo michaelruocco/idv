@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;
-import uk.co.idv.json.util.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 
 import java.io.IOException;
 import java.time.Instant;

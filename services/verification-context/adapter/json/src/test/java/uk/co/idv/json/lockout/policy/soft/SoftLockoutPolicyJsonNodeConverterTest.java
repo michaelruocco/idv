@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
-import uk.co.idv.json.TestObjectMapperFactory;
+import uk.co.idv.json.lockout.policy.LockoutPolicyObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SoftLockoutPolicyJsonNodeConverterTest {
 
-    private static final ObjectMapper MAPPER = TestObjectMapperFactory.build();
+    private static final ObjectMapper MAPPER = new LockoutPolicyObjectMapperFactory().build();
 
     @Test
     void shouldDeserializePolicy() throws JsonProcessingException {

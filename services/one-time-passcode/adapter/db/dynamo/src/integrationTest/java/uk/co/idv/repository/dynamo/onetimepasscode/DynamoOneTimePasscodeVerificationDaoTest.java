@@ -11,7 +11,7 @@ import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.dynamo.ttl.CurrentEpochSecondProvider;
 import uk.co.idv.dynamo.ttl.EpochSecondProvider;
 import uk.co.idv.json.onetimepasscode.OneTimePasscodeObjectMapperFactory;
-import uk.co.idv.utils.json.jackson.JacksonJsonConverter;
+import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
 import java.util.Optional;
