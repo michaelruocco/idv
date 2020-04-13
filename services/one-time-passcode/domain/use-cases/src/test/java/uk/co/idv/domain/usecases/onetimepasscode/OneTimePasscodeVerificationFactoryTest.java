@@ -7,9 +7,9 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
-import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
+import uk.co.idv.domain.usecases.util.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -22,11 +22,11 @@ class OneTimePasscodeVerificationFactoryTest {
     private final Instant now = Instant.now();
 
     private final IdGenerator idGenerator = new FakeIdGenerator(id);
-    private final TimeGenerator timeGenerator = new FakeTimeGenerator(now);
+    private final TimeProvider timeProvider = new FakeTimeProvider(now);
 
     private final OneTimePasscodeVerificationFactory factory = OneTimePasscodeVerificationFactory.builder()
             .idGenerator(idGenerator)
-            .timeGenerator(timeGenerator)
+            .timeProvider(timeProvider)
             .build();
 
     @Test

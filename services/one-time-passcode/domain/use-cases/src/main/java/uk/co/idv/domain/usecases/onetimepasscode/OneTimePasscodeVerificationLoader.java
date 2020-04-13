@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -11,7 +11,7 @@ import java.util.UUID;
 public class OneTimePasscodeVerificationLoader {
 
     private final OneTimePasscodeVerificationDao dao;
-    private final TimeGenerator timeGenerator;
+    private final TimeProvider timeProvider;
 
     public OneTimePasscodeVerification load(final UUID id) {
         final OneTimePasscodeVerification verification = dao.load(id)
@@ -21,7 +21,7 @@ public class OneTimePasscodeVerificationLoader {
     }
 
     private void validateExpiry(final OneTimePasscodeVerification verification) {
-        final Instant now = timeGenerator.now();
+        final Instant now = timeProvider.now();
         if (verification.hasExpired(now)) {
             throw new OneTimePasscodeVerificationExpiredException(verification, now);
         }

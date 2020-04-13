@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
 import uk.co.idv.domain.usecases.lockout.InitialLockoutPolicyCreator;
-import uk.co.idv.domain.usecases.util.CurrentTimeGenerator;
+import uk.co.idv.domain.usecases.util.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
@@ -46,8 +46,8 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 public class VerificationContextDomainConfig {
 
     @Bean
-    public TimeGenerator timeService() {
-        return new CurrentTimeGenerator();
+    public TimeProvider timeService() {
+        return new CurrentTimeProvider();
     }
 
     @Bean
@@ -172,11 +172,11 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public VerificationContextLoader verificationContextLoader(final TimeGenerator timeGenerator,
+    public VerificationContextLoader verificationContextLoader(final TimeProvider timeProvider,
                                                                final LockoutService lockoutService,
                                                                final VerificationContextDao dao) {
         return DefaultVerificationContextLoader.builder()
-                .timeGenerator(timeGenerator)
+                .timeProvider(timeProvider)
                 .lockoutService(lockoutService)
                 .dao(dao)
                 .build();
@@ -195,7 +195,7 @@ public class VerificationContextDomainConfig {
 
     @Bean
     public VerificationContextCreator verificationContextCreator(final IdGenerator idGenerator,
-                                                                 final TimeGenerator timeGenerator,
+                                                                 final TimeProvider timeProvider,
                                                                  final IdentityService identityService,
                                                                  final SequenceLoader sequenceLoader,
                                                                  final ExpiryCalculator expiryCalculator,
@@ -203,7 +203,7 @@ public class VerificationContextDomainConfig {
                                                                  final VerificationContextDao dao) {
         return VerificationContextCreator.builder()
                 .idGenerator(idGenerator)
-                .timeGenerator(timeGenerator)
+                .timeProvider(timeProvider)
                 .identityService(identityService)
                 .sequenceLoader(sequenceLoader)
                 .expiryCalculator(expiryCalculator)
@@ -225,11 +225,11 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public LockoutFacade lockoutFacade(final TimeGenerator timeGenerator,
+    public LockoutFacade lockoutFacade(final TimeProvider timeProvider,
                                        final IdentityService identityService,
                                        final LockoutService lockoutService) {
         return DefaultLockoutFacade.builder()
-                .timeGenerator(timeGenerator)
+                .timeProvider(timeProvider)
                 .identityService(identityService)
                 .lockoutService(lockoutService)
                 .build();

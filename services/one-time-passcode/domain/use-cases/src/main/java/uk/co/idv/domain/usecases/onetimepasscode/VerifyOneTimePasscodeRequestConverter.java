@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class VerifyOneTimePasscodeRequestConverter {
 
-    private final TimeGenerator timeGenerator;
+    private final TimeProvider timeProvider;
 
     public Collection<OneTimePasscodeVerificationAttempt> toAttempts(final VerifyOneTimePasscodeRequest request) {
         return request.getPasscodes().stream()
@@ -21,7 +21,7 @@ public class VerifyOneTimePasscodeRequestConverter {
     private OneTimePasscodeVerificationAttempt toAttempt(final String passcode) {
         return OneTimePasscodeVerificationAttempt.builder()
                 .passcode(passcode)
-                .created(timeGenerator.now())
+                .created(timeProvider.now())
                 .build();
     }
 

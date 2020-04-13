@@ -2,8 +2,8 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;
-import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.FakeTimeProvider;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -13,9 +13,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class VerifyOneTimePasscodeRequestConverterTest {
 
     private final Instant now = Instant.now();
-    private final TimeGenerator timeGenerator = new FakeTimeGenerator(now);
+    private final TimeProvider timeProvider = new FakeTimeProvider(now);
 
-    private final VerifyOneTimePasscodeRequestConverter converter = new VerifyOneTimePasscodeRequestConverter(timeGenerator);
+    private final VerifyOneTimePasscodeRequestConverter converter = new VerifyOneTimePasscodeRequestConverter(timeProvider);
 
     @Test
     void shouldConvertToAttemptForEachPasscode() {

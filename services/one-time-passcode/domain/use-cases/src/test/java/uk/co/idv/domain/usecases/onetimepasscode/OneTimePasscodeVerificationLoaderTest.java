@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationLoader.OneTimePasscodeVerificationExpiredException;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationLoader.OneTimePasscodeVerificationNotFoundException;
-import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.FakeTimeProvider;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -21,11 +21,11 @@ class OneTimePasscodeVerificationLoaderTest {
     private final Instant now = Instant.now();
 
     private final OneTimePasscodeVerificationDao dao = mock(OneTimePasscodeVerificationDao.class);
-    private final TimeGenerator timeGenerator = new FakeTimeGenerator(now);
+    private final TimeProvider timeProvider = new FakeTimeProvider(now);
 
     private final OneTimePasscodeVerificationLoader loader = OneTimePasscodeVerificationLoader.builder()
             .dao(dao)
-            .timeGenerator(timeGenerator)
+            .timeProvider(timeProvider)
             .build();
 
     @Test

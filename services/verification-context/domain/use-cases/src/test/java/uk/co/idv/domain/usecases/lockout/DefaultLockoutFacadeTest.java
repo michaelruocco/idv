@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
-import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.FakeTimeProvider;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -23,12 +23,12 @@ class DefaultLockoutFacadeTest {
     private final Instant now = Instant.now();
     private final Identity identity = new Identity(AliasesMother.aliases());
 
-    private final TimeGenerator timeGenerator = new FakeTimeGenerator(now);
+    private final TimeProvider timeProvider = new FakeTimeProvider(now);
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
     private final FakeLockoutService lockoutService = new FakeLockoutService();
 
     private final LockoutFacade facade = DefaultLockoutFacade.builder()
-            .timeGenerator(timeGenerator)
+            .timeProvider(timeProvider)
             .identityService(identityService)
             .lockoutService(lockoutService)
             .build();

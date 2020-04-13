@@ -6,9 +6,9 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CurrentTimeGeneratorTest {
+class CurrentTimeProviderTest {
 
-    private final TimeGenerator service = new CurrentTimeGenerator();
+    private final TimeProvider service = new CurrentTimeProvider();
 
     @Test
     void shouldReturnCurrentTime() {

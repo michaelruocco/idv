@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 import uk.co.idv.domain.usecases.lockout.DefaultLoadLockoutStateRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
@@ -15,7 +15,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
 
     private final VerificationContextDao dao;
     private final LockoutService lockoutService;
-    private final TimeGenerator timeGenerator;
+    private final TimeProvider timeProvider;
 
     @Override
     public VerificationContext load(final UUID id) {
@@ -26,7 +26,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
     }
 
     private void validateExpiry(final VerificationContext context) {
-        final Instant now = timeGenerator.now();
+        final Instant now = timeProvider.now();
         if (context.hasExpired(now)) {
             throw new VerificationContextExpiredException(context, now);
         }
@@ -38,7 +38,7 @@ public class DefaultVerificationContextLoader implements VerificationContextLoad
                 .activityName(context.getActivityName())
                 .alias(context.getProvidedAlias())
                 .idvIdValue(context.getIdvIdValue())
-                .timestamp(timeGenerator.now())
+                .timestamp(timeProvider.now())
                 .build();
         lockoutService.validateState(request);
     }

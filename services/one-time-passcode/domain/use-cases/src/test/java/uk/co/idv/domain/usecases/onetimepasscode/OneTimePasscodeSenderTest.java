@@ -13,7 +13,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -32,7 +32,7 @@ class OneTimePasscodeSenderTest {
     private final OneTimePasscodeVerificationLoader verificationLoader = mock(OneTimePasscodeVerificationLoader.class);
     private final PasscodeGenerator passcodeGenerator = mock(PasscodeGenerator.class);
     private final OneTimePasscodeMessageBuilder messageBuilder = mock(OneTimePasscodeMessageBuilder.class);
-    private final TimeGenerator timeGenerator = mock(TimeGenerator.class);
+    private final TimeProvider timeProvider = mock(TimeProvider.class);
     private final OneTimePasscodeDeliverySender deliverySender = mock(OneTimePasscodeDeliverySender.class);
     private final OneTimePasscodeVerificationDao dao = mock(OneTimePasscodeVerificationDao.class);
 
@@ -42,7 +42,7 @@ class OneTimePasscodeSenderTest {
             .verificationLoader(verificationLoader)
             .passcodeGenerator(passcodeGenerator)
             .messageBuilder(messageBuilder)
-            .timeGenerator(timeGenerator)
+            .timeProvider(timeProvider)
             .sender(deliverySender)
             .dao(dao)
             .build();
@@ -86,7 +86,7 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeGenerator.now()).willReturn(now);
+        given(timeProvider.now()).willReturn(now);
 
         final OneTimePasscodeVerification verification = sender.send(request);
 
@@ -119,7 +119,7 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeGenerator.now()).willReturn(now);
+        given(timeProvider.now()).willReturn(now);
 
         final OneTimePasscodeVerification verification = sender.send(request);
 
@@ -177,7 +177,7 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeGenerator.now()).willReturn(now);
+        given(timeProvider.now()).willReturn(now);
 
         final OneTimePasscodeVerification verification = sender.send(request);
 
@@ -212,7 +212,7 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeGenerator.now()).willReturn(now);
+        given(timeProvider.now()).willReturn(now);
 
         final OneTimePasscodeVerification verification = sender.send(request);
 

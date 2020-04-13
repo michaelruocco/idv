@@ -2,11 +2,11 @@ package uk.co.idv.domain.usecases.util;
 
 import java.time.Instant;
 
-public class FakeTimeGenerator implements TimeGenerator {
+public class FakeTimeProvider implements TimeProvider {
 
     private Instant now;
 
-    public FakeTimeGenerator(final Instant now) {
+    public FakeTimeProvider(final Instant now) {
         this.now = now;
     }
 

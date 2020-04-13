@@ -3,13 +3,13 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
 
 @RequiredArgsConstructor
 public class OneTimePasscodeVerificationConverter {
 
-    private final TimeGenerator timeGenerator;
+    private final TimeProvider timeProvider;
 
     public RecordResultRequest toRecordResultRequest(final OneTimePasscodeVerification verification) {
         return RecordResultRequest.builder()
@@ -21,7 +21,7 @@ public class OneTimePasscodeVerificationConverter {
     private VerificationResult toResult(final OneTimePasscodeVerification verification) {
         return new OneTimePasscodeVerificationResult(
                 verification.getId(),
-                timeGenerator.now(),
+                timeProvider.now(),
                 verification.isSuccessful()
         );
     }

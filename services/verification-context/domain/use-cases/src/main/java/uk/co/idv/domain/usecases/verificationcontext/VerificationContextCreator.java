@@ -4,7 +4,7 @@ import lombok.Builder;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class VerificationContextCreator {
 
     private final IdGenerator idGenerator;
-    private final TimeGenerator timeGenerator;
+    private final TimeProvider timeProvider;
     private final IdentityService identityService;
     private final SequenceLoader sequenceLoader;
     private final ExpiryCalculator expiryCalculator;
@@ -34,7 +34,7 @@ public class VerificationContextCreator {
         final VerificationSequences sequences = loadVerificationSequences(request, identity);
 
         final UUID id = idGenerator.generate();
-        final Instant created = timeGenerator.now();
+        final Instant created = timeProvider.now();
         final Instant expiry = calculateExpiry(request, created, sequences);
 
         final VerificationContext context = VerificationContext.builder()
@@ -67,7 +67,7 @@ public class VerificationContextCreator {
                 .activity(createContextRequest.getActivity())
                 .alias(createContextRequest.getProvidedAlias())
                 .idvIdValue(identity.getIdvIdValue())
-                .timestamp(timeGenerator.now())
+                .timestamp(timeProvider.now())
                 .build();
         lockoutService.validateState(request);
     }

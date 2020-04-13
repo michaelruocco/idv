@@ -7,9 +7,9 @@ import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.FakeIdGenerator;
-import uk.co.idv.domain.usecases.util.FakeTimeGenerator;
+import uk.co.idv.domain.usecases.util.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -37,7 +37,7 @@ class VerificationContextCreatorTest {
     private static final Duration EXPIRY_DURATION = Duration.ofMinutes(5);
 
     private final IdGenerator idGenerator = new FakeIdGenerator(ID);
-    private final TimeGenerator timeGenerator = new FakeTimeGenerator(NOW);
+    private final TimeProvider timeProvider = new FakeTimeProvider(NOW);
 
     private final Identity identity = new Identity(AliasesMother.aliases());
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
@@ -52,7 +52,7 @@ class VerificationContextCreatorTest {
 
     private final VerificationContextCreator creator = VerificationContextCreator.builder()
             .idGenerator(idGenerator)
-            .timeGenerator(timeGenerator)
+            .timeProvider(timeProvider)
             .identityService(identityService)
             .sequenceLoader(sequenceLoader)
             .expiryCalculator(expiryCalculator)

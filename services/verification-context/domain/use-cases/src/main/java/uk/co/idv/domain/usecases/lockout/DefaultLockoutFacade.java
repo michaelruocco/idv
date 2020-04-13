@@ -8,12 +8,12 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
-import uk.co.idv.domain.usecases.util.TimeGenerator;
+import uk.co.idv.domain.usecases.util.TimeProvider;
 
 @Builder
 public class DefaultLockoutFacade implements LockoutFacade {
 
-    private final TimeGenerator timeGenerator;
+    private final TimeProvider timeProvider;
     private final IdentityService identityService;
     private final LockoutService lockoutService;
 
@@ -48,7 +48,7 @@ public class DefaultLockoutFacade implements LockoutFacade {
     private LockoutStateRequest toLockoutStateRequest(final LockoutRequest request,
                                                       final Identity identity) {
         return DefaultLoadLockoutStateRequest.builder()
-                .timestamp(timeGenerator.now())
+                .timestamp(timeProvider.now())
                 .channelId(request.getChannelId())
                 .activityName(request.getActivityName())
                 .alias(request.getAlias())

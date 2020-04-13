@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.util;
 
 import java.time.Instant;
 
-public interface TimeGenerator {
+public interface TimeProvider {
 
     Instant now();
 
