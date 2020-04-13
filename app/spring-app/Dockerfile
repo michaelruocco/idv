@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+FROM adoptopenjdk/openjdk13:alpine-jre
 
 ENV SPRING_PROFILES_ACTIVE=default
 ENV SERVER_PORT=80
