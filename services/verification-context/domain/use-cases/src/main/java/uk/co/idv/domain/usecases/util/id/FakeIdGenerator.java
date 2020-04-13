@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.util;
+package uk.co.idv.domain.usecases.util.id;
 
 import java.util.UUID;
 

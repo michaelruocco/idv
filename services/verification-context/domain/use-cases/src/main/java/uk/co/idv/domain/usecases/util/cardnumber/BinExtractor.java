@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.util;
+package uk.co.idv.domain.usecases.util.cardnumber;
 
 public class BinExtractor {
 

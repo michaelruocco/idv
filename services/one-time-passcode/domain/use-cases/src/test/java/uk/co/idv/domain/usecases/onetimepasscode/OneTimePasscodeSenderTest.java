@@ -13,7 +13,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
-import uk.co.idv.domain.usecases.util.TimeProvider;
+import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 import java.time.Instant;
 import java.util.UUID;

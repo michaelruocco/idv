@@ -2,8 +2,8 @@ package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
-import uk.co.idv.domain.usecases.util.FakeIdGenerator;
-import uk.co.idv.domain.usecases.util.IdGenerator;
+import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
+import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Optional;

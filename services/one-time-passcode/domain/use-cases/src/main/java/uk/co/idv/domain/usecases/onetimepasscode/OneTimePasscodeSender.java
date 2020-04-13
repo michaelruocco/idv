@@ -8,7 +8,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
-import uk.co.idv.domain.usecases.util.TimeProvider;
+import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 import java.util.UUID;
 

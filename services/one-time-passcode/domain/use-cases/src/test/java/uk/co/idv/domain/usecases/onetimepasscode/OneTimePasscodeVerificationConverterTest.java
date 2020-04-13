@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
-import uk.co.idv.domain.usecases.util.FakeTimeProvider;
-import uk.co.idv.domain.usecases.util.TimeProvider;
+import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
+import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
 
 import java.time.Instant;

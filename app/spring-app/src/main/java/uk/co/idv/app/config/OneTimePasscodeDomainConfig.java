@@ -19,8 +19,8 @@ import uk.co.idv.domain.usecases.onetimepasscode.message.DefaultOneTimePasscodeM
 import uk.co.idv.domain.usecases.onetimepasscode.message.DelegatingOneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OnlinePurchaseOneTimePasscodeMessageBuilder;
-import uk.co.idv.domain.usecases.util.IdGenerator;
-import uk.co.idv.domain.usecases.util.TimeProvider;
+import uk.co.idv.domain.usecases.util.id.IdGenerator;
+import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 

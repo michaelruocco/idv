@@ -3,8 +3,8 @@ package uk.co.idv.onetimepasscode.sender;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDeliveryMother;
-import uk.co.idv.domain.usecases.util.FakeIdGenerator;
-import uk.co.idv.domain.usecases.util.IdGenerator;
+import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
+import uk.co.idv.domain.usecases.util.id.IdGenerator;
 
 import java.util.UUID;
 

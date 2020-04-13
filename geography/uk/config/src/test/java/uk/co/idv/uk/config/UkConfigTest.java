@@ -3,7 +3,7 @@ package uk.co.idv.uk.config;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.usecases.util.RandomIdGenerator;
+import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
 import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
 

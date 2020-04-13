@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
-import uk.co.idv.domain.usecases.util.IdGenerator;
+import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.uk.config.UkConfig;
 
 @Configuration

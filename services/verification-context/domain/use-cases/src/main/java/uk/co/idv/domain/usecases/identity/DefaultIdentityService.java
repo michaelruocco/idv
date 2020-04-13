@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.identity;
 
 import lombok.Builder;
-import uk.co.idv.domain.usecases.util.IdGenerator;
+import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.CreditCardNumber;

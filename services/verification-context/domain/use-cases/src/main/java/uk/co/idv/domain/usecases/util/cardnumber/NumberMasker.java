@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.util;
+package uk.co.idv.domain.usecases.util.cardnumber;
 
 import org.apache.commons.lang3.StringUtils;
 

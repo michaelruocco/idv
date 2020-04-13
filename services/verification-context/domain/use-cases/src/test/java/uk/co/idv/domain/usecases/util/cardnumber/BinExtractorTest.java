@@ -1,7 +1,7 @@
-package uk.co.idv.domain.usecases.util;
+package uk.co.idv.domain.usecases.util.cardnumber;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.usecases.util.BinExtractor.CardNumberTooShortForBinException;
+import uk.co.idv.domain.usecases.util.cardnumber.BinExtractor.CardNumberTooShortForBinException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

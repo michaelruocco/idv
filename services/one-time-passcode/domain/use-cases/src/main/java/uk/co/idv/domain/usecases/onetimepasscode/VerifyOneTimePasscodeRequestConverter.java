@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;
-import uk.co.idv.domain.usecases.util.TimeProvider;
+import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 import java.util.Collection;
 import java.util.stream.Collectors;

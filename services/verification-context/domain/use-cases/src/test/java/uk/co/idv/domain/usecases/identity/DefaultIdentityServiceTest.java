@@ -3,7 +3,7 @@ package uk.co.idv.domain.usecases.identity;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.ChannelMother;
-import uk.co.idv.domain.usecases.util.FakeIdGenerator;
+import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
