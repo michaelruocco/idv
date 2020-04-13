@@ -95,6 +95,11 @@ docker compose tasks in order, which will give a simple command to build and tes
 ```
 
 ```gradle
+// check that dependencies are up to date
+./gradlew dependencyUpdates
+```
+
+```gradle
 // generates dependency graph diagrams in the build/reports/depdendency-graph folder
 // one is idv specific and is useful for understanding the project architecture
 // the other shows every project dependency and is a bit too busy to be useful, but is
