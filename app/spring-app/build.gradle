@@ -32,32 +32,32 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'ch.qos.logback:logback-classic:1.2.3'
 
-    compile project(':uk-config')
+    implementation project(':uk-config')
 
-    compile project(':verification-context-entities')
-    compile project(':verification-context-use-cases')
+    implementation project(':verification-context-entities')
+    implementation project(':verification-context-use-cases')
 
-    compile project(':verification-context-dynamo-db')
-    compile project(':verification-context-in-memory-db')
+    implementation project(':verification-context-dynamo-db')
+    implementation project(':verification-context-in-memory-db')
 
-    compile project(':one-time-passcode-entities')
-    compile project(':one-time-passcode-use-cases')
+    implementation project(':one-time-passcode-entities')
+    implementation project(':one-time-passcode-use-cases')
 
-    compile project(':one-time-passcode-dynamo-db')
-    compile project(':one-time-passcode-in-memory-db')
+    implementation project(':one-time-passcode-dynamo-db')
+    implementation project(':one-time-passcode-in-memory-db')
 
-    compile project(':one-time-passcode-sns-delivery')
-    compile project(':one-time-passcode-in-memory-delivery')
+    implementation project(':one-time-passcode-sns-delivery')
+    implementation project(':one-time-passcode-in-memory-delivery')
 
-    testCompile project(':verification-context-api').sourceSets.test.output
-    testCompile project(':verification-context-entities').sourceSets.test.output
-    testCompile project(':verification-context-use-cases').sourceSets.test.output
-    testCompile project(':one-time-passcode-entities').sourceSets.test.output
-    testCompile project(':one-time-passcode-use-cases').sourceSets.test.output
+    testImplementation project(':verification-context-api').sourceSets.test.output
+    testImplementation project(':verification-context-entities').sourceSets.test.output
+    testImplementation project(':verification-context-use-cases').sourceSets.test.output
+    testImplementation project(':one-time-passcode-entities').sourceSets.test.output
+    testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
 
-    integrationTestCompile 'com.github.stefanbirkner:system-rules:1.19.0'
-    integrationTestCompile project(':one-time-passcode-sns-delivery').sourceSets.integrationTest.output
-    integrationTestCompile "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    integrationTestImplementation 'com.github.stefanbirkner:system-rules:1.19.0'
+    integrationTestImplementation project(':one-time-passcode-sns-delivery').sourceSets.integrationTest.output
+    integrationTestImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
 }
 
 integrationTest {

@@ -1,8 +1,7 @@
 dependencies {
-    compile project(':verification-context-api')
-    compile project(':one-time-passcode-api')
-    compile project(':uk-entities')
+    api project(':verification-context-api')
+    api project(':one-time-passcode-api')
+    api project(':uk-entities')
 
-    testCompile "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
-    testCompile "org.slf4j:slf4j-simple:${slf4jVersion}"
+    testImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 }
