@@ -1,5 +1,5 @@
 plugins {
-    id 'org.unbroken-dome.test-sets' version '2.2.1'
+    id 'org.unbroken-dome.test-sets' version "${testSetsPluginVersion}"
 }
 
 testSets {

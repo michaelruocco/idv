@@ -54,6 +54,7 @@ subprojects {
         commonsCollectionsVersion = '4.4'
         commonsLangVersion = '3.10'
         jacksonDataTypeJsrVersion = '2.10.3'
+        testSetsPluginVersion = '3.0.1'
     }
 
     dependencies {
