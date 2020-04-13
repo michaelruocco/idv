@@ -11,6 +11,7 @@ dependencies {
     api project(':one-time-passcode-entities')
 
     implementation project(':one-time-passcode-use-cases')
+    implementation project(':use-cases-utils')
     implementation project(':aws-system-properties')
 
     testImplementation project(':one-time-passcode-entities').sourceSets.test.output

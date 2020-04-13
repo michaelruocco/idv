@@ -7,12 +7,7 @@
 
 ## TODO list
 
-*  Split out use case utils so that one-time-passcode sender modules dont need to depdend on
-verification-context-use-case for id generator interfaces
-
-*  Put object mothers in separate module
-
-*  Get rid of fake time generator and just use a mock, also rename time generator to clock or something similar
+*  Put object mothers in separate module or move into production code packages
 
 *  All eligible flag against delivery method (for otp) and card (for pinsentry)
 

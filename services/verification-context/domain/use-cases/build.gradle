@@ -1,7 +1,6 @@
 dependencies {
     api project(':verification-context-entities')
-
-    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+    api project(':use-cases-utils')
 
     testImplementation project(':verification-context-entities').sourceSets.test.output
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"

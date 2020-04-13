@@ -24,6 +24,9 @@ project(':aws-system-properties').projectDir = file('utils/aws-system-properties
 include ':dynamo-db-utils'
 project(':dynamo-db-utils').projectDir = file('utils/dynamo-db-utils')
 
+include ':use-cases-utils'
+project(':use-cases-utils').projectDir = file('services/utils/domain/use-cases')
+
 //verification context service
 include ':verification-context-entities'
 project(':verification-context-entities').projectDir = file('services/verification-context/domain/entities')
