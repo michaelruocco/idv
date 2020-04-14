@@ -3,6 +3,7 @@ package uk.co.idv.domain.entities.lockout.policy.state;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -54,6 +55,14 @@ public class CalculateLockoutStateRequest implements LockoutStateRequest {
 
     public VerificationAttempts getAttempts() {
         return attempts;
+    }
+
+    public Instant calculateLockedUntil(final Duration duration) {
+        return attempts.getMostRecentTimestamp().plus(duration);
+    }
+
+    public boolean wasIssuedBefore(final Instant instant) {
+        return this.timestamp.isBefore(instant);
     }
 
     public CalculateLockoutStateRequest updateAttempts(final VerificationAttempts attempts) {

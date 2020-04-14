@@ -2,6 +2,7 @@ package uk.co.idv.domain.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -51,6 +52,15 @@ class SoftLockIntervalsTest {
                 interval1,
                 interval2
         );
+    }
+
+    @Test
+    void shouldBeIterable() {
+        final Iterator<SoftLockInterval> iterator = intervals.iterator();
+
+        assertThat(iterator.next()).isEqualTo(interval1);
+        assertThat(iterator.next()).isEqualTo(interval2);
+        assertThat(iterator.hasNext()).isFalse();
     }
 
 }

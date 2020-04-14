@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest.CalculateLockoutStateRequestBuilder;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -137,6 +138,47 @@ class CalculateLockoutStateRequestTest {
         final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(updatedAttempts);
 
         assertThat(updatedRequest.getAttempts()).isEqualTo(updatedAttempts);
+    }
+
+    @Test
+    void shouldAddDurationToMostRecentAttemptTimestampToCalculateLockedUntil() {
+        final VerificationAttempts attempts = VerificationAttemptsMother.oneAttempt();
+        final CalculateLockoutStateRequest request = builder.attempts(attempts).build();
+        final Duration duration = Duration.ofHours(1);
+
+        final Instant lockedUntil = request.calculateLockedUntil(duration);
+
+        assertThat(lockedUntil).isEqualTo(attempts.getMostRecentTimestamp().plus(duration));
+    }
+
+    @Test
+    void shouldReturnIssuedBeforeTrueIfTimestampIsBeforeInstantPassedIn() {
+        final Instant instant = Instant.now();
+        final CalculateLockoutStateRequest request = builder.timestamp(instant.minusSeconds(1)).build();
+
+        final boolean issuedBefore = request.wasIssuedBefore(instant);
+
+        assertThat(issuedBefore).isTrue();
+    }
+
+    @Test
+    void shouldReturnIssuedBeforeFalseIfTimestampIsEqualToInstantPassedIn() {
+        final Instant instant = Instant.now();
+        final CalculateLockoutStateRequest request = builder.timestamp(instant).build();
+
+        final boolean issuedBefore = request.wasIssuedBefore(instant);
+
+        assertThat(issuedBefore).isFalse();
+    }
+
+    @Test
+    void shouldReturnIssuedBeforeFalseIfTimestampIsAfterInstantPassedIn() {
+        final Instant instant = Instant.now();
+        final CalculateLockoutStateRequest request = builder.timestamp(instant.plusSeconds(1)).build();
+
+        final boolean issuedBefore = request.wasIssuedBefore(instant);
+
+        assertThat(issuedBefore).isFalse();
     }
 
 }

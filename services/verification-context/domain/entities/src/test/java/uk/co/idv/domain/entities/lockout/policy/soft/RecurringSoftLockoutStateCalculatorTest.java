@@ -1,21 +1,21 @@
 package uk.co.idv.domain.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequestMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.NotLockedState;
 
-import java.time.Instant;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class RecurringSoftLockoutStateCalculatorTest {
 
     private final SoftLockInterval interval = SoftLockIntervalMother.build(2);
-    private final RecurringSoftLockoutStateCalculator calculator = new RecurringSoftLockoutStateCalculator(interval);
+    private final SoftLockoutStateFactory stateFactory = mock(SoftLockoutStateFactory.class);
+    private final RecurringSoftLockoutStateCalculator calculator = new RecurringSoftLockoutStateCalculator(interval, stateFactory);
 
     @Test
     void shouldReturnType() {
@@ -28,7 +28,7 @@ class RecurringSoftLockoutStateCalculatorTest {
     }
 
     @Test
-    void shouldReturnNotLockedStateIfNumberOfAttemptsIsNotDivisableByIntervalNumberOfAttempts() {
+    void shouldReturnNotLockedStateIfNumberOfAttemptsIsNotDivisibleByIntervalNumberOfAttempts() {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
 
         final LockoutState state = calculator.calculate(request);
@@ -46,66 +46,16 @@ class RecurringSoftLockoutStateCalculatorTest {
     }
 
     @Test
-    void shouldReturnNotLockedStateIfNumberOfAttemptsIsDivisableByIntervalNumberOfAttemptsButLockHasExpired() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
-        final Instant mostRecentTimestamp = attempts.getMostRecentTimestamp();
+    void shouldReturnLockoutStateFromStateFactoryIfNumberOfAttemptsIsDivisibleByIntervalNumberOfAttempts() {
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
-                .timestamp(mostRecentTimestamp.plus(interval.getDuration()))
-                .attempts(attempts)
+                .attempts(VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts()))
                 .build();
+        final LockoutState expectedState = mock(LockoutState.class);
+        given(stateFactory.build(interval.getDuration(), request)).willReturn(expectedState);
 
         final LockoutState state = calculator.calculate(request);
 
-        assertThat(state).isInstanceOf(NotLockedState.class);
-    }
-
-    @Test
-    void shouldReturnSoftLockoutStateIfNumberOfAttemptsIsDivisableByIntervalNumberOfAttempts() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts() * 2);
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
-                .attempts(attempts)
-                .build();
-
-        final LockoutState state = calculator.calculate(request);
-
-        assertThat(state).isInstanceOf(SoftLockoutState.class);
-    }
-
-    @Test
-    void shouldPopulateAttemptsOnSoftLockState() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
-                .attempts(attempts)
-                .build();
-
-        final LockoutState state = calculator.calculate(request);
-
-        assertThat(state.getAttempts()).isEqualTo(request.getAttempts());
-    }
-
-    @Test
-    void shouldPopulateIntervalDurationOnSoftLockState() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
-                .attempts(attempts)
-                .build();
-
-        final SoftLockoutState state = (SoftLockoutState) calculator.calculate(request);
-
-        assertThat(state.getDuration()).isEqualTo(interval.getDuration());
-    }
-
-    @Test
-    void shouldPopulateLockedUntilOnSoftLockState() {
-        final VerificationAttempts attempts = VerificationAttemptsMother.withNumberOfAttempts(interval.getNumberOfAttempts());
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.defaultBuilder()
-                .attempts(attempts)
-                .build();
-
-        final SoftLockoutState state = (SoftLockoutState) calculator.calculate(request);
-
-        final Instant mostRecentTimestamp = attempts.getMostRecentTimestamp();
-        assertThat(state.getLockedUntil()).isEqualTo(mostRecentTimestamp.plus(interval.getDuration()));
+        assertThat(state).isEqualTo(expectedState);
     }
 
 }

@@ -9,9 +9,6 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.state.NotLockedState;
 
-import java.time.Duration;
-import java.time.Instant;
-
 @Slf4j
 @RequiredArgsConstructor
 @EqualsAndHashCode
@@ -20,6 +17,11 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
     public static final String TYPE = "recurring-soft-lock";
 
     private final SoftLockInterval interval;
+    private final SoftLockoutStateFactory stateFactory;
+
+    public RecurringSoftLockoutStateCalculator(final SoftLockInterval interval) {
+        this(interval, new SoftLockoutStateFactory());
+    }
 
     @Override
     public String getType() {
@@ -34,7 +36,7 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
         if (!matchesInterval) {
             return new NotLockedState(attempts);
         }
-        return toLockoutState(request);
+        return stateFactory.build(interval.getDuration(), request);
     }
 
     public SoftLockInterval getInterval() {
@@ -43,24 +45,6 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
 
     private boolean isLocked(final VerificationAttempts attempts) {
         return attempts.size() % interval.getNumberOfAttempts() == 0;
-    }
-
-    private LockoutState toLockoutState(final CalculateLockoutStateRequest request) {
-        final VerificationAttempts attempts = request.getAttempts();
-        final Instant mostRecentTimestamp = attempts.getMostRecentTimestamp();
-        final Duration duration = interval.getDuration();
-        final Instant lockedUntil = mostRecentTimestamp.plus(duration);
-
-        final boolean isLocked = request.getTimestamp().isBefore(lockedUntil);
-        if (!isLocked) {
-            return new NotLockedState(attempts);
-        }
-
-        return SoftLockoutState.builder()
-                .attempts(attempts)
-                .duration(duration)
-                .lockedUntil(lockedUntil)
-                .build();
     }
 
 }
