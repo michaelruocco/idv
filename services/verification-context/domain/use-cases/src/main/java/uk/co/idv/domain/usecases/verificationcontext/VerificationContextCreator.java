@@ -1,7 +1,6 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import lombok.Builder;
-import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
@@ -13,7 +12,6 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Builder
 public class VerificationContextCreator {
@@ -30,24 +28,8 @@ public class VerificationContextCreator {
         final Identity identity = loadIdentity(request);
         validateLockoutState(request, identity);
 
-        final Activity activity = request.getActivity();
         final VerificationSequences sequences = loadVerificationSequences(request, identity);
-
-        final UUID id = idGenerator.generate();
-        final Instant created = timeProvider.now();
-        final Instant expiry = calculateExpiry(request, created, sequences);
-
-        final VerificationContext context = VerificationContext.builder()
-                .id(id)
-                .channel(request.getChannel())
-                .providedAlias(request.getProvidedAlias())
-                .activity(activity)
-                .identity(identity)
-                .created(created)
-                .sequences(sequences)
-                .expiry(expiry)
-                .build();
-
+        final VerificationContext context = buildContext(request, identity, sequences);
         dao.save(context);
 
         return context;
@@ -81,6 +63,23 @@ public class VerificationContextCreator {
                 .identity(identity)
                 .build();
         return sequenceLoader.loadSequences(request);
+    }
+
+    private VerificationContext buildContext(final CreateContextRequest request,
+                                             final Identity identity,
+                                             final VerificationSequences sequences) {
+        final Instant created = timeProvider.now();
+        final Instant expiry = calculateExpiry(request, created, sequences);
+        return VerificationContext.builder()
+                .id(idGenerator.generate())
+                .channel(request.getChannel())
+                .providedAlias(request.getProvidedAlias())
+                .activity(request.getActivity())
+                .identity(identity)
+                .created(created)
+                .sequences(sequences)
+                .expiry(expiry)
+                .build();
     }
 
     private Instant calculateExpiry(final CreateContextRequest createContextRequest,

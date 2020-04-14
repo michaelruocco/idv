@@ -20,7 +20,7 @@ public class VerifyOneTimePasscodeRequestDeserializer extends StdDeserializer<Ve
         final JsonNode node = parser.getCodec().readTree(parser);
         return VerifyOneTimePasscodeRequest.builder()
                 .id(JsonNodeConverter.toUUID(node.get("id")))
-                .passcodes(JsonNodeConverter.toStrings(node.get("passcodes"), parser))
+                .passcodes(JsonNodeConverter.toStringCollection(node.get("passcodes"), parser))
                 .build();
     }
 

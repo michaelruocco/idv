@@ -44,7 +44,7 @@ public class JsonNodeConverterTest {
         final Collection<String> expectedValues = Arrays.asList("value1", "value2");
         final JsonNode node = toArrayNode(expectedValues);
 
-        final Collection<String> values = JsonNodeConverter.toStrings(node, buildJsonParser());
+        final Collection<String> values = JsonNodeConverter.toStringCollection(node, buildJsonParser());
 
         assertThat(values).containsExactlyElementsOf(expectedValues);
     }

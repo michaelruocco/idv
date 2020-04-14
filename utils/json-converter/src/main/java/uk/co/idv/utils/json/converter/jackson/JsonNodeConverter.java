@@ -23,9 +23,12 @@ public class JsonNodeConverter {
         return Instant.parse(node.asText());
     }
 
-    public static Collection<String> toStrings(final JsonNode node, final JsonParser parser) throws IOException {
-        final String[] values = node.traverse(parser.getCodec()).readValueAs(String[].class);
-        return Arrays.asList(values);
+    public static Collection<String> toStringCollection(final JsonNode node, final JsonParser parser) throws IOException {
+        return Arrays.asList(toObject(node, parser, String[].class));
+    }
+
+    public static <T> T toObject(final JsonNode node, final JsonParser parser, final Class<T> type) throws IOException {
+        return node.traverse(parser.getCodec()).readValueAs(type);
     }
 
 }

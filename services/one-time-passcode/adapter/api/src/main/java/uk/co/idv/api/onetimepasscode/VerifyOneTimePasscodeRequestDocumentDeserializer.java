@@ -22,7 +22,7 @@ public class VerifyOneTimePasscodeRequestDocumentDeserializer extends StdDeseria
         final JsonNode attributesNode = dataNode.get("attributes");
         final VerifyOneTimePasscodeRequest request = VerifyOneTimePasscodeRequest.builder()
                 .id(JsonNodeConverter.toUUID(dataNode.get("id")))
-                .passcodes(JsonNodeConverter.toStrings(attributesNode.get("passcodes"), parser))
+                .passcodes(JsonNodeConverter.toStringCollection(attributesNode.get("passcodes"), parser))
                 .build();
         return new VerifyOneTimePasscodeRequestDocument(request);
     }
