@@ -12,35 +12,46 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.P
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
-import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
+import uk.co.idv.json.verificationcontext.method.AbstractVerificationMethodJsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-@Slf4j
-public class PhysicalPinsentryJsonNodeConverter implements VerificationMethodJsonNodeConverter {
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractEligible;
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractResults;
+import static uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryVerificationMethodJsonNodeConverter.extractFunction;
 
-    @Override
-    public boolean supportsMethod(final String name) {
-        boolean supported = PhysicalPinsentry.NAME.equals(name);
-        log.info("returning supported {} for method name {}", supported, name);
-        return supported;
+@Slf4j
+public class PhysicalPinsentryJsonNodeConverter extends AbstractVerificationMethodJsonNodeConverter {
+
+    public PhysicalPinsentryJsonNodeConverter() {
+        super(PhysicalPinsentry.NAME);
     }
 
     @Override
     public VerificationMethod toMethod(final JsonNode node,
                                        final JsonParser parser,
-                                       final DeserializationContext context) throws IOException {
-        final boolean eligible = node.get("eligible").asBoolean();
-        final PinsentryFunction function = PinsentryFunction.valueOf(node.get("function").asText().toUpperCase());
+                                       final DeserializationContext context) {
+        final boolean eligible = extractEligible(node);
+        final PinsentryFunction function = extractFunction(node);
         if (eligible) {
-            final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
-            final Collection<CardNumber> cardNumbers = Arrays.asList(node.get("cardNumbers").traverse(parser.getCodec()).readValueAs(CardNumber[].class));
+            final VerificationResults results = extractResults(node, parser);
+            final Collection<CardNumber> cardNumbers = extractCardNumbers(node, parser);
             return new PhysicalPinsentryEligible(function, cardNumbers, results);
         }
+        final Ineligible reason = extractReason(node);
+        return new PhysicalPinsentryIneligible(reason, function);
+    }
+
+    private static Collection<CardNumber> extractCardNumbers(final JsonNode node, final JsonParser parser) {
+        final CardNumber[] cardNumbers = JsonNodeConverter.toObject(node.get("cardNumbers"), parser, CardNumber[].class);
+        return Arrays.asList(cardNumbers);
+    }
+
+    private Ineligible extractReason(final JsonNode node) {
         final String reason = node.get("reason").asText();
-        return new PhysicalPinsentryIneligible(new Ineligible(reason), function);
+        return new Ineligible(reason);
     }
 
 }

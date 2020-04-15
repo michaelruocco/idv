@@ -8,7 +8,6 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.usecases.exception.MethodNotSupportedException;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -31,19 +30,8 @@ public class VerificationMethodDeserializer extends StdDeserializer<Verification
         final JsonNode node = parser.getCodec().readTree(parser);
         final String name = node.get("name").asText();
         return findConverter(name)
-                .map(converter -> toMethod(converter, node, parser, context))
+                .map(converter -> converter.toMethod(node, parser, context))
                 .orElseThrow(() -> new MethodNotSupportedException(name));
-    }
-
-    private VerificationMethod toMethod(final VerificationMethodJsonNodeConverter converter,
-                                        final JsonNode node,
-                                        final JsonParser parser,
-                                        final DeserializationContext context) {
-        try {
-            return converter.toMethod(node, parser, context);
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
     }
 
     private Optional<VerificationMethodJsonNodeConverter> findConverter(final String name) {

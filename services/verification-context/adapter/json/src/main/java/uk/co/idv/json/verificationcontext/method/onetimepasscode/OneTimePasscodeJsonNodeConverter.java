@@ -11,34 +11,43 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
-import uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter;
+import uk.co.idv.json.verificationcontext.method.AbstractVerificationMethodJsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
-@Slf4j
-public class OneTimePasscodeJsonNodeConverter implements VerificationMethodJsonNodeConverter {
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractEligible;
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractResults;
 
-    @Override
-    public boolean supportsMethod(final String name) {
-        boolean supported = OneTimePasscode.NAME.equals(name);
-        log.info("returning supported {} for method name {}", supported, name);
-        return supported;
+@Slf4j
+public class OneTimePasscodeJsonNodeConverter extends AbstractVerificationMethodJsonNodeConverter {
+
+    public OneTimePasscodeJsonNodeConverter() {
+        super(OneTimePasscode.NAME);
     }
 
     @Override
     public VerificationMethod toMethod(final JsonNode node,
                                        final JsonParser parser,
-                                       final DeserializationContext context) throws IOException {
-        final boolean eligible = node.get("eligible").asBoolean();
+                                       final DeserializationContext context) {
+        final boolean eligible = extractEligible(node);
         if (eligible) {
-            final VerificationResults results = node.get("results").traverse(parser.getCodec()).readValueAs(VerificationResults.class);
-            final PasscodeSettings settings = node.get("passcodeSettings").traverse(parser.getCodec()).readValueAs(PasscodeSettings.class);
-            final Collection<DeliveryMethod> deliveryMethods = Arrays.asList(node.get("deliveryMethods").traverse(parser.getCodec()).readValueAs(DeliveryMethod[].class));
+            final VerificationResults results = extractResults(node, parser);
+            final PasscodeSettings settings = extractPasscodeSettings(node, parser);
+            final Collection<DeliveryMethod> deliveryMethods = extractDeliveryMethods(node, parser);
             return new OneTimePasscodeEligible(settings, deliveryMethods, results);
         }
         return new OneTimePasscodeIneligible();
+    }
+
+    private static PasscodeSettings extractPasscodeSettings(final JsonNode node, final JsonParser parser) {
+        return JsonNodeConverter.toObject(node.get("passcodeSettings"), parser, PasscodeSettings.class);
+    }
+
+    private static Collection<DeliveryMethod> extractDeliveryMethods(final JsonNode node, final JsonParser parser) {
+        final DeliveryMethod[] deliveryMethods = JsonNodeConverter.toObject(node.get("deliveryMethods"), parser, DeliveryMethod[].class);
+        return Arrays.asList(deliveryMethods);
     }
 
 }
