@@ -20,19 +20,15 @@ public class RecordAttemptRequestConverter {
     }
 
     private VerificationAttempt toSuccessfulAttempt(final VerificationResult result, final VerificationContext context) {
-        return DefaultVerificationAttempt.builder()
-                .methodName(result.getMethodName())
-                .verificationId(result.getVerificationId())
-                .timestamp(result.getTimestamp())
-                .contextId(context.getId())
-                .channelId(context.getChannelId())
-                .activityName(context.getActivityName())
-                .alias(context.getProvidedAlias())
-                .idvIdValue(context.getIdvIdValue())
-                .buildSuccessful();
+        return toBuilder(result, context).buildSuccessful();
     }
 
     private VerificationAttempt toFailedAttempt(final VerificationResult result, final VerificationContext context) {
+        return toBuilder(result, context).buildFailed();
+    }
+
+    private DefaultVerificationAttempt.DefaultVerificationAttemptBuilder toBuilder(final VerificationResult result,
+                                                                                   final VerificationContext context) {
         return DefaultVerificationAttempt.builder()
                 .methodName(result.getMethodName())
                 .verificationId(result.getVerificationId())
@@ -41,8 +37,7 @@ public class RecordAttemptRequestConverter {
                 .channelId(context.getChannelId())
                 .activityName(context.getActivityName())
                 .alias(context.getProvidedAlias())
-                .idvIdValue(context.getIdvIdValue())
-                .buildFailed();
+                .idvIdValue(context.getIdvIdValue());
     }
 
 }
