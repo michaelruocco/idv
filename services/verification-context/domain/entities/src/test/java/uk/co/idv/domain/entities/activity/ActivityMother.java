@@ -1,7 +1,7 @@
 package uk.co.idv.domain.entities.activity;
 
 import org.javamoney.moneta.Money;
-import uk.co.idv.domain.entities.cardnumber.CardNumberMother;
+import uk.co.idv.domain.entities.card.number.CardNumberMother;
 
 import java.time.Instant;
 

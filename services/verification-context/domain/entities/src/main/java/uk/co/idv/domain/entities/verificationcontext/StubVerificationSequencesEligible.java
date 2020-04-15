@@ -2,8 +2,8 @@ package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
-import uk.co.idv.domain.entities.cardnumber.CreditCardNumber;
+import uk.co.idv.domain.entities.card.number.CardNumber;
+import uk.co.idv.domain.entities.card.number.CreditCardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;

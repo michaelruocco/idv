@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
-import uk.co.idv.domain.entities.cardnumber.CardType;
+import uk.co.idv.domain.entities.card.number.CardNumber;
+import uk.co.idv.domain.entities.card.number.CardType;
 
 import java.io.IOException;
 

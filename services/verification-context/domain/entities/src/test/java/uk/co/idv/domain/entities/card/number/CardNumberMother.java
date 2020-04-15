@@ -1,7 +1,4 @@
-package uk.co.idv.domain.entities.cardnumber;
-
-
-
+package uk.co.idv.domain.entities.card.number;
 
 import java.util.Collection;
 import java.util.Collections;

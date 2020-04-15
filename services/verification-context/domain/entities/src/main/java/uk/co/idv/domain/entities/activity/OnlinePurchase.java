@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.activity;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
+import uk.co.idv.domain.entities.card.number.CardNumber;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;

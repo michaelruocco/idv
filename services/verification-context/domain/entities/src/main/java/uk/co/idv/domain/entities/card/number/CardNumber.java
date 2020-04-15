@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.cardnumber;
+package uk.co.idv.domain.entities.card.number;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

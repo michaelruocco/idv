@@ -6,7 +6,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibil
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
+import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.io.IOException;

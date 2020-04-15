@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Ineligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
+import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;

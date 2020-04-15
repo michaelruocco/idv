@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.cardnumber.CardNumberMother;
+import uk.co.idv.domain.entities.card.number.CardNumberMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;

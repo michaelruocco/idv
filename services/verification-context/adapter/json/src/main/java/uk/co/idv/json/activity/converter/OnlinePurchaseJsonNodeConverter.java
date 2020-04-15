@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.javamoney.moneta.Money;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
+import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.json.activity.ActivityJsonNodeConverter;
 
 import javax.money.MonetaryAmount;

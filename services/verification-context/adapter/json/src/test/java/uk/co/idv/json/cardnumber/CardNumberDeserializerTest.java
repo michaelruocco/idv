@@ -3,8 +3,8 @@ package uk.co.idv.json.cardnumber;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
-import uk.co.idv.domain.entities.cardnumber.CardNumberMother;
+import uk.co.idv.domain.entities.card.number.CardNumber;
+import uk.co.idv.domain.entities.card.number.CardNumberMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 

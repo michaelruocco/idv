@@ -5,8 +5,8 @@ import nl.jqno.equalsverifier.Warning;
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.OnlinePurchase.OnlinePurchaseBuilder;
-import uk.co.idv.domain.entities.cardnumber.CardNumber;
-import uk.co.idv.domain.entities.cardnumber.CardNumberMother;
+import uk.co.idv.domain.entities.card.number.CardNumber;
+import uk.co.idv.domain.entities.card.number.CardNumberMother;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;
