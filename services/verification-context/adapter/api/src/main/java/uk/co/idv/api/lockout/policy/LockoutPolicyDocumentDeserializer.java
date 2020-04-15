@@ -36,8 +36,7 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
 
         private LockoutPolicyAttributes toAttributes(final ApiDataDocumentRequest request) {
             final JsonNode dataNode = request.getDataNode();
-            final JsonNode attributesNode = extractAttributes(dataNode);
-            final String type = extractType(attributesNode);
+            final String type = extractType(extractAttributes(dataNode));
             switch (type) {
                 case HardLockoutStateCalculator.TYPE:
                     return toHardLockoutPolicyAttributes(dataNode);
@@ -63,7 +62,7 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
         }
 
         private static LockoutPolicyAttributes toLockoutPolicyAttributes(final JsonNode dataNode) {
-            final JsonNode attributesNode = dataNode.get("attributes");
+            final JsonNode attributesNode = extractAttributes(dataNode);
             return new DefaultLockoutPolicyAttributes(
                     toId(dataNode),
                     extractType(attributesNode),
@@ -73,7 +72,7 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
         }
 
         private static LockoutPolicyAttributes toSoftLockoutPolicyAttributes(final JsonNode dataNode) {
-            final JsonNode attributesNode = dataNode.get("attributes");
+            final JsonNode attributesNode = extractAttributes(dataNode);
             return SoftLockoutPolicyAttributes.builder()
                     .id(toId(dataNode))
                     .lockoutLevel(toLockoutLevel(attributesNode))
@@ -83,7 +82,7 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
         }
 
         private static LockoutPolicyAttributes toRecurringSoftLockoutPolicyAttributes(final JsonNode dataNode) {
-            final JsonNode attributesNode = dataNode.get("attributes");
+            final JsonNode attributesNode = extractAttributes(dataNode);
             return RecurringSoftLockoutPolicyAttributes.builder()
                     .id(toId(dataNode))
                     .lockoutLevel(toLockoutLevel(attributesNode))
