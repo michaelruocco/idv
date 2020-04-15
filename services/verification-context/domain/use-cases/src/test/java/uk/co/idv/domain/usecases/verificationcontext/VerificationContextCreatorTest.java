@@ -1,16 +1,11 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.activity.ActivityMother;
-import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
-import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.identity.FakeIdentityService;
@@ -62,72 +57,57 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassChannelWhenUpsertingIdentity() {
-        final Channel channel = ChannelMother.fake();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .channel(channel)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final UpsertIdentityRequest upsertIdentityRequest = identityService.getLastUpsertRequest();
-        assertThat(upsertIdentityRequest.getChannel()).isEqualTo(channel);
+        assertThat(upsertIdentityRequest.getChannel()).isEqualTo(createContextRequest.getChannel());
     }
 
     @Test
     void shouldPassProvidedAliasWhenUpsertingIdentity() {
-        final Alias providedAlias = AliasesMother.creditCardNumber();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .providedAlias(providedAlias)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final UpsertIdentityRequest upsertIdentityRequest = identityService.getLastUpsertRequest();
-        assertThat(upsertIdentityRequest.getProvidedAlias()).isEqualTo(providedAlias);
+        assertThat(upsertIdentityRequest.getProvidedAlias()).isEqualTo(createContextRequest.getProvidedAlias());
     }
 
     @Test
     void shouldPassChannelWhenValidatingLockoutState() {
-        final Channel channel = ChannelMother.fake();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .channel(channel)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getChannelId()).isEqualTo(channel.getId());
+        assertThat(validateStateRequest.getChannelId()).isEqualTo(createContextRequest.getChannelId());
     }
 
     @Test
     void shouldPassActivityWhenValidatingLockoutState() {
-        final Activity activity = ActivityMother.fake();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .activity(activity)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getActivityName()).isEqualTo(activity.getName());
+        assertThat(validateStateRequest.getActivityName()).isEqualTo(createContextRequest.getActivityName());
     }
 
     @Test
     void shouldPassProvidedAliasWhenValidatingLockoutState() {
-        final Alias providedAlias = AliasesMother.creditCardNumber();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .providedAlias(providedAlias)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getAlias()).isEqualTo(providedAlias);
+        assertThat(validateStateRequest.getAlias()).isEqualTo(createContextRequest.getProvidedAlias());
     }
 
     @Test
     void shouldPassIdvIdValueWhenValidatingLockoutState() {
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder().build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
@@ -137,7 +117,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassCurrentTimestampWhenValidatingLockoutState() {
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder().build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
@@ -149,7 +129,7 @@ class VerificationContextCreatorTest {
     void shouldThrowExceptionIfLockoutStateIsLocked() {
         final LockoutState lockedState = mock(LockoutState.class);
         lockoutService.setHasLockedState(lockedState);
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder().build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         final LockedOutException error = (LockedOutException) catchThrowable(() -> creator.create(createContextRequest));
 
@@ -160,46 +140,37 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassChannelWhenLoadingSequences() {
-        final Channel channel = ChannelMother.fake();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .channel(channel)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final LoadSequencesRequest loadSequencesRequest = sequenceLoader.getLastRequest();
-        assertThat(loadSequencesRequest.getChannel()).isEqualTo(channel);
+        assertThat(loadSequencesRequest.getChannel()).isEqualTo(createContextRequest.getChannel());
     }
 
     @Test
     void shouldPassActivityWhenLoadingSequences() {
-        final Activity activity = ActivityMother.fake();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .activity(activity)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final LoadSequencesRequest loadSequencesRequest = sequenceLoader.getLastRequest();
-        assertThat(loadSequencesRequest.getActivity()).isEqualTo(activity);
+        assertThat(loadSequencesRequest.getActivity()).isEqualTo(createContextRequest.getActivity());
     }
 
     @Test
     void shouldPassProvidedAliasWhenLoadingSequences() {
-        final Alias providedAlias = AliasesMother.creditCardNumber();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .providedAlias(providedAlias)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final LoadSequencesRequest loadSequencesRequest = sequenceLoader.getLastRequest();
-        assertThat(loadSequencesRequest.getProvidedAlias()).isEqualTo(providedAlias);
+        assertThat(loadSequencesRequest.getProvidedAlias()).isEqualTo(createContextRequest.getProvidedAlias());
     }
 
     @Test
     void shouldPassIdentityWhenLoadingSequences() {
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder().build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
@@ -209,33 +180,27 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassChannelWhenCalculatingExpiry() {
-        final Channel channel = ChannelMother.fake();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .channel(channel)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final CalculateExpiryRequest calculateExpiryRequest = expiryCalculator.getLastRequest();
-        assertThat(calculateExpiryRequest.getChannel()).isEqualTo(channel);
+        assertThat(calculateExpiryRequest.getChannel()).isEqualTo(createContextRequest.getChannel());
     }
 
     @Test
     void shouldPassActivityWhenCalculatingExpiry() {
-        final Activity activity = ActivityMother.fake();
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder()
-                .activity(activity)
-                .build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
         final CalculateExpiryRequest calculateExpiryRequest = expiryCalculator.getLastRequest();
-        assertThat(calculateExpiryRequest.getActivity()).isEqualTo(activity);
+        assertThat(calculateExpiryRequest.getActivity()).isEqualTo(createContextRequest.getActivity());
     }
 
     @Test
     void shouldPassCreatedTimestampWhenCalculatingExpiry() {
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder().build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
@@ -245,7 +210,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPassSequenceWhenCalculatingExpiry() {
-        final CreateContextRequest createContextRequest = CreateContextRequest.builder().build();
+        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
 
         creator.create(createContextRequest);
 
@@ -255,7 +220,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateId() {
-        final CreateContextRequest request = CreateContextRequest.builder().build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 
@@ -264,43 +229,34 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateChannel() {
-        final Channel channel = ChannelMother.fake();
-        final CreateContextRequest request = CreateContextRequest.builder()
-                .channel(channel)
-                .build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 
-        assertThat(context.getChannelId()).isEqualTo(channel.getId());
+        assertThat(context.getChannelId()).isEqualTo(request.getChannelId());
     }
 
     @Test
     void shouldPopulateProvidedAlias() {
-        final Alias providedAlias = AliasesMother.creditCardNumber();
-        final CreateContextRequest request = CreateContextRequest.builder()
-                .providedAlias(providedAlias)
-                .build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 
-        assertThat(context.getProvidedAlias()).isEqualTo(providedAlias);
+        assertThat(context.getProvidedAlias()).isEqualTo(request.getProvidedAlias());
     }
 
     @Test
     void shouldPopulateActivity() {
-        final Activity activity = ActivityMother.fake();
-        final CreateContextRequest request = CreateContextRequest.builder()
-                .activity(activity)
-                .build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 
-        assertThat(context.getActivity()).isEqualTo(activity);
+        assertThat(context.getActivity()).isEqualTo(request.getActivity());
     }
 
     @Test
     void shouldPopulateIdentity() {
-        final CreateContextRequest request = CreateContextRequest.builder().build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 
@@ -309,7 +265,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateCreated() {
-        final CreateContextRequest request = CreateContextRequest.builder().build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 
@@ -318,7 +274,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateSequences() {
-        final CreateContextRequest request = CreateContextRequest.builder().build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 
@@ -327,7 +283,7 @@ class VerificationContextCreatorTest {
 
     @Test
     void shouldPopulateExpiry() {
-        final CreateContextRequest request = CreateContextRequest.builder().build();
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
         final VerificationContext context = creator.create(request);
 

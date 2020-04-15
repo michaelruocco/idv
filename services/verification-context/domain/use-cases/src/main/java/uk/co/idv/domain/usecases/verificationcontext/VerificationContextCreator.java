@@ -2,6 +2,7 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
+import uk.co.idv.domain.usecases.lockout.DefaultLoadLockoutStateRequest;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -44,9 +45,9 @@ public class VerificationContextCreator {
     }
 
     private void validateLockoutState(final CreateContextRequest createContextRequest, final Identity identity) {
-        final LockoutStateRequest request = VerificationContextLoadLockoutStateRequest.builder()
-                .channel(createContextRequest.getChannel())
-                .activity(createContextRequest.getActivity())
+        final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder()
+                .channelId(createContextRequest.getChannelId())
+                .activityName(createContextRequest.getActivityName())
                 .alias(createContextRequest.getProvidedAlias())
                 .idvIdValue(identity.getIdvIdValue())
                 .timestamp(timeProvider.now())
