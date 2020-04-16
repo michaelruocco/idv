@@ -4,6 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
+import uk.co.idv.domain.usecases.identity.data.AccountLoader;
+import uk.co.idv.domain.usecases.identity.data.AliasLoader;
+import uk.co.idv.domain.usecases.identity.data.IdentityDataService;
+import uk.co.idv.domain.usecases.identity.data.PhoneNumberLoader;
 import uk.co.idv.domain.usecases.lockout.InitialLockoutPolicyCreator;
 import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
@@ -40,7 +44,6 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
-
 
 @Configuration
 public class VerificationContextDomainConfig {
@@ -86,10 +89,38 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
+    public AliasLoader aliasLoader() {
+        return new AliasLoader();
+    }
+
+    @Bean
+    public PhoneNumberLoader phoneNumberLoader() {
+        return new PhoneNumberLoader();
+    }
+
+    @Bean
+    public AccountLoader accountLoader() {
+        return new AccountLoader();
+    }
+
+    @Bean
+    public IdentityDataService identityDataService(final AliasLoader aliasLoader,
+                                                   final PhoneNumberLoader phoneNumberLoader,
+                                                   final AccountLoader accountLoader) {
+        return IdentityDataService.builder()
+                .aliasLoader(aliasLoader)
+                .phoneNumberLoader(phoneNumberLoader)
+                .accountLoader(accountLoader)
+                .build();
+    }
+
+    @Bean
     public IdentityService identityService(final IdGenerator idGenerator,
+                                           final IdentityDataService dataService,
                                            final IdentityDao dao) {
         return DefaultIdentityService.builder()
                 .idGenerator(idGenerator)
+                .dataService(dataService)
                 .dao(dao)
                 .build();
     }

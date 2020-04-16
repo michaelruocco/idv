@@ -1,6 +1,7 @@
 package uk.co.idv.repository.inmemory.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
@@ -24,7 +25,7 @@ class InMemoryIdentityDaoTest {
     void shouldLoadSavedIdentityByAliases() {
         final Alias idvId = AliasesMother.idvId();
         final Alias creditCardNumber = AliasesMother.creditCardNumber();
-        final Identity identity = new Identity(Aliases.with(idvId, creditCardNumber));
+        final Identity identity = IdentityMother.withAliases(Aliases.with(idvId, creditCardNumber));
 
         dao.save(identity);
 

@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
@@ -24,7 +25,7 @@ class AliasMappingItemConverterTest {
     @Test
     void shouldConvertIdentityToMappingDocumentForEachAlias() {
         final Aliases aliases = AliasesMother.aliases();
-        final Identity identity = new Identity(aliases);
+        final Identity identity = IdentityMother.withAliases(aliases);
 
         final Collection<Item> items = converter.toItems(identity);
 
@@ -34,7 +35,7 @@ class AliasMappingItemConverterTest {
     @Test
     void shouldConvertAliasToMappingDocument() {
         final Alias alias = AliasesMother.idvId();
-        final Identity identity = new Identity(Aliases.with(alias));
+        final Identity identity = IdentityMother.withAliases(Aliases.with(alias));
         final String expectedAliasString = "alias-string";
         given(aliasConverter.toString(alias)).willReturn(expectedAliasString);
 
@@ -48,7 +49,7 @@ class AliasMappingItemConverterTest {
     void shouldCovertIdvIdToAllMappingDocuments() {
         final Alias idvId = AliasesMother.idvId();
         final Alias creditCardNumber = AliasesMother.creditCardNumber();
-        final Identity identity = new Identity(Aliases.with(idvId, creditCardNumber));
+        final Identity identity = IdentityMother.withAliases(Aliases.with(idvId, creditCardNumber));
 
         final Collection<Item> items = converter.toItems(identity);
 

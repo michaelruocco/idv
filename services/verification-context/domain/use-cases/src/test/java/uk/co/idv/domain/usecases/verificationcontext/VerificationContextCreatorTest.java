@@ -1,12 +1,12 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
-import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.identity.FakeIdentityService;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
@@ -34,7 +34,7 @@ class VerificationContextCreatorTest {
     private final IdGenerator idGenerator = new FakeIdGenerator(ID);
     private final TimeProvider timeProvider = new FakeTimeProvider(NOW);
 
-    private final Identity identity = new Identity(AliasesMother.aliases());
+    private final Identity identity = IdentityMother.build();
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
 
     private final VerificationSequences sequences = new StubVerificationSequencesEligible();

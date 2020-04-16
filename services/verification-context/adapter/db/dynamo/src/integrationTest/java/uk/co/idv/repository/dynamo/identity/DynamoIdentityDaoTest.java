@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
@@ -31,7 +32,7 @@ class DynamoIdentityDaoTest {
 
     @Test
     void shouldLoadByIdvIdAlias() {
-        final Identity identity = new Identity(AliasesMother.aliases());
+        final Identity identity = IdentityMother.emptyData(AliasesMother.aliases());
         dao.save(identity);
 
         final Optional<Identity> loadedIdentity = dao.load(AliasesMother.idvId());
@@ -41,7 +42,7 @@ class DynamoIdentityDaoTest {
 
     @Test
     void shouldLoadByCreditCardNumberAlias() {
-        final Identity identity = new Identity(AliasesMother.aliases());
+        final Identity identity = IdentityMother.emptyData(AliasesMother.aliases());
         dao.save(identity);
 
         final Optional<Identity> loadedIdentity = dao.load(AliasesMother.creditCardNumber());
@@ -65,9 +66,9 @@ class DynamoIdentityDaoTest {
 
     @Test
     void shouldDeleteAliasFromIdentityWhenUpdatedAndAliasIsNoLongerPresent() {
-        final Identity identity = new Identity(AliasesMother.aliases());
+        final Identity identity = IdentityMother.emptyData(AliasesMother.aliases());
         dao.save(identity);
-        final Identity updateIdentity = new Identity(Aliases.with(AliasesMother.idvId()));
+        final Identity updateIdentity = IdentityMother.emptyData(Aliases.with(AliasesMother.idvId()));
         dao.save(updateIdentity);
 
         final Optional<Identity> loadedIdentity = dao.load(AliasesMother.idvId());

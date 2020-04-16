@@ -5,6 +5,7 @@ import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.channel.ChannelMother;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -82,7 +83,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnIdentity() {
-        final Identity identity = new Identity(AliasesMother.aliases());
+        final Identity identity = IdentityMother.build();
 
         final VerificationContext context = builder.identity(identity).build();
 
@@ -91,7 +92,7 @@ class VerificationContextTest {
 
     @Test
     void shouldReturnIdvIdValue() {
-        final Identity identity = new Identity(AliasesMother.aliases());
+        final Identity identity = IdentityMother.build();
 
         final VerificationContext context = builder.identity(identity).build();
 

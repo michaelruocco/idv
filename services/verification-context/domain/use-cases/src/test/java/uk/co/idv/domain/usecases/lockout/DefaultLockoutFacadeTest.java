@@ -1,6 +1,7 @@
 package uk.co.idv.domain.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DefaultLockoutFacadeTest {
 
     private final Instant now = Instant.now();
-    private final Identity identity = new Identity(AliasesMother.aliases());
+    private final Identity identity = IdentityMother.build();
 
     private final TimeProvider timeProvider = new FakeTimeProvider(now);
     private final FakeIdentityService identityService = new FakeIdentityService(identity);

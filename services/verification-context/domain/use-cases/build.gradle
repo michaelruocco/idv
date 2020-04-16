@@ -4,4 +4,5 @@ dependencies {
 
     testImplementation project(':verification-context-entities').sourceSets.test.output
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
+    testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 }

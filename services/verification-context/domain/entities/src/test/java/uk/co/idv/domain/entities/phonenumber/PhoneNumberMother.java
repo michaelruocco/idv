@@ -1,17 +1,21 @@
 package uk.co.idv.domain.entities.phonenumber;
 
-
-import java.util.Collection;
-import java.util.Collections;
-
 public class PhoneNumberMother {
 
     private PhoneNumberMother() {
         // utility class
     }
 
-    public static Collection<PhoneNumber> oneMobile() {
-        return Collections.singleton(mobile());
+    public static PhoneNumbers empty() {
+        return new PhoneNumbers();
+    }
+
+    public static PhoneNumbers oneMobile() {
+        return new PhoneNumbers(mobile());
+    }
+
+    public static PhoneNumbers twoNumbers() {
+        return new PhoneNumbers(mobile(), other());
     }
 
     public static PhoneNumber mobile() {

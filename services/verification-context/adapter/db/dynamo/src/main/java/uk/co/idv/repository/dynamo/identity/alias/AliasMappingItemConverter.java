@@ -8,8 +8,10 @@ import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
+import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -38,7 +40,12 @@ public class AliasMappingItemConverter {
         final Collection<Alias> aliases = items.stream()
                 .map(item -> aliasConverter.toAlias(item.getString("alias")))
                 .collect(Collectors.toList());
-        return new Identity(Aliases.with(aliases));
+        return Identity.builder()
+                .aliases(Aliases.with(aliases))
+                //TODO load phone numbers and accounts from database correctly
+                .phoneNumbers(new PhoneNumbers())
+                .accounts(Collections.emptyList())
+                .build();
     }
 
 }

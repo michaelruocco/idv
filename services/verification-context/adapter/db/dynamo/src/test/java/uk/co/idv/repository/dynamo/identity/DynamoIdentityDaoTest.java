@@ -9,6 +9,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
@@ -70,7 +71,7 @@ public class DynamoIdentityDaoTest {
         final Item item = new Item();
         final Collection<Item> items = Collections.singleton(item);
         given(itemConverter.queryOutcomesToItems(queryOutcomes)).willReturn(items);
-        final Identity expectedIdentity = new Identity(AliasesMother.aliases());
+        final Identity expectedIdentity = IdentityMother.withAliases(AliasesMother.aliases());
         given(itemConverter.toIdentity(items)).willReturn(expectedIdentity);
 
         final Optional<Identity> identity = dao.load(idvIdAlias);
@@ -101,7 +102,7 @@ public class DynamoIdentityDaoTest {
         given(idvIdIndex.query(any(QuerySpec.class))).willReturn(queryOutcomes);
         final Collection<Item> items = Collections.singleton(item);
         given(itemConverter.queryOutcomesToItems(queryOutcomes)).willReturn(items);
-        final Identity expectedIdentity = new Identity(AliasesMother.aliases());
+        final Identity expectedIdentity = IdentityMother.withAliases(AliasesMother.aliases());
         given(itemConverter.toIdentity(items)).willReturn(expectedIdentity);
 
         final Optional<Identity> identity = dao.load(alias);
@@ -111,7 +112,7 @@ public class DynamoIdentityDaoTest {
 
     @Test
     void shouldSaveAllAliasesIfIdentityDoesNotExist() {
-        final Identity identity = new Identity(AliasesMother.aliases());
+        final Identity identity = IdentityMother.withAliases(AliasesMother.aliases());
         final Item item1 = new Item().with("alias", "item1");
         final Item item2 = new Item().with("alias", "item2");
         final Collection<Item> items = Arrays.asList(item1, item2);
@@ -127,7 +128,7 @@ public class DynamoIdentityDaoTest {
 
     @Test
     void shouldDeleteAliasesIfAliasesExistButNotPresentOnUpdatedIdentity() {
-        final Identity identity = new Identity(AliasesMother.aliases());
+        final Identity identity = IdentityMother.withAliases(AliasesMother.aliases());
         final Item item1 = new Item().with("alias", "item1");
         final Item item2 = new Item().with("alias", "item2");
         final Collection<Item> newItems = Arrays.asList(item1, item2);

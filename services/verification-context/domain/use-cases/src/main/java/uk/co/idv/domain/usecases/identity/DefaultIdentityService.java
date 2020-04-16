@@ -1,10 +1,10 @@
 package uk.co.idv.domain.usecases.identity;
 
 import lombok.Builder;
+import uk.co.idv.domain.usecases.identity.data.IdentityDataResponse;
+import uk.co.idv.domain.usecases.identity.data.IdentityDataService;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.entities.identity.alias.Alias;
-import uk.co.idv.domain.entities.identity.alias.Aliases;
-import uk.co.idv.domain.entities.identity.alias.CreditCardNumber;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
 
@@ -13,8 +13,9 @@ import java.util.Optional;
 @Builder
 public class DefaultIdentityService implements IdentityService {
 
-    private final IdentityDao dao;
     private final IdGenerator idGenerator;
+    private final IdentityDataService dataService;
+    private final IdentityDao dao;
 
     @Override
     public Identity upsert(final UpsertIdentityRequest request) {
@@ -29,27 +30,19 @@ public class DefaultIdentityService implements IdentityService {
     }
 
     private Identity createNewIdentity(final UpsertIdentityRequest request) {
-        final Aliases aliases = buildAliases(request.getProvidedAlias());
-        final Identity identity = new Identity(aliases);
+        final IdvId idvId = createNewIdvId();
+        final IdentityDataResponse response = dataService.load(request);
+        final Identity identity = Identity.builder()
+                .aliases(response.getAliases().add(idvId))
+                .phoneNumbers(response.getPhoneNumbers())
+                .accounts(response.getAccounts())
+                .build();
         dao.save(identity);
         return identity;
     }
 
-    private Aliases buildAliases(final Alias providedAlias) {
-        final IdvId idvId = new IdvId(idGenerator.generate());
-        if (shouldCreateAdditionalAlias(providedAlias)) {
-            return Aliases.with(idvId, providedAlias, createAdditionalAlias(providedAlias));
-        }
-        return Aliases.with(idvId, providedAlias);
-    }
-
-    private boolean shouldCreateAdditionalAlias(final Alias providedAlias) {
-        return providedAlias.getValue().endsWith("2");
-    }
-
-    private Alias createAdditionalAlias(final Alias providedAlias) {
-        final String value = Long.toString(Long.parseLong(providedAlias.getValue()) + 1);
-        return new CreditCardNumber(value);
+    private IdvId createNewIdvId() {
+        return new IdvId(idGenerator.generate());
     }
 
 }

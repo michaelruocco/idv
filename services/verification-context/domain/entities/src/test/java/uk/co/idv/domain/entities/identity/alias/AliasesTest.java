@@ -94,4 +94,15 @@ class AliasesTest {
         assertThat(aliases.contains(creditCardNumber)).isFalse();
     }
 
+    @Test
+    void shouldAddAlias() {
+        final Alias idvId = AliasesMother.idvId();
+        final Aliases aliases = Aliases.with(idvId);
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
+
+        final Aliases addedAliases = aliases.add(creditCardNumber);
+
+        assertThat(addedAliases).containsExactly(idvId, creditCardNumber);
+    }
+
 }

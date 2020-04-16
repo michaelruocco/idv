@@ -3,7 +3,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.ChannelMother;
-import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
@@ -26,7 +26,7 @@ public class VerificationContextMother {
                 id(),
                 ChannelMother.fake(),
                 AliasesMother.creditCardNumber(),
-                identity(),
+                IdentityMother.emptyData(),
                 activity,
                 created(),
                 expiry(),
@@ -38,7 +38,7 @@ public class VerificationContextMother {
                 id(),
                 ChannelMother.fake(),
                 AliasesMother.creditCardNumber(),
-                identity(),
+                IdentityMother.emptyData(),
                 ActivityMother.fake(),
                 created(),
                 expiry(),
@@ -47,10 +47,6 @@ public class VerificationContextMother {
 
     private static UUID id() {
         return UUID.fromString("eaca769b-c8ac-42fc-ba6a-97e6f1be36f8");
-    }
-
-    private static Identity identity() {
-        return new Identity(AliasesMother.aliases());
     }
 
     private static Instant created() {

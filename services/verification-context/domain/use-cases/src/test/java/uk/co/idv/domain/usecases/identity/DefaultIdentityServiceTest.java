@@ -1,8 +1,11 @@
 package uk.co.idv.domain.usecases.identity;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.channel.ChannelMother;
+import uk.co.idv.domain.entities.card.account.Account;
+import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.domain.usecases.identity.data.IdentityDataResponse;
+import uk.co.idv.domain.usecases.identity.data.IdentityDataResponseMother;
+import uk.co.idv.domain.usecases.identity.data.IdentityDataService;
 import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
@@ -11,6 +14,7 @@ import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
 import uk.co.idv.domain.usecases.identity.IdentityService.IdentityNotFoundException;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,63 +27,73 @@ class DefaultIdentityServiceTest {
 
     private static final UUID VALUE = UUID.randomUUID();
 
-    private final IdentityDao dao = mock(IdentityDao.class);
     private final FakeIdGenerator idGenerator = new FakeIdGenerator(VALUE);
+    private final IdentityDataService dataService = mock(IdentityDataService.class);
+    private final IdentityDao dao = mock(IdentityDao.class);
 
     private final IdentityService service = DefaultIdentityService.builder()
             .idGenerator(idGenerator)
+            .dataService(dataService)
             .dao(dao)
             .build();
 
     @Test
     void shouldReturnNewIdentityWithGeneratedIdvIdIfIdentityNotFound() {
-        final Alias providedAlias = AliasesMother.creditCardNumber();
-        final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
-        given(dao.load(providedAlias)).willReturn(Optional.empty());
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+        given(dao.load(request.getProvidedAlias())).willReturn(Optional.empty());
+        final IdentityDataResponse dataResponse = IdentityDataResponseMother.empty();
+        given(dataService.load(request)).willReturn(dataResponse);
 
         final Identity identity = service.upsert(request);
 
         final Aliases aliases = identity.getAliases();
-        assertThat(aliases).containsExactlyInAnyOrder(
-                new IdvId(VALUE),
-                providedAlias
-        );
+        assertThat(aliases).containsExactlyInAnyOrder(new IdvId(VALUE));
     }
 
     @Test
-    void shouldReturnNewIdentityWithGeneratedIdvIdAndAdditionalAliasIfIdentityNotFoundAndAliasValueEndsWithTwo() {
-        final Alias providedAlias = AliasesMother.creditCardNumber("4929992222222222");
-        final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
-        given(dao.load(providedAlias)).willReturn(Optional.empty());
+    void shouldReturnNewIdentityWithLoadedAliasesIfIdentityNotFound() {
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+        given(dao.load(request.getProvidedAlias())).willReturn(Optional.empty());
+        final IdentityDataResponse dataResponse = IdentityDataResponseMother.withAlias(request.getProvidedAlias());
+        given(dataService.load(request)).willReturn(dataResponse);
 
         final Identity identity = service.upsert(request);
 
         final Aliases aliases = identity.getAliases();
-        assertThat(aliases).containsExactlyInAnyOrder(
-                new IdvId(VALUE),
-                providedAlias,
-                AliasesMother.creditCardNumber("4929992222222223")
-        );
+        assertThat(aliases).containsExactly(request.getProvidedAlias(), new IdvId(VALUE));
     }
 
     @Test
-    void shouldReturnNewIdentityWithProvidedAliasIfIdentityNotFound() {
-        final Alias providedAlias = AliasesMother.creditCardNumber();
-        final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
-        given(dao.load(providedAlias)).willReturn(Optional.empty());
+    void shouldReturnNewIdentityWithLoadedPhoneNumbersIfIdentityNotFound() {
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+        given(dao.load(request.getProvidedAlias())).willReturn(Optional.empty());
+        final IdentityDataResponse dataResponse = IdentityDataResponseMother.empty();
+        given(dataService.load(request)).willReturn(dataResponse);
 
         final Identity identity = service.upsert(request);
 
-        final Aliases aliases = identity.getAliases();
-        assertThat(aliases).containsExactly(new IdvId(VALUE), providedAlias);
+        final PhoneNumbers phoneNumbers = identity.getPhoneNumbers();
+        assertThat(phoneNumbers).isEqualTo(dataResponse.getPhoneNumbers());
+    }
+
+    @Test
+    void shouldReturnNewIdentityWithLoadedAccountsIfIdentityNotFound() {
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+        given(dao.load(request.getProvidedAlias())).willReturn(Optional.empty());
+        final IdentityDataResponse dataResponse = IdentityDataResponseMother.empty();
+        given(dataService.load(request)).willReturn(dataResponse);
+
+        final Identity identity = service.upsert(request);
+
+        final Collection<Account> accounts = identity.getAccounts();
+        assertThat(accounts).isEqualTo(dataResponse.getAccounts());
     }
 
     @Test
     void shouldReturnExistingIdentityIfIdentityFound() {
-        final Alias providedAlias = AliasesMother.creditCardNumber();
-        final UpsertIdentityRequest request = buildUpsertRequest(providedAlias);
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
         final Identity existingIdentity = mock(Identity.class);
-        given(dao.load(providedAlias)).willReturn(Optional.of(existingIdentity));
+        given(dao.load(request.getProvidedAlias())).willReturn(Optional.of(existingIdentity));
 
         final Identity identity = service.upsert(request);
 
@@ -109,14 +123,6 @@ class DefaultIdentityServiceTest {
         final Identity identity = service.load(request);
 
         assertThat(identity).isEqualTo(existingIdentity);
-    }
-
-    private static UpsertIdentityRequest buildUpsertRequest(final Alias providedAlias) {
-        final Channel channel = ChannelMother.fake();
-        return UpsertIdentityRequest.builder()
-                .channel(channel)
-                .providedAlias(providedAlias)
-                .build();
     }
 
     private static LoadIdentityRequest buildLoadRequest(final Alias providedAlias) {

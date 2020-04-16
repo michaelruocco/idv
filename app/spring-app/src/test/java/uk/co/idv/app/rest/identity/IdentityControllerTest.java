@@ -3,6 +3,7 @@ package uk.co.idv.app.rest.identity;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.api.identity.IdentityDocument;
 import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.mock;
 class IdentityControllerTest {
 
     private final AliasFactory aliasFactory = mock(AliasFactory.class);
-    private final Identity identity = new Identity(AliasesMother.aliases());
+    private final Identity identity = IdentityMother.build();
 
     private final FakeIdentityService service = new FakeIdentityService(identity);
 

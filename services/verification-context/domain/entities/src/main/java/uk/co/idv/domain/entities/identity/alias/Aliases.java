@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.identity.alias;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import uk.co.idv.domain.entities.identity.alias.Alias.AliasWithTypeNotFoundException;
 
 import java.util.Arrays;
@@ -13,9 +14,10 @@ import java.util.stream.Stream;
 import static java.util.Collections.unmodifiableSet;
 
 @EqualsAndHashCode
+@ToString
 public class Aliases implements Iterable<Alias> {
 
-    private Collection<Alias> aliases;
+    private final Collection<Alias> aliases;
 
     protected Aliases(final Collection<Alias> aliases) {
         this.aliases = unmodifiableSet(new LinkedHashSet<>(aliases));
@@ -43,6 +45,11 @@ public class Aliases implements Iterable<Alias> {
         return aliases.size();
     }
 
+    public Aliases add(final Alias alias) {
+        final Collection<Alias> updatedAliases = new LinkedHashSet<>(aliases);
+        updatedAliases.add(alias);
+        return new Aliases(updatedAliases);
+    }
     private IdvId getIdvId() {
         return (IdvId) getAliasByType(IdvId.TYPE);
     }
