@@ -19,11 +19,11 @@ public class PhoneNumberMother {
     }
 
     public static PhoneNumber mobile() {
-        return new MobilePhoneNumber("+447089123456");
+        return new MobilePhoneNumber("+447089111111");
     }
 
     public static PhoneNumber other() {
-        return new OtherPhoneNumber("+441604123456");
+        return new OtherPhoneNumber("+441604222222");
     }
 
 }

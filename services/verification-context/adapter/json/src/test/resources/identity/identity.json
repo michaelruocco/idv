@@ -9,5 +9,15 @@
       "type": "credit-card-number",
       "value": "4929001111111111"
     }
+  ],
+  "phoneNumbers": [
+    {
+      "type": "MOBILE",
+      "value": "+447089111111"
+    },
+    {
+      "type": "OTHER",
+      "value": "+441604222222"
+    }
   ]
 }

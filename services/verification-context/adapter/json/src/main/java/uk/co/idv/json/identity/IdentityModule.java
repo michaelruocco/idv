@@ -4,11 +4,9 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.alias.Alias;
-import uk.co.idv.domain.entities.identity.alias.Aliases;
-import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.json.phonenumber.PhoneNumberModule;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 public class IdentityModule extends SimpleModule {
 
@@ -16,19 +14,13 @@ public class IdentityModule extends SimpleModule {
         super("identity-module", Version.unknownVersion());
 
         setMixInAnnotation(Identity.class, IdentityMixin.class);
-        setMixInAnnotation(PhoneNumbers.class, PhoneNumbersMixin.class);
 
-        addSerializer(Aliases.class, new AliasesSerializer());
-        addSerializer(Alias.class, new AliasSerializer());
-
-        addDeserializer(Alias.class, new AliasDeserializer());
-        addDeserializer(Aliases.class, new AliasesDeserializer());
         addDeserializer(Identity.class, new IdentityDeserializer());
     }
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Collections.singleton(new AliasModule());
+        return Arrays.asList(new AliasModule(), new PhoneNumberModule());
     }
 
 }

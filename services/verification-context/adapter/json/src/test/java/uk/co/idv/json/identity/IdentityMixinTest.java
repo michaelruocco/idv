@@ -24,10 +24,4 @@ class IdentityMixinTest {
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
-    private static ObjectMapper buildMapper() {
-        final ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new IdentityModule());
-        return mapper;
-    }
-
 }
