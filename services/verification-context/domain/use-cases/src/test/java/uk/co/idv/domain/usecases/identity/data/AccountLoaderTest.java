@@ -30,8 +30,8 @@ class AccountLoaderTest {
     }
 
     @Test
-    void shouldReturnOpenAccountWithAliasValueCreditCardNumberIfProvidedAliasIsACreditCardNumber() {
-        final Alias alias = AliasesMother.creditCardNumber();
+    void shouldReturnOpenAccountWithAliasValueCreditCardNumberIfProvidedAliasIsACreditCardNumberAndValueEndsInNine() {
+        final Alias alias = AliasesMother.creditCardNumber("4929001111111119");
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final Collection<Account> accounts = loader.load(request);
@@ -41,8 +41,8 @@ class AccountLoaderTest {
     }
 
     @Test
-    void shouldReturnOpenAccountWithAliasValueDebitCardNumberIfProvidedAliasIsADebitCardNumber() {
-        final Alias alias = AliasesMother.debitCardNumber();
+    void shouldReturnOpenAccountWithAliasValueDebitCardNumberIfProvidedAliasIsADebitCardNumberAndValueEndsInNine() {
+        final Alias alias = AliasesMother.debitCardNumber("4929001111111119");
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final Collection<Account> accounts = loader.load(request);

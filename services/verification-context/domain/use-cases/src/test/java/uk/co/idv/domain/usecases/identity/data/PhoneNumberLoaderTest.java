@@ -17,8 +17,9 @@ public class PhoneNumberLoaderTest {
     private final PhoneNumberLoader loader = new PhoneNumberLoader();
 
     @Test
-    void shouldReturnTwoMobileNumbers() {
-        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+    void shouldReturnTwoMobileNumbersIfAliasValueEndsInNine() {
+        final Alias alias = AliasesMother.creditCardNumber("4929001111111119");
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final PhoneNumbers numbers = loader.load(request);
 
@@ -27,7 +28,7 @@ public class PhoneNumberLoaderTest {
 
     @Test
     void shouldConvertCardNumberAliasToPhoneNumberByTrimmingProvidedAliasValueTo11Chars() {
-        final Alias alias = AliasesMother.creditCardNumber("4929001111111111");
+        final Alias alias = AliasesMother.creditCardNumber("4929001111111119");
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final PhoneNumbers numbers = loader.load(request);
@@ -38,7 +39,8 @@ public class PhoneNumberLoaderTest {
     @Test
     @ClearSystemProperty(key = "stubbed.phone.number")
     void shouldReturnDefaultPhoneNumberIfStubbedMobileNumberSystemPropertyIsNotSet() {
-        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+        final Alias alias = AliasesMother.creditCardNumber("4929001111111119");
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final PhoneNumbers numbers = loader.load(request);
 
@@ -48,7 +50,8 @@ public class PhoneNumberLoaderTest {
     @Test
     @SetSystemProperty(key = "stubbed.phone.number", value = "07809123456")
     void shouldReturnDefaultStubbedMobileNumberFromSystemPropertyIfSet() {
-        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+        final Alias alias = AliasesMother.creditCardNumber("4929001111111119");
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final PhoneNumbers numbers = loader.load(request);
 

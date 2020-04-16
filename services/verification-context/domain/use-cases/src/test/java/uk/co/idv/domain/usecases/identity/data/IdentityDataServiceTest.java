@@ -21,11 +21,13 @@ public class IdentityDataServiceTest {
     private final AliasLoader aliasLoader = mock(AliasLoader.class);
     private final PhoneNumberLoader phoneNumberLoader = mock(PhoneNumberLoader.class);
     private final AccountLoader accountLoader = mock(AccountLoader.class);
+    private final MobileApplicationEligibleLoader mobileApplicationEligibleLoader = mock(MobileApplicationEligibleLoader.class);
 
     private final IdentityDataService service = IdentityDataService.builder()
             .aliasLoader(aliasLoader)
             .phoneNumberLoader(phoneNumberLoader)
             .accountLoader(accountLoader)
+            .mobileApplicationEligibleLoader(mobileApplicationEligibleLoader)
             .build();
 
     @Test
@@ -59,6 +61,16 @@ public class IdentityDataServiceTest {
         final IdentityDataResponse response = service.load(request);
 
         assertThat(response.getAccounts()).isEqualTo(expectedAccounts);
+    }
+
+    @Test
+    void shouldReturnMobileApplicationEligibleFromMobileApplicationEligibleLoader() {
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
+        given(mobileApplicationEligibleLoader.load(request)).willReturn(true);
+
+        final IdentityDataResponse response = service.load(request);
+
+        assertThat(response.isMobileApplicationEligible()).isTrue();
     }
 
 }

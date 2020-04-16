@@ -47,4 +47,15 @@ public class IdentityDataResponseTest {
         assertThat(response.getAccounts()).isEqualTo(accounts);
     }
 
+    @Test
+    public void shouldReturnHasMobileApplication() {
+        final boolean mobileApplicationEligible = true;
+
+        final IdentityDataResponse response = IdentityDataResponse.builder()
+                .mobileApplicationEligible(mobileApplicationEligible)
+                .build();
+
+        assertThat(response.isMobileApplicationEligible()).isEqualTo(mobileApplicationEligible);
+    }
+
 }

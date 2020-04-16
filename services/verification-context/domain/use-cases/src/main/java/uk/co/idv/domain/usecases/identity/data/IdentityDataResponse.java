@@ -15,5 +15,6 @@ public class IdentityDataResponse {
     private final Aliases aliases;
     private final PhoneNumbers phoneNumbers;
     private final Collection<Account> accounts;
+    private final boolean mobileApplicationEligible;
 
 }

@@ -37,7 +37,11 @@ public class AliasesMother {
     }
 
     public static Alias debitCardNumber() {
-        return new DebitCardNumber("4929992222222222");
+        return debitCardNumber("4929992222222222");
+    }
+
+    public static Alias debitCardNumber(final String tokenized) {
+        return new DebitCardNumber(tokenized);
     }
 
     public static Alias fake() {

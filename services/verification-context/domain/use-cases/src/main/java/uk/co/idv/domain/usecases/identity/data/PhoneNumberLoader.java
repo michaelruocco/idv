@@ -14,9 +14,16 @@ public class PhoneNumberLoader {
 
     public PhoneNumbers load(final UpsertIdentityRequest request) {
         final Alias providedAlias = request.getProvidedAlias();
-        final PhoneNumber number1 = new MobilePhoneNumber(toPhoneNumber(providedAlias));
-        final PhoneNumber number2 = new MobilePhoneNumber(loadStubbedPhoneNumber());
-        return new PhoneNumbers(number1, number2);
+        if (valueEndsWithNine(providedAlias)) {
+            final PhoneNumber number1 = new MobilePhoneNumber(toPhoneNumber(providedAlias));
+            final PhoneNumber number2 = new MobilePhoneNumber(loadStubbedPhoneNumber());
+            return new PhoneNumbers(number1, number2);
+        }
+        return new PhoneNumbers();
+    }
+
+    private boolean valueEndsWithNine(final Alias alias) {
+        return alias.getValue().endsWith("9");
     }
 
     private String loadStubbedPhoneNumber() {
