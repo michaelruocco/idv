@@ -13,7 +13,7 @@
     },
     "cardNumber": {
       "tokenized": "4929991234567890",
-      "type": "CREDIT"
+      "type": "credit"
     }
   },
   "providedAlias": {

@@ -19,7 +19,7 @@ class CreditCardNumberTest {
     void shouldReturnCreditType() {
         final CardNumber cardNumber = new CreditCardNumber(TOKENIZED);
 
-        assertThat(cardNumber.getType()).isEqualTo(CardType.CREDIT);
+        assertThat(cardNumber.getType()).isEqualTo(CreditCardNumber.TYPE);
     }
 
 }

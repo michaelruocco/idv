@@ -14,7 +14,7 @@ class OpenAccountTest {
     void shouldReturnStatus() {
         final Account account = new OpenAccount(CARD_NUMBER);
 
-        assertThat(account.getStatus()).isEqualTo(AccountStatus.OPEN);
+        assertThat(account.getStatus()).isEqualTo(OpenAccount.STATUS);
     }
 
     @Test

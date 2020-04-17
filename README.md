@@ -7,9 +7,19 @@
 
 ## TODO list
 
+*  Add emails to identity
+
+*  Add replace mobileApplicationEligible with mobile devices on identity
+
+*  Use identity data to determine method eligibility
+
+*  Add dynamo db persistence of identity data (phone numbers / emails / devices / accounts)
+
 *  Put object mothers in separate module or move into production code packages
 
 *  All eligible flag against delivery method (for otp) and card (for pinsentry)
+
+*  Add folders to postman collection and try using a single one again
 
 *  Add properly formatted error handling for OTP scenarios
 

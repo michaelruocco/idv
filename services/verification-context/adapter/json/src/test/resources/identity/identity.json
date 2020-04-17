@@ -12,22 +12,22 @@
   ],
   "accounts": [
     {
+      "status": "open",
       "cardNumbers": [
         {
           "tokenized": "4929991234567890",
-          "type": "CREDIT"
+          "type": "credit"
         }
-      ],
-      "status": "OPEN"
+      ]
     },
     {
+      "status": "closed",
       "cardNumbers": [
         {
           "tokenized": "4929112222222222",
-          "type": "DEBIT"
+          "type": "debit"
         }
-      ],
-      "status": "CLOSED"
+      ]
     }
   ],
   "phoneNumbers": [

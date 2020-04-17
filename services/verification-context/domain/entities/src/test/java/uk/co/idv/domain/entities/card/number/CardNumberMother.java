@@ -13,10 +13,6 @@ public class CardNumberMother {
         return Collections.singleton(credit());
     }
 
-    public static Collection<CardNumber> oneDebit() {
-        return Collections.singleton(debit());
-    }
-
     public static CardNumber credit() {
         return new CreditCardNumber("4929991234567890");
     }

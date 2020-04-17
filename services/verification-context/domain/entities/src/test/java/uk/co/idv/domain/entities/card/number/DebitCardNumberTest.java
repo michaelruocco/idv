@@ -19,7 +19,7 @@ class DebitCardNumberTest {
     void shouldReturnCreditType() {
         final CardNumber cardNumber = new DebitCardNumber(TOKENIZED);
 
-        assertThat(cardNumber.getType()).isEqualTo(CardType.DEBIT);
+        assertThat(cardNumber.getType()).isEqualTo(DebitCardNumber.TYPE);
     }
 
 }

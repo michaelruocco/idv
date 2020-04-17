@@ -14,7 +14,7 @@ class ClosedAccountTest {
     void shouldReturnStatus() {
         final Account account = new ClosedAccount(CARD_NUMBER);
 
-        assertThat(account.getStatus()).isEqualTo(AccountStatus.CLOSED);
+        assertThat(account.getStatus()).isEqualTo(ClosedAccount.STATUS);
     }
 
     @Test

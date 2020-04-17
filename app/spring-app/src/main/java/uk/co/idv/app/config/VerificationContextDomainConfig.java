@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConvert
 import uk.co.idv.domain.usecases.identity.data.AccountLoader;
 import uk.co.idv.domain.usecases.identity.data.AliasLoader;
 import uk.co.idv.domain.usecases.identity.data.IdentityDataService;
+import uk.co.idv.domain.usecases.identity.data.MobileApplicationEligibleLoader;
 import uk.co.idv.domain.usecases.identity.data.PhoneNumberLoader;
 import uk.co.idv.domain.usecases.lockout.InitialLockoutPolicyCreator;
 import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
@@ -104,13 +105,20 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
+    public MobileApplicationEligibleLoader mobileApplicationEligibleLoader() {
+        return new MobileApplicationEligibleLoader();
+    }
+
+    @Bean
     public IdentityDataService identityDataService(final AliasLoader aliasLoader,
                                                    final PhoneNumberLoader phoneNumberLoader,
-                                                   final AccountLoader accountLoader) {
+                                                   final AccountLoader accountLoader,
+                                                   final MobileApplicationEligibleLoader mobileApplicationEligibleLoader) {
         return IdentityDataService.builder()
                 .aliasLoader(aliasLoader)
                 .phoneNumberLoader(phoneNumberLoader)
                 .accountLoader(accountLoader)
+                .mobileApplicationEligibleLoader(mobileApplicationEligibleLoader)
                 .build();
     }
 

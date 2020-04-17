@@ -1,4 +1,4 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.method;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.Module;
@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.json.verificationcontext.AllowAllSimpleMethodModule;
+import uk.co.idv.json.verificationcontext.VerificationContextModule;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 

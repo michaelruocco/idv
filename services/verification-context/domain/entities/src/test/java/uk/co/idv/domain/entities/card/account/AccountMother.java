@@ -5,16 +5,11 @@ import uk.co.idv.domain.entities.card.number.CardNumberMother;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public class AccountMother {
 
     private AccountMother() {
         // utility class
-    }
-
-    public static Collection<Account> oneOpen() {
-        return Collections.singleton(open());
     }
 
     public static Collection<Account> two() {
@@ -30,7 +25,8 @@ public class AccountMother {
     }
 
     public static Account closed() {
-        return new ClosedAccount(CardNumberMother.oneDebit());
+        return new ClosedAccount(CardNumberMother.debit());
     }
+
 
 }

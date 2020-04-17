@@ -5,8 +5,10 @@ import lombok.Getter;
 @Getter
 public class CreditCardNumber extends CardNumber {
 
+    public static final String TYPE = "credit";
+
     public CreditCardNumber(final String tokenized) {
-        super(tokenized, CardType.CREDIT);
+        super(TYPE, tokenized);
     }
 
 }

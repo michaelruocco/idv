@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @EqualsAndHashCode
 public class CardNumber {
 
+    private final String type;
     private final String tokenized;
-    private final CardType type;
 
 }

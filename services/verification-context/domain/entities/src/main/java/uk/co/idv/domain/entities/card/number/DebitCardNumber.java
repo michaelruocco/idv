@@ -5,8 +5,10 @@ import lombok.Getter;
 @Getter
 public class DebitCardNumber extends CardNumber {
 
+    public static final String TYPE = "debit";
+
     public DebitCardNumber(final String tokenized) {
-        super(tokenized, CardType.DEBIT);
+        super(TYPE, tokenized);
     }
 
 }
