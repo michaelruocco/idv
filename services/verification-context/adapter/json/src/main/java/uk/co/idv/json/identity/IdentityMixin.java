@@ -13,6 +13,7 @@ import java.util.UUID;
 @JsonPropertyOrder({
         "id",
         "aliases",
+        "accounts",
         "phoneNumbers"
 })
 public interface IdentityMixin {
@@ -21,12 +22,12 @@ public interface IdentityMixin {
     UUID getIdvIdValue();
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    Collection<Account> getAccounts();
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     PhoneNumbers getPhoneNumbers();
 
     @JsonIgnore
     PhoneNumbers getMobilePhoneNumbers();
-
-    @JsonIgnore
-    Collection<Account> getAccounts();
 
 }
