@@ -6,10 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
 public class VerificationSequencesDeserializer extends StdDeserializer<VerificationSequences> {
 
@@ -18,9 +16,9 @@ public class VerificationSequencesDeserializer extends StdDeserializer<Verificat
     }
 
     @Override
-    public VerificationSequences deserialize(final JsonParser parser,final DeserializationContext context) throws IOException {
-        final JsonNode node = parser.getCodec().readTree(parser);
-        final Collection<VerificationSequence> sequences = Arrays.asList(node.traverse(parser.getCodec()).readValueAs(VerificationSequence[].class));
+    public VerificationSequences deserialize(final JsonParser parser,final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
+        final VerificationSequence[] sequences = JsonNodeConverter.toObject(node, parser, VerificationSequence[].class);
         return new VerificationSequences(sequences);
     }
 

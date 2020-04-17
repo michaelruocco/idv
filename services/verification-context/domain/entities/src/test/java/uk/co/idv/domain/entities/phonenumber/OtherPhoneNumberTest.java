@@ -12,7 +12,7 @@ class OtherPhoneNumberTest {
     void shouldReturnType() {
         final PhoneNumber number = new OtherPhoneNumber(VALUE);
 
-        assertThat(number.getType()).isEqualTo(PhoneNumberType.OTHER);
+        assertThat(number.getType()).isEqualTo(OtherPhoneNumber.TYPE);
     }
 
     @Test

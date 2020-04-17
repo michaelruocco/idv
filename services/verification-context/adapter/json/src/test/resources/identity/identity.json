@@ -32,11 +32,11 @@
   ],
   "phoneNumbers": [
     {
-      "type": "MOBILE",
+      "type": "mobile",
       "value": "+447089111111"
     },
     {
-      "type": "OTHER",
+      "type": "other",
       "value": "+441604222222"
     }
   ]

@@ -1,21 +1,11 @@
 package uk.co.idv.domain.entities.phonenumber;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+public interface PhoneNumber {
 
-@RequiredArgsConstructor
-@Getter
-@EqualsAndHashCode
-@ToString
-public class PhoneNumber {
+    String getType();
 
-    private final PhoneNumberType type;
-    private final String value;
+    String getValue();
 
-    public boolean isMobile() {
-        return PhoneNumberType.MOBILE.equals(type);
-    }
+    boolean isMobile();
 
 }

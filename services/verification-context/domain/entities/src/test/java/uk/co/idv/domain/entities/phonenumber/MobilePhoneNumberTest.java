@@ -12,7 +12,7 @@ class MobilePhoneNumberTest {
     void shouldReturnType() {
         final PhoneNumber number = new MobilePhoneNumber(VALUE);
 
-        assertThat(number.getType()).isEqualTo(PhoneNumberType.MOBILE);
+        assertThat(number.getType()).isEqualTo(MobilePhoneNumber.TYPE);
     }
 
     @Test

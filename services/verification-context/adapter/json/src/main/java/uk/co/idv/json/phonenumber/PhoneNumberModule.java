@@ -12,6 +12,9 @@ public class PhoneNumberModule extends SimpleModule {
 
         setMixInAnnotation(PhoneNumber.class, PhoneNumberMixin.class);
         setMixInAnnotation(PhoneNumbers.class, PhoneNumbersMixin.class);
+
+        addDeserializer(PhoneNumber.class, new PhoneNumberDeserializer());
+        addDeserializer(PhoneNumbers.class, new PhoneNumbersDeserializer());
     }
 
 }

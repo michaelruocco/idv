@@ -2,15 +2,26 @@ package uk.co.idv.domain.entities.phonenumber;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+@RequiredArgsConstructor
 @Getter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class MobilePhoneNumber extends PhoneNumber {
+@EqualsAndHashCode
+@ToString
+public class MobilePhoneNumber implements PhoneNumber {
 
-    public MobilePhoneNumber(final String value) {
-        super(PhoneNumberType.MOBILE, value);
+    public static final String TYPE = "mobile";
+
+    private final String value;
+
+    @Override
+    public String getType() {
+        return TYPE;
+    }
+
+    public boolean isMobile() {
+        return true;
     }
 
 }
