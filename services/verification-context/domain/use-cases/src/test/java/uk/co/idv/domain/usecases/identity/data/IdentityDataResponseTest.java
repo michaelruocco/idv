@@ -5,10 +5,12 @@ import uk.co.idv.domain.entities.card.account.Account;
 import uk.co.idv.domain.entities.card.account.AccountMother;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,14 +50,14 @@ public class IdentityDataResponseTest {
     }
 
     @Test
-    public void shouldReturnHasMobileApplication() {
-        final boolean mobileApplicationEligible = true;
+    public void shouldReturnMobileDevices() {
+        final Collection<MobileDevice> devices = Collections.emptyList();
 
         final IdentityDataResponse response = IdentityDataResponse.builder()
-                .mobileApplicationEligible(mobileApplicationEligible)
+                .mobileDevices(devices)
                 .build();
 
-        assertThat(response.isMobileApplicationEligible()).isEqualTo(mobileApplicationEligible);
+        assertThat(response.getMobileDevices()).isEqualTo(devices);
     }
 
 }

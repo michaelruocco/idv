@@ -27,6 +27,16 @@ public class PhoneNumberLoaderTest {
     }
 
     @Test
+    void shouldReturnemptyMobileNumbersIfAliasValueDoesNotEndInNine() {
+        final Alias alias = AliasesMother.creditCardNumber("4929001111111111");
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
+
+        final PhoneNumbers numbers = loader.load(request);
+
+        assertThat(numbers).isEmpty();
+    }
+
+    @Test
     void shouldConvertCardNumberAliasToPhoneNumberByTrimmingProvidedAliasValueTo11Chars() {
         final Alias alias = AliasesMother.creditCardNumber("4929001111111119");
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);

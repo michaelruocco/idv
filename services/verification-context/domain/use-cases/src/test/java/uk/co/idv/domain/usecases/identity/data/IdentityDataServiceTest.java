@@ -5,6 +5,8 @@ import uk.co.idv.domain.entities.card.account.Account;
 import uk.co.idv.domain.entities.card.account.AccountMother;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
+import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
@@ -21,13 +23,13 @@ public class IdentityDataServiceTest {
     private final AliasLoader aliasLoader = mock(AliasLoader.class);
     private final PhoneNumberLoader phoneNumberLoader = mock(PhoneNumberLoader.class);
     private final AccountLoader accountLoader = mock(AccountLoader.class);
-    private final MobileApplicationEligibleLoader mobileApplicationEligibleLoader = mock(MobileApplicationEligibleLoader.class);
+    private final MobileDeviceLoader mobileDeviceLoader = mock(MobileDeviceLoader.class);
 
     private final IdentityDataService service = IdentityDataService.builder()
             .aliasLoader(aliasLoader)
             .phoneNumberLoader(phoneNumberLoader)
             .accountLoader(accountLoader)
-            .mobileApplicationEligibleLoader(mobileApplicationEligibleLoader)
+            .mobileDeviceLoader(mobileDeviceLoader)
             .build();
 
     @Test
@@ -64,13 +66,14 @@ public class IdentityDataServiceTest {
     }
 
     @Test
-    void shouldReturnMobileApplicationEligibleFromMobileApplicationEligibleLoader() {
+    void shouldReturnMobileDevicesFromMobileDeviceLoader() {
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
-        given(mobileApplicationEligibleLoader.load(request)).willReturn(true);
+        final Collection<MobileDevice> devices = MobileDeviceMother.oneTrusted();
+        given(mobileDeviceLoader.load(request)).willReturn(devices);
 
         final IdentityDataResponse response = service.load(request);
 
-        assertThat(response.isMobileApplicationEligible()).isTrue();
+        assertThat(response.getMobileDevices()).containsExactlyElementsOf(devices);
     }
 
 }

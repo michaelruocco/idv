@@ -7,9 +7,9 @@
 
 ## TODO list
 
-*  Add emails to identity
+*  Populate mobile devices onto identity
 
-*  Add replace mobileApplicationEligible with mobile devices on identity
+*  Create email loader and populate emails onto identity
 
 *  Use identity data to determine method eligibility
 
