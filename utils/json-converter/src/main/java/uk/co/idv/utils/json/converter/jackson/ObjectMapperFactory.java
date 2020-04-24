@@ -28,6 +28,7 @@ public class ObjectMapperFactory {
     private ObjectMapper customize(final ObjectMapper mapper) {
         log.info("registering jackson modules {}", modules);
         return mapper.setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
+
                 .disable(WRITE_DATES_AS_TIMESTAMPS)
                 .registerModules(modules);
     }

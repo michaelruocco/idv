@@ -39,5 +39,17 @@
       "type": "other",
       "value": "+441604222222"
     }
+  ],
+  "mobileDevices": [
+    {
+      "id": "1234567890ABCDEFG",
+      "lastLogin":"2020-04-24T05:32:00.428Z",
+      "trusted": true
+    },
+    {
+      "id": "0987654321ABCXYZ",
+      "lastLogin":"2020-04-24T05:27:00.123Z",
+      "trusted": false
+    }
   ]
 }

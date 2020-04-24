@@ -21,7 +21,7 @@ class PhoneNumbersDeserializerTest {
 
         final PhoneNumbers phoneNumbers = MAPPER.readValue(json, PhoneNumbers.class);
 
-        assertThat(phoneNumbers).isEqualTo(PhoneNumberMother.twoNumbers());
+        assertThat(phoneNumbers).isEqualTo(PhoneNumberMother.two());
     }
 
 }

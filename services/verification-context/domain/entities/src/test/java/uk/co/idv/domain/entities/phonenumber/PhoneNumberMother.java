@@ -10,11 +10,7 @@ public class PhoneNumberMother {
         return new PhoneNumbers();
     }
 
-    public static PhoneNumbers oneMobile() {
-        return new PhoneNumbers(mobile());
-    }
-
-    public static PhoneNumbers twoNumbers() {
+    public static PhoneNumbers two() {
         return new PhoneNumbers(mobile(), other());
     }
 

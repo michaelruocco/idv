@@ -17,7 +17,7 @@ class PhoneNumbersMixinTest {
 
     @Test
     void shouldSerializePhoneNumbers() throws JsonProcessingException {
-        final PhoneNumbers phoneNumbers = PhoneNumberMother.twoNumbers();
+        final PhoneNumbers phoneNumbers = PhoneNumberMother.two();
 
         final String json = MAPPER.writeValueAsString(phoneNumbers);
 

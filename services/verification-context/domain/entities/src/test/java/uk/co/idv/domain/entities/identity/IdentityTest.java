@@ -7,6 +7,8 @@ import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
+import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
+import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 
@@ -63,7 +65,7 @@ class IdentityTest {
 
     @Test
     void shouldReturnPhoneNumbers() {
-        final PhoneNumbers numbers = PhoneNumberMother.twoNumbers();
+        final PhoneNumbers numbers = PhoneNumberMother.two();
 
         final Identity identity = Identity.builder()
                 .phoneNumbers(numbers)
@@ -74,7 +76,7 @@ class IdentityTest {
 
     @Test
     void shouldReturnMobileNumbers() {
-        final PhoneNumbers numbers = PhoneNumberMother.twoNumbers();
+        final PhoneNumbers numbers = PhoneNumberMother.two();
 
         final Identity identity = Identity.builder()
                 .phoneNumbers(numbers)
@@ -84,7 +86,7 @@ class IdentityTest {
     }
 
     @Test
-    void shouldReturnMobileAccounts() {
+    void shouldReturnAccounts() {
         final Collection<Account> accounts = AccountMother.two();
 
         final Identity identity = Identity.builder()
@@ -92,6 +94,17 @@ class IdentityTest {
                 .build();
 
         assertThat(identity.getAccounts()).isEqualTo(accounts);
+    }
+
+    @Test
+    void shouldReturnMobileDevices() {
+        final Collection<MobileDevice> devices = MobileDeviceMother.oneTrusted();
+
+        final Identity identity = Identity.builder()
+                .mobileDevices(devices)
+                .build();
+
+        assertThat(identity.getMobileDevices()).isEqualTo(devices);
     }
 
 }

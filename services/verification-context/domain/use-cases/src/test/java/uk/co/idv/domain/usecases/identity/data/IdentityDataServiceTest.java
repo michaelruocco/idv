@@ -46,7 +46,7 @@ public class IdentityDataServiceTest {
     @Test
     void shouldReturnPhoneNumbersFromPhoneNumberLoader() {
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
-        final PhoneNumbers expectedPhoneNumbers = PhoneNumberMother.twoNumbers();
+        final PhoneNumbers expectedPhoneNumbers = PhoneNumberMother.two();
         given(phoneNumberLoader.load(request)).willReturn(expectedPhoneNumbers);
 
         final IdentityDataResponse response = service.load(request);

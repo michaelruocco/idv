@@ -29,7 +29,7 @@ public class IdentityDataResponseTest {
 
     @Test
     public void shouldReturnPhoneNumbers() {
-        final PhoneNumbers numbers = PhoneNumberMother.twoNumbers();
+        final PhoneNumbers numbers = PhoneNumberMother.two();
 
         final IdentityDataResponse response = IdentityDataResponse.builder()
                 .phoneNumbers(numbers)

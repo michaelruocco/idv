@@ -25,7 +25,7 @@ public class MobileDeviceLoader {
 
     private Collection<MobileDevice> toEligibleDevices() {
         final MobileDevice device = MobileDevice.builder()
-                .id("1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+                .id("1234567890ABCDEFG")
                 .lastLogin(timeProvider.now().minus(Duration.ofMinutes(5)))
                 .trusted(true)
                 .build();

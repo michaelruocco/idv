@@ -7,13 +7,18 @@
 
 ## TODO list
 
-*  Populate mobile devices onto identity
-
 *  Create email loader and populate emails onto identity
+
+*  Change object mapper config to globally ignore empty lists
 
 *  Use identity data to determine method eligibility
 
 *  Add dynamo db persistence of identity data (phone numbers / emails / devices / accounts)
+
+*  Have another look at verification method / sequence serialization to double check as
+   it looks overly complex
+
+## Future Enhancements / Ideas
 
 *  Put object mothers in separate module or move into production code packages
 
@@ -33,9 +38,15 @@
 
 *  Verification method policies updatable on the fly
 
+*  Once policies are in database look at options for cache layer to reduce number of db hits, first simple idea is to
+   add a caching decorator to the policy dao classes where we can pass a configurable duration of how long to cache for,
+   on first read load all policies into a map if any writes are made then update map. Would need to think about
+   messaging between multiple instances, probably best option for this would be a pub sub notification that would use
+   something like sns or kafka then each instance could listen for updates and refresh cache as needed.
+
 *  Deploy onto AWS (ideally would be automatic from travis ci pipeline)
 
-*  Acceptance tests (cucumber?)
+*  Acceptance tests (cucumber / karate) alongside postman tests already in place
 
 *  Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
 docker compose tasks in order, which will give a simple command to build and test before adding a commit
