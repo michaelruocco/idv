@@ -7,16 +7,18 @@
 
 ## TODO list
 
-*  Create email loader and populate emails onto identity
-
-*  Change object mapper config to globally ignore empty lists
-
 *  Use identity data to determine method eligibility
 
 *  Add dynamo db persistence of identity data (phone numbers / emails / devices / accounts)
 
 *  Have another look at verification method / sequence serialization to double check as
    it looks overly complex
+
+*  Create email loader and populate emails onto identity
+
+*  Change object mapper config to globally ignore empty lists
+
+*  Think about turning provided alias into provided aliases
 
 ## Future Enhancements / Ideas
 
