@@ -1,0 +1,9 @@
+{
+  "status": "invalid",
+  "cardNumbers": [
+    {
+      "tokenized": "4929112222222222",
+      "type": "debit"
+    }
+  ]
+}
