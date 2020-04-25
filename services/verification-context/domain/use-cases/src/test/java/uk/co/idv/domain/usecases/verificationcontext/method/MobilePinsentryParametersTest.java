@@ -5,9 +5,10 @@ import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
 
@@ -15,16 +16,17 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PushNotificationParametersTest {
+class MobilePinsentryParametersTest {
 
+    private static final PinsentryFunction FUNCTION = PinsentryFunction.IDENTIFY;
     private static final int MAX_ATTEMPTS = 3;
     private static final Duration DURATION = Duration.ofMinutes(5);
 
-    private final PushNotificationParameters parameters = new PushNotificationParameters(MAX_ATTEMPTS, DURATION);
+    private final MobilePinsentryParameters parameters = new MobilePinsentryParameters(FUNCTION, MAX_ATTEMPTS, DURATION);
 
     @Test
     void shouldReturnMethodName() {
-        assertThat(parameters.getMethodName()).isEqualTo(PushNotification.NAME);
+        assertThat(parameters.getMethodName()).isEqualTo(MobilePinsentry.NAME);
     }
 
     @Test
@@ -34,7 +36,7 @@ class PushNotificationParametersTest {
 
         final VerificationMethod method = parameters.buildMethod(request);
 
-        assertThat(method).isEqualTo(new PushNotificationEligible(MAX_ATTEMPTS, DURATION));
+        assertThat(method).isEqualTo(new MobilePinsentryEligible(FUNCTION, MAX_ATTEMPTS, DURATION));
     }
 
     @Test
@@ -44,7 +46,7 @@ class PushNotificationParametersTest {
 
         final VerificationMethod method = parameters.buildMethod(request);
 
-        assertThat(method).isEqualTo(new PushNotificationIneligible());
+        assertThat(method).isEqualTo(new MobilePinsentryIneligible(FUNCTION));
     }
 
 }

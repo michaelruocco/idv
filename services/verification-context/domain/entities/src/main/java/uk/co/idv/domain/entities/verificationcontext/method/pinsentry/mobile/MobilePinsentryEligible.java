@@ -25,7 +25,20 @@ public class MobilePinsentryEligible extends AbstractVerificationMethodEligible 
     }
 
     public MobilePinsentryEligible(final PinsentryFunction function, final VerificationResults results) {
-        super(NAME, results, MAX_ATTEMPTS, DURATION);
+        this(function, results, MAX_ATTEMPTS, DURATION);
+    }
+
+    public MobilePinsentryEligible(final PinsentryFunction function,
+                                   final int maxAttempts,
+                                   final Duration duration) {
+        this(function, new DefaultVerificationResults(), maxAttempts, duration);
+    }
+
+    public MobilePinsentryEligible(final PinsentryFunction function,
+                                   final VerificationResults results,
+                                   final int maxAttempts,
+                                   final Duration duration) {
+        super(NAME, results, maxAttempts, duration);
         this.function = function;
     }
 
