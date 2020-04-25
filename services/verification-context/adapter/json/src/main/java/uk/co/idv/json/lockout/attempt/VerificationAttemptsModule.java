@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.json.identity.AliasModule;
+import uk.co.idv.json.identity.alias.AliasModule;
 
 import java.util.Arrays;
 

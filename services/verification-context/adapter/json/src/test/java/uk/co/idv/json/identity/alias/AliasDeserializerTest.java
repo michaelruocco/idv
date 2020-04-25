@@ -1,4 +1,4 @@
-package uk.co.idv.json.identity;
+package uk.co.idv.json.identity.alias;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
