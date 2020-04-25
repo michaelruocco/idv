@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.Module;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
-import uk.co.idv.json.activity.AllowAllSimpleActivityModule;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
@@ -30,8 +29,7 @@ class VerificationContextDeserializerTest {
 
     private static Collection<Module> modules() {
         return Arrays.asList(
-                new VerificationContextModule(),
-                new AllowAllSimpleActivityModule()
+                new VerificationContextModule()
         );
     }
 

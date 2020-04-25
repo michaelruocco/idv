@@ -1,4 +1,4 @@
-package uk.co.idv.json.activity;
+package uk.co.idv.json.activity.onlinepurchase;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.activity.OnlinePurchase;
 import uk.co.idv.domain.entities.card.number.CardNumber;
+import uk.co.idv.json.activity.ActivityJsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 

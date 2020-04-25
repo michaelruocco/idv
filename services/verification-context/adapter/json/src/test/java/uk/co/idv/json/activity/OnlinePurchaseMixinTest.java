@@ -10,7 +10,7 @@ import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class ActivityMixinTest {
+class OnlinePurchaseMixinTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapperFactory(new ActivityModule()).build();
 

@@ -4,26 +4,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.activity.ActivityMother;
-import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ActivityDeserializerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapperFactory(new ActivityModule()).build();
 
     @Test
-    void shouldDeserializeOnlinePurchase() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("activity/online-purchase.json");
+    void shouldDeserializeFakeActivity() throws IOException {
+        final String json = ContentLoader.loadContentFromClasspath("activity/fake-activity.json");
 
         final Activity activity = MAPPER.readValue(json, Activity.class);
 
-        assertThat(activity).isEqualToComparingFieldByField(ActivityMother.onlinePurchase());
+        assertThat(activity).isEqualToComparingFieldByField(ActivityMother.fake());
     }
 
     @Test
@@ -36,14 +34,12 @@ class ActivityDeserializerTest {
     }
 
     @Test
-    void shouldThrowExceptionIfActivityNotSupported() {
-        final String json = ContentLoader.loadContentFromClasspath("activity/not-supported-activity.json");
+    void shouldDeserializeOnlinePurchase() throws IOException {
+        final String json = ContentLoader.loadContentFromClasspath("activity/online-purchase.json");
 
-        final Throwable error = catchThrowable(() -> MAPPER.readValue(json, Activity.class));
+        final Activity activity = MAPPER.readValue(json, Activity.class);
 
-        assertThat(error)
-                .isInstanceOf(ActivityNotSupportedException.class)
-                .hasMessage("not-supported-activity");
+        assertThat(activity).isEqualToComparingFieldByField(ActivityMother.onlinePurchase());
     }
 
 }

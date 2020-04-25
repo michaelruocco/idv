@@ -19,7 +19,7 @@ public class VerificationMethodDeserializer extends StdDeserializer<Verification
     private final Map<String, Class<? extends VerificationMethod>> mappings;
 
     public VerificationMethodDeserializer() {
-        this(buildMappings());
+        this(buildDefaultMappings());
     }
 
     public VerificationMethodDeserializer(final Map<String, Class<? extends VerificationMethod>> mappings) {
@@ -34,7 +34,7 @@ public class VerificationMethodDeserializer extends StdDeserializer<Verification
         return JsonNodeConverter.toObject(node, parser, mappings.get(name));
     }
 
-    private static Map<String, Class<? extends VerificationMethod>> buildMappings() {
+    private static Map<String, Class<? extends VerificationMethod>> buildDefaultMappings() {
         return Map.of(
                 PushNotification.NAME, PushNotification.class,
                 OneTimePasscode.NAME, OneTimePasscode.class,

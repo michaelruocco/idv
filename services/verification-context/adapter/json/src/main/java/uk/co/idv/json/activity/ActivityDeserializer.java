@@ -5,50 +5,54 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.activity.Activity;
-import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.usecases.exception.ActivityNotSupportedException;
+import uk.co.idv.domain.entities.activity.OnlinePurchase;
+import uk.co.idv.domain.entities.activity.SimpleActivity;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 public class ActivityDeserializer extends StdDeserializer<Activity> {
 
-    private final Collection<ActivityJsonNodeConverter> converters;
+    private final Map<String, Class<? extends Activity>> mappings;
 
-    public ActivityDeserializer(final ActivityJsonNodeConverter... converters) {
-        this(Arrays.asList(converters));
+    public ActivityDeserializer() {
+        this(buildDefaultMappings());
     }
 
-    public ActivityDeserializer(final Collection<ActivityJsonNodeConverter> converters) {
-        super(Channel.class);
-        this.converters = converters;
+    public ActivityDeserializer(final Map<String, Class<? extends Activity>> mappings) {
+        super(Activity.class);
+        this.mappings = mappings;
     }
 
     @Override
     public Activity deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
-        final JsonNode node = parser.getCodec().readTree(parser);
+        final JsonNode node = JsonParserConverter.toNode(parser);
         final String name = ActivityJsonNodeConverter.extractName(node);
-        return findConverter(name)
-                .map(converter -> toActivity(converter, node, parser, context))
-                .orElseThrow(() -> new ActivityNotSupportedException(name));
+        final Optional<Class<? extends Activity>> type = toMappingType(name);
+        return type.map(t -> toSpecificActivity(node, parser, t))
+                .orElseGet(() -> toSimpleActivity(node));
     }
 
-    private Optional<ActivityJsonNodeConverter> findConverter(final String name) {
-        return converters.stream().filter(converter -> converter.supportsActivity(name)).findFirst();
+    private Optional<Class<? extends Activity>> toMappingType(final String name) {
+        return Optional.ofNullable(mappings.get(name));
     }
 
-    private Activity toActivity(final ActivityJsonNodeConverter converter,
-                                       final JsonNode node,
-                                       final JsonParser parser,
-                                       final DeserializationContext context) {
-        try {
-            return converter.toActivity(node, parser, context);
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
+    private static Activity toSpecificActivity(final JsonNode node, final JsonParser parser, final Class<? extends Activity> type) {
+        return JsonNodeConverter.toObject(node, parser, type);
+    }
+
+    private static Activity toSimpleActivity(final JsonNode node) {
+        return SimpleActivity.builder()
+                .name(ActivityJsonNodeConverter.extractName(node))
+                .timestamp(ActivityJsonNodeConverter.extractTimestamp(node))
+                .build();
+    }
+
+    private static Map<String, Class<? extends Activity>> buildDefaultMappings() {
+        return Map.of(OnlinePurchase.NAME, OnlinePurchase.class);
     }
 
 }
