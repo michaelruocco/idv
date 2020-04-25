@@ -30,6 +30,16 @@ class AccountLoaderTest {
     }
 
     @Test
+    void shouldReturnEmptyListIfProvidedAliasIsACardNumberButAliasDoesNotEndInNine() {
+        final Alias alias = AliasesMother.creditCardNumber("4929001111111111");
+        final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
+
+        final Collection<Account> accounts = loader.load(request);
+
+        assertThat(accounts).isEmpty();
+    }
+
+    @Test
     void shouldReturnOpenAccountWithAliasValueCreditCardNumberIfProvidedAliasIsACreditCardNumberAndValueEndsInNine() {
         final Alias alias = AliasesMother.creditCardNumber("4929001111111119");
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);

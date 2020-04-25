@@ -34,12 +34,6 @@ public class PushNotificationEligible extends AbstractVerificationMethodEligible
         super(NAME, new DefaultVerificationResults(), maxAttempts, duration);
     }
 
-    public PushNotificationEligible(final VerificationResults results,
-                                    final int maxAttempts,
-                                    final Duration duration) {
-        super(NAME, results, maxAttempts, duration);
-    }
-
     @Override
     protected VerificationMethod updateResults(final VerificationResults results) {
         return new PushNotificationEligible(results);
