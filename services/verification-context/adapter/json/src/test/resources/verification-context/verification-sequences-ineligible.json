@@ -2,46 +2,74 @@
   {
     "name": "push-notification",
     "eligible": false,
+    "complete": false,
+    "successful": false,
+    "duration": 0,
     "methods": [
       {
         "name": "push-notification",
         "eligible": false,
-        "reason": "no mobile application"
+        "reason": "no mobile application",
+        "complete": false,
+        "successful": false,
+        "duration": 0,
+        "maxAttempts": 0
       }
     ]
   },
   {
     "name": "physical-pinsentry",
     "eligible": false,
+    "complete": false,
+    "successful": false,
+    "duration": 0,
     "methods": [
       {
         "name": "physical-pinsentry",
         "function": "respond",
         "eligible": false,
-        "reason": "no eligible cards found"
+        "reason": "no eligible cards found",
+        "complete": false,
+        "successful": false,
+        "duration": 0,
+        "maxAttempts": 0
       }
     ]
   },
   {
     "name": "mobile-pinsentry",
     "eligible": false,
+    "complete": false,
+    "successful": false,
+    "duration": 0,
     "methods": [
       {
         "name": "mobile-pinsentry",
         "function": "respond",
         "eligible": false,
-        "reason": "no mobile application"
+        "reason": "no mobile application",
+        "complete": false,
+        "successful": false,
+        "duration": 0,
+        "maxAttempts": 0
       }
     ]
   },
   {
     "name": "one-time-passcode",
     "eligible": false,
+    "complete": false,
+    "successful": false,
+    "duration": 0,
     "methods": [
       {
         "name": "one-time-passcode",
         "eligible": false,
-        "reason": "no eligible delivery methods found"
+        "reason": "no eligible delivery methods found",
+        "complete": false,
+        "successful": false,
+        "duration": 0,
+        "maxAttempts": 0
       }
     ]
   }

@@ -14,15 +14,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ObjectMapperFactoryTest {
 
     @Test
-    void shouldReturnMapperWithNonAbsentSerializationInclusion() {
+    void shouldReturnMapperWithNonEmptySerializationInclusion() {
         final ObjectMapperFactory factory = new ObjectMapperFactory();
 
         final ObjectMapper mapper = factory.build();
 
         final SerializationConfig config = mapper.getSerializationConfig();
         final JsonInclude.Value inclusion = config.getDefaultPropertyInclusion();
-        assertThat(inclusion.getContentInclusion()).isEqualTo(JsonInclude.Include.NON_ABSENT);
-        assertThat(inclusion.getValueInclusion()).isEqualTo(JsonInclude.Include.NON_ABSENT);
+        assertThat(inclusion.getContentInclusion()).isEqualTo(JsonInclude.Include.NON_EMPTY);
+        assertThat(inclusion.getValueInclusion()).isEqualTo(JsonInclude.Include.NON_EMPTY);
     }
 
     @Test

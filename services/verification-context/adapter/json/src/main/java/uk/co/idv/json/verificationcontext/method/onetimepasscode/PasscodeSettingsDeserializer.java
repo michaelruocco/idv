@@ -14,7 +14,7 @@ public class PasscodeSettingsDeserializer extends StdDeserializer<PasscodeSettin
 
     @Override
     public PasscodeSettings deserialize(final JsonParser parser, final DeserializationContext context) {
-        return new DefaultPasscodeSettings();
+        return new DefaultPasscodeSettings(); //TODO properly deserialize values
     }
 
 }

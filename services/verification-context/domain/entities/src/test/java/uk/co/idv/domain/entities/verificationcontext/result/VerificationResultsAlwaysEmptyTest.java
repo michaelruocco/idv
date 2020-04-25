@@ -21,7 +21,14 @@ class VerificationResultsAlwaysEmptyTest {
     void shouldReturnEmptyStream() {
         final VerificationResults results = new VerificationResultsAlwaysEmpty();
 
-        assertThat(results.stream()).isEmpty();
+        assertThat(results.toStream()).isEmpty();
+    }
+
+    @Test
+    void shouldReturnEmptyCollction() {
+        final VerificationResults results = new VerificationResultsAlwaysEmpty();
+
+        assertThat(results.toCollection()).isEmpty();
     }
 
     @Test

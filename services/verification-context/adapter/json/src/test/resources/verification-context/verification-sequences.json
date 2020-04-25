@@ -12,8 +12,7 @@
         "complete": false,
         "successful": false,
         "duration": 300000,
-        "maxAttempts": 5,
-        "results": []
+        "maxAttempts": 5
       }
     ]
   },
@@ -37,8 +36,7 @@
             "tokenized": "4929991234567890",
             "type": "credit"
           }
-        ],
-        "results": []
+        ]
       }
     ]
   },
@@ -56,8 +54,7 @@
         "complete": false,
         "successful": false,
         "duration": 300000,
-        "maxAttempts": 1,
-        "results": []
+        "maxAttempts": 1
       }
     ]
   },
@@ -86,8 +83,7 @@
             "type": "sms",
             "value": "07809386681"
           }
-        ],
-        "results": []
+        ]
       }
     ]
   }

@@ -1,5 +1,8 @@
 {
   "name": "fake-method",
   "eligible": true,
-  "duration": 300000
+  "complete": false,
+  "successful": false,
+  "duration": 300000,
+  "maxAttempts": 2
 }

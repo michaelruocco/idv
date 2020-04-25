@@ -5,37 +5,42 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.usecases.exception.MethodNotSupportedException;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.Map;
 
 public class VerificationMethodDeserializer extends StdDeserializer<VerificationMethod> {
 
-    private final Collection<VerificationMethodJsonNodeConverter> converters;
+    private final Map<String, Class<? extends VerificationMethod>> mappings;
 
-    public VerificationMethodDeserializer(final VerificationMethodJsonNodeConverter... converters) {
-        this(Arrays.asList(converters));
+    public VerificationMethodDeserializer() {
+        this(buildMappings());
     }
 
-    public VerificationMethodDeserializer(final Collection<VerificationMethodJsonNodeConverter> converters) {
+    public VerificationMethodDeserializer(final Map<String, Class<? extends VerificationMethod>> mappings) {
         super(VerificationMethod.class);
-        this.converters = converters;
+        this.mappings = mappings;
     }
 
     @Override
-    public VerificationMethod deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
-        final JsonNode node = parser.getCodec().readTree(parser);
+    public VerificationMethod deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
         final String name = node.get("name").asText();
-        return findConverter(name)
-                .map(converter -> converter.toMethod(node, parser, context))
-                .orElseThrow(() -> new MethodNotSupportedException(name));
+        return JsonNodeConverter.toObject(node, parser, mappings.get(name));
     }
 
-    private Optional<VerificationMethodJsonNodeConverter> findConverter(final String name) {
-        return converters.stream().filter(converter -> converter.supportsMethod(name)).findFirst();
+    private static Map<String, Class<? extends VerificationMethod>> buildMappings() {
+        return Map.of(
+                PushNotification.NAME, PushNotification.class,
+                OneTimePasscode.NAME, OneTimePasscode.class,
+                PhysicalPinsentry.NAME, PhysicalPinsentry.class,
+                MobilePinsentry.NAME, MobilePinsentry.class
+        );
     }
 
 }

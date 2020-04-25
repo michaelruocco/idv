@@ -2,5 +2,9 @@
   "name": "physical-pinsentry",
   "function": "respond",
   "eligible": false,
-  "reason": "no eligible cards found"
+  "reason": "no eligible cards found",
+  "complete": false,
+  "successful": false,
+  "duration": 0,
+  "maxAttempts": 0
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class VerificationContextDeserializer extends StdDeserializer<VerificationContext> {
 
-    protected VerificationContextDeserializer() {
+    public VerificationContextDeserializer() {
         super(VerificationContext.class);
     }
 

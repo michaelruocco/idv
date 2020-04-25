@@ -1,5 +1,9 @@
 {
   "name": "fake-method",
   "eligible": false,
-  "reason": "fake ineligible reason"
+  "reason": "fake ineligible reason",
+  "complete": false,
+  "successful": false,
+  "duration": 0,
+  "maxAttempts": 0
 }

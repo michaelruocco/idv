@@ -41,8 +41,7 @@
               "complete": false,
               "successful": false,
               "duration": 300000,
-              "maxAttempts": 5,
-              "results": []
+              "maxAttempts": 5
             }
           ]
         }

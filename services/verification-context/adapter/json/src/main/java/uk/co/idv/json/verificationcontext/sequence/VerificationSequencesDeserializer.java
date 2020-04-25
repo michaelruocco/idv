@@ -1,4 +1,4 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.sequence;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

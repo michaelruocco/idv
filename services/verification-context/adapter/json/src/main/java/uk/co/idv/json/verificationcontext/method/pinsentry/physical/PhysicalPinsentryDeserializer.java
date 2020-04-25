@@ -3,40 +3,36 @@ package uk.co.idv.json.verificationcontext.method.pinsentry.physical;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Ineligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
-import uk.co.idv.json.verificationcontext.method.AbstractVerificationMethodJsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractEligible;
-import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractResults;
-import static uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryVerificationMethodJsonNodeConverter.extractFunction;
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.isEligible;
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.toResults;
+import static uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryFunctionJsonNodeConverter.extractFunction;
 
-@Slf4j
-public class PhysicalPinsentryJsonNodeConverter extends AbstractVerificationMethodJsonNodeConverter {
+public class PhysicalPinsentryDeserializer extends StdDeserializer<PhysicalPinsentry> {
 
-    public PhysicalPinsentryJsonNodeConverter() {
-        super(PhysicalPinsentry.NAME);
+    public PhysicalPinsentryDeserializer() {
+        super(PhysicalPinsentry.class);
     }
 
     @Override
-    public VerificationMethod toMethod(final JsonNode node,
-                                       final JsonParser parser,
-                                       final DeserializationContext context) {
-        final boolean eligible = extractEligible(node);
+    public PhysicalPinsentry deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
         final PinsentryFunction function = extractFunction(node);
-        if (eligible) {
-            final VerificationResults results = extractResults(node, parser);
+        if (isEligible(node)) {
+            final VerificationResults results = toResults(node, parser);
             final Collection<CardNumber> cardNumbers = extractCardNumbers(node, parser);
             return new PhysicalPinsentryEligible(function, cardNumbers, results);
         }

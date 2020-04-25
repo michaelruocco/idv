@@ -38,8 +38,13 @@ public class VerificationResultsAlwaysEmpty implements VerificationResults {
     }
 
     @Override
-    public Stream<VerificationResult> stream() {
+    public Stream<VerificationResult> toStream() {
         return Stream.empty();
+    }
+
+    @Override
+    public Collection<VerificationResult> toCollection() {
+        return Collections.emptyList();
     }
 
     public VerificationResults add(final VerificationResult result) {

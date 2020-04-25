@@ -2,5 +2,9 @@
   "name": "mobile-pinsentry",
   "function": "respond",
   "eligible": false,
-  "reason": "no mobile application"
+  "reason": "no mobile application",
+  "complete": false,
+  "successful": false,
+  "duration": 0,
+  "maxAttempts": 0
 }

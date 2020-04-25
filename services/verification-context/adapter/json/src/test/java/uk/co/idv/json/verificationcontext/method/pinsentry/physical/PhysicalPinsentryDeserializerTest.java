@@ -10,7 +10,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.P
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.json.verificationcontext.VerificationContextObjectMapperFactory;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +18,7 @@ import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.Pin
 
 class PhysicalPinsentryDeserializerTest {
 
-    private static final ObjectMapper MAPPER = new VerificationContextObjectMapperFactory().build();
+    private static final ObjectMapper MAPPER = new ObjectMapperFactory(new PhysicalPinsentryMethodModule()).build();
 
     @Test
     void shouldDeserializeIneligible() throws JsonProcessingException {

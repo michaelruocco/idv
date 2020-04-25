@@ -6,6 +6,7 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,8 +68,13 @@ public class DefaultVerificationResults implements VerificationResults {
     }
 
     @Override
-    public Stream<VerificationResult> stream() {
+    public Stream<VerificationResult> toStream() {
         return results.stream();
+    }
+
+    @Override
+    public Collection<VerificationResult> toCollection() {
+        return Collections.unmodifiableList(results);
     }
 
 }

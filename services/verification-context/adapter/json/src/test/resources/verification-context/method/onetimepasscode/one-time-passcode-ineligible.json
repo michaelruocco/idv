@@ -1,5 +1,9 @@
 {
   "name": "one-time-passcode",
   "eligible": false,
-  "reason": "no eligible delivery methods found"
+  "reason": "no eligible delivery methods found",
+  "complete": false,
+  "successful": false,
+  "duration": 0,
+  "maxAttempts": 0
 }

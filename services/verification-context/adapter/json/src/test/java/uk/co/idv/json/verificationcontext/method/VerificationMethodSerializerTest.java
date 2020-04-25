@@ -7,13 +7,12 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.json.verificationcontext.AllowAllSimpleMethodModule;
 import uk.co.idv.json.verificationcontext.VerificationContextModule;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
@@ -22,7 +21,7 @@ class VerificationMethodSerializerTest {
     private static final ObjectMapper MAPPER = new ObjectMapperFactory(modules()).build();
 
     @Test
-    void shouldSerializeCommonFieldsForEligibleUnrecognisedMethod() throws JsonProcessingException {
+    void shouldSerializeEligibleUnrecognisedMethod() throws JsonProcessingException {
         final VerificationMethod method = new FakeVerificationMethodEligible();
 
         final String json = MAPPER.writeValueAsString(method);
@@ -32,7 +31,7 @@ class VerificationMethodSerializerTest {
     }
 
     @Test
-    void shouldSerializeCommonFieldsForIneligibleUnrecognisedMethod() throws JsonProcessingException {
+    void shouldSerializeIneligibleUnrecognisedMethod() throws JsonProcessingException {
         final VerificationMethod method = new FakeVerificationMethodIneligible();
 
         final String json = MAPPER.writeValueAsString(method);
@@ -42,10 +41,7 @@ class VerificationMethodSerializerTest {
     }
 
     private static Collection<Module> modules() {
-        return Arrays.asList(
-                new VerificationContextModule(),
-                new AllowAllSimpleMethodModule()
-        );
+        return Collections.singleton(new VerificationContextModule());
     }
 
     private static String loadFileContent(final String name) {

@@ -17,6 +17,8 @@ public interface VerificationResults extends Iterable<VerificationResult> {
 
     int size();
 
-    Stream<VerificationResult> stream();
+    Stream<VerificationResult> toStream();
+
+    Collection<VerificationResult> toCollection();
 
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.json.account.AccountModule;
-import uk.co.idv.json.mobiledevices.MobileDeviceModule;
+import uk.co.idv.json.mobiledevice.MobileDeviceModule;
 import uk.co.idv.json.phonenumber.PhoneNumberModule;
 
 import java.util.Arrays;

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class CreateContextRequestDeserializer extends StdDeserializer<CreateContextRequest> {
 
-    CreateContextRequestDeserializer() {
+    public CreateContextRequestDeserializer() {
         super(CreateContextRequest.class);
     }
 

@@ -3,37 +3,33 @@ package uk.co.idv.json.verificationcontext.method.onetimepasscode;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
-import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
-import uk.co.idv.json.verificationcontext.method.AbstractVerificationMethodJsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractEligible;
-import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.extractResults;
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.isEligible;
+import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.toResults;
 
-@Slf4j
-public class OneTimePasscodeJsonNodeConverter extends AbstractVerificationMethodJsonNodeConverter {
+public class OneTimePasscodeDeserializer extends StdDeserializer<OneTimePasscode> {
 
-    public OneTimePasscodeJsonNodeConverter() {
-        super(OneTimePasscode.NAME);
+    public OneTimePasscodeDeserializer() {
+        super(OneTimePasscode.class);
     }
 
     @Override
-    public VerificationMethod toMethod(final JsonNode node,
-                                       final JsonParser parser,
-                                       final DeserializationContext context) {
-        final boolean eligible = extractEligible(node);
-        if (eligible) {
-            final VerificationResults results = extractResults(node, parser);
+    public OneTimePasscode deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
+        if (isEligible(node)) {
+            final VerificationResults results = toResults(node, parser);
             final PasscodeSettings settings = extractPasscodeSettings(node, parser);
             final Collection<DeliveryMethod> deliveryMethods = extractDeliveryMethods(node, parser);
             return new OneTimePasscodeEligible(settings, deliveryMethods, results);

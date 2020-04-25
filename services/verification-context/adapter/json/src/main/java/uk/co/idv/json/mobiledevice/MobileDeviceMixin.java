@@ -1,4 +1,4 @@
-package uk.co.idv.json.mobiledevices;
+package uk.co.idv.json.mobiledevice;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 

@@ -10,8 +10,7 @@ public class VerificationResultsModule extends SimpleModule {
     public VerificationResultsModule() {
         super("verification-context-results-module", Version.unknownVersion());
 
-        addSerializer(VerificationResults.class, new VerificationResultsSerializer());
-        addSerializer(VerificationResult.class, new VerificationResultSerializer());
+        setMixInAnnotation(VerificationResults.class, VerificationResultsMixin.class);
 
         addDeserializer(VerificationResult.class, new VerificationResultDeserializer());
         addDeserializer(VerificationResults.class, new VerificationResultsDeserializer());
