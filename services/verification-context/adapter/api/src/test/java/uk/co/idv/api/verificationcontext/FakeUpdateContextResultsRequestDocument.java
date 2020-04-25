@@ -1,7 +1,7 @@
 package uk.co.idv.api.verificationcontext;
 
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
+import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequest;
 
 import java.util.UUID;
 

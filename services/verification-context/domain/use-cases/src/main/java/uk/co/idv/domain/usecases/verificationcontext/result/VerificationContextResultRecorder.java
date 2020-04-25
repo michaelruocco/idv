@@ -1,10 +1,12 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.result;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 
 import java.util.UUID;
 

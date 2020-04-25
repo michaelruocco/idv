@@ -37,13 +37,13 @@ import uk.co.idv.domain.usecases.lockout.VerificationAttemptsLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextService;
-import uk.co.idv.domain.usecases.verificationcontext.ExpiryCalculator;
+import uk.co.idv.domain.usecases.verificationcontext.expiry.ExpiryCalculator;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.MaxDurationExpiryCalculator;
-import uk.co.idv.domain.usecases.verificationcontext.SequenceLoader;
-import uk.co.idv.domain.usecases.verificationcontext.sequences.StubbedSequenceLoader;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.SequenceLoader;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.StubbedSequenceLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
-import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
+import uk.co.idv.domain.usecases.verificationcontext.result.VerificationContextResultRecorder;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
 @Configuration

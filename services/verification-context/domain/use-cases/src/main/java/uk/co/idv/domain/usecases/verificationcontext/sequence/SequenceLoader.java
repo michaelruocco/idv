@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.sequence;
 
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
 

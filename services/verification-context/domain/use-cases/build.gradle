@@ -2,6 +2,8 @@ dependencies {
     api project(':verification-context-entities')
     api project(':use-cases-utils')
 
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+
     testImplementation project(':verification-context-entities').sourceSets.test.output
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"

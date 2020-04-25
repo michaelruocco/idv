@@ -1,8 +1,8 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.result;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
-import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest.RecordResultRequestBuilder;
+import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequest.RecordResultRequestBuilder;
 
 import java.util.UUID;
 

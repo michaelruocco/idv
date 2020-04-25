@@ -1,6 +1,7 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
+import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequest;
 
 import java.util.UUID;
 

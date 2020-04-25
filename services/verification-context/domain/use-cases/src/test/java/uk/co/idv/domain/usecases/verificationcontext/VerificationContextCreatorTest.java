@@ -16,7 +16,10 @@ import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutExceptio
 import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
+import uk.co.idv.domain.usecases.verificationcontext.expiry.CalculateExpiryRequest;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.FakeExpiryCalculator;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.FakeSequenceLoader;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.time.Duration;
 import java.time.Instant;

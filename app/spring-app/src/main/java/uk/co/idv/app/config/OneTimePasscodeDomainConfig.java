@@ -22,7 +22,7 @@ import uk.co.idv.domain.usecases.onetimepasscode.message.OnlinePurchaseOneTimePa
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
-import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
+import uk.co.idv.domain.usecases.verificationcontext.result.VerificationContextResultRecorder;
 
 @Configuration
 public class OneTimePasscodeDomainConfig {

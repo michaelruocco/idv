@@ -4,12 +4,9 @@ import uk.co.idv.domain.entities.card.account.AccountMother;
 import uk.co.idv.domain.entities.identity.Identity.IdentityBuilder;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumberMother;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class IdentityMother {

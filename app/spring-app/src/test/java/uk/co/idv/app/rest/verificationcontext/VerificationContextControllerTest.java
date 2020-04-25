@@ -12,7 +12,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.usecases.verificationcontext.CreateContextRequest;
 import uk.co.idv.domain.usecases.verificationcontext.FakeVerificationContextService;
-import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
+import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequest;
 
 import java.util.UUID;
 

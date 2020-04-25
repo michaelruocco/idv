@@ -1,11 +1,12 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.usecases.verificationcontext.LoadSequencesRequest.LoadSequencesRequestBuilder;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest.LoadSequencesRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -42,12 +43,21 @@ class LoadSequencesRequestTest {
     }
 
     @Test
-    void shouldReturnCreated() {
-        final Identity identity = mock(Identity.class);
+    void shouldReturnIdentity() {
+        final Identity identity = IdentityMother.build();
 
         final LoadSequencesRequest request = builder.identity(identity).build();
 
         assertThat(request.getIdentity()).isEqualTo(identity);
+    }
+
+    @Test
+    void shouldReturnMobileDevicesFromIdentity() {
+        final Identity identity = IdentityMother.build();
+
+        final LoadSequencesRequest request = builder.identity(identity).build();
+
+        assertThat(request.getMobileDevices()).isEqualTo(identity.getMobileDevices());
     }
 
 }

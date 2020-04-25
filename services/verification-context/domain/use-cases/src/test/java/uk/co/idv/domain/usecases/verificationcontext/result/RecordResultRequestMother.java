@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.result;
 
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 

@@ -1,4 +1,5 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.expiry;
+
 
 import java.time.Instant;
 

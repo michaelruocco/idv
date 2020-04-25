@@ -7,7 +7,7 @@ import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMoth
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
-import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
+import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequest;
 
 import java.time.Instant;
 

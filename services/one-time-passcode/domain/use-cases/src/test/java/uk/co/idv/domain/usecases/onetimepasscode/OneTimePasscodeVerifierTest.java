@@ -6,9 +6,9 @@ import org.mockito.Mockito;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttemptMother;
-import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequest;
-import uk.co.idv.domain.usecases.verificationcontext.RecordResultRequestMother;
-import uk.co.idv.domain.usecases.verificationcontext.VerificationContextResultRecorder;
+import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequest;
+import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequestMother;
+import uk.co.idv.domain.usecases.verificationcontext.result.VerificationContextResultRecorder;
 
 import java.util.Collection;
 import java.util.Collections;

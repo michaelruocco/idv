@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.verificationcontext.sequences;
+package uk.co.idv.domain.usecases.verificationcontext.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.alias.Alias;
@@ -6,9 +6,6 @@ import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesIneligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
-import uk.co.idv.domain.usecases.verificationcontext.LoadSequencesRequest;
-import uk.co.idv.domain.usecases.verificationcontext.SequenceLoader;
-import uk.co.idv.domain.usecases.verificationcontext.sequences.StubbedSequenceLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

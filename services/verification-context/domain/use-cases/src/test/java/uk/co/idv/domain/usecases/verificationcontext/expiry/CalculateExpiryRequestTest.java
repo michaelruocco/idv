@@ -1,10 +1,10 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.expiry;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
-import uk.co.idv.domain.usecases.verificationcontext.CalculateExpiryRequest.CalculateExpiryRequestBuilder;
+import uk.co.idv.domain.usecases.verificationcontext.expiry.CalculateExpiryRequest.CalculateExpiryRequestBuilder;
 
 import java.time.Instant;
 

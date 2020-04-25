@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.verificationcontext;
+package uk.co.idv.domain.usecases.verificationcontext.result;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
@@ -6,6 +6,8 @@ import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.usecases.verificationcontext.FakeVerificationContextLoader;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 
 import java.util.UUID;
 
