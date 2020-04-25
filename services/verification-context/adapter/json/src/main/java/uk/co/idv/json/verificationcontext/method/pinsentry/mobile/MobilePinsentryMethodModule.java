@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryF
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodModule;
 import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryFunctionSerializer;
+import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryVerificationMethodMixin;
 import uk.co.idv.json.verificationcontext.result.VerificationResultsModule;
 
 import java.util.Arrays;
@@ -15,6 +16,8 @@ public class MobilePinsentryMethodModule extends SimpleModule {
 
     public MobilePinsentryMethodModule() {
         super("mobile-pinsentry-method-module", Version.unknownVersion());
+
+        setMixInAnnotation(MobilePinsentry.class, PinsentryVerificationMethodMixin.class);
 
         addSerializer(PinsentryFunction.class, new PinsentryFunctionSerializer());
 
