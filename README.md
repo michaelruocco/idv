@@ -7,8 +7,6 @@
 
 ## TODO list
 
-*  Apply changes made to verification json module to channels and activities
-
 *  Use identity data to determine method eligibility
 
 *  Add dynamo db persistence of identity data (phone numbers / emails / devices / accounts)

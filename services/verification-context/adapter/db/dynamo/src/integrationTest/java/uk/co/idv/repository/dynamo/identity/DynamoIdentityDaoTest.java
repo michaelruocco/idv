@@ -32,7 +32,7 @@ class DynamoIdentityDaoTest {
 
     @Test
     void shouldLoadByIdvIdAlias() {
-        final Identity identity = IdentityMother.emptyData(AliasesMother.aliases());
+        final Identity identity = IdentityMother.emptyDataBuilder(AliasesMother.aliases());
         dao.save(identity);
 
         final Optional<Identity> loadedIdentity = dao.load(AliasesMother.idvId());
@@ -42,7 +42,7 @@ class DynamoIdentityDaoTest {
 
     @Test
     void shouldLoadByCreditCardNumberAlias() {
-        final Identity identity = IdentityMother.emptyData(AliasesMother.aliases());
+        final Identity identity = IdentityMother.emptyDataBuilder(AliasesMother.aliases());
         dao.save(identity);
 
         final Optional<Identity> loadedIdentity = dao.load(AliasesMother.creditCardNumber());
@@ -66,9 +66,9 @@ class DynamoIdentityDaoTest {
 
     @Test
     void shouldDeleteAliasFromIdentityWhenUpdatedAndAliasIsNoLongerPresent() {
-        final Identity identity = IdentityMother.emptyData(AliasesMother.aliases());
+        final Identity identity = IdentityMother.emptyDataBuilder(AliasesMother.aliases());
         dao.save(identity);
-        final Identity updateIdentity = IdentityMother.emptyData(Aliases.with(AliasesMother.idvId()));
+        final Identity updateIdentity = IdentityMother.emptyDataBuilder(Aliases.with(AliasesMother.idvId()));
         dao.save(updateIdentity);
 
         final Optional<Identity> loadedIdentity = dao.load(AliasesMother.idvId());

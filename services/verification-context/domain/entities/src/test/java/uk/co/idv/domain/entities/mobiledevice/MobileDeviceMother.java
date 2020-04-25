@@ -15,6 +15,10 @@ public class MobileDeviceMother {
         return Collections.singleton(trusted());
     }
 
+    public static Collection<MobileDevice> oneUntrusted() {
+        return Collections.singleton(untrusted());
+    }
+
     public static MobileDevice trusted() {
         return trusted(Instant.parse("2020-04-24T05:32:00.428Z"));
     }
