@@ -21,8 +21,8 @@ class DefaultPasscodeSettingsTest {
     }
 
     @Test
-    void shouldReturnMaxAttempts() {
-        assertThat(settings.getMaxDeliveryAttempts()).isEqualTo(3);
+    void shouldReturnMaxDeliveries() {
+        assertThat(settings.getMaxDeliveries()).isEqualTo(3);
     }
 
 }

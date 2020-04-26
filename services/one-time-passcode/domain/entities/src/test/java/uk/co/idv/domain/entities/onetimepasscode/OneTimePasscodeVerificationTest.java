@@ -2,7 +2,7 @@ package uk.co.idv.domain.entities.onetimepasscode;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.VerificationStatus;
-import uk.co.idv.domain.entities.onetimepasscode.exception.NoDeliveryAttemptsRemainingException;
+import uk.co.idv.domain.entities.onetimepasscode.exception.NoDeliveriesRemainingException;
 import uk.co.idv.domain.entities.onetimepasscode.exception.VerificationAlreadyCompleteException;
 
 import java.time.Instant;
@@ -63,10 +63,10 @@ class OneTimePasscodeVerificationTest {
         final int maxDeliveries = 3;
 
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxDeliveryAttempts(maxDeliveries)
+                .maxDeliveries(maxDeliveries)
                 .build();
 
-        assertThat(verification.getMaxDeliveryAttempts()).isEqualTo(maxDeliveries);
+        assertThat(verification.getMaxDeliveries()).isEqualTo(maxDeliveries);
     }
 
     @Test
@@ -140,33 +140,33 @@ class OneTimePasscodeVerificationTest {
     @Test
     void shouldThrowExceptionIfDeliveryIsRecordedWhenNoDeliveriesAreRemaining() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxDeliveryAttempts(1)
+                .maxDeliveries(1)
                 .build();
         final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
         verification.record(delivery);
 
         final Throwable error = catchThrowable(() -> verification.record(delivery));
 
-        assertThat(error).isInstanceOf(NoDeliveryAttemptsRemainingException.class);
+        assertThat(error).isInstanceOf(NoDeliveriesRemainingException.class);
     }
 
     @Test
     void shouldDecrementDeliveriesRemainingAfterDeliveryIsRecorded() {
         final int maxDeliveries = 1;
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxDeliveryAttempts(maxDeliveries)
+                .maxDeliveries(maxDeliveries)
                 .build();
         final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
 
-        assertThat(verification.getDeliveryAttemptsRemaining()).isEqualTo(maxDeliveries);
+        assertThat(verification.getDeliveriesRemaining()).isEqualTo(maxDeliveries);
         verification.record(delivery);
-        assertThat(verification.getDeliveryAttemptsRemaining()).isEqualTo(maxDeliveries - 1);
+        assertThat(verification.getDeliveriesRemaining()).isEqualTo(maxDeliveries - 1);
     }
 
     @Test
     void shouldReturnRecordedDeliveries() {
         final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
-                .maxDeliveryAttempts(1)
+                .maxDeliveries(1)
                 .build();
         final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery();
 

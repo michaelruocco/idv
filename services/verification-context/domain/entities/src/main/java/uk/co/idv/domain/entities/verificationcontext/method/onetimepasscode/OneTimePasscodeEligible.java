@@ -60,8 +60,8 @@ public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible 
         return passcodeSettings.getLength();
     }
 
-    public int getMaxDeliveryAttempts() {
-        return passcodeSettings.getMaxDeliveryAttempts();
+    public int getMaxDeliveries() {
+        return passcodeSettings.getMaxDeliveries();
     }
 
     @Override

@@ -80,13 +80,13 @@ class OneTimePasscodeVerificationFactoryTest {
     }
 
     @Test
-    void shouldPopulateMaxDeliveryAttempts() {
+    void shouldPopulateMaxDeliveries() {
         final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
         final OneTimePasscodeVerification verification = factory.build(context);
 
-        assertThat(verification.getMaxDeliveryAttempts()).isEqualTo(method.getMaxDeliveryAttempts());
+        assertThat(verification.getMaxDeliveries()).isEqualTo(method.getMaxDeliveries());
     }
 
 }

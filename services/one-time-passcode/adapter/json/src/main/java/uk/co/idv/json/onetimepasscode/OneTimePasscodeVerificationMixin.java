@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "expiry",
         "complete",
         "status",
-        "maxDeliveryAttempts",
+        "maxDeliveries",
         "maxAttempts"
 })
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public interface OneTimePasscodeVerificationMixin {
 
     @JsonIgnore
-    int getDeliveryAttemptsRemaining();
+    int getDeliveriesRemaining();
 
     @JsonIgnore
     int getAttemptsRemaining();

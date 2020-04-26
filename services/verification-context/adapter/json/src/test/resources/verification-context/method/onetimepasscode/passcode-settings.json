@@ -1,5 +1,5 @@
 {
   "length": 8,
   "duration": 150000,
-  "maxDeliveryAttempts": 3
+  "maxDeliveries": 3
 }

@@ -6,7 +6,7 @@
   "complete": true,
   "completed": "2019-09-21T20:45:32.233721Z",
   "status": "successful",
-  "maxDeliveryAttempts": 3,
+  "maxDeliveries": 3,
   "maxAttempts": 5,
   "deliveries": [
     {

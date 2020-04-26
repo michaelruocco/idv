@@ -26,7 +26,7 @@ public class OneTimePasscodeVerificationFactory {
                 .created(created)
                 .expiry(created.plus(method.getDuration()))
                 .maxAttempts(method.getMaxAttempts())
-                .maxDeliveryAttempts(settings.getMaxDeliveryAttempts())
+                .maxDeliveries(settings.getMaxDeliveries())
                 .build();
     }
 

@@ -32,7 +32,7 @@ public class OneTimePasscodeVerificationDeserializer extends StdDeserializer<One
                 .created(JsonNodeConverter.toInstant(node.get("created")))
                 .expiry(JsonNodeConverter.toInstant(node.get("expiry")))
                 .status(node.get("status").asText())
-                .maxDeliveryAttempts(node.get("maxDeliveryAttempts").asInt())
+                .maxDeliveries(node.get("maxDeliveries").asInt())
                 .maxAttempts(node.get("maxAttempts").asInt())
                 .deliveries(new ArrayList<>(extractDeliveries(parser, node)))
                 .attempts(new ArrayList<>(extractAttempts(parser, node)))

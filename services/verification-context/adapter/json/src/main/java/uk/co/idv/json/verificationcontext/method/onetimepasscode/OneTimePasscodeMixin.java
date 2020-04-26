@@ -9,6 +9,6 @@ public interface OneTimePasscodeMixin extends VerificationMethodMixin {
     int getPasscodeLength();
 
     @JsonIgnore
-    int getMaxDeliveryAttempts();
+    int getMaxDeliveries();
 
 }

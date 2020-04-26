@@ -20,7 +20,7 @@ public class DefaultPasscodeSettings implements PasscodeSettings {
     }
 
     @Override
-    public int getMaxDeliveryAttempts() {
+    public int getMaxDeliveries() {
         return 3;
     }
 

@@ -3,7 +3,7 @@ package uk.co.idv.domain.entities.onetimepasscode;
 import lombok.Builder;
 import lombok.Getter;
 import uk.co.idv.domain.entities.VerificationStatus;
-import uk.co.idv.domain.entities.onetimepasscode.exception.NoDeliveryAttemptsRemainingException;
+import uk.co.idv.domain.entities.onetimepasscode.exception.NoDeliveriesRemainingException;
 import uk.co.idv.domain.entities.onetimepasscode.exception.VerificationAlreadyCompleteException;
 
 import java.time.Instant;
@@ -21,7 +21,7 @@ public class OneTimePasscodeVerification {
     private final UUID contextId;
     private final Instant created;
     private final Instant expiry;
-    private final int maxDeliveryAttempts;
+    private final int maxDeliveries;
     private final int maxAttempts;
 
     @Builder.Default
@@ -50,13 +50,13 @@ public class OneTimePasscodeVerification {
     public void record(final OneTimePasscodeDelivery delivery) {
         validateComplete();
         if (!hasDeliveriesRemaining()) {
-            throw new NoDeliveryAttemptsRemainingException(id, getMaxDeliveryAttempts());
+            throw new NoDeliveriesRemainingException(id, getMaxDeliveries());
         }
         this.deliveries.add(delivery);
     }
 
-    public int getDeliveryAttemptsRemaining() {
-        return maxDeliveryAttempts - deliveries.size();
+    public int getDeliveriesRemaining() {
+        return maxDeliveries - deliveries.size();
     }
 
     public void verify(final Collection<OneTimePasscodeVerificationAttempt> attempts) {
@@ -87,7 +87,7 @@ public class OneTimePasscodeVerification {
     }
 
     private boolean hasDeliveriesRemaining() {
-        return getDeliveryAttemptsRemaining() > 0;
+        return getDeliveriesRemaining() > 0;
     }
 
     private boolean hasAttemptsRemaining() {

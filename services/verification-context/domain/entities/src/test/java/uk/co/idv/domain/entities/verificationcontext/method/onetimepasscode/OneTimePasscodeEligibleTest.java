@@ -58,8 +58,8 @@ class OneTimePasscodeEligibleTest {
     }
 
     @Test
-    void shouldReturnMaxDeliveryAttempts() {
-        assertThat(method.getMaxDeliveryAttempts()).isEqualTo(passcodeSettings.getMaxDeliveryAttempts());
+    void shouldReturnMaxDeliveries() {
+        assertThat(method.getMaxDeliveries()).isEqualTo(passcodeSettings.getMaxDeliveries());
     }
 
     @Test
