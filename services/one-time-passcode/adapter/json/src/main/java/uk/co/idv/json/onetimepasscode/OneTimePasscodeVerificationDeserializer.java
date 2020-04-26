@@ -15,10 +15,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 public class OneTimePasscodeVerificationDeserializer extends StdDeserializer<OneTimePasscodeVerification> {
 
-    OneTimePasscodeVerificationDeserializer() {
+    public OneTimePasscodeVerificationDeserializer() {
         super(OneTimePasscodeVerification.class);
     }
 
@@ -39,27 +40,21 @@ public class OneTimePasscodeVerificationDeserializer extends StdDeserializer<One
                 .build();
     }
 
-    private static Collection<OneTimePasscodeDelivery> extractDeliveries(final JsonParser parser, final JsonNode node) throws IOException {
-        if (node.has("deliveries")) {
-            final JsonNode deliveriesNoes = node.get("deliveries");
-            return Arrays.asList(deliveriesNoes.traverse(parser.getCodec()).readValueAs(OneTimePasscodeDelivery[].class));
-        }
-        return Collections.emptyList();
+    private static Collection<OneTimePasscodeDelivery> extractDeliveries(final JsonParser parser, final JsonNode node) {
+        final JsonNode deliveries = node.get("deliveries");
+        return Arrays.asList(JsonNodeConverter.toObject(deliveries, parser, OneTimePasscodeDelivery[].class));
     }
 
-    private static Collection<OneTimePasscodeVerificationAttempt> extractAttempts(final JsonParser parser, final JsonNode node) throws IOException {
-        if (node.has("attempts")) {
-            final JsonNode attemptsNode = node.get("attempts");
-            return Arrays.asList(attemptsNode.traverse(parser.getCodec()).readValueAs(OneTimePasscodeVerificationAttempt[].class));
-        }
-        return Collections.emptyList();
+    private static Collection<OneTimePasscodeVerificationAttempt> extractAttempts(final JsonParser parser, final JsonNode node) {
+        return Optional.ofNullable(node.get("attempts"))
+                .map(attempts -> Arrays.asList(JsonNodeConverter.toObject(attempts, parser, OneTimePasscodeVerificationAttempt[].class)))
+                .orElse(Collections.emptyList());
     }
 
     private Instant extractCompleted(final JsonNode node) {
-        if (node.has("completed")) {
-            return JsonNodeConverter.toInstant(node.get("completed"));
-        }
-        return null;
+        return Optional.ofNullable(node.get("completed"))
+                .map(JsonNodeConverter::toInstant)
+                .orElse(null);
     }
 
 }

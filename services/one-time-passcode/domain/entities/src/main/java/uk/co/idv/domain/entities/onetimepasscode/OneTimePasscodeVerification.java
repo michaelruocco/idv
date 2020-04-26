@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
+//TODO try making this immutable
 @Builder
 @Getter
 public class OneTimePasscodeVerification {
@@ -24,13 +25,13 @@ public class OneTimePasscodeVerification {
     private final int maxAttempts;
 
     @Builder.Default
+    private final Collection<OneTimePasscodeDelivery> deliveries = new ArrayList<>();
+
+    @Builder.Default
+    private final Collection<OneTimePasscodeVerificationAttempt> attempts = new ArrayList<>();
+
+    @Builder.Default
     private String status = VerificationStatus.PENDING;
-
-    @Builder.Default
-    private Collection<OneTimePasscodeDelivery> deliveries = new ArrayList<>();
-
-    @Builder.Default
-    private Collection<OneTimePasscodeVerificationAttempt> attempts = new ArrayList<>();
 
     private Instant completed;
 
@@ -101,7 +102,6 @@ public class OneTimePasscodeVerification {
         this.attempts.add(attempt);
         this.completed = attempt.getCreated();
         this.status = VerificationStatus.SUCCESSFUL;
-
     }
 
     private void handleFailed(final OneTimePasscodeVerificationAttempt attempt) {

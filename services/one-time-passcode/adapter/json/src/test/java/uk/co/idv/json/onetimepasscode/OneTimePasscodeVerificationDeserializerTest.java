@@ -15,12 +15,24 @@ public class OneTimePasscodeVerificationDeserializerTest {
     private static final ObjectMapper MAPPER = new OneTimePasscodeObjectMapperFactory().build();
 
     @Test
-    void shouldDeserializeVerification() throws IOException {
+    void shouldDeserializePendingVerification() throws IOException {
         final String json = ContentLoader.loadContentFromClasspath("one-time-passcode-verification-pending.json");
 
         final OneTimePasscodeVerification verification = MAPPER.readValue(json, OneTimePasscodeVerification.class);
 
         final OneTimePasscodeVerification expectedVerification = OneTimePasscodeVerificationMother.pending();
+        assertThat(verification).isEqualToIgnoringGivenFields(expectedVerification, "deliveries", "attempts");
+        assertThat(verification.getDeliveries()).containsExactlyElementsOf(expectedVerification.getDeliveries());
+        assertThat(verification.getAttempts()).containsExactlyElementsOf(expectedVerification.getAttempts());
+    }
+
+    @Test
+    void shouldDeserializeCompleteVerification() throws IOException {
+        final String json = ContentLoader.loadContentFromClasspath("one-time-passcode-verification-successful.json");
+
+        final OneTimePasscodeVerification verification = MAPPER.readValue(json, OneTimePasscodeVerification.class);
+
+        final OneTimePasscodeVerification expectedVerification = OneTimePasscodeVerificationMother.successful();
         assertThat(verification).isEqualToIgnoringGivenFields(expectedVerification, "deliveries", "attempts");
         assertThat(verification.getDeliveries()).containsExactlyElementsOf(expectedVerification.getDeliveries());
         assertThat(verification.getAttempts()).containsExactlyElementsOf(expectedVerification.getAttempts());

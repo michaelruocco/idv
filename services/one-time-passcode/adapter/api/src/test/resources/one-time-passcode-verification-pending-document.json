@@ -21,12 +21,6 @@
           "message": "Your verification code is 12345678",
           "sent": "2019-09-21T20:44:52.233721Z"
         }
-      ],
-      "attempts": [
-        {
-          "created": "2019-09-21T20:45:32.233721Z",
-          "passcode": "12345678"
-        }
       ]
     }
   }
