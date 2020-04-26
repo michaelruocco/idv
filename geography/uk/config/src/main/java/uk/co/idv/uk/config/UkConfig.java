@@ -2,8 +2,6 @@ package uk.co.idv.uk.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
-import uk.co.idv.api.lockout.policy.soft.SoftLockIntervalDtoConverter;
-import uk.co.idv.api.lockout.policy.soft.SoftLockIntervalDtosConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
@@ -31,22 +29,11 @@ public class UkConfig {
     }
 
     public DefaultLockoutPolicyAttributesConverter lockoutPolicyAttributesConverter() {
-        return new UkLockoutPolicyAttributesConverter(
-                recordAttemptStrategyFactory(),
-                softLockIntervalDtosConverter()
-        );
+        return new UkLockoutPolicyAttributesConverter(recordAttemptStrategyFactory());
     }
 
     private RecordAttemptStrategyFactory recordAttemptStrategyFactory() {
         return new RecordAttemptStrategyFactory();
-    }
-
-    private SoftLockIntervalDtosConverter softLockIntervalDtosConverter() {
-        return new SoftLockIntervalDtosConverter(softLockIntervalDtoConverter());
-    }
-
-    private SoftLockIntervalDtoConverter softLockIntervalDtoConverter() {
-        return new SoftLockIntervalDtoConverter();
     }
 
 }

@@ -7,12 +7,8 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategyFactory;
-import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockIntervals;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
-
-import java.util.Collection;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -21,11 +17,9 @@ import static org.mockito.Mockito.mock;
 class SoftLockoutPolicyAttributesConverterTest {
 
     private final RecordAttemptStrategyFactory recordAttemptStrategyFactory = mock(RecordAttemptStrategyFactory.class);
-    private final SoftLockIntervalDtosConverter softLockIntervalDtosConverter = mock(SoftLockIntervalDtosConverter.class);
 
     private final SoftLockoutPolicyAttributesConverter converter = SoftLockoutPolicyAttributesConverter.builder()
             .recordAttemptStrategyFactory(recordAttemptStrategyFactory)
-            .softLockIntervalDtosConverter(softLockIntervalDtosConverter)
             .build();
 
     @Test
@@ -79,12 +73,10 @@ class SoftLockoutPolicyAttributesConverterTest {
     @Test
     void shouldPopulateIntervalsOnPolicy() {
         final SoftLockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.softLock();
-        final SoftLockIntervals intervals = mock(SoftLockIntervals.class);
-        given(softLockIntervalDtosConverter.toIntervals(attributes.getIntervals())).willReturn(intervals);
 
         final SoftLockoutPolicy policy = (SoftLockoutPolicy) converter.toPolicy(attributes);
 
-        assertThat(policy.getIntervals()).isEqualTo(intervals);
+        assertThat(policy.getIntervals()).isEqualTo(attributes.getIntervals());
     }
 
     @Test
@@ -124,14 +116,12 @@ class SoftLockoutPolicyAttributesConverterTest {
     }
 
     @Test
-    void shouldPopulateIntervalDtosOnAttributes() {
+    void shouldPopulateIntervalsOnAttributes() {
         final SoftLockoutPolicy policy = LockoutPolicyMother.softLockoutPolicy();
-        final Collection<SoftLockIntervalDto> dtos = Collections.emptyList();
-        given(softLockIntervalDtosConverter.toDtos(policy.getIntervals())).willReturn(dtos);
 
         final SoftLockoutPolicyAttributes attributes = (SoftLockoutPolicyAttributes) converter.toAttributes(policy);
 
-        assertThat(attributes.getIntervals()).isEqualTo(dtos);
+        assertThat(attributes.getIntervals()).isEqualTo(policy.getIntervals());
     }
 
 }

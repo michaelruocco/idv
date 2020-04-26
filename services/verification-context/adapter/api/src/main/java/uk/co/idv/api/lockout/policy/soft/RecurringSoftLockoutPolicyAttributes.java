@@ -6,6 +6,7 @@ import lombok.Getter;
 import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributes;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockInterval;
 
 import java.util.UUID;
 
@@ -13,13 +14,13 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class RecurringSoftLockoutPolicyAttributes extends DefaultLockoutPolicyAttributes {
 
-    private final SoftLockIntervalDto interval;
+    private final SoftLockInterval interval;
 
     @Builder
     public RecurringSoftLockoutPolicyAttributes(final UUID id,
                                                 final String recordAttempts,
                                                 final LockoutLevel lockoutLevel,
-                                                final SoftLockIntervalDto interval) {
+                                                final SoftLockInterval interval) {
         super(id,
                 RecurringSoftLockoutStateCalculator.TYPE,
                 recordAttempts,

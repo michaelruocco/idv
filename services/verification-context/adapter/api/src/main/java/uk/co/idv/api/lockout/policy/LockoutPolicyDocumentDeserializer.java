@@ -1,9 +1,9 @@
 package uk.co.idv.api.lockout.policy;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import uk.co.idv.api.lockout.policy.hard.HardLockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.soft.RecurringSoftLockoutPolicyAttributes;
-import uk.co.idv.api.lockout.policy.soft.SoftLockIntervalDto;
 import uk.co.idv.api.lockout.policy.soft.SoftLockoutPolicyAttributes;
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutLevel;
@@ -11,7 +11,10 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockInterval;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockIntervals;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 import uk.co.mruoc.jsonapi.ApiDataDocumentRequest;
 import uk.co.mruoc.jsonapi.ApiDocumentDeserializer;
 import uk.co.mruoc.jsonapi.ApiDocumentFactory;
@@ -43,9 +46,9 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
                 case NonLockingLockoutStateCalculator.TYPE:
                     return toLockoutPolicyAttributes(dataNode);
                 case SoftLockoutStateCalculator.TYPE:
-                    return toSoftLockoutPolicyAttributes(dataNode);
+                    return toSoftLockoutPolicyAttributes(request);
                 case RecurringSoftLockoutStateCalculator.TYPE:
-                    return toRecurringSoftLockoutPolicyAttributes(dataNode);
+                    return toRecurringSoftLockoutPolicyAttributes(request);
                 default:
                     throw new LockoutTypeNotSupportedException(type);
             }
@@ -71,23 +74,25 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
             );
         }
 
-        private static LockoutPolicyAttributes toSoftLockoutPolicyAttributes(final JsonNode dataNode) {
+        private static LockoutPolicyAttributes toSoftLockoutPolicyAttributes(final ApiDataDocumentRequest request) {
+            final JsonNode dataNode = request.getDataNode();
             final JsonNode attributesNode = extractAttributes(dataNode);
             return SoftLockoutPolicyAttributes.builder()
                     .id(toId(dataNode))
                     .lockoutLevel(toLockoutLevel(attributesNode))
                     .recordAttempts(toRecordAttemptStrategy(attributesNode))
-                    .intervals(toIntervals(attributesNode.get("intervals")))
+                    .intervals(toIntervals(attributesNode.get("intervals"), request.getParser()))
                     .build();
         }
 
-        private static LockoutPolicyAttributes toRecurringSoftLockoutPolicyAttributes(final JsonNode dataNode) {
+        private static LockoutPolicyAttributes toRecurringSoftLockoutPolicyAttributes(final ApiDataDocumentRequest request) {
+            final JsonNode dataNode = request.getDataNode();
             final JsonNode attributesNode = extractAttributes(dataNode);
             return RecurringSoftLockoutPolicyAttributes.builder()
                     .id(toId(dataNode))
                     .lockoutLevel(toLockoutLevel(attributesNode))
                     .recordAttempts(toRecordAttemptStrategy(attributesNode))
-                    .interval(toInterval(attributesNode.get("interval")))
+                    .interval(toInterval(attributesNode.get("interval"), request.getParser()))
                     .build();
         }
 
@@ -116,18 +121,12 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
             return values;
         }
 
-        private static Collection<SoftLockIntervalDto> toIntervals(final JsonNode node) {
-            final Collection<SoftLockIntervalDto> intervals = new ArrayList<>();
-            for (final JsonNode intervalNode : node) {
-                intervals.add(toInterval(intervalNode));
-            }
-            return intervals;
+        private static SoftLockIntervals toIntervals(final JsonNode node, final JsonParser parser) {
+            return JsonNodeConverter.toObject(node, parser, SoftLockIntervals.class);
         }
 
-        private static SoftLockIntervalDto toInterval(final JsonNode node) {
-            final int numberOfAttempts = node.get("numberOfAttempts").asInt();
-            final long duration = node.get("duration").asLong();
-            return new SoftLockIntervalDto(numberOfAttempts, duration);
+        private static SoftLockInterval toInterval(final JsonNode node, final JsonParser parser) {
+            return JsonNodeConverter.toObject(node, parser, SoftLockInterval.class);
         }
 
         private static JsonNode extractAttributes(final JsonNode node) {

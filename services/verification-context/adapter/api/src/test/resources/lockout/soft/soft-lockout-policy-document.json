@@ -18,10 +18,6 @@
         {
           "numberOfAttempts": 1,
           "duration": 60000
-        },
-        {
-          "numberOfAttempts": 2,
-          "duration": 120000
         }
       ]
     }
