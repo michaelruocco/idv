@@ -23,7 +23,7 @@ class NonLockingLockoutPolicyJsonNodeConverterTest {
 
         final LockoutPolicy expectedPolicy = LockoutPolicyMother.nonLockingPolicy();
         assertThat(policy).isEqualToIgnoringGivenFields(expectedPolicy, "level");
-        LockoutAssertions.assertThat(policy.getLockoutLevel()).isEqualTo(expectedPolicy.getLockoutLevel());
+        LockoutAssertions.assertThat(policy.getLevel()).isEqualTo(expectedPolicy.getLevel());
     }
 
 }

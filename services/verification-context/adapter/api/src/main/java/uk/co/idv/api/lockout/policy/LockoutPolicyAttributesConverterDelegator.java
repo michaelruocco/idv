@@ -27,7 +27,7 @@ public class LockoutPolicyAttributesConverterDelegator {
     }
 
     public LockoutPolicyAttributes toAttributes(final LockoutPolicy policy) {
-        final String type = policy.getLockoutType();
+        final String type = policy.getType();
         return findConverter(type)
                 .map(converter -> converter.toAttributes(policy))
                 .orElseThrow(() -> new LockoutTypeNotSupportedException(type));

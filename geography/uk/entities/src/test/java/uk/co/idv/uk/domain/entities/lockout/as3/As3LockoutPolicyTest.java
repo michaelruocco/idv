@@ -25,7 +25,7 @@ class As3LockoutPolicyTest {
 
     @Test
     void shouldReturnAs3LockoutLevel() {
-        final LockoutLevel level = policy.getLockoutLevel();
+        final LockoutLevel level = policy.getLevel();
 
         assertThat(level).isInstanceOf(As3LockoutLevel.class);
     }

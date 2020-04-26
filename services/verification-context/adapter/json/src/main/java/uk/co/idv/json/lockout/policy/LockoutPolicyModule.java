@@ -6,9 +6,11 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockInterval;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockIntervals;
 import uk.co.idv.json.lockout.policy.recordattempt.DefaultRecordAttemptStrategyDeserializer;
 import uk.co.idv.json.lockout.policy.soft.SoftLockIntervalDeserializer;
 import uk.co.idv.json.lockout.policy.soft.SoftLockIntervalSerializer;
+import uk.co.idv.json.lockout.policy.soft.SoftLockIntervalsDeserializer;
 
 public class LockoutPolicyModule extends SimpleModule {
 
@@ -21,6 +23,7 @@ public class LockoutPolicyModule extends SimpleModule {
         addSerializer(SoftLockInterval.class, new SoftLockIntervalSerializer());
 
         addDeserializer(SoftLockInterval.class, new SoftLockIntervalDeserializer());
+        addDeserializer(SoftLockIntervals.class, new SoftLockIntervalsDeserializer());
         addDeserializer(LockoutLevel.class, new LockoutLevelDeserializer());
         addDeserializer(RecordAttemptStrategy.class, new DefaultRecordAttemptStrategyDeserializer());
         addDeserializer(LockoutPolicy.class, new DefaultLockoutPolicyDeserializer());

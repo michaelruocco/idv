@@ -161,7 +161,7 @@ class DefaultLockoutPolicyServiceTest {
     void shouldCreatePolicyIfNoPoliciesAlreadyExistForSameLevel() {
         final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
         final LockoutLevel level = mock(LockoutLevel.class);
-        given(policy.getLockoutLevel()).willReturn(level);
+        given(policy.getLevel()).willReturn(level);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
         given(dao.load(request)).willReturn(Collections.emptyList());
 
@@ -176,7 +176,7 @@ class DefaultLockoutPolicyServiceTest {
         final LockoutLevel level = mock(LockoutLevel.class);
         final UUID id = UUID.randomUUID();
         given(policy.getId()).willReturn(id);
-        given(policy.getLockoutLevel()).willReturn(level);
+        given(policy.getLevel()).willReturn(level);
         given(policy.appliesTo(request)).willReturn(true);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
         given(dao.load(request)).willReturn(Collections.singleton(policy));
@@ -193,8 +193,8 @@ class DefaultLockoutPolicyServiceTest {
         final LockoutPolicy policy1 = mock(LockoutPolicy.class);
         final LockoutLevel level = mock(LockoutLevel.class);
         final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
-        given(policy.getLockoutLevel()).willReturn(level);
-        given(policy1.getLockoutLevel()).willReturn(level);
+        given(policy.getLevel()).willReturn(level);
+        given(policy1.getLevel()).willReturn(level);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
         given(dao.load(request)).willReturn(Collections.emptyList());
 

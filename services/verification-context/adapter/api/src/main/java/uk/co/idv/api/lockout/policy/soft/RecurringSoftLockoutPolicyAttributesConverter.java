@@ -36,7 +36,7 @@ public class RecurringSoftLockoutPolicyAttributesConverter implements LockoutPol
         return RecurringSoftLockoutPolicyAttributes.builder()
                 .id(softLockoutPolicy.getId())
                 .recordAttempts(softLockoutPolicy.getRecordAttemptStrategyType())
-                .lockoutLevel(softLockoutPolicy.getLockoutLevel())
+                .lockoutLevel(softLockoutPolicy.getLevel())
                 .interval(softLockIntervalDtosConverter.toDto(softLockoutPolicy.getInterval()))
                 .build();
     }

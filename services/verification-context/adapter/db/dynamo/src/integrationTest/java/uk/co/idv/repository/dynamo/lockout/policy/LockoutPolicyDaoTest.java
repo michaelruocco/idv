@@ -50,14 +50,14 @@ public class LockoutPolicyDaoTest {
 
         assertThat(loadedPolicy.isPresent()).isTrue();
         assertThat(loadedPolicy.get()).isEqualToIgnoringGivenFields(policy, "level");
-        LockoutAssertions.assertThat(loadedPolicy.get().getLockoutLevel()).isEqualTo(policy.getLockoutLevel());
+        LockoutAssertions.assertThat(loadedPolicy.get().getLevel()).isEqualTo(policy.getLevel());
     }
 
     @Test
     void shouldLoadLockoutPolicyByRequest() {
         final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
         dao.save(policy);
-        final LockoutLevel level = policy.getLockoutLevel();
+        final LockoutLevel level = policy.getLevel();
         final LockoutPolicyRequest request = DefaultLockoutPolicyRequest.builder()
                 .channelId(level.getChannelId())
                 .activityName(IterableUtils.get(level.getActivityNames(), 0))

@@ -34,7 +34,7 @@ public class HardLockoutPolicyAttributesConverter implements LockoutPolicyAttrib
                 .id(hardLockoutPolicy.getId())
                 .recordAttempts(hardLockoutPolicy.getRecordAttemptStrategyType())
                 .maxNumberOfAttempts(hardLockoutPolicy.getMaxNumberOfAttempts())
-                .lockoutLevel(hardLockoutPolicy.getLockoutLevel())
+                .lockoutLevel(hardLockoutPolicy.getLevel())
                 .build();
     }
 

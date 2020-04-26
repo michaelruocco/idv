@@ -24,7 +24,7 @@ class RsaLockoutPolicyTest {
 
     @Test
     void shouldReturnRsaLockoutLevel() {
-        final LockoutLevel level = policy.getLockoutLevel();
+        final LockoutLevel level = policy.getLevel();
 
         assertThat(level).isInstanceOf(RsaLockoutLevel.class);
     }

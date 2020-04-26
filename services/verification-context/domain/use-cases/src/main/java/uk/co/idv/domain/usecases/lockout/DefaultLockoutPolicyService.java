@@ -54,7 +54,7 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
 
     @Override
     public void create(final LockoutPolicy policy) {
-        final Collection<LockoutPolicy> existingPolicies = loadPolicies(policy.getLockoutLevel());
+        final Collection<LockoutPolicy> existingPolicies = loadPolicies(policy.getLevel());
         if (!existingPolicies.isEmpty()) {
             throw new LockoutPoliciesAlreadyExistException(existingPolicies);
         }

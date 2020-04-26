@@ -3,11 +3,11 @@
   "stateCalculator": {
     "type": "non-locking"
   },
-  "recordAttemptStrategy": {
+  "recordAttempts": {
     "type": "never"
   },
-  "lockoutType": "non-locking",
-  "lockoutLevel": {
+  "type": "non-locking",
+  "level": {
     "channelId": "fake-channel",
     "activityNames": [
       "fake-activity"
@@ -15,6 +15,5 @@
     "aliasTypes": [
       "fake-alias-type"
     ]
-  },
-  "channelId": "fake-channel"
+  }
 }

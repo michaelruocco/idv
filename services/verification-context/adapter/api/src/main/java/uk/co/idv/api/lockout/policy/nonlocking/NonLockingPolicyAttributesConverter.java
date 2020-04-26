@@ -30,9 +30,9 @@ public class NonLockingPolicyAttributesConverter implements LockoutPolicyAttribu
     public LockoutPolicyAttributes toAttributes(final LockoutPolicy policy) {
         return new DefaultLockoutPolicyAttributes(
                 policy.getId(),
-                policy.getLockoutType(),
+                policy.getType(),
                 policy.getRecordAttemptStrategyType(),
-                policy.getLockoutLevel()
+                policy.getLevel()
         );
     }
 

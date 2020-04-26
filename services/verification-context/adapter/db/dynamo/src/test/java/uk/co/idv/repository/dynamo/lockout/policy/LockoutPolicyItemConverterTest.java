@@ -43,7 +43,7 @@ class LockoutPolicyItemConverterTest {
 
         final Item item = converter.toItem(policy);
 
-        assertThat(item.getString("lockoutType")).isEqualTo(policy.getLockoutType());
+        assertThat(item.getString("lockoutType")).isEqualTo(policy.getType());
     }
 
     @Test

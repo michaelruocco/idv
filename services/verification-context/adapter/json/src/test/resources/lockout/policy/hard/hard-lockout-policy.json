@@ -4,12 +4,12 @@
     "maxNumberOfAttempts":3,
     "type": "hard-lock"
   },
-  "recordAttemptStrategy": {
+  "recordAttempts": {
     "type": "every-attempt"
   },
   "maxNumberOfAttempts":3,
-  "lockoutType": "hard-lock",
-  "lockoutLevel": {
+  "type": "hard-lock",
+  "level": {
     "channelId": "fake-channel",
     "activityNames": [
       "fake-activity"
@@ -17,6 +17,5 @@
     "aliasTypes": [
       "fake-alias-type"
     ]
-  },
-  "channelId": "fake-channel"
+  }
 }

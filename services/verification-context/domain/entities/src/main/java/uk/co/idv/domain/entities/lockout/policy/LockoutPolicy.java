@@ -14,7 +14,7 @@ public interface LockoutPolicy {
 
     UUID getId();
 
-    String getLockoutType();
+    String getType();
 
     String getRecordAttemptStrategyType();
 
@@ -34,6 +34,6 @@ public interface LockoutPolicy {
 
     RecordAttemptStrategy getRecordAttemptStrategy();
 
-    LockoutLevel getLockoutLevel();
+    LockoutLevel getLevel();
 
 }

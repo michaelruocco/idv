@@ -34,7 +34,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public String getLockoutType() {
+    public String getType() {
         return stateCalculator.getType();
     }
 
@@ -87,7 +87,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public LockoutLevel getLockoutLevel() {
+    public LockoutLevel getLevel() {
         return level;
     }
 

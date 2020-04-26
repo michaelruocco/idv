@@ -24,7 +24,7 @@ class NonLockingLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutLevel() {
-        assertThat(policy.getLockoutLevel()).isEqualTo(LEVEL);
+        assertThat(policy.getLevel()).isEqualTo(LEVEL);
     }
 
     @Test
@@ -39,7 +39,7 @@ class NonLockingLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(policy.getLockoutType()).isEqualTo(NonLockingLockoutStateCalculator.TYPE);
+        assertThat(policy.getType()).isEqualTo(NonLockingLockoutStateCalculator.TYPE);
     }
 
     @Test

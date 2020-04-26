@@ -7,15 +7,15 @@
     },
     "type": "recurring-soft-lock"
   },
-  "recordAttemptStrategy": {
+  "recordAttempts": {
     "type": "every-attempt"
   },
   "interval": {
     "numberOfAttempts": 1,
     "duration": 60000
   },
-  "lockoutType": "recurring-soft-lock",
-  "lockoutLevel": {
+  "type": "recurring-soft-lock",
+  "level": {
     "channelId": "fake-channel",
     "activityNames": [
       "fake-activity"
@@ -23,6 +23,5 @@
     "aliasTypes": [
       "fake-alias-type"
     ]
-  },
-  "channelId": "fake-channel"
+  }
 }

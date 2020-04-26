@@ -29,13 +29,13 @@ class LockoutPolicyAttributesConverterDelegatorTest {
     @Test
     void shouldThrowExceptionIfNoConverterSupportingLockoutPolicy() {
         final LockoutPolicy policy = mock(LockoutPolicy.class);
-        given(policy.getLockoutType()).willReturn("not-supported");
+        given(policy.getType()).willReturn("not-supported");
 
         final Throwable error = catchThrowable(() -> delegator.toAttributes(policy));
 
         assertThat(error)
                 .isInstanceOf(LockoutTypeNotSupportedException.class)
-                .hasMessage(policy.getLockoutType());
+                .hasMessage(policy.getType());
     }
 
     @Test
@@ -54,7 +54,7 @@ class LockoutPolicyAttributesConverterDelegatorTest {
     void shouldConvertLockoutPolicy() {
         final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
         final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.hardLock();
-        given(converter.supports(policy.getLockoutType())).willReturn(true);
+        given(converter.supports(policy.getType())).willReturn(true);
         given(converter.toAttributes(policy)).willReturn(expectedAttributes);
 
         final LockoutPolicyAttributes attributes = delegator.toAttributes(policy);

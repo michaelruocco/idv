@@ -29,7 +29,7 @@ public class LockoutPolicyDeserializer extends StdDeserializer<LockoutPolicy> {
     @Override
     public LockoutPolicy deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
         final JsonNode node = parser.getCodec().readTree(parser);
-        final String type = LockoutPolicyJsonNodeConverter.extractLockoutType(node);
+        final String type = LockoutPolicyJsonNodeConverter.toType(node);
         return findConverter(type)
                 .map(converter -> toPolicy(converter, node, parser, context))
                 .orElseThrow(() -> new LockoutTypeNotSupportedException(type));

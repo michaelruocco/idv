@@ -31,7 +31,7 @@ class RecurringSoftLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutLevel() {
-        assertThat(policy.getLockoutLevel()).isEqualTo(LEVEL);
+        assertThat(policy.getLevel()).isEqualTo(LEVEL);
     }
 
     @Test
@@ -46,7 +46,7 @@ class RecurringSoftLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(policy.getLockoutType()).isEqualTo(RecurringSoftLockoutStateCalculator.TYPE);
+        assertThat(policy.getType()).isEqualTo(RecurringSoftLockoutStateCalculator.TYPE);
     }
 
     @Test

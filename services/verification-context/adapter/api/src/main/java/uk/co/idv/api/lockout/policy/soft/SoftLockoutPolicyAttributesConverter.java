@@ -36,7 +36,7 @@ public class SoftLockoutPolicyAttributesConverter implements LockoutPolicyAttrib
         return SoftLockoutPolicyAttributes.builder()
                 .id(softLockoutPolicy.getId())
                 .recordAttempts(softLockoutPolicy.getRecordAttemptStrategyType())
-                .lockoutLevel(softLockoutPolicy.getLockoutLevel())
+                .lockoutLevel(softLockoutPolicy.getLevel())
                 .intervals(softLockIntervalDtosConverter.toDtos(softLockoutPolicy.getIntervals()))
                 .build();
     }

@@ -31,7 +31,7 @@ class SoftLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutLevel() {
-        assertThat(policy.getLockoutLevel()).isEqualTo(LEVEL);
+        assertThat(policy.getLevel()).isEqualTo(LEVEL);
     }
 
     @Test
@@ -46,7 +46,7 @@ class SoftLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(policy.getLockoutType()).isEqualTo(SoftLockoutStateCalculator.TYPE);
+        assertThat(policy.getType()).isEqualTo(SoftLockoutStateCalculator.TYPE);
     }
 
     @Test

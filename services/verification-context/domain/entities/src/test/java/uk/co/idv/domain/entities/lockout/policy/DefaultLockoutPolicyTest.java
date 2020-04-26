@@ -114,7 +114,7 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(policy.getLockoutType()).isEqualTo(stateCalculator.getType());
+        assertThat(policy.getType()).isEqualTo(stateCalculator.getType());
     }
 
     @Test
@@ -129,7 +129,7 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutLevel() {
-        final LockoutLevel result = policy.getLockoutLevel();
+        final LockoutLevel result = policy.getLevel();
 
         assertThat(result).isEqualTo(level);
     }
