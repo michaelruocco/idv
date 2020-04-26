@@ -5,6 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
+import uk.co.idv.domain.usecases.lockout.attempt.LockoutAttemptRecorder;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateLoader;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateResetter;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateValidator;
 
 @Builder
 @Slf4j

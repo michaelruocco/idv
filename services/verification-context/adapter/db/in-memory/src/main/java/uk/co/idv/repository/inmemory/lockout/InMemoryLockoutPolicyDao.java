@@ -1,7 +1,7 @@
 package uk.co.idv.repository.inmemory.lockout;
 
 import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 
 import java.util.Collection;

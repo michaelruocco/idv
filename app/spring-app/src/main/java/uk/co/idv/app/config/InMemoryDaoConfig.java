@@ -14,8 +14,8 @@ import uk.co.idv.repository.inmemory.lockout.InMemoryVerificationAttemptDao;
 import uk.co.idv.repository.inmemory.onetimepasscode.InMemoryOneTimePasscodeVerificationDao;
 import uk.co.idv.repository.inmemory.verificationcontext.InMemoryVerificationContextDao;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 
 @Configuration

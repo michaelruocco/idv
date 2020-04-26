@@ -1,6 +1,6 @@
 package uk.co.idv.repository.inmemory.lockout;
 
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
+import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.HashMap;

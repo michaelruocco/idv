@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 
 import java.util.Collection;
 import java.util.Collections;

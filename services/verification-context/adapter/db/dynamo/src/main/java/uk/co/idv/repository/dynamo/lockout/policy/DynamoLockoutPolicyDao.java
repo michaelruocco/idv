@@ -10,7 +10,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 
 import java.util.Collection;
 import java.util.Optional;

@@ -12,7 +12,7 @@ import uk.co.idv.domain.usecases.identity.FakeIdentityService;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
-import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateValidator.LockedOutException;
 import uk.co.idv.domain.entities.verificationcontext.StubVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;

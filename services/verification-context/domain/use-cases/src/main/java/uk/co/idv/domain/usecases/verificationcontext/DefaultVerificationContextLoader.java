@@ -3,7 +3,7 @@ package uk.co.idv.domain.usecases.verificationcontext;
 import lombok.Builder;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
-import uk.co.idv.domain.usecases.lockout.DefaultLoadLockoutStateRequest;
+import uk.co.idv.domain.usecases.lockout.state.DefaultLoadLockoutStateRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 

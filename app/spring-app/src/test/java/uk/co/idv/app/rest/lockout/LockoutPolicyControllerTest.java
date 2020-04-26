@@ -12,7 +12,7 @@ import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.api.lockout.policy.FakeLockoutPolicyAttributes;
 import uk.co.idv.api.lockout.policy.LockoutPoliciesDocument;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
-import uk.co.idv.domain.usecases.lockout.FakeLockoutPolicyService;
+import uk.co.idv.domain.usecases.lockout.policy.FakeLockoutPolicyService;
 
 import java.util.Collection;
 import java.util.Collections;

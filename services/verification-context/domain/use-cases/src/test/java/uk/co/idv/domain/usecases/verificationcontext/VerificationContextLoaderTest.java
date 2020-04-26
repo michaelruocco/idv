@@ -7,7 +7,7 @@ import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
-import uk.co.idv.domain.usecases.lockout.LockoutStateValidator.LockedOutException;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateValidator.LockedOutException;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader.VerificationContextNotFoundException;

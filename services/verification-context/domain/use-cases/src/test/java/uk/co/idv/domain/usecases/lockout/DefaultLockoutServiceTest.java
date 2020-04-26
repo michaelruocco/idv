@@ -6,6 +6,11 @@ import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
+import uk.co.idv.domain.usecases.lockout.attempt.LockoutAttemptRecorder;
+import uk.co.idv.domain.usecases.lockout.state.DefaultLoadLockoutStateRequest;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateLoader;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateResetter;
+import uk.co.idv.domain.usecases.lockout.state.LockoutStateValidator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

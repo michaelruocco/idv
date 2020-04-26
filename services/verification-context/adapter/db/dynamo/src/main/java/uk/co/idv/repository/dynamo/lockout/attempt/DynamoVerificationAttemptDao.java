@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
+import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
 import uk.co.idv.utils.json.converter.JsonConverter;
 
 import java.util.Optional;

@@ -2,7 +2,7 @@ package uk.co.idv.repository.inmemory.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 
 import java.util.Collection;

@@ -14,7 +14,7 @@ import uk.co.idv.api.lockout.policy.LockoutPolicyDocument;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.api.lockout.policy.LockoutPoliciesDocument;
 import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyService;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService;
 
 import java.net.URI;
 import java.util.Collection;

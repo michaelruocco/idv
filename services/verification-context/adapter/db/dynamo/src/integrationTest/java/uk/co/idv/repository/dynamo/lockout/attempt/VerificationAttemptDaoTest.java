@@ -6,7 +6,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
-import uk.co.idv.domain.usecases.lockout.VerificationAttemptDao;
+import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.json.lockout.attempt.VerificationAttemptsModule;
 import uk.co.idv.repository.dynamo.VerificationContextDynamoConfig;

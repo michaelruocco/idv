@@ -3,7 +3,7 @@ package uk.co.idv.domain.usecases.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyService.RequestedLockoutPolicyNotFoundException;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.RequestedLockoutPolicyNotFoundException;
 
 
 import static org.assertj.core.api.Assertions.assertThat;

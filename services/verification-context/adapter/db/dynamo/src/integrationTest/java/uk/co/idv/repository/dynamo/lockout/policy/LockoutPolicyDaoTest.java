@@ -11,7 +11,7 @@ import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
 import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
-import uk.co.idv.domain.usecases.lockout.LockoutPolicyDao;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.json.lockout.policy.LockoutPolicyModule;
 import uk.co.idv.repository.dynamo.VerificationContextDynamoConfig;

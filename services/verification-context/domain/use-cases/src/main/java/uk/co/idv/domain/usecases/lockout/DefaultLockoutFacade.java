@@ -8,6 +8,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
+import uk.co.idv.domain.usecases.lockout.state.DefaultLoadLockoutStateRequest;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 @Builder
