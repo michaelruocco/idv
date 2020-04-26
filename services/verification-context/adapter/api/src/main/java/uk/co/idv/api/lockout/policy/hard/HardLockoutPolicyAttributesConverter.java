@@ -22,7 +22,7 @@ public class HardLockoutPolicyAttributesConverter implements LockoutPolicyAttrib
         final HardLockoutPolicyAttributes hardLockoutAttributes = (HardLockoutPolicyAttributes) attributes;
         return new HardLockoutPolicy(
                 hardLockoutAttributes.getId(),
-                hardLockoutAttributes.getLockoutLevel(),
+                hardLockoutAttributes.getLevel(),
                 recordAttemptStrategyFactory.build(hardLockoutAttributes.getRecordAttempts()),
                 hardLockoutAttributes.getMaxNumberOfAttempts()
         );

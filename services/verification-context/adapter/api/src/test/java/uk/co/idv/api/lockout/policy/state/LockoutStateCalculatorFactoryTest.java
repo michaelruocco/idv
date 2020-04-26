@@ -21,13 +21,13 @@ class LockoutStateCalculatorFactoryTest {
     @Test
     void shouldThrowLockoutTypeNotSupportedExceptionForInvalidLockoutType() {
         final DefaultLockoutPolicyAttributes parameters = mock(DefaultLockoutPolicyAttributes.class);
-        given(parameters.getLockoutType()).willReturn("invalid");
+        given(parameters.getType()).willReturn("invalid");
 
         final Throwable error = catchThrowable(() -> factory.build(parameters));
 
         assertThat(error)
                 .isInstanceOf(LockoutTypeNotSupportedException.class)
-                .hasMessage(parameters.getLockoutType());
+                .hasMessage(parameters.getType());
     }
 
     @Test

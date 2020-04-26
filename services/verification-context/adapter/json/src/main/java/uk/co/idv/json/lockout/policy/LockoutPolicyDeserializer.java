@@ -4,50 +4,47 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.Map;
 
 public class LockoutPolicyDeserializer extends StdDeserializer<LockoutPolicy> {
 
-    private final Collection<LockoutPolicyJsonNodeConverter> converters;
+    private final Map<String, Class<? extends LockoutPolicy>> mappings;
 
-    public LockoutPolicyDeserializer(final LockoutPolicyJsonNodeConverter... converters) {
-        this(Arrays.asList(converters));
+    public LockoutPolicyDeserializer() {
+        this(buildDefaultMappings());
     }
 
-    public LockoutPolicyDeserializer(final Collection<LockoutPolicyJsonNodeConverter> converters) {
+    public LockoutPolicyDeserializer(final Map<String, Class<? extends LockoutPolicy>> mappings) {
         super(LockoutPolicy.class);
-        this.converters = converters;
+        this.mappings = mappings;
     }
 
     @Override
-    public LockoutPolicy deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
-        final JsonNode node = parser.getCodec().readTree(parser);
-        final String type = LockoutPolicyJsonNodeConverter.toType(node);
-        return findConverter(type)
-                .map(converter -> toPolicy(converter, node, parser, context))
-                .orElseThrow(() -> new LockoutTypeNotSupportedException(type));
+    public LockoutPolicy deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
+        final String type = node.get("type").asText();
+        return JsonNodeConverter.toObject(node, parser, mappings.get(type));
     }
 
-    private LockoutPolicy toPolicy(final LockoutPolicyJsonNodeConverter converter,
-                                   final JsonNode node,
-                                   final JsonParser parser,
-                                   final DeserializationContext context) {
-        try {
-            return converter.toPolicy(node, parser, context);
-        } catch (final IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    private Optional<LockoutPolicyJsonNodeConverter> findConverter(final String type) {
-        return converters.stream().filter(converter -> converter.supportsType(type)).findFirst();
+    private static Map<String, Class<? extends LockoutPolicy>> buildDefaultMappings() {
+        return Map.of(
+                SoftLockoutStateCalculator.TYPE, SoftLockoutPolicy.class,
+                RecurringSoftLockoutStateCalculator.TYPE, RecurringSoftLockoutPolicy.class,
+                HardLockoutStateCalculator.TYPE, HardLockoutPolicy.class,
+                NonLockingLockoutStateCalculator.TYPE, NonLockingLockoutPolicy.class
+        );
     }
 
 }

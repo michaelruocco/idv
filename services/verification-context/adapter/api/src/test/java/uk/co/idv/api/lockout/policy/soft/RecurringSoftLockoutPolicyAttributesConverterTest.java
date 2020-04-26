@@ -50,7 +50,7 @@ class RecurringSoftLockoutPolicyAttributesConverterTest {
 
         final LockoutPolicy policy = converter.toPolicy(attributes);
 
-        assertThat(policy.getLevel()).isEqualTo(attributes.getLockoutLevel());
+        assertThat(policy.getLevel()).isEqualTo(attributes.getLevel());
     }
 
     @Test
@@ -99,7 +99,7 @@ class RecurringSoftLockoutPolicyAttributesConverterTest {
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
-        assertThat(attributes.getLockoutLevel()).isEqualTo(policy.getLevel());
+        assertThat(attributes.getLevel()).isEqualTo(policy.getLevel());
     }
 
     @Test
@@ -117,7 +117,7 @@ class RecurringSoftLockoutPolicyAttributesConverterTest {
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
-        assertThat(attributes.getLockoutType()).isEqualTo(policy.getType());
+        assertThat(attributes.getType()).isEqualTo(policy.getType());
     }
 
     @Test

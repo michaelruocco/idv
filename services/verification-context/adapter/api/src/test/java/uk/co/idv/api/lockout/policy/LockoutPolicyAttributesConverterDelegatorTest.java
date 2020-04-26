@@ -23,7 +23,7 @@ class LockoutPolicyAttributesConverterDelegatorTest {
 
         assertThat(error)
                 .isInstanceOf(LockoutTypeNotSupportedException.class)
-                .hasMessage(attributes.getLockoutType());
+                .hasMessage(attributes.getType());
     }
 
     @Test
@@ -42,7 +42,7 @@ class LockoutPolicyAttributesConverterDelegatorTest {
     void shouldConvertLockoutPolicyAttributes() {
         final LockoutPolicy expectedPolicy = LockoutPolicyMother.hardLockoutPolicy();
         final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.hardLock();
-        given(converter.supports(attributes.getLockoutType())).willReturn(true);
+        given(converter.supports(attributes.getType())).willReturn(true);
         given(converter.toPolicy(attributes)).willReturn(expectedPolicy);
 
         final LockoutPolicy policy = delegator.toPolicy(attributes);

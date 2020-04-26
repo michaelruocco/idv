@@ -13,8 +13,8 @@ import java.util.UUID;
 public class DefaultLockoutPolicyAttributes implements LockoutPolicyAttributes {
 
     private UUID id;
-    private String lockoutType;
+    private String type;
     private String recordAttempts;
-    private LockoutLevel lockoutLevel;
+    private LockoutLevel level;
 
 }

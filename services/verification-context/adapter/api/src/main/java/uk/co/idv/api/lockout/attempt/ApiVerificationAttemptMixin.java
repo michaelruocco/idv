@@ -15,7 +15,7 @@ import java.util.UUID;
         "timestamp",
         "successful"
 })
-public interface VerificationAttemptMixin {
+public interface ApiVerificationAttemptMixin {
 
     @JsonIgnore
     UUID getIdvIdValue();

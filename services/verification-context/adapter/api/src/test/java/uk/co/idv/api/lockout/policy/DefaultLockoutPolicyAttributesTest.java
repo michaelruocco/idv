@@ -20,7 +20,7 @@ class DefaultLockoutPolicyAttributesTest {
 
     @Test
     void shouldReturnLockoutType() {
-        assertThat(parameters.getLockoutType()).isEqualTo(CustomLockoutPolicyAttributes.LOCKOUT_TYPE);
+        assertThat(parameters.getType()).isEqualTo(CustomLockoutPolicyAttributes.LOCKOUT_TYPE);
     }
 
     @Test
@@ -30,7 +30,7 @@ class DefaultLockoutPolicyAttributesTest {
 
     @Test
     void shouldReturnLockoutLevel() {
-        assertThat(parameters.getLockoutLevel()).isEqualTo(CustomLockoutPolicyAttributes.LOCKOUT_LEVEL);
+        assertThat(parameters.getLevel()).isEqualTo(CustomLockoutPolicyAttributes.LOCKOUT_LEVEL);
     }
 
     @Test

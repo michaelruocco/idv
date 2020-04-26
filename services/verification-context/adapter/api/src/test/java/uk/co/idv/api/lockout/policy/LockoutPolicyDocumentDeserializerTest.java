@@ -23,8 +23,8 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyAttributes attributes = document.getAttributes();
         final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.hardLock();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
-        LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test
@@ -35,8 +35,8 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyAttributes attributes = document.getAttributes();
         final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.nonLocking();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
-        LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test
@@ -47,8 +47,8 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyAttributes attributes = document.getAttributes();
         final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.softLock();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
-        LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test
@@ -59,8 +59,8 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyAttributes attributes = document.getAttributes();
         final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.recurringSoftLock();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "lockoutLevel");
-        LockoutAssertions.assertThat(attributes.getLockoutLevel()).isEqualTo(expectedAttributes.getLockoutLevel());
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test

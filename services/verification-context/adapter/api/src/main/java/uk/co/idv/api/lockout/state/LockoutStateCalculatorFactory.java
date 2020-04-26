@@ -9,7 +9,7 @@ import uk.co.idv.api.lockout.policy.LockoutPolicyAttributes;
 public class LockoutStateCalculatorFactory {
 
     public LockoutStateCalculator build(final LockoutPolicyAttributes parameters) {
-        final String type = parameters.getLockoutType();
+        final String type = parameters.getType();
         if (HardLockoutStateCalculator.TYPE.equals(type)) {
             return toHardLockoutStateCalculator((HardLockoutPolicyAttributes) parameters);
         }

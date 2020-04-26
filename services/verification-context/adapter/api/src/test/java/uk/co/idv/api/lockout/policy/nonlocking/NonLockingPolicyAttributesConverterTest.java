@@ -36,7 +36,7 @@ class NonLockingPolicyAttributesConverterTest {
 
         final LockoutPolicy policy = converter.toPolicy(parameters);
 
-        assertThat(policy.getLevel()).isEqualTo(parameters.getLockoutLevel());
+        assertThat(policy.getLevel()).isEqualTo(parameters.getLevel());
     }
 
     @Test
@@ -74,7 +74,7 @@ class NonLockingPolicyAttributesConverterTest {
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
-        assertThat(attributes.getLockoutLevel()).isEqualTo(policy.getLevel());
+        assertThat(attributes.getLevel()).isEqualTo(policy.getLevel());
     }
 
     @Test
@@ -92,7 +92,7 @@ class NonLockingPolicyAttributesConverterTest {
 
         final LockoutPolicyAttributes attributes = converter.toAttributes(policy);
 
-        assertThat(attributes.getLockoutType()).isEqualTo(policy.getType());
+        assertThat(attributes.getType()).isEqualTo(policy.getType());
     }
 
 }

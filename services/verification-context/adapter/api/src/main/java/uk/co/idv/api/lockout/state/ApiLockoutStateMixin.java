@@ -11,7 +11,7 @@ import java.util.UUID;
         "locked",
         "attempts"
 })
-public interface LockoutStateMixin {
+public interface ApiLockoutStateMixin {
 
     @JsonIgnore
     UUID getId();

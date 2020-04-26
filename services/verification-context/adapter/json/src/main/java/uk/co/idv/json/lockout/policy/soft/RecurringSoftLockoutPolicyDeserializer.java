@@ -3,24 +3,22 @@ package uk.co.idv.json.lockout.policy.soft;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockInterval;
 import uk.co.idv.json.lockout.policy.LockoutPolicyJsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
-public class RecurringSoftLockoutPolicyJsonNodeConverter implements LockoutPolicyJsonNodeConverter {
+public class RecurringSoftLockoutPolicyDeserializer extends StdDeserializer<RecurringSoftLockoutPolicy> {
 
-    @Override
-    public boolean supportsType(String type) {
-        return RecurringSoftLockoutStateCalculator.TYPE.equals(type);
+    public RecurringSoftLockoutPolicyDeserializer() {
+        super(RecurringSoftLockoutPolicy.class);
     }
 
     @Override
-    public LockoutPolicy toPolicy(final JsonNode node,
-                                  final JsonParser parser,
-                                  final DeserializationContext context) {
+    public RecurringSoftLockoutPolicy deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
         return new RecurringSoftLockoutPolicy(
                 JsonNodeConverter.toUUID(node.get("id")),
                 LockoutPolicyJsonNodeConverter.toLevel(node, parser),

@@ -3,23 +3,21 @@ package uk.co.idv.json.lockout.policy.nonlocking;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
 import uk.co.idv.json.lockout.policy.LockoutPolicyJsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
-public class NonLockingLockoutPolicyJsonNodeConverter implements LockoutPolicyJsonNodeConverter {
+public class NonLockingLockoutPolicyDeserializer extends StdDeserializer<NonLockingLockoutPolicy> {
 
-    @Override
-    public boolean supportsType(String type) {
-        return NonLockingLockoutStateCalculator.TYPE.equals(type);
+    public NonLockingLockoutPolicyDeserializer() {
+        super(NonLockingLockoutPolicy.class);
     }
 
     @Override
-    public LockoutPolicy toPolicy(final JsonNode node,
-                                  final JsonParser parser,
-                                  final DeserializationContext context) {
+    public NonLockingLockoutPolicy deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
         return new NonLockingLockoutPolicy(
                 JsonNodeConverter.toUUID(node.get("id")),
                 LockoutPolicyJsonNodeConverter.toLevel(node, parser),

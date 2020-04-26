@@ -25,7 +25,7 @@ public class SoftLockoutPolicyAttributesConverter implements LockoutPolicyAttrib
         final SoftLockoutPolicyAttributes softLockoutAttributes = (SoftLockoutPolicyAttributes) attributes;
         return new SoftLockoutPolicy(
                 softLockoutAttributes.getId(),
-                softLockoutAttributes.getLockoutLevel(),
+                softLockoutAttributes.getLevel(),
                 recordAttemptStrategyFactory.build(softLockoutAttributes.getRecordAttempts()),
                 softLockIntervalDtosConverter.toIntervals(softLockoutAttributes.getIntervals())
         );

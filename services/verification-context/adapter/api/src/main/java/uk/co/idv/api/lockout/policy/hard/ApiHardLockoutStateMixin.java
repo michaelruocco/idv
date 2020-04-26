@@ -1,7 +1,7 @@
 package uk.co.idv.api.lockout.policy.hard;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import uk.co.idv.api.lockout.state.LockoutStateMixin;
+import uk.co.idv.api.lockout.state.ApiLockoutStateMixin;
 
 @JsonPropertyOrder({
         "id",
@@ -11,7 +11,7 @@ import uk.co.idv.api.lockout.state.LockoutStateMixin;
         "numberOfAttemptsRemaining",
         "attempts"
 })
-public interface HardLockoutStateMixin extends LockoutStateMixin {
+public interface ApiHardLockoutStateMixin extends ApiLockoutStateMixin {
 
     // intentionally blank
 

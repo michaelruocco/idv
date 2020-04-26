@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class HardLockoutStateMixinTest {
+class ApiHardLockoutStateMixinTest {
 
     private static final ObjectMapper MAPPER = new ApiVerificationContextObjectMapperFactory().build();
 

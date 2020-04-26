@@ -22,7 +22,7 @@ public class NonLockingPolicyAttributesConverter implements LockoutPolicyAttribu
     public LockoutPolicy toPolicy(final LockoutPolicyAttributes attributes) {
         return new NonLockingLockoutPolicy(
                 attributes.getId(),
-                attributes.getLockoutLevel(),
+                attributes.getLevel(),
                 recordAttemptStrategyFactory.build(attributes.getRecordAttempts())
         );
     }

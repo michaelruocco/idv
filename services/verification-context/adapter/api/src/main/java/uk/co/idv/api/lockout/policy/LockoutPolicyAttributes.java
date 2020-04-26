@@ -10,8 +10,8 @@ public interface LockoutPolicyAttributes {
 
     String getRecordAttempts();
 
-    String getLockoutType();
+    String getType();
 
-    LockoutLevel getLockoutLevel();
+    LockoutLevel getLevel();
 
 }

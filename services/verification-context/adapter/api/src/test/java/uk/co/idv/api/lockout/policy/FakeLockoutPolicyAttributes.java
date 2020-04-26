@@ -17,12 +17,12 @@ public class FakeLockoutPolicyAttributes implements LockoutPolicyAttributes {
     }
 
     @Override
-    public String getLockoutType() {
+    public String getType() {
         return null;
     }
 
     @Override
-    public LockoutLevel getLockoutLevel() {
+    public LockoutLevel getLevel() {
         return null;
     }
 
