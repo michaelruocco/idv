@@ -19,7 +19,6 @@ import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
-import uk.co.idv.api.lockout.state.LockoutStateCalculatorFactory;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutFacade;
 import uk.co.idv.domain.usecases.lockout.policy.DefaultLockoutPolicyService;
 import uk.co.idv.domain.usecases.lockout.DefaultLockoutService;
@@ -67,11 +66,6 @@ public class VerificationContextDomainConfig {
     @Bean
     public SequenceLoader sequenceLoader() {
         return new StubbedSequenceLoader();
-    }
-
-    @Bean
-    public LockoutStateCalculatorFactory stateCalculatorFactory() {
-        return new LockoutStateCalculatorFactory();
     }
 
     @Bean

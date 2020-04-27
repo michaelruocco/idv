@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import uk.co.idv.api.lockout.policy.DefaultLockoutPolicyAttributesConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.uk.config.UkConfig;
@@ -33,11 +32,6 @@ public class UkSpringConfig {
     @Bean
     public LockoutPolicyProvider lockoutPolicyProvider() {
         return ukConfig.lockoutPolicyProvider();
-    }
-
-    @Bean
-    public DefaultLockoutPolicyAttributesConverter lockoutPolicyAttributesConverter() {
-        return ukConfig.lockoutPolicyAttributesConverter();
     }
 
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
 import uk.co.idv.json.lockout.policy.LockoutPolicyMixin;
 import uk.co.idv.json.lockout.policy.level.LockoutLevelModule;
 import uk.co.idv.json.lockout.policy.recordattempt.RecordAttemptStrategyModule;
@@ -18,7 +18,7 @@ public class HardLockoutPolicyModule extends SimpleModule {
 
         setMixInAnnotation(LockoutPolicy.class, LockoutPolicyMixin.class);
 
-        addDeserializer(HardLockoutPolicy.class, new HardLockoutPolicyDeserializer());
+        addDeserializer(HardLockoutStateCalculator.class, new HardLockoutStateCalculatorDeserializer());
     }
 
     @Override

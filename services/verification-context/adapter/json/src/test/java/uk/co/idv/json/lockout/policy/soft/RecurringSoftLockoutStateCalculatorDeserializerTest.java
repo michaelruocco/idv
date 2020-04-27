@@ -11,7 +11,7 @@ import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RecurringSoftLockoutPolicyDeserializerTest {
+class RecurringSoftLockoutStateCalculatorDeserializerTest {
 
     private static final ObjectMapper MAPPER = new LockoutPolicyObjectMapperFactory().build();
 

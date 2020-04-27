@@ -1,8 +1,18 @@
 {
   "data": {
-    "id": "39374b21-e603-4408-9155-d122e3c1222a",
+    "id": "1fc57cfa-6fff-411c-bc74-de71a938b30f",
     "type": "lockout-policies",
     "attributes": {
+      "stateCalculator": {
+        "interval": {
+          "numberOfAttempts": 1,
+          "duration": 60000
+        },
+        "type": "recurring-soft-lock"
+      },
+      "recordAttempts": {
+        "type": "every-attempt"
+      },
       "level": {
         "channelId": "fake-channel",
         "activityNames": [
@@ -11,12 +21,6 @@
         "aliasTypes": [
           "fake-alias-type"
         ]
-      },
-      "recordAttempts": "every-attempt",
-      "type": "recurring-soft-lock",
-      "interval": {
-        "numberOfAttempts": 1,
-        "duration": 60000
       }
     }
   }

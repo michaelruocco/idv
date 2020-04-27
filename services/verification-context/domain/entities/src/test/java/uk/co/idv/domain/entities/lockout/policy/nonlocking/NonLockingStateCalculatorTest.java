@@ -9,9 +9,9 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NonLockingLockoutStateCalculatorTest {
+class NonLockingStateCalculatorTest {
 
-    private final LockoutStateCalculator calculator = new NonLockingLockoutStateCalculator();
+    private final LockoutStateCalculator calculator = new NonLockingStateCalculator();
 
     @Test
     void shouldReturnNotLocked() {

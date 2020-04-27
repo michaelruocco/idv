@@ -42,7 +42,7 @@ public class AliasMappingItemConverter {
                 .collect(Collectors.toList());
         return Identity.builder()
                 .aliases(Aliases.with(aliases))
-                //TODO load phone numbers, accounts and mobile devices from database correctly
+                //TODO load phone numbers, accounts and mobile devices from database correctly once persisted
                 .phoneNumbers(new PhoneNumbers())
                 .accounts(Collections.emptyList())
                 .mobileDevices(Collections.emptyList())

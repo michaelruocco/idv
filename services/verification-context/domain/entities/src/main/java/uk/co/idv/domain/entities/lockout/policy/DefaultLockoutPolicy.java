@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
@@ -11,6 +12,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import java.util.UUID;
 
 @Slf4j
+@Builder
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private final UUID id;

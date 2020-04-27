@@ -3,7 +3,9 @@
     "id": "39374b21-e603-4408-9155-d122e3c1222a",
     "type": "lockout-policies",
     "attributes": {
-      "type": "invalid-type"
+      "stateCalculator": {
+        "type": "invalid-type"
+      }
     }
   }
 }

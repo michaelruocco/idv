@@ -1,4 +1,4 @@
-package uk.co.idv.api.lockout.policy.hard;
+package uk.co.idv.api.lockout.policy.state;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

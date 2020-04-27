@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.api.verificationcontext.ApiVerificationContextObjectMapperFactory;
 import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,8 +23,8 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
 
-        final LockoutPolicyAttributes attributes = document.getAttributes();
-        final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.hardLock();
+        final LockoutPolicy attributes = document.getAttributes();
+        final LockoutPolicy expectedAttributes = LockoutPolicyMother.hardLockoutPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
@@ -33,8 +35,8 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
 
-        final LockoutPolicyAttributes attributes = document.getAttributes();
-        final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.nonLocking();
+        final LockoutPolicy attributes = document.getAttributes();
+        final LockoutPolicy expectedAttributes = LockoutPolicyMother.nonLockingPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
@@ -45,8 +47,8 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
 
-        final LockoutPolicyAttributes attributes = document.getAttributes();
-        final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.softLock();
+        final LockoutPolicy attributes = document.getAttributes();
+        final LockoutPolicy expectedAttributes = LockoutPolicyMother.softLockoutPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
@@ -57,14 +59,14 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicyDocument document = MAPPER.readValue(json, LockoutPolicyDocument.class);
 
-        final LockoutPolicyAttributes attributes = document.getAttributes();
-        final LockoutPolicyAttributes expectedAttributes = LockoutPolicyAttributesMother.recurringSoftLock();
+        final LockoutPolicy attributes = document.getAttributes();
+        final LockoutPolicy expectedAttributes = LockoutPolicyMother.recurringSoftLockoutPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test
-    void shouldThrowExceptionIfLockoutPolicyTypeIsInvalid() {
+    void shouldThrowExceptionIfStateCalculatorTypeIsInvalid() {
         final String json = ContentLoader.loadContentFromClasspath("lockout/invalid-lockout-policy-document.json");
 
         final Throwable error = catchThrowable(() -> MAPPER.readValue(json, LockoutPolicyDocument.class));

@@ -26,10 +26,10 @@ public class ApiVerificationContextModule extends SimpleModule {
 
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
-                new ApiModule(),
-                new ApiLockoutStateModule(),
                 new VerificationContextModule(),
-                new LockoutPolicyModule()
+                new LockoutPolicyModule(),
+                new ApiModule(),
+                new ApiLockoutStateModule()
         );
     }
 

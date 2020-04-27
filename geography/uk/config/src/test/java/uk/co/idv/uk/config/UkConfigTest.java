@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
-import uk.co.idv.uk.api.lockout.policy.UkLockoutPolicyAttributesConverter;
 import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
 
 import java.util.Collection;
@@ -44,11 +43,6 @@ class UkConfigTest {
     @Test
     void shouldReturnUkLockoutPolicyProvider() {
         assertThat(config.lockoutPolicyProvider()).isInstanceOf(UkLockoutPolicyProvider.class);
-    }
-
-    @Test
-    void lockoutPolicyAttributesConverter() {
-        assertThat(config.lockoutPolicyAttributesConverter()).isInstanceOf(UkLockoutPolicyAttributesConverter.class);
     }
 
     private static Collection<Object> toIds(final Module module) {

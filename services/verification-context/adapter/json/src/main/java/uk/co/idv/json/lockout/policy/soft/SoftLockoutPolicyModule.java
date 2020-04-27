@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockInterval;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockIntervals;
-import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
 import uk.co.idv.json.DurationSerializer;
 import uk.co.idv.json.lockout.policy.LockoutPolicyMixin;
 import uk.co.idv.json.lockout.policy.level.LockoutLevelModule;
@@ -28,8 +28,8 @@ public class SoftLockoutPolicyModule extends SimpleModule {
         addDeserializer(SoftLockInterval.class, new SoftLockIntervalDeserializer());
         addDeserializer(SoftLockIntervals.class, new SoftLockIntervalsDeserializer());
 
-        addDeserializer(SoftLockoutPolicy.class, new SoftLockoutPolicyDeserializer());
-        addDeserializer(RecurringSoftLockoutPolicy.class, new RecurringSoftLockoutPolicyDeserializer());
+        addDeserializer(SoftLockoutStateCalculator.class, new SoftLockoutStateCalculatorDeserializer());
+        addDeserializer(RecurringSoftLockoutStateCalculator.class, new RecurringSoftLockoutStateCalculatorDeserializer());
     }
 
     @Override

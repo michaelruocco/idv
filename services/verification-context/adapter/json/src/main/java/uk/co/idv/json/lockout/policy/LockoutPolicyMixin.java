@@ -10,6 +10,9 @@ public interface LockoutPolicyMixin {
     RecordAttemptStrategy getRecordAttemptStrategy();
 
     @JsonIgnore
+    String getType();
+
+    @JsonIgnore
     boolean isAliasLevel();
 
     @JsonIgnore

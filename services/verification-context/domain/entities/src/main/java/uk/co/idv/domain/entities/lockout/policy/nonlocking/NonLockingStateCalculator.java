@@ -9,7 +9,7 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 
 @Slf4j
 @EqualsAndHashCode
-public class NonLockingLockoutStateCalculator implements LockoutStateCalculator {
+public class NonLockingStateCalculator implements LockoutStateCalculator {
 
     public static final String TYPE = "non-locking";
 

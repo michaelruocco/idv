@@ -4,21 +4,21 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingStateCalculator;
 import uk.co.idv.json.lockout.policy.LockoutPolicyMixin;
 import uk.co.idv.json.lockout.policy.level.LockoutLevelModule;
 import uk.co.idv.json.lockout.policy.recordattempt.RecordAttemptStrategyModule;
 
 import java.util.Arrays;
 
-public class NonLockingLockoutPolicyModule extends SimpleModule {
+public class NonLockingPolicyModule extends SimpleModule {
 
-    public NonLockingLockoutPolicyModule() {
+    public NonLockingPolicyModule() {
         super("non-locking-lockout-policy-module", Version.unknownVersion());
 
         setMixInAnnotation(LockoutPolicy.class, LockoutPolicyMixin.class);
 
-        addDeserializer(NonLockingLockoutPolicy.class, new NonLockingLockoutPolicyDeserializer());
+        addDeserializer(NonLockingStateCalculator.class, new NonLockingStateCalculatorDeserializer());
     }
 
     @Override

@@ -1,14 +1,12 @@
 {
   "id": "08027524-b8fd-4df0-946d-056eb98f508f",
   "stateCalculator": {
-    "maxNumberOfAttempts":3,
+    "maxNumberOfAttempts": 3,
     "type": "hard-lock"
   },
   "recordAttempts": {
     "type": "every-attempt"
   },
-  "maxNumberOfAttempts":3,
-  "type": "hard-lock",
   "level": {
     "channelId": "fake-channel",
     "activityNames": [

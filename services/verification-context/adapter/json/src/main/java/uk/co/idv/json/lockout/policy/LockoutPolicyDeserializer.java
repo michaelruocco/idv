@@ -4,47 +4,41 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.hard.HardLockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingLockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
-import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
-import java.util.Map;
-
 public class LockoutPolicyDeserializer extends StdDeserializer<LockoutPolicy> {
 
-    private final Map<String, Class<? extends LockoutPolicy>> mappings;
-
     public LockoutPolicyDeserializer() {
-        this(buildDefaultMappings());
-    }
-
-    public LockoutPolicyDeserializer(final Map<String, Class<? extends LockoutPolicy>> mappings) {
         super(LockoutPolicy.class);
-        this.mappings = mappings;
     }
 
     @Override
     public LockoutPolicy deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
-        final String type = node.get("type").asText();
-        return JsonNodeConverter.toObject(node, parser, mappings.get(type));
+        return new DefaultLockoutPolicy(
+                JsonNodeConverter.toUUID(node.get("id")),
+                toStateCalculator(node, parser),
+                toLevel(node, parser),
+                toRecordAttempts(node, parser)
+        );
     }
 
-    private static Map<String, Class<? extends LockoutPolicy>> buildDefaultMappings() {
-        return Map.of(
-                SoftLockoutStateCalculator.TYPE, SoftLockoutPolicy.class,
-                RecurringSoftLockoutStateCalculator.TYPE, RecurringSoftLockoutPolicy.class,
-                HardLockoutStateCalculator.TYPE, HardLockoutPolicy.class,
-                NonLockingLockoutStateCalculator.TYPE, NonLockingLockoutPolicy.class
-        );
+    public static LockoutStateCalculator toStateCalculator(final JsonNode node, final JsonParser parser) {
+        return JsonNodeConverter.toObject(node.get("stateCalculator"), parser, LockoutStateCalculator.class);
+    }
+
+    public static LockoutLevel toLevel(final JsonNode node, final JsonParser parser) {
+        return JsonNodeConverter.toObject(node.get("level"), parser, LockoutLevel.class);
+    }
+
+    public static RecordAttemptStrategy toRecordAttempts(final JsonNode node, final JsonParser parser) {
+        return JsonNodeConverter.toObject(node.get("recordAttempts"), parser, RecordAttemptStrategy.class);
     }
 
 }

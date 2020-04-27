@@ -6,7 +6,6 @@
   "recordAttempts": {
     "type": "never"
   },
-  "type": "non-locking",
   "level": {
     "channelId": "fake-channel",
     "activityNames": [

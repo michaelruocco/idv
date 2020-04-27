@@ -1,7 +1,6 @@
-package uk.co.idv.api.lockout.policy.hard;
+package uk.co.idv.api.lockout.state;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import uk.co.idv.api.lockout.state.ApiLockoutStateMixin;
 
 @JsonPropertyOrder({
         "id",

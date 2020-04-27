@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.api.verificationcontext.ApiVerificationContextObjectMapperFactory;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
@@ -14,7 +16,7 @@ class LockoutPoliciesDocumentSerializerTest {
 
     @Test
     void shouldSerializePolicies() throws JsonProcessingException {
-        final LockoutPolicyAttributes attributes = LockoutPolicyAttributesMother.hardLock();
+        final LockoutPolicy attributes = LockoutPolicyMother.hardLockoutPolicy();
         final LockoutPoliciesDocument document = new LockoutPoliciesDocument(attributes);
 
         final String json = MAPPER.writeValueAsString(document);
