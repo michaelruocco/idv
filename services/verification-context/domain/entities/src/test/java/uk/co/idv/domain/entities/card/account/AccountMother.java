@@ -20,13 +20,16 @@ public class AccountMother {
         return open(CardNumberMother.credit());
     }
 
-    public static Account open(final CardNumber... cardNumber) {
-        return new OpenAccount(cardNumber);
+    public static Account open(final CardNumber... cardNumbers) {
+        return new OpenAccount(cardNumbers);
     }
 
     public static Account closed() {
-        return new ClosedAccount(CardNumberMother.debit());
+        return closed(CardNumberMother.debit());
     }
 
+    public static Account closed(final CardNumber... cardNumbers) {
+        return new ClosedAccount(cardNumbers);
+    }
 
 }

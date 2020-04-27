@@ -35,7 +35,22 @@ public class PhysicalPinsentryEligible extends AbstractVerificationMethodEligibl
     public PhysicalPinsentryEligible(final PinsentryFunction function,
                                      final Collection<CardNumber> cardNumbers,
                                      final VerificationResults results) {
-        super(NAME, results, MAX_ATTEMPTS, DURATION);
+        this(function, MAX_ATTEMPTS, DURATION, cardNumbers, results);
+    }
+
+    public PhysicalPinsentryEligible(final PinsentryFunction function,
+                                     final int maxAttempts,
+                                     final Duration duration,
+                                     final Collection<CardNumber> cardNumbers) {
+        this(function, maxAttempts, duration, cardNumbers, new DefaultVerificationResults());
+    }
+
+    public PhysicalPinsentryEligible(final PinsentryFunction function,
+                                     final int maxAttempts,
+                                     final Duration duration,
+                                     final Collection<CardNumber> cardNumbers,
+                                     final VerificationResults results) {
+        super(NAME, results, maxAttempts, duration);
         this.function = function;
         this.cardNumbers = cardNumbers;
     }

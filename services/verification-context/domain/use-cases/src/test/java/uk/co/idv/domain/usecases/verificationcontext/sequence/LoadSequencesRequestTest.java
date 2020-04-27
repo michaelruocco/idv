@@ -60,4 +60,13 @@ class LoadSequencesRequestTest {
         assertThat(request.getMobileDevices()).isEqualTo(identity.getMobileDevices());
     }
 
+    @Test
+    void shouldReturnAccountsFromIdentity() {
+        final Identity identity = IdentityMother.build();
+
+        final LoadSequencesRequest request = builder.identity(identity).build();
+
+        assertThat(request.getAccounts()).isEqualTo(identity.getAccounts());
+    }
+
 }

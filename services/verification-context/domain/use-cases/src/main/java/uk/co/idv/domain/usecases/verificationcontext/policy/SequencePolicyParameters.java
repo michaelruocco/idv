@@ -6,8 +6,8 @@ import uk.co.idv.domain.entities.verificationcontext.MultipleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.SingleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.usecases.verificationcontext.policy.method.MethodPolicyParameters;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
-import uk.co.idv.domain.usecases.verificationcontext.method.MethodPolicyParameters;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,11 +20,11 @@ public class SequencePolicyParameters {
     private final String name;
     private final Collection<MethodPolicyParameters> parameters;
 
-    public SequencePolicyParameters(MethodPolicyParameters parameters) {
+    public SequencePolicyParameters(final MethodPolicyParameters parameters) {
         this(parameters.getMethodName(), Collections.singleton(parameters));
     }
 
-    public SequencePolicyParameters(final String name, MethodPolicyParameters... parameters) {
+    public SequencePolicyParameters(final String name, final MethodPolicyParameters... parameters) {
         this(name, Arrays.asList(parameters));
     }
 

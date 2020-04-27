@@ -3,6 +3,7 @@ package uk.co.idv.domain.usecases.verificationcontext.sequence;
 import lombok.Builder;
 import lombok.Getter;
 import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.card.account.Account;
 import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
@@ -21,6 +22,10 @@ public class LoadSequencesRequest {
 
     public Collection<MobileDevice> getMobileDevices() {
         return identity.getMobileDevices();
+    }
+
+    public Collection<Account> getAccounts() {
+        return identity.getAccounts();
     }
 
 }

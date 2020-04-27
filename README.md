@@ -11,9 +11,9 @@
 
 *  Add dynamo db persistence of identity data (phone numbers / emails / devices / accounts)
 
-*  Create email loader and populate emails onto identity
+*  Create physical PINsentry device loader and populate pinsentry devices onto identity
 
-*  Change object mapper config to globally ignore empty lists
+*  Create email loader and populate emails onto identity
 
 *  Think about turning provided alias into provided aliases
 

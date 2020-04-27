@@ -5,9 +5,9 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
+import uk.co.idv.domain.usecases.verificationcontext.policy.method.MethodPolicyParameters;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
-import uk.co.idv.domain.usecases.verificationcontext.method.MethodPolicyParameters;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
