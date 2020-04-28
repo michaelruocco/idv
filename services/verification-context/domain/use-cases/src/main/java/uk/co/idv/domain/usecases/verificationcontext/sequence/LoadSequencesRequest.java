@@ -8,6 +8,7 @@ import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
+import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 
 import java.util.Collection;
 
@@ -26,6 +27,10 @@ public class LoadSequencesRequest {
 
     public Collection<Account> getAccounts() {
         return identity.getAccounts();
+    }
+
+    public PhoneNumbers getPhoneNumbers() {
+        return identity.getPhoneNumbers();
     }
 
 }

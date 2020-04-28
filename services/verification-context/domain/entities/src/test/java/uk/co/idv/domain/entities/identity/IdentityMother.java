@@ -7,7 +7,9 @@ import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
+import uk.co.idv.domain.entities.phonenumber.PhoneNumber;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumberMother;
+import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -42,6 +44,16 @@ public class IdentityMother {
     public static Identity withAccounts(final Collection<Account> accounts) {
         return defaultBuilder()
                 .accounts(accounts)
+                .build();
+    }
+
+    public static Identity withPhoneNumbers(final PhoneNumber... phoneNumbers) {
+        return withPhoneNumbers(new PhoneNumbers(phoneNumbers));
+    }
+
+    public static Identity withPhoneNumbers(final PhoneNumbers phoneNumbers) {
+        return defaultBuilder()
+                .phoneNumbers(phoneNumbers)
                 .build();
     }
 

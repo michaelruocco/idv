@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @ToString
@@ -23,6 +24,10 @@ public class PhoneNumbers implements Iterable<PhoneNumber> {
     @Override
     public Iterator<PhoneNumber> iterator() {
         return numbers.iterator();
+    }
+
+    public Stream<PhoneNumber> stream() {
+        return numbers.stream();
     }
 
     public PhoneNumbers getMobileNumbers() {

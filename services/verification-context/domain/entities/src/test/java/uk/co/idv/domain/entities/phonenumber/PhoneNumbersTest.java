@@ -19,6 +19,11 @@ public class PhoneNumbersTest {
     }
 
     @Test
+    void shouldBeStreamable() {
+        assertThat(numbers.stream()).containsExactly(mobileNumber, otherNumber);
+    }
+
+    @Test
     void shouldReturnMobileNumbers() {
         assertThat(numbers.getMobileNumbers()).containsExactly(mobileNumber);
     }

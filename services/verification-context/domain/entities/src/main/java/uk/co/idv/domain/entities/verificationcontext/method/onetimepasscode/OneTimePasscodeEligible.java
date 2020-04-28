@@ -36,7 +36,22 @@ public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible 
     public OneTimePasscodeEligible(final PasscodeSettings passcodeSettings,
                                    final Collection<DeliveryMethod> deliveryMethods,
                                    final VerificationResults results) {
-        super(NAME, results, MAX_ATTEMPTS, DURATION);
+        this(passcodeSettings, deliveryMethods, MAX_ATTEMPTS, DURATION, results);
+    }
+
+    public OneTimePasscodeEligible(final PasscodeSettings passcodeSettings,
+                                   final Collection<DeliveryMethod> deliveryMethods,
+                                   final int maxAttempts,
+                                   final Duration duration) {
+        this(passcodeSettings, deliveryMethods, maxAttempts, duration, new DefaultVerificationResults());
+    }
+
+    public OneTimePasscodeEligible(final PasscodeSettings passcodeSettings,
+                                   final Collection<DeliveryMethod> deliveryMethods,
+                                   final int maxAttempts,
+                                   final Duration duration,
+                                   final VerificationResults results) {
+        super(NAME, results, maxAttempts, duration);
         this.passcodeSettings = passcodeSettings;
         this.deliveryMethods = deliveryMethods;
     }
@@ -66,7 +81,13 @@ public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible 
 
     @Override
     protected VerificationMethod updateResults(final VerificationResults results) {
-        return new OneTimePasscodeEligible(passcodeSettings, deliveryMethods, results);
+        return new OneTimePasscodeEligible(
+                passcodeSettings,
+                deliveryMethods,
+                getMaxAttempts(),
+                getDuration(),
+                results
+        );
     }
 
     public static class DeliveryMethodNotFoundException extends RuntimeException {

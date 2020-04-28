@@ -6,8 +6,8 @@ import uk.co.idv.domain.entities.card.account.OpenAccount;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
@@ -25,7 +25,7 @@ public class PhysicalPinsentryParameters implements MethodPolicyParameters {
 
     @Override
     public String getMethodName() {
-        return MobilePinsentry.NAME;
+        return PhysicalPinsentry.NAME;
     }
 
     @Override
