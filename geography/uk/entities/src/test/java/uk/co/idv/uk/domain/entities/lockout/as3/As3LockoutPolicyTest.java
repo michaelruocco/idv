@@ -1,7 +1,7 @@
 package uk.co.idv.uk.domain.entities.lockout.as3;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.nonlocking.NonLockingStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
@@ -25,9 +25,9 @@ class As3LockoutPolicyTest {
 
     @Test
     void shouldReturnAs3LockoutLevel() {
-        final LockoutLevel level = policy.getLevel();
+        final PolicyLevel level = policy.getLevel();
 
-        assertThat(level).isInstanceOf(As3LockoutLevel.class);
+        assertThat(level).isInstanceOf(As3LockoutPolicyLevel.class);
     }
 
     @Test

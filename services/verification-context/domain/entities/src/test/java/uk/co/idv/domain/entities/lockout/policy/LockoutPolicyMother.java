@@ -7,6 +7,8 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordNever;
 import uk.co.idv.domain.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockIntervalMother;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockoutStateCalculator;
+import uk.co.idv.domain.entities.policy.LockoutLevelMother;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 
 import java.util.UUID;
 
@@ -16,10 +18,10 @@ public class LockoutPolicyMother {
         return hardLockoutPolicy(LockoutLevelMother.aliasLockoutLevel());
     }
 
-    public static LockoutPolicy hardLockoutPolicy(final LockoutLevel lockoutLevel) {
+    public static LockoutPolicy hardLockoutPolicy(final PolicyLevel policyLevel) {
         return DefaultLockoutPolicy.builder()
                 .id(UUID.fromString("08027524-b8fd-4df0-946d-056eb98f508f"))
-                .level(lockoutLevel)
+                .level(policyLevel)
                 .recordAttemptStrategy(new RecordEveryAttempt())
                 .stateCalculator(new HardLockoutStateCalculator(3))
                 .build();

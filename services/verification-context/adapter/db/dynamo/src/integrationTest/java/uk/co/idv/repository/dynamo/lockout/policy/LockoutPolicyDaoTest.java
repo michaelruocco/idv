@@ -5,10 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import uk.co.idv.domain.entities.lockout.DefaultLockoutPolicyRequest;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
+import uk.co.idv.domain.entities.policy.DefaultPolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
@@ -57,8 +57,8 @@ public class LockoutPolicyDaoTest {
     void shouldLoadLockoutPolicyByRequest() {
         final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
         dao.save(policy);
-        final LockoutLevel level = policy.getLevel();
-        final LockoutPolicyRequest request = DefaultLockoutPolicyRequest.builder()
+        final PolicyLevel level = policy.getLevel();
+        final PolicyRequest request = DefaultPolicyRequest.builder()
                 .channelId(level.getChannelId())
                 .activityName(IterableUtils.get(level.getActivityNames(), 0))
                 .aliasType(IterableUtils.get(level.getAliasTypes(), 0))

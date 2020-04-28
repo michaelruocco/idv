@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
@@ -89,7 +89,7 @@ class DynamoLockoutPolicyDaoTest {
     @Test
     void shouldLoadLockoutPoliciesByChannelId() {
         final String channelId = "channel-id";
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final PolicyRequest request = mock(PolicyRequest.class);
         given(request.getChannelId()).willReturn(channelId);
         final ItemCollection<QueryOutcome> items = mock(ItemCollection.class);
         given(index.query(new ChannelIdQuery(channelId))).willReturn(items);

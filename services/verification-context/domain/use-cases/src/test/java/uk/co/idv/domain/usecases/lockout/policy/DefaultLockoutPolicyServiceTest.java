@@ -1,10 +1,10 @@
 package uk.co.idv.domain.usecases.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevelConverter;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
+import uk.co.idv.domain.entities.policy.LockoutLevelConverter;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequestMother;
 import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
@@ -159,8 +159,8 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldCreatePolicyIfNoPoliciesAlreadyExistForSameLevel() {
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
-        final LockoutLevel level = mock(LockoutLevel.class);
+        final PolicyRequest request = mock(PolicyRequest.class);
+        final PolicyLevel level = mock(PolicyLevel.class);
         given(policy.getLevel()).willReturn(level);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
         given(dao.load(request)).willReturn(Collections.emptyList());
@@ -172,8 +172,8 @@ class DefaultLockoutPolicyServiceTest {
 
     @Test
     void shouldThrowExceptionIfPolicyAlreadyExistForSameLevel() {
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
-        final LockoutLevel level = mock(LockoutLevel.class);
+        final PolicyRequest request = mock(PolicyRequest.class);
+        final PolicyLevel level = mock(PolicyLevel.class);
         final UUID id = UUID.randomUUID();
         given(policy.getId()).willReturn(id);
         given(policy.getLevel()).willReturn(level);
@@ -191,8 +191,8 @@ class DefaultLockoutPolicyServiceTest {
     @Test
     void shouldCreateMultiplePolicies() {
         final LockoutPolicy policy1 = mock(LockoutPolicy.class);
-        final LockoutLevel level = mock(LockoutLevel.class);
-        final LockoutPolicyRequest request = mock(LockoutPolicyRequest.class);
+        final PolicyLevel level = mock(PolicyLevel.class);
+        final PolicyRequest request = mock(PolicyRequest.class);
         given(policy.getLevel()).willReturn(level);
         given(policy1.getLevel()).willReturn(level);
         given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));

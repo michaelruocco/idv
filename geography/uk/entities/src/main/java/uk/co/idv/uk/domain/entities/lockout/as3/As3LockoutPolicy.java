@@ -11,7 +11,7 @@ public class As3LockoutPolicy extends DefaultLockoutPolicy {
     public As3LockoutPolicy(final UUID id) {
         super(id,
                 new NonLockingStateCalculator(),
-                new As3LockoutLevel(),
+                new As3LockoutPolicyLevel(),
                 new RecordNever()
         );
     }

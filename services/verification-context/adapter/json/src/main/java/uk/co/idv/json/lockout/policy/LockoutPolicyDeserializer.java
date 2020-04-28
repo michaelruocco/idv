@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.lockout.policy.DefaultLockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
@@ -33,8 +33,8 @@ public class LockoutPolicyDeserializer extends StdDeserializer<LockoutPolicy> {
         return JsonNodeConverter.toObject(node.get("stateCalculator"), parser, LockoutStateCalculator.class);
     }
 
-    public static LockoutLevel toLevel(final JsonNode node, final JsonParser parser) {
-        return JsonNodeConverter.toObject(node.get("level"), parser, LockoutLevel.class);
+    public static PolicyLevel toLevel(final JsonNode node, final JsonParser parser) {
+        return JsonNodeConverter.toObject(node.get("level"), parser, PolicyLevel.class);
     }
 
     public static RecordAttemptStrategy toRecordAttempts(final JsonNode node, final JsonParser parser) {

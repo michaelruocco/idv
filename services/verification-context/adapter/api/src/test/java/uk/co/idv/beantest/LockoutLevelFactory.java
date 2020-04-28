@@ -1,13 +1,13 @@
 package uk.co.idv.beantest;
 
 import org.meanbean.lang.Factory;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevelMother;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
+import uk.co.idv.domain.entities.policy.LockoutLevelMother;
 
-public class LockoutLevelFactory implements Factory<LockoutLevel> {
+public class LockoutLevelFactory implements Factory<PolicyLevel> {
 
     @Override
-    public LockoutLevel create() {
+    public PolicyLevel create() {
         return LockoutLevelMother.defaultLockoutLevel();
     }
 

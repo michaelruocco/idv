@@ -1,12 +1,13 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
 
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public interface LockoutPolicy {
 
     boolean isAliasLevel();
 
-    boolean appliesTo(final LockoutPolicyRequest request);
+    boolean appliesTo(final PolicyRequest request);
 
     boolean shouldRecordAttempt(final RecordAttemptRequest request);
 
@@ -34,6 +35,6 @@ public interface LockoutPolicy {
 
     RecordAttemptStrategy getRecordAttemptStrategy();
 
-    LockoutLevel getLevel();
+    PolicyLevel getLevel();
 
 }

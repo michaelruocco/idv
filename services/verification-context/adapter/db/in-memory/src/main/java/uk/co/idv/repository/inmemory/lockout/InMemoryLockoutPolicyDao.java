@@ -1,6 +1,6 @@
 package uk.co.idv.repository.inmemory.lockout;
 
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 
@@ -26,7 +26,7 @@ public class InMemoryLockoutPolicyDao implements LockoutPolicyDao {
     }
 
     @Override
-    public Collection<LockoutPolicy> load(final LockoutPolicyRequest request) {
+    public Collection<LockoutPolicy> load(final PolicyRequest request) {
         return policies.values().stream()
                 .filter(policy -> policy.appliesTo(request))
                 .collect(Collectors.toList());

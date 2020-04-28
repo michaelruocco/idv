@@ -2,12 +2,13 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 
 import java.util.UUID;
 
@@ -17,12 +18,12 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private final UUID id;
     private final LockoutStateCalculator stateCalculator;
-    private final LockoutLevel level;
+    private final PolicyLevel level;
     private final RecordAttemptStrategy recordAttemptStrategy;
 
     public DefaultLockoutPolicy(final UUID id,
                                 final LockoutStateCalculator stateCalculator,
-                                final LockoutLevel level,
+                                final PolicyLevel level,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
         this.id = id;
         this.stateCalculator = stateCalculator;
@@ -56,7 +57,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public boolean appliesTo(final LockoutPolicyRequest request) {
+    public boolean appliesTo(final PolicyRequest request) {
         return level.appliesTo(request);
     }
 
@@ -89,7 +90,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public LockoutLevel getLevel() {
+    public PolicyLevel getLevel() {
         return level;
     }
 

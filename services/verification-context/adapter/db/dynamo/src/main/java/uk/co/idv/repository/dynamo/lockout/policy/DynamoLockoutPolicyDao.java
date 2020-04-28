@@ -8,7 +8,7 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 
@@ -44,7 +44,7 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
     }
 
     @Override
-    public Collection<LockoutPolicy> load(final LockoutPolicyRequest request) {
+    public Collection<LockoutPolicy> load(final PolicyRequest request) {
         final QuerySpec query = new ChannelIdQuery(request.getChannelId());
         final ItemCollection<QueryOutcome> items = channelIdIndex.query(query);
         return converter.queryOutcomesToPolicies(items);

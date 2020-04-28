@@ -1,6 +1,6 @@
 package uk.co.idv.domain.entities.lockout.assertion;
 
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 
 public class LockoutAssertions {
 
@@ -8,7 +8,7 @@ public class LockoutAssertions {
         // utility class
     }
 
-    public static LockoutLevelAssert assertThat(LockoutLevel actual) {
+    public static LockoutLevelAssert assertThat(PolicyLevel actual) {
         return new LockoutLevelAssert(actual);
     }
 

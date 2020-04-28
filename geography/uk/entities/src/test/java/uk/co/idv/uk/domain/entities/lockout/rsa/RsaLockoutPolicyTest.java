@@ -1,7 +1,7 @@
 package uk.co.idv.uk.domain.entities.lockout.rsa;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordEveryAttempt;
@@ -24,9 +24,9 @@ class RsaLockoutPolicyTest {
 
     @Test
     void shouldReturnRsaLockoutLevel() {
-        final LockoutLevel level = policy.getLevel();
+        final PolicyLevel level = policy.getLevel();
 
-        assertThat(level).isInstanceOf(RsaLockoutLevel.class);
+        assertThat(level).isInstanceOf(RsaLockoutPolicyLevel.class);
     }
 
     @Test

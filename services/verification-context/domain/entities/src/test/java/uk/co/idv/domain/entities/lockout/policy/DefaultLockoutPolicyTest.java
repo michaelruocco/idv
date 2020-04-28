@@ -11,6 +11,8 @@ import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptReque
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
+import uk.co.idv.domain.entities.policy.FakePolicyLevel;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
 
 import java.util.UUID;
 
@@ -22,7 +24,7 @@ class DefaultLockoutPolicyTest {
 
     private final UUID id = UUID.randomUUID();
     private final RecordAttemptStrategy recordAttemptStrategy = mock(RecordAttemptStrategy.class);
-    private final FakeLockoutLevel level = new FakeLockoutLevel();
+    private final FakePolicyLevel level = new FakePolicyLevel();
     private final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
 
     private final LockoutPolicy policy = new DefaultLockoutPolicy(
@@ -129,7 +131,7 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnLockoutLevel() {
-        final LockoutLevel result = policy.getLevel();
+        final PolicyLevel result = policy.getLevel();
 
         assertThat(result).isEqualTo(level);
     }

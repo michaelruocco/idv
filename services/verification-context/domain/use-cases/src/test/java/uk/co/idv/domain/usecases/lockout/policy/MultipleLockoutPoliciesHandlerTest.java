@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevelMother;
+import uk.co.idv.domain.entities.policy.LockoutLevelMother;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 

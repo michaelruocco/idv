@@ -2,9 +2,9 @@ package uk.co.idv.domain.usecases.lockout.policy;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.LockoutPolicyRequest;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevel;
-import uk.co.idv.domain.entities.lockout.policy.LockoutLevelConverter;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
+import uk.co.idv.domain.entities.policy.LockoutLevelConverter;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
@@ -87,20 +87,20 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
                 .orElseThrow(() -> new RequestedLockoutPolicyNotFoundException(request));
     }
 
-    private Optional<LockoutPolicy> loadPolicy(final LockoutPolicyRequest request) {
+    private Optional<LockoutPolicy> loadPolicy(final PolicyRequest request) {
         final List<LockoutPolicy> policies = loadPolicies(request);
         return multiplePoliciesHandler.extractPolicy(policies);
     }
 
-    private List<LockoutPolicy> loadPolicies(final LockoutLevel level) {
-        final Collection<LockoutPolicyRequest> requests = lockoutLevelConverter.toPolicyRequests(level);
+    private List<LockoutPolicy> loadPolicies(final PolicyLevel level) {
+        final Collection<PolicyRequest> requests = lockoutLevelConverter.toPolicyRequests(level);
         return requests.stream()
                 .map(this::loadPolicies)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 
-    private List<LockoutPolicy> loadPolicies(final LockoutPolicyRequest request) {
+    private List<LockoutPolicy> loadPolicies(final PolicyRequest request) {
         final Collection<LockoutPolicy> policies = dao.load(request);
         final List<LockoutPolicy> applicablePolicies = policies.stream()
                 .filter(policy -> policy.appliesTo(request))

@@ -10,7 +10,7 @@ public class RsaLockoutPolicy extends DefaultLockoutPolicy {
     public RsaLockoutPolicy(final UUID id) {
         super(id,
                 new RsaLockoutStateCalculator(),
-                new RsaLockoutLevel(),
+                new RsaLockoutPolicyLevel(),
                 new RecordEveryAttempt()
         );
     }
