@@ -2,14 +2,16 @@ package uk.co.idv.domain.usecases.verificationcontext.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.activity.Activity;
+import uk.co.idv.domain.entities.activity.ActivityMother;
 import uk.co.idv.domain.entities.channel.Channel;
+import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest.LoadSequencesRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class LoadSequencesRequestTest {
 
@@ -17,7 +19,7 @@ class LoadSequencesRequestTest {
 
     @Test
     void shouldReturnChannel() {
-        final Channel channel = mock(Channel.class);
+        final Channel channel = ChannelMother.fake();
 
         final LoadSequencesRequest request = builder.channel(channel).build();
 
@@ -25,8 +27,17 @@ class LoadSequencesRequestTest {
     }
 
     @Test
+    void shouldReturnChannelId() {
+        final Channel channel = ChannelMother.fake();
+
+        final LoadSequencesRequest request = builder.channel(channel).build();
+
+        assertThat(request.getChannelId()).isEqualTo(channel.getId());
+    }
+
+    @Test
     void shouldReturnActivity() {
-        final Activity activity = mock(Activity.class);
+        final Activity activity = ActivityMother.fake();
 
         final LoadSequencesRequest request = builder.activity(activity).build();
 
@@ -34,12 +45,30 @@ class LoadSequencesRequestTest {
     }
 
     @Test
+    void shouldReturnActivityName() {
+        final Activity activity = ActivityMother.fake();
+
+        final LoadSequencesRequest request = builder.activity(activity).build();
+
+        assertThat(request.getActivityName()).isEqualTo(activity.getName());
+    }
+
+    @Test
     void shouldReturnProvidedAlias() {
-        final Alias providedAlias = mock(Alias.class);
+        final Alias providedAlias = AliasesMother.creditCardNumber();
 
         final LoadSequencesRequest request = builder.providedAlias(providedAlias).build();
 
         assertThat(request.getProvidedAlias()).isEqualTo(providedAlias);
+    }
+
+    @Test
+    void shouldReturnProvidedAliasType() {
+        final Alias providedAlias = AliasesMother.creditCardNumber();
+
+        final LoadSequencesRequest request = builder.providedAlias(providedAlias).build();
+
+        assertThat(request.getAliasType()).isEqualTo(providedAlias.getType());
     }
 
     @Test

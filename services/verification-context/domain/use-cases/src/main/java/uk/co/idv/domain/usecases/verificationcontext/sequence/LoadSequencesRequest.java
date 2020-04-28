@@ -9,12 +9,13 @@ import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 
 import java.util.Collection;
 
 @Builder
 @Getter
-public class LoadSequencesRequest {
+public class LoadSequencesRequest implements PolicyRequest {
 
     private final Channel channel;
     private final Activity activity;
@@ -31,6 +32,21 @@ public class LoadSequencesRequest {
 
     public PhoneNumbers getPhoneNumbers() {
         return identity.getPhoneNumbers();
+    }
+
+    @Override
+    public String getActivityName() {
+        return activity.getName();
+    }
+
+    @Override
+    public String getAliasType() {
+        return providedAlias.getType();
+    }
+
+    @Override
+    public String getChannelId() {
+        return channel.getId();
     }
 
 }

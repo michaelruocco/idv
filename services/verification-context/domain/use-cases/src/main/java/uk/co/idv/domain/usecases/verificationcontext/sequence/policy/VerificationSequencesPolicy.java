@@ -7,6 +7,6 @@ public interface VerificationSequencesPolicy {
 
     boolean appliesTo(final LoadSequencesRequest request);
 
-    VerificationSequences calculateSequences(final LoadSequencesRequest request);
+    VerificationSequences buildSequences(final LoadSequencesRequest request);
 
 }
