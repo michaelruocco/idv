@@ -6,7 +6,7 @@ import uk.co.idv.domain.entities.verificationcontext.MultipleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.SingleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.usecases.verificationcontext.policy.method.MethodPolicyParameters;
+import uk.co.idv.domain.usecases.verificationcontext.policy.method.MethodPolicy;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Arrays;
@@ -15,21 +15,21 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class SequencePolicyParameters {
+public class SequencePolicy {
 
     private final String name;
-    private final Collection<MethodPolicyParameters> parameters;
+    private final Collection<MethodPolicy> methodPolicies;
 
-    public SequencePolicyParameters(final MethodPolicyParameters parameters) {
-        this(parameters.getMethodName(), Collections.singleton(parameters));
+    public SequencePolicy(final MethodPolicy methodPolicy) {
+        this(methodPolicy.getName(), Collections.singleton(methodPolicy));
     }
 
-    public SequencePolicyParameters(final String name, final MethodPolicyParameters... parameters) {
-        this(name, Arrays.asList(parameters));
+    public SequencePolicy(final String name, final MethodPolicy... methodPolicies) {
+        this(name, Arrays.asList(methodPolicies));
     }
 
     public VerificationSequence buildSequence(final LoadSequencesRequest request) {
-        final Collection<VerificationMethod> methods = parameters.stream()
+        final Collection<VerificationMethod> methods = methodPolicies.stream()
                 .map(parameters -> parameters.buildMethod(request))
                 .collect(Collectors.toList());
         if (methods.size() == 1) {

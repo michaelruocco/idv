@@ -5,7 +5,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
-import uk.co.idv.domain.usecases.verificationcontext.policy.method.MethodPolicyParameters;
+import uk.co.idv.domain.usecases.verificationcontext.policy.method.MethodPolicy;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
 
@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class SequencePolicyParametersTest {
+class SequencePolicyTest {
 
     @Test
     void shouldCreateSequenceWithSingleMethod() {
-        final MethodPolicyParameters methodParameters = mock(MethodPolicyParameters.class);
-        final SequencePolicyParameters sequenceParameters = new SequencePolicyParameters(methodParameters);
+        final MethodPolicy methodParameters = mock(MethodPolicy.class);
+        final SequencePolicy sequenceParameters = new SequencePolicy(methodParameters);
         final LoadSequencesRequest request = LoadSequencesRequestMother.build();
         final VerificationMethod expectedMethod = OneTimePasscodeMother.eligible();
         given(methodParameters.buildMethod(request)).willReturn(expectedMethod);
@@ -32,9 +32,9 @@ class SequencePolicyParametersTest {
     @Test
     void shouldCreateSequenceWithMultipleMethods() {
         final String sequenceName = "sequence-name";
-        final MethodPolicyParameters methodParameters1 = mock(MethodPolicyParameters.class);
-        final MethodPolicyParameters methodParameters2 = mock(MethodPolicyParameters.class);
-        final SequencePolicyParameters sequenceParameters = new SequencePolicyParameters(
+        final MethodPolicy methodParameters1 = mock(MethodPolicy.class);
+        final MethodPolicy methodParameters2 = mock(MethodPolicy.class);
+        final SequencePolicy sequenceParameters = new SequencePolicy(
                 sequenceName,
                 methodParameters1,
                 methodParameters2

@@ -3,9 +3,9 @@ package uk.co.idv.domain.usecases.verificationcontext.policy.method;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
-public interface MethodPolicyParameters {
+public interface MethodPolicy {
 
-    String getMethodName();
+    String getName();
 
     VerificationMethod buildMethod(final LoadSequencesRequest request);
 

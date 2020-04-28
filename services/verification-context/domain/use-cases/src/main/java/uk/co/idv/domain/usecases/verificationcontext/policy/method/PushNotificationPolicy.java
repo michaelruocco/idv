@@ -12,13 +12,13 @@ import java.time.Duration;
 import java.util.Collection;
 
 @RequiredArgsConstructor
-public class PushNotificationParameters implements MethodPolicyParameters {
+public class PushNotificationPolicy implements MethodPolicy {
 
     private final int maxAttempts;
     private final Duration duration;
 
     @Override
-    public String getMethodName() {
+    public String getName() {
         return PushNotification.NAME;
     }
 

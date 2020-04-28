@@ -5,10 +5,9 @@ import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
 
@@ -16,17 +15,16 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MobilePinsentryParametersTest {
+class PushNotificationPolicyTest {
 
-    private static final PinsentryFunction FUNCTION = PinsentryFunction.IDENTIFY;
     private static final int MAX_ATTEMPTS = 3;
     private static final Duration DURATION = Duration.ofMinutes(5);
 
-    private final MobilePinsentryParameters parameters = new MobilePinsentryParameters(FUNCTION, MAX_ATTEMPTS, DURATION);
+    private final PushNotificationPolicy parameters = new PushNotificationPolicy(MAX_ATTEMPTS, DURATION);
 
     @Test
     void shouldReturnMethodName() {
-        assertThat(parameters.getMethodName()).isEqualTo(MobilePinsentry.NAME);
+        assertThat(parameters.getName()).isEqualTo(PushNotification.NAME);
     }
 
     @Test
@@ -36,7 +34,7 @@ class MobilePinsentryParametersTest {
 
         final VerificationMethod method = parameters.buildMethod(request);
 
-        assertThat(method).isInstanceOf(MobilePinsentryEligible.class);
+        assertThat(method).isInstanceOf(PushNotificationEligible.class);
     }
 
     @Test
@@ -46,7 +44,7 @@ class MobilePinsentryParametersTest {
 
         final VerificationMethod method = parameters.buildMethod(request);
 
-        assertThat(method).isInstanceOf(MobilePinsentryIneligible.class);
+        assertThat(method).isInstanceOf(PushNotificationIneligible.class);
     }
 
     @Test
@@ -74,7 +72,7 @@ class MobilePinsentryParametersTest {
         final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final MobilePinsentryEligible method = (MobilePinsentryEligible) parameters.buildMethod(request);
+        final VerificationMethod method = parameters.buildMethod(request);
 
         assertThat(method.getDuration()).isEqualTo(DURATION);
     }
@@ -87,26 +85,6 @@ class MobilePinsentryParametersTest {
         final VerificationMethod method = parameters.buildMethod(request);
 
         assertThat(method.getDuration()).isEqualTo(Duration.ZERO);
-    }
-
-    @Test
-    void shouldPopulateFunctionIfIdentityHasAtLeastOneTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
-
-        final MobilePinsentryEligible method = (MobilePinsentryEligible) parameters.buildMethod(request);
-
-        assertThat(method.getFunction()).isEqualTo(FUNCTION);
-    }
-
-    @Test
-    void shouldPopulateFunctionIfIdentityDoesNotHaveTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
-
-        final MobilePinsentryIneligible method = (MobilePinsentryIneligible) parameters.buildMethod(request);
-
-        assertThat(method.getFunction()).isEqualTo(FUNCTION);
     }
 
 }

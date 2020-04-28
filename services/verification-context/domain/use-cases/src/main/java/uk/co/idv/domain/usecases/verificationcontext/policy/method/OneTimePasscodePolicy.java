@@ -18,7 +18,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class OneTimePasscodeParameters implements MethodPolicyParameters {
+public class OneTimePasscodePolicy implements MethodPolicy {
 
     private final IdGenerator idGenerator;
     private final PasscodeSettings settings;
@@ -26,7 +26,7 @@ public class OneTimePasscodeParameters implements MethodPolicyParameters {
     private final Duration duration;
 
     @Override
-    public String getMethodName() {
+    public String getName() {
         return OneTimePasscode.NAME;
     }
 

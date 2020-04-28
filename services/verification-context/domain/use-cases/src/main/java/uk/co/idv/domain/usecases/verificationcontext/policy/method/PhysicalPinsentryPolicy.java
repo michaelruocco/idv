@@ -17,14 +17,14 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class PhysicalPinsentryParameters implements MethodPolicyParameters {
+public class PhysicalPinsentryPolicy implements MethodPolicy {
 
     private final PinsentryFunction function;
     private final int maxAttempts;
     private final Duration duration;
 
     @Override
-    public String getMethodName() {
+    public String getName() {
         return PhysicalPinsentry.NAME;
     }
 
@@ -40,7 +40,7 @@ public class PhysicalPinsentryParameters implements MethodPolicyParameters {
     private static Collection<CardNumber> toEligibleCards(final LoadSequencesRequest request) {
         final Collection<Account> accounts = request.getAccounts();
         return accounts.stream()
-                .filter(PhysicalPinsentryParameters::isEligible)
+                .filter(PhysicalPinsentryPolicy::isEligible)
                 .map(Account::getCardNumbers)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());

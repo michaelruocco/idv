@@ -26,7 +26,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OneTimePasscodeParametersTest {
+class OneTimePasscodePolicyTest {
 
     private static final int MAX_ATTEMPTS = 3;
     private static final Duration DURATION = Duration.ofMinutes(5);
@@ -34,11 +34,11 @@ class OneTimePasscodeParametersTest {
 
     private final PasscodeSettings settings = new DefaultPasscodeSettings();
     private final IdGenerator idGenerator = new FakeIdGenerator(ID);
-    private final OneTimePasscodeParameters parameters = new OneTimePasscodeParameters(idGenerator, settings, MAX_ATTEMPTS, DURATION);
+    private final OneTimePasscodePolicy parameters = new OneTimePasscodePolicy(idGenerator, settings, MAX_ATTEMPTS, DURATION);
 
     @Test
     void shouldReturnMethodName() {
-        assertThat(parameters.getMethodName()).isEqualTo(OneTimePasscode.NAME);
+        assertThat(parameters.getName()).isEqualTo(OneTimePasscode.NAME);
     }
 
     @Test

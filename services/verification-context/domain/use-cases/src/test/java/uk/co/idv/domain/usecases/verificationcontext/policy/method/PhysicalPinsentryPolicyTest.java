@@ -18,17 +18,17 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PhysicalPinsentryParametersTest {
+class PhysicalPinsentryPolicyTest {
 
     private static final PinsentryFunction FUNCTION = PinsentryFunction.IDENTIFY;
     private static final int MAX_ATTEMPTS = 3;
     private static final Duration DURATION = Duration.ofMinutes(5);
 
-    private final PhysicalPinsentryParameters parameters = new PhysicalPinsentryParameters(FUNCTION, MAX_ATTEMPTS, DURATION);
+    private final PhysicalPinsentryPolicy parameters = new PhysicalPinsentryPolicy(FUNCTION, MAX_ATTEMPTS, DURATION);
 
     @Test
     void shouldReturnMethodName() {
-        assertThat(parameters.getMethodName()).isEqualTo(PhysicalPinsentry.NAME);
+        assertThat(parameters.getName()).isEqualTo(PhysicalPinsentry.NAME);
     }
 
     @Test

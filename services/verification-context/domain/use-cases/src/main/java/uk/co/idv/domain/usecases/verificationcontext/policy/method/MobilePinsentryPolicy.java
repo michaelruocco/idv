@@ -13,14 +13,14 @@ import java.time.Duration;
 import java.util.Collection;
 
 @RequiredArgsConstructor
-public class MobilePinsentryParameters implements MethodPolicyParameters {
+public class MobilePinsentryPolicy implements MethodPolicy {
 
     private final PinsentryFunction function;
     private final int maxAttempts;
     private final Duration duration;
 
     @Override
-    public String getMethodName() {
+    public String getName() {
         return MobilePinsentry.NAME;
     }
 
