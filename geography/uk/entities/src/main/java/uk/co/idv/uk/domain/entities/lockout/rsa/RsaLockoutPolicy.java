@@ -8,9 +8,10 @@ import java.util.UUID;
 public class RsaLockoutPolicy extends DefaultLockoutPolicy {
 
     public RsaLockoutPolicy(final UUID id) {
-        super(id,
-                new RsaLockoutStateCalculator(),
+        super(
+                id,
                 new RsaLockoutPolicyLevel(),
+                new RsaLockoutStateCalculator(),
                 new RecordEveryAttempt()
         );
     }

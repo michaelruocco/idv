@@ -9,9 +9,10 @@ import java.util.UUID;
 public class As3LockoutPolicy extends DefaultLockoutPolicy {
 
     public As3LockoutPolicy(final UUID id) {
-        super(id,
-                new NonLockingStateCalculator(),
+        super(
+                id,
                 new As3LockoutPolicyLevel(),
+                new NonLockingStateCalculator(),
                 new RecordNever()
         );
     }

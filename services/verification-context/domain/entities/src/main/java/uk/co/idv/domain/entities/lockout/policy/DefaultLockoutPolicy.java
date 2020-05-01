@@ -18,13 +18,13 @@ import java.util.UUID;
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private final UUID id;
-    private final LockoutStateCalculator stateCalculator;
     private final PolicyLevel level;
+    private final LockoutStateCalculator stateCalculator;
     private final RecordAttemptStrategy recordAttemptStrategy;
 
     public DefaultLockoutPolicy(final UUID id,
-                                final LockoutStateCalculator stateCalculator,
                                 final PolicyLevel level,
+                                final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
         this.id = id;
         this.stateCalculator = stateCalculator;
@@ -97,15 +97,8 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     private VerificationAttempts filterApplicableAttempts(final CalculateLockoutStateRequest request) {
-        //TODO try moving this into attempts class
         final VerificationAttempts attempts = request.getAttempts();
-        log.info("level {} is alias level {}", level, level.isAliasLevel());
-        if (level.isAliasLevel()) {
-            log.info("filtering by alias {}", request.getAlias());
-            final VerificationAttempts aliasAttempts = attempts.filterMatching(request.getAlias());
-            return aliasAttempts.filterMatching(level);
-        }
-        return attempts.filterMatching(level);
+        return attempts.filterApplicable(level, request.getAlias());
     }
 
 }

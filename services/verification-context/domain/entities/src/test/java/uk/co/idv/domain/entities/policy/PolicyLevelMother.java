@@ -4,15 +4,15 @@ import uk.co.idv.domain.entities.policy.DefaultPolicyLevel.DefaultPolicyLevelBui
 
 import java.util.Collections;
 
-public class LockoutLevelMother {
+public class PolicyLevelMother {
 
-    public static PolicyLevel aliasLockoutLevel() {
+    public static PolicyLevel aliasPolicyLevel() {
         return commonBuilder()
                 .aliasTypes(Collections.singleton("fake-alias-type"))
                 .build();
     }
 
-    public static PolicyLevel defaultLockoutLevel() {
+    public static PolicyLevel defaultPolicyLevel() {
         return commonBuilder()
                 .aliasTypes(Collections.singleton(PolicyLevel.ALL))
                 .build();

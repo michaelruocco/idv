@@ -5,6 +5,15 @@
     "attributes": {
       "stateCalculator": {
         "type": "invalid-type"
+      },
+      "level": {
+        "channelId": "fake-channel",
+        "activityNames": [
+          "fake-activity"
+        ],
+        "aliasTypes": [
+          "fake-alias-type"
+        ]
       }
     }
   }

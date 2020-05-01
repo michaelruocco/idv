@@ -1,7 +1,7 @@
 package uk.co.idv.domain.usecases.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.policy.LockoutLevelMother;
+import uk.co.idv.domain.entities.policy.PolicyLevelMother;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 
@@ -37,8 +37,8 @@ class MultipleLockoutPoliciesHandlerTest {
 
     @Test
     void shouldReturnFirstAliasLevelPolicyIfMultiplePoliciesPassed() {
-        final LockoutPolicy defaultLevelPolicy = LockoutPolicyMother.hardLockoutPolicy(LockoutLevelMother.defaultLockoutLevel());
-        final LockoutPolicy aliasLevelPolicy = LockoutPolicyMother.hardLockoutPolicy(LockoutLevelMother.aliasLockoutLevel());
+        final LockoutPolicy defaultLevelPolicy = LockoutPolicyMother.hardLockoutPolicy(PolicyLevelMother.defaultPolicyLevel());
+        final LockoutPolicy aliasLevelPolicy = LockoutPolicyMother.hardLockoutPolicy(PolicyLevelMother.aliasPolicyLevel());
         final List<LockoutPolicy> policies = Arrays.asList(defaultLevelPolicy, aliasLevelPolicy);
 
         final Optional<LockoutPolicy> policy = handler.extractPolicy(policies);
@@ -48,8 +48,8 @@ class MultipleLockoutPoliciesHandlerTest {
 
     @Test
     void shouldReturnPolicyIfMultipleDefaultLevelPoliciesArePassed() {
-        final LockoutPolicy policy1 = LockoutPolicyMother.hardLockoutPolicy(LockoutLevelMother.defaultLockoutLevel());
-        final LockoutPolicy policy2 = LockoutPolicyMother.hardLockoutPolicy(LockoutLevelMother.defaultLockoutLevel());
+        final LockoutPolicy policy1 = LockoutPolicyMother.hardLockoutPolicy(PolicyLevelMother.defaultPolicyLevel());
+        final LockoutPolicy policy2 = LockoutPolicyMother.hardLockoutPolicy(PolicyLevelMother.defaultPolicyLevel());
         final List<LockoutPolicy> policies = Arrays.asList(policy1, policy2);
 
         final Optional<LockoutPolicy> policy = handler.extractPolicy(policies);

@@ -67,7 +67,7 @@ class LockoutPolicyDocumentDeserializerTest {
 
     @Test
     void shouldThrowExceptionIfStateCalculatorTypeIsInvalid() {
-        final String json = ContentLoader.loadContentFromClasspath("lockout/invalid-lockout-policy-document.json");
+        final String json = ContentLoader.loadContentFromClasspath("lockout/invalid-state-calculator-lockout-policy-document.json");
 
         final Throwable error = catchThrowable(() -> MAPPER.readValue(json, LockoutPolicyDocument.class));
 

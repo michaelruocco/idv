@@ -23,8 +23,8 @@ public class LockoutPolicyDeserializer extends StdDeserializer<LockoutPolicy> {
         final JsonNode node = JsonParserConverter.toNode(parser);
         return new DefaultLockoutPolicy(
                 JsonNodeConverter.toUUID(node.get("id")),
-                toStateCalculator(node, parser),
                 toLevel(node, parser),
+                toStateCalculator(node, parser),
                 toRecordAttempts(node, parser)
         );
     }

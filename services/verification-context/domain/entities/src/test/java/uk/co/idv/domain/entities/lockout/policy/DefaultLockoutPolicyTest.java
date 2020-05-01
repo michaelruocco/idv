@@ -1,17 +1,13 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.alias.AliasesMother;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequestMother;
-import uk.co.idv.domain.entities.lockout.policy.state.FakeLockoutStateCalculator;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateCalculator;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
-import uk.co.idv.domain.entities.policy.FakePolicyLevel;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 
 import java.util.UUID;
@@ -23,21 +19,21 @@ import static org.mockito.Mockito.mock;
 class DefaultLockoutPolicyTest {
 
     private final UUID id = UUID.randomUUID();
+    private final PolicyLevel level = mock(PolicyLevel.class);
     private final RecordAttemptStrategy recordAttemptStrategy = mock(RecordAttemptStrategy.class);
-    private final FakePolicyLevel level = new FakePolicyLevel();
-    private final FakeLockoutStateCalculator stateCalculator = new FakeLockoutStateCalculator();
+    private final LockoutStateCalculator stateCalculator = mock(LockoutStateCalculator.class);
 
     private final LockoutPolicy policy = new DefaultLockoutPolicy(
             id,
-            stateCalculator,
             level,
+            stateCalculator,
             recordAttemptStrategy
     );
 
     @Test
     void shouldReturnTrueIfLockoutRequestAppliesToPolicy() {
         final RecordAttemptRequest request = mock(RecordAttemptRequest.class);
-        level.setAppliesTo(true);
+        given(level.appliesTo(request)).willReturn(true);
 
         final boolean result = policy.appliesTo(request);
 
@@ -71,42 +67,34 @@ class DefaultLockoutPolicyTest {
     }
 
     @Test
-    void shouldNotRemoveAttemptsWhenResettingIfNoneAreApplicable() {
-        final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
-        final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
-        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withAttempts(attempts);
+    void shouldIncludeApplicableAttemptsWhenCalculatingLockoutState() {
+        final VerificationAttempts attempts = mock(VerificationAttempts.class);
+        final CalculateLockoutStateRequest request = mock(CalculateLockoutStateRequest.class);
+        given(request.getAttempts()).willReturn(attempts);
+        final VerificationAttempts applicableAttempts = mock(VerificationAttempts.class);
+        final CalculateLockoutStateRequest updatedRequest = mock(CalculateLockoutStateRequest.class);
+        given(attempts.filterApplicable(level, request.getAlias())).willReturn(applicableAttempts);
+        given(request.updateAttempts(applicableAttempts)).willReturn(updatedRequest);
+        final LockoutState expectedState = mock(LockoutState.class);
+        given(stateCalculator.calculate(updatedRequest)).willReturn(expectedState);
 
-        final VerificationAttempts resetAttempts = policy.reset(request);
+        final LockoutState state = policy.calculateState(request);
 
-        assertThat(resetAttempts).containsExactlyElementsOf(attempts);
+        assertThat(state).isEqualTo(expectedState);
     }
 
     @Test
-    void shouldResetAttemptsWhenTheyApplyToParameters() {
-        level.setAppliesTo(true);
-        final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
-        final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
-        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
+    void shouldRemoveApplicableAttemptsFromAttemptsWhenReset() {
+        final VerificationAttempts attempts = mock(VerificationAttempts.class);
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withAttempts(attempts);
+        final VerificationAttempts applicableAttempts = mock(VerificationAttempts.class);
+        given(attempts.filterApplicable(level, request.getAlias())).willReturn(applicableAttempts);
+        final VerificationAttempts expectedResetAttempts = mock(VerificationAttempts.class);
+        given(attempts.remove(applicableAttempts)).willReturn(expectedResetAttempts);
 
         final VerificationAttempts resetAttempts = policy.reset(request);
 
-        assertThat(resetAttempts).isEmpty();
-    }
-
-    @Test
-    void shouldResetAttemptsByAliasWhenLockingAtAliasLevelTheyApplyToParameters() {
-        level.setAppliesTo(true);
-        level.setAliasLevel(true);
-        final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
-        final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
-        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withAttempts(attempts);
-
-        final VerificationAttempts resetAttempts = policy.reset(request);
-
-        assertThat(resetAttempts).containsExactly(differentAliasAttempt);
+        assertThat(resetAttempts).isEqualTo(expectedResetAttempts);
     }
 
     @Test
@@ -152,7 +140,7 @@ class DefaultLockoutPolicyTest {
 
     @Test
     void shouldReturnIsAliasLevel() {
-        level.setAliasLevel(true);
+        given(level.isAliasLevel()).willReturn(true);
 
         final boolean aliasLevel = policy.isAliasLevel();
 

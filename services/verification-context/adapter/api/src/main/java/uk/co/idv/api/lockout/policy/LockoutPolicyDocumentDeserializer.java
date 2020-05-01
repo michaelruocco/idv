@@ -31,8 +31,8 @@ public class LockoutPolicyDocumentDeserializer extends ApiDocumentDeserializer<L
             final JsonNode attributesNode = dataNode.get("attributes");
             return new DefaultLockoutPolicy(
                     JsonNodeConverter.toUUID(dataNode.get("id")),
-                    toStateCalculator(attributesNode, request.getParser()),
                     toLevel(attributesNode, request.getParser()),
+                    toStateCalculator(attributesNode, request.getParser()),
                     toRecordAttempts(attributesNode, request.getParser())
             );
         }
