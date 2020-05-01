@@ -1,16 +1,20 @@
 package uk.co.idv.domain.usecases.lockout.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutRequestMother;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.policy.LockoutLevelConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.LockoutPoliciesAlreadyExistException;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.LockoutPolicyNotFoundException;
+import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.RequestedLockoutPolicyNotFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -131,6 +135,49 @@ class DefaultLockoutPolicyServiceTest {
         final LockoutPolicy loadedPolicy = service.load(id);
 
         assertThat(loadedPolicy).isEqualTo(policy);
+    }
+
+    @Test
+    void shouldLoadPolicyApplicableToRequest() {
+        final LockoutRequest request = mock(LockoutRequest.class);
+        final PolicyLevel level = mock(PolicyLevel.class);
+        final UUID id = UUID.randomUUID();
+        given(policy.getId()).willReturn(id);
+        given(policy.appliesTo(request)).willReturn(true);
+        given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
+        final List<LockoutPolicy> policies = Collections.singletonList(policy);
+        given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.of(policy));
+        given(dao.load(request)).willReturn(policies);
+
+        final LockoutPolicy loadedPolicy = service.load(request);
+
+        assertThat(loadedPolicy).isEqualTo(policy);
+    }
+
+    @Test
+    void shouldThrowExceptionIfApplicablePolicyNotFound() {
+        final LockoutRequest request = LockoutRequestMother.fake();
+        final PolicyLevel level = mock(PolicyLevel.class);
+        final UUID id = UUID.randomUUID();
+        given(policy.getId()).willReturn(id);
+        given(policy.appliesTo(request)).willReturn(true);
+        given(lockoutLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
+        final List<LockoutPolicy> policies = Collections.singletonList(policy);
+        given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.empty());
+        given(dao.load(request)).willReturn(policies);
+
+        final Throwable error = catchThrowable(() -> service.load(request));
+
+        assertThat(error)
+                .isInstanceOf(RequestedLockoutPolicyNotFoundException.class)
+                .hasMessage(toExpectedMessage(request));
+    }
+
+    private static String toExpectedMessage(final LockoutRequest request) {
+        return String.format("channelId %s activity %s aliasType %s",
+                request.getChannelId(),
+                request.getActivityName(),
+                request.getAlias().getType());
     }
 
 }

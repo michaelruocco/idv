@@ -56,6 +56,7 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
                 .orElseThrow(() -> new LockoutPolicyNotFoundException(id));
     }
 
+    @Override
     public LockoutPolicy load(final LockoutRequest request) {
         return loadPolicy(request)
                 .orElseThrow(() -> new RequestedLockoutPolicyNotFoundException(request));
