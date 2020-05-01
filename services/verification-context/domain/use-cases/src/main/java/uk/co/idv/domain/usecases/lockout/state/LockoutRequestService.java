@@ -1,0 +1,21 @@
+package uk.co.idv.domain.usecases.lockout.state;
+
+import lombok.Builder;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
+import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptsLoader;
+
+@Builder
+public class LockoutRequestService {
+
+    private final VerificationAttemptsLoader attemptsLoader;
+    private final LockoutStateRequestConverter requestConverter;
+
+    public CalculateLockoutStateRequest toCalculateRequest(final LockoutStateRequest request) {
+        final VerificationAttempts attempts = attemptsLoader.load(request.getIdvIdValue());
+        return requestConverter.toCalculateRequest(request, attempts);
+    }
+
+}

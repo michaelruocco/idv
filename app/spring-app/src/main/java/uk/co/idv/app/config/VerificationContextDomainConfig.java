@@ -10,6 +10,7 @@ import uk.co.idv.domain.usecases.identity.data.IdentityDataService;
 import uk.co.idv.domain.usecases.identity.data.MobileDeviceLoader;
 import uk.co.idv.domain.usecases.identity.data.PhoneNumberLoader;
 import uk.co.idv.domain.usecases.lockout.policy.InitialLockoutPolicyCreator;
+import uk.co.idv.domain.usecases.lockout.state.LockoutRequestService;
 import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
@@ -161,26 +162,31 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public LockoutStateResetter lockoutStateResetter(final VerificationAttemptsLoader attemptsLoader,
+    public LockoutRequestService requestService(final VerificationAttemptsLoader attemptsLoader,
+                                                final LockoutStateRequestConverter requestConverter) {
+        return LockoutRequestService.builder()
+                .attemptsLoader(attemptsLoader)
+                .requestConverter(requestConverter)
+                .build();
+    }
+
+    @Bean
+    public LockoutStateResetter lockoutStateResetter(final LockoutRequestService requestService,
                                                      final LockoutPolicyService policyService,
-                                                     final LockoutStateRequestConverter requestConverter,
                                                      final VerificationAttemptDao dao) {
         return LockoutStateResetter.builder()
-                .attemptsLoader(attemptsLoader)
+                .requestService(requestService)
                 .policyService(policyService)
-                .requestConverter(requestConverter)
                 .dao(dao)
                 .build();
     }
 
     @Bean
-    public LockoutStateLoader lockoutStateLoader(final VerificationAttemptsLoader attemptsLoader,
-                                                 final LockoutPolicyService policyService,
-                                                 final LockoutStateRequestConverter requestConverter) {
+    public LockoutStateLoader lockoutStateLoader(final LockoutRequestService requestService,
+                                                 final LockoutPolicyService policyService) {
         return LockoutStateLoader.builder()
-                .attemptsLoader(attemptsLoader)
+                .requestService(requestService)
                 .policyService(policyService)
-                .requestConverter(requestConverter)
                 .build();
     }
 
