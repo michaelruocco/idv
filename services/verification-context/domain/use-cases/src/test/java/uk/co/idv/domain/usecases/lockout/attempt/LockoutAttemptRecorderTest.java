@@ -2,6 +2,7 @@ package uk.co.idv.domain.usecases.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.hard.FakeHardLockoutState;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
@@ -41,7 +42,9 @@ class LockoutAttemptRecorderTest {
         final VerificationAttempt attempt = VerificationAttemptsMother.successful();
         final LockoutState loadedState = new FakeHardLockoutState();
         given(requestConverter.toAttempt(request)).willReturn(attempt);
-        given(policyService.shouldRecordAttempt(request)).willReturn(false);
+        final LockoutPolicy policy = mock(LockoutPolicy.class);
+        given(policyService.load(request)).willReturn(policy);
+        given(policy.shouldRecordAttempt(request)).willReturn(false);
         given(stateLoader.load(attempt)).willReturn(loadedState);
 
         final LockoutState state = recorder.recordAttempt(request);
@@ -55,7 +58,9 @@ class LockoutAttemptRecorderTest {
         final VerificationAttempt attempt = VerificationAttemptsMother.successful();
         final LockoutState loadedState = new FakeHardLockoutState();
         given(requestConverter.toAttempt(request)).willReturn(attempt);
-        given(policyService.shouldRecordAttempt(request)).willReturn(true);
+        final LockoutPolicy policy = mock(LockoutPolicy.class);
+        given(policyService.load(request)).willReturn(policy);
+        given(policy.shouldRecordAttempt(request)).willReturn(true);
         given(stateLoader.load(attempt)).willReturn(loadedState);
 
         final LockoutState state = recorder.recordAttempt(request);
@@ -70,7 +75,9 @@ class LockoutAttemptRecorderTest {
         final VerificationAttempt attempt = VerificationAttemptsMother.failed();
         final LockoutState loadedState = new FakeHardLockoutState();
         given(requestConverter.toAttempt(request)).willReturn(attempt);
-        given(policyService.shouldRecordAttempt(request)).willReturn(true);
+        final LockoutPolicy policy = mock(LockoutPolicy.class);
+        given(policyService.load(request)).willReturn(policy);
+        given(policy.shouldRecordAttempt(request)).willReturn(true);
         given(stateLoader.load(attempt)).willReturn(loadedState);
 
         final LockoutState state = recorder.recordAttempt(request);

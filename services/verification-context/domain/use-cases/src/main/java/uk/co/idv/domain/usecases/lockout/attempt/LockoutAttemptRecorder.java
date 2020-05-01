@@ -2,6 +2,7 @@ package uk.co.idv.domain.usecases.lockout.attempt;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempt;
@@ -21,10 +22,15 @@ public class LockoutAttemptRecorder {
 
     public LockoutState recordAttempt(final RecordAttemptRequest request) {
         final VerificationAttempt attempt = requestConverter.toAttempt(request);
-        if (policyService.shouldRecordAttempt(request)) {
+        if (shouldRecordAttempt(request)) {
             return recordAttempt(attempt);
         }
         return loadState(attempt);
+    }
+
+    private boolean shouldRecordAttempt(final RecordAttemptRequest request) {
+        final LockoutPolicy policy = policyService.load(request);
+        return policy.shouldRecordAttempt(request);
     }
 
     private LockoutState recordAttempt(final VerificationAttempt attempt) {

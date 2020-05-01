@@ -2,23 +2,13 @@ package uk.co.idv.domain.usecases.lockout.policy;
 
 import lombok.Getter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
-import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
-import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
-import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.Collection;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public interface LockoutPolicyService {
-
-    boolean shouldRecordAttempt(RecordAttemptRequest request);
-
-    LockoutState calculateState(CalculateLockoutStateRequest request);
-
-    VerificationAttempts resetAttempts(CalculateLockoutStateRequest request);
 
     default void create(Collection<LockoutPolicy> policies) {
         policies.forEach(this::create);
@@ -29,6 +19,8 @@ public interface LockoutPolicyService {
     void update(LockoutPolicy policy);
 
     LockoutPolicy load(UUID id);
+
+    LockoutPolicy load(final LockoutRequest request);
 
     Collection<LockoutPolicy> loadAll();
 
@@ -47,7 +39,6 @@ public interface LockoutPolicyService {
 
     }
 
-    @Getter
     class LockoutPolicyNotFoundException extends RuntimeException {
 
         public LockoutPolicyNotFoundException(final UUID id) {

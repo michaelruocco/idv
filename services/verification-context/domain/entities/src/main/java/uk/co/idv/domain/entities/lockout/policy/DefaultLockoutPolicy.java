@@ -2,8 +2,9 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
+import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -67,21 +68,17 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     @Override
-    public VerificationAttempts reset(final VerificationAttempts attempts, final LockoutRequest request) {
-        final VerificationAttempts applicableAttempts = filterApplicableAttempts(attempts, request);
+    public VerificationAttempts reset(final CalculateLockoutStateRequest request) {
+        final VerificationAttempts attempts = request.getAttempts();
+        final VerificationAttempts applicableAttempts = filterApplicableAttempts(request);
         return attempts.remove(applicableAttempts);
     }
 
     @Override
-    public VerificationAttempts filterApplicableAttempts(final VerificationAttempts attempts,
-                                                         final LockoutRequest request) {
-        log.info("level {} is alias level {}", level, level.isAliasLevel());
-        if (level.isAliasLevel()) {
-            log.info("filtering by alias {}", request.getAlias());
-            final VerificationAttempts aliasAttempts = attempts.filterMatching(request.getAlias());
-            return aliasAttempts.filterMatching(level);
-        }
-        return attempts.filterMatching(level);
+    public LockoutState calculateState(final CalculateLockoutStateRequest request) {
+        final VerificationAttempts applicableAttempts = filterApplicableAttempts(request);
+        final CalculateLockoutStateRequest updatedRequest = request.updateAttempts(applicableAttempts);
+        return stateCalculator.calculate(updatedRequest);
     }
 
     @Override
@@ -97,6 +94,18 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     @Override
     public RecordAttemptStrategy getRecordAttemptStrategy() {
         return recordAttemptStrategy;
+    }
+
+    private VerificationAttempts filterApplicableAttempts(final CalculateLockoutStateRequest request) {
+        //TODO try moving this into attempts class
+        final VerificationAttempts attempts = request.getAttempts();
+        log.info("level {} is alias level {}", level, level.isAliasLevel());
+        if (level.isAliasLevel()) {
+            log.info("filtering by alias {}", request.getAlias());
+            final VerificationAttempts aliasAttempts = attempts.filterMatching(request.getAlias());
+            return aliasAttempts.filterMatching(level);
+        }
+        return attempts.filterMatching(level);
     }
 
 }

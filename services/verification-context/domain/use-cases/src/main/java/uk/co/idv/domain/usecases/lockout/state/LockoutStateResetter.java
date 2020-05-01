@@ -2,6 +2,7 @@ package uk.co.idv.domain.usecases.lockout.state;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
@@ -9,8 +10,6 @@ import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService;
 import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptsLoader;
-
-import java.util.UUID;
 
 @Builder
 @Slf4j
@@ -23,14 +22,15 @@ public class LockoutStateResetter {
 
     public void reset(final LockoutStateRequest lockoutRequest) {
         log.info("resetting lockout state for request {}", lockoutRequest);
-        final VerificationAttempts attempts = loadAttempts(lockoutRequest.getIdvIdValue());
-        final CalculateLockoutStateRequest resetRequest = requestConverter.toCalculateRequest(lockoutRequest, attempts);
-        final VerificationAttempts resetAttempts = policyService.resetAttempts(resetRequest);
+        final LockoutPolicy policy = policyService.load(lockoutRequest);
+        final CalculateLockoutStateRequest calculateRequest = toCalculateStateRequest(lockoutRequest);
+        final VerificationAttempts resetAttempts = policy.reset(calculateRequest);
         dao.save(resetAttempts);
     }
 
-    private VerificationAttempts loadAttempts(final UUID idvId) {
-        return attemptsLoader.load(idvId);
+    private CalculateLockoutStateRequest toCalculateStateRequest(final LockoutStateRequest stateRequest) {
+        final VerificationAttempts attempts = attemptsLoader.load(stateRequest.getIdvIdValue());
+        return requestConverter.toCalculateRequest(stateRequest, attempts);
     }
 
 }

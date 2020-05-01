@@ -75,9 +75,9 @@ class DefaultLockoutPolicyTest {
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withOneAttempt();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withAttempts(attempts);
 
-        final VerificationAttempts resetAttempts = policy.reset(attempts, request);
+        final VerificationAttempts resetAttempts = policy.reset(request);
 
         assertThat(resetAttempts).containsExactlyElementsOf(attempts);
     }
@@ -88,9 +88,9 @@ class DefaultLockoutPolicyTest {
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest inputRequest = CalculateLockoutStateRequestMother.withOneAttempt();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withAttempts(attempts);
 
-        final VerificationAttempts resetAttempts = policy.reset(attempts, inputRequest);
+        final VerificationAttempts resetAttempts = policy.reset(request);
 
         assertThat(resetAttempts).isEmpty();
     }
@@ -102,9 +102,9 @@ class DefaultLockoutPolicyTest {
         final VerificationAttempt matchingAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber());
         final VerificationAttempt differentAliasAttempt = VerificationAttemptsMother.failed(UUID.randomUUID(), AliasesMother.creditCardNumber("4929992222222222"));
         final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(matchingAliasAttempt, differentAliasAttempt);
-        final CalculateLockoutStateRequest inputRequest = CalculateLockoutStateRequestMother.withOneAttempt();
+        final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withAttempts(attempts);
 
-        final VerificationAttempts resetAttempts = policy.reset(attempts, inputRequest);
+        final VerificationAttempts resetAttempts = policy.reset(request);
 
         assertThat(resetAttempts).containsExactly(differentAliasAttempt);
     }

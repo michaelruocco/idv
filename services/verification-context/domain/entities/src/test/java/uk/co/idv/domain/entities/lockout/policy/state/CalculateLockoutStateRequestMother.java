@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.lockout.policy.state;
 
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest.CalculateLockoutStateRequestBuilder;
 
@@ -14,7 +15,13 @@ public class CalculateLockoutStateRequestMother {
     }
 
     public static CalculateLockoutStateRequest withOneAttempt() {
-        return defaultBuilder().build();
+        return withAttempts(VerificationAttemptsMother.oneAttempt());
+    }
+
+    public static CalculateLockoutStateRequest withAttempts(final VerificationAttempts attempts) {
+        return defaultBuilder()
+                .attempts(attempts)
+                .build();
     }
 
     public static CalculateLockoutStateRequestBuilder defaultBuilder() {
@@ -23,8 +30,7 @@ public class CalculateLockoutStateRequestMother {
                 .activityName("fake-activity")
                 .timestamp(Instant.parse("2019-09-21T20:43:32.233721Z"))
                 .alias(AliasesMother.creditCardNumber())
-                .idvIdValue(UUID.fromString("d23d923a-521a-422d-9ba9-8cb1c756dbee"))
-                .attempts(VerificationAttemptsMother.oneAttempt());
+                .idvIdValue(UUID.fromString("d23d923a-521a-422d-9ba9-8cb1c756dbee"));
     }
 
 }
