@@ -33,10 +33,6 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         this(id, idvId, Collections.emptyList());
     }
 
-    public VerificationAttempts(final UUID idvId, final Collection<VerificationAttempt> attempts) {
-        this(UUID.randomUUID(), idvId, attempts);
-    }
-
     public VerificationAttempts(final UUID id, final UUID idvId, final Collection<VerificationAttempt> attempts) {
         this.id = id;
         this.idvId = idvId;
