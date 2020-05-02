@@ -1,26 +1,33 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode;
 
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import uk.co.idv.domain.entities.verificationcontext.method.AbstractVerificationMethodEligible;
+import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodUtils;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible implements OneTimePasscode {
+@EqualsAndHashCode
+@RequiredArgsConstructor
+public class OneTimePasscodeEligible implements VerificationMethod, OneTimePasscode {
 
     private static final int MAX_ATTEMPTS = 1;
     private static final Duration DURATION = Duration.ofMinutes(5);
+    private static final Eligibility ELIGIBLE = new Eligible();
 
     private final PasscodeSettings passcodeSettings;
     private final Collection<DeliveryMethod> deliveryMethods;
+    private final int maxAttempts;
+    private final Duration duration;
+    private final VerificationResults results;
 
     public OneTimePasscodeEligible(final PasscodeSettings passcodeSettings,
                                    final Collection<DeliveryMethod> deliveryMethods) {
@@ -44,16 +51,6 @@ public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible 
                                    final int maxAttempts,
                                    final Duration duration) {
         this(passcodeSettings, deliveryMethods, maxAttempts, duration, new DefaultVerificationResults());
-    }
-
-    public OneTimePasscodeEligible(final PasscodeSettings passcodeSettings,
-                                   final Collection<DeliveryMethod> deliveryMethods,
-                                   final int maxAttempts,
-                                   final Duration duration,
-                                   final VerificationResults results) {
-        super(NAME, results, maxAttempts, duration);
-        this.passcodeSettings = passcodeSettings;
-        this.deliveryMethods = deliveryMethods;
     }
 
     public PasscodeSettings getPasscodeSettings() {
@@ -80,14 +77,59 @@ public class OneTimePasscodeEligible extends AbstractVerificationMethodEligible 
     }
 
     @Override
-    protected VerificationMethod updateResults(final VerificationResults results) {
-        return new OneTimePasscodeEligible(
-                passcodeSettings,
-                deliveryMethods,
-                getMaxAttempts(),
-                getDuration(),
-                results
-        );
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public int getMaxAttempts() {
+        return maxAttempts;
+    }
+
+    @Override
+    public Duration getDuration() {
+        return duration;
+    }
+
+    @Override
+    public boolean isEligible() {
+        return ELIGIBLE.isEligible();
+    }
+
+    @Override
+    public Optional<String> getEligibilityReason() {
+        return ELIGIBLE.getReason();
+    }
+
+    @Override
+    public Eligibility getEligibility() {
+        return ELIGIBLE;
+    }
+
+    @Override
+    public boolean hasResults() {
+        return !results.isEmpty();
+    }
+
+    @Override
+    public boolean isComplete() {
+        return VerificationMethodUtils.isComplete(results, maxAttempts);
+    }
+
+    @Override
+    public boolean isSuccessful() {
+        return results.containsSuccessful();
+    }
+
+    @Override
+    public VerificationResults getResults() {
+        return results;
+    }
+
+    @Override
+    public VerificationMethod addResult(VerificationResult result) {
+        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, maxAttempts);
+        return new OneTimePasscodeEligible(passcodeSettings, deliveryMethods, maxAttempts, duration, updatedResults);
     }
 
     public static class DeliveryMethodNotFoundException extends RuntimeException {

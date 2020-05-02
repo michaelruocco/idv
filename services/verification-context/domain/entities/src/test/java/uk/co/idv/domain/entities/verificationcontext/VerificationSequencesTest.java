@@ -115,7 +115,7 @@ class VerificationSequencesTest {
 
     @Test
     void shouldAddResultToMethodThatIsNextMethodInAnySequences() {
-        final String methodName = "method-name";
+        final String methodName = "fake-method";
         final VerificationMethod method1 = new FakeVerificationMethodEligible(methodName);
         final VerificationMethod method2 = new FakeVerificationMethodEligible(methodName);
         final VerificationSequence sequence1 = new SingleMethodSequence(method1);
