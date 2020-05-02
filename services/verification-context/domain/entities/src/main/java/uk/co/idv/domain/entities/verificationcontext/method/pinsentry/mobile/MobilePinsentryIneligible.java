@@ -1,23 +1,83 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile;
 
-import uk.co.idv.domain.entities.verificationcontext.method.AbstractVerificationMethodIneligible;
+import lombok.RequiredArgsConstructor;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsAlwaysEmpty;
 
-public class MobilePinsentryIneligible extends AbstractVerificationMethodIneligible implements MobilePinsentry {
+import java.time.Duration;
+import java.util.Optional;
 
-    private static final String NAME = "mobile-pinsentry";
+@RequiredArgsConstructor
+public class MobilePinsentryIneligible implements VerificationMethod, MobilePinsentry {
+
+    private static final Eligibility ELIGIBILITY = new NoMobileApplication();
+    private static final VerificationResults RESULTS = new VerificationResultsAlwaysEmpty();
 
     private final PinsentryFunction function;
-
-    public MobilePinsentryIneligible(final PinsentryFunction function) {
-        super(NAME, new NoMobileApplication());
-        this.function = function;
-    }
 
     @Override
     public PinsentryFunction getFunction() {
         return function;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public int getMaxAttempts() {
+        return 0;
+    }
+
+    @Override
+    public Duration getDuration() {
+        return Duration.ZERO;
+    }
+
+    @Override
+    public boolean isEligible() {
+        return ELIGIBILITY.isEligible();
+    }
+
+    @Override
+    public Optional<String> getEligibilityReason() {
+        return ELIGIBILITY.getReason();
+    }
+
+    @Override
+    public Eligibility getEligibility() {
+        return ELIGIBILITY;
+    }
+
+    @Override
+    public boolean hasResults() {
+        return false;
+    }
+
+    @Override
+    public boolean isComplete() {
+        return false;
+    }
+
+    @Override
+    public boolean isSuccessful() {
+        return false;
+    }
+
+    @Override
+    public VerificationResults getResults() {
+        return RESULTS;
+    }
+
+    @Override
+    public VerificationMethod addResult(final VerificationResult result) {
+        throw new CannotAddResultToIneligibleMethodException(NAME);
     }
 
 }

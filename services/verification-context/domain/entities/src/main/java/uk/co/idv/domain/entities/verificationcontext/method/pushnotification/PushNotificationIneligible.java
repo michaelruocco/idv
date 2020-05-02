@@ -46,11 +46,6 @@ public class PushNotificationIneligible implements VerificationMethod, PushNotif
     }
 
     @Override
-    public boolean hasName(String otherName) {
-        return NAME.equals(otherName);
-    }
-
-    @Override
     public boolean hasResults() {
         return false;
     }

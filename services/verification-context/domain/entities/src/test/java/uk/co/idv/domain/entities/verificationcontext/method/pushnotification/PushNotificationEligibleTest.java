@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
@@ -121,6 +123,13 @@ class PushNotificationEligibleTest {
 
         assertThat(methodWithResult).isEqualToIgnoringGivenFields(method, "results");
         assertThat(methodWithResult.getResults()).containsExactly(result);
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(PushNotificationEligible.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

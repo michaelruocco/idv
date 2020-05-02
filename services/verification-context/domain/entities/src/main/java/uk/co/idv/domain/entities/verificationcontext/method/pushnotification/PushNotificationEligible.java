@@ -2,7 +2,6 @@ package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
@@ -15,7 +14,6 @@ import java.time.Duration;
 import java.util.Optional;
 
 @EqualsAndHashCode
-@ToString
 @RequiredArgsConstructor
 public class PushNotificationEligible implements VerificationMethod, PushNotification {
 
@@ -78,11 +76,6 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
     }
 
     @Override
-    public boolean hasName(final String otherName) {
-        return NAME.equals(otherName);
-    }
-
-    @Override
     public boolean hasResults() {
         return !results.isEmpty();
     }
@@ -104,7 +97,8 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
 
     @Override
     public VerificationMethod addResult(final VerificationResult result) {
-        return new PushNotificationEligible(VerificationMethodUtils.addResult(results, result, NAME, maxAttempts));
+        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, maxAttempts);
+        return new PushNotificationEligible(updatedResults);
     }
 
 }

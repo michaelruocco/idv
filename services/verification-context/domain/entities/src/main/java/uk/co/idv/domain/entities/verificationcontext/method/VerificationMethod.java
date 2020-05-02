@@ -22,8 +22,6 @@ public interface VerificationMethod {
 
     Eligibility getEligibility();
 
-    boolean hasName(final String otherName);
-
     boolean hasResults();
 
     boolean isComplete();
@@ -33,6 +31,10 @@ public interface VerificationMethod {
     VerificationResults getResults();
 
     VerificationMethod addResult(final VerificationResult result);
+
+    default boolean hasName(final String otherName) {
+        return getName().equals(otherName);
+    }
 
     @Getter
     class CannotAddResultToMethodException extends RuntimeException {
