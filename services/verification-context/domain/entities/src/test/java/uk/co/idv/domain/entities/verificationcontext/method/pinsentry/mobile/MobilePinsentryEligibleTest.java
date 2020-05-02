@@ -17,9 +17,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MobilePinsentryEligibleTest {
 
-    private final PinsentryFunction function = PinsentryFunction.IDENTIFY;
+    private static final PinsentryFunction FUNCTION = PinsentryFunction.IDENTIFY;
 
-    private final MobilePinsentryEligible method = new MobilePinsentryEligible(function);
+    private final MobilePinsentryEligible method = new MobilePinsentryEligible(FUNCTION);
 
     @Test
     void shouldReturnName() {
@@ -63,7 +63,7 @@ class MobilePinsentryEligibleTest {
 
     @Test
     void shouldReturnFunction() {
-        assertThat(method.getFunction()).isEqualTo(function);
+        assertThat(method.getFunction()).isEqualTo(FUNCTION);
     }
 
     @Test
@@ -75,7 +75,7 @@ class MobilePinsentryEligibleTest {
     void shouldHaveResultIfResultAdded() {
         final VerificationResult result = new FakeVerificationResultSuccessful(MobilePinsentry.NAME);
 
-        final VerificationMethod methodWithResult = new MobilePinsentryEligible(function, result);
+        final VerificationMethod methodWithResult = new MobilePinsentryEligible(FUNCTION, result);
 
         assertThat(methodWithResult.hasResults()).isTrue();
     }
@@ -84,7 +84,7 @@ class MobilePinsentryEligibleTest {
     void shouldBeCompleteIfHasSuccessfulResult() {
         final VerificationResult result = new FakeVerificationResultSuccessful(MobilePinsentry.NAME);
 
-        final VerificationMethod completeMethod = new MobilePinsentryEligible(function, result);
+        final VerificationMethod completeMethod = new MobilePinsentryEligible(FUNCTION, result);
 
         assertThat(completeMethod.isComplete()).isTrue();
     }
@@ -94,7 +94,7 @@ class MobilePinsentryEligibleTest {
         final int maxAttempts = 1;
         final VerificationResult result = new FakeVerificationResultFailed(MobilePinsentry.NAME);
 
-        final VerificationMethod completeMethod = new MobilePinsentryEligible(function, new DefaultVerificationResults(result), maxAttempts, Duration.ZERO);
+        final VerificationMethod completeMethod = new MobilePinsentryEligible(new DefaultVerificationResults(result), maxAttempts, Duration.ZERO, FUNCTION);
 
         assertThat(completeMethod.isComplete()).isTrue();
     }
@@ -104,16 +104,16 @@ class MobilePinsentryEligibleTest {
         final int maxAttempts = 2;
         final VerificationResult result = new FakeVerificationResultFailed(MobilePinsentry.NAME);
 
-        final VerificationMethod completeMethod = new MobilePinsentryEligible(function, new DefaultVerificationResults(result), maxAttempts, Duration.ZERO);
+        final VerificationMethod incompleteMethod = new MobilePinsentryEligible(new DefaultVerificationResults(result), maxAttempts, Duration.ZERO, FUNCTION);
 
-        assertThat(completeMethod.isComplete()).isFalse();
+        assertThat(incompleteMethod.isComplete()).isFalse();
     }
 
     @Test
     void shouldBeSuccessfulIfHasSuccessfulResult() {
         final VerificationResult result = new FakeVerificationResultSuccessful(MobilePinsentry.NAME);
 
-        final VerificationMethod successfulMethod = new MobilePinsentryEligible(function, result);
+        final VerificationMethod successfulMethod = new MobilePinsentryEligible(FUNCTION, result);
 
         assertThat(successfulMethod.isSuccessful()).isTrue();
     }

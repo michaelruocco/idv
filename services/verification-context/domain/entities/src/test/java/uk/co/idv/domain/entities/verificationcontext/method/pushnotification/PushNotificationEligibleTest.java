@@ -86,7 +86,7 @@ class PushNotificationEligibleTest {
         final int maxAttempts = 1;
         final VerificationResult result = new FakeVerificationResultFailed(PushNotification.NAME);
 
-        final VerificationMethod completeMethod = new PushNotificationEligible(maxAttempts, Duration.ZERO, new DefaultVerificationResults(result));
+        final VerificationMethod completeMethod = new PushNotificationEligible(new DefaultVerificationResults(result), maxAttempts, Duration.ZERO);
 
         assertThat(completeMethod.isComplete()).isTrue();
     }
@@ -96,9 +96,9 @@ class PushNotificationEligibleTest {
         final int maxAttempts = 2;
         final VerificationResult result = new FakeVerificationResultFailed(PushNotification.NAME);
 
-        final VerificationMethod completeMethod = new PushNotificationEligible(maxAttempts, Duration.ZERO, new DefaultVerificationResults(result));
+        final VerificationMethod incompleteMethod = new PushNotificationEligible(new DefaultVerificationResults(result), maxAttempts, Duration.ZERO);
 
-        assertThat(completeMethod.isComplete()).isFalse();
+        assertThat(incompleteMethod.isComplete()).isFalse();
     }
 
     @Test

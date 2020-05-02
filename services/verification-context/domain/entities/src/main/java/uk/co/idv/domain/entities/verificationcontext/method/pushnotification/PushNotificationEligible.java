@@ -19,11 +19,11 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
 
     private static final int MAX_ATTEMPTS = 5;
     private static final Duration DURATION = Duration.ofMinutes(5);
+    private static final Eligibility ELIGIBLE = new Eligible();
 
     private final VerificationResults results;
     private final int maxAttempts;
     private final Duration duration;
-    private final Eligibility eligibility;
 
     public PushNotificationEligible() {
         this(new DefaultVerificationResults());
@@ -34,15 +34,11 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
     }
 
     public PushNotificationEligible(final VerificationResults results) {
-        this(MAX_ATTEMPTS, DURATION, results);
+        this(results, MAX_ATTEMPTS, DURATION);
     }
 
     public PushNotificationEligible(final int maxAttempts, final Duration duration) {
-        this(maxAttempts, duration, new DefaultVerificationResults());
-    }
-
-    public PushNotificationEligible(final int maxAttempts, final Duration duration, final VerificationResults results) {
-        this(results, maxAttempts, duration, new Eligible());
+        this(new DefaultVerificationResults(), maxAttempts, duration);
     }
 
     @Override
@@ -62,17 +58,17 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
 
     @Override
     public boolean isEligible() {
-        return eligibility.isEligible();
+        return ELIGIBLE.isEligible();
     }
 
     @Override
     public Optional<String> getEligibilityReason() {
-        return eligibility.getReason();
+        return ELIGIBLE.getReason();
     }
 
     @Override
     public Eligibility getEligibility() {
-        return eligibility;
+        return ELIGIBLE;
     }
 
     @Override

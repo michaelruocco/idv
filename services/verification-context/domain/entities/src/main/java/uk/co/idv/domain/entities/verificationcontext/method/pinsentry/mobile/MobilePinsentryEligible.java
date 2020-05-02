@@ -20,11 +20,11 @@ public class MobilePinsentryEligible implements VerificationMethod, MobilePinsen
 
     private static final int MAX_ATTEMPTS = 1;
     private static final Duration DURATION = Duration.ofMinutes(5);
+    private static final Eligibility ELIGIBLE = new Eligible();
 
     private final VerificationResults results;
     private final int maxAttempts;
     private final Duration duration;
-    private final Eligibility eligibility;
     private final PinsentryFunction function;
 
     public MobilePinsentryEligible(final PinsentryFunction function) {
@@ -36,20 +36,13 @@ public class MobilePinsentryEligible implements VerificationMethod, MobilePinsen
     }
 
     public MobilePinsentryEligible(final PinsentryFunction function, final VerificationResults results) {
-        this(function, results, MAX_ATTEMPTS, DURATION);
+        this(results, MAX_ATTEMPTS, DURATION, function);
     }
 
     public MobilePinsentryEligible(final PinsentryFunction function,
                                    final int maxAttempts,
                                    final Duration duration) {
-        this(function, new DefaultVerificationResults(), maxAttempts, duration);
-    }
-
-    public MobilePinsentryEligible(final PinsentryFunction function,
-                                   final VerificationResults results,
-                                   final int maxAttempts,
-                                   final Duration duration) {
-        this(results, maxAttempts, duration, new Eligible(), function);
+        this(new DefaultVerificationResults(), maxAttempts, duration, function);
     }
 
     @Override
@@ -74,17 +67,17 @@ public class MobilePinsentryEligible implements VerificationMethod, MobilePinsen
 
     @Override
     public boolean isEligible() {
-        return eligibility.isEligible();
+        return ELIGIBLE.isEligible();
     }
 
     @Override
     public Optional<String> getEligibilityReason() {
-        return eligibility.getReason();
+        return ELIGIBLE.getReason();
     }
 
     @Override
     public Eligibility getEligibility() {
-        return eligibility;
+        return ELIGIBLE;
     }
 
     @Override
@@ -110,7 +103,7 @@ public class MobilePinsentryEligible implements VerificationMethod, MobilePinsen
     @Override
     public VerificationMethod addResult(VerificationResult result) {
         final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, maxAttempts);
-        return new MobilePinsentryEligible(updatedResults, maxAttempts, duration, eligibility, function);
+        return new MobilePinsentryEligible(updatedResults, maxAttempts, duration, function);
     }
 
 }
