@@ -62,10 +62,7 @@ public abstract class AbstractVerificationMethod implements VerificationMethod {
 
     @Override
     public boolean isComplete() {
-        if (results.containsSuccessful()) {
-            return true;
-        }
-        return results.size() >= maxAttempts;
+        return VerificationMethodUtils.isComplete(results, maxAttempts);
     }
 
     @Override
@@ -90,13 +87,7 @@ public abstract class AbstractVerificationMethod implements VerificationMethod {
 
     @Override
     public VerificationMethod addResult(final VerificationResult result) {
-        if (!name.equals(result.getMethodName())) {
-            throw new CannotAddResultToMethodException(result.getMethodName(), name);
-        }
-        if (isComplete()) {
-            throw new MethodAlreadyCompleteException(name);
-        }
-        return updateResults(results.add(result));
+        return updateResults(VerificationMethodUtils.addResult(results, result, name, maxAttempts));
     }
 
     protected abstract VerificationMethod updateResults(final VerificationResults results);

@@ -15,7 +15,7 @@ class AbstractVerificationMethodIneligibleTest {
 
     private static final String METHOD_NAME = "fake-method";
 
-    private VerificationMethod method = new FakeVerificationMethodIneligible();
+    private final VerificationMethod method = new FakeVerificationMethodIneligible();
 
     @Test
     void shouldReturnName() {

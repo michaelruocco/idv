@@ -39,20 +39,6 @@ class VerificationResultsAlwaysEmptyTest {
     }
 
     @Test
-    void shouldNotContainSuccessfulMethod() {
-        final VerificationResults results = new VerificationResultsAlwaysEmpty();
-
-        assertThat(results.containsSuccessful(METHOD_NAME)).isFalse();
-    }
-
-    @Test
-    void shouldNotReturnAnyMethodNames() {
-        final VerificationResults results = new VerificationResultsAlwaysEmpty();
-
-        assertThat(results.getMethodNames()).isEmpty();
-    }
-
-    @Test
     void shouldReturnZeroSize() {
         final VerificationResults results = new VerificationResultsAlwaysEmpty();
 

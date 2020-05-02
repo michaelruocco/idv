@@ -23,16 +23,6 @@ public class VerificationResultsAlwaysEmpty implements VerificationResults {
         return false;
     }
 
-    @Override
-    public boolean containsSuccessful(final String methodName) {
-        return false;
-    }
-
-    @Override
-    public Collection<String> getMethodNames() {
-        return Collections.emptySet();
-    }
-
     public int size() {
         return 0;
     }

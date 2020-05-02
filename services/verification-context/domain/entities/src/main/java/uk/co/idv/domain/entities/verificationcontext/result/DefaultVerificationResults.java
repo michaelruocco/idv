@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @EqualsAndHashCode
@@ -39,20 +38,6 @@ public class DefaultVerificationResults implements VerificationResults {
     @Override
     public boolean containsSuccessful() {
         return results.stream().anyMatch(VerificationResult::isSuccessful);
-    }
-
-    @Override
-    public boolean containsSuccessful(final String methodName) {
-        return results.stream()
-                .filter(result -> result.hasMethodName(methodName))
-                .anyMatch(VerificationResult::isSuccessful);
-    }
-
-    @Override
-    public Collection<String> getMethodNames() {
-        return results.stream()
-                .map(VerificationResult::getMethodName)
-                .collect(Collectors.toSet());
     }
 
     @Override

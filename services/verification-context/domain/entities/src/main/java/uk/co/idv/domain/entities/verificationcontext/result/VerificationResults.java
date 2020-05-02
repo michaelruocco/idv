@@ -9,10 +9,6 @@ public interface VerificationResults extends Iterable<VerificationResult> {
 
     boolean containsSuccessful();
 
-    boolean containsSuccessful(final String methodName);
-
-    Collection<String> getMethodNames();
-
     VerificationResults add(final VerificationResult result);
 
     int size();

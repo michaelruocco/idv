@@ -1,21 +1,31 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
 import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import uk.co.idv.domain.entities.verificationcontext.method.AbstractVerificationMethodEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodUtils;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.time.Duration;
+import java.util.Optional;
 
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class PushNotificationEligible extends AbstractVerificationMethodEligible implements PushNotification {
+@EqualsAndHashCode
+@ToString
+@RequiredArgsConstructor
+public class PushNotificationEligible implements VerificationMethod, PushNotification {
 
     private static final int MAX_ATTEMPTS = 5;
     private static final Duration DURATION = Duration.ofMinutes(5);
+
+    private final VerificationResults results;
+    private final int maxAttempts;
+    private final Duration duration;
+    private final Eligibility eligibility;
 
     public PushNotificationEligible() {
         this(new DefaultVerificationResults());
@@ -26,17 +36,75 @@ public class PushNotificationEligible extends AbstractVerificationMethodEligible
     }
 
     public PushNotificationEligible(final VerificationResults results) {
-        super(NAME, results, MAX_ATTEMPTS, DURATION);
+        this(MAX_ATTEMPTS, DURATION, results);
     }
 
-    public PushNotificationEligible(final int maxAttempts,
-                                    final Duration duration) {
-        super(NAME, new DefaultVerificationResults(), maxAttempts, duration);
+    public PushNotificationEligible(final int maxAttempts, final Duration duration) {
+        this(maxAttempts, duration, new DefaultVerificationResults());
+    }
+
+    public PushNotificationEligible(final int maxAttempts, final Duration duration, final VerificationResults results) {
+        this(results, maxAttempts, duration, new Eligible());
     }
 
     @Override
-    protected VerificationMethod updateResults(final VerificationResults results) {
-        return new PushNotificationEligible(results);
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public int getMaxAttempts() {
+        return maxAttempts;
+    }
+
+    @Override
+    public Duration getDuration() {
+        return duration;
+    }
+
+    @Override
+    public boolean isEligible() {
+        return eligibility.isEligible();
+    }
+
+    @Override
+    public Optional<String> getEligibilityReason() {
+        return eligibility.getReason();
+    }
+
+    @Override
+    public Eligibility getEligibility() {
+        return eligibility;
+    }
+
+    @Override
+    public boolean hasName(final String otherName) {
+        return NAME.equals(otherName);
+    }
+
+    @Override
+    public boolean hasResults() {
+        return !results.isEmpty();
+    }
+
+    @Override
+    public boolean isComplete() {
+        return VerificationMethodUtils.isComplete(results, maxAttempts);
+    }
+
+    @Override
+    public boolean isSuccessful() {
+        return results.containsSuccessful();
+    }
+
+    @Override
+    public VerificationResults getResults() {
+        return results;
+    }
+
+    @Override
+    public VerificationMethod addResult(final VerificationResult result) {
+        return new PushNotificationEligible(VerificationMethodUtils.addResult(results, result, NAME, maxAttempts));
     }
 
 }
