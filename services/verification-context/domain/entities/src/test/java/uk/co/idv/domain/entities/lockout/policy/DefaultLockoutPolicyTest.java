@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.policy.state.ApplicableAttemptFilter;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequestMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
@@ -22,12 +23,14 @@ class DefaultLockoutPolicyTest {
     private final PolicyLevel level = mock(PolicyLevel.class);
     private final RecordAttemptStrategy recordAttemptStrategy = mock(RecordAttemptStrategy.class);
     private final LockoutStateCalculator stateCalculator = mock(LockoutStateCalculator.class);
+    private final ApplicableAttemptFilter attemptFilter = mock(ApplicableAttemptFilter.class);
 
     private final LockoutPolicy policy = new DefaultLockoutPolicy(
             id,
             level,
             stateCalculator,
-            recordAttemptStrategy
+            recordAttemptStrategy,
+            attemptFilter
     );
 
     @Test
@@ -73,7 +76,7 @@ class DefaultLockoutPolicyTest {
         given(request.getAttempts()).willReturn(attempts);
         final VerificationAttempts applicableAttempts = mock(VerificationAttempts.class);
         final CalculateLockoutStateRequest updatedRequest = mock(CalculateLockoutStateRequest.class);
-        given(attempts.filterApplicable(level, request.getAlias())).willReturn(applicableAttempts);
+        given(attemptFilter.filter(request)).willReturn(applicableAttempts);
         given(request.updateAttempts(applicableAttempts)).willReturn(updatedRequest);
         final LockoutState expectedState = mock(LockoutState.class);
         given(stateCalculator.calculate(updatedRequest)).willReturn(expectedState);
@@ -88,7 +91,7 @@ class DefaultLockoutPolicyTest {
         final VerificationAttempts attempts = mock(VerificationAttempts.class);
         final CalculateLockoutStateRequest request = CalculateLockoutStateRequestMother.withAttempts(attempts);
         final VerificationAttempts applicableAttempts = mock(VerificationAttempts.class);
-        given(attempts.filterApplicable(level, request.getAlias())).willReturn(applicableAttempts);
+        given(attemptFilter.filter(request)).willReturn(applicableAttempts);
         final VerificationAttempts expectedResetAttempts = mock(VerificationAttempts.class);
         given(attempts.remove(applicableAttempts)).willReturn(expectedResetAttempts);
 

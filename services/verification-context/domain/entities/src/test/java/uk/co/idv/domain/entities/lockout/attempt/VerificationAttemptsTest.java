@@ -1,9 +1,13 @@
 package uk.co.idv.domain.entities.lockout.attempt;
 
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.identity.alias.Alias;
+import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts.CannotAddAttemptException;
+import uk.co.idv.domain.entities.policy.PolicyLevel;
+import uk.co.idv.domain.entities.policy.PolicyLevelMother;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,7 +80,7 @@ class VerificationAttemptsTest {
         final VerificationAttempt attempt1 = mock(VerificationAttempt.class);
         final VerificationAttempt attempt2 = mock(VerificationAttempt.class);
 
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Arrays.asList(attempt1, attempt2));
+        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(attempt1, attempt2);
 
         assertThat(attempts.collection()).containsExactly(attempt1, attempt2);
     }
@@ -86,9 +90,48 @@ class VerificationAttemptsTest {
         final VerificationAttempt attempt1 = mock(VerificationAttempt.class);
         final VerificationAttempt attempt2 = mock(VerificationAttempt.class);
 
-        final VerificationAttempts attempts = new VerificationAttempts(UUID.randomUUID(), Arrays.asList(attempt1, attempt2));
+        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(attempt1, attempt2);
 
         assertThat(attempts.stream()).containsExactly(attempt1, attempt2);
+    }
+
+    @Test
+    void shouldFilterAttemptsThatMatchAlias() {
+        final Alias alias = AliasesMother.creditCardNumber();
+        final VerificationAttempt attempt1 = VerificationAttemptsMother.builder().alias(alias).build();
+        final VerificationAttempt attempt2 = VerificationAttemptsMother.builder().alias(AliasesMother.debitCardNumber()).build();
+
+        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(attempt1, attempt2);
+
+        assertThat(attempts.filterApplicable(alias)).containsExactly(attempt1);
+    }
+
+    @Test
+    void shouldFilterAttemptsThatMatchPolicyLevel() {
+        final PolicyLevel level = PolicyLevelMother.defaultPolicyLevel();
+        final VerificationAttempt attempt1 = VerificationAttemptsMother.builder()
+                .channelId(level.getChannelId())
+                .activityName(IterableUtils.get(level.getActivityNames(), 0))
+                .build();
+        final VerificationAttempt attempt2 = VerificationAttemptsMother.builder()
+                .channelId("other-channel")
+                .activityName("other-activity")
+                .build();
+
+        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(attempt1, attempt2);
+
+        assertThat(attempts.filterApplicable(level)).containsExactly(attempt1);
+    }
+
+    @Test
+    void shouldRemoveAttempts() {
+        final VerificationAttempt attempt1 = VerificationAttemptsMother.successful();
+        final VerificationAttempt attempt2 = VerificationAttemptsMother.failed();
+        final VerificationAttempts attempts = VerificationAttemptsMother.withAttempts(attempt1, attempt2);
+
+        final VerificationAttempts updatedAttempts = attempts.remove(VerificationAttemptsMother.withAttempts(attempt2));
+
+        assertThat(updatedAttempts).containsExactly(attempt1);
     }
 
     @Test

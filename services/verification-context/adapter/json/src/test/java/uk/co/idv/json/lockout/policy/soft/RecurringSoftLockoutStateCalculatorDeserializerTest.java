@@ -22,7 +22,7 @@ class RecurringSoftLockoutStateCalculatorDeserializerTest {
         final LockoutPolicy policy = MAPPER.readValue(json, LockoutPolicy.class);
 
         final LockoutPolicy expectedPolicy = LockoutPolicyMother.recurringSoftLockoutPolicy();
-        assertThat(policy).isEqualToIgnoringGivenFields(expectedPolicy, "level");
+        assertThat(policy).isEqualToIgnoringGivenFields(expectedPolicy, "level", "attemptFilter");
         LockoutAssertions.assertThat(policy.getLevel()).isEqualTo(expectedPolicy.getLevel());
     }
 

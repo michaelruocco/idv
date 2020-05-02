@@ -49,7 +49,7 @@ public class LockoutPolicyDaoTest {
         final Optional<LockoutPolicy> loadedPolicy = dao.load(policy.getId());
 
         assertThat(loadedPolicy.isPresent()).isTrue();
-        assertThat(loadedPolicy.get()).isEqualToIgnoringGivenFields(policy, "level");
+        assertThat(loadedPolicy.get()).isEqualToIgnoringGivenFields(policy, "level", "attemptFilter");
         LockoutAssertions.assertThat(loadedPolicy.get().getLevel()).isEqualTo(policy.getLevel());
     }
 

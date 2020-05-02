@@ -60,20 +60,24 @@ public class VerificationAttemptsMother {
     }
 
     public static VerificationAttempt failed(final UUID idvId, final Alias alias) {
-        return builder(idvId, alias).buildFailed();
+        return builder()
+                .idvIdValue(idvId)
+                .alias(alias)
+                .buildFailed();
     }
 
     public static DefaultVerificationAttemptBuilder builder(final UUID idvId) {
-        return builder(idvId, AliasesMother.creditCardNumber());
+        return builder().idvIdValue(idvId);
     }
 
-    public static DefaultVerificationAttemptBuilder builder(final UUID idvId, final Alias alias) {
+
+    public static DefaultVerificationAttemptBuilder builder() {
         return DefaultVerificationAttempt.builder()
                 .contextId(CONTEXT_ID)
                 .channelId("fake-channel")
                 .activityName("fake-activity")
-                .alias(alias)
-                .idvIdValue(idvId)
+                .alias(AliasesMother.creditCardNumber())
+                .idvIdValue(UUID.fromString("1a2c2a26-a48b-4bea-ad04-daa13c056b68"))
                 .methodName("fake-method")
                 .verificationId(VERIFICATION_ID)
                 .timestamp(TIMESTAMP);

@@ -77,16 +77,6 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return new VerificationAttempts(id, idvId, newAttempts);
     }
 
-    public VerificationAttempts filterApplicable(final PolicyLevel level, final Alias alias) {
-        log.info("level {} is alias level {}", level, level.isAliasLevel());
-        if (level.isAliasLevel()) {
-            log.info("filtering by alias {}", alias);
-            final VerificationAttempts aliasAttempts = filterApplicable(alias);
-            return aliasAttempts.filterApplicable(level);
-        }
-        return filterApplicable(level);
-    }
-
     public VerificationAttempts filterApplicable(final PolicyLevel level) {
         final Collection<VerificationAttempt> applicableAttempts = attempts.stream()
                 .filter(level::appliesTo)

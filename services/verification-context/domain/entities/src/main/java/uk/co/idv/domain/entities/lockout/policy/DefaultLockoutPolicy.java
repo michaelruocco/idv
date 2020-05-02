@@ -2,6 +2,7 @@ package uk.co.idv.domain.entities.lockout.policy;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.domain.entities.lockout.policy.state.ApplicableAttemptFilter;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
@@ -14,22 +15,32 @@ import uk.co.idv.domain.entities.policy.PolicyLevel;
 import java.util.UUID;
 
 @Slf4j
-@Builder
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
     private final UUID id;
     private final PolicyLevel level;
     private final LockoutStateCalculator stateCalculator;
     private final RecordAttemptStrategy recordAttemptStrategy;
+    private final ApplicableAttemptFilter attemptFilter;
 
+    @Builder
     public DefaultLockoutPolicy(final UUID id,
                                 final PolicyLevel level,
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
+        this(id, level, stateCalculator, recordAttemptStrategy, new ApplicableAttemptFilter(level));
+    }
+
+    public DefaultLockoutPolicy(final UUID id,
+                                final PolicyLevel level,
+                                final LockoutStateCalculator stateCalculator,
+                                final RecordAttemptStrategy recordAttemptStrategy,
+                                final ApplicableAttemptFilter attemptFilter) {
         this.id = id;
         this.stateCalculator = stateCalculator;
         this.level = level;
         this.recordAttemptStrategy = recordAttemptStrategy;
+        this.attemptFilter = attemptFilter;
     }
 
     @Override
@@ -97,8 +108,7 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     }
 
     private VerificationAttempts filterApplicableAttempts(final CalculateLockoutStateRequest request) {
-        final VerificationAttempts attempts = request.getAttempts();
-        return attempts.filterApplicable(level, request.getAlias());
+        return attemptFilter.filter(request);
     }
 
 }

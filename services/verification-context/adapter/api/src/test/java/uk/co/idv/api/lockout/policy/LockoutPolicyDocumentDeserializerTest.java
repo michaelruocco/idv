@@ -25,7 +25,7 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.hardLockoutPolicy();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
@@ -37,7 +37,7 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.nonLockingPolicy();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
@@ -49,7 +49,7 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.softLockoutPolicy();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
@@ -61,7 +61,7 @@ class LockoutPolicyDocumentDeserializerTest {
 
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.recurringSoftLockoutPolicy();
-        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level");
+        assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
         LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
