@@ -1,39 +1,43 @@
-package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
+package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.CannotAddResultToIneligibleMethodException;
-import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 
 import java.time.Duration;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class PushNotificationTest {
+class PhysicalPinsentryTest {
 
-    private final VerificationMethodParams params = mock(VerificationMethodParams.class);
+    private final PinsentryParams params = mock(PinsentryParams.class);
     private final Eligibility eligibility = mock(Eligibility.class);
     private final VerificationResults results = mock(VerificationResults.class);
+    private final Collection<CardNumber> cardNumbers = Collections.emptyList();
 
-    private final PushNotification method = PushNotification.builder()
+    private final PhysicalPinsentry method = PhysicalPinsentry.builder()
             .params(params)
+            .cardNumbers(cardNumbers)
             .eligibility(eligibility)
             .results(results)
             .build();
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo(PushNotification.NAME);
+        assertThat(method.getName()).isEqualTo("physical-pinsentry");
     }
 
     @Test
@@ -62,6 +66,16 @@ class PushNotificationTest {
     }
 
     @Test
+    void shouldReturnFunction() {
+        final PinsentryFunction expectedFunction = PinsentryFunction.RESPOND;
+        given(params.getFunction()).willReturn(expectedFunction);
+
+        final PinsentryFunction function = method.getFunction();
+
+        assertThat(function).isEqualTo(expectedFunction);
+    }
+
+    @Test
     void shouldReturnEligibility() {
         assertThat(method.getEligibility()).isEqualTo(eligibility);
     }
@@ -87,8 +101,13 @@ class PushNotificationTest {
     }
 
     @Test
-    void shouldHavePushNotificationName() {
-        assertThat(method.hasName(PushNotification.NAME)).isTrue();
+    void shouldReturnCardNumbers() {
+        assertThat(method.getCardNumbers()).isEqualTo(cardNumbers);
+    }
+
+    @Test
+    void shouldHavePhysicalPinsentryName() {
+        assertThat(method.hasName(PhysicalPinsentry.NAME)).isTrue();
     }
 
     @Test
@@ -111,16 +130,6 @@ class PushNotificationTest {
     }
 
     @Test
-    void shouldBeCompleteIfHasMaxAttemptsNumberOfFailedResults() {
-        final VerificationMethod completeMethod = PushNotificationMother.eligibleBuilder()
-                .params(PushNotificationMother.paramsWithMaxAttempts(1))
-                .results(VerificationResultsMother.oneFailed(PushNotification.NAME))
-                .build();
-
-        assertThat(completeMethod.isComplete()).isTrue();
-    }
-
-    @Test
     void shouldNotBeCompleteIfMethodIsIneligible() {
         given(eligibility.isEligible()).willReturn(false);
 
@@ -129,9 +138,18 @@ class PushNotificationTest {
 
     @Test
     void shouldBeCompleteIfHasSuccessfulResult() {
-        final VerificationMethod incompleteMethod = PushNotification.eligibleBuilder()
-                .params(PushNotificationMother.paramsWithMaxAttempts(2))
-                .results(VerificationResultsMother.oneSuccessful(PushNotification.NAME))
+        final VerificationMethod incompleteMethod = PhysicalPinsentryMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PhysicalPinsentry.NAME))
+                .build();
+
+        assertThat(incompleteMethod.isComplete()).isTrue();
+    }
+
+    @Test
+    void shouldBeCompleteIfHasMaxAttemptsNumberOfFailedResults() {
+        final VerificationMethod incompleteMethod = PhysicalPinsentryMother.eligibleBuilder()
+                .params(PhysicalPinsentryMother.paramsWithMaxAttempts(1))
+                .results(VerificationResultsMother.oneFailed(PhysicalPinsentry.NAME))
                 .build();
 
         assertThat(incompleteMethod.isComplete()).isTrue();
@@ -139,9 +157,9 @@ class PushNotificationTest {
 
     @Test
     void shouldNotBeCompleteIfHasFailedResultButHasAttemptsRemaining() {
-        final VerificationMethod incompleteMethod = PushNotificationMother.eligibleBuilder()
-                .params(PushNotificationMother.paramsWithMaxAttempts(2))
-                .results(VerificationResultsMother.oneFailed(PushNotification.NAME))
+        final VerificationMethod incompleteMethod = PhysicalPinsentryMother.eligibleBuilder()
+                .params(PhysicalPinsentryMother.paramsWithMaxAttempts(2))
+                .results(VerificationResultsMother.oneFailed(PhysicalPinsentry.NAME))
                 .build();
 
         assertThat(incompleteMethod.isComplete()).isFalse();
@@ -156,8 +174,11 @@ class PushNotificationTest {
 
     @Test
     void shouldAddResult() {
-        final VerificationResult result = VerificationResultsMother.successful(PushNotification.NAME);
-        final PushNotification emptyResultsMethod = PushNotificationMother.eligible();
+        final VerificationResult result = VerificationResultsMother.successful(PhysicalPinsentry.NAME);
+        final PhysicalPinsentry emptyResultsMethod = PhysicalPinsentry.eligibleBuilder()
+                .params(PhysicalPinsentryMother.paramsBuilder().build())
+                .cardNumbers(cardNumbers)
+                .build();
 
         final VerificationMethod methodWithResult = emptyResultsMethod.addResult(result);
 
@@ -166,20 +187,8 @@ class PushNotificationTest {
     }
 
     @Test
-    void shouldNotAddResultIfIneligible() {
-        final VerificationResult result = VerificationResultsMother.successful(PushNotification.NAME);
-        final PushNotification emptyResultsMethod = PushNotificationMother.ineligible();
-
-        final Throwable error = catchThrowable(() -> emptyResultsMethod.addResult(result));
-
-        assertThat(error)
-                .isInstanceOf(CannotAddResultToIneligibleMethodException.class)
-                .hasMessage(PushNotification.NAME);
-    }
-
-    @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(PushNotification.class)
+        EqualsVerifier.forClass(PhysicalPinsentry.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }

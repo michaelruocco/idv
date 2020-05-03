@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.method;
+package uk.co.idv.domain.entities.verificationcontext.method.pinsentry;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -8,13 +8,13 @@ import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultVerificationMethodParamsTest {
+class PinsentryParamsTest {
 
     @Test
     void shouldReturnMaxAttempts() {
         final int maxAttempts = 5;
 
-        final VerificationMethodParams params = DefaultVerificationMethodParams.builder()
+        final PinsentryParams params = PinsentryParams.builder()
                 .maxAttempts(maxAttempts)
                 .build();
 
@@ -25,7 +25,7 @@ class DefaultVerificationMethodParamsTest {
     void shouldReturnDuration() {
         final Duration duration = Duration.ofMinutes(1);
 
-        final VerificationMethodParams params = DefaultVerificationMethodParams.builder()
+        final PinsentryParams params = PinsentryParams.builder()
                 .duration(duration)
                 .build();
 
@@ -33,8 +33,19 @@ class DefaultVerificationMethodParamsTest {
     }
 
     @Test
+    void shouldReturnFunction() {
+        final PinsentryFunction function = PinsentryFunction.RESPOND;
+
+        final PinsentryParams params = PinsentryParams.builder()
+                .function(function)
+                .build();
+
+        assertThat(params.getFunction()).isEqualTo(function);
+    }
+
+    @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(DefaultVerificationMethodParams.class)
+        EqualsVerifier.forClass(PinsentryParams.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }

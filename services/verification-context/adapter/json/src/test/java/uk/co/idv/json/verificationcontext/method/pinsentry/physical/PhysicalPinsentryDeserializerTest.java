@@ -4,17 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.card.number.CardNumberMother;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryMother;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction.RESPOND;
 
 class PhysicalPinsentryDeserializerTest {
 
@@ -24,19 +20,20 @@ class PhysicalPinsentryDeserializerTest {
     void shouldDeserializeIneligible() throws JsonProcessingException {
         final String json = loadFileContent("physical-pinsentry-ineligible.json");
 
-        final VerificationMethod method =  MAPPER.readValue(json, VerificationMethod.class);
+        final PhysicalPinsentry method = (PhysicalPinsentry) MAPPER.readValue(json, VerificationMethod.class);
 
-        final VerificationMethod expectedMethod = new PhysicalPinsentryIneligible(new NoEligibleCards(), RESPOND);
-        assertThat(method).isEqualToComparingFieldByField(expectedMethod);
+        final PhysicalPinsentry expectedMethod = PhysicalPinsentryMother.ineligible();
+        assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "params");
+        assertThat(method.getParams()).isEqualToComparingFieldByField(expectedMethod.getParams());
     }
 
     @Test
     void shouldDeserializeEligible() throws JsonProcessingException {
         final String json = loadFileContent("physical-pinsentry-eligible.json");
 
-        final PhysicalPinsentryEligible method =  (PhysicalPinsentryEligible) MAPPER.readValue(json, VerificationMethod.class);
+        final PhysicalPinsentry method = (PhysicalPinsentry) MAPPER.readValue(json, VerificationMethod.class);
 
-        final PhysicalPinsentryEligible expectedMethod = new PhysicalPinsentryEligible(RESPOND, CardNumberMother.oneCredit());
+        final PhysicalPinsentry expectedMethod = PhysicalPinsentryMother.eligible();
         assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "cardNumbers");
         assertThat(method.getCardNumbers()).containsExactlyElementsOf(expectedMethod.getCardNumbers());
     }
@@ -45,9 +42,11 @@ class PhysicalPinsentryDeserializerTest {
     void shouldDeserializeEligibleWithResult() throws JsonProcessingException {
         final String json = loadFileContent("physical-pinsentry-eligible-with-result.json");
 
-        final PhysicalPinsentryEligible method = (PhysicalPinsentryEligible) MAPPER.readValue(json, VerificationMethod.class);
+        final PhysicalPinsentry method = (PhysicalPinsentry) MAPPER.readValue(json, VerificationMethod.class);
 
-        final PhysicalPinsentryEligible expectedMethod = new PhysicalPinsentryEligible(RESPOND, CardNumberMother.oneCredit(), new FakeVerificationResultSuccessful(PhysicalPinsentry.NAME));
+        final PhysicalPinsentry expectedMethod = PhysicalPinsentryMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PhysicalPinsentry.NAME))
+                .build();
         assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "cardNumbers");
         assertThat(method.getCardNumbers()).containsExactlyElementsOf(expectedMethod.getCardNumbers());
     }

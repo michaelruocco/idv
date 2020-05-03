@@ -7,9 +7,8 @@ import uk.co.idv.domain.entities.verificationcontext.method.DefaultVerificationM
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.json.verificationcontext.method.DefaultVerificationMethodParamsDeserializer;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodModule;
-import uk.co.idv.json.verificationcontext.result.VerificationResultsModule;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class PushNotificationMethodModule extends SimpleModule {
 
@@ -24,10 +23,7 @@ public class PushNotificationMethodModule extends SimpleModule {
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Arrays.asList(
-                new VerificationMethodModule(),
-                new VerificationResultsModule()
-        );
+        return Collections.singleton(new VerificationMethodModule());
     }
 
 }

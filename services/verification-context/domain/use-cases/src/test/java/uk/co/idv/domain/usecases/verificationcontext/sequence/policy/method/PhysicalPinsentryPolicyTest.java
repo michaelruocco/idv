@@ -7,28 +7,24 @@ import uk.co.idv.domain.entities.card.number.CardNumberMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.IneligiblePinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
-
-import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PhysicalPinsentryPolicyTest {
 
-    private static final PinsentryFunction FUNCTION = PinsentryFunction.IDENTIFY;
-    private static final int MAX_ATTEMPTS = 3;
-    private static final Duration DURATION = Duration.ofMinutes(5);
+    private static final PinsentryParams PARAMS = PhysicalPinsentryMother.paramsBuilder().build();
 
-    private final PhysicalPinsentryPolicy parameters = new PhysicalPinsentryPolicy(FUNCTION, MAX_ATTEMPTS, DURATION);
+    private final PhysicalPinsentryPolicy policy = new PhysicalPinsentryPolicy(PARAMS);
 
     @Test
     void shouldReturnMethodName() {
-        assertThat(parameters.getName()).isEqualTo(PhysicalPinsentry.NAME);
+        assertThat(policy.getName()).isEqualTo(PhysicalPinsentry.NAME);
     }
 
     @Test
@@ -37,9 +33,10 @@ class PhysicalPinsentryPolicyTest {
         final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 
-        assertThat(method).isInstanceOf(PhysicalPinsentryEligible.class);
+        assertThat(method).isEqualToIgnoringGivenFields(PhysicalPinsentryMother.eligible(), "cardNumbers");
+        assertThat(method.getCardNumbers()).containsExactly(creditCardNumber);
     }
 
     @Test
@@ -47,9 +44,9 @@ class PhysicalPinsentryPolicyTest {
         final Identity identity = IdentityMother.withAccounts(AccountMother.closed());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final VerificationMethod method = policy.buildMethod(request);
 
-        assertThat(method).isInstanceOf(PhysicalPinsentryIneligible.class);
+        assertThat(method).isEqualTo(PhysicalPinsentryMother.ineligible());
     }
 
     @Test
@@ -58,72 +55,31 @@ class PhysicalPinsentryPolicyTest {
         final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final PhysicalPinsentryEligible method = (PhysicalPinsentryEligible) parameters.buildMethod(request);
+        final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 
         assertThat(method.getCardNumbers()).containsExactly(creditCardNumber);
     }
 
     @Test
-    void shouldPopulateFunctionIfIdentityHasOpenAccountsWithCard() {
+    void shouldPopulateParamsIfIdentityHasOpenAccountsWithCard() {
         final CardNumber creditCardNumber = CardNumberMother.credit();
         final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final PhysicalPinsentryEligible method = (PhysicalPinsentryEligible) parameters.buildMethod(request);
+        final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 
-        assertThat(method.getFunction()).isEqualTo(FUNCTION);
+        assertThat(method.getParams()).isEqualTo(PARAMS);
     }
 
     @Test
-    void shouldPopulateFunctionIfIdentityDoesNotHaveAnyOpenAccounts() {
+    void shouldPopulateIneligibleParamsIfIdentityDoesNotHaveTrustedDevice() {
         final Identity identity = IdentityMother.withAccounts(AccountMother.closed());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final PhysicalPinsentryIneligible method = (PhysicalPinsentryIneligible) parameters.buildMethod(request);
+        final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 
-        assertThat(method.getFunction()).isEqualTo(FUNCTION);
+        assertThat(method.getParams()).isEqualTo(new IneligiblePinsentryParams(PARAMS.getFunction()));
     }
 
-    @Test
-    void shouldPopulateMaxAttemptsIfIdentityHasOpenAccountsWithCard() {
-        final CardNumber creditCardNumber = CardNumberMother.credit();
-        final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
-
-        final VerificationMethod method = parameters.buildMethod(request);
-
-        assertThat(method.getMaxAttempts()).isEqualTo(MAX_ATTEMPTS);
-    }
-
-    @Test
-    void shouldPopulateZeroMaxAttemptsIfIdentityDoesNotHaveAnyOpenAccounts() {
-        final Identity identity = IdentityMother.withAccounts(AccountMother.closed());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
-
-        final VerificationMethod method = parameters.buildMethod(request);
-
-        assertThat(method.getMaxAttempts()).isEqualTo(0);
-    }
-
-    @Test
-    void shouldPopulateDurationIfIdentityHasOpenAccountsWithCard() {
-        final CardNumber creditCardNumber = CardNumberMother.credit();
-        final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
-
-        final VerificationMethod method = parameters.buildMethod(request);
-
-        assertThat(method.getDuration()).isEqualTo(DURATION);
-    }
-
-    @Test
-    void shouldPopulateZeroDurationIfIdentityDoesNotHaveAnyOpenAccounts() {
-        final Identity identity = IdentityMother.withAccounts(AccountMother.closed());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
-
-        final VerificationMethod method = parameters.buildMethod(request);
-
-        assertThat(method.getDuration()).isEqualTo(Duration.ZERO);
-    }
 
 }

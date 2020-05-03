@@ -28,13 +28,15 @@
     "methods": [
       {
         "name": "physical-pinsentry",
-        "function": "respond",
         "eligible": false,
         "reason": "no eligible cards found",
         "complete": false,
         "successful": false,
-        "duration": 0,
-        "maxAttempts": 0
+        "parameters": {
+          "function": "respond",
+          "duration": 0,
+          "maxAttempts": 0
+        }
       }
     ]
   },

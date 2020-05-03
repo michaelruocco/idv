@@ -27,12 +27,14 @@
     "methods": [
       {
         "name": "physical-pinsentry",
-        "function": "respond",
         "eligible": true,
         "complete": false,
         "successful": false,
-        "duration": 300000,
-        "maxAttempts": 1,
+        "parameters": {
+          "function": "respond",
+          "duration": 300000,
+          "maxAttempts": 1
+        },
         "cardNumbers": [
           {
             "tokenized": "4929991234567890",

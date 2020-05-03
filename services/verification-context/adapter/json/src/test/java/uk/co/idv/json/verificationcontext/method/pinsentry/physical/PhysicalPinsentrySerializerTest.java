@@ -4,22 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.card.number.CardNumber;
-import uk.co.idv.domain.entities.card.number.CardNumberMother;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryMother;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction.RESPOND;
 
 class PhysicalPinsentrySerializerTest {
 
@@ -27,8 +18,7 @@ class PhysicalPinsentrySerializerTest {
 
     @Test
     void shouldSerializeEligiblePhysicalPinsentry() throws JsonProcessingException {
-        final Collection<CardNumber> cardNumbers = Collections.singleton(CardNumberMother.credit());
-        final VerificationMethod method = new PhysicalPinsentryEligible(RESPOND, cardNumbers);
+        final VerificationMethod method = PhysicalPinsentryMother.eligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -38,9 +28,9 @@ class PhysicalPinsentrySerializerTest {
 
     @Test
     void shouldSerializeEligiblePhysicalPinsentryWithResult() throws JsonProcessingException {
-        final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(PhysicalPinsentry.NAME);
-        final Collection<CardNumber> cardNumbers = Collections.singleton(CardNumberMother.credit());
-        final VerificationMethod method = new PhysicalPinsentryEligible(RESPOND, cardNumbers, result);
+        final VerificationMethod method = PhysicalPinsentryMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PhysicalPinsentry.NAME))
+                .build();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -50,7 +40,7 @@ class PhysicalPinsentrySerializerTest {
 
     @Test
     void shouldSerializeIneligiblePhysicalPinsentry() throws JsonProcessingException {
-        final VerificationMethod method = new PhysicalPinsentryIneligible(new NoEligibleCards(), RESPOND);
+        final VerificationMethod method = PhysicalPinsentryMother.ineligible();
 
         final String json = MAPPER.writeValueAsString(method);
 

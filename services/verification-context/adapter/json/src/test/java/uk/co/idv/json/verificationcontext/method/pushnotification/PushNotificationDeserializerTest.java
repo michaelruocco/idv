@@ -20,9 +20,11 @@ class PushNotificationDeserializerTest {
     void shouldDeserializeIneligible() throws JsonProcessingException {
         final String json = loadFileContent("push-notification-ineligible.json");
 
-        final VerificationMethod method = MAPPER.readValue(json, VerificationMethod.class);
+        final PushNotification method = (PushNotification) MAPPER.readValue(json, VerificationMethod.class);
 
-        assertThat(method).isEqualToComparingFieldByField(PushNotificationMother.ineligible());
+        final PushNotification expectedMethod = PushNotificationMother.ineligible();
+        assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "params");
+        assertThat(method.getParams()).isEqualToComparingFieldByField(expectedMethod.getParams());
     }
 
     @Test
