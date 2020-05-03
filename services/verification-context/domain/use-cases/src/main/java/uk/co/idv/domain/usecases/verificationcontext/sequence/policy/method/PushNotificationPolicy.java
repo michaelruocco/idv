@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Collection;
@@ -24,9 +23,11 @@ public class PushNotificationPolicy implements MethodPolicy {
     @Override
     public VerificationMethod buildMethod(final LoadSequencesRequest request) {
         if (isEligible(request)) {
-            return new PushNotificationEligible(params);
+            return PushNotification.eligibleBuilder()
+                    .params(params)
+                    .build();
         }
-        return new PushNotificationIneligible();
+        return PushNotification.ineligible(new NoMobileApplication());
     }
 
     private boolean isEligible(final LoadSequencesRequest request) {

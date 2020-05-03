@@ -6,9 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.method.DefaultVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
@@ -25,12 +24,13 @@ public class PushNotificationDeserializer extends StdDeserializer<PushNotificati
     public PushNotification deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
         if (isEligible(node)) {
-            return PushNotificationEligible.builder()
+            return PushNotification.eligibleBuilder()
                     .params(toParams(node, parser))
                     .results(toResults(node, parser))
                     .build();
         }
-        return new PushNotificationIneligible();
+        //TODO add ineligible deserializer to pick up reason on fly
+        return PushNotification.ineligible(new NoMobileApplication());
     }
 
     public static VerificationMethodParams toParams(final JsonNode node, final JsonParser parser) {

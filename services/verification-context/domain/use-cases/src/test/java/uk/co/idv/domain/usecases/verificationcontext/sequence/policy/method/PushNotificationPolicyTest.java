@@ -7,8 +7,6 @@ import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
@@ -19,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PushNotificationPolicyTest {
 
-    private static final VerificationMethodParams PARAMS = PushNotificationMother.params();
+    private static final VerificationMethodParams PARAMS = PushNotificationMother.paramsBuilder().build();
 
     private final PushNotificationPolicy policy = new PushNotificationPolicy(PARAMS);
 
@@ -35,7 +33,7 @@ class PushNotificationPolicyTest {
 
         final VerificationMethod method = policy.buildMethod(request);
 
-        assertThat(method).isInstanceOf(PushNotificationEligible.class);
+        assertThat(method).isEqualTo(PushNotificationMother.eligible());
     }
 
     @Test
@@ -45,7 +43,7 @@ class PushNotificationPolicyTest {
 
         final VerificationMethod method = policy.buildMethod(request);
 
-        assertThat(method).isInstanceOf(PushNotificationIneligible.class);
+        assertThat(method).isEqualTo(PushNotificationMother.ineligible());
     }
 
     @Test

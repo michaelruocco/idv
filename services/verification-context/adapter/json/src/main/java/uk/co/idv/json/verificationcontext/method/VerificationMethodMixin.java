@@ -11,9 +11,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibil
         "eligible",
         "reason",
         "complete",
-        "successful",
-        "duration",
-        "maxAttempts"
+        "successful"
 })
 public interface VerificationMethodMixin {
 

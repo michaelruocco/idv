@@ -1,8 +1,9 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.verificationcontext.method.DefaultVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.card.number.CreditCardNumber;
@@ -12,9 +13,10 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.Mob
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -37,12 +39,16 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPushNotificationSequence() {
-        final VerificationMethod pushNotification = new PushNotificationEligible(buildPushNotificationParams());
+        final VerificationMethod pushNotification = PushNotification.builder()
+                .params(buildPushNotificationParams())
+                .eligibility(new Eligible())
+                .results(new DefaultVerificationResults())
+                .build();
         return new SingleMethodSequence(pushNotification);
     }
 
     private static VerificationMethodParams buildPushNotificationParams() {
-        return DefaultVerificationMethodParams.builder()
+        return PinsentryParams.builder()
                 .maxAttempts(5)
                 .duration(Duration.ofMinutes(5))
                 .build();

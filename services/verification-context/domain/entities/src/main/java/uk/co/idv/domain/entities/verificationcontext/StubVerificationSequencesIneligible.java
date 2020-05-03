@@ -1,12 +1,15 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
+import uk.co.idv.domain.entities.verificationcontext.method.IneligibleVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsAlwaysEmpty;
 
 
 public class StubVerificationSequencesIneligible extends VerificationSequences {
@@ -25,7 +28,11 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPushNotificationSequence() {
-        final VerificationMethod pushNotification = new PushNotificationIneligible();
+        final VerificationMethod pushNotification = PushNotification.builder()
+                .params(new IneligibleVerificationMethodParams())
+                .eligibility(new NoMobileApplication())
+                .results(new VerificationResultsAlwaysEmpty())
+                .build();
         return new SingleMethodSequence(pushNotification);
     }
 

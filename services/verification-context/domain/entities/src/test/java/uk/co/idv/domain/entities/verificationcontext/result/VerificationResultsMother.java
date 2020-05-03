@@ -6,6 +6,10 @@ public class VerificationResultsMother {
         return new DefaultVerificationResults();
     }
 
+    public static VerificationResults alwaysEmpty() {
+        return new VerificationResultsAlwaysEmpty();
+    }
+
     public static VerificationResults oneSuccessful(final String methodName) {
         return new DefaultVerificationResults(successful(methodName));
     }

@@ -1,13 +1,100 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import uk.co.idv.domain.entities.verificationcontext.method.IneligibleVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodUtils;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
+import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Ineligible;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsAlwaysEmpty;
 
-public interface PushNotification extends VerificationMethod {
+import java.time.Duration;
+import java.util.Optional;
 
-    String NAME = "push-notification";
+@Getter
+@Builder
+@EqualsAndHashCode
+@ToString
+public class PushNotification implements VerificationMethod {
 
-    //TODO move this up to verification method interface once all methods are using parameters
-    VerificationMethodParams getParameters();
+    public static final String NAME = "push-notification";
+
+    private final VerificationMethodParams params;
+    private final Eligibility eligibility;
+    private final VerificationResults results;
+
+    public static PushNotificationBuilder eligibleBuilder() {
+        return PushNotification.builder()
+                .eligibility(new Eligible())
+                .results(new DefaultVerificationResults());
+    }
+
+    public static PushNotification ineligible(final Ineligible reason) {
+        return PushNotification.builder()
+                .params(new IneligibleVerificationMethodParams())
+                .eligibility(reason)
+                .results(new VerificationResultsAlwaysEmpty())
+                .build();
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public int getMaxAttempts() {
+        return params.getMaxAttempts();
+    }
+
+    @Override
+    public Duration getDuration() {
+        return params.getDuration();
+    }
+
+    @Override
+    public boolean isEligible() {
+        return eligibility.isEligible();
+    }
+
+    @Override
+    public Optional<String> getEligibilityReason() {
+        return eligibility.getReason();
+    }
+
+    @Override
+    public boolean hasResults() {
+        return !results.isEmpty();
+    }
+
+    @Override
+    public boolean isComplete() {
+        if (!isEligible()) {
+            return false;
+        }
+        return VerificationMethodUtils.isComplete(results, params.getMaxAttempts());
+    }
+
+    @Override
+    public boolean isSuccessful() {
+        return results.containsSuccessful();
+    }
+
+    @Override
+    public PushNotification addResult(final VerificationResult result) {
+        if (!isEligible()) {
+            throw new CannotAddResultToIneligibleMethodException(NAME);
+        }
+        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, params.getMaxAttempts());
+        return new PushNotification(params, eligibility, updatedResults);
+    }
 
 }

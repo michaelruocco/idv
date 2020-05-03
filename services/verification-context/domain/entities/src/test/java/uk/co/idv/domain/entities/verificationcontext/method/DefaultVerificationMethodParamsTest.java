@@ -14,7 +14,7 @@ class DefaultVerificationMethodParamsTest {
     void shouldReturnMaxAttempts() {
         final int maxAttempts = 5;
 
-        final VerificationMethodParams params = DefaultVerificationMethodParams.builder()
+        final VerificationMethodParams params = uk.co.idv.domain.entities.verificationcontext.method.PinsentryParams.builder()
                 .maxAttempts(maxAttempts)
                 .build();
 
@@ -25,7 +25,7 @@ class DefaultVerificationMethodParamsTest {
     void shouldReturnDuration() {
         final Duration duration = Duration.ofMinutes(1);
 
-        final VerificationMethodParams params = DefaultVerificationMethodParams.builder()
+        final VerificationMethodParams params = uk.co.idv.domain.entities.verificationcontext.method.PinsentryParams.builder()
                 .duration(duration)
                 .build();
 
@@ -34,7 +34,7 @@ class DefaultVerificationMethodParamsTest {
 
     @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(DefaultVerificationMethodParams.class)
+        EqualsVerifier.forClass(uk.co.idv.domain.entities.verificationcontext.method.PinsentryParams.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }
