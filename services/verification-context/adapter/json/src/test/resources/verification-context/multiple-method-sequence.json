@@ -10,9 +10,10 @@
       "eligible": true,
       "complete": false,
       "successful": false,
-      "duration": 300000,
-      "maxAttempts": 5,
-      "results": []
+      "parameters": {
+        "duration": 300000,
+        "maxAttempts": 5
+      }
     },
     {
       "name": "mobile-pinsentry",
@@ -21,8 +22,7 @@
       "complete": false,
       "successful": false,
       "duration": 300000,
-      "maxAttempts": 1,
-      "results": []
+      "maxAttempts": 1
     }
   ]
 }

@@ -3,6 +3,8 @@
   "eligible": true,
   "complete": false,
   "successful": false,
-  "duration": 300000,
-  "maxAttempts": 5
+  "parameters": {
+    "duration": 300000,
+    "maxAttempts": 5
+  }
 }

@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
@@ -21,18 +20,18 @@ class PushNotificationDeserializerTest {
     void shouldDeserializeIneligible() throws JsonProcessingException {
         final String json = loadFileContent("push-notification-ineligible.json");
 
-        final VerificationMethod method =  MAPPER.readValue(json, VerificationMethod.class);
+        final VerificationMethod method = MAPPER.readValue(json, VerificationMethod.class);
 
-        assertThat(method).isEqualToComparingFieldByField(new PushNotificationIneligible());
+        assertThat(method).isEqualToComparingFieldByField(PushNotificationMother.ineligible());
     }
 
     @Test
     void shouldDeserializeEligible() throws JsonProcessingException {
         final String json = loadFileContent("push-notification-eligible.json");
 
-        final VerificationMethod method =  MAPPER.readValue(json, VerificationMethod.class);
+        final VerificationMethod method = MAPPER.readValue(json, VerificationMethod.class);
 
-        assertThat(method).isEqualToComparingFieldByField(new PushNotificationEligible());
+        assertThat(method).isEqualToComparingFieldByField(PushNotificationMother.eligible());
     }
 
     @Test
@@ -41,7 +40,9 @@ class PushNotificationDeserializerTest {
 
         final VerificationMethod method = MAPPER.readValue(json, VerificationMethod.class);
 
-        final VerificationMethod expectedMethod = new PushNotificationEligible(new FakeVerificationResultSuccessful(PushNotification.NAME));
+        final VerificationMethod expectedMethod = PushNotificationMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PushNotification.NAME))
+                .build();
         assertThat(method).isEqualToComparingFieldByField(expectedMethod);
     }
 

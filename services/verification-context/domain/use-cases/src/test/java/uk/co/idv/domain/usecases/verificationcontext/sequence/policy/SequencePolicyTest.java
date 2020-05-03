@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method.MethodPolicy;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
@@ -42,7 +42,7 @@ class SequencePolicyTest {
         final LoadSequencesRequest request = LoadSequencesRequestMother.build();
         final VerificationMethod expectedMethod1 = OneTimePasscodeMother.eligible();
         given(methodParameters1.buildMethod(request)).willReturn(expectedMethod1);
-        final VerificationMethod expectedMethod2 = new PushNotificationEligible();
+        final VerificationMethod expectedMethod2 = PushNotificationMother.eligible();
         given(methodParameters2.buildMethod(request)).willReturn(expectedMethod2);
 
         final VerificationSequence sequence = sequenceParameters.buildSequence(request);

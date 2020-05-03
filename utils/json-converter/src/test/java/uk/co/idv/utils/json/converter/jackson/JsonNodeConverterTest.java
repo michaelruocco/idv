@@ -6,11 +6,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.LongNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,6 +43,16 @@ public class JsonNodeConverterTest {
         final Instant instant = JsonNodeConverter.toInstant(node);
 
         assertThat(instant).isEqualTo(expectedInstant);
+    }
+
+    @Test
+    void shouldConvertJsonNodeToDuration() {
+        final Duration expectedDuration = Duration.ofSeconds(1);
+        final JsonNode node = LongNode.valueOf(expectedDuration.toMillis());
+
+        final Duration duration = JsonNodeConverter.toDuration(node);
+
+        assertThat(duration).isEqualTo(duration);
     }
 
     @Test

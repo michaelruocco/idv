@@ -6,7 +6,7 @@ import uk.co.idv.domain.entities.channel.ChannelMother;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -18,7 +18,7 @@ public class VerificationContextMother {
     }
 
     public static VerificationContext fake() {
-        return withNextEligibleMethod(new PushNotificationEligible());
+        return withNextEligibleMethod(PushNotificationMother.eligible());
     }
 
     public static VerificationContext withActivity(final Activity activity) {
@@ -30,7 +30,7 @@ public class VerificationContextMother {
                 activity,
                 created(),
                 expiry(),
-                new VerificationSequences(new SingleMethodSequence(new PushNotificationEligible())));
+                new VerificationSequences(new SingleMethodSequence(PushNotificationMother.eligible())));
     }
 
     public static VerificationContext withNextEligibleMethod(final VerificationMethod method) {

@@ -1,11 +1,14 @@
 package uk.co.idv.domain.entities.verificationcontext.result;
 
 
+import lombok.EqualsAndHashCode;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
+@EqualsAndHashCode
 public class VerificationResultsAlwaysEmpty implements VerificationResults {
 
     @Override

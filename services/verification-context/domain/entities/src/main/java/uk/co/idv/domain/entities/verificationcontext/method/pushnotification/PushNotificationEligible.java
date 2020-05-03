@@ -1,8 +1,10 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
@@ -15,30 +17,16 @@ import java.util.Optional;
 
 @EqualsAndHashCode
 @RequiredArgsConstructor
+@Builder
 public class PushNotificationEligible implements VerificationMethod, PushNotification {
 
-    private static final int MAX_ATTEMPTS = 5;
-    private static final Duration DURATION = Duration.ofMinutes(5);
     private static final Eligibility ELIGIBLE = new Eligible();
 
+    private final VerificationMethodParams params;
     private final VerificationResults results;
-    private final int maxAttempts;
-    private final Duration duration;
 
-    public PushNotificationEligible() {
-        this(new DefaultVerificationResults());
-    }
-
-    public PushNotificationEligible(final VerificationResult result) {
-        this(new DefaultVerificationResults(result));
-    }
-
-    public PushNotificationEligible(final VerificationResults results) {
-        this(results, MAX_ATTEMPTS, DURATION);
-    }
-
-    public PushNotificationEligible(final int maxAttempts, final Duration duration) {
-        this(new DefaultVerificationResults(), maxAttempts, duration);
+    public PushNotificationEligible(final VerificationMethodParams params) {
+        this(params, new DefaultVerificationResults());
     }
 
     @Override
@@ -48,12 +36,12 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
 
     @Override
     public int getMaxAttempts() {
-        return maxAttempts;
+        return params.getMaxAttempts();
     }
 
     @Override
     public Duration getDuration() {
-        return duration;
+        return params.getDuration();
     }
 
     @Override
@@ -78,7 +66,7 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
 
     @Override
     public boolean isComplete() {
-        return VerificationMethodUtils.isComplete(results, maxAttempts);
+        return VerificationMethodUtils.isComplete(results, params.getMaxAttempts());
     }
 
     @Override
@@ -93,8 +81,13 @@ public class PushNotificationEligible implements VerificationMethod, PushNotific
 
     @Override
     public VerificationMethod addResult(final VerificationResult result) {
-        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, maxAttempts);
-        return new PushNotificationEligible(updatedResults);
+        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, params.getMaxAttempts());
+        return new PushNotificationEligible(params, updatedResults);
+    }
+
+    @Override
+    public VerificationMethodParams getParameters() {
+        return params;
     }
 
 }

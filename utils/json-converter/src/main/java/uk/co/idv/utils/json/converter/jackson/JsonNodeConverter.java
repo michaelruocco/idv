@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,6 +23,10 @@ public class JsonNodeConverter {
 
     public static Instant toInstant(final JsonNode node) {
         return Instant.parse(node.asText());
+    }
+
+    public static Duration toDuration(final JsonNode node) {
+        return Duration.ofMillis(node.asLong());
     }
 
     public static Collection<String> toStringCollection(final JsonNode node, final JsonParser parser) {

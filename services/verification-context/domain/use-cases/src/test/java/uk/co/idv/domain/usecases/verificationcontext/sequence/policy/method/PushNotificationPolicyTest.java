@@ -5,9 +5,11 @@ import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
 
@@ -17,14 +19,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PushNotificationPolicyTest {
 
-    private static final int MAX_ATTEMPTS = 3;
-    private static final Duration DURATION = Duration.ofMinutes(5);
+    private static final VerificationMethodParams PARAMS = PushNotificationMother.params();
 
-    private final PushNotificationPolicy parameters = new PushNotificationPolicy(MAX_ATTEMPTS, DURATION);
+    private final PushNotificationPolicy policy = new PushNotificationPolicy(PARAMS);
 
     @Test
     void shouldReturnMethodName() {
-        assertThat(parameters.getName()).isEqualTo(PushNotification.NAME);
+        assertThat(policy.getName()).isEqualTo(PushNotification.NAME);
     }
 
     @Test
@@ -32,7 +33,7 @@ class PushNotificationPolicyTest {
         final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final VerificationMethod method = policy.buildMethod(request);
 
         assertThat(method).isInstanceOf(PushNotificationEligible.class);
     }
@@ -42,7 +43,7 @@ class PushNotificationPolicyTest {
         final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final VerificationMethod method = policy.buildMethod(request);
 
         assertThat(method).isInstanceOf(PushNotificationIneligible.class);
     }
@@ -52,9 +53,9 @@ class PushNotificationPolicyTest {
         final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final VerificationMethod method = policy.buildMethod(request);
 
-        assertThat(method.getMaxAttempts()).isEqualTo(MAX_ATTEMPTS);
+        assertThat(method.getMaxAttempts()).isEqualTo(PARAMS.getMaxAttempts());
     }
 
     @Test
@@ -62,7 +63,7 @@ class PushNotificationPolicyTest {
         final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final VerificationMethod method = policy.buildMethod(request);
 
         assertThat(method.getMaxAttempts()).isEqualTo(0);
     }
@@ -72,9 +73,9 @@ class PushNotificationPolicyTest {
         final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final VerificationMethod method = policy.buildMethod(request);
 
-        assertThat(method.getDuration()).isEqualTo(DURATION);
+        assertThat(method.getDuration()).isEqualTo(PARAMS.getDuration());
     }
 
     @Test
@@ -82,7 +83,7 @@ class PushNotificationPolicyTest {
         final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final VerificationMethod method = policy.buildMethod(request);
 
         assertThat(method.getDuration()).isEqualTo(Duration.ZERO);
     }

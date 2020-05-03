@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.lockout.policy.soft.SoftLockInterval;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 
 import java.io.IOException;
-import java.time.Duration;
 
 public class SoftLockIntervalDeserializer extends StdDeserializer<SoftLockInterval> {
 
@@ -20,7 +20,7 @@ public class SoftLockIntervalDeserializer extends StdDeserializer<SoftLockInterv
         final JsonNode node = parser.getCodec().readTree(parser);
         return new SoftLockInterval(
                 node.get("numberOfAttempts").asInt(),
-                Duration.ofMillis(node.get("duration").asLong())
+                JsonNodeConverter.toDuration(node.get("duration"))
         );
     }
 

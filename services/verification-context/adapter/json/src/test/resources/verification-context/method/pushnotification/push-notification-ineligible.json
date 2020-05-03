@@ -4,6 +4,8 @@
   "reason": "no mobile application",
   "complete": false,
   "successful": false,
-  "duration": 0,
-  "maxAttempts": 0
+  "parameters": {
+    "duration": 0,
+    "maxAttempts": 0
+  }
 }

@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.result;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -61,6 +63,13 @@ class VerificationResultsAlwaysEmptyTest {
         final VerificationResults results = new VerificationResultsAlwaysEmpty();
 
         assertThat(results.iterator()).isEqualTo(Collections.emptyIterator());
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(VerificationResultsAlwaysEmpty.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .verify();
     }
 
 }

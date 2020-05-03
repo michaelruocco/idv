@@ -1,6 +1,8 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.domain.entities.verificationcontext.method.DefaultVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.card.number.CreditCardNumber;
@@ -14,6 +16,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.Pus
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -34,8 +37,15 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPushNotificationSequence() {
-        final VerificationMethod pushNotification = new PushNotificationEligible();
+        final VerificationMethod pushNotification = new PushNotificationEligible(buildPushNotificationParams());
         return new SingleMethodSequence(pushNotification);
+    }
+
+    private static VerificationMethodParams buildPushNotificationParams() {
+        return DefaultVerificationMethodParams.builder()
+                .maxAttempts(5)
+                .duration(Duration.ofMinutes(5))
+                .build();
     }
 
     private static VerificationSequence buildPhysicalPinsentrySequence() {

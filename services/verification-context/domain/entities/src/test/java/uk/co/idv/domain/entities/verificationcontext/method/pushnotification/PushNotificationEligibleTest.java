@@ -5,10 +5,8 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
-import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 
 import java.time.Duration;
 
@@ -16,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PushNotificationEligibleTest {
 
-    private final VerificationMethod method = new PushNotificationEligible();
+    private final VerificationMethod method = PushNotificationMother.eligible();
 
     @Test
     void shouldReturnName() {
@@ -65,47 +63,47 @@ class PushNotificationEligibleTest {
 
     @Test
     void shouldHaveResultIfResultAdded() {
-        final VerificationResult result = new FakeVerificationResultSuccessful(PushNotification.NAME);
-
-        final VerificationMethod methodWithResult = new PushNotificationEligible(result);
+        final VerificationMethod methodWithResult = PushNotificationMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PushNotification.NAME))
+                .build();
 
         assertThat(methodWithResult.hasResults()).isTrue();
     }
 
     @Test
     void shouldBeCompleteIfHasSuccessfulResult() {
-        final VerificationResult result = new FakeVerificationResultSuccessful(PushNotification.NAME);
-
-        final VerificationMethod completeMethod = new PushNotificationEligible(result);
+        final VerificationMethod completeMethod = PushNotificationMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PushNotification.NAME))
+                .build();
 
         assertThat(completeMethod.isComplete()).isTrue();
     }
 
     @Test
     void shouldBeCompleteIfHasMaxAttemptsNumberOfFailedResults() {
-        final int maxAttempts = 1;
-        final VerificationResult result = new FakeVerificationResultFailed(PushNotification.NAME);
-
-        final VerificationMethod completeMethod = new PushNotificationEligible(new DefaultVerificationResults(result), maxAttempts, Duration.ZERO);
+        final VerificationMethod completeMethod = PushNotificationMother.eligibleBuilder()
+                .params(PushNotificationMother.paramsWithMaxAttempts(1))
+                .results(VerificationResultsMother.oneFailed(PushNotification.NAME))
+                .build();
 
         assertThat(completeMethod.isComplete()).isTrue();
     }
 
     @Test
     void shouldNotBeCompleteIfHasFailedResultButHasAttemptsRemaining() {
-        final int maxAttempts = 2;
-        final VerificationResult result = new FakeVerificationResultFailed(PushNotification.NAME);
-
-        final VerificationMethod incompleteMethod = new PushNotificationEligible(new DefaultVerificationResults(result), maxAttempts, Duration.ZERO);
+        final VerificationMethod incompleteMethod = PushNotificationMother.eligibleBuilder()
+                .params(PushNotificationMother.paramsWithMaxAttempts(2))
+                .results(VerificationResultsMother.oneFailed(PushNotification.NAME))
+                .build();
 
         assertThat(incompleteMethod.isComplete()).isFalse();
     }
 
     @Test
     void shouldBeSuccessfulIfHasSuccessfulResult() {
-        final VerificationResult result = new FakeVerificationResultSuccessful(PushNotification.NAME);
-
-        final VerificationMethod successfulMethod = new PushNotificationEligible(result);
+        final VerificationMethod successfulMethod = PushNotificationMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PushNotification.NAME))
+                .build();
 
         assertThat(successfulMethod.isSuccessful()).isTrue();
     }
@@ -117,7 +115,7 @@ class PushNotificationEligibleTest {
 
     @Test
     void shouldAddResult() {
-        final VerificationResult result = new FakeVerificationResultSuccessful(PushNotification.NAME);
+        final VerificationResult result = VerificationResultsMother.successful(PushNotification.NAME);
 
         final VerificationMethod methodWithResult = method.addResult(result);
 

@@ -5,10 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
@@ -20,7 +18,7 @@ class PushNotificationSerializerTest {
 
     @Test
     void shouldSerializeEligiblePushNotification() throws JsonProcessingException {
-        final VerificationMethod method = new PushNotificationEligible();
+        final VerificationMethod method = PushNotificationMother.eligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -30,8 +28,9 @@ class PushNotificationSerializerTest {
 
     @Test
     void shouldSerializeEligiblePushNotificationWithResult() throws JsonProcessingException {
-        final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(PushNotification.NAME);
-        final VerificationMethod method = new PushNotificationEligible(result);
+        final VerificationMethod method = PushNotificationMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(PushNotification.NAME))
+                .build();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -41,7 +40,7 @@ class PushNotificationSerializerTest {
 
     @Test
     void shouldSerializeIneligiblePushNotification() throws JsonProcessingException {
-        final VerificationMethod method = new PushNotificationIneligible();
+        final VerificationMethod method = PushNotificationMother.ineligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
