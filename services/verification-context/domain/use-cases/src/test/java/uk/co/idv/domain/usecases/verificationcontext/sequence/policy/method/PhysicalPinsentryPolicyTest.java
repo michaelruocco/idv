@@ -72,7 +72,7 @@ class PhysicalPinsentryPolicyTest {
     }
 
     @Test
-    void shouldPopulateIneligibleParamsIfIdentityDoesNotHaveTrustedDevice() {
+    void shouldPopulateIneligibleParamsIfIdentityDoesOpenAccountWithCard() {
         final Identity identity = IdentityMother.withAccounts(AccountMother.closed());
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
@@ -80,6 +80,5 @@ class PhysicalPinsentryPolicyTest {
 
         assertThat(method.getParams()).isEqualTo(new IneligiblePinsentryParams(PARAMS.getFunction()));
     }
-
 
 }

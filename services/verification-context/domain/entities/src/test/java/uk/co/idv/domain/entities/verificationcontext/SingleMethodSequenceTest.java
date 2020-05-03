@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence.MethodNotFoundInSequenceException;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMethodEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
@@ -30,7 +30,7 @@ class SingleMethodSequenceTest {
 
     @Test
     void shouldReturnMobilePinsentry() {
-        final MobilePinsentryEligible method = mock(MobilePinsentryEligible.class);
+        final MobilePinsentry method = mock(MobilePinsentry.class);
         final VerificationSequence sequence = new SingleMethodSequence(method);
 
         assertThat(sequence.getMobilePinsentry()).contains(method);

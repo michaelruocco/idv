@@ -10,6 +10,7 @@ import uk.co.idv.json.cardnumber.CardNumberModule;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodModule;
 import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryFunctionSerializer;
 import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryParamsDeserializer;
+import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryVerificationMethodMixin;
 
 import java.util.Arrays;
 
@@ -18,7 +19,7 @@ public class PhysicalPinsentryMethodModule extends SimpleModule {
     public PhysicalPinsentryMethodModule() {
         super("physical-pinsentry-method-module", Version.unknownVersion());
 
-        setMixInAnnotation(PhysicalPinsentry.class, PhysicalPinsentryVerificationMethodMixin.class);
+        setMixInAnnotation(PhysicalPinsentry.class, PinsentryVerificationMethodMixin.class);
 
         addSerializer(PinsentryFunction.class, new PinsentryFunctionSerializer());
 

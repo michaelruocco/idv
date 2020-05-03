@@ -5,14 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryMother;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction.RESPOND;
 
 class MobilePinsentryDeserializerTest {
 
@@ -22,10 +20,11 @@ class MobilePinsentryDeserializerTest {
     void shouldDeserializeIneligible() throws JsonProcessingException {
         final String json = loadFileContent("mobile-pinsentry-ineligible.json");
 
-        final VerificationMethod method =  MAPPER.readValue(json, VerificationMethod.class);
+        final MobilePinsentry method = (MobilePinsentry) MAPPER.readValue(json, VerificationMethod.class);
 
-        final VerificationMethod expectedMethod = new MobilePinsentryIneligible(RESPOND);
-        assertThat(method).isEqualToComparingFieldByField(expectedMethod);
+        final MobilePinsentry expectedMethod = MobilePinsentryMother.ineligible();
+        assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "params");
+        assertThat(method.getParams()).isEqualToComparingFieldByField(expectedMethod.getParams());
     }
 
     @Test
@@ -34,7 +33,7 @@ class MobilePinsentryDeserializerTest {
 
         final VerificationMethod method = MAPPER.readValue(json, VerificationMethod.class);
 
-        final VerificationMethod expectedMethod = new MobilePinsentryEligible(RESPOND);
+        final VerificationMethod expectedMethod = MobilePinsentryMother.eligible();
         assertThat(method).isEqualToComparingFieldByField(expectedMethod);
     }
 
@@ -42,10 +41,13 @@ class MobilePinsentryDeserializerTest {
     void shouldDeserializeEligibleWithResult() throws JsonProcessingException {
         final String json = loadFileContent("mobile-pinsentry-eligible-with-result.json");
 
-        final VerificationMethod method = MAPPER.readValue(json, VerificationMethod.class);
+        final MobilePinsentry method = (MobilePinsentry) MAPPER.readValue(json, VerificationMethod.class);
 
-        final VerificationMethod expectedMethod = new MobilePinsentryEligible(RESPOND, new FakeVerificationResultSuccessful(MobilePinsentry.NAME));
-        assertThat(method).isEqualToComparingFieldByField(expectedMethod);
+        final MobilePinsentry expectedMethod = MobilePinsentryMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(MobilePinsentry.NAME))
+                .build();
+        assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "params");
+        assertThat(method.getParams()).isEqualTo(expectedMethod.getParams());
     }
 
     private static String loadFileContent(final String name) {

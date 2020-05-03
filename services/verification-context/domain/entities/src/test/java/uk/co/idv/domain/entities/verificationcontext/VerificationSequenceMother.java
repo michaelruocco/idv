@@ -1,8 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
 
 import java.util.Arrays;
@@ -22,7 +21,7 @@ public class VerificationSequenceMother {
     private static Collection<VerificationMethod> buildMultipleMethods() {
         return Arrays.asList(
                 PushNotificationMother.eligible(),
-                new MobilePinsentryEligible(PinsentryFunction.RESPOND)
+                MobilePinsentryMother.eligible()
         );
     }
 

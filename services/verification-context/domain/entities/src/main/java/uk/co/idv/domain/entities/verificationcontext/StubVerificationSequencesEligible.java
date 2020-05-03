@@ -10,9 +10,9 @@ import uk.co.idv.domain.entities.card.number.CreditCardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -64,17 +64,19 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
         return new SingleMethodSequence(physicalPinsentry);
     }
 
+    private static VerificationSequence buildMobilePinsentrySequence() {
+        final VerificationMethod mobilePinsentry = MobilePinsentry.eligibleBuilder()
+                .params(buildPinsentryParams())
+                .build();
+        return new SingleMethodSequence(mobilePinsentry);
+    }
+
     private static PinsentryParams buildPinsentryParams() {
         return PinsentryParams.builder()
                 .maxAttempts(1)
                 .duration(Duration.ofMinutes(5))
                 .function(PinsentryFunction.RESPOND)
                 .build();
-    }
-
-    private static VerificationSequence buildMobilePinsentrySequence() {
-        final VerificationMethod mobilePinsentry = new MobilePinsentryEligible(PinsentryFunction.RESPOND);
-        return new SingleMethodSequence(mobilePinsentry);
     }
 
     private static VerificationSequence buildOneTimePasscodeSequence() {

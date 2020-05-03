@@ -6,15 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryMother;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
-import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction.RESPOND;
 
 class MobilePinsentrySerializerTest {
 
@@ -22,7 +19,7 @@ class MobilePinsentrySerializerTest {
 
     @Test
     void shouldSerializeEligibleMobilePinsentry() throws JsonProcessingException {
-        final VerificationMethod method = new MobilePinsentryEligible(RESPOND);
+        final VerificationMethod method = MobilePinsentryMother.eligible();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -32,8 +29,9 @@ class MobilePinsentrySerializerTest {
 
     @Test
     void shouldSerializeEligibleMobilePinsentryWithResult() throws JsonProcessingException {
-        final VerificationResultSuccessful result = new FakeVerificationResultSuccessful(MobilePinsentry.NAME);
-        final VerificationMethod method = new MobilePinsentryEligible(RESPOND, result);
+        final VerificationMethod method = MobilePinsentryMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(MobilePinsentry.NAME))
+                .build();
 
         final String json = MAPPER.writeValueAsString(method);
 
@@ -43,7 +41,7 @@ class MobilePinsentrySerializerTest {
 
     @Test
     void shouldSerializeIneligibleMobilePinsentry() throws JsonProcessingException {
-        final VerificationMethod method = new MobilePinsentryIneligible(RESPOND);
+        final VerificationMethod method = MobilePinsentryMother.ineligible();
 
         final String json = MAPPER.writeValueAsString(method);
 

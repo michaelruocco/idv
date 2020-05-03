@@ -1,9 +1,8 @@
-package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
+package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
@@ -13,31 +12,27 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class PhysicalPinsentryTest {
+class MobilePinsentryTest {
 
     private final PinsentryParams params = mock(PinsentryParams.class);
     private final Eligibility eligibility = mock(Eligibility.class);
     private final VerificationResults results = mock(VerificationResults.class);
-    private final Collection<CardNumber> cardNumbers = Collections.emptyList();
 
-    private final PhysicalPinsentry method = PhysicalPinsentry.builder()
+    private final MobilePinsentry method = MobilePinsentry.builder()
             .params(params)
-            .cardNumbers(cardNumbers)
             .eligibility(eligibility)
             .results(results)
             .build();
 
     @Test
     void shouldReturnName() {
-        assertThat(method.getName()).isEqualTo("physical-pinsentry");
+        assertThat(method.getName()).isEqualTo("mobile-pinsentry");
     }
 
     @Test
@@ -101,13 +96,8 @@ class PhysicalPinsentryTest {
     }
 
     @Test
-    void shouldReturnCardNumbers() {
-        assertThat(method.getCardNumbers()).isEqualTo(cardNumbers);
-    }
-
-    @Test
-    void shouldHavePhysicalPinsentryName() {
-        assertThat(method.hasName(PhysicalPinsentry.NAME)).isTrue();
+    void shouldHaveMobilePinsentryName() {
+        assertThat(method.hasName(MobilePinsentry.NAME)).isTrue();
     }
 
     @Test
@@ -138,8 +128,9 @@ class PhysicalPinsentryTest {
 
     @Test
     void shouldBeCompleteIfHasSuccessfulResult() {
-        final VerificationMethod completeMethod = PhysicalPinsentryMother.eligibleBuilder()
-                .results(VerificationResultsMother.oneSuccessful(PhysicalPinsentry.NAME))
+        final VerificationMethod completeMethod = MobilePinsentry.eligibleBuilder()
+                .params(MobilePinsentryMother.paramsWithMaxAttempts(2))
+                .results(VerificationResultsMother.oneSuccessful(MobilePinsentry.NAME))
                 .build();
 
         assertThat(completeMethod.isComplete()).isTrue();
@@ -147,9 +138,9 @@ class PhysicalPinsentryTest {
 
     @Test
     void shouldBeCompleteIfHasMaxAttemptsNumberOfFailedResults() {
-        final VerificationMethod completeMethod = PhysicalPinsentryMother.eligibleBuilder()
-                .params(PhysicalPinsentryMother.paramsWithMaxAttempts(1))
-                .results(VerificationResultsMother.oneFailed(PhysicalPinsentry.NAME))
+        final VerificationMethod completeMethod = MobilePinsentryMother.eligibleBuilder()
+                .params(MobilePinsentryMother.paramsWithMaxAttempts(1))
+                .results(VerificationResultsMother.oneFailed(MobilePinsentry.NAME))
                 .build();
 
         assertThat(completeMethod.isComplete()).isTrue();
@@ -157,9 +148,9 @@ class PhysicalPinsentryTest {
 
     @Test
     void shouldNotBeCompleteIfHasFailedResultButHasAttemptsRemaining() {
-        final VerificationMethod incompleteMethod = PhysicalPinsentryMother.eligibleBuilder()
-                .params(PhysicalPinsentryMother.paramsWithMaxAttempts(2))
-                .results(VerificationResultsMother.oneFailed(PhysicalPinsentry.NAME))
+        final VerificationMethod incompleteMethod = MobilePinsentryMother.eligibleBuilder()
+                .params(MobilePinsentryMother.paramsWithMaxAttempts(2))
+                .results(VerificationResultsMother.oneFailed(MobilePinsentry.NAME))
                 .build();
 
         assertThat(incompleteMethod.isComplete()).isFalse();
@@ -174,11 +165,8 @@ class PhysicalPinsentryTest {
 
     @Test
     void shouldAddResult() {
-        final VerificationResult result = VerificationResultsMother.successful(PhysicalPinsentry.NAME);
-        final PhysicalPinsentry emptyResultsMethod = PhysicalPinsentry.eligibleBuilder()
-                .params(PhysicalPinsentryMother.paramsBuilder().build())
-                .cardNumbers(cardNumbers)
-                .build();
+        final VerificationResult result = VerificationResultsMother.successful(MobilePinsentry.NAME);
+        final MobilePinsentry emptyResultsMethod = MobilePinsentryMother.eligible();
 
         final VerificationMethod methodWithResult = emptyResultsMethod.addResult(result);
 
@@ -188,7 +176,7 @@ class PhysicalPinsentryTest {
 
     @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(PhysicalPinsentry.class)
+        EqualsVerifier.forClass(MobilePinsentry.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }

@@ -3,7 +3,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 import uk.co.idv.domain.entities.verificationcontext.method.IneligibleVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.IneligiblePinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -49,7 +49,10 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildMobilePinsentrySequence() {
-        final VerificationMethod mobilePinsentry = new MobilePinsentryIneligible(PinsentryFunction.RESPOND);
+        final VerificationMethod mobilePinsentry = MobilePinsentry.eligibleBuilder()
+                .params(new IneligiblePinsentryParams(PinsentryFunction.RESPOND))
+                .eligibility(new NoMobileApplication())
+                .build();
         return new SingleMethodSequence(mobilePinsentry);
     }
 

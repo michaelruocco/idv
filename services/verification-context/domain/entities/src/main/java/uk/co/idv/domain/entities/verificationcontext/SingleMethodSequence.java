@@ -3,7 +3,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
@@ -32,8 +32,8 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public Optional<MobilePinsentryEligible> getMobilePinsentry() {
-        return castMethodTo(MobilePinsentryEligible.class);
+    public Optional<MobilePinsentry> getMobilePinsentry() {
+        return castMethodTo(MobilePinsentry.class);
     }
 
     @Override

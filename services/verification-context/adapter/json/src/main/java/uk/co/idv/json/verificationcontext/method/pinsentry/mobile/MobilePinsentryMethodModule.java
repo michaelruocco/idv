@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodModule;
 import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryFunctionSerializer;
+import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryParamsDeserializer;
 import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryVerificationMethodMixin;
-import uk.co.idv.json.verificationcontext.result.VerificationResultsModule;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public class MobilePinsentryMethodModule extends SimpleModule {
 
@@ -22,14 +23,12 @@ public class MobilePinsentryMethodModule extends SimpleModule {
         addSerializer(PinsentryFunction.class, new PinsentryFunctionSerializer());
 
         addDeserializer(MobilePinsentry.class, new MobilePinsentryDeserializer());
+        addDeserializer(PinsentryParams.class, new PinsentryParamsDeserializer());
     }
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Arrays.asList(
-                new VerificationMethodModule(),
-                new VerificationResultsModule()
-        );
+        return Collections.singleton(new VerificationMethodModule());
     }
 
 }

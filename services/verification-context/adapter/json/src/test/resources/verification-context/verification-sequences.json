@@ -53,12 +53,14 @@
     "methods": [
       {
         "name": "mobile-pinsentry",
-        "function": "respond",
         "eligible": true,
         "complete": false,
         "successful": false,
-        "duration": 300000,
-        "maxAttempts": 1
+        "parameters": {
+          "function": "respond",
+          "duration": 300000,
+          "maxAttempts": 1
+        }
       }
     ]
   },

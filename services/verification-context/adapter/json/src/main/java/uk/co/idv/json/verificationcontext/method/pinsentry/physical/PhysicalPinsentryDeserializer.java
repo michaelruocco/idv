@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.card.number.CardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
@@ -17,6 +16,7 @@ import java.util.Optional;
 
 import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.toEligibility;
 import static uk.co.idv.json.verificationcontext.method.VerificationMethodJsonNodeConverter.toResults;
+import static uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryFunctionJsonNodeConverter.extractParams;
 
 public class PhysicalPinsentryDeserializer extends StdDeserializer<PhysicalPinsentry> {
 
@@ -39,10 +39,6 @@ public class PhysicalPinsentryDeserializer extends StdDeserializer<PhysicalPinse
         return Optional.ofNullable(node.get("cardNumbers"))
                 .map(results -> Arrays.asList(JsonNodeConverter.toObject(results, parser, CardNumber[].class)))
                 .orElseGet(Collections::emptyList);
-    }
-
-    private static PinsentryParams extractParams(final JsonNode node, final JsonParser parser) {
-        return JsonNodeConverter.toObject(node.get("parameters"), parser, PinsentryParams.class);
     }
 
 }
