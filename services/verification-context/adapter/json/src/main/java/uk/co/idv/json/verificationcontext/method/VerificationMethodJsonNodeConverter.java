@@ -15,10 +15,6 @@ public class VerificationMethodJsonNodeConverter {
         //utility class
     }
 
-    public static boolean isEligible(final JsonNode node) {
-        return node.get("eligible").asBoolean();
-    }
-
     public static VerificationResults toResults(final JsonNode node, final JsonParser parser) {
         return Optional.ofNullable(node.get("results"))
                 .map(results -> JsonNodeConverter.toObject(results, parser, VerificationResults.class))
