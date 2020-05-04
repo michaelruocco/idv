@@ -39,9 +39,12 @@ class OneTimePasscodePolicyTest {
         final Identity identity = IdentityMother.withPhoneNumbers(phoneNumber);
         final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
 
-        final VerificationMethod method = parameters.buildMethod(request);
+        final OneTimePasscode method = (OneTimePasscode) parameters.buildMethod(request);
 
-        assertThat(method).isEqualTo(OneTimePasscodeMother.eligible());
+        final OneTimePasscode expectedMethod = OneTimePasscodeMother.eligible();
+        assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "deliveryMethods");
+        assertThat(method.getDeliveryMethods()).containsExactlyElementsOf(expectedMethod.getDeliveryMethods());
+
     }
 
     @Test

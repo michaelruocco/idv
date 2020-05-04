@@ -1,36 +1,36 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode;
 
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode.OneTimePasscodeBuilder;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible.OneTimePasscodeEligibleBuilder;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParamsMother;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 public class OneTimePasscodeMother {
 
-    public static OneTimePasscode eligible() {
-        return eligible(DeliveryMethodMother.sms());
+    public static OneTimePasscode ineligible() {
+        return new OneTimePasscodeIneligible(
+                new NoEligibleDeliveryMethods(),
+                Collections.emptyList()
+        );
     }
 
-    public static OneTimePasscode ineligible() {
-        return OneTimePasscode.ineligibleBuilder()
-                .params(OneTimePasscodeParamsMother.ineligible())
-                .deliveryMethods(Collections.emptyList())
-                .eligibility(new NoEligibleDeliveryMethods())
-                .build();
+    public static OneTimePasscode eligible() {
+        return eligibleBuilder().build();
     }
 
     public static OneTimePasscode eligible(final DeliveryMethod... deliveryMethods) {
-        return OneTimePasscode.eligibleBuilder()
-                .params(OneTimePasscodeParamsMother.eligible())
+        return eligibleBuilder()
                 .deliveryMethods(Arrays.asList(deliveryMethods))
                 .build();
     }
 
-    public static OneTimePasscodeBuilder eligibleBuilder() {
-        return OneTimePasscode.eligibleBuilder()
-                .deliveryMethods(DeliveryMethodMother.oneSms())
-                .params(OneTimePasscodeParamsMother.eligible());
+    public static OneTimePasscodeEligibleBuilder eligibleBuilder() {
+        return OneTimePasscodeEligible.builder()
+                .params(OneTimePasscodeParamsMother.eligible())
+                .results(VerificationResultsMother.empty())
+                .deliveryMethods(DeliveryMethodMother.oneSms());
     }
 
 }

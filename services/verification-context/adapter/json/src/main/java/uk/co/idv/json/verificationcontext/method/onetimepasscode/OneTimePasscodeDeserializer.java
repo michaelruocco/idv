@@ -27,12 +27,12 @@ public class OneTimePasscodeDeserializer extends StdDeserializer<OneTimePasscode
     @Override
     public OneTimePasscode deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
-        return OneTimePasscode.builder()
-                .params(extractParams(node, parser))
-                .deliveryMethods(extractDeliveryMethods(node, parser))
-                .eligibility(toEligibility(node, parser))
-                .results(toResults(node, parser))
-                .build();
+        return new OneTimePasscode(
+                extractParams(node, parser),
+                toEligibility(node, parser),
+                toResults(node, parser),
+                extractDeliveryMethods(node, parser)
+        );
     }
 
     private static OneTimePasscodeParams extractParams(final JsonNode node, final JsonParser parser) {

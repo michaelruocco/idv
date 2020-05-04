@@ -1,6 +1,8 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultOneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeSettings;
@@ -11,7 +13,6 @@ import uk.co.idv.domain.entities.card.number.CreditCardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -77,10 +78,11 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildOneTimePasscodeSequence() {
-        final VerificationMethod oneTimePasscode = OneTimePasscode.eligibleBuilder()
-                .deliveryMethods(Collections.singleton(new SmsDeliveryMethod(UUID.randomUUID(), loadPhoneNumber())))
-                .params(buildOneTimePasscodeParams())
-                .build();
+        final DeliveryMethod deliveryMethod = new SmsDeliveryMethod(UUID.randomUUID(), loadPhoneNumber());
+        final VerificationMethod oneTimePasscode = new OneTimePasscodeEligible(
+                buildOneTimePasscodeParams(),
+                Collections.singleton(deliveryMethod)
+        );
         return new SingleMethodSequence(oneTimePasscode);
     }
 

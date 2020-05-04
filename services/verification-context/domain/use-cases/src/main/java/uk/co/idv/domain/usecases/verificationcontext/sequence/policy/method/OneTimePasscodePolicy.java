@@ -7,7 +7,8 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.NoEligibleDeliveryMethods;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.IneligibleOneTimePasscodeParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
@@ -49,18 +50,11 @@ public class OneTimePasscodePolicy implements MethodPolicy {
     }
 
     private static VerificationMethod ineligible(final Collection<DeliveryMethod> deliveryMethods) {
-        return OneTimePasscode.ineligibleBuilder()
-                .params(new IneligibleOneTimePasscodeParams())
-                .deliveryMethods(deliveryMethods)
-                .eligibility(new NoEligibleDeliveryMethods())
-                .build();
+        return new OneTimePasscodeIneligible(new NoEligibleDeliveryMethods(), deliveryMethods);
     }
 
     private VerificationMethod eligible(final Collection<DeliveryMethod> deliveryMethods) {
-        return OneTimePasscode.eligibleBuilder()
-                .params(params)
-                .deliveryMethods(deliveryMethods)
-                .build();
+        return new OneTimePasscodeEligible(params, deliveryMethods);
     }
 
 }
