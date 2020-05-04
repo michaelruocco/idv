@@ -6,6 +6,8 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Collection;
@@ -23,11 +25,9 @@ public class PushNotificationPolicy implements MethodPolicy {
     @Override
     public VerificationMethod buildMethod(final LoadSequencesRequest request) {
         if (isEligible(request)) {
-            return PushNotification.eligibleBuilder()
-                    .params(params)
-                    .build();
+            return new PushNotificationEligible(params);
         }
-        return PushNotification.ineligible(new NoMobileApplication());
+        return new PushNotificationIneligible(new NoMobileApplication());
     }
 
     private boolean isEligible(final LoadSequencesRequest request) {

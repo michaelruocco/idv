@@ -6,7 +6,6 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.para
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.params.IneligibleVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
@@ -14,8 +13,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.N
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -36,11 +34,7 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPushNotificationSequence() {
-        final VerificationMethod pushNotification = PushNotification.builder()
-                .params(new IneligibleVerificationMethodParams())
-                .eligibility(new NoMobileApplication())
-                .results(new DefaultVerificationResults())
-                .build();
+        final VerificationMethod pushNotification = new PushNotificationIneligible(new NoMobileApplication());
         return new SingleMethodSequence(pushNotification);
     }
 

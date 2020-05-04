@@ -22,17 +22,16 @@ public class PushNotificationDeserializer extends StdDeserializer<PushNotificati
     @Override
     public PushNotification deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
-        return PushNotification.eligibleBuilder()
-                .params(toParams(node, parser))
-                .eligibility(toEligibility(node, parser))
-                .results(toResults(node, parser))
-                .build();
+        return new PushNotification(
+                toParams(node, parser),
+                toEligibility(node, parser),
+                toResults(node, parser)
+        );
     }
 
     private static VerificationMethodParams toParams(final JsonNode node, final JsonParser parser) {
         return JsonNodeConverter.toObject(node.get("parameters"), parser, DefaultVerificationMethodParams.class);
     }
-
 
 
 }

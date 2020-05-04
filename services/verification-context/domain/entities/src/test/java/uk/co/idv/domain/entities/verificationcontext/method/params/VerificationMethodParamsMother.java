@@ -1,27 +1,24 @@
 package uk.co.idv.domain.entities.verificationcontext.method.params;
 
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams.DefaultVerificationMethodParamsBuilder;
 
 import java.time.Duration;
 
-public class DefaultVerificationMethodParamsMother {
+public class VerificationMethodParamsMother {
 
     public static VerificationMethodParams eligible() {
-        return withDuration(Duration.ofMinutes(5));
+        return builder().build();
     }
 
-    public static VerificationMethodParams withDuration(final Duration duration) {
+    public static DefaultVerificationMethodParamsBuilder builder() {
         return DefaultVerificationMethodParams.builder()
                 .maxAttempts(5)
-                .duration(duration)
-                .build();
+                .duration(Duration.ofMinutes(5));
     }
 
     public static VerificationMethodParams ineligible() {
-        return DefaultVerificationMethodParams.builder()
-                .maxAttempts(0)
-                .duration(Duration.ZERO)
-                .build();
+        return new IneligibleVerificationMethodParams();
     }
 
 }

@@ -12,6 +12,8 @@ public interface VerificationMethod {
 
     String getName();
 
+    VerificationMethodParams getParams();
+
     int getMaxAttempts();
 
     Duration getDuration();

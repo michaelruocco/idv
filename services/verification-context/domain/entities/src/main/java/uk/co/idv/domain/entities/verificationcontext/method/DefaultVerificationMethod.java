@@ -57,7 +57,10 @@ public class DefaultVerificationMethod implements VerificationMethod {
         if (!isEligible()) {
             return false;
         }
-        return VerificationMethodUtils.isComplete(results, params.getMaxAttempts());
+        if (results.containsSuccessful()) {
+            return true;
+        }
+        return results.size() >= params.getMaxAttempts();
     }
 
     @Override
@@ -70,7 +73,13 @@ public class DefaultVerificationMethod implements VerificationMethod {
         if (!isEligible()) {
             throw new CannotAddResultToIneligibleMethodException(name);
         }
-        VerificationMethodUtils.addResult(results, result, name, params.getMaxAttempts());
+        if (!name.equals(result.getMethodName())) {
+            throw new CannotAddResultToMethodException(result.getMethodName(), name);
+        }
+        if (isComplete()) {
+            throw new MethodAlreadyCompleteException(name);
+        }
+        results.add(result);
     }
 
 }

@@ -1,39 +1,24 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
-import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams;
-import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams.DefaultVerificationMethodParamsBuilder;
-import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
-import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification.PushNotificationBuilder;
-
-import java.time.Duration;
+import uk.co.idv.domain.entities.verificationcontext.method.params.VerificationMethodParamsMother;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible.PushNotificationEligibleBuilder;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 
 public class PushNotificationMother {
 
     public static PushNotification ineligible() {
-        return PushNotification.ineligible(new NoMobileApplication());
+        return new PushNotificationIneligible(new NoMobileApplication());
     }
 
     public static PushNotification eligible() {
-        return eligibleBuilder().build();
+        return new PushNotificationEligible(VerificationMethodParamsMother.eligible());
     }
 
-    public static PushNotificationBuilder eligibleBuilder() {
-        return PushNotification.eligibleBuilder()
-                .params(paramsBuilder().build());
-    }
-
-    //TODO split params into separate object mother class
-    public static VerificationMethodParams paramsWithMaxAttempts(int maxAttempts) {
-        return paramsBuilder()
-                .maxAttempts(maxAttempts)
-                .build();
-    }
-
-    public static DefaultVerificationMethodParamsBuilder paramsBuilder() {
-        return DefaultVerificationMethodParams.builder()
-                .maxAttempts(5)
-                .duration(Duration.ofMinutes(5));
+    public static PushNotificationEligibleBuilder eligibleBuilder() {
+        return PushNotificationEligible.builder()
+                .params(VerificationMethodParamsMother.eligible())
+                .results(new DefaultVerificationResults());
     }
 
 }
