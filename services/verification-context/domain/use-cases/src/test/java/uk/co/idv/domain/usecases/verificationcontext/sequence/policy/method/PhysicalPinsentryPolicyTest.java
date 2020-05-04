@@ -7,8 +7,9 @@ import uk.co.idv.domain.entities.card.number.CardNumberMother;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParamsMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
@@ -18,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PhysicalPinsentryPolicyTest {
 
-    private static final DefaultPinsentryParams PARAMS = PhysicalPinsentryMother.paramsBuilder().build();
+    private static final PinsentryParams PARAMS = PinsentryParamsMother.eligible();
 
     private final PhysicalPinsentryPolicy policy = new PhysicalPinsentryPolicy(PARAMS);
 

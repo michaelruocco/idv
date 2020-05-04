@@ -27,12 +27,12 @@ public class PhysicalPinsentryDeserializer extends StdDeserializer<PhysicalPinse
     @Override
     public PhysicalPinsentry deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
-        return PhysicalPinsentry.eligibleBuilder()
-                .params(extractParams(node, parser))
-                .cardNumbers(extractCardNumbers(node, parser))
-                .eligibility(toEligibility(node, parser))
-                .results(toResults(node, parser))
-                .build();
+        return new PhysicalPinsentry(
+                extractParams(node, parser),
+                toEligibility(node, parser),
+                toResults(node, parser),
+                extractCardNumbers(node, parser)
+        );
     }
 
     private static Collection<CardNumber> extractCardNumbers(final JsonNode node, final JsonParser parser) {

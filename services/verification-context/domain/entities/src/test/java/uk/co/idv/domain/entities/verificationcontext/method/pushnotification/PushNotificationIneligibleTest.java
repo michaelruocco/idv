@@ -25,7 +25,7 @@ class PushNotificationIneligibleTest {
     }
 
     @Test
-    void shouldBeEligible() {
+    void shouldBeIneligible() {
         assertThat(method.getEligibility()).isEqualTo(ineligible);
     }
 

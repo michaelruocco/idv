@@ -54,12 +54,12 @@ class OneTimePasscodeEligibleTest {
     }
 
     @Test
-    void shouldReturnMaxDeliveryMethods() {
+    void shouldReturnDeliveryMethods() {
         assertThat(method.getDeliveryMethods()).isEqualTo(deliveryMethods);
     }
 
     @Test
-    void shouldReturnMaxDeliveryMethodById() {
+    void shouldReturnDeliveryMethodById() {
         assertThat(method.getDeliveryMethod(deliveryMethod.getId())).isEqualTo(deliveryMethod);
     }
 

@@ -5,10 +5,11 @@ import uk.co.idv.domain.entities.card.account.Account;
 import uk.co.idv.domain.entities.card.account.OpenAccount;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Collection;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PhysicalPinsentryPolicy implements MethodPolicy {
 
-    private final DefaultPinsentryParams params;
+    private final PinsentryParams params;
 
     @Override
     public String getName() {
@@ -47,18 +48,11 @@ public class PhysicalPinsentryPolicy implements MethodPolicy {
     }
 
     private VerificationMethod toIneligible(final Collection<CardNumber> cardNumbers) {
-        return  PhysicalPinsentry.ineligibleBuilder()
-                .params(new IneligiblePinsentryParams(params.getFunction()))
-                .cardNumbers(cardNumbers)
-                .eligibility(new NoEligibleCards())
-                .build();
+        return new PhysicalPinsentryIneligible(params.getFunction(), new NoEligibleCards(), cardNumbers);
     }
 
     private VerificationMethod toEligible(final Collection<CardNumber> cardNumbers) {
-        return PhysicalPinsentry.eligibleBuilder()
-                .params(params)
-                .cardNumbers(cardNumbers)
-                .build();
+        return new PhysicalPinsentryEligible(params, cardNumbers);
     }
 
 }

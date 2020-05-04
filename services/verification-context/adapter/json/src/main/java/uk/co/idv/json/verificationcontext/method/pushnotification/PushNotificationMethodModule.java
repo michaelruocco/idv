@@ -15,8 +15,6 @@ public class PushNotificationMethodModule extends SimpleModule {
     public PushNotificationMethodModule() {
         super("push-notification-method-module", Version.unknownVersion());
 
-        setMixInAnnotation(PushNotification.class, PushNotificationMixin.class);
-
         addDeserializer(PushNotification.class, new PushNotificationDeserializer());
         addDeserializer(DefaultVerificationMethodParams.class, new DefaultVerificationMethodParamsDeserializer());
     }

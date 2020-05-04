@@ -14,9 +14,9 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.para
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationEligible;
 
 import java.time.Duration;
@@ -55,18 +55,15 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
 
     private static VerificationSequence buildPhysicalPinsentrySequence() {
         final Collection<CardNumber> cardNumbers = Collections.singleton(new CreditCardNumber("4929991234567890"));
-        final VerificationMethod physicalPinsentry = PhysicalPinsentry.eligibleBuilder()
-                .params(buildPinsentryParams())
-                .cardNumbers(cardNumbers)
-                .build();
-        return new SingleMethodSequence(physicalPinsentry);
+        final VerificationMethod method = new PhysicalPinsentryEligible(buildPinsentryParams(), cardNumbers);
+        return new SingleMethodSequence(method);
     }
 
     private static VerificationSequence buildMobilePinsentrySequence() {
-        final VerificationMethod mobilePinsentry = MobilePinsentry.eligibleBuilder()
+        final VerificationMethod method = MobilePinsentry.eligibleBuilder()
                 .params(buildPinsentryParams())
                 .build();
-        return new SingleMethodSequence(mobilePinsentry);
+        return new SingleMethodSequence(method);
     }
 
     private static DefaultPinsentryParams buildPinsentryParams() {

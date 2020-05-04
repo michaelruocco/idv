@@ -15,7 +15,7 @@ import java.time.Duration;
         "reason",
         "complete",
         "successful",
-        "params"
+        "parameters"
 })
 public interface VerificationMethodMixin {
 

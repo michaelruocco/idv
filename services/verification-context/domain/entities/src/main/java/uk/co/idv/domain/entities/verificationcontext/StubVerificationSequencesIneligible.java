@@ -7,11 +7,12 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.Ine
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationIneligible;
 
 import java.util.Collections;
+
+import static uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction.RESPOND;
 
 public class StubVerificationSequencesIneligible extends VerificationSequences {
 
@@ -34,17 +35,13 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildPhysicalPinsentrySequence() {
-        final VerificationMethod physicalPinsentry = PhysicalPinsentry.ineligibleBuilder()
-                .params(new IneligiblePinsentryParams(PinsentryFunction.RESPOND))
-                .eligibility(new NoEligibleCards())
-                .cardNumbers(Collections.emptyList())
-                .build();
-        return new SingleMethodSequence(physicalPinsentry);
+        final VerificationMethod method = new PhysicalPinsentryIneligible(RESPOND, new NoEligibleCards(), Collections.emptyList());
+        return new SingleMethodSequence(method);
     }
 
     private static VerificationSequence buildMobilePinsentrySequence() {
         final VerificationMethod mobilePinsentry = MobilePinsentry.eligibleBuilder()
-                .params(new IneligiblePinsentryParams(PinsentryFunction.RESPOND))
+                .params(new IneligiblePinsentryParams(RESPOND))
                 .eligibility(new NoMobileApplication())
                 .build();
         return new SingleMethodSequence(mobilePinsentry);
