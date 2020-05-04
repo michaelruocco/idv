@@ -5,10 +5,11 @@ import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryMother;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParamsMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
 
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MobilePinsentryPolicyTest {
 
-    private static final DefaultPinsentryParams PARAMS = MobilePinsentryMother.paramsBuilder().build();
+    private static final PinsentryParams PARAMS = PinsentryParamsMother.eligible();
 
     private final MobilePinsentryPolicy parameters = new MobilePinsentryPolicy(PARAMS);
 

@@ -3,8 +3,7 @@ package uk.co.idv.domain.entities.verificationcontext;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.NoEligibleDeliveryMethods;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
@@ -40,19 +39,13 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildMobilePinsentrySequence() {
-        final VerificationMethod mobilePinsentry = MobilePinsentry.eligibleBuilder()
-                .params(new IneligiblePinsentryParams(RESPOND))
-                .eligibility(new NoMobileApplication())
-                .build();
-        return new SingleMethodSequence(mobilePinsentry);
+        final VerificationMethod method = new MobilePinsentryIneligible(RESPOND, new NoMobileApplication());
+        return new SingleMethodSequence(method);
     }
 
     private static VerificationSequence buildOneTimePasscodeSequence() {
-        final VerificationMethod oneTimePasscode = new OneTimePasscodeIneligible(
-                new NoEligibleDeliveryMethods(),
-                Collections.emptyList()
-        );
-        return new SingleMethodSequence(oneTimePasscode);
+        final VerificationMethod method = new OneTimePasscodeIneligible(new NoEligibleDeliveryMethods(), Collections.emptyList());
+        return new SingleMethodSequence(method);
     }
 
 }

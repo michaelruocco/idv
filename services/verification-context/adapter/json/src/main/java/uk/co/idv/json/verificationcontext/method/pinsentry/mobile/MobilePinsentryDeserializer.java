@@ -20,11 +20,11 @@ public class MobilePinsentryDeserializer extends StdDeserializer<MobilePinsentry
     @Override
     public MobilePinsentry deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
-        return MobilePinsentry.builder()
-                .params(extractParams(node, parser))
-                .eligibility(toEligibility(node, parser))
-                .results(toResults(node, parser))
-                .build();
+        return new MobilePinsentry(
+                extractParams(node, parser),
+                toEligibility(node, parser),
+                toResults(node, parser)
+        );
     }
 
 }

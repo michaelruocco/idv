@@ -12,8 +12,8 @@ import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.card.number.CreditCardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
@@ -60,9 +60,7 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildMobilePinsentrySequence() {
-        final VerificationMethod method = MobilePinsentry.eligibleBuilder()
-                .params(buildPinsentryParams())
-                .build();
+        final VerificationMethod method = new MobilePinsentryEligible(buildPinsentryParams());
         return new SingleMethodSequence(method);
     }
 
