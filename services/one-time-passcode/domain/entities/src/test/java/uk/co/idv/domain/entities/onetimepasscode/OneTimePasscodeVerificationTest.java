@@ -219,7 +219,9 @@ class OneTimePasscodeVerificationTest {
                 .maxAttempts(1)
                 .deliveries(OneTimePasscodeDeliveryMother.oneSmsDelivery("111111"))
                 .build();
-        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.attempt("222222");
+        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.builder()
+                .passcode("222222")
+                .build();
 
         verification.verify(attempt);
 
@@ -235,7 +237,9 @@ class OneTimePasscodeVerificationTest {
                 .maxAttempts(2)
                 .deliveries(OneTimePasscodeDeliveryMother.oneSmsDelivery(passcode))
                 .build();
-        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.attempt(passcode);
+        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.builder()
+                .passcode(passcode)
+                .build();
 
         verification.verify(attempt);
 
@@ -270,7 +274,9 @@ class OneTimePasscodeVerificationTest {
                 .maxAttempts(3)
                 .deliveries(OneTimePasscodeDeliveryMother.oneSmsDelivery(passcode))
                 .build();
-        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.attempt("222222");
+        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.builder()
+                .passcode("222222")
+                .build();
 
         verification.verify(Arrays.asList(attempt, attempt));
 
