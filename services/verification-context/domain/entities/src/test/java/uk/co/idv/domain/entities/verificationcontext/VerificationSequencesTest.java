@@ -83,6 +83,19 @@ class VerificationSequencesTest {
     }
 
     @Test
+    void shouldAddResultToMethodIfResultIsForNextMethodInSequenceAndMethodIsEligible() {
+        final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
+        final VerificationMethod method = new FakeVerificationMethodEligible(result.getMethodName());
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        final VerificationSequences sequences = new VerificationSequences(sequence);
+
+        sequences.addResultIfHasSequencesWithNextMethod(result);
+
+        assertThat(method.getResults()).containsExactly(result);
+    }
+
+    @Test
     void shouldThrowExceptionIfAddingResultWithMethodThatIsNextMethodInSequenceButNotEligible() {
         final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
         final VerificationMethod method = new FakeVerificationMethodIneligible(result.getMethodName());

@@ -11,6 +11,8 @@ import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.Pus
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -192,6 +194,27 @@ class SingleMethodSequenceTest {
         final VerificationSequence sequence = new SingleMethodSequence(method);
 
         assertThat(sequence.getMethod(method.getName())).isEqualTo(method);
+    }
+
+    @Test
+    void shouldNotAddResultToMethodIfMethodNameDoesNotMatch() {
+        final VerificationMethod method = new FakeVerificationMethodEligible();
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+
+        sequence.addResultIfHasNextMethod(VerificationResultsMother.successful("other-method"));
+
+        assertThat(method.getResults()).isEmpty();
+    }
+
+    @Test
+    void shouldNotResultToMethodIfMethodNameMatches() {
+        final VerificationMethod method = new FakeVerificationMethodEligible();
+        final VerificationSequence sequence = new SingleMethodSequence(method);
+        final VerificationResult result = VerificationResultsMother.successful(method.getName());
+
+        sequence.addResultIfHasNextMethod(result);
+
+        assertThat(method.getResults()).containsExactly(result);
     }
 
     @Test

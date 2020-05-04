@@ -5,7 +5,6 @@ import lombok.ToString;
 import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -53,18 +52,6 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
             throw new NotNextMethodInSequenceException(methodName);
         }
         addResult(result);
-    }
-
-    public VerificationSequence get(final String sequenceName) {
-        return sequences.stream().filter(sequence -> sequence.getName().equals(sequenceName))
-                .findFirst()
-                .orElseThrow(() -> new NoSequencesFoundWithNameException(sequenceName));
-    }
-
-    public VerificationResults getResults(final String sequenceName, final String methodName) {
-        final VerificationSequence sequence = get(sequenceName);
-        final VerificationMethod method = sequence.getMethod(methodName);
-        return method.getResults();
     }
 
     public boolean hasSequencesWithNextMethod(final String methodName) {
