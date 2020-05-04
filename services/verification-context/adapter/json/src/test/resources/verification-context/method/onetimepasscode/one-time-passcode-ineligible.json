@@ -4,6 +4,13 @@
   "reason": "no eligible delivery methods found",
   "complete": false,
   "successful": false,
-  "duration": 0,
-  "maxAttempts": 0
+  "parameters": {
+    "duration": 0,
+    "maxAttempts": 0,
+    "passcodeSettings": {
+      "length": 0,
+      "duration": 0,
+      "maxDeliveries": 0
+    }
+  }
 }

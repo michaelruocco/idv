@@ -2,8 +2,8 @@ package uk.co.idv.json.verificationcontext.method.pinsentry;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 
 public class PinsentryFunctionJsonNodeConverter {

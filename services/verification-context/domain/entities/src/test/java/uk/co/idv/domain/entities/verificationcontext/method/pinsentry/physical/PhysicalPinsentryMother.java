@@ -2,10 +2,10 @@ package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical;
 
 import uk.co.idv.domain.entities.card.number.CardNumberMother;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.IneligiblePinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams.PinsentryParamsBuilder;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams.DefaultPinsentryParamsBuilder;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry.PhysicalPinsentryBuilder;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 
@@ -40,14 +40,15 @@ public class PhysicalPinsentryMother {
                 .results(new DefaultVerificationResults());
     }
 
-    public static PinsentryParams paramsWithMaxAttempts(int maxAttempts) {
+    //TODO split params into separate object mother class
+    public static DefaultPinsentryParams paramsWithMaxAttempts(int maxAttempts) {
         return paramsBuilder()
                 .maxAttempts(maxAttempts)
                 .build();
     }
 
-    public static PinsentryParamsBuilder paramsBuilder() {
-        return PinsentryParams.builder()
+    public static DefaultPinsentryParamsBuilder paramsBuilder() {
+        return DefaultPinsentryParams.builder()
                 .maxAttempts(1)
                 .duration(Duration.ofMinutes(5))
                 .function(FUNCTION);

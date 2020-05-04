@@ -9,7 +9,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
@@ -51,7 +51,7 @@ class OneTimePasscodeSenderTest {
     void shouldCreateVerification() {
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
+        final OneTimePasscode method = OneTimePasscodeMother.eligible(deliveryMethod);
         final SendOneTimePasscodeRequest request = SendOneTimePasscodeRequest.builder()
                 .contextId(contextId)
                 .deliveryMethodId(deliveryMethod.getId())
@@ -72,7 +72,7 @@ class OneTimePasscodeSenderTest {
     void shouldRecordDeliveryAgainstCreatedVerificationBeforeSaving() {
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
+        final OneTimePasscode method = OneTimePasscodeMother.eligible(deliveryMethod);
         final SendOneTimePasscodeRequest request = SendOneTimePasscodeRequest.builder()
                 .contextId(contextId)
                 .deliveryMethodId(deliveryMethod.getId())
@@ -105,7 +105,7 @@ class OneTimePasscodeSenderTest {
     void shouldSendPasscodeForCreatedVerification() {
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
+        final OneTimePasscode method = OneTimePasscodeMother.eligible(deliveryMethod);
         final SendOneTimePasscodeRequest request = SendOneTimePasscodeRequest.builder()
                 .contextId(contextId)
                 .deliveryMethodId(deliveryMethod.getId())
@@ -139,7 +139,7 @@ class OneTimePasscodeSenderTest {
         final UUID id = UUID.randomUUID();
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
+        final OneTimePasscode method = OneTimePasscodeMother.eligible(deliveryMethod);
         final ResendOneTimePasscodeRequest request = ResendOneTimePasscodeRequest.builder()
                 .id(id)
                 .contextId(contextId)
@@ -162,7 +162,7 @@ class OneTimePasscodeSenderTest {
         final UUID id = UUID.randomUUID();
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
+        final OneTimePasscode method = OneTimePasscodeMother.eligible(deliveryMethod);
         final ResendOneTimePasscodeRequest request = ResendOneTimePasscodeRequest.builder()
                 .id(id)
                 .contextId(contextId)
@@ -197,7 +197,7 @@ class OneTimePasscodeSenderTest {
         final UUID id = UUID.randomUUID();
         final UUID contextId = UUID.randomUUID();
         final DeliveryMethod deliveryMethod = DeliveryMethodMother.sms();
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible(deliveryMethod);
+        final OneTimePasscode method = OneTimePasscodeMother.eligible(deliveryMethod);
         final ResendOneTimePasscodeRequest request = ResendOneTimePasscodeRequest.builder()
                 .id(id)
                 .contextId(contextId)

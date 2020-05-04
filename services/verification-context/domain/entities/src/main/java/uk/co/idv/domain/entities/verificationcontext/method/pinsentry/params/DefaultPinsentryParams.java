@@ -1,10 +1,9 @@
-package uk.co.idv.domain.entities.verificationcontext.method.pinsentry;
+package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 
 import java.time.Duration;
 
@@ -12,7 +11,7 @@ import java.time.Duration;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class PinsentryParams implements VerificationMethodParams {
+public class DefaultPinsentryParams implements PinsentryParams {
 
     private final int maxAttempts;
     private final Duration duration;

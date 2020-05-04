@@ -1,7 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification;
 
-import uk.co.idv.domain.entities.verificationcontext.method.DefaultVerificationMethodParams;
-import uk.co.idv.domain.entities.verificationcontext.method.DefaultVerificationMethodParams.DefaultVerificationMethodParamsBuilder;
+import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams.DefaultVerificationMethodParamsBuilder;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification.PushNotificationBuilder;
@@ -23,6 +23,7 @@ public class PushNotificationMother {
                 .params(paramsBuilder().build());
     }
 
+    //TODO split params into separate object mother class
     public static VerificationMethodParams paramsWithMaxAttempts(int maxAttempts) {
         return paramsBuilder()
                 .maxAttempts(maxAttempts)

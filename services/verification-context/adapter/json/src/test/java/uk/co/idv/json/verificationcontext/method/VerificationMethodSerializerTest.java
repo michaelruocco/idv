@@ -20,6 +20,8 @@ class VerificationMethodSerializerTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapperFactory(modules()).build();
 
+    //TODO fix these tests so that params are returned, will require rework of FakeVerificationMethod
+
     @Test
     void shouldSerializeEligibleUnrecognisedMethod() throws JsonProcessingException {
         final VerificationMethod method = new FakeVerificationMethodEligible();

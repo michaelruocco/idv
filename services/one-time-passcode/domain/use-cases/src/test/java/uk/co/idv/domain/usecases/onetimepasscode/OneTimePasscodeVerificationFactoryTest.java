@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContextMother;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
@@ -31,7 +31,7 @@ class OneTimePasscodeVerificationFactoryTest {
 
     @Test
     void shouldPopulateId() {
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final OneTimePasscode method = OneTimePasscodeMother.eligible();
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
         final OneTimePasscodeVerification verification = factory.build(context);
@@ -41,7 +41,7 @@ class OneTimePasscodeVerificationFactoryTest {
 
     @Test
     void shouldPopulateContextId() {
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final OneTimePasscode method = OneTimePasscodeMother.eligible();
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
         final OneTimePasscodeVerification verification = factory.build(context);
@@ -51,7 +51,7 @@ class OneTimePasscodeVerificationFactoryTest {
 
     @Test
     void shouldPopulateCreated() {
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final OneTimePasscode method = OneTimePasscodeMother.eligible();
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
         final OneTimePasscodeVerification verification = factory.build(context);
@@ -61,7 +61,7 @@ class OneTimePasscodeVerificationFactoryTest {
 
     @Test
     void shouldPopulateExpired() {
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final OneTimePasscode method = OneTimePasscodeMother.eligible();
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
         final OneTimePasscodeVerification verification = factory.build(context);
@@ -71,7 +71,7 @@ class OneTimePasscodeVerificationFactoryTest {
 
     @Test
     void shouldPopulateMaxAttempts() {
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final OneTimePasscode method = OneTimePasscodeMother.eligible();
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
         final OneTimePasscodeVerification verification = factory.build(context);
@@ -81,7 +81,7 @@ class OneTimePasscodeVerificationFactoryTest {
 
     @Test
     void shouldPopulateMaxDeliveries() {
-        final OneTimePasscodeEligible method = OneTimePasscodeMother.eligible();
+        final OneTimePasscode method = OneTimePasscodeMother.eligible();
         final VerificationContext context = VerificationContextMother.withNextEligibleMethod(method);
 
         final OneTimePasscodeVerification verification = factory.build(context);

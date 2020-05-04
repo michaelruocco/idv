@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
 
+import java.time.Duration;
+
 
 @JsonPropertyOrder({
         "name",
@@ -20,5 +22,11 @@ public interface VerificationMethodMixin {
 
     @JsonProperty("reason")
     String getEligibilityReason();
+
+    @JsonIgnore
+    int getMaxAttempts();
+
+    @JsonIgnore
+    Duration getDuration();
 
 }

@@ -1,27 +1,29 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.verificationcontext.method.DefaultVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultOneTimePasscodeParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.card.number.CreditCardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultPasscodeSettings;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @Slf4j
 public class StubVerificationSequencesEligible extends VerificationSequences {
@@ -71,8 +73,8 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
         return new SingleMethodSequence(mobilePinsentry);
     }
 
-    private static PinsentryParams buildPinsentryParams() {
-        return PinsentryParams.builder()
+    private static DefaultPinsentryParams buildPinsentryParams() {
+        return DefaultPinsentryParams.builder()
                 .maxAttempts(1)
                 .duration(Duration.ofMinutes(5))
                 .function(PinsentryFunction.RESPOND)
@@ -80,9 +82,10 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildOneTimePasscodeSequence() {
-        final Collection<DeliveryMethod> deliveryMethods = Collections.singleton(new SmsDeliveryMethod(loadPhoneNumber()));
-        final PasscodeSettings passcodeSettings = new DefaultPasscodeSettings();
-        final VerificationMethod oneTimePasscode = new OneTimePasscodeEligible(passcodeSettings, deliveryMethods);
+        final VerificationMethod oneTimePasscode = OneTimePasscode.eligibleBuilder()
+                .deliveryMethods(Collections.singleton(new SmsDeliveryMethod(UUID.randomUUID(), loadPhoneNumber())))
+                .params(buildOneTimePasscodeParams())
+                .build();
         return new SingleMethodSequence(oneTimePasscode);
     }
 
@@ -90,6 +93,22 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
         final String phoneNumber = System.getProperty("stubbed.phone.number", "07809386681");
         log.info("loaded system property stubbed.phone.number {}", phoneNumber);
         return phoneNumber;
+    }
+
+    private static OneTimePasscodeParams buildOneTimePasscodeParams() {
+        return DefaultOneTimePasscodeParams.builder()
+                .maxAttempts(1)
+                .duration(Duration.ofMinutes(5))
+                .passcodeSettings(buildPasscodeSettings())
+                .build();
+    }
+
+    private static PasscodeSettings buildPasscodeSettings() {
+        return DefaultPasscodeSettings.builder()
+                .length(8)
+                .duration(Duration.ofMillis(150000))
+                .maxDeliveries(3)
+                .build();
     }
 
 }

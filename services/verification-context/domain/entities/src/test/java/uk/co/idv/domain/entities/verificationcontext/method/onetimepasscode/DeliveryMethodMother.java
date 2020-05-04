@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class DeliveryMethodMother {
 
-    private static UUID DEFAULT_ID = UUID.fromString("2a82fcb5-19d4-469d-9c1b-4b2318c1e3f4");
+    private static final UUID DEFAULT_ID = UUID.fromString("2a82fcb5-19d4-469d-9c1b-4b2318c1e3f4");
 
     private DeliveryMethodMother() {
         // utility class
@@ -25,7 +25,7 @@ public class DeliveryMethodMother {
     }
 
     public static SmsDeliveryMethod sms(UUID id) {
-        return new SmsDeliveryMethod(id, "07819389980");
+        return new SmsDeliveryMethod(id, "+447089111111");
     }
 
 }

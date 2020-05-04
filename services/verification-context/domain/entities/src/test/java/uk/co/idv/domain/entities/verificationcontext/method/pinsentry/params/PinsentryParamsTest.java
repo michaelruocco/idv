@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.method.pinsentry;
+package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -14,7 +14,7 @@ class PinsentryParamsTest {
     void shouldReturnMaxAttempts() {
         final int maxAttempts = 5;
 
-        final PinsentryParams params = PinsentryParams.builder()
+        final PinsentryParams params = DefaultPinsentryParams.builder()
                 .maxAttempts(maxAttempts)
                 .build();
 
@@ -25,7 +25,7 @@ class PinsentryParamsTest {
     void shouldReturnDuration() {
         final Duration duration = Duration.ofMinutes(1);
 
-        final PinsentryParams params = PinsentryParams.builder()
+        final PinsentryParams params = DefaultPinsentryParams.builder()
                 .duration(duration)
                 .build();
 
@@ -36,7 +36,7 @@ class PinsentryParamsTest {
     void shouldReturnFunction() {
         final PinsentryFunction function = PinsentryFunction.RESPOND;
 
-        final PinsentryParams params = PinsentryParams.builder()
+        final PinsentryParams params = DefaultPinsentryParams.builder()
                 .function(function)
                 .build();
 
@@ -45,7 +45,7 @@ class PinsentryParamsTest {
 
     @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(PinsentryParams.class)
+        EqualsVerifier.forClass(DefaultPinsentryParams.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }

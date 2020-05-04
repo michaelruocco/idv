@@ -76,12 +76,14 @@
         "eligible": true,
         "complete": false,
         "successful": false,
-        "duration": 300000,
-        "maxAttempts": 1,
-        "passcodeSettings": {
-          "length": 8,
-          "duration": 150000,
-          "maxDeliveries": 3
+        "parameters": {
+          "duration": 300000,
+          "maxAttempts": 1,
+          "passcodeSettings": {
+            "length": 8,
+            "duration": 150000,
+            "maxDeliveries": 3
+          }
         },
         "deliveryMethods": [
           {

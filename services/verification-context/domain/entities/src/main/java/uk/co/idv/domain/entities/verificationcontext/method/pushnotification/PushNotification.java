@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import uk.co.idv.domain.entities.verificationcontext.method.IneligibleVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.params.IneligibleVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodUtils;

@@ -18,10 +18,6 @@ public class SmsDeliveryMethod implements DeliveryMethod {
     private final UUID id;
     private final String value;
 
-    public SmsDeliveryMethod(final String value) {
-        this(UUID.randomUUID(), value);
-    }
-
     public String getType() {
         return TYPE;
     }

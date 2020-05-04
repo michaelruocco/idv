@@ -5,8 +5,8 @@ import uk.co.idv.domain.entities.card.account.Account;
 import uk.co.idv.domain.entities.card.account.OpenAccount;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.IneligiblePinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PhysicalPinsentryPolicy implements MethodPolicy {
 
-    private final PinsentryParams params;
+    private final DefaultPinsentryParams params;
 
     @Override
     public String getName() {

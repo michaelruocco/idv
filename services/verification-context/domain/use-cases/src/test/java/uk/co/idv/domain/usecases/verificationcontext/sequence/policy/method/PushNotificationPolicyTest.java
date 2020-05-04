@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
-import uk.co.idv.domain.entities.verificationcontext.method.IneligibleVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.params.IneligibleVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;

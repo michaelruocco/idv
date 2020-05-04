@@ -2,7 +2,7 @@ package uk.co.idv.json.verificationcontext;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 
 import java.util.UUID;
 
@@ -28,6 +28,6 @@ public interface VerificationContextMixin {
     UUID getIdvIdValue();
 
     @JsonIgnore
-    OneTimePasscodeEligible getNextOneTimePasscodeEligibleMethod();
+    OneTimePasscode getNextOneTimePasscodeEligibleMethod();
 
 }

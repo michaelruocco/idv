@@ -3,7 +3,5 @@
   "eligible": false,
   "reason": "fake ineligible reason",
   "complete": false,
-  "successful": false,
-  "duration": 0,
-  "maxAttempts": 0
+  "successful": false
 }

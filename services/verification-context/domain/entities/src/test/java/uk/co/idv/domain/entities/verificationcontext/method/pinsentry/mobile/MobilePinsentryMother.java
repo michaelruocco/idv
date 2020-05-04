@@ -2,10 +2,10 @@ package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile;
 
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligible;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.IneligiblePinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams.PinsentryParamsBuilder;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams.DefaultPinsentryParamsBuilder;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry.MobilePinsentryBuilder;
 import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 
@@ -37,14 +37,14 @@ public class MobilePinsentryMother {
                 .results(new DefaultVerificationResults());
     }
 
-    public static PinsentryParams paramsWithMaxAttempts(int maxAttempts) {
+    public static DefaultPinsentryParams paramsWithMaxAttempts(int maxAttempts) {
         return paramsBuilder()
                 .maxAttempts(maxAttempts)
                 .build();
     }
 
-    public static PinsentryParamsBuilder paramsBuilder() {
-        return PinsentryParams.builder()
+    public static DefaultPinsentryParamsBuilder paramsBuilder() {
+        return DefaultPinsentryParams.builder()
                 .maxAttempts(1)
                 .duration(Duration.ofMinutes(5))
                 .function(FUNCTION);

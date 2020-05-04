@@ -4,18 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DefaultPasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
-import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
+import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
-
-import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,9 +20,9 @@ class OneTimePasscodeDeserializerTest {
     void shouldDeserializeIneligible() throws JsonProcessingException {
         final String json = loadFileContent("one-time-passcode-ineligible.json");
 
-        final VerificationMethod method =  MAPPER.readValue(json, VerificationMethod.class);
+        final VerificationMethod method = MAPPER.readValue(json, VerificationMethod.class);
 
-        final VerificationMethod expectedMethod = new OneTimePasscodeIneligible();
+        final VerificationMethod expectedMethod = OneTimePasscodeMother.ineligible();
         assertThat(method).isEqualToComparingFieldByField(expectedMethod);
     }
 
@@ -37,11 +30,9 @@ class OneTimePasscodeDeserializerTest {
     void shouldDeserializeEligible() throws JsonProcessingException {
         final String json = loadFileContent("one-time-passcode-eligible.json");
 
-        final OneTimePasscodeEligible method = (OneTimePasscodeEligible) MAPPER.readValue(json, VerificationMethod.class);
+        final OneTimePasscode method = (OneTimePasscode) MAPPER.readValue(json, VerificationMethod.class);
 
-        final PasscodeSettings settings = new DefaultPasscodeSettings();
-        final Collection<DeliveryMethod> deliveryMethods = DeliveryMethodMother.oneSms();
-        final OneTimePasscodeEligible expectedMethod = new OneTimePasscodeEligible(settings, deliveryMethods);
+        final OneTimePasscode expectedMethod = OneTimePasscodeMother.eligible();
         assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "deliveryMethods");
         assertThat(method.getDeliveryMethods()).containsExactlyElementsOf(expectedMethod.getDeliveryMethods());
     }
@@ -50,11 +41,11 @@ class OneTimePasscodeDeserializerTest {
     void shouldDeserializeEligibleWithResult() throws JsonProcessingException {
         final String json = loadFileContent("one-time-passcode-eligible-with-result.json");
 
-        final OneTimePasscodeEligible method = (OneTimePasscodeEligible) MAPPER.readValue(json, VerificationMethod.class);
+        final OneTimePasscode method = (OneTimePasscode) MAPPER.readValue(json, VerificationMethod.class);
 
-        final PasscodeSettings settings = new DefaultPasscodeSettings();
-        final Collection<DeliveryMethod> deliveryMethods = DeliveryMethodMother.oneSms();
-        final OneTimePasscodeEligible expectedMethod = new OneTimePasscodeEligible(settings, deliveryMethods, new FakeVerificationResultSuccessful(OneTimePasscode.NAME));
+        final OneTimePasscode expectedMethod = OneTimePasscodeMother.eligibleBuilder()
+                .results(VerificationResultsMother.oneSuccessful(OneTimePasscode.NAME))
+                .build();
         assertThat(method).isEqualToIgnoringGivenFields(expectedMethod, "deliveryMethods");
         assertThat(method.getDeliveryMethods()).containsExactlyElementsOf(expectedMethod.getDeliveryMethods());
     }

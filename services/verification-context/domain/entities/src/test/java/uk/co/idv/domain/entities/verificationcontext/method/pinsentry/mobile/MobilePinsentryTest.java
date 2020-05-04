@@ -4,9 +4,10 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.CannotAddResultToIneligibleMethodException;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibility;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsMother;
@@ -15,12 +16,13 @@ import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class MobilePinsentryTest {
 
-    private final PinsentryParams params = mock(PinsentryParams.class);
+    private final DefaultPinsentryParams params = mock(DefaultPinsentryParams.class);
     private final Eligibility eligibility = mock(Eligibility.class);
     private final VerificationResults results = mock(VerificationResults.class);
 
@@ -172,6 +174,18 @@ class MobilePinsentryTest {
 
         assertThat(methodWithResult).isEqualToIgnoringGivenFields(emptyResultsMethod, "results");
         assertThat(methodWithResult.getResults()).containsExactly(result);
+    }
+
+    @Test
+    void shouldNotAddResultIfIneligible() {
+        final VerificationResult result = VerificationResultsMother.successful(MobilePinsentry.NAME);
+        final MobilePinsentry emptyResultsMethod = MobilePinsentry.ineligibleBuilder().build();
+
+        final Throwable error = catchThrowable(() -> emptyResultsMethod.addResult(result));
+
+        assertThat(error)
+                .isInstanceOf(CannotAddResultToIneligibleMethodException.class)
+                .hasMessage(MobilePinsentry.NAME);
     }
 
     @Test

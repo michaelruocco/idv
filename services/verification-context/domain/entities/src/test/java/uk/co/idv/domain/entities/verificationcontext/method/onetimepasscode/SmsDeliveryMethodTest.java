@@ -28,10 +28,10 @@ class SmsDeliveryMethodTest {
     }
 
     @Test
-    void shouldPopulateRandomIdIfNotProvided() {
-        final SmsDeliveryMethod mobileNumber = new SmsDeliveryMethod(NUMBER);
+    void shouldReturnType() {
+        final SmsDeliveryMethod mobileNumber = new SmsDeliveryMethod(ID, NUMBER);
 
-        assertThat(mobileNumber.getId()).isNotNull();
+        assertThat(mobileNumber.getType()).isEqualTo(SmsDeliveryMethod.TYPE);
     }
 
     @Test

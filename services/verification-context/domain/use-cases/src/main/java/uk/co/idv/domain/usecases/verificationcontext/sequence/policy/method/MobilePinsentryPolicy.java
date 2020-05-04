@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.IneligiblePinsentryParams;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
@@ -14,7 +14,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class MobilePinsentryPolicy implements MethodPolicy {
 
-    private final PinsentryParams params;
+    private final DefaultPinsentryParams params;
 
     @Override
     public String getName() {

@@ -1,12 +1,10 @@
 package uk.co.idv.json.verificationcontext.method.pushnotification;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodMixin;
 
-import java.time.Duration;
 
 
 @JsonPropertyOrder({
@@ -21,12 +19,5 @@ public interface PushNotificationMixin extends VerificationMethodMixin {
 
     @JsonProperty("parameters")
     VerificationMethodParams getParams();
-
-    //TODO move up to verification method mixin once all methods are updated to use params
-    @JsonIgnore
-    int getMaxAttempts();
-
-    @JsonIgnore
-    Duration getDuration();
 
 }

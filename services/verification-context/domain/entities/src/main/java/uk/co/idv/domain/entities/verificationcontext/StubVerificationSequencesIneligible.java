@@ -1,17 +1,23 @@
 package uk.co.idv.domain.entities.verificationcontext;
 
-import uk.co.idv.domain.entities.verificationcontext.method.IneligibleVerificationMethodParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.NoEligibleDeliveryMethods;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultOneTimePasscodeParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.params.IneligibleVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.eligibility.NoMobileApplication;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.IneligiblePinsentryParams;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.NoEligibleCards;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.PinsentryFunction;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsAlwaysEmpty;
 
+import java.time.Duration;
 import java.util.Collections;
 
 
@@ -57,8 +63,28 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
     }
 
     private static VerificationSequence buildOneTimePasscodeSmsSequence() {
-        final VerificationMethod oneTimePasscodeSms = new OneTimePasscodeIneligible();
+        final VerificationMethod oneTimePasscodeSms = OneTimePasscode.ineligibleBuilder()
+                .params(buildOneTimePasscodeParams())
+                .eligibility(new NoEligibleDeliveryMethods())
+                .deliveryMethods(Collections.emptyList())
+                .build();
         return new SingleMethodSequence(oneTimePasscodeSms);
+    }
+
+    private static OneTimePasscodeParams buildOneTimePasscodeParams() {
+        return DefaultOneTimePasscodeParams.builder()
+                .maxAttempts(0)
+                .duration(Duration.ZERO)
+                .passcodeSettings(buildPasscodeSettings())
+                .build();
+    }
+
+    private static PasscodeSettings buildPasscodeSettings() {
+        return DefaultPasscodeSettings.builder()
+                .length(0)
+                .duration(Duration.ZERO)
+                .maxDeliveries(0)
+                .build();
     }
 
 }

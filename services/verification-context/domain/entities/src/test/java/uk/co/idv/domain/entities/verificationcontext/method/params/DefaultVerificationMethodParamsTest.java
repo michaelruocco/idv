@@ -1,8 +1,9 @@
-package uk.co.idv.domain.entities.verificationcontext.method;
+package uk.co.idv.domain.entities.verificationcontext.method.params;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 
 import java.time.Duration;
 

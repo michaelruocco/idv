@@ -8,7 +8,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.FakeVerificationMeth
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.CannotAddResultToIneligibleMethodException;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
@@ -181,7 +181,7 @@ class VerificationSequencesTest {
 
     @Test
     void shouldReturnMethodIfMethodIsNextMethodInTwoSequencesAndMethodIsTheSame() {
-        final OneTimePasscodeEligible oneTimePasscode = OneTimePasscodeMother.eligible();
+        final OneTimePasscode oneTimePasscode = OneTimePasscodeMother.eligible();
         final VerificationSequence sequence1 = new SingleMethodSequence(oneTimePasscode);
         final VerificationSequence sequence2 = new SingleMethodSequence(OneTimePasscodeMother.eligible());
         final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);

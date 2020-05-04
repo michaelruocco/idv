@@ -5,15 +5,14 @@ import uk.co.idv.domain.entities.phonenumber.PhoneNumber;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.NoEligibleDeliveryMethods;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.IneligibleOneTimePasscodeParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
-import java.time.Duration;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -21,9 +20,7 @@ import java.util.stream.Collectors;
 public class OneTimePasscodePolicy implements MethodPolicy {
 
     private final IdGenerator idGenerator;
-    private final PasscodeSettings settings;
-    private final int maxAttempts;
-    private final Duration duration;
+    private final OneTimePasscodeParams params;
 
     @Override
     public String getName() {
@@ -34,9 +31,9 @@ public class OneTimePasscodePolicy implements MethodPolicy {
     public VerificationMethod buildMethod(final LoadSequencesRequest request) {
         final Collection<DeliveryMethod> deliveryMethods = toDeliveryMethods(request);
         if (deliveryMethods.isEmpty()) {
-            return new OneTimePasscodeIneligible();
+            return ineligible(deliveryMethods);
         }
-        return new OneTimePasscodeEligible(settings, deliveryMethods, maxAttempts, duration);
+        return eligible(deliveryMethods);
     }
 
     private Collection<DeliveryMethod> toDeliveryMethods(final LoadSequencesRequest request) {
@@ -49,6 +46,21 @@ public class OneTimePasscodePolicy implements MethodPolicy {
 
     private DeliveryMethod toDeliveryMethod(final PhoneNumber phoneNumber) {
         return new SmsDeliveryMethod(idGenerator.generate(), phoneNumber.getValue());
+    }
+
+    private static VerificationMethod ineligible(final Collection<DeliveryMethod> deliveryMethods) {
+        return OneTimePasscode.ineligibleBuilder()
+                .params(new IneligibleOneTimePasscodeParams())
+                .deliveryMethods(deliveryMethods)
+                .eligibility(new NoEligibleDeliveryMethods())
+                .build();
+    }
+
+    private VerificationMethod eligible(final Collection<DeliveryMethod> deliveryMethods) {
+        return OneTimePasscode.eligibleBuilder()
+                .params(params)
+                .deliveryMethods(deliveryMethods)
+                .build();
     }
 
 }

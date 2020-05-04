@@ -1,18 +1,17 @@
-package uk.co.idv.domain.entities.verificationcontext.method.pinsentry;
+package uk.co.idv.domain.entities.verificationcontext.method.params;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 
 import java.time.Duration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IneligiblePinsentryParamsTest {
+class IneligibleVerificationMethodParamsTest {
 
-    private static final PinsentryFunction FUNCTION = PinsentryFunction.RESPOND;
-
-    private final PinsentryParams params = new IneligiblePinsentryParams(FUNCTION);
+    private final VerificationMethodParams params = new IneligibleVerificationMethodParams();
 
     @Test
     void shouldReturnZeroMaxAttempts() {
@@ -20,18 +19,13 @@ class IneligiblePinsentryParamsTest {
     }
 
     @Test
-    void shouldReturnDuration() {
+    void shouldReturnZeroDuration() {
         assertThat(params.getDuration()).isEqualTo(Duration.ZERO);
     }
 
     @Test
-    void shouldReturnFunction() {
-        assertThat(params.getFunction()).isEqualTo(FUNCTION);
-    }
-
-    @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(IneligiblePinsentryParams.class)
+        EqualsVerifier.forClass(IneligibleVerificationMethodParams.class)
                 .withRedefinedSuperclass()
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
