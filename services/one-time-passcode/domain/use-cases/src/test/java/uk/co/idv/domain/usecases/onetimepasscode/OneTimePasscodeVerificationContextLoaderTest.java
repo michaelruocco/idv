@@ -1,6 +1,5 @@
 package uk.co.idv.domain.usecases.onetimepasscode;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.NotNextMethodInSequenceException;
@@ -31,7 +30,7 @@ class OneTimePasscodeVerificationContextLoaderTest {
 
         final VerificationContext context = loader.load(ID);
 
-        Assertions.assertThat(context).isEqualTo(expectedContext);
+        assertThat(context).isEqualTo(expectedContext);
     }
 
     @Test
