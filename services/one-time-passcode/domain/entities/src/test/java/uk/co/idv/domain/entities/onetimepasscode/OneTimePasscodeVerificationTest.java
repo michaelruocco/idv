@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.onetimepasscode.exception.VerificationAlreadyCo
 
 import java.time.Instant;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -241,6 +242,25 @@ class OneTimePasscodeVerificationTest {
         assertThat(verification.isComplete()).isTrue();
         assertThat(verification.getCompleted()).contains(attempt.getCreated());
         assertThat(verification.getStatus()).isEqualTo(VerificationStatus.SUCCESSFUL);
+    }
+
+    @Test
+    void shouldNotCompleteVerificationOrUpdateStatusIfDeliveryHasExpired() {
+        final String passcode = "12345678";
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDeliveryMother.smsDelivery(passcode);
+        final OneTimePasscodeVerification verification = OneTimePasscodeVerification.builder()
+                .maxAttempts(3)
+                .deliveries(Collections.singleton(delivery))
+                .build();
+        final OneTimePasscodeVerificationAttempt attempt = OneTimePasscodeVerificationAttemptMother.builder()
+                .created(delivery.getExpiry().plusMillis(1))
+                .build();
+
+        verification.verify(Arrays.asList(attempt, attempt));
+
+        assertThat(verification.isComplete()).isFalse();
+        assertThat(verification.getCompleted()).isEmpty();
+        assertThat(verification.getStatus()).isEqualTo(VerificationStatus.PENDING);
     }
 
     @Test
