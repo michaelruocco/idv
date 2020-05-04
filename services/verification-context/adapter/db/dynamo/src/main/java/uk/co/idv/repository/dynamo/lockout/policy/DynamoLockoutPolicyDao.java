@@ -24,7 +24,7 @@ public class DynamoLockoutPolicyDao implements LockoutPolicyDao {
     private final LockoutPolicyItemsConverter converter;
 
     @Builder
-    private DynamoLockoutPolicyDao(final Table table, final LockoutPolicyItemsConverter converter) {
+    public DynamoLockoutPolicyDao(final Table table, final LockoutPolicyItemsConverter converter) {
         this.table = table;
         this.channelIdIndex = table.getIndex("channelIdIndex");
         this.converter = converter;

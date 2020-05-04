@@ -28,7 +28,7 @@ public class DynamoIdentityDao implements IdentityDao {
     private final AliasConverter aliasConverter;
 
     @Builder
-    private DynamoIdentityDao(final Table table,
+    public DynamoIdentityDao(final Table table,
                               final AliasMappingItemConverter itemConverter,
                               final AliasConverter aliasConverter) {
         this.table = table;
