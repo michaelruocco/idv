@@ -8,14 +8,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Stream;
 
 @EqualsAndHashCode
 @ToString
 public class DefaultVerificationResults implements VerificationResults {
 
-    private final List<VerificationResult> results;
+    private final Collection<VerificationResult> results;
 
     public DefaultVerificationResults(final VerificationResult... results) {
         this(Arrays.asList(results));
@@ -41,10 +40,8 @@ public class DefaultVerificationResults implements VerificationResults {
     }
 
     @Override
-    public VerificationResults add(final VerificationResult result) {
-        final Collection<VerificationResult> updatedResults = new ArrayList<>(results);
-        updatedResults.add(result);
-        return new DefaultVerificationResults(updatedResults);
+    public void add(final VerificationResult result) {
+        results.add(result);
     }
 
     @Override
@@ -59,7 +56,7 @@ public class DefaultVerificationResults implements VerificationResults {
 
     @Override
     public Collection<VerificationResult> toCollection() {
-        return Collections.unmodifiableList(results);
+        return Collections.unmodifiableCollection(results);
     }
 
 }

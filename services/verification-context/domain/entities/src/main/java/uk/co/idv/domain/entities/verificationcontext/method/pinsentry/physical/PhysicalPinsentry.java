@@ -87,13 +87,12 @@ public class PhysicalPinsentry implements VerificationMethod {
     }
 
     @Override
-    public VerificationMethod addResult(final VerificationResult result) {
+    public void addResult(final VerificationResult result) {
         if (!isEligible()) {
             throw new CannotAddResultToIneligibleMethodException(NAME);
         }
         final int maxAttempts = params.getMaxAttempts();
-        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, maxAttempts);
-        return new PhysicalPinsentry(params, cardNumbers, eligibility, updatedResults);
+        VerificationMethodUtils.addResult(results, result, NAME, maxAttempts);
     }
 
     public PinsentryFunction getFunction() {

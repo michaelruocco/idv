@@ -77,18 +77,8 @@ public class VerificationContext {
         return channel.hasId(channelId);
     }
 
-    public VerificationContext addResult(final VerificationResult result) {
-        final VerificationSequences updatedSequences = this.sequences.addResultIfHasSequencesWithNextMethod(result);
-        return VerificationContext.builder()
-                .id(id)
-                .channel(channel)
-                .providedAlias(providedAlias)
-                .identity(identity)
-                .activity(activity)
-                .created(created)
-                .expiry(expiry)
-                .sequences(updatedSequences)
-                .build();
+    public void addResult(final VerificationResult result) {
+        sequences.addResultIfHasSequencesWithNextMethod(result);
     }
 
     public boolean containsCompleteSequenceContainingMethod(final String methodName) {

@@ -157,12 +157,11 @@ class PushNotificationTest {
     @Test
     void shouldAddResult() {
         final VerificationResult result = VerificationResultsMother.successful(PushNotification.NAME);
-        final PushNotification emptyResultsMethod = PushNotificationMother.eligible();
+        final PushNotification method = PushNotificationMother.eligible();
 
-        final VerificationMethod methodWithResult = emptyResultsMethod.addResult(result);
+        method.addResult(result);
 
-        assertThat(methodWithResult).isEqualToIgnoringGivenFields(emptyResultsMethod, "results");
-        assertThat(methodWithResult.getResults()).containsExactly(result);
+        assertThat(method.getResults()).containsExactly(result);
     }
 
     @Test

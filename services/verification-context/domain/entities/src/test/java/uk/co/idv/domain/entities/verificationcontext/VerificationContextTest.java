@@ -22,6 +22,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class VerificationContextTest {
 
@@ -156,18 +157,14 @@ class VerificationContextTest {
     }
 
     @Test
-    void shouldAddResult() {
-        final String methodName = "method-name";
+    void shouldAttemptToAddResultToAllSequences() {
         final VerificationSequences sequences = mock(VerificationSequences.class);
-        final VerificationSequences updatedSequences = mock(VerificationSequences.class);
-        final VerificationResult result = new FakeVerificationResultSuccessful(methodName);
-        given(sequences.addResultIfHasSequencesWithNextMethod(result)).willReturn(updatedSequences);
+        final VerificationResult result = new FakeVerificationResultSuccessful("method-name");
         final VerificationContext context = builder.sequences(sequences).build();
 
-        final VerificationContext updatedContext = context.addResult(result);
+        context.addResult(result);
 
-        assertThat(updatedContext).isEqualToIgnoringGivenFields(context, "sequences");
-        assertThat(updatedContext.getSequences()).isEqualTo(updatedSequences);
+        verify(sequences).addResultIfHasSequencesWithNextMethod(result);
     }
 
     @Test

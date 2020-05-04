@@ -20,10 +20,10 @@ public class VerificationContextResultRecorder {
     public VerificationContext recordResult(final RecordResultRequest request) {
         final VerificationContext context = loadContext(request.getContextId());
         final VerificationResult result = request.getResult();
-        final VerificationContext contextWithResult = context.addResult(result);
-        recordAttempt(result, contextWithResult);
-        dao.save(contextWithResult);
-        return contextWithResult;
+        context.addResult(result);
+        recordAttempt(result, context);
+        dao.save(context);
+        return context;
     }
 
     private VerificationContext loadContext(final UUID id) {

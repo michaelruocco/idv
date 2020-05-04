@@ -86,11 +86,10 @@ public class MultipleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public VerificationSequence addResultIfHasNextMethod(final VerificationResult result) {
+    public void addResultIfHasNextMethod(final VerificationResult result) {
         if (hasNextMethod(result.getMethodName())) {
-            return addResult(result);
+            addResult(result);
         }
-        return this;
     }
 
     @Override
@@ -124,21 +123,13 @@ public class MultipleMethodSequence implements VerificationSequence {
                 .findFirst();
     }
 
-    private VerificationSequence addResult(final VerificationResult result) {
+    private void addResult(final VerificationResult result) {
         final String resultMethodName = result.getMethodName();
         final VerificationMethod resultMethod = getMethod(resultMethodName);
         if (!resultMethod.isEligible()) {
-            return this;
+            return;
         }
-        final Collection<VerificationMethod> updatedMethods = getMethodsExcluding(resultMethodName);
-        updatedMethods.add(resultMethod.addResult(result));
-        return new MultipleMethodSequence(name, updatedMethods);
-    }
-
-    private Collection<VerificationMethod> getMethodsExcluding(final String methodName) {
-        return methods.stream()
-                .filter(method -> !method.hasName(methodName))
-                .collect(Collectors.toList());
+        resultMethod.addResult(result);
     }
 
     private Duration calculateLongestMethodDuration() {

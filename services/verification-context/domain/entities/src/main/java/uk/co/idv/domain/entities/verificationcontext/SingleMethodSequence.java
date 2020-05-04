@@ -80,11 +80,10 @@ public class SingleMethodSequence implements VerificationSequence {
     }
 
     @Override
-    public VerificationSequence addResultIfHasNextMethod(final VerificationResult result) {
+    public void addResultIfHasNextMethod(final VerificationResult result) {
         if (containsMethod(result.getMethodName())) {
-            return new SingleMethodSequence(method.addResult(result));
+            method.addResult(result);
         }
-        return this;
     }
 
     @Override

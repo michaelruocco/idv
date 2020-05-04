@@ -48,9 +48,9 @@ class VerificationResultsTest {
         final VerificationResults results = new DefaultVerificationResults(result1);
         final VerificationResult result2 = new FakeVerificationResultFailed(METHOD_NAME);
 
-        final VerificationResults updatedResults = results.add(result2);
+        results.add(result2);
 
-        assertThat(updatedResults).containsExactly(result1, result2);
+        assertThat(results).containsExactly(result1, result2);
     }
 
     @Test

@@ -168,12 +168,11 @@ class MobilePinsentryTest {
     @Test
     void shouldAddResult() {
         final VerificationResult result = VerificationResultsMother.successful(MobilePinsentry.NAME);
-        final MobilePinsentry emptyResultsMethod = MobilePinsentryMother.eligible();
+        final MobilePinsentry method = MobilePinsentryMother.eligible();
 
-        final VerificationMethod methodWithResult = emptyResultsMethod.addResult(result);
+        method.addResult(result);
 
-        assertThat(methodWithResult).isEqualToIgnoringGivenFields(emptyResultsMethod, "results");
-        assertThat(methodWithResult.getResults()).containsExactly(result);
+        assertThat(method.getResults()).containsExactly(result);
     }
 
     @Test

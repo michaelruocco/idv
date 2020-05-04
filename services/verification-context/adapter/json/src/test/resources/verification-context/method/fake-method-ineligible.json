@@ -3,5 +3,9 @@
   "eligible": false,
   "reason": "fake ineligible reason",
   "complete": false,
-  "successful": false
+  "successful": false,
+  "parameters": {
+    "maxAttempts": 0,
+    "duration": 0
+  }
 }

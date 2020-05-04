@@ -38,7 +38,7 @@ public interface VerificationSequence {
 
     boolean isSuccessful();
 
-    VerificationSequence addResultIfHasNextMethod(VerificationResult result);
+    void addResultIfHasNextMethod(VerificationResult result);
 
     String getName();
 

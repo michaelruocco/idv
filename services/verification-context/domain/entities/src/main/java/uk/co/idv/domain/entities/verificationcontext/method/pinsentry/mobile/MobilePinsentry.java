@@ -86,13 +86,11 @@ public class MobilePinsentry implements VerificationMethod {
     }
 
     @Override
-    public VerificationMethod addResult(final VerificationResult result) {
+    public void addResult(final VerificationResult result) {
         if (!isEligible()) {
             throw new CannotAddResultToIneligibleMethodException(NAME);
         }
-        final int maxAttempts = params.getMaxAttempts();
-        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, maxAttempts);
-        return new MobilePinsentry(params, eligibility, updatedResults);
+        VerificationMethodUtils.addResult(results, result, NAME, params.getMaxAttempts());
     }
 
     public PinsentryFunction getFunction() {

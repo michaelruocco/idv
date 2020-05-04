@@ -105,12 +105,11 @@ public class OneTimePasscode implements VerificationMethod {
     }
 
     @Override
-    public VerificationMethod addResult(VerificationResult result) {
+    public void addResult(VerificationResult result) {
         if (!isEligible()) {
             throw new CannotAddResultToIneligibleMethodException(NAME);
         }
-        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, params.getMaxAttempts());
-        return new OneTimePasscode(params, deliveryMethods, eligibility, updatedResults);
+        VerificationMethodUtils.addResult(results, result, NAME, params.getMaxAttempts());
     }
 
     public static class DeliveryMethodNotFoundException extends RuntimeException {

@@ -114,22 +114,6 @@ class VerificationSequencesTest {
     }
 
     @Test
-    void shouldAddResultToMethodThatIsNextMethodInAnySequences() {
-        final String methodName = "fake-method";
-        final VerificationMethod method1 = new FakeVerificationMethodEligible(methodName);
-        final VerificationMethod method2 = new FakeVerificationMethodEligible(methodName);
-        final VerificationSequence sequence1 = new SingleMethodSequence(method1);
-        final VerificationSequence sequence2 = new SingleMethodSequence(method2);
-        final VerificationSequences sequences = new VerificationSequences(sequence1, sequence2);
-        final VerificationResult result = new FakeVerificationResultSuccessful(methodName);
-
-        final VerificationSequences updatedSequences = sequences.addResultIfHasSequencesWithNextMethod(result);
-
-        assertThat(updatedSequences.getResults(sequence1.getName(), method1.getName())).containsExactly(result);
-        assertThat(updatedSequences.getResults(sequence2.getName(), method2.getName())).containsExactly(result);
-    }
-
-    @Test
     void shouldReturnContainsSequenceWithCompleteMethod() {
         final VerificationMethod completeMethod = new FakeVerificationMethodEligible(new FakeVerificationResultSuccessful("method-name-1"));
         final VerificationMethod incompleteMethod = new FakeVerificationMethodEligible(new FakeVerificationResultFailed("method-name-2"));

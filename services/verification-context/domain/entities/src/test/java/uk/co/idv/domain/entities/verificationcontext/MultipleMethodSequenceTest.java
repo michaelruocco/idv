@@ -113,42 +113,38 @@ class MultipleMethodSequenceTest {
     }
 
     @Test
-    void shouldReturnExistingSequenceIfResultMethodIsNotNextMethodInSequence() {
+    void shouldNotAddResultToMethodIfResultMethodIsNotNextMethodInSequence() {
         final VerificationMethod method = new FakeVerificationMethodEligible(METHOD_NAME_1);
         final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
         final VerificationResult result = new FakeVerificationResultSuccessful("other-name");
 
-        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
+        sequence.addResultIfHasNextMethod(result);
 
-        assertThat(updatedSequence).isSameAs(sequence);
+        assertThat(method.getResults()).isEmpty();
     }
 
     @Test
-    void shouldReturnExistingSequenceIfResultMethodIsNextMethodInSequenceButNotEligible() {
+    void shouldNotAddResultToMethodIfResultMethodIsNextMethodInSequenceButNotEligible() {
         final VerificationMethod method = new FakeVerificationMethodIneligible(METHOD_NAME_1);
         final VerificationSequence sequence = new MultipleMethodSequence(Collections.singleton(method));
         final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
 
-        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
+        sequence.addResultIfHasNextMethod(result);
 
-        assertThat(updatedSequence).isSameAs(sequence);
+        assertThat(method.getResults()).isEmpty();
     }
 
     @Test
-    void shouldAddResultIfResultMethodIsNextMethodInSequence() {
+    void shouldAddResultToMethodIfResultMethodIsNextMethodInSequence() {
         final VerificationMethod method1 = new FakeVerificationMethodEligible(METHOD_NAME_1);
         final VerificationMethod method2 = new FakeVerificationMethodEligible(METHOD_NAME_2);
         final VerificationSequence sequence = new MultipleMethodSequence(Arrays.asList(method1, method2));
         final VerificationResult result = new FakeVerificationResultSuccessful(method1.getName());
 
-        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
+        sequence.addResultIfHasNextMethod(result);
 
-        assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "methods");
-        final VerificationMethod updatedMethod1 = updatedSequence.getMethod(method1.getName());
-        assertThat(updatedMethod1).isEqualToIgnoringGivenFields(method1, "results");
-        assertThat(updatedMethod1.getResults()).containsExactly(result);
-        final VerificationMethod updatedMethod2 = updatedSequence.getMethod(method2.getName());
-        assertThat(updatedMethod2).isEqualToIgnoringGivenFields(method2);
+        assertThat(method1.getResults()).containsExactly(result);
+        assertThat(method2.getResults()).isEmpty();
     }
 
     @Test

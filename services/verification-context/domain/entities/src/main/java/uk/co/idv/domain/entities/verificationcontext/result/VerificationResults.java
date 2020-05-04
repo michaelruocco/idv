@@ -9,7 +9,7 @@ public interface VerificationResults extends Iterable<VerificationResult> {
 
     boolean containsSuccessful();
 
-    VerificationResults add(final VerificationResult result);
+    void add(final VerificationResult result);
 
     int size();
 

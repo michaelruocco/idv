@@ -5,24 +5,23 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.M
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
-
 public class VerificationMethodUtils {
 
     private VerificationMethodUtils() {
         // utility class
     }
 
-    public static VerificationResults addResult(final VerificationResults results,
-                                                final VerificationResult result,
-                                                final String name,
-                                                final int maxAttempts) {
+    public static void addResult(final VerificationResults results,
+                                 final VerificationResult result,
+                                 final String name,
+                                 final int maxAttempts) {
         if (!name.equals(result.getMethodName())) {
             throw new CannotAddResultToMethodException(result.getMethodName(), name);
         }
         if (isComplete(results, maxAttempts)) {
             throw new MethodAlreadyCompleteException(name);
         }
-        return results.add(result);
+        results.add(result);
     }
 
     public static boolean isComplete(final VerificationResults results, final int maxAttempts) {

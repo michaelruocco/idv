@@ -15,11 +15,10 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResultsAlwaysEmpty;
+import uk.co.idv.domain.entities.verificationcontext.result.DefaultVerificationResults;
 
 import java.time.Duration;
 import java.util.Collections;
-
 
 public class StubVerificationSequencesIneligible extends VerificationSequences {
 
@@ -40,7 +39,7 @@ public class StubVerificationSequencesIneligible extends VerificationSequences {
         final VerificationMethod pushNotification = PushNotification.builder()
                 .params(new IneligibleVerificationMethodParams())
                 .eligibility(new NoMobileApplication())
-                .results(new VerificationResultsAlwaysEmpty())
+                .results(new DefaultVerificationResults())
                 .build();
         return new SingleMethodSequence(pushNotification);
     }

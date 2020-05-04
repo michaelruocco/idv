@@ -209,14 +209,13 @@ class OneTimePasscodeTest {
     @Test
     void shouldAddResult() {
         final VerificationResult result = VerificationResultsMother.successful(OneTimePasscode.NAME);
-        final OneTimePasscode emptyResultsMethod = OneTimePasscode.eligibleBuilder()
+        final OneTimePasscode method = OneTimePasscode.eligibleBuilder()
                 .params(OneTimePasscodeParamsMother.eligible())
                 .build();
 
-        final VerificationMethod methodWithResult = emptyResultsMethod.addResult(result);
+        method.addResult(result);
 
-        assertThat(methodWithResult).isEqualToIgnoringGivenFields(emptyResultsMethod, "results");
-        assertThat(methodWithResult.getResults()).containsExactly(result);
+        assertThat(method.getResults()).containsExactly(result);
     }
 
     @Test

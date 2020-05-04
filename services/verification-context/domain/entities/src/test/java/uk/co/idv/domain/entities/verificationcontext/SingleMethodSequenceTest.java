@@ -11,7 +11,6 @@ import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.Pus
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultFailed;
 import uk.co.idv.domain.entities.verificationcontext.result.FakeVerificationResultSuccessful;
-import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -110,31 +109,6 @@ class SingleMethodSequenceTest {
     }
 
     @Test
-    void shouldReturnExistingSequenceIfResultMethodIsNotNextMethodInSequence() {
-        final VerificationMethod method = new FakeVerificationMethodEligible();
-        final VerificationSequence sequence = new SingleMethodSequence(method);
-        final VerificationResult result = new FakeVerificationResultSuccessful("other-name");
-
-        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
-
-        assertThat(updatedSequence).isSameAs(sequence);
-    }
-
-    @Test
-    void shouldAddResultIfResultMethodIsNextMethodInSequence() {
-        final VerificationMethod method = new FakeVerificationMethodEligible();
-        final VerificationSequence sequence = new SingleMethodSequence(method);
-        final VerificationResult result = new FakeVerificationResultSuccessful(method.getName());
-
-        final VerificationSequence updatedSequence = sequence.addResultIfHasNextMethod(result);
-
-        assertThat(updatedSequence).isEqualToIgnoringGivenFields(sequence, "method");
-        final VerificationMethod updatedMethod = updatedSequence.getMethod(method.getName());
-        assertThat(updatedMethod).isEqualToIgnoringGivenFields(method, "results");
-        assertThat(updatedMethod.getResults()).containsExactly(result);
-    }
-
-    @Test
     void shouldNotBeCompleteIfResultsAreEmpty() {
         final VerificationMethod method = new FakeVerificationMethodEligible();
 
@@ -204,11 +178,11 @@ class SingleMethodSequenceTest {
     @Test
     void shouldReturnHasNextMethodFalseIfNextMethodIsComplete() {
         final VerificationMethod method = new FakeVerificationMethodEligible();
-        final VerificationMethod completeMethod = method.addResult(new FakeVerificationResultSuccessful(method.getName()));
+        method.addResult(new FakeVerificationResultSuccessful(method.getName()));
 
-        final VerificationSequence sequence = new SingleMethodSequence(completeMethod);
+        final VerificationSequence sequence = new SingleMethodSequence(method);
 
-        assertThat(sequence.hasNextMethod(completeMethod.getName())).isFalse();
+        assertThat(sequence.hasNextMethod(method.getName())).isFalse();
     }
 
     @Test

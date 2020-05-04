@@ -88,12 +88,11 @@ public class PushNotification implements VerificationMethod {
     }
 
     @Override
-    public PushNotification addResult(final VerificationResult result) {
+    public void addResult(final VerificationResult result) {
         if (!isEligible()) {
             throw new CannotAddResultToIneligibleMethodException(NAME);
         }
-        final VerificationResults updatedResults = VerificationMethodUtils.addResult(results, result, NAME, params.getMaxAttempts());
-        return new PushNotification(params, eligibility, updatedResults);
+        VerificationMethodUtils.addResult(results, result, NAME, params.getMaxAttempts());
     }
 
 }

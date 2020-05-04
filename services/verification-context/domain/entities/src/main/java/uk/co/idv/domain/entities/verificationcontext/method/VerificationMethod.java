@@ -30,7 +30,7 @@ public interface VerificationMethod {
 
     VerificationResults getResults();
 
-    VerificationMethod addResult(final VerificationResult result);
+    void addResult(final VerificationResult result);
 
     default boolean hasName(final String otherName) {
         return getName().equals(otherName);

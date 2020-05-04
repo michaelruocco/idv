@@ -47,12 +47,12 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
                 .orElse(Duration.ZERO);
     }
 
-    public VerificationSequences addResultIfHasSequencesWithNextMethod(final VerificationResult result) {
+    public void addResultIfHasSequencesWithNextMethod(final VerificationResult result) {
         final String methodName = result.getMethodName();
         if (!hasSequencesWithNextMethod(methodName)) {
             throw new NotNextMethodInSequenceException(methodName);
         }
-        return addResult(result);
+        addResult(result);
     }
 
     public VerificationSequence get(final String sequenceName) {
@@ -98,11 +98,8 @@ public class VerificationSequences implements Iterable<VerificationSequence> {
         }
     }
 
-    private VerificationSequences addResult(final VerificationResult result) {
-        final Collection<VerificationSequence> updatedSequences = sequences.stream()
-                .map(sequence -> sequence.addResultIfHasNextMethod(result))
-                .collect(Collectors.toList());
-        return new VerificationSequences(updatedSequences);
+    private void addResult(final VerificationResult result) {
+        sequences.forEach(sequence -> sequence.addResultIfHasNextMethod(result));
     }
 
     public static class NotNextMethodInSequenceException extends RuntimeException {

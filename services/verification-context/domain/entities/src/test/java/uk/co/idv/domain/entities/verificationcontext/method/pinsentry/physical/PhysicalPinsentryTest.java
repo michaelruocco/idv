@@ -177,15 +177,14 @@ class PhysicalPinsentryTest {
     @Test
     void shouldAddResult() {
         final VerificationResult result = VerificationResultsMother.successful(PhysicalPinsentry.NAME);
-        final PhysicalPinsentry emptyResultsMethod = PhysicalPinsentry.eligibleBuilder()
+        final PhysicalPinsentry method = PhysicalPinsentry.eligibleBuilder()
                 .params(PhysicalPinsentryMother.paramsBuilder().build())
                 .cardNumbers(cardNumbers)
                 .build();
 
-        final VerificationMethod methodWithResult = emptyResultsMethod.addResult(result);
+        method.addResult(result);
 
-        assertThat(methodWithResult).isEqualToIgnoringGivenFields(emptyResultsMethod, "results");
-        assertThat(methodWithResult.getResults()).containsExactly(result);
+        assertThat(method.getResults()).containsExactly(result);
     }
 
     @Test
