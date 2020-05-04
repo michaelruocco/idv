@@ -1,5 +1,6 @@
 package uk.co.idv.domain.usecases.onetimepasscode;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
@@ -47,6 +48,11 @@ class OneTimePasscodeSenderTest {
             .dao(dao)
             .build();
 
+    @BeforeEach
+    public void setUp() {
+        given(timeProvider.now()).willReturn(now);
+    }
+
     @Test
     void shouldCreateVerification() {
         final UUID contextId = UUID.randomUUID();
@@ -86,7 +92,6 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeProvider.now()).willReturn(now);
 
         final OneTimePasscodeVerification verification = sender.send(request);
 
@@ -95,6 +100,7 @@ class OneTimePasscodeSenderTest {
                 .passcode(passcode)
                 .message(message)
                 .sent(now)
+                .expiry(now.plus(method.getPasscodeDuration()))
                 .build();
         final InOrder inOrder = Mockito.inOrder(verification, dao);
         inOrder.verify(verification).record(expectedDelivery);
@@ -119,7 +125,6 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeProvider.now()).willReturn(now);
 
         final OneTimePasscodeVerification verification = sender.send(request);
 
@@ -128,6 +133,7 @@ class OneTimePasscodeSenderTest {
                 .passcode(passcode)
                 .message(message)
                 .sent(now)
+                .expiry(now.plus(method.getPasscodeDuration()))
                 .build();
         final InOrder inOrder = Mockito.inOrder(deliverySender, dao);
         inOrder.verify(deliverySender).send(expectedDelivery);
@@ -177,7 +183,7 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeProvider.now()).willReturn(now);
+
 
         final OneTimePasscodeVerification verification = sender.send(request);
 
@@ -186,6 +192,7 @@ class OneTimePasscodeSenderTest {
                 .passcode(passcode)
                 .message(message)
                 .sent(now)
+                .expiry(now.plus(method.getPasscodeDuration()))
                 .build();
         final InOrder inOrder = Mockito.inOrder(verification, dao);
         inOrder.verify(verification).record(expectedDelivery);
@@ -212,7 +219,6 @@ class OneTimePasscodeSenderTest {
         given(passcodeGenerator.generate(method.getPasscodeLength())).willReturn(passcode);
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
-        given(timeProvider.now()).willReturn(now);
 
         final OneTimePasscodeVerification verification = sender.send(request);
 
@@ -221,6 +227,7 @@ class OneTimePasscodeSenderTest {
                 .passcode(passcode)
                 .message(message)
                 .sent(now)
+                .expiry(now.plus(method.getPasscodeDuration()))
                 .build();
         final InOrder inOrder = Mockito.inOrder(deliverySender, dao);
         inOrder.verify(deliverySender).send(expectedDelivery);

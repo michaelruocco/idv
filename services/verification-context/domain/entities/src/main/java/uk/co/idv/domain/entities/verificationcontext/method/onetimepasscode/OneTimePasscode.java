@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.eligibility.Eligibil
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.result.VerificationResults;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -34,6 +35,10 @@ public class OneTimePasscode extends DefaultVerificationMethod {
 
     public int getMaxDeliveries() {
         return params.getMaxDeliveries();
+    }
+
+    public Duration getPasscodeDuration() {
+        return params.getPasscodeDuration();
     }
 
     public Collection<DeliveryMethod> getDeliveryMethods() {

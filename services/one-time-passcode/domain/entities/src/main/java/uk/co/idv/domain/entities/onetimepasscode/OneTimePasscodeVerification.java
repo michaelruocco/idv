@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-//TODO try making this immutable
 @Builder
 @Getter
 public class OneTimePasscodeVerification {
@@ -95,7 +94,9 @@ public class OneTimePasscodeVerification {
     }
 
     private boolean isValid(final OneTimePasscodeVerificationAttempt attempt) {
-        return deliveries.stream().anyMatch(delivery -> delivery.hasPasscode(attempt.getPasscode()));
+        return deliveries.stream()
+                .filter(delivery -> !delivery.hasExpired(attempt.getCreated()))
+                .anyMatch(delivery -> delivery.hasPasscode(attempt.getPasscode()));
     }
 
     private void handleSuccessful(final OneTimePasscodeVerificationAttempt attempt) {

@@ -17,6 +17,7 @@ public class OneTimePasscodeModule extends SimpleModule {
 
     public OneTimePasscodeModule() {
         setMixInAnnotation(OneTimePasscodeVerification.class, OneTimePasscodeVerificationMixin.class);
+        setMixInAnnotation(OneTimePasscodeDelivery.class, OneTimePasscodeDeliveryMixin.class);
 
         addDeserializer(SendOneTimePasscodeRequest.class, new SendOneTimePasscodeRequestDeserializer());
         addDeserializer(ResendOneTimePasscodeRequest.class, new ResendOneTimePasscodeRequestDeserializer());

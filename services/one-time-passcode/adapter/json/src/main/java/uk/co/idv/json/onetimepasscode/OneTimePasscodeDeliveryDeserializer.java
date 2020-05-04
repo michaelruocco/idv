@@ -6,9 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethod;
-
-import java.io.IOException;
-import java.time.Instant;
+import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
+import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
 public class OneTimePasscodeDeliveryDeserializer extends StdDeserializer<OneTimePasscodeDelivery> {
 
@@ -17,18 +16,19 @@ public class OneTimePasscodeDeliveryDeserializer extends StdDeserializer<OneTime
     }
 
     @Override
-    public OneTimePasscodeDelivery deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
-        final JsonNode node = parser.getCodec().readTree(parser);
+    public OneTimePasscodeDelivery deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode node = JsonParserConverter.toNode(parser);
         return OneTimePasscodeDelivery.builder()
                 .method(toMethod(parser, node.get("method")))
                 .passcode(node.get("passcode").asText())
                 .message(node.get("message").asText())
-                .sent(Instant.parse(node.get("sent").asText()))
+                .sent(JsonNodeConverter.toInstant(node.get("sent")))
+                .expiry(JsonNodeConverter.toInstant(node.get("expiry")))
                 .build();
     }
 
-    private static DeliveryMethod toMethod(final JsonParser parser, final JsonNode node) throws IOException {
-        return node.traverse(parser.getCodec()).readValueAs(DeliveryMethod.class);
+    private static DeliveryMethod toMethod(final JsonParser parser, final JsonNode node) {
+        return JsonNodeConverter.toObject(node, parser, DeliveryMethod.class);
     }
 
 }

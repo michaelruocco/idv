@@ -55,6 +55,17 @@ class OneTimePasscodeDeliveryTest {
     }
 
     @Test
+    void shouldReturnExpiryTimestamp() {
+        final Instant expiry = Instant.now();
+
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
+                .expiry(expiry)
+                .build();
+
+        assertThat(delivery.getExpiry()).isEqualTo(expiry);
+    }
+
+    @Test
     void shouldReturnHasPasscodeTrueIfProvidedPasscodeDoesNotMatchDeliveryPasscode() {
         final String passcode = "12345678";
 
@@ -74,6 +85,38 @@ class OneTimePasscodeDeliveryTest {
                 .build();
 
         assertThat(delivery.hasPasscode(passcode)).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasExpiredTrueIfProvidedInstantIsAfterExpiry() {
+        final Instant expiry = Instant.now();
+        final Instant instant = expiry.plusMillis(1);
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
+                .expiry(expiry)
+                .build();
+
+        assertThat(delivery.hasExpired(instant)).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasExpiredFalseIfProvidedInstantIsEqualToExpiry() {
+        final Instant expiry = Instant.now();
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
+                .expiry(expiry)
+                .build();
+
+        assertThat(delivery.hasExpired(expiry)).isFalse();
+    }
+
+    @Test
+    void shouldReturnHasExpiredFalseIfProvidedInstantIsBeforeExpiry() {
+        final Instant expiry = Instant.now();
+        final Instant instant = expiry.minusMillis(1);
+        final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
+                .expiry(expiry)
+                .build();
+
+        assertThat(delivery.hasExpired(instant)).isFalse();
     }
 
 }

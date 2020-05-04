@@ -54,6 +54,11 @@ class OneTimePasscodeEligibleTest {
     }
 
     @Test
+    void shouldReturnPasscodeDuration() {
+        assertThat(method.getPasscodeDuration()).isEqualTo(params.getPasscodeDuration());
+    }
+
+    @Test
     void shouldReturnDeliveryMethods() {
         assertThat(method.getDeliveryMethods()).isEqualTo(deliveryMethods);
     }

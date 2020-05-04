@@ -10,6 +10,7 @@ import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Builder
@@ -49,11 +50,13 @@ public class OneTimePasscodeSender {
                                                final OneTimePasscode method,
                                                final Activity activity) {
         final String passcode = passcodeGenerator.generate(method.getPasscodeLength());
+        final Instant sent = timeProvider.now();
         return OneTimePasscodeDelivery.builder()
                 .passcode(passcode)
                 .method(method.getDeliveryMethod(deliveryMethodId))
                 .message(messageBuilder.build(activity, passcode))
-                .sent(timeProvider.now())
+                .sent(sent)
+                .expiry(sent.plus(method.getPasscodeDuration()))
                 .build();
     }
 

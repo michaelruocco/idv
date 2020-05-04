@@ -24,6 +24,7 @@ public class OneTimePasscodeDeliveryMother {
                 .passcode(passcode)
                 .message(String.format("Your verification code is %s", passcode))
                 .sent(Instant.parse("2019-09-21T20:44:52.233721Z"))
+                .expiry(Instant.parse("2019-09-21T20:50:33.233333Z"))
                 .build();
     }
 

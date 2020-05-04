@@ -6,7 +6,6 @@ public interface PasscodeSettings {
 
     int getLength();
 
-    //TODO is this used?
     Duration getDuration();
 
     int getMaxDeliveries();

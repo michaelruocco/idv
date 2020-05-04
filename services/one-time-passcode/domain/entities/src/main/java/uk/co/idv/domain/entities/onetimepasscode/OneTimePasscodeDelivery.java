@@ -18,9 +18,14 @@ public class OneTimePasscodeDelivery {
     private final String passcode;
     private final String message;
     private final Instant sent;
+    private final Instant expiry;
 
     public boolean hasPasscode(final String passcode) {
         return this.passcode.equals(passcode);
+    }
+
+    public boolean hasExpired(final Instant instant) {
+        return instant.isAfter(expiry);
     }
 
 }
