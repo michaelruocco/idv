@@ -11,22 +11,16 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParamsMother;
-import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
-import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
-
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class OneTimePasscodePolicyTest {
 
-    private static final UUID ID = UUID.fromString("2a82fcb5-19d4-469d-9c1b-4b2318c1e3f4");
     private static final OneTimePasscodeParams PARAMS = OneTimePasscodeParamsMother.eligible();
 
-    private final IdGenerator idGenerator = new FakeIdGenerator(ID);
-    private final OneTimePasscodePolicy parameters = new OneTimePasscodePolicy(idGenerator, PARAMS);
+    private final OneTimePasscodePolicy parameters = new OneTimePasscodePolicy(PARAMS);
 
     @Test
     void shouldReturnMethodName() {
@@ -66,7 +60,10 @@ class OneTimePasscodePolicyTest {
 
         final OneTimePasscode method = (OneTimePasscode) parameters.buildMethod(request);
 
-        assertThat(method.getDeliveryMethods()).containsExactly(new SmsDeliveryMethod(ID, phoneNumber.getValue()));
+        assertThat(method.getDeliveryMethods()).containsExactly(new SmsDeliveryMethod(
+                phoneNumber.getId(),
+                phoneNumber.getValue()
+        ));
     }
 
 }

@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class DeliveryMethodMother {
 
-    private static final UUID DEFAULT_ID = UUID.fromString("2a82fcb5-19d4-469d-9c1b-4b2318c1e3f4");
+    private static final UUID DEFAULT_ID = UUID.fromString("9c3fbf94-d4b7-445e-ae3a-b0935f314c6d");
 
     private DeliveryMethodMother() {
         // utility class

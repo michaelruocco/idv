@@ -11,7 +11,6 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
-import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Collection;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OneTimePasscodePolicy implements MethodPolicy {
 
-    private final IdGenerator idGenerator;
     private final OneTimePasscodeParams params;
 
     @Override
@@ -46,7 +44,7 @@ public class OneTimePasscodePolicy implements MethodPolicy {
     }
 
     private DeliveryMethod toDeliveryMethod(final PhoneNumber phoneNumber) {
-        return new SmsDeliveryMethod(idGenerator.generate(), phoneNumber.getValue());
+        return new SmsDeliveryMethod(phoneNumber.getId(), phoneNumber.getValue());
     }
 
     private static VerificationMethod ineligible(final Collection<DeliveryMethod> deliveryMethods) {
