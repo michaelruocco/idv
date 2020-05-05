@@ -1,25 +1,19 @@
 package uk.co.idv.domain.entities.phonenumber;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Builder;
 
-@RequiredArgsConstructor
-@Getter
-@EqualsAndHashCode
-@ToString
-public class OtherPhoneNumber implements PhoneNumber {
+import java.util.UUID;
+
+public class OtherPhoneNumber extends AbstractPhoneNumber {
 
     public static final String TYPE = "other";
 
-    private final String value;
-
-    @Override
-    public String getType() {
-        return TYPE;
+    @Builder
+    public OtherPhoneNumber(final UUID id, final String value) {
+        super(id, TYPE, value);
     }
 
+    @Override
     public boolean isMobile() {
         return false;
     }

@@ -10,6 +10,8 @@ import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequestMother;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PhoneNumberLoaderTest {
@@ -43,7 +45,10 @@ public class PhoneNumberLoaderTest {
 
         final PhoneNumbers numbers = loader.load(request);
 
-        assertThat(numbers).contains(new MobilePhoneNumber("49290011111"));
+        assertThat(numbers).contains(MobilePhoneNumber.builder()
+                .id(UUID.fromString("6837f49b-c19d-43dc-a2fd-0755bd09bcc5"))
+                .value("49290011111")
+                .build());
     }
 
     @Test
@@ -54,7 +59,10 @@ public class PhoneNumberLoaderTest {
 
         final PhoneNumbers numbers = loader.load(request);
 
-        assertThat(numbers).contains(new MobilePhoneNumber("07809386681"));
+        assertThat(numbers).contains(MobilePhoneNumber.builder()
+                .id(UUID.fromString("8c8b65ef-ceb7-413a-98b8-e72b611cca64"))
+                .value("07809386681")
+                .build());
     }
 
     @Test
@@ -65,7 +73,10 @@ public class PhoneNumberLoaderTest {
 
         final PhoneNumbers numbers = loader.load(request);
 
-        assertThat(numbers).contains(new MobilePhoneNumber("07809123456"));
+        assertThat(numbers).contains(MobilePhoneNumber.builder()
+                .id(UUID.fromString("8c8b65ef-ceb7-413a-98b8-e72b611cca64"))
+                .value("07809123456")
+                .build());
     }
 
 }
