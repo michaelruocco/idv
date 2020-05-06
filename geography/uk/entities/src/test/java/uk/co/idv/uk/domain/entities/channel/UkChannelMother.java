@@ -1,8 +1,6 @@
 package uk.co.idv.uk.domain.entities.channel;
 
-import uk.co.idv.uk.domain.entities.channel.as3.As3;
-import uk.co.idv.uk.domain.entities.channel.rsa.Rsa;
-import uk.co.idv.uk.domain.entities.channel.rsa.Rsa.RsaBuilder;
+import uk.co.idv.uk.domain.entities.channel.Rsa.RsaBuilder;
 
 public class UkChannelMother {
 

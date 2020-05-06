@@ -5,12 +5,12 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.Deli
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultOneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.card.number.CreditCardNumber;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultPasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultPasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.DefaultPinsentryParams;
@@ -91,12 +91,12 @@ public class StubVerificationSequencesEligible extends VerificationSequences {
         return DefaultOneTimePasscodeParams.builder()
                 .maxAttempts(1)
                 .duration(Duration.ofMinutes(5))
-                .passcodeSettings(buildPasscodeSettings())
+                .passcodeParams(buildPasscodeSettings())
                 .build();
     }
 
-    private static PasscodeSettings buildPasscodeSettings() {
-        return DefaultPasscodeSettings.builder()
+    private static PasscodeParams buildPasscodeSettings() {
+        return DefaultPasscodeParams.builder()
                 .length(8)
                 .duration(Duration.ofMillis(150000))
                 .maxDeliveries(3)

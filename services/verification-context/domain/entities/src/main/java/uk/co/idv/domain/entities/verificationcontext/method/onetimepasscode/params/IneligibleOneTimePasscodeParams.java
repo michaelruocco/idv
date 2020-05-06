@@ -8,7 +8,7 @@ import java.time.Duration;
 public class IneligibleOneTimePasscodeParams extends DefaultOneTimePasscodeParams {
 
     public IneligibleOneTimePasscodeParams() {
-        super(new IneligiblePasscodeSettings(), 0, Duration.ZERO);
+        super(0, Duration.ZERO, new IneligiblePasscodeParams());
     }
 
 }

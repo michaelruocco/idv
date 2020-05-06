@@ -10,19 +10,19 @@ class DefaultOneTimePasscodeParamsTest {
 
     @Test
     void shouldReturnPasscodeSettings() {
-        final PasscodeSettings settings = PasscodeSettingsMother.eligible();
+        final PasscodeParams settings = PasscodeSettingsMother.eligible();
         final OneTimePasscodeParams params = DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(settings)
+                .passcodeParams(settings)
                 .build();
 
-        assertThat(params.getPasscodeSettings()).isEqualTo(settings);
+        assertThat(params.getPasscodeParams()).isEqualTo(settings);
     }
 
     @Test
     void shouldReturnPasscodeLength() {
-        final PasscodeSettings settings = PasscodeSettingsMother.eligible();
+        final PasscodeParams settings = PasscodeSettingsMother.eligible();
         final OneTimePasscodeParams params = DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(settings)
+                .passcodeParams(settings)
                 .build();
 
         assertThat(params.getPasscodeLength()).isEqualTo(settings.getLength());
@@ -30,9 +30,9 @@ class DefaultOneTimePasscodeParamsTest {
 
     @Test
     void shouldReturnPasscodeDuration() {
-        final PasscodeSettings settings = PasscodeSettingsMother.eligible();
+        final PasscodeParams settings = PasscodeSettingsMother.eligible();
         final OneTimePasscodeParams params = DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(settings)
+                .passcodeParams(settings)
                 .build();
 
         assertThat(params.getPasscodeDuration()).isEqualTo(settings.getDuration());
@@ -40,9 +40,9 @@ class DefaultOneTimePasscodeParamsTest {
 
     @Test
     void shouldReturnMaxDeliveries() {
-        final PasscodeSettings settings = PasscodeSettingsMother.eligible();
+        final PasscodeParams settings = PasscodeSettingsMother.eligible();
         final OneTimePasscodeParams params = DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(settings)
+                .passcodeParams(settings)
                 .build();
 
         assertThat(params.getMaxDeliveries()).isEqualTo(settings.getMaxDeliveries());

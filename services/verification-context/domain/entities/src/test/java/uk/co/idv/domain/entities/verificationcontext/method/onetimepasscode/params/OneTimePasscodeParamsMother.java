@@ -14,7 +14,7 @@ public class OneTimePasscodeParamsMother {
 
     public static OneTimePasscodeParams withMaxAttempts(int maxAttempts) {
         return DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(PasscodeSettingsMother.eligible())
+                .passcodeParams(PasscodeSettingsMother.eligible())
                 .duration(Duration.ofMinutes(5))
                 .maxAttempts(maxAttempts)
                 .build();

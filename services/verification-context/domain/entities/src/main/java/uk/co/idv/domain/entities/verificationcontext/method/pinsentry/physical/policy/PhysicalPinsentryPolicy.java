@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.policy;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.card.account.Account;
 import uk.co.idv.domain.entities.card.account.OpenAccount;
@@ -16,7 +18,9 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.P
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class PhysicalPinsentryPolicy implements VerificationMethodPolicy {
 
     private final PinsentryParams params;

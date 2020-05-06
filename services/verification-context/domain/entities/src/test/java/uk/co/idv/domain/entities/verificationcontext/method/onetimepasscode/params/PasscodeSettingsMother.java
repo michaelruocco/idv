@@ -9,16 +9,16 @@ public class PasscodeSettingsMother {
         // utility class
     }
 
-    public static PasscodeSettings eligible() {
-        return DefaultPasscodeSettings.builder()
+    public static PasscodeParams eligible() {
+        return DefaultPasscodeParams.builder()
                 .length(8)
                 .duration(Duration.ofMillis(150000))
                 .maxDeliveries(3)
                 .build();
     }
 
-    public static PasscodeSettings ineligible() {
-        return DefaultPasscodeSettings.builder()
+    public static PasscodeParams ineligible() {
+        return DefaultPasscodeParams.builder()
                 .length(0)
                 .duration(Duration.ZERO)
                 .maxDeliveries(0)

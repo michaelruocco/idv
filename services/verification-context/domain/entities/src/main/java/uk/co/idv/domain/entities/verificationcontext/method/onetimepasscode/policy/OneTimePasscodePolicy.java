@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.policy;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumber;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
@@ -17,7 +19,9 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodPo
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class OneTimePasscodePolicy implements VerificationMethodPolicy {
 
     private final OneTimePasscodeParams params;

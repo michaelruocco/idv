@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequence;
@@ -8,6 +9,7 @@ import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequen
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+@Getter
 @RequiredArgsConstructor
 public class DefaultVerificationSequencesPolicy implements VerificationSequencesPolicy {
 

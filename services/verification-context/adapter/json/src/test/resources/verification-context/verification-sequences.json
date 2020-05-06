@@ -79,7 +79,7 @@
         "parameters": {
           "duration": 300000,
           "maxAttempts": 1,
-          "passcodeSettings": {
+          "passcode": {
             "length": 8,
             "duration": 150000,
             "maxDeliveries": 3

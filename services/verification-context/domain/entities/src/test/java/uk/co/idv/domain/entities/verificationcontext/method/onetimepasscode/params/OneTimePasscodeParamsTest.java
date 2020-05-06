@@ -36,23 +36,23 @@ class OneTimePasscodeParamsTest {
 
     @Test
     void shouldReturnPasscodeSettings() {
-        final PasscodeSettings passcodeSettings = mock(PasscodeSettings.class);
+        final PasscodeParams passcodeParams = mock(PasscodeParams.class);
 
         final OneTimePasscodeParams params = DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(passcodeSettings)
+                .passcodeParams(passcodeParams)
                 .build();
 
-        assertThat(params.getPasscodeSettings()).isEqualTo(passcodeSettings);
+        assertThat(params.getPasscodeParams()).isEqualTo(passcodeParams);
     }
 
     @Test
     void shouldReturnLengthFromPasscodeSettings() {
         final int length = 4;
-        final PasscodeSettings passcodeSettings = mock(PasscodeSettings.class);
-        given(passcodeSettings.getLength()).willReturn(length);
+        final PasscodeParams passcodeParams = mock(PasscodeParams.class);
+        given(passcodeParams.getLength()).willReturn(length);
 
         final OneTimePasscodeParams params = DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(passcodeSettings)
+                .passcodeParams(passcodeParams)
                 .build();
 
         assertThat(params.getPasscodeLength()).isEqualTo(length);
@@ -61,11 +61,11 @@ class OneTimePasscodeParamsTest {
     @Test
     void shouldReturnMaxDeliveriesFromPasscodeSettings() {
         final int maxDeliveries = 2;
-        final PasscodeSettings passcodeSettings = mock(PasscodeSettings.class);
-        given(passcodeSettings.getMaxDeliveries()).willReturn(maxDeliveries);
+        final PasscodeParams passcodeParams = mock(PasscodeParams.class);
+        given(passcodeParams.getMaxDeliveries()).willReturn(maxDeliveries);
 
         final OneTimePasscodeParams params = DefaultOneTimePasscodeParams.builder()
-                .passcodeSettings(passcodeSettings)
+                .passcodeParams(passcodeParams)
                 .build();
 
         assertThat(params.getMaxDeliveries()).isEqualTo(maxDeliveries);
@@ -73,7 +73,7 @@ class OneTimePasscodeParamsTest {
 
     @Test
     void shouldTestEquals() {
-        EqualsVerifier.forClass(PasscodeSettings.class)
+        EqualsVerifier.forClass(PasscodeParams.class)
                 .suppress(Warning.STRICT_INHERITANCE)
                 .verify();
     }

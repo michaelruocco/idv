@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -13,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
 
+@Getter
 @RequiredArgsConstructor
 public class VerificationSequencePolicy {
 

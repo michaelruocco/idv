@@ -13,23 +13,23 @@ import java.time.Duration;
 @ToString
 public class DefaultOneTimePasscodeParams implements OneTimePasscodeParams {
 
-    private final PasscodeSettings passcodeSettings;
     private final int maxAttempts;
     private final Duration duration;
+    private final PasscodeParams passcodeParams;
 
     @Override
     public int getPasscodeLength() {
-        return passcodeSettings.getLength();
+        return passcodeParams.getLength();
     }
 
     @Override
     public int getMaxDeliveries() {
-        return passcodeSettings.getMaxDeliveries();
+        return passcodeParams.getMaxDeliveries();
     }
 
     @Override
     public Duration getPasscodeDuration() {
-        return passcodeSettings.getDuration();
+        return passcodeParams.getDuration();
     }
 
 }

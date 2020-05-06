@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
-import uk.co.idv.uk.domain.entities.lockout.UkLockoutPolicyProvider;
+import uk.co.idv.uk.domain.entities.policy.lockout.UkLockoutPolicyProvider;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 
 public class UkConfig {

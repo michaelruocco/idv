@@ -6,7 +6,7 @@ import java.time.Duration;
 
 public interface OneTimePasscodeParams extends VerificationMethodParams {
 
-    PasscodeSettings getPasscodeSettings();
+    PasscodeParams getPasscodeParams();
 
     int getPasscodeLength();
 

@@ -1,5 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.policy;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -13,7 +15,9 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodPo
 
 import java.util.Collection;
 
+@Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class MobilePinsentryPolicy implements VerificationMethodPolicy {
 
     private final PinsentryParams params;

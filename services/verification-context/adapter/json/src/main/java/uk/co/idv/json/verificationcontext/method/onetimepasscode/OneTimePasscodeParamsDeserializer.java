@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.DefaultOneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
-import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeSettings;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeParams;
 import uk.co.idv.utils.json.converter.jackson.JsonNodeConverter;
 import uk.co.idv.utils.json.converter.jackson.JsonParserConverter;
 
@@ -22,7 +22,7 @@ public class OneTimePasscodeParamsDeserializer extends StdDeserializer<OneTimePa
         return DefaultOneTimePasscodeParams.builder()
                 .maxAttempts(node.get("maxAttempts").asInt())
                 .duration(JsonNodeConverter.toDuration(node.get("duration")))
-                .passcodeSettings(JsonNodeConverter.toObject(node.get("passcodeSettings"), parser, PasscodeSettings.class))
+                .passcodeParams(JsonNodeConverter.toObject(node.get("passcode"), parser, PasscodeParams.class))
                 .build();
     }
 

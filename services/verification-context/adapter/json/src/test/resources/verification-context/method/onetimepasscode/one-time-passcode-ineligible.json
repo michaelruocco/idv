@@ -7,7 +7,7 @@
   "parameters": {
     "duration": 0,
     "maxAttempts": 0,
-    "passcodeSettings": {
+    "passcode": {
       "length": 0,
       "duration": 0,
       "maxDeliveries": 0
