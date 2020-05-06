@@ -5,12 +5,18 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.sequence.policy.VerificationSequencePolicy;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RsaOnlinePurchasePolicyTest {
 
     private final RsaOnlinePurchasePolicy policy = new RsaOnlinePurchasePolicy();
+
+    @Test
+    void shouldReturnId() {
+        assertThat(policy.getId()).isEqualTo(UUID.fromString("8072b821-9945-49c3-b299-819ca085f2a4"));
+    }
 
     @Test
     void shouldReturnPolicyLevel() {

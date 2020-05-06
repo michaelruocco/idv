@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class LockoutLevelConverter {
+public class PolicyLevelConverter {
 
     public Collection<PolicyRequest> toPolicyRequests(final PolicyLevel level) {
         final Collection<PolicyRequest> requests = new ArrayList<>();

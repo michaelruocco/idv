@@ -3,21 +3,29 @@ package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
+import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
 public class DefaultVerificationSequencesPolicy implements VerificationSequencesPolicy {
 
+    private final UUID id;
     private final PolicyLevel level;
     private final Collection<VerificationSequencePolicy> sequencePolicies;
 
     @Override
-    public boolean appliesTo(final VerificationSequencesPolicyRequest request) {
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public boolean appliesTo(final PolicyRequest request) {
         return level.appliesTo(request);
     }
 

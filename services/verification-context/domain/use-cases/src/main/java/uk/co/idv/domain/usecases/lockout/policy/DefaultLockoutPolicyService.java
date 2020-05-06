@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
-import uk.co.idv.domain.entities.policy.LockoutLevelConverter;
+import uk.co.idv.domain.entities.policy.PolicyLevelConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 public class DefaultLockoutPolicyService implements LockoutPolicyService {
 
     private final LockoutPolicyDao dao;
-    private final LockoutLevelConverter lockoutLevelConverter;
+    private final PolicyLevelConverter policyLevelConverter;
     private final MultipleLockoutPoliciesHandler multiplePoliciesHandler;
 
     public DefaultLockoutPolicyService(final LockoutPolicyDao dao) {
-        this(dao, new LockoutLevelConverter(), new MultipleLockoutPoliciesHandler());
+        this(dao, new PolicyLevelConverter(), new MultipleLockoutPoliciesHandler());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class DefaultLockoutPolicyService implements LockoutPolicyService {
     }
 
     private List<LockoutPolicy> loadPolicies(final PolicyLevel level) {
-        final Collection<PolicyRequest> requests = lockoutLevelConverter.toPolicyRequests(level);
+        final Collection<PolicyRequest> requests = policyLevelConverter.toPolicyRequests(level);
         return requests.stream()
                 .map(this::loadPolicies)
                 .flatMap(Collection::stream)

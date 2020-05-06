@@ -7,6 +7,7 @@ import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequen
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -14,12 +15,19 @@ import static org.mockito.Mockito.mock;
 
 class DefaultVerificationSequencesPolicyTest {
 
+    private static final UUID ID = UUID.randomUUID();
+
     private final PolicyLevel level = mock(PolicyLevel.class);
     private final VerificationSequencePolicy sequencePolicy1 = mock(VerificationSequencePolicy.class);
     private final VerificationSequencePolicy sequencePolicy2 = mock(VerificationSequencePolicy.class);
     private final Collection<VerificationSequencePolicy> sequencePolicies = Arrays.asList(sequencePolicy1, sequencePolicy2);
 
-    private final VerificationSequencesPolicy policy = new DefaultVerificationSequencesPolicy(level, sequencePolicies);
+    private final VerificationSequencesPolicy policy = new DefaultVerificationSequencesPolicy(ID, level, sequencePolicies);
+
+    @Test
+    void shouldReturnId() {
+        assertThat(policy.getId()).isEqualTo(ID);
+    }
 
     @Test
     void shouldReturnAppliesToFromPolicyLevel() {
