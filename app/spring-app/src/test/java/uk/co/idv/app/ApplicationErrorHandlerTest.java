@@ -25,7 +25,7 @@ import uk.co.idv.json.identity.alias.AliasDeserializer.AliasNotSupportedExceptio
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.state.LockoutStateValidator.LockedOutException;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.NotNextMethodInSequenceException;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences.NotNextMethodInSequenceException;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod.MethodAlreadyCompleteException;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader.VerificationContextExpiredException;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader.VerificationContextNotFoundException;

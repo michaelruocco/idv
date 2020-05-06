@@ -1,6 +1,6 @@
 package uk.co.idv.domain.usecases.verificationcontext.expiry;
 
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 
 import java.time.Duration;
 import java.time.Instant;

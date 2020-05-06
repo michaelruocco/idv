@@ -9,7 +9,7 @@ import uk.co.idv.domain.entities.channel.Channel;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 
 import java.io.IOException;
 import java.time.Instant;

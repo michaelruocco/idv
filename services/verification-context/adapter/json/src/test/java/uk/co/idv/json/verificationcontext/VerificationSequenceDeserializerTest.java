@@ -2,8 +2,8 @@ package uk.co.idv.json.verificationcontext;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequenceMother;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequence;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequenceMother;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;

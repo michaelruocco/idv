@@ -7,6 +7,8 @@ import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
+import uk.co.idv.domain.entities.verificationcontext.sequence.SingleMethodSequence;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 
 import java.time.Instant;
 import java.util.UUID;

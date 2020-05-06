@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import uk.co.idv.domain.entities.activity.Activity;
 import uk.co.idv.domain.entities.channel.Channel;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 
 import java.time.Instant;
 

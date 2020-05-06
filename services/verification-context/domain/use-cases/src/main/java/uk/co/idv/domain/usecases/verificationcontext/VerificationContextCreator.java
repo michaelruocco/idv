@@ -10,7 +10,7 @@ import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.CalculateExpiryRequest;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.ExpiryCalculator;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;

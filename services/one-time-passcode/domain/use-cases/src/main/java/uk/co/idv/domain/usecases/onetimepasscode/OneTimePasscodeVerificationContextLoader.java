@@ -2,7 +2,7 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
-import uk.co.idv.domain.entities.verificationcontext.VerificationSequences.NotNextMethodInSequenceException;
+import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences.NotNextMethodInSequenceException;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 
