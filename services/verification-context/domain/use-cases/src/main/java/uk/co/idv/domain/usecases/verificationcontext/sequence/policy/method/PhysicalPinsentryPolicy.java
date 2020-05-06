@@ -10,7 +10,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.N
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryEligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryIneligible;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.VerificationSequencesPolicyRequest;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -26,7 +26,7 @@ public class PhysicalPinsentryPolicy implements VerificationMethodPolicy {
     }
 
     @Override
-    public VerificationMethod buildMethod(final LoadSequencesRequest request) {
+    public VerificationMethod buildMethod(final VerificationSequencesPolicyRequest request) {
         final Collection<CardNumber> eligibleCardNumbers = toEligibleCardNumbers(request);
         if (eligibleCardNumbers.isEmpty()) {
             return toIneligible(eligibleCardNumbers);
@@ -34,7 +34,7 @@ public class PhysicalPinsentryPolicy implements VerificationMethodPolicy {
         return toEligible(eligibleCardNumbers);
     }
 
-    private static Collection<CardNumber> toEligibleCardNumbers(final LoadSequencesRequest request) {
+    private static Collection<CardNumber> toEligibleCardNumbers(final VerificationSequencesPolicyRequest request) {
         final Collection<Account> accounts = request.getAccounts();
         return accounts.stream()
                 .filter(PhysicalPinsentryPolicy::isEligible)

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,7 +24,7 @@ class DefaultVerificationSequencesPolicyTest {
     @Test
     void shouldReturnAppliesToFromPolicyLevel() {
         final boolean expectedAppliesTo = true;
-        final LoadSequencesRequest request = mock(LoadSequencesRequest.class);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
         given(level.appliesTo(request)).willReturn(expectedAppliesTo);
 
         final boolean appliesTo = policy.appliesTo(request);
@@ -35,7 +34,7 @@ class DefaultVerificationSequencesPolicyTest {
 
     @Test
     void shouldReturnSequencesFromEachSequencePolicy() {
-        final LoadSequencesRequest request = mock(LoadSequencesRequest.class);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
         final VerificationSequence expectedSequence1 = mock(VerificationSequence.class);
         given(sequencePolicy1.buildSequence(request)).willReturn(expectedSequence1);
         final VerificationSequence expectedSequence2 = mock(VerificationSequence.class);

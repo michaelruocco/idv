@@ -7,7 +7,6 @@ import uk.co.idv.domain.entities.verificationcontext.SingleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method.VerificationMethodPolicy;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,7 +27,7 @@ public class VerificationSequencePolicy {
         this(name, Arrays.asList(methodPolicies));
     }
 
-    public VerificationSequence buildSequence(final LoadSequencesRequest request) {
+    public VerificationSequence buildSequence(final VerificationSequencesPolicyRequest request) {
         final Collection<VerificationMethod> methods = methodPolicies.stream()
                 .map(parameters -> parameters.buildMethod(request))
                 .collect(Collectors.toList());

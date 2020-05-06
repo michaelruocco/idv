@@ -8,7 +8,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.Mob
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.VerificationSequencesPolicyRequest;
 
 import java.util.Collection;
 
@@ -23,14 +23,14 @@ public class MobilePinsentryPolicy implements VerificationMethodPolicy {
     }
 
     @Override
-    public VerificationMethod buildMethod(final LoadSequencesRequest request) {
+    public VerificationMethod buildMethod(final VerificationSequencesPolicyRequest request) {
         if (isEligible(request)) {
             return eligible();
         }
         return ineligible();
     }
 
-    private boolean isEligible(final LoadSequencesRequest request) {
+    private boolean isEligible(final VerificationSequencesPolicyRequest request) {
         final Collection<MobileDevice> mobileDevices = request.getMobileDevices();
         return mobileDevices.stream().anyMatch(MobileDevice::isTrusted);
     }

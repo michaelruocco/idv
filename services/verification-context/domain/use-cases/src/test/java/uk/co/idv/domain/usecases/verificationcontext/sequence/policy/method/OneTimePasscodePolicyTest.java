@@ -1,20 +1,20 @@
 package uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumber;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumberMother;
+import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParamsMother;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.VerificationSequencesPolicyRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class OneTimePasscodePolicyTest {
 
@@ -30,8 +30,8 @@ class OneTimePasscodePolicyTest {
     @Test
     void shouldReturnEligibleIfIdentityHasAtLeastOneMobilePhoneNumber() {
         final PhoneNumber phoneNumber = PhoneNumberMother.mobile();
-        final Identity identity = IdentityMother.withPhoneNumbers(phoneNumber);
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getPhoneNumbers()).willReturn(new PhoneNumbers(phoneNumber));
 
         final OneTimePasscode method = (OneTimePasscode) parameters.buildMethod(request);
 
@@ -44,8 +44,8 @@ class OneTimePasscodePolicyTest {
     @Test
     void shouldReturnIneligibleIfIdentityDoesNotHaveAnyMobilePhoneNumbers() {
         final PhoneNumber phoneNumber = PhoneNumberMother.other();
-        final Identity identity = IdentityMother.withPhoneNumbers(phoneNumber);
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getPhoneNumbers()).willReturn(new PhoneNumbers(phoneNumber));
 
         final VerificationMethod method = parameters.buildMethod(request);
 
@@ -55,8 +55,8 @@ class OneTimePasscodePolicyTest {
     @Test
     void shouldPopulateSmsDeliveryMethodForMobilePhoneNumber() {
         final PhoneNumber phoneNumber = PhoneNumberMother.mobile();
-        final Identity identity = IdentityMother.withPhoneNumbers(phoneNumber);
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getPhoneNumbers()).willReturn(new PhoneNumbers(phoneNumber));
 
         final OneTimePasscode method = (OneTimePasscode) parameters.buildMethod(request);
 

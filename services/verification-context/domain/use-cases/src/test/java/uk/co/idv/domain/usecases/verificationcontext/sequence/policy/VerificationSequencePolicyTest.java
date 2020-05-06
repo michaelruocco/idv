@@ -6,8 +6,6 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method.VerificationMethodPolicy;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -19,7 +17,7 @@ class VerificationSequencePolicyTest {
     void shouldCreateSequenceWithSingleMethod() {
         final VerificationMethodPolicy methodParameters = mock(VerificationMethodPolicy.class);
         final VerificationSequencePolicy sequenceParameters = new VerificationSequencePolicy(methodParameters);
-        final LoadSequencesRequest request = LoadSequencesRequestMother.build();
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
         final VerificationMethod expectedMethod = OneTimePasscodeMother.eligible();
         given(methodParameters.buildMethod(request)).willReturn(expectedMethod);
 
@@ -39,7 +37,7 @@ class VerificationSequencePolicyTest {
                 methodParameters1,
                 methodParameters2
         );
-        final LoadSequencesRequest request = LoadSequencesRequestMother.build();
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
         final VerificationMethod expectedMethod1 = OneTimePasscodeMother.eligible();
         given(methodParameters1.buildMethod(request)).willReturn(expectedMethod1);
         final VerificationMethod expectedMethod2 = PushNotificationMother.eligible();

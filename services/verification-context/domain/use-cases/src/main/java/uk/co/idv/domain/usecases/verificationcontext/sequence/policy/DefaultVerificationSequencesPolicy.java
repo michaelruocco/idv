@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequences;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -16,12 +15,12 @@ public class DefaultVerificationSequencesPolicy implements VerificationSequences
     private final Collection<VerificationSequencePolicy> sequencePolicies;
 
     @Override
-    public boolean appliesTo(final LoadSequencesRequest request) {
+    public boolean appliesTo(final VerificationSequencesPolicyRequest request) {
         return level.appliesTo(request);
     }
 
     @Override
-    public VerificationSequences buildSequences(final LoadSequencesRequest request) {
+    public VerificationSequences buildSequences(final VerificationSequencesPolicyRequest request) {
         final Collection<VerificationSequence> sequences = sequencePolicies.stream()
                 .map(sequencePolicy -> sequencePolicy.buildSequence(request))
                 .collect(Collectors.toList());

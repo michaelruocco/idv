@@ -1,8 +1,6 @@
 package uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.verificationcontext.method.params.IneligibleVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -10,10 +8,11 @@ import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodPa
 import uk.co.idv.domain.entities.verificationcontext.method.params.VerificationMethodParamsMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotificationMother;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.VerificationSequencesPolicyRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class PushNotificationPolicyTest {
 
@@ -28,8 +27,8 @@ class PushNotificationPolicyTest {
 
     @Test
     void shouldReturnEligibleIfIdentityHasAtLeastOneTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneTrusted());
 
         final VerificationMethod method = policy.buildMethod(request);
 
@@ -38,8 +37,8 @@ class PushNotificationPolicyTest {
 
     @Test
     void shouldReturnIneligibleIfIdentityDoesNotHaveTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneUntrusted());
 
         final VerificationMethod method = policy.buildMethod(request);
 
@@ -48,8 +47,8 @@ class PushNotificationPolicyTest {
 
     @Test
     void shouldPopulateParamsIfIdentityHasAtLeastOneTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneTrusted());
 
         final PushNotification method = (PushNotification) policy.buildMethod(request);
 
@@ -58,8 +57,8 @@ class PushNotificationPolicyTest {
 
     @Test
     void shouldPopulateIneligibleParamsIfIdentityDoesNotHaveTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneUntrusted());
 
         final PushNotification method = (PushNotification) policy.buildMethod(request);
 

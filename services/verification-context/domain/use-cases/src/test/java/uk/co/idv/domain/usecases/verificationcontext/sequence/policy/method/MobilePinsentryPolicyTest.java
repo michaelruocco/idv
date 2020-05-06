@@ -1,8 +1,6 @@
 package uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.mobiledevice.MobileDeviceMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
@@ -10,10 +8,11 @@ import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.Mob
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentryMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParamsMother;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.VerificationSequencesPolicyRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class MobilePinsentryPolicyTest {
 
@@ -28,8 +27,8 @@ class MobilePinsentryPolicyTest {
 
     @Test
     void shouldReturnEligibleIfIdentityHasAtLeastOneTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneTrusted());
 
         final VerificationMethod method = parameters.buildMethod(request);
 
@@ -38,8 +37,8 @@ class MobilePinsentryPolicyTest {
 
     @Test
     void shouldReturnIneligibleIfIdentityDoesNotHaveTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneUntrusted());
 
         final VerificationMethod method = parameters.buildMethod(request);
 
@@ -48,8 +47,8 @@ class MobilePinsentryPolicyTest {
 
     @Test
     void shouldPopulateParamsIfIdentityHasAtLeastOneTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneTrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneTrusted());
 
         final MobilePinsentry method = (MobilePinsentry) parameters.buildMethod(request);
 
@@ -58,8 +57,8 @@ class MobilePinsentryPolicyTest {
 
     @Test
     void shouldPopulateIneligibleParamsIfIdentityDoesNotHaveTrustedDevice() {
-        final Identity identity = IdentityMother.withMobileDevices(MobileDeviceMother.oneUntrusted());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getMobileDevices()).willReturn(MobileDeviceMother.oneUntrusted());
 
         final MobilePinsentry method = (MobilePinsentry) parameters.buildMethod(request);
 

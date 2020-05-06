@@ -4,18 +4,19 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.card.account.AccountMother;
 import uk.co.idv.domain.entities.card.number.CardNumber;
 import uk.co.idv.domain.entities.card.number.CardNumberMother;
-import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.IneligiblePinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParamsMother;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentryMother;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequestMother;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.VerificationSequencesPolicyRequest;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class PhysicalPinsentryPolicyTest {
 
@@ -31,8 +32,8 @@ class PhysicalPinsentryPolicyTest {
     @Test
     void shouldReturnEligibleIfIdentityHasOpenAccountsWithCard() {
         final CardNumber creditCardNumber = CardNumberMother.credit();
-        final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getAccounts()).willReturn(Collections.singleton(AccountMother.open(creditCardNumber)));
 
         final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 
@@ -42,8 +43,8 @@ class PhysicalPinsentryPolicyTest {
 
     @Test
     void shouldReturnIneligibleIfIdentityDoesNotHaveAnyOpenAccounts() {
-        final Identity identity = IdentityMother.withAccounts(AccountMother.closed());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getAccounts()).willReturn(Collections.singleton(AccountMother.closed()));
 
         final VerificationMethod method = policy.buildMethod(request);
 
@@ -53,8 +54,8 @@ class PhysicalPinsentryPolicyTest {
     @Test
     void shouldPopulateCardNumbersFromOpenAccounts() {
         final CardNumber creditCardNumber = CardNumberMother.credit();
-        final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getAccounts()).willReturn(Collections.singleton(AccountMother.open(creditCardNumber)));
 
         final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 
@@ -64,8 +65,8 @@ class PhysicalPinsentryPolicyTest {
     @Test
     void shouldPopulateParamsIfIdentityHasOpenAccountsWithCard() {
         final CardNumber creditCardNumber = CardNumberMother.credit();
-        final Identity identity = IdentityMother.withAccounts(AccountMother.open(creditCardNumber));
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getAccounts()).willReturn(Collections.singleton(AccountMother.open(creditCardNumber)));
 
         final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 
@@ -74,8 +75,8 @@ class PhysicalPinsentryPolicyTest {
 
     @Test
     void shouldPopulateIneligibleParamsIfIdentityDoesOpenAccountWithCard() {
-        final Identity identity = IdentityMother.withAccounts(AccountMother.closed());
-        final LoadSequencesRequest request = LoadSequencesRequestMother.withIdentity(identity);
+        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        given(request.getAccounts()).willReturn(Collections.singleton(AccountMother.closed()));
 
         final PhysicalPinsentry method = (PhysicalPinsentry) policy.buildMethod(request);
 

@@ -11,7 +11,7 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneT
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeIneligible;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.SmsDeliveryMethod;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.VerificationSequencesPolicyRequest;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -27,7 +27,7 @@ public class OneTimePasscodePolicy implements VerificationMethodPolicy {
     }
 
     @Override
-    public VerificationMethod buildMethod(final LoadSequencesRequest request) {
+    public VerificationMethod buildMethod(final VerificationSequencesPolicyRequest request) {
         final Collection<DeliveryMethod> deliveryMethods = toDeliveryMethods(request);
         if (deliveryMethods.isEmpty()) {
             return ineligible(deliveryMethods);
@@ -35,7 +35,7 @@ public class OneTimePasscodePolicy implements VerificationMethodPolicy {
         return eligible(deliveryMethods);
     }
 
-    private Collection<DeliveryMethod> toDeliveryMethods(final LoadSequencesRequest request) {
+    private Collection<DeliveryMethod> toDeliveryMethods(final VerificationSequencesPolicyRequest request) {
         final PhoneNumbers phoneNumbers = request.getPhoneNumbers();
         return phoneNumbers.stream()
                 .filter(PhoneNumber::isMobile)
