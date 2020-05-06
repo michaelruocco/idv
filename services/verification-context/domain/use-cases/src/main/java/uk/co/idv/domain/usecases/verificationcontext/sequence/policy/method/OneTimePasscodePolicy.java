@@ -17,7 +17,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class OneTimePasscodePolicy implements MethodPolicy {
+public class OneTimePasscodePolicy implements VerificationMethodPolicy {
 
     private final OneTimePasscodeParams params;
 

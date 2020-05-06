@@ -16,9 +16,9 @@ import static org.mockito.Mockito.mock;
 class DefaultVerificationSequencesPolicyTest {
 
     private final PolicyLevel level = mock(PolicyLevel.class);
-    private final SequencePolicy sequencePolicy1 = mock(SequencePolicy.class);
-    private final SequencePolicy sequencePolicy2 = mock(SequencePolicy.class);
-    private final Collection<SequencePolicy> sequencePolicies = Arrays.asList(sequencePolicy1, sequencePolicy2);
+    private final VerificationSequencePolicy sequencePolicy1 = mock(VerificationSequencePolicy.class);
+    private final VerificationSequencePolicy sequencePolicy2 = mock(VerificationSequencePolicy.class);
+    private final Collection<VerificationSequencePolicy> sequencePolicies = Arrays.asList(sequencePolicy1, sequencePolicy2);
 
     private final VerificationSequencesPolicy policy = new DefaultVerificationSequencesPolicy(level, sequencePolicies);
 

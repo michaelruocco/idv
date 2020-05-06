@@ -13,7 +13,7 @@ import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesReque
 import java.util.Collection;
 
 @RequiredArgsConstructor
-public class MobilePinsentryPolicy implements MethodPolicy {
+public class MobilePinsentryPolicy implements VerificationMethodPolicy {
 
     private final PinsentryParams params;
 

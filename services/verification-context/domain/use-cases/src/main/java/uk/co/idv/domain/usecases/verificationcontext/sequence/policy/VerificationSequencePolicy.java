@@ -6,7 +6,7 @@ import uk.co.idv.domain.entities.verificationcontext.MultipleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.SingleMethodSequence;
 import uk.co.idv.domain.entities.verificationcontext.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method.MethodPolicy;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.policy.method.VerificationMethodPolicy;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 
 import java.util.Arrays;
@@ -15,16 +15,16 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class SequencePolicy {
+public class VerificationSequencePolicy {
 
     private final String name;
-    private final Collection<MethodPolicy> methodPolicies;
+    private final Collection<VerificationMethodPolicy> methodPolicies;
 
-    public SequencePolicy(final MethodPolicy methodPolicy) {
+    public VerificationSequencePolicy(final VerificationMethodPolicy methodPolicy) {
         this(methodPolicy.getName(), Collections.singleton(methodPolicy));
     }
 
-    public SequencePolicy(final String name, final MethodPolicy... methodPolicies) {
+    public VerificationSequencePolicy(final String name, final VerificationMethodPolicy... methodPolicies) {
         this(name, Arrays.asList(methodPolicies));
     }
 

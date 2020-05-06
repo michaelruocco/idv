@@ -16,7 +16,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class PhysicalPinsentryPolicy implements MethodPolicy {
+public class PhysicalPinsentryPolicy implements VerificationMethodPolicy {
 
     private final PinsentryParams params;
 

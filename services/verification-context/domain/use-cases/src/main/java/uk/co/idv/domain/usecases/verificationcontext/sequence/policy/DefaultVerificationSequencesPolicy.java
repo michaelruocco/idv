@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class DefaultVerificationSequencesPolicy implements VerificationSequencesPolicy {
 
     private final PolicyLevel level;
-    private final Collection<SequencePolicy> sequencePolicies;
+    private final Collection<VerificationSequencePolicy> sequencePolicies;
 
     @Override
     public boolean appliesTo(final LoadSequencesRequest request) {
