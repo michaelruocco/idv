@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
-import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.LockoutPoliciesAlreadyExistException;
+import uk.co.idv.domain.usecases.policy.PolicyService.PoliciesAlreadyExistException;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,7 +49,7 @@ class InitialLockoutPolicyCreatorTest {
     void shouldReturnFalseIfAnyPoliciesAlreadyExist() {
         final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
         given(provider.getPolicies()).willReturn(Collections.singleton(policy));
-        doThrow(LockoutPoliciesAlreadyExistException.class).when(service).create(policy);
+        doThrow(PoliciesAlreadyExistException.class).when(service).create(policy);
 
         boolean allCreated = creator.create();
 

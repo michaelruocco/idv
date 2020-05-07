@@ -7,9 +7,9 @@ import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.policy.PolicyLevelConverter;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.LockoutPoliciesAlreadyExistException;
-import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.LockoutPolicyNotFoundException;
-import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.RequestedLockoutPolicyNotFoundException;
+import uk.co.idv.domain.usecases.policy.PolicyService.PoliciesAlreadyExistException;
+import uk.co.idv.domain.usecases.policy.PolicyService.PolicyNotFoundException;
+import uk.co.idv.domain.usecases.policy.PolicyService.RequestedPolicyNotFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,13 +26,13 @@ import static org.mockito.Mockito.verify;
 
 class DefaultLockoutPolicyServiceTest {
 
-    private final LockoutPolicy policy = mock(LockoutPolicy.class);
+    private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
     private final PolicyLevelConverter policyLevelConverter = mock(PolicyLevelConverter.class);
     private final MultipleLockoutPoliciesHandler multiplePoliciesHandler = mock(MultipleLockoutPoliciesHandler.class);
 
-    private final LockoutPolicyDao dao = mock(LockoutPolicyDao.class);
+    private final LockoutPolicy policy = mock(LockoutPolicy.class);
 
-    private final LockoutPolicyService service = new DefaultLockoutPolicyService(dao, policyLevelConverter, multiplePoliciesHandler);
+    private final LockoutPolicyService service = new DefaultLockoutPolicyService(dao, multiplePoliciesHandler, policyLevelConverter);
 
     @Test
     void shouldCreatePolicyIfNoPoliciesAlreadyExistForSameLevel() {
@@ -61,8 +61,8 @@ class DefaultLockoutPolicyServiceTest {
         final Throwable error = catchThrowable(() -> service.create(policy));
 
         assertThat(error)
-                .isInstanceOf(LockoutPoliciesAlreadyExistException.class)
-                .hasMessage(String.format("lockout policies %s already exist for same lockout level", id.toString()));
+                .isInstanceOf(PoliciesAlreadyExistException.class)
+                .hasMessage(String.format("policies %s already exist for same lockout level", id.toString()));
     }
 
     @Test
@@ -90,7 +90,7 @@ class DefaultLockoutPolicyServiceTest {
         final Throwable error = catchThrowable(() -> service.update(policy));
 
         assertThat(error)
-                .isInstanceOf(LockoutPolicyNotFoundException.class)
+                .isInstanceOf(PolicyNotFoundException.class)
                 .hasMessage(id.toString());
     }
 
@@ -123,7 +123,7 @@ class DefaultLockoutPolicyServiceTest {
         final Throwable error = catchThrowable(() -> service.load(id));
 
         assertThat(error)
-                .isInstanceOf(LockoutPolicyNotFoundException.class)
+                .isInstanceOf(PolicyNotFoundException.class)
                 .hasMessage(id.toString());
     }
 
@@ -169,7 +169,7 @@ class DefaultLockoutPolicyServiceTest {
         final Throwable error = catchThrowable(() -> service.load(request));
 
         assertThat(error)
-                .isInstanceOf(RequestedLockoutPolicyNotFoundException.class)
+                .isInstanceOf(RequestedPolicyNotFoundException.class)
                 .hasMessage(toExpectedMessage(request));
     }
 

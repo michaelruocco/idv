@@ -1,20 +1,19 @@
-package uk.co.idv.domain.usecases.lockout;
+package uk.co.idv.domain.usecases.policy;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttemptsMother;
-import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyService.RequestedLockoutPolicyNotFoundException;
-
+import uk.co.idv.domain.usecases.policy.PolicyService.RequestedPolicyNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class RequestedLockoutPolicyNotFoundExceptionTest {
+class RequestedPolicyNotFoundExceptionTest {
 
     @Test
     void shouldReturnMessage() {
         final LockoutRequest request = VerificationAttemptsMother.successful();
 
-        final Throwable exception = new RequestedLockoutPolicyNotFoundException(request);
+        final Throwable exception = new RequestedPolicyNotFoundException(request);
 
         final String expectedMessage = String.format("channelId %s activity %s aliasType %s",
                 request.getChannelId(),
@@ -27,7 +26,7 @@ class RequestedLockoutPolicyNotFoundExceptionTest {
     void shouldReturnRequest() {
         final LockoutRequest request = VerificationAttemptsMother.successful();
 
-        final RequestedLockoutPolicyNotFoundException exception = new RequestedLockoutPolicyNotFoundException(request);
+        final RequestedPolicyNotFoundException exception = new RequestedPolicyNotFoundException(request);
 
         assertThat(exception.getRequest()).isEqualTo(request);
     }

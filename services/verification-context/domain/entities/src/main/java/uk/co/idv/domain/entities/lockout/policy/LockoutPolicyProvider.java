@@ -1,9 +1,9 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
-import java.util.Collection;
+import uk.co.idv.domain.entities.policy.PolicyProvider;
 
-public interface LockoutPolicyProvider {
+public interface LockoutPolicyProvider extends PolicyProvider<LockoutPolicy> {
 
-    Collection<LockoutPolicy> getPolicies();
+    // intentionally blank
 
 }
