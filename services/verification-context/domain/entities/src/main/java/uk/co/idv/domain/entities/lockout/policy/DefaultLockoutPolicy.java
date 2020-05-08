@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.policy.state.ApplicableAttemptFilter;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
-import uk.co.idv.domain.entities.policy.PolicyRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptRequest;
 import uk.co.idv.domain.entities.lockout.policy.recordattempt.RecordAttemptStrategy;
 import uk.co.idv.domain.entities.lockout.attempt.VerificationAttempts;
@@ -61,16 +60,6 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
     @Override
     public String getChannelId() {
         return level.getChannelId();
-    }
-
-    @Override
-    public boolean isAliasLevel() {
-        return level.isAliasLevel();
-    }
-
-    @Override
-    public boolean appliesTo(final PolicyRequest request) {
-        return level.appliesTo(request);
     }
 
     @Override

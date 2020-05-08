@@ -1,13 +1,16 @@
-package uk.co.idv.domain.usecases.verificationcontext.policy;
+package uk.co.idv.domain.usecases.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.domain.entities.lockout.LockoutRequest;
+import uk.co.idv.domain.entities.lockout.LockoutRequestMother;
+import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.domain.entities.policy.Policy;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.policy.PolicyLevelConverter;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
-import uk.co.idv.domain.entities.verificationcontext.sequence.policy.VerificationSequencesPolicy;
-import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationSequencePolicyService.RequestedVerificationSequencesPolicyNotFoundException;
-import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationSequencePolicyService.VerificationSequencesPolicyAlreadyExistsException;
-import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationSequencePolicyService.VerificationSequencesPolicyNotFoundException;
+import uk.co.idv.domain.usecases.policy.PolicyService.PoliciesAlreadyExistException;
+import uk.co.idv.domain.usecases.policy.PolicyService.PolicyNotFoundException;
+import uk.co.idv.domain.usecases.policy.PolicyService.RequestedPolicyNotFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,15 +25,19 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class DefaultVerificationSequencesPolicyServiceTest {
+class DefaultPolicyServiceTest {
 
-    private final VerificationSequencesPolicy policy = mock(VerificationSequencesPolicy.class);
+    private final PolicyDao<Policy> dao = mock(PolicyDao.class);
+    private final MultiplePoliciesHandler<Policy> multiplePoliciesHandler = mock(MultiplePoliciesHandler.class);
     private final PolicyLevelConverter policyLevelConverter = mock(PolicyLevelConverter.class);
-    private final MultipleVerificationSequencesPoliciesHandler multiplePoliciesHandler = mock(MultipleVerificationSequencesPoliciesHandler.class);
 
-    private final VerificationSequencePolicyDao dao = mock(VerificationSequencePolicyDao.class);
+    private final LockoutPolicy policy = mock(LockoutPolicy.class);
 
-    private final VerificationSequencePolicyService service = new DefaultVerificationSequencesPolicyService(dao, policyLevelConverter, multiplePoliciesHandler);
+    private final PolicyService<Policy> service = new DefaultPolicyService<>(
+            dao,
+            multiplePoliciesHandler,
+            policyLevelConverter
+    );
 
     @Test
     void shouldCreatePolicyIfNoPoliciesAlreadyExistForSameLevel() {
@@ -46,7 +53,7 @@ class DefaultVerificationSequencesPolicyServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionIfPolicyAlreadyExistsForSameLevel() {
+    void shouldThrowExceptionIfPolicyAlreadyExistForSameLevel() {
         final PolicyRequest request = mock(PolicyRequest.class);
         final PolicyLevel level = mock(PolicyLevel.class);
         final UUID id = UUID.randomUUID();
@@ -59,13 +66,13 @@ class DefaultVerificationSequencesPolicyServiceTest {
         final Throwable error = catchThrowable(() -> service.create(policy));
 
         assertThat(error)
-                .isInstanceOf(VerificationSequencesPolicyAlreadyExistsException.class)
-                .hasMessage(String.format("verification sequences policy %s already exists for same lockout level", id.toString()));
+                .isInstanceOf(PoliciesAlreadyExistException.class)
+                .hasMessage(String.format("policies %s already exist for same lockout level", id.toString()));
     }
 
     @Test
     void shouldCreateMultiplePolicies() {
-        final VerificationSequencesPolicy policy1 = mock(VerificationSequencesPolicy.class);
+        final LockoutPolicy policy1 = mock(LockoutPolicy.class);
         final PolicyLevel level = mock(PolicyLevel.class);
         final PolicyRequest request = mock(PolicyRequest.class);
         given(policy.getLevel()).willReturn(level);
@@ -88,7 +95,7 @@ class DefaultVerificationSequencesPolicyServiceTest {
         final Throwable error = catchThrowable(() -> service.update(policy));
 
         assertThat(error)
-                .isInstanceOf(VerificationSequencesPolicyNotFoundException.class)
+                .isInstanceOf(PolicyNotFoundException.class)
                 .hasMessage(id.toString());
     }
 
@@ -105,10 +112,10 @@ class DefaultVerificationSequencesPolicyServiceTest {
 
     @Test
     void shouldReturnAllPolicies() {
-        final Collection<VerificationSequencesPolicy> expectedPolicies = Collections.singleton(policy);
+        final Collection<Policy> expectedPolicies = Collections.singleton(policy);
         given(dao.load()).willReturn(expectedPolicies);
 
-        final Collection<VerificationSequencesPolicy> policies = service.loadAll();
+        final Collection<Policy> policies = service.loadAll();
 
         assertThat(policies).isEqualTo(expectedPolicies);
     }
@@ -121,7 +128,7 @@ class DefaultVerificationSequencesPolicyServiceTest {
         final Throwable error = catchThrowable(() -> service.load(id));
 
         assertThat(error)
-                .isInstanceOf(VerificationSequencesPolicyNotFoundException.class)
+                .isInstanceOf(PolicyNotFoundException.class)
                 .hasMessage(id.toString());
     }
 
@@ -130,52 +137,52 @@ class DefaultVerificationSequencesPolicyServiceTest {
         final UUID id = UUID.randomUUID();
         given(dao.load(id)).willReturn(Optional.of(policy));
 
-        final VerificationSequencesPolicy loadedPolicy = service.load(id);
+        final Policy loadedPolicy = service.load(id);
 
         assertThat(loadedPolicy).isEqualTo(policy);
     }
 
     @Test
     void shouldLoadPolicyApplicableToRequest() {
-        final PolicyRequest request = mock(PolicyRequest.class);
+        final LockoutRequest request = mock(LockoutRequest.class);
         final PolicyLevel level = mock(PolicyLevel.class);
         final UUID id = UUID.randomUUID();
         given(policy.getId()).willReturn(id);
         given(policy.appliesTo(request)).willReturn(true);
         given(policyLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
-        final List<VerificationSequencesPolicy> policies = Collections.singletonList(policy);
+        final List<Policy> policies = Collections.singletonList(policy);
         given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.of(policy));
         given(dao.load(request)).willReturn(policies);
 
-        final VerificationSequencesPolicy loadedPolicy = service.load(request);
+        final Policy loadedPolicy = service.load(request);
 
         assertThat(loadedPolicy).isEqualTo(policy);
     }
 
     @Test
     void shouldThrowExceptionIfApplicablePolicyNotFound() {
-        final PolicyRequest request = mock(PolicyRequest.class);
+        final LockoutRequest request = LockoutRequestMother.fake();
         final PolicyLevel level = mock(PolicyLevel.class);
         final UUID id = UUID.randomUUID();
         given(policy.getId()).willReturn(id);
         given(policy.appliesTo(request)).willReturn(true);
         given(policyLevelConverter.toPolicyRequests(level)).willReturn(Collections.singleton(request));
-        final List<VerificationSequencesPolicy> policies = Collections.singletonList(policy);
+        final List<Policy> policies = Collections.singletonList(policy);
         given(multiplePoliciesHandler.extractPolicy(policies)).willReturn(Optional.empty());
         given(dao.load(request)).willReturn(policies);
 
         final Throwable error = catchThrowable(() -> service.load(request));
 
         assertThat(error)
-                .isInstanceOf(RequestedVerificationSequencesPolicyNotFoundException.class)
+                .isInstanceOf(RequestedPolicyNotFoundException.class)
                 .hasMessage(toExpectedMessage(request));
     }
 
-    private static String toExpectedMessage(final PolicyRequest request) {
+    private static String toExpectedMessage(final LockoutRequest request) {
         return String.format("channelId %s activity %s aliasType %s",
                 request.getChannelId(),
                 request.getActivityName(),
-                request.getAliasType());
+                request.getAlias().getType());
     }
 
 }

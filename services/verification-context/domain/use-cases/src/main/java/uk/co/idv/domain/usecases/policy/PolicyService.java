@@ -1,7 +1,6 @@
 package uk.co.idv.domain.usecases.policy;
 
 import lombok.Getter;
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.policy.Policy;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
 
@@ -21,7 +20,7 @@ public interface PolicyService<T extends Policy> {
 
     T load(UUID id);
 
-    T load(final LockoutRequest request);
+    T load(final PolicyRequest request);
 
     Collection<T> loadAll();
 

@@ -6,10 +6,14 @@ public interface Policy {
 
     UUID getId();
 
-    boolean isAliasLevel();
-
     PolicyLevel getLevel();
 
-    boolean appliesTo(final PolicyRequest request);
+    default boolean isAliasLevel() {
+        return getLevel().isAliasLevel();
+    }
+
+    default boolean appliesTo(final PolicyRequest request) {
+        return getLevel().appliesTo(request);
+    }
 
 }

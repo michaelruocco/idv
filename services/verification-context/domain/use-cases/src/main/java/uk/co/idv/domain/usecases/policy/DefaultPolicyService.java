@@ -2,7 +2,6 @@ package uk.co.idv.domain.usecases.policy;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.domain.entities.policy.Policy;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.policy.PolicyLevelConverter;
@@ -58,7 +57,7 @@ public class DefaultPolicyService<T extends Policy> implements PolicyService<T> 
     }
 
     @Override
-    public T load(final LockoutRequest request) {
+    public T load(final PolicyRequest request) {
         return loadPolicy(request)
                 .orElseThrow(() -> new RequestedPolicyNotFoundException(request));
     }

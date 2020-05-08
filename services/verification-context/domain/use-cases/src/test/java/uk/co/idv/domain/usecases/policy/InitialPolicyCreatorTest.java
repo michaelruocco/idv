@@ -1,9 +1,8 @@
-package uk.co.idv.domain.usecases.lockout.policy;
+package uk.co.idv.domain.usecases.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
+import uk.co.idv.domain.entities.policy.Policy;
+import uk.co.idv.domain.entities.policy.PolicyProvider;
 import uk.co.idv.domain.usecases.policy.PolicyService.PoliciesAlreadyExistException;
 
 import java.util.Arrays;
@@ -15,17 +14,17 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class InitialLockoutPolicyCreatorTest {
+class InitialPolicyCreatorTest {
 
-    private final LockoutPolicyProvider provider = mock(LockoutPolicyProvider.class);
-    private final LockoutPolicyService service = mock(LockoutPolicyService.class);
+    private final PolicyProvider<Policy> provider = mock(PolicyProvider.class);
+    private final PolicyService<Policy> service = mock(PolicyService.class);
 
-    private final InitialLockoutPolicyCreator creator = new InitialLockoutPolicyCreator(provider, service);
+    private final InitialPolicyCreator<Policy> creator = new InitialPolicyCreator<>(provider, service);
 
     @Test
     void shouldReturnAllCreatedTrueIfNoExceptionsThrown() {
-        final LockoutPolicy policy1 = LockoutPolicyMother.hardLockoutPolicy();
-        final LockoutPolicy policy2 = LockoutPolicyMother.softLockoutPolicy();
+        final Policy policy1 = mock(Policy.class);
+        final Policy policy2 = mock(Policy.class);
         given(provider.getPolicies()).willReturn(Arrays.asList(policy1, policy2));
 
         boolean allCreated = creator.create();
@@ -35,8 +34,8 @@ class InitialLockoutPolicyCreatorTest {
 
     @Test
     void shouldCreateAllProvidedPolicies() {
-        final LockoutPolicy policy1 = LockoutPolicyMother.hardLockoutPolicy();
-        final LockoutPolicy policy2 = LockoutPolicyMother.softLockoutPolicy();
+        final Policy policy1 = mock(Policy.class);
+        final Policy policy2 = mock(Policy.class);
         given(provider.getPolicies()).willReturn(Arrays.asList(policy1, policy2));
 
         creator.create();
@@ -47,7 +46,7 @@ class InitialLockoutPolicyCreatorTest {
 
     @Test
     void shouldReturnFalseIfAnyPoliciesAlreadyExist() {
-        final LockoutPolicy policy = LockoutPolicyMother.hardLockoutPolicy();
+        final Policy policy = mock(Policy.class);
         given(provider.getPolicies()).willReturn(Collections.singleton(policy));
         doThrow(PoliciesAlreadyExistException.class).when(service).create(policy);
 

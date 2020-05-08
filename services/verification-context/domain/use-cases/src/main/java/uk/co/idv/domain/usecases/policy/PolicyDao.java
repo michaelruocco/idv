@@ -1,6 +1,5 @@
 package uk.co.idv.domain.usecases.policy;
 
-import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.policy.Policy;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
 

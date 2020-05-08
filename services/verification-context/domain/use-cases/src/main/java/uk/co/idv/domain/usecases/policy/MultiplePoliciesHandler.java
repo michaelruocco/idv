@@ -11,33 +11,36 @@ import java.util.Optional;
 public class MultiplePoliciesHandler<T extends Policy> {
 
     public Optional<T> extractPolicy(final List<T> policies) {
-        switch (policies.size()) {
-            case 0:
-                return Optional.empty();
-            case 1:
-                return Optional.of(policies.get(0));
-            default:
-                return Optional.of(handleMultiple(policies));
+        if (policies.isEmpty()) {
+            return Optional.empty();
         }
+        if (policies.size() == 1) {
+            return Optional.of(policies.get(0));
+        }
+        return Optional.of(handleMultiple(policies));
     }
 
     private T handleMultiple(final List<T> policies) {
         log.info("handling multiple policies {}", policies);
-        final Optional<T> aliasLevelPolicy = extractFirstAliasLevelPolicy(policies);
-        if (aliasLevelPolicy.isPresent()) {
-            final T policy = aliasLevelPolicy.get();
-            log.info("returning alias level policy {}", policy);
-            return policy;
-        }
-        final T policy = policies.get(0);
-        log.info("defaulting to first policy {}", policy);
-        return policy;
+        return extractFirstAliasLevelPolicy(policies)
+                .map(this::logAliasLevel)
+                .orElseGet(() -> logDefaultToFirst(policies.get(0)));
     }
 
     private Optional<T> extractFirstAliasLevelPolicy(final Collection<T> policies) {
         return policies.stream()
                 .filter(Policy::isAliasLevel)
                 .findFirst();
+    }
+
+    private T logAliasLevel(final T policy) {
+        log.info("returning alias level policy {}", policy);
+        return policy;
+    }
+
+    private T logDefaultToFirst(final T policy) {
+        log.info("defaulting to first policy {}", policy);
+        return policy;
     }
 
 }

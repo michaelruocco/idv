@@ -1,9 +1,9 @@
 package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
 
-import java.util.Collection;
+import uk.co.idv.domain.entities.policy.PolicyProvider;
 
-public interface VerificationSequencesPolicyProvider {
+public interface VerificationSequencesPolicyProvider extends PolicyProvider<VerificationSequencesPolicy> {
 
-    Collection<VerificationSequencesPolicy> getPolicies();
+    // intentionally blank
 
 }
