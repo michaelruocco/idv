@@ -9,8 +9,6 @@
 
 *  Use identity data to determine method eligibility
 
-*  Remove default values for duration and max attempts for eligible methods and use object mother pattern with methods
-
 *  Add dynamo db persistence of identity data (phone numbers / emails / devices / accounts)
 
 *  Create physical PINsentry device loader and populate pinsentry devices onto identity
@@ -18,6 +16,8 @@
 *  Create email loader and populate emails onto identity
 
 *  Think about turning provided alias into provided aliases
+
+*  Clean up api modules
 
 ## Future Enhancements / Ideas
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.api.lockout.ApiLockoutStateModule;
+import uk.co.idv.api.verificationcontext.policy.ApiVerificationPolicyModule;
 import uk.co.idv.json.lockout.policy.LockoutPolicyModule;
 import uk.co.idv.json.verificationcontext.VerificationContextModule;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
@@ -29,7 +30,8 @@ public class ApiVerificationContextModule extends SimpleModule {
                 new VerificationContextModule(),
                 new LockoutPolicyModule(),
                 new ApiModule(),
-                new ApiLockoutStateModule()
+                new ApiLockoutStateModule(),
+                new ApiVerificationPolicyModule()
         );
     }
 
