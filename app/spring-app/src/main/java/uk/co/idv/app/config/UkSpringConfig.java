@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
+import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicyProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.uk.config.UkConfig;
 
@@ -32,6 +33,11 @@ public class UkSpringConfig {
     @Bean
     public LockoutPolicyProvider lockoutPolicyProvider() {
         return ukConfig.lockoutPolicyProvider();
+    }
+
+    @Bean
+    public VerificationPolicyProvider verificationPolicyProvider() {
+        return ukConfig.verificationPolicyProvider();
     }
 
 }

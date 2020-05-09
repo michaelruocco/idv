@@ -30,8 +30,8 @@ public class ApiVerificationContextModule extends SimpleModule {
                 new VerificationContextModule(),
                 new LockoutPolicyModule(),
                 new ApiModule(),
-                new ApiLockoutStateModule(),
-                new ApiVerificationPolicyModule()
+                new ApiVerificationPolicyModule(),
+                new ApiLockoutStateModule()
         );
     }
 

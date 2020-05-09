@@ -67,7 +67,7 @@ class DefaultPolicyServiceTest {
 
         assertThat(error)
                 .isInstanceOf(PoliciesAlreadyExistException.class)
-                .hasMessage(String.format("policies %s already exist for same lockout level", id.toString()));
+                .hasMessage(String.format("policies %s already exist for same policy level", id.toString()));
     }
 
     @Test

@@ -689,7 +689,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"data\": {\n        \"id\": \"{{lockoutPolicyId}}\",\n        \"type\": \"lockout-policies\",\n        \"attributes\": {\n            \"stateCalculator\": {\n                \"maxNumberOfAttempts\": 3,\n                \"type\": \"hard-lock\"\n            },\n            \"recordAttempts\": {\n                \"type\": \"every-attempt\"\n            },\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            }\n        }\n    }\n}"
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{lockoutPolicyId}}\",\n        \"type\": \"lockout-policies\",\n        \"attributes\": {\n            \"stateCalculator\": {\n                \"maxNumberOfAttempts\": 3,\n                \"type\": \"hard-lock\"\n            },\n            \"recordAttempts\": {\n                \"type\": \"every-attempt\"\n            },\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"login\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            }\n        }\n    }\n}"
 				},
 				"url": {
 					"raw": "{{host}}/lockout-policies/{{lockoutPolicyId}}",
@@ -699,6 +699,169 @@
 					"path": [
 						"lockout-policies",
 						"{{lockoutPolicyId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-verification-policies",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9de90f2f-ce5a-4adc-a75d-5057f4977670",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f515acc-742d-454e-930e-53159358b5bd",
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{host}}/verification-policies",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"verification-policies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-verification-policy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "920122b6-dee8-4c13-b22a-4d2323f87ebf",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "dc5aafd1-eb45-4573-b1e5-89c11d1474b5",
+						"exec": [
+							"var json = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"verificationPolicyId\", json.data.id);",
+							"",
+							"pm.test(\"should return created status\", function () {",
+							"    pm.response.to.have.status(201);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{$guid}}\",\n        \"type\": \"verification-policies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"online-purchase\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"sequences\": [\n                {\n                    \"name\": \"push-notification\",\n                    \"methods\": [\n                        {\n                            \"name\": \"push-notification\",\n                            \"parameters\": {\n                                \"maxAttempts\": 5,\n                                \"duration\": 300000\n                            }\n                        }\n                    ]\n                }\n            ]\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/verification-policies",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"verification-policies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-verification-policy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f98a138a-81dd-4ad7-a236-33fc1d464fb0",
+						"exec": [
+							"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8136a398-c8c9-459d-abb7-009609a5fd32",
+						"exec": [
+							"pm.test(\"should return ok status\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"data\": {\n        \"id\": \"{{verificationPolicyId}}\",\n        \"type\": \"verification-policies\",\n        \"attributes\": {\n            \"level\": {\n                \"channelId\": \"AS3\",\n                \"activityNames\": [\n                    \"login\"\n                ],\n                \"aliasTypes\": [\n                    \"all\"\n                ]\n            },\n            \"sequences\": [\n                {\n                    \"name\": \"push-notification\",\n                    \"methods\": [\n                        {\n                            \"name\": \"push-notification\",\n                            \"parameters\": {\n                                \"maxAttempts\": 1,\n                                \"duration\": 300000\n                            }\n                        }\n                    ]\n                },\n                {\n                    \"name\": \"mobile-pinsentry\",\n                    \"methods\": [\n                        {\n                            \"name\": \"mobile-pinsentry\",\n                            \"parameters\": {\n                                \"maxAttempts\": 1,\n                                \"duration\": 300000,\n                                \"function\": \"respond\"\n                            }\n                        }\n                    ]\n                }\n            ]\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "{{host}}/verification-policies/{{verificationPolicyId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"verification-policies",
+						"{{verificationPolicyId}}"
 					]
 				}
 			},

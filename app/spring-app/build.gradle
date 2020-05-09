@@ -22,7 +22,7 @@ repositories {
 ext['junit-jupiter.version'] = ext.junitVersion
 
 configurations {
-    compile.exclude module: 'spring-boot-starter-logging'
+    testCompile.exclude module: 'slf4j-simple'
 }
 
 dependencies {
@@ -30,7 +30,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'ch.qos.logback:logback-classic:1.2.3'
 
     implementation project(':uk-config')
 

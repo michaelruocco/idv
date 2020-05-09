@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
+import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicyProvider;
 import uk.co.idv.domain.usecases.identity.data.AccountLoader;
 import uk.co.idv.domain.usecases.identity.data.AliasLoader;
 import uk.co.idv.domain.usecases.identity.data.IdentityDataService;
@@ -39,6 +40,10 @@ import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextL
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextService;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.ExpiryCalculator;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.MaxDurationExpiryCalculator;
+import uk.co.idv.domain.usecases.verificationcontext.policy.DefaultVerificationPolicyService;
+import uk.co.idv.domain.usecases.verificationcontext.policy.InitialVerificationPolicyCreator;
+import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyDao;
+import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyService;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.SequenceLoader;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.StubbedSequenceLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
@@ -72,6 +77,11 @@ public class VerificationContextDomainConfig {
     @Bean
     public LockoutPolicyService lockoutPolicyService(final LockoutPolicyDao dao) {
         return new DefaultLockoutPolicyService(dao);
+    }
+
+    @Bean
+    public VerificationPolicyService verificationPolicyService(final VerificationPolicyDao dao) {
+        return new DefaultVerificationPolicyService(dao);
     }
 
     @Bean
@@ -283,6 +293,17 @@ public class VerificationContextDomainConfig {
     @Bean
     public CreateLockoutPoliciesListener createLockoutPoliciesListener(final InitialLockoutPolicyCreator policyCreator) {
         return new CreateLockoutPoliciesListener(policyCreator);
+    }
+
+    @Bean
+    public InitialVerificationPolicyCreator populateVerificationPoliciesListener(final VerificationPolicyProvider policyProvider,
+                                                                                 final VerificationPolicyService policyService) {
+        return new InitialVerificationPolicyCreator(policyProvider, policyService);
+    }
+
+    @Bean
+    public CreateVerificationPoliciesListener createVerificationPoliciesListener(final InitialVerificationPolicyCreator policyCreator) {
+        return new CreateVerificationPoliciesListener(policyCreator);
     }
 
 }

@@ -28,6 +28,7 @@ public class InitialPolicyCreator<T extends Policy> {
 
     private boolean createPolicy(final T policy) {
         try {
+            log.info("attempting to create policy {}", policy);
             policyService.create(policy);
             return true;
         } catch (final PoliciesAlreadyExistException e) {

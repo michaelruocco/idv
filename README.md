@@ -19,6 +19,8 @@
 
 *  Clean up api modules
 
+*  Add delete endpoints for verification and lockout policies
+
 ## Future Enhancements / Ideas
 
 *  Put object mothers in separate module or move into production code packages

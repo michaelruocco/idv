@@ -54,7 +54,7 @@ public interface PolicyService<T extends Policy> {
         }
 
         private static String toMessage(final Collection<UUID> ids) {
-            return String.format("policies %s already exist for same lockout level", toString(ids));
+            return String.format("policies %s already exist for same policy level", toString(ids));
         }
 
         private static String toString(final Collection<UUID> ids) {

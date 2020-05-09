@@ -2,9 +2,11 @@ package uk.co.idv.uk.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
+import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicyProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
 import uk.co.idv.uk.domain.entities.policy.lockout.UkLockoutPolicyProvider;
+import uk.co.idv.uk.domain.entities.policy.sequence.UkVerificationPolicyProvider;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 
 public class UkConfig {
@@ -23,6 +25,10 @@ public class UkConfig {
 
     public LockoutPolicyProvider lockoutPolicyProvider() {
         return new UkLockoutPolicyProvider();
+    }
+
+    public VerificationPolicyProvider verificationPolicyProvider() {
+        return new UkVerificationPolicyProvider();
     }
 
 }
