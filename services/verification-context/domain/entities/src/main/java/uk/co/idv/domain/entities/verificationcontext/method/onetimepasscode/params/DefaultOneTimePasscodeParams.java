@@ -1,16 +1,12 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.time.Duration;
 
-@Getter
 @Builder
-@EqualsAndHashCode
-@ToString
+@Data
 public class DefaultOneTimePasscodeParams implements OneTimePasscodeParams {
 
     private final int maxAttempts;

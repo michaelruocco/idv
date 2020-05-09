@@ -7,7 +7,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.co.idv.domain.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
-import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
+import uk.co.idv.domain.entities.policy.assertion.PolicyAssertions;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
@@ -50,7 +50,7 @@ public class LockoutPolicyDaoTest {
 
         assertThat(loadedPolicy.isPresent()).isTrue();
         assertThat(loadedPolicy.get()).isEqualToIgnoringGivenFields(policy, "level", "attemptFilter");
-        LockoutAssertions.assertThat(loadedPolicy.get().getLevel()).isEqualTo(policy.getLevel());
+        PolicyAssertions.assertThat(loadedPolicy.get().getLevel()).isEqualTo(policy.getLevel());
     }
 
     @Test

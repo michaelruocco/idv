@@ -1,7 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext.method.pushnotification.policy;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -15,9 +14,8 @@ import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.Pus
 
 import java.util.Collection;
 
-@Getter
 @RequiredArgsConstructor
-@EqualsAndHashCode
+@Data
 public class PushNotificationPolicy implements VerificationMethodPolicy {
 
     private final VerificationMethodParams params;

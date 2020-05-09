@@ -1,0 +1,16 @@
+package uk.co.idv.json.verificationcontext.policy;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethodParams;
+
+@JsonPropertyOrder({
+        "name",
+        "parameters"
+})
+public interface VerificationMethodPolicyMixin {
+
+    @JsonProperty("parameters")
+    VerificationMethodParams getParams();
+
+}

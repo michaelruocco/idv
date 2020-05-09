@@ -1,0 +1,69 @@
+{
+  "id": "a94c6385-cbfd-4823-8a8c-d47c7b274bdf",
+  "level": {
+    "channelId": "fake-channel",
+    "activityNames": [
+      "fake-activity"
+    ],
+    "aliasTypes": [
+      "all"
+    ]
+  },
+  "sequences": [
+    {
+      "name": "push-notification",
+      "methods": [
+        {
+          "name": "push-notification",
+          "parameters": {
+            "maxAttempts": 5,
+            "duration": 300000
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile-pinsentry",
+      "methods": [
+        {
+          "name": "mobile-pinsentry",
+          "parameters": {
+            "maxAttempts": 1,
+            "duration": 300000,
+            "function": "respond"
+          }
+        }
+      ]
+    },
+    {
+      "name": "one-time-passcode",
+      "methods": [
+        {
+          "name": "one-time-passcode",
+          "parameters": {
+            "maxAttempts": 1,
+            "duration": 300000,
+            "passcode": {
+              "length": 8,
+              "duration": 150000,
+              "maxDeliveries": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "physical-pinsentry",
+      "methods": [
+        {
+          "name": "physical-pinsentry",
+          "parameters": {
+            "maxAttempts": 1,
+            "duration": 300000,
+            "function": "respond"
+          }
+        }
+      ]
+    }
+  ]
+}

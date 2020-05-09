@@ -3,7 +3,7 @@ package uk.co.idv.json.lockout.policy.soft;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
+import uk.co.idv.domain.entities.policy.assertion.PolicyAssertions;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.json.lockout.policy.LockoutPolicyObjectMapperFactory;
@@ -23,7 +23,7 @@ class RecurringSoftLockoutStateCalculatorDeserializerTest {
 
         final LockoutPolicy expectedPolicy = LockoutPolicyMother.recurringSoftLockoutPolicy();
         assertThat(policy).isEqualToIgnoringGivenFields(expectedPolicy, "level", "attemptFilter");
-        LockoutAssertions.assertThat(policy.getLevel()).isEqualTo(expectedPolicy.getLevel());
+        PolicyAssertions.assertThat(policy.getLevel()).isEqualTo(expectedPolicy.getLevel());
     }
 
 }

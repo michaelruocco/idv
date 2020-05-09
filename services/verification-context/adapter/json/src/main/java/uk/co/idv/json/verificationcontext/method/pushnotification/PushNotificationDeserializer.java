@@ -33,5 +33,4 @@ public class PushNotificationDeserializer extends StdDeserializer<PushNotificati
         return JsonNodeConverter.toObject(node.get("parameters"), parser, DefaultVerificationMethodParams.class);
     }
 
-
 }

@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.verificationcontext.policy;
 
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -11,18 +12,18 @@ import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequen
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.stream.Collectors;
 
-@Getter
 @RequiredArgsConstructor
+@Builder
+@Data
 public class VerificationSequencePolicy {
 
     private final String name;
     private final Collection<VerificationMethodPolicy> methodPolicies;
 
     public VerificationSequencePolicy(final VerificationMethodPolicy methodPolicy) {
-        this(methodPolicy.getName(), Collections.singleton(methodPolicy));
+        this(methodPolicy.getName(), methodPolicy);
     }
 
     public VerificationSequencePolicy(final String name, final VerificationMethodPolicy... methodPolicies) {

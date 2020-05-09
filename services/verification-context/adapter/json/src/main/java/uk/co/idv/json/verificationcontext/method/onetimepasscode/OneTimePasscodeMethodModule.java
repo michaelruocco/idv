@@ -7,10 +7,10 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.Deli
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.OneTimePasscodeParams;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params.PasscodeParams;
+import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.policy.OneTimePasscodePolicy;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodModule;
-import uk.co.idv.json.verificationcontext.result.VerificationResultsModule;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 
 public class OneTimePasscodeMethodModule extends SimpleModule {
@@ -25,14 +25,12 @@ public class OneTimePasscodeMethodModule extends SimpleModule {
         addDeserializer(DeliveryMethod.class, new DeliveryMethodDeserializer());
         addDeserializer(OneTimePasscodeParams.class, new OneTimePasscodeParamsDeserializer());
         addDeserializer(PasscodeParams.class, new PasscodeSettingsDeserializer());
+        addDeserializer(OneTimePasscodePolicy.class, new OneTimePasscodePolicyDeserializer());
     }
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Arrays.asList(
-                new VerificationMethodModule(),
-                new VerificationResultsModule()
-        );
+        return Collections.singleton(new VerificationMethodModule());
     }
 
 }

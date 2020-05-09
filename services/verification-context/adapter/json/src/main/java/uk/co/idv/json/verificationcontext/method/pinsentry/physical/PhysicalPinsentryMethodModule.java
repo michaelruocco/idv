@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.PhysicalPinsentry;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.physical.policy.PhysicalPinsentryPolicy;
 import uk.co.idv.json.cardnumber.CardNumberModule;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodModule;
 import uk.co.idv.json.verificationcontext.method.pinsentry.PinsentryFunctionSerializer;
@@ -24,6 +25,7 @@ public class PhysicalPinsentryMethodModule extends SimpleModule {
         addSerializer(PinsentryFunction.class, new PinsentryFunctionSerializer());
 
         addDeserializer(PhysicalPinsentry.class, new PhysicalPinsentryDeserializer());
+        addDeserializer(PhysicalPinsentryPolicy.class, new PhysicalPinsentryPolicyDeserializer());
         addDeserializer(PinsentryParams.class, new PinsentryParamsDeserializer());
     }
 

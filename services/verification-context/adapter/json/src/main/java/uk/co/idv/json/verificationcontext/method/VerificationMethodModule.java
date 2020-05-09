@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
 import uk.co.idv.json.DurationSerializer;
 import uk.co.idv.json.verificationcontext.method.eligibility.EligibilityModule;
+import uk.co.idv.json.verificationcontext.policy.VerificationPolicyModule;
 import uk.co.idv.json.verificationcontext.result.VerificationResultsModule;
 
 import java.time.Duration;
@@ -30,8 +31,9 @@ public class VerificationMethodModule extends SimpleModule {
         return Arrays.asList(
                 new Jdk8Module(),
                 new JavaTimeModule(),
+                new EligibilityModule(),
                 new VerificationResultsModule(),
-                new EligibilityModule()
+                new VerificationPolicyModule()
         );
     }
 

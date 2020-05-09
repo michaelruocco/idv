@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.api.verificationcontext.ApiVerificationContextObjectMapperFactory;
-import uk.co.idv.domain.entities.lockout.assertion.LockoutAssertions;
+import uk.co.idv.domain.entities.policy.assertion.PolicyAssertions;
 import uk.co.idv.domain.entities.lockout.exception.LockoutTypeNotSupportedException;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyMother;
@@ -26,7 +26,7 @@ class LockoutPolicyDocumentDeserializerTest {
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.hardLockoutPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
-        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
+        PolicyAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test
@@ -38,7 +38,7 @@ class LockoutPolicyDocumentDeserializerTest {
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.nonLockingPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
-        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
+        PolicyAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test
@@ -50,7 +50,7 @@ class LockoutPolicyDocumentDeserializerTest {
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.softLockoutPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
-        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
+        PolicyAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test
@@ -62,7 +62,7 @@ class LockoutPolicyDocumentDeserializerTest {
         final LockoutPolicy attributes = document.getAttributes();
         final LockoutPolicy expectedAttributes = LockoutPolicyMother.recurringSoftLockoutPolicy();
         assertThat(attributes).isEqualToIgnoringGivenFields(expectedAttributes, "level", "attemptFilter");
-        LockoutAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
+        PolicyAssertions.assertThat(attributes.getLevel()).isEqualTo(expectedAttributes.getLevel());
     }
 
     @Test

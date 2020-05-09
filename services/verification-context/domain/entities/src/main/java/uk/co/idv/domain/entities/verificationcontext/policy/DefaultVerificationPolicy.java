@@ -1,5 +1,6 @@
 package uk.co.idv.domain.entities.verificationcontext.policy;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
+@Builder
 public class DefaultVerificationPolicy implements VerificationPolicy {
 
     private final UUID id;

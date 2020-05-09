@@ -1,9 +1,10 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.sequence;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequence;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequenceMother;
+import uk.co.idv.json.verificationcontext.VerificationContextObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ class VerificationSequenceDeserializerTest {
 
     @Test
     void shouldDeserializeSequenceWithSingleMethod() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("verification-context/single-method-sequence.json");
+        final String json = ContentLoader.loadContentFromClasspath("verification-context/sequence/single-method-sequence.json");
 
         final VerificationSequence sequence = MAPPER.readValue(json, VerificationSequence.class);
 
@@ -26,7 +27,7 @@ class VerificationSequenceDeserializerTest {
 
     @Test
     void shouldDeserializeSequenceWithMultipleMethods() throws IOException {
-        final String json = ContentLoader.loadContentFromClasspath("verification-context/multiple-method-sequence.json");
+        final String json = ContentLoader.loadContentFromClasspath("verification-context/sequence/multiple-method-sequence.json");
 
         final VerificationSequence sequence = MAPPER.readValue(json, VerificationSequence.class);
 

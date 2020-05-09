@@ -3,6 +3,7 @@ package uk.co.idv.json.verificationcontext.method.pinsentry.mobile;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.policy.MobilePinsentryPolicy;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryFunction;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.mobile.MobilePinsentry;
 import uk.co.idv.domain.entities.verificationcontext.method.pinsentry.params.PinsentryParams;
@@ -23,6 +24,7 @@ public class MobilePinsentryMethodModule extends SimpleModule {
         addSerializer(PinsentryFunction.class, new PinsentryFunctionSerializer());
 
         addDeserializer(MobilePinsentry.class, new MobilePinsentryDeserializer());
+        addDeserializer(MobilePinsentryPolicy.class, new MobilePinsentryPolicyDeserializer());
         addDeserializer(PinsentryParams.class, new PinsentryParamsDeserializer());
     }
 

@@ -28,18 +28,18 @@ public class OneTimePasscodeDeserializer extends StdDeserializer<OneTimePasscode
     public OneTimePasscode deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
         return new OneTimePasscode(
-                extractParams(node, parser),
+                toParams(node, parser),
                 toEligibility(node, parser),
                 toResults(node, parser),
-                extractDeliveryMethods(node, parser)
+                toDeliveryMethods(node, parser)
         );
     }
 
-    private static OneTimePasscodeParams extractParams(final JsonNode node, final JsonParser parser) {
+    private static OneTimePasscodeParams toParams(final JsonNode node, final JsonParser parser) {
         return JsonNodeConverter.toObject(node.get("parameters"), parser, OneTimePasscodeParams.class);
     }
 
-    private static Collection<DeliveryMethod> extractDeliveryMethods(final JsonNode node, final JsonParser parser) {
+    private static Collection<DeliveryMethod> toDeliveryMethods(final JsonNode node, final JsonParser parser) {
         return Optional.ofNullable(node.get("deliveryMethods"))
                 .map(results -> Arrays.asList(JsonNodeConverter.toObject(results, parser, DeliveryMethod[].class)))
                 .orElseGet(Collections::emptyList);

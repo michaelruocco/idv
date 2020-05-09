@@ -1,12 +1,12 @@
 package uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.params;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
 
 import java.time.Duration;
 
 @Builder
-@EqualsAndHashCode
+@Data
 public class DefaultPasscodeParams implements PasscodeParams {
 
     private final int length;

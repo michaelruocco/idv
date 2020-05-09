@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.domain.entities.verificationcontext.method.params.DefaultVerificationMethodParams;
 import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.PushNotification;
+import uk.co.idv.domain.entities.verificationcontext.method.pushnotification.policy.PushNotificationPolicy;
 import uk.co.idv.json.verificationcontext.method.DefaultVerificationMethodParamsDeserializer;
 import uk.co.idv.json.verificationcontext.method.VerificationMethodModule;
 
@@ -16,6 +17,7 @@ public class PushNotificationMethodModule extends SimpleModule {
         super("push-notification-method-module", Version.unknownVersion());
 
         addDeserializer(PushNotification.class, new PushNotificationDeserializer());
+        addDeserializer(PushNotificationPolicy.class, new PushNotificationPolicyDeserializer());
         addDeserializer(DefaultVerificationMethodParams.class, new DefaultVerificationMethodParamsDeserializer());
     }
 

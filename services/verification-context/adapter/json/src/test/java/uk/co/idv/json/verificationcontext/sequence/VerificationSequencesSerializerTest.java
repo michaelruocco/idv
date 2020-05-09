@@ -1,4 +1,4 @@
-package uk.co.idv.json.verificationcontext;
+package uk.co.idv.json.verificationcontext.sequence;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.sequence.StubVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.sequence.StubVerificationSequencesIneligible;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
+import uk.co.idv.json.verificationcontext.VerificationContextObjectMapperFactory;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
@@ -20,7 +21,7 @@ class VerificationSequencesSerializerTest {
 
         final String json = MAPPER.writeValueAsString(sequences);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/verification-sequences.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/sequence/verification-sequences.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
@@ -30,7 +31,7 @@ class VerificationSequencesSerializerTest {
 
         final String json = MAPPER.writeValueAsString(sequences);
 
-        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/verification-sequences-ineligible.json");
+        final String expectedJson = ContentLoader.loadContentFromClasspath("verification-context/sequence/verification-sequences-ineligible.json");
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
