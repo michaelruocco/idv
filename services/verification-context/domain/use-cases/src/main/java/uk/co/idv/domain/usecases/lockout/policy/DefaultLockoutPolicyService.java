@@ -12,10 +12,4 @@ public class DefaultLockoutPolicyService extends DefaultPolicyService<LockoutPol
         super(dao, new MultipleLockoutPoliciesHandler(), new PolicyLevelConverter());
     }
 
-    public DefaultLockoutPolicyService(final LockoutPolicyDao dao,
-                                       final MultipleLockoutPoliciesHandler multiplePoliciesHandler,
-                                       final PolicyLevelConverter policyLevelConverter) {
-        super(dao, multiplePoliciesHandler, policyLevelConverter);
-    }
-
 }

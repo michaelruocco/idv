@@ -21,10 +21,6 @@ public class DefaultPolicyService<T extends Policy> implements PolicyService<T> 
     private final MultiplePoliciesHandler<T> multiplePoliciesHandler;
     private final PolicyLevelConverter policyLevelConverter;
 
-    public DefaultPolicyService(final PolicyDao<T> dao, final MultiplePoliciesHandler<T> multiplePoliciesHandler) {
-        this(dao, multiplePoliciesHandler, new PolicyLevelConverter());
-    }
-
     @Override
     public void create(final T policy) {
         final Collection<T> existingPolicies = loadPolicies(policy.getLevel());
