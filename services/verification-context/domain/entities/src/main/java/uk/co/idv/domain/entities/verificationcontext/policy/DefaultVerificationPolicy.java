@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
+package uk.co.idv.domain.entities.verificationcontext.policy;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
-public class DefaultVerificationSequencesPolicy implements VerificationSequencesPolicy {
+public class DefaultVerificationPolicy implements VerificationPolicy {
 
     private final UUID id;
     private final PolicyLevel level;
@@ -24,7 +24,7 @@ public class DefaultVerificationSequencesPolicy implements VerificationSequences
     }
 
     @Override
-    public VerificationSequences buildSequences(final VerificationSequencesPolicyRequest request) {
+    public VerificationSequences buildSequences(final VerificationPolicyRequest request) {
         final Collection<VerificationSequence> sequences = sequencePolicies.stream()
                 .map(sequencePolicy -> sequencePolicy.buildSequence(request))
                 .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
+package uk.co.idv.domain.entities.verificationcontext.policy;
 
 import uk.co.idv.domain.entities.policy.PolicyLevelMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.policy.OneTimePasscodePolicyMother;
@@ -10,10 +10,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.UUID;
 
-public class VerificationSequencesPolicyMother {
+public class VerificationPolicyMother {
 
-    public static VerificationSequencesPolicy build() {
-        return new DefaultVerificationSequencesPolicy(
+    public static VerificationPolicy build() {
+        return new DefaultVerificationPolicy(
                 UUID.fromString("a94c6385-cbfd-4823-8a8c-d47c7b274bdf"),
                 PolicyLevelMother.defaultPolicyLevel(),
                 buildSequencePolicies()

@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
+package uk.co.idv.domain.entities.verificationcontext.policy;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.policy.PolicyLevel;
@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class DefaultVerificationSequencesPolicyTest {
+class DefaultVerificationPolicyTest {
 
     private static final UUID ID = UUID.randomUUID();
 
@@ -22,7 +22,7 @@ class DefaultVerificationSequencesPolicyTest {
     private final VerificationSequencePolicy sequencePolicy2 = mock(VerificationSequencePolicy.class);
     private final Collection<VerificationSequencePolicy> sequencePolicies = Arrays.asList(sequencePolicy1, sequencePolicy2);
 
-    private final VerificationSequencesPolicy policy = new DefaultVerificationSequencesPolicy(ID, level, sequencePolicies);
+    private final VerificationPolicy policy = new DefaultVerificationPolicy(ID, level, sequencePolicies);
 
     @Test
     void shouldReturnId() {
@@ -32,7 +32,7 @@ class DefaultVerificationSequencesPolicyTest {
     @Test
     void shouldReturnAppliesToFromPolicyLevel() {
         final boolean expectedAppliesTo = true;
-        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        final VerificationPolicyRequest request = mock(VerificationPolicyRequest.class);
         given(level.appliesTo(request)).willReturn(expectedAppliesTo);
 
         final boolean appliesTo = policy.appliesTo(request);
@@ -42,7 +42,7 @@ class DefaultVerificationSequencesPolicyTest {
 
     @Test
     void shouldReturnSequencesFromEachSequencePolicy() {
-        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        final VerificationPolicyRequest request = mock(VerificationPolicyRequest.class);
         final VerificationSequence expectedSequence1 = mock(VerificationSequence.class);
         given(sequencePolicy1.buildSequence(request)).willReturn(expectedSequence1);
         final VerificationSequence expectedSequence2 = mock(VerificationSequence.class);

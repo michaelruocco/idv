@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
+package uk.co.idv.domain.entities.verificationcontext.policy;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.verificationcontext.method.VerificationMethod;
@@ -17,7 +17,7 @@ class VerificationSequencePolicyTest {
     void shouldCreateSequenceWithSingleMethod() {
         final VerificationMethodPolicy methodPolicy = mock(VerificationMethodPolicy.class);
         final VerificationSequencePolicy sequencePolicy = new VerificationSequencePolicy(methodPolicy);
-        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        final VerificationPolicyRequest request = mock(VerificationPolicyRequest.class);
         final VerificationMethod expectedMethod = OneTimePasscodeMother.eligible();
         given(methodPolicy.buildMethod(request)).willReturn(expectedMethod);
 
@@ -37,7 +37,7 @@ class VerificationSequencePolicyTest {
                 methodPolicy1,
                 methodPolicy2
         );
-        final VerificationSequencesPolicyRequest request = mock(VerificationSequencesPolicyRequest.class);
+        final VerificationPolicyRequest request = mock(VerificationPolicyRequest.class);
         final VerificationMethod expectedMethod1 = OneTimePasscodeMother.eligible();
         given(methodPolicy1.buildMethod(request)).willReturn(expectedMethod1);
         final VerificationMethod expectedMethod2 = PushNotificationMother.eligible();

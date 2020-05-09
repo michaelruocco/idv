@@ -1,4 +1,4 @@
-package uk.co.idv.domain.entities.verificationcontext.sequence.policy;
+package uk.co.idv.domain.entities.verificationcontext.policy;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class VerificationSequencePolicy {
         this(name, Arrays.asList(methodPolicies));
     }
 
-    public VerificationSequence buildSequence(final VerificationSequencesPolicyRequest request) {
+    public VerificationSequence buildSequence(final VerificationPolicyRequest request) {
         final Collection<VerificationMethod> methods = methodPolicies.stream()
                 .map(parameters -> parameters.buildMethod(request))
                 .collect(Collectors.toList());

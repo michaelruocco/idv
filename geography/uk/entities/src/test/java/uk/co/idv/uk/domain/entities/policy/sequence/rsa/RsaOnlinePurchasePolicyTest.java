@@ -2,7 +2,7 @@ package uk.co.idv.uk.domain.entities.policy.sequence.rsa;
 
 import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.entities.verificationcontext.sequence.policy.VerificationSequencePolicy;
+import uk.co.idv.domain.entities.verificationcontext.policy.VerificationSequencePolicy;
 
 import java.util.Collection;
 import java.util.UUID;
