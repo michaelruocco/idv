@@ -12,10 +12,4 @@ public class DefaultVerificationPolicyService extends DefaultPolicyService<Verif
         super(dao, new MultipleVerificationPoliciesHandler(), new PolicyLevelConverter());
     }
 
-    public DefaultVerificationPolicyService(final VerificationPolicyDao dao,
-                                            final MultipleVerificationPoliciesHandler multiplePoliciesHandler,
-                                            final PolicyLevelConverter policyLevelConverter) {
-        super(dao, multiplePoliciesHandler, policyLevelConverter);
-    }
-
 }
