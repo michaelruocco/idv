@@ -17,11 +17,11 @@ public class PhoneNumberLoader {
     public PhoneNumbers load(final UpsertIdentityRequest request) {
         final Alias providedAlias = request.getProvidedAlias();
         if (valueEndsWithNine(providedAlias)) {
-            final PhoneNumber number1 = toPhoneNumber(providedAlias);
-            final PhoneNumber number2 = loadStubbedPhoneNumber();
-            return new PhoneNumbers(number1, number2);
+            return new PhoneNumbers();
         }
-        return new PhoneNumbers();
+        final PhoneNumber number1 = toPhoneNumber(providedAlias);
+        final PhoneNumber number2 = loadStubbedPhoneNumber();
+        return new PhoneNumbers(number1, number2);
     }
 
     private boolean valueEndsWithNine(final Alias alias) {

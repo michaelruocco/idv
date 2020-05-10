@@ -44,8 +44,8 @@ import uk.co.idv.domain.usecases.verificationcontext.policy.DefaultVerificationP
 import uk.co.idv.domain.usecases.verificationcontext.policy.InitialVerificationPolicyCreator;
 import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyDao;
 import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyService;
+import uk.co.idv.domain.usecases.verificationcontext.sequence.DefaultSequenceLoader;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.SequenceLoader;
-import uk.co.idv.domain.usecases.verificationcontext.sequence.StubbedSequenceLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.result.VerificationContextResultRecorder;
@@ -70,8 +70,8 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public SequenceLoader sequenceLoader() {
-        return new StubbedSequenceLoader();
+    public SequenceLoader sequenceLoader(final VerificationPolicyService policyService) {
+        return new DefaultSequenceLoader(policyService);
     }
 
     @Bean

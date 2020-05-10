@@ -46,10 +46,15 @@ public class Aliases implements Iterable<Alias> {
     }
 
     public Aliases add(final Alias alias) {
+        return add(Aliases.with(alias));
+    }
+
+    public Aliases add(final Aliases aliasesToAdd) {
         final Collection<Alias> updatedAliases = new LinkedHashSet<>(aliases);
-        updatedAliases.add(alias);
+        aliasesToAdd.forEach(updatedAliases::add);
         return new Aliases(updatedAliases);
     }
+
     private IdvId getIdvId() {
         return (IdvId) getAliasByType(IdvId.TYPE);
     }

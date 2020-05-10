@@ -18,9 +18,9 @@ public class MobileDeviceLoader {
     public Collection<MobileDevice> load(final UpsertIdentityRequest request) {
         final Alias providedAlias = request.getProvidedAlias();
         if (valueEndsWithNine(providedAlias)) {
-            return toEligibleDevices();
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+        return toEligibleDevices();
     }
 
     private Collection<MobileDevice> toEligibleDevices() {

@@ -12,8 +12,8 @@
         "complete": false,
         "successful": false,
         "parameters": {
-          "duration": 300000,
-          "maxAttempts": 5
+          "maxAttempts": 5,
+          "duration": 300000
         }
       }
     ]
@@ -31,14 +31,14 @@
         "complete": false,
         "successful": false,
         "parameters": {
-          "function": "respond",
+          "maxAttempts": 1,
           "duration": 300000,
-          "maxAttempts": 1
+          "function": "respond"
         },
         "cardNumbers": [
           {
-            "tokenized": "4929991234567890",
-            "type": "credit"
+            "type": "credit",
+            "tokenized": "4929991234567890"
           }
         ]
       }
@@ -57,9 +57,9 @@
         "complete": false,
         "successful": false,
         "parameters": {
-          "function": "respond",
+          "maxAttempts": 1,
           "duration": 300000,
-          "maxAttempts": 1
+          "function": "respond"
         }
       }
     ]
@@ -77,8 +77,8 @@
         "complete": false,
         "successful": false,
         "parameters": {
-          "duration": 300000,
           "maxAttempts": 1,
+          "duration": 300000,
           "passcode": {
             "length": 8,
             "duration": 150000,
@@ -88,8 +88,8 @@
         "deliveryMethods": [
           {
             "id": "${json-unit.ignore}",
-            "type": "sms",
-            "value": "07809386681"
+            "value": "+447089111111",
+            "type": "sms"
           }
         ]
       }

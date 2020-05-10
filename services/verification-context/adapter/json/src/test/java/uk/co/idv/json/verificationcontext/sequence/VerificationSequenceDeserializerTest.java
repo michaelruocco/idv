@@ -21,7 +21,7 @@ class VerificationSequenceDeserializerTest {
 
         final VerificationSequence sequence = MAPPER.readValue(json, VerificationSequence.class);
 
-        final VerificationSequence expectedSequence = VerificationSequenceMother.singleMethodSequence();
+        final VerificationSequence expectedSequence = VerificationSequenceMother.oneEligibleMethodSequence();
         assertThat(sequence).isEqualTo(expectedSequence);
     }
 
@@ -31,7 +31,7 @@ class VerificationSequenceDeserializerTest {
 
         final VerificationSequence sequence = MAPPER.readValue(json, VerificationSequence.class);
 
-        final VerificationSequence expectedSequence = VerificationSequenceMother.multipleMethodSequence();
+        final VerificationSequence expectedSequence = VerificationSequenceMother.twoEligibleMethodSequence();
         assertThat(sequence).isEqualToIgnoringGivenFields(expectedSequence, "methods");
         assertThat(sequence.getMethods()).containsExactlyElementsOf(expectedSequence.getMethods());
     }

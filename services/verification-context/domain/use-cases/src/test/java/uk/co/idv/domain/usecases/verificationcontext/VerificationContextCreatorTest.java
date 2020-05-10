@@ -3,17 +3,16 @@ package uk.co.idv.domain.usecases.verificationcontext;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
+import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.identity.FakeIdentityService;
-import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
 import uk.co.idv.domain.usecases.lockout.state.LockoutStateValidator.LockedOutException;
-import uk.co.idv.domain.entities.verificationcontext.sequence.StubVerificationSequencesEligible;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.CalculateExpiryRequest;
@@ -41,7 +40,7 @@ class VerificationContextCreatorTest {
     private final Identity identity = IdentityMother.build();
     private final FakeIdentityService identityService = new FakeIdentityService(identity);
 
-    private final VerificationSequences sequences = new StubVerificationSequencesEligible();
+    private final VerificationSequences sequences = mock(VerificationSequences.class);
     private final FakeSequenceLoader sequenceLoader = new FakeSequenceLoader(sequences);
 
     private final FakeExpiryCalculator expiryCalculator = new FakeExpiryCalculator(EXPIRY_DURATION);
@@ -65,8 +64,8 @@ class VerificationContextCreatorTest {
 
         creator.create(createContextRequest);
 
-        final UpsertIdentityRequest upsertIdentityRequest = identityService.getLastUpsertRequest();
-        assertThat(upsertIdentityRequest.getChannel()).isEqualTo(createContextRequest.getChannel());
+        final UpsertIdentityRequest identityRequest = identityService.getLastUpsertRequest();
+        assertThat(identityRequest.getChannel()).isEqualTo(createContextRequest.getChannel());
     }
 
     @Test
@@ -75,8 +74,8 @@ class VerificationContextCreatorTest {
 
         creator.create(createContextRequest);
 
-        final UpsertIdentityRequest upsertIdentityRequest = identityService.getLastUpsertRequest();
-        assertThat(upsertIdentityRequest.getProvidedAlias()).isEqualTo(createContextRequest.getProvidedAlias());
+        final UpsertIdentityRequest identityRequest = identityService.getLastUpsertRequest();
+        assertThat(identityRequest.getProvidedAlias()).isEqualTo(createContextRequest.getProvidedAlias());
     }
 
     @Test

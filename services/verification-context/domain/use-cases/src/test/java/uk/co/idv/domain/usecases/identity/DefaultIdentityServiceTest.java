@@ -2,6 +2,7 @@ package uk.co.idv.domain.usecases.identity;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.card.account.Account;
+import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.domain.usecases.identity.data.IdentityDataResponse;
 import uk.co.idv.domain.usecases.identity.data.IdentityDataResponseMother;
@@ -92,8 +93,10 @@ class DefaultIdentityServiceTest {
     @Test
     void shouldReturnExistingIdentityIfIdentityFound() {
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.build();
-        final Identity existingIdentity = mock(Identity.class);
+        final Identity existingIdentity = IdentityMother.emptyData();
         given(dao.load(request.getProvidedAlias())).willReturn(Optional.of(existingIdentity));
+        final IdentityDataResponse dataResponse = IdentityDataResponseMother.withAlias(request.getProvidedAlias());
+        given(dataService.load(request)).willReturn(dataResponse);
 
         final Identity identity = service.upsert(request);
 

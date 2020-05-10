@@ -24,8 +24,8 @@ class MobileDeviceLoaderTest {
     private final MobileDeviceLoader loader = new MobileDeviceLoader(timeProvider);
 
     @Test
-    void shouldReturnTrustedDeviceLoggedInFiveMinutesAgoIfAliasValueEndsInNine() {
-        final Alias alias = AliasesMother.debitCardNumber("4929001111111119");
+    void shouldReturnTrustedDeviceLoggedInFiveMinutesAgoIfAliasValueDoesNotEndInNine() {
+        final Alias alias = AliasesMother.debitCardNumber("4929001111111111");
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final Collection<MobileDevice> devices = loader.load(request);
@@ -35,8 +35,8 @@ class MobileDeviceLoaderTest {
     }
 
     @Test
-    void shouldReturnEmptyListIfAliasValueDoesNotEndInNine() {
-        final Alias alias = AliasesMother.debitCardNumber("4929001111111111");
+    void shouldReturnEmptyListIfAliasValueEndsInNine() {
+        final Alias alias = AliasesMother.debitCardNumber("4929001111111119");
         final UpsertIdentityRequest request = UpsertIdentityRequestMother.withProvidedAlias(alias);
 
         final Collection<MobileDevice> devices = loader.load(request);

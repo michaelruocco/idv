@@ -19,7 +19,7 @@
 							"var identity = attributes.identity;",
 							"",
 							"var alias = identity.aliases[0];",
-							"var otpMethod = attributes.sequences[3].methods[0];",
+							"var otpMethod = attributes.sequences[2].methods[0];",
 							"",
 							"postman.setEnvironmentVariable(\"verificationContextId\", json.data.id);",
 							"postman.setEnvironmentVariable(\"idvId\", identity.id);",

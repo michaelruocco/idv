@@ -10,12 +10,13 @@ import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.mobiledevice.MobileDevice;
 import uk.co.idv.domain.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.domain.entities.policy.PolicyRequest;
+import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicyRequest;
 
 import java.util.Collection;
 
 @Builder
 @Getter
-public class LoadSequencesRequest implements PolicyRequest {
+public class LoadSequencesRequest implements PolicyRequest, VerificationPolicyRequest {
 
     private final Channel channel;
     private final Activity activity;

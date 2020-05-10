@@ -13,6 +13,7 @@ public class IdentityDataResponseMother {
                 .aliases(Aliases.empty())
                 .phoneNumbers(PhoneNumberMother.empty())
                 .accounts(Collections.emptyList())
+                .mobileDevices(Collections.emptyList())
                 .build();
     }
 
@@ -21,6 +22,7 @@ public class IdentityDataResponseMother {
                 .aliases(Aliases.with(alias))
                 .phoneNumbers(PhoneNumberMother.empty())
                 .accounts(Collections.emptyList())
+                .mobileDevices(Collections.emptyList())
                 .build();
     }
 

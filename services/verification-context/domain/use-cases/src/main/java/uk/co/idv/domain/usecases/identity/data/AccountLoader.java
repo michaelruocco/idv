@@ -15,10 +15,10 @@ public class AccountLoader {
 
     public Collection<Account> load(final UpsertIdentityRequest request) {
         final Alias providedAlias = request.getProvidedAlias();
-        if (providedAlias.isCardNumber() && valueEndsWithNine(providedAlias)) {
-            return Collections.singleton(toAccount(providedAlias));
+        if (!providedAlias.isCardNumber() || valueEndsWithNine(providedAlias)) {
+            return Collections.emptyList();
         }
-        return Collections.emptyList();
+        return Collections.singleton(toAccount(providedAlias));
     }
 
     private boolean valueEndsWithNine(final Alias alias) {
