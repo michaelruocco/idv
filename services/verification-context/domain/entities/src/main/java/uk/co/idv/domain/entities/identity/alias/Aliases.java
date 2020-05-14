@@ -33,6 +33,10 @@ public class Aliases implements Iterable<Alias> {
         return idvId.getValueAsUuid();
     }
 
+    public IdvId getIdvId() {
+        return (IdvId) getAliasByType(IdvId.TYPE);
+    }
+
     public boolean contains(final Alias alias) {
         return aliases.contains(alias);
     }
@@ -53,10 +57,6 @@ public class Aliases implements Iterable<Alias> {
         final Collection<Alias> updatedAliases = new LinkedHashSet<>(aliases);
         aliasesToAdd.forEach(updatedAliases::add);
         return new Aliases(updatedAliases);
-    }
-
-    private IdvId getIdvId() {
-        return (IdvId) getAliasByType(IdvId.TYPE);
     }
 
     private Alias getAliasByType(final String type) {

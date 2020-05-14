@@ -8,8 +8,8 @@ import uk.co.idv.domain.entities.identity.IdentityMother;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
+import uk.co.idv.utils.json.converter.JsonConverter;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,13 +19,15 @@ import static org.mockito.Mockito.mock;
 class AliasMappingItemConverterTest {
 
     private final AliasConverter aliasConverter = mock(AliasConverter.class);
+    private final JsonConverter jsonConverter = mock(JsonConverter.class);
 
-    private final AliasMappingItemConverter converter = new AliasMappingItemConverter(aliasConverter);
+    private final AliasMappingItemConverter converter = new AliasMappingItemConverter(aliasConverter, jsonConverter);
 
     @Test
     void shouldConvertIdentityToMappingDocumentForEachAlias() {
         final Aliases aliases = AliasesMother.aliases();
         final Identity identity = IdentityMother.withAliases(aliases);
+        given(jsonConverter.toJson(identity)).willReturn("{}");
 
         final Collection<Item> items = converter.toItems(identity);
 
@@ -38,6 +40,7 @@ class AliasMappingItemConverterTest {
         final Identity identity = IdentityMother.withAliases(Aliases.with(alias));
         final String expectedAliasString = "alias-string";
         given(aliasConverter.toString(alias)).willReturn(expectedAliasString);
+        given(jsonConverter.toJson(identity)).willReturn("{}");
 
         final Collection<Item> items = converter.toItems(identity);
 
@@ -50,6 +53,7 @@ class AliasMappingItemConverterTest {
         final Alias idvId = AliasesMother.idvId();
         final Alias creditCardNumber = AliasesMother.creditCardNumber();
         final Identity identity = IdentityMother.withAliases(Aliases.with(idvId, creditCardNumber));
+        given(jsonConverter.toJson(identity)).willReturn("{}");
 
         final Collection<Item> items = converter.toItems(identity);
 
@@ -58,24 +62,22 @@ class AliasMappingItemConverterTest {
 
     @Test
     void shouldConvertMappingDocumentsToIdentity() {
-        final Item item1 = toItem("alias1");
-        final Alias alias1 = AliasesMother.idvId();
-        given(aliasConverter.toAlias(item1.getString("alias"))).willReturn(alias1);
+        final Item item = toItem("alias1");
+        final Alias alias = AliasesMother.idvId();
+        given(aliasConverter.toAlias(item.getString("alias"))).willReturn(alias);
 
-        final Item item2 = toItem("alias2");
-        final Alias alias2 = AliasesMother.creditCardNumber();
-        given(aliasConverter.toAlias(item2.getString("alias"))).willReturn(alias2);
+        final Identity expectedIdentity = IdentityMother.withAliases(Aliases.with(alias));
+        given(jsonConverter.toObject(item.getJSON("body"), Identity.class)).willReturn(expectedIdentity);
 
-        final Identity identity = converter.toIdentity(Arrays.asList(item1, item2));
+        final Identity identity = converter.toIdentity(item);
 
-        assertThat(identity.getAliases()).hasSize(2);
-        assertThat(identity.hasAlias(alias1)).isTrue();
-        assertThat(identity.hasAlias(alias2)).isTrue();
+        assertThat(identity).isEqualTo(expectedIdentity);
     }
 
     private Item toItem(final String alias) {
         return new Item()
-                .with("alias", alias);
+                .with("alias", alias)
+                .withJSON("body", "{}");
     }
 
 }

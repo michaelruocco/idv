@@ -33,4 +33,20 @@ class InMemoryIdentityDaoTest {
         assertThat(dao.load(creditCardNumber)).contains(identity);
     }
 
+    @Test
+    void shouldNotBeAbleToLoadByAliasThatHasBeenDeleted() {
+        final Alias idvId = AliasesMother.idvId();
+        final Alias creditCardNumber = AliasesMother.creditCardNumber();
+        final Identity original = IdentityMother.withAliases(Aliases.with(idvId, creditCardNumber));
+        dao.save(original);
+
+        final Alias debitCardNumber = AliasesMother.debitCardNumber();
+        final Identity updated = IdentityMother.withAliases(Aliases.with(idvId, debitCardNumber));
+        dao.save(updated);
+
+        assertThat(dao.load(idvId)).contains(updated);
+        assertThat(dao.load(debitCardNumber)).contains(updated);
+        assertThat(dao.load(creditCardNumber)).isEmpty();
+    }
+
 }

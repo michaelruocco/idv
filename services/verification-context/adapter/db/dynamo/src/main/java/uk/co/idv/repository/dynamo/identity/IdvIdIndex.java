@@ -12,7 +12,7 @@ public class IdvIdIndex extends GlobalSecondaryIndex {
     public IdvIdIndex() {
         withIndexName(IDV_ID + "Index");
         withKeySchema(new KeySchemaElement(IDV_ID, KeyType.HASH));
-        withProjection(new KeysOnlyProjection());
+        withProjection(new IdentityProjection());
         withProvisionedThroughput(new DefaultProvisionedThroughput());
     }
 

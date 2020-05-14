@@ -32,7 +32,7 @@ class IdvIdIndexTest {
     void shouldSetKeysOnlyProjection() {
         final Projection projection = index.getProjection();
 
-        assertThat(projection).isInstanceOf(KeysOnlyProjection.class);
+        assertThat(projection).isInstanceOf(IdentityProjection.class);
     }
 
     @Test

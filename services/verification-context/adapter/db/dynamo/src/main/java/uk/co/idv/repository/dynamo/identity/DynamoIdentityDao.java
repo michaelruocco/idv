@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.IdvId;
@@ -29,8 +30,8 @@ public class DynamoIdentityDao implements IdentityDao {
 
     @Builder
     public DynamoIdentityDao(final Table table,
-                              final AliasMappingItemConverter itemConverter,
-                              final AliasConverter aliasConverter) {
+                             final AliasMappingItemConverter itemConverter,
+                             final AliasConverter aliasConverter) {
         this.table = table;
         this.idvIdIndex = table.getIndex("idvIdIndex");
         this.itemConverter = itemConverter;
@@ -90,7 +91,7 @@ public class DynamoIdentityDao implements IdentityDao {
             log.info("no existing items found for idv id {}", idvId);
             return Optional.empty();
         }
-        return Optional.of(itemConverter.toIdentity(items));
+        return Optional.of(itemConverter.toIdentity(IterableUtils.get(items, 0)));
     }
 
     private Collection<Item> loadItemsByIdvId(final UUID idvId) {

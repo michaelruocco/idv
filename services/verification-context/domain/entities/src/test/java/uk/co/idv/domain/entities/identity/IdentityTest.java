@@ -41,6 +41,17 @@ class IdentityTest {
     }
 
     @Test
+    void shouldReturnIdvIdAlias() {
+        final IdvId idvId = AliasesMother.idvId();
+
+        final Identity identity = Identity.builder()
+                .aliases(Aliases.with(idvId))
+                .build();
+
+        assertThat(identity.getIdvId()).isEqualTo(idvId);
+    }
+
+    @Test
     void shouldReturnTrueIfHasAlias() {
         final IdvId idvId = AliasesMother.idvId();
 

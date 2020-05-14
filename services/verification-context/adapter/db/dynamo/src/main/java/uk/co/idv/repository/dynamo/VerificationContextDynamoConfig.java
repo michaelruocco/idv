@@ -46,11 +46,11 @@ public class VerificationContextDynamoConfig {
         );
     }
 
-    public IdentityDao identityDao() {
+    public IdentityDao identityDao(final JsonConverter jsonConverter) {
         final AliasConverter aliasConverter = aliasConverter();
         return DynamoIdentityDao.builder()
                 .aliasConverter(aliasConverter)
-                .itemConverter(new AliasMappingItemConverter(aliasConverter))
+                .itemConverter(new AliasMappingItemConverter(aliasConverter, jsonConverter))
                 .table(tableService.getOrCreateTable(new IdentityMappingCreateTableRequest(environment)))
                 .build();
     }

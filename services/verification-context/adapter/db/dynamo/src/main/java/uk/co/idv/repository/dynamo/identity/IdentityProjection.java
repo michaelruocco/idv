@@ -3,10 +3,11 @@ package uk.co.idv.repository.dynamo.identity;
 import com.amazonaws.services.dynamodbv2.model.Projection;
 import com.amazonaws.services.dynamodbv2.model.ProjectionType;
 
-public class KeysOnlyProjection extends Projection {
+public class IdentityProjection extends Projection {
 
-    public KeysOnlyProjection() {
-        withProjectionType(ProjectionType.KEYS_ONLY);
+    public IdentityProjection() {
+        withProjectionType(ProjectionType.INCLUDE);
+        withNonKeyAttributes("body");
     }
 
 }

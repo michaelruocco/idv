@@ -10,7 +10,11 @@ import uk.co.idv.domain.entities.identity.alias.Aliases;
 import uk.co.idv.domain.entities.identity.alias.AliasesMother;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
+import uk.co.idv.json.identity.IdentityModule;
 import uk.co.idv.repository.dynamo.VerificationContextDynamoConfig;
+import uk.co.idv.utils.json.converter.JsonConverter;
+import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
+import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;
 
 import java.util.Optional;
 
@@ -27,7 +31,9 @@ class DynamoIdentityDaoTest {
     @BeforeEach
     void setUp() {
         final VerificationContextDynamoConfig config = new VerificationContextDynamoConfig(DYNAMO_DB.buildClient());
-        dao = config.identityDao();
+        final ObjectMapperFactory factory = new ObjectMapperFactory(new IdentityModule());
+        final JsonConverter jsonConverter = new JacksonJsonConverter(factory.build());
+        dao = config.identityDao(jsonConverter);
     }
 
     @Test

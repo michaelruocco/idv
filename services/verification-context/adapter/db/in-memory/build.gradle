@@ -1,6 +1,7 @@
 dependencies {
     implementation project(':verification-context-entities')
     implementation project(':verification-context-use-cases')
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
     testImplementation project(':verification-context-entities').sourceSets.test.output
 }

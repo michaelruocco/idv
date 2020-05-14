@@ -72,7 +72,7 @@ public class DynamoIdentityDaoTest {
         final Collection<Item> items = Collections.singleton(item);
         given(itemConverter.queryOutcomesToItems(queryOutcomes)).willReturn(items);
         final Identity expectedIdentity = IdentityMother.withAliases(AliasesMother.aliases());
-        given(itemConverter.toIdentity(items)).willReturn(expectedIdentity);
+        given(itemConverter.toIdentity(item)).willReturn(expectedIdentity);
 
         final Optional<Identity> identity = dao.load(idvIdAlias);
 
@@ -103,7 +103,7 @@ public class DynamoIdentityDaoTest {
         final Collection<Item> items = Collections.singleton(item);
         given(itemConverter.queryOutcomesToItems(queryOutcomes)).willReturn(items);
         final Identity expectedIdentity = IdentityMother.withAliases(AliasesMother.aliases());
-        given(itemConverter.toIdentity(items)).willReturn(expectedIdentity);
+        given(itemConverter.toIdentity(item)).willReturn(expectedIdentity);
 
         final Optional<Identity> identity = dao.load(alias);
 

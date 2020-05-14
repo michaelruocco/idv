@@ -35,8 +35,8 @@ public class DynamoDaoConfig {
     }
 
     @Bean
-    public IdentityDao identityDao() {
-        return verificationContextConfig.identityDao();
+    public IdentityDao identityDao(final JsonConverter jsonConverter) {
+        return verificationContextConfig.identityDao(jsonConverter);
     }
 
     @Bean

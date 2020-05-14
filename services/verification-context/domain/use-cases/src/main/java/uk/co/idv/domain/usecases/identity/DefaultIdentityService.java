@@ -18,7 +18,6 @@ public class DefaultIdentityService implements IdentityService {
     private final IdentityDataService dataService;
     private final IdentityDao dao;
 
-    //TODO need to ensure data is persisted correctly along with aliases
     @Override
     public Identity upsert(final UpsertIdentityRequest request) {
         final Optional<Identity> loadedIdentity = dao.load(request.getProvidedAlias());

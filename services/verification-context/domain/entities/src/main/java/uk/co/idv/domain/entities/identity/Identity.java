@@ -26,6 +26,10 @@ public class Identity {
         return aliases.getIdvIdValue();
     }
 
+    public Alias getIdvId() {
+        return aliases.getIdvId();
+    }
+
     public Aliases getAliases() {
         return aliases;
     }
