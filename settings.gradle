@@ -40,6 +40,9 @@ project(':verification-context-in-memory-db').projectDir = file('services/verifi
 include ':verification-context-dynamo-db'
 project(':verification-context-dynamo-db').projectDir = file('services/verification-context/adapter/db/dynamo')
 
+include ':verification-context-redis-db'
+project(':verification-context-redis-db').projectDir = file('services/verification-context/adapter/db/redis')
+
 include ':verification-context-json'
 project(':verification-context-json').projectDir = file('services/verification-context/adapter/json')
 

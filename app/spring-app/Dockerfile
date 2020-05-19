@@ -15,5 +15,6 @@ CMD java \
   -Denvironment=${ENVIRONMENT} \
   -Daws.dynamo.db.endpoint.uri=${AWS_DYNAMO_DB_ENDPOINT_URI} \
   -Daws.sns.endpoint.uri=${AWS_SNS_ENDPOINT_URI} \
+  -Dredis.endpoint.uri=${REDIS_ENDPOINT_URI} \
   -Dstubbed.phone.number=${STUBBED_PHONE_NUMBER} \
   -jar /opt/app.jar

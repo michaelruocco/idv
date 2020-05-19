@@ -1,0 +1,39 @@
+plugins {
+    id 'org.unbroken-dome.test-sets' version "${testSetsPluginVersion}"
+    id 'java-test-fixtures'
+}
+
+testSets {
+    integrationTest
+}
+
+ext {
+    redissonVersion = '3.12.5'
+}
+
+dependencies {
+    implementation project(':verification-context-use-cases')
+    implementation project(':json-converter')
+    implementation project(':aws-system-properties')
+    implementation "org.redisson:redisson:${redissonVersion}"
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+
+    testImplementation project(':verification-context-entities').sourceSets.test.output
+
+    //TODO figure whether we can get testFixtures to pick up from implementation classpath
+    //without having to change to API
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesApi "org.redisson:redisson:${redissonVersion}"
+    testFixturesApi "org.testcontainers:junit-jupiter:${testContainersVersion}"
+
+    integrationTestImplementation project(':verification-context-json')
+    integrationTestImplementation testFixtures(project(':verification-context-redis-db'))
+}
+
+integrationTest {
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+    }
+}

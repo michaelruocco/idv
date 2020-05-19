@@ -8,6 +8,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import uk.co.idv.dynamo.test.DynamoDbLocalContainer;
 import uk.co.idv.onetimepasscode.sender.sns.SnsLocalContainer;
+import uk.co.idv.repository.redis.verificationcontext.RedissonLocalContainer;
 
 @Testcontainers
 @Slf4j
@@ -18,6 +19,9 @@ class ApplicationTest {
 
     @Container
     public static final SnsLocalContainer SNS = new SnsLocalContainer();
+
+    @Container
+    public static final RedissonLocalContainer REDIS = new RedissonLocalContainer();
 
     @Rule
     public final RestoreSystemProperties restore = new RestoreSystemProperties();
@@ -34,7 +38,7 @@ class ApplicationTest {
     void shouldStartupWithUkProfile() {
         setSpringProfiles("uk");
         setRandomServerPort();
-        setAwsProperties();
+        setProperties();
 
         Application.main(new String[0]);
     }
@@ -47,11 +51,12 @@ class ApplicationTest {
         System.setProperty("server.port", "0");
     }
 
-    private void setAwsProperties() {
-        System.setProperty("aws.dynamo.db.endpoint.uri", DYNAMO_DB.buildEndpointUri());
-        System.setProperty("aws.sns.endpoint.uri", SNS.buildEndpointUri());
+    private void setProperties() {
         System.setProperty("aws.accessKeyId", "abc");
         System.setProperty("aws.secretKey", "123");
+        System.setProperty("aws.dynamo.db.endpoint.uri", DYNAMO_DB.buildEndpointUri());
+        System.setProperty("aws.sns.endpoint.uri", SNS.buildEndpointUri());
+        System.setProperty("redis.endpoint.uri", REDIS.buildEndpointUri());
     }
 
 }

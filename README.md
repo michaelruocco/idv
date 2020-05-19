@@ -140,3 +140,12 @@ aws cloudformation create-stack --stack-name idv-dev-alb --template-url https://
 
 aws cloudformation create-stack --stack-name idv-dev-verification-context --template-url https://idv-cloud-formation-templates.s3-eu-west-1.amazonaws.com/service-fargate-private-subnet-public-lb.yml --parameters ParameterKey=EnvironmentName,ParameterValue=idv-dev ParameterKey=ServiceName,ParameterValue=verification-context ParameterKey=ImageUrl,ParameterValue=michaelruocco/verification-context-spring-app:latest ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=Role,ParameterValue=ecsTaskExecutionRole --region eu-west-1
 ```
+
+Need to create new simple cloudformation templates, as a rough idea it will need to
+create
+
+*  VPC
+*  Ideally just private subnets
+*  API Gateway
+*  Redis / elasticache 
+*  Dynamo tables (if we dont want service to create them instead)

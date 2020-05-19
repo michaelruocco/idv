@@ -38,6 +38,7 @@ dependencies {
 
     implementation project(':verification-context-dynamo-db')
     implementation project(':verification-context-in-memory-db')
+    implementation project(':verification-context-redis-db')
 
     implementation project(':one-time-passcode-entities')
     implementation project(':one-time-passcode-use-cases')
@@ -56,6 +57,7 @@ dependencies {
 
     integrationTestImplementation 'com.github.stefanbirkner:system-rules:1.19.0'
     integrationTestImplementation project(':one-time-passcode-sns-delivery').sourceSets.integrationTest.output
+    integrationTestImplementation testFixtures(project(':verification-context-redis-db'))
     integrationTestImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
 }
 

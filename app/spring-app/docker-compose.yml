@@ -12,6 +12,10 @@ services:
       - DEFAULT_REGION=eu-west-1
       - SERVICES=sns
 
+  redis:
+    image: redis
+    container_name: redis
+
   verification-context-app:
     image: michaelruocco/verification-context-spring-app
     container_name: verification-context-app
@@ -23,6 +27,8 @@ services:
       - AWS_SECRET_KEY=123
       - AWS_DYNAMO_DB_ENDPOINT_URI=http://aws-dynamo-db:8000
       - AWS_SNS_ENDPOINT_URI=http://aws-sns:4575
+      - REDIS_ENDPOINT_URI=redis://redis:6379
     depends_on:
       - aws-dynamo-db
       - aws-sns
+      - redis
