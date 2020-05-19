@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
-import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
@@ -43,12 +42,6 @@ public class DynamoDaoConfig {
     @Bean
     public VerificationAttemptDao verificationAttemptsDao(final JsonConverter jsonConverter) {
         return verificationContextConfig.verificationAttemptDao(jsonConverter);
-    }
-
-    //TODO move with redis config
-    @Bean
-    public LockoutPolicyDao lockoutPolicyDao(final JsonConverter jsonConverter) {
-        return verificationContextConfig.lockoutPolicyDao(jsonConverter);
     }
 
     @Bean

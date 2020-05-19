@@ -13,6 +13,7 @@ import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicy;
 import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicyMother;
 import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyDao;
 import uk.co.idv.json.verificationcontext.VerificationContextModule;
+import uk.co.idv.repository.redis.VerificationContextRedisConfig;
 import uk.co.idv.utils.json.converter.JsonConverter;
 import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
 import uk.co.idv.utils.json.converter.jackson.ObjectMapperFactory;

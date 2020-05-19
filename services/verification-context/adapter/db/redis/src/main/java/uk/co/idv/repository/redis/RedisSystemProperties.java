@@ -1,4 +1,4 @@
-package uk.co.idv.repository.redis.verificationcontext;
+package uk.co.idv.repository.redis;
 
 import uk.co.idv.utils.aws.system.SystemPropertyLoader;
 

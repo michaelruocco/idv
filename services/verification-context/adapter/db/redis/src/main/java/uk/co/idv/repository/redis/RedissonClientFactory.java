@@ -1,4 +1,4 @@
-package uk.co.idv.repository.redis.verificationcontext;
+package uk.co.idv.repository.redis;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

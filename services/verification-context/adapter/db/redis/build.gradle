@@ -18,6 +18,7 @@ dependencies {
     implementation "org.redisson:redisson:${redissonVersion}"
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
+    testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     testImplementation project(':verification-context-entities').sourceSets.test.output
 
     //TODO figure whether we can get testFixtures to pick up from implementation classpath
