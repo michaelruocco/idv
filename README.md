@@ -7,9 +7,7 @@
 
 ## TODO list
 
-*  Use identity data to determine method eligibility
-
-*  Add dynamo db persistence of identity data (phone numbers / emails / devices / accounts)
+*  Add post endpoint for creating user identites
 
 *  Create physical PINsentry device loader and populate pinsentry devices onto identity
 
@@ -23,7 +21,7 @@
 
 ## Future Enhancements / Ideas
 
-*  Put object mothers in separate module or move into production code packages
+*  Put object mothers into test fixtures
 
 *  All eligible flag against delivery method (for otp) and card (for pinsentry)
 
@@ -36,16 +34,6 @@
 *  Try removing NAT gateway from AWS templates as they are costly when you leave the ECS cluster running
 
 *  Implement token validation for access control and see if it is possible to format responses based on user profile
-
-*  Verification method policies
-
-*  Verification method policies updatable on the fly
-
-*  Once policies are in database look at options for cache layer to reduce number of db hits, first simple idea is to
-   add a caching decorator to the policy dao classes where we can pass a configurable duration of how long to cache for,
-   on first read load all policies into a map if any writes are made then update map. Would need to think about
-   messaging between multiple instances, probably best option for this would be a pub sub notification that would use
-   something like sns or kafka then each instance could listen for updates and refresh cache as needed.
 
 *  Deploy onto AWS (ideally would be automatic from travis ci pipeline)
 
