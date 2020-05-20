@@ -7,7 +7,9 @@
 
 ## TODO list
 
-*  Add post endpoint for creating user identites
+*  Add post endpoint for creating user identities
+
+*  Add way to configure how identity / eligibility data loaded, e.g. from data or external system, probably via a policy
 
 *  Create physical PINsentry device loader and populate pinsentry devices onto identity
 
@@ -19,19 +21,19 @@
 
 *  Add delete endpoints for verification and lockout policies
 
+*  Put object mothers and other test helper code into test fixtures
+
 ## Future Enhancements / Ideas
 
-*  Put object mothers into test fixtures
+*  Create own simpler cloud formation templates with ECS, API gateway, ElastiCache
 
-*  All eligible flag against delivery method (for otp) and card (for pinsentry)
+*  Add eligible flag against delivery method (for otp) and card (for pinsentry)
 
 *  Add folders to postman collection and try using a single one again
 
 *  Add properly formatted error handling for OTP scenarios
 
 *  Load phone numbers from database so we don't have use stubbed environment variables to change phone numbers
-
-*  Try removing NAT gateway from AWS templates as they are costly when you leave the ECS cluster running
 
 *  Implement token validation for access control and see if it is possible to format responses based on user profile
 
@@ -40,7 +42,7 @@
 *  Acceptance tests (cucumber / karate) alongside postman tests already in place
 
 *  Add "preCommit" task to gradle which will run build, spotless apply, build docker image and run postman tests after
-docker compose tasks in order, which will give a simple command to build and test before adding a commit
+   docker compose tasks in order, which will give a simple command to build and test before adding a commit
 
 ## Useful commands
 
@@ -128,12 +130,3 @@ aws cloudformation create-stack --stack-name idv-dev-alb --template-url https://
 
 aws cloudformation create-stack --stack-name idv-dev-verification-context --template-url https://idv-cloud-formation-templates.s3-eu-west-1.amazonaws.com/service-fargate-private-subnet-public-lb.yml --parameters ParameterKey=EnvironmentName,ParameterValue=idv-dev ParameterKey=ServiceName,ParameterValue=verification-context ParameterKey=ImageUrl,ParameterValue=michaelruocco/verification-context-spring-app:latest ParameterKey=DesiredCount,ParameterValue=1 ParameterKey=Role,ParameterValue=ecsTaskExecutionRole --region eu-west-1
 ```
-
-Need to create new simple cloudformation templates, as a rough idea it will need to
-create
-
-*  VPC
-*  Ideally just private subnets
-*  API Gateway
-*  Redis / elasticache 
-*  Dynamo tables (if we dont want service to create them instead)
