@@ -3,8 +3,8 @@ dependencies {
     implementation project(':json-converter')
     implementation 'com.github.michaelruocco:jackson-json-api:2.0.2'
 
-    testImplementation project(':verification-context-entities').sourceSets.test.output
-    testImplementation project(':verification-context-use-cases').sourceSets.test.output
+    testImplementation testFixtures(project(':verification-context-entities'))
+    testImplementation testFixtures(project(':verification-context-use-cases'))
     testImplementation project(':verification-context-json').sourceSets.test.output
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitVersion}"
     testImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"

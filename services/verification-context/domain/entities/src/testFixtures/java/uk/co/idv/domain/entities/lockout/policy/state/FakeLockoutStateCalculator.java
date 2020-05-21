@@ -1,7 +1,6 @@
 package uk.co.idv.domain.entities.lockout.policy.state;
 
 
-
 public class FakeLockoutStateCalculator implements LockoutStateCalculator {
 
     private CalculateLockoutStateRequest lastCalculateStateRequest;

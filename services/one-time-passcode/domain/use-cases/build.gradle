@@ -6,7 +6,7 @@ dependencies {
     implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
 
     testImplementation testFixtures(project(':one-time-passcode-entities'))
-    testImplementation project(':verification-context-entities').sourceSets.test.output
-    testImplementation project(':verification-context-use-cases').sourceSets.test.output
+    testImplementation testFixtures(project(':verification-context-entities'))
+    testImplementation testFixtures(project(':verification-context-use-cases'))
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
 }

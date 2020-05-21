@@ -19,10 +19,8 @@ dependencies {
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
-    testImplementation project(':verification-context-entities').sourceSets.test.output
+    testImplementation testFixtures(project(':verification-context-entities'))
 
-    //TODO figure whether we can get testFixtures to pick up from implementation classpath
-    //without having to change to API
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testFixturesApi "org.redisson:redisson:${redissonVersion}"

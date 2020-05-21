@@ -49,9 +49,9 @@ dependencies {
     implementation project(':one-time-passcode-sns-delivery')
     implementation project(':one-time-passcode-in-memory-delivery')
 
+    testImplementation testFixtures(project(':verification-context-entities'))
+    testImplementation testFixtures(project(':verification-context-use-cases'))
     testImplementation project(':verification-context-api').sourceSets.test.output
-    testImplementation project(':verification-context-entities').sourceSets.test.output
-    testImplementation project(':verification-context-use-cases').sourceSets.test.output
     testImplementation testFixtures(project(':one-time-passcode-entities'))
     testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
 

@@ -8,4 +8,6 @@ dependencies {
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
+
+    testFixturesImplementation "org.assertj:assertj-core:${assertjVersion}"
 }
