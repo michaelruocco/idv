@@ -14,14 +14,12 @@ dependencies {
     implementation project(':one-time-passcode-json')
     implementation project(':aws-system-properties')
 
-    testImplementation project(':verification-context-entities').sourceSets.test.output
     testImplementation testFixtures(project(':one-time-passcode-entities'))
-    testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
     testImplementation "org.meanbean:meanbean:${meanBeanVersion}"
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 
-    integrationTestImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    integrationTestImplementation testFixtures(project(':dynamo-db-utils'))
 }
 
 integrationTest {

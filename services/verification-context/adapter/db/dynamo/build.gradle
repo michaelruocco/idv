@@ -17,7 +17,7 @@ dependencies {
 
     testImplementation testFixtures(project(':verification-context-entities'))
     testImplementation testFixtures(project(':verification-context-use-cases'))
-    testImplementation project(':dynamo-db-utils')
+    testImplementation testFixtures(project(':dynamo-db-utils'))
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
     testImplementation "org.meanbean:meanbean:${meanBeanVersion}"
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"

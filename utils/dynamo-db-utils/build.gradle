@@ -1,5 +1,11 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
 dependencies {
     api "com.amazonaws:aws-java-sdk-dynamodb:${awsSdkVersion}"
 
-    implementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    testFixturesApi "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }

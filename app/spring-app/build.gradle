@@ -58,7 +58,7 @@ dependencies {
     integrationTestImplementation 'com.github.stefanbirkner:system-rules:1.19.0'
     integrationTestImplementation project(':one-time-passcode-sns-delivery').sourceSets.integrationTest.output
     integrationTestImplementation testFixtures(project(':verification-context-redis-db'))
-    integrationTestImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    integrationTestImplementation testFixtures(project(':dynamo-db-utils'))
 }
 
 integrationTest {
