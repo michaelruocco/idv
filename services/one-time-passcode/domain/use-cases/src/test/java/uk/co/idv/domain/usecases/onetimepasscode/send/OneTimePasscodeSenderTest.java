@@ -188,7 +188,6 @@ class OneTimePasscodeSenderTest {
         final String message = "message";
         given(messageBuilder.build(context.getActivity(), passcode)).willReturn(message);
 
-
         final OneTimePasscodeVerification verification = sender.send(request);
 
         final OneTimePasscodeDelivery expectedDelivery = OneTimePasscodeDelivery.builder()
