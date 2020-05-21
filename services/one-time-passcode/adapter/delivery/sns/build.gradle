@@ -14,7 +14,7 @@ dependencies {
     implementation project(':use-cases-utils')
     implementation project(':aws-system-properties')
 
-    testImplementation project(':one-time-passcode-entities').sourceSets.test.output
+    testImplementation testFixtures(project(':one-time-passcode-entities'))
     testImplementation project(':verification-context-entities').sourceSets.test.output
 
     integrationTestImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"

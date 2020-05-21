@@ -7,7 +7,7 @@
 
 ## TODO list
 
-*  Add post endpoint for creating user identities
+*  Add post endpoint for creating identities
 
 *  Add way to configure how identity / eligibility data loaded, e.g. from data or external system, probably via a policy
 
@@ -27,7 +27,7 @@
 
 *  Create own simpler cloud formation templates with ECS, API gateway, ElastiCache
 
-*  Add eligible flag against delivery method (for otp) and card (for pinsentry)
+*  Add eligibility against delivery method (for otp) and card (for pinsentry)
 
 *  Add folders to postman collection and try using a single one again
 

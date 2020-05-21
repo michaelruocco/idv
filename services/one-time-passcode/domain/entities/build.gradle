@@ -1,6 +1,13 @@
+plugins {
+    id 'java-test-fixtures'
+}
+
 dependencies {
     implementation project(':verification-context-entities')
 
-    testImplementation project(':verification-context-entities').sourceSets.test.output
     testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
+    testImplementation testFixtures(project(':verification-context-entities'))
+
+    testFixturesImplementation project(':verification-context-entities')
+    testFixturesImplementation testFixtures(project(':verification-context-entities'))
 }
