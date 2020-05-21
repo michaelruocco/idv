@@ -5,7 +5,6 @@ dependencies {
 
     testImplementation testFixtures(project(':verification-context-entities'))
     testImplementation testFixtures(project(':verification-context-use-cases'))
-    testImplementation project(':verification-context-json').sourceSets.test.output
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitVersion}"
     testImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
     testImplementation "org.meanbean:meanbean:${meanBeanVersion}"

@@ -2,5 +2,4 @@ dependencies {
     implementation project(':one-time-passcode-use-cases')
 
     testImplementation testFixtures(project(':one-time-passcode-entities'))
-    testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
 }

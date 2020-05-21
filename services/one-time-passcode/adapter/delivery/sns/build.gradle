@@ -1,5 +1,6 @@
 plugins {
     id 'org.unbroken-dome.test-sets' version "${testSetsPluginVersion}"
+    id 'java-test-fixtures'
 }
 
 testSets {
@@ -17,7 +18,9 @@ dependencies {
     testImplementation testFixtures(project(':one-time-passcode-entities'))
     testImplementation testFixtures(project(':verification-context-entities'))
 
-    integrationTestImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    testFixturesApi "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
 integrationTest {
