@@ -21,8 +21,6 @@
 
 *  Add delete endpoints for verification and lockout policies
 
-*  Put object mothers and other test helper code into test fixtures
-
 ## Future Enhancements / Ideas
 
 *  Create own simpler cloud formation templates with ECS, API gateway, ElastiCache
