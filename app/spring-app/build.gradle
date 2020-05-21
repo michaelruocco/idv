@@ -53,7 +53,7 @@ dependencies {
     testImplementation testFixtures(project(':verification-context-use-cases'))
     testImplementation project(':verification-context-api').sourceSets.test.output
     testImplementation testFixtures(project(':one-time-passcode-entities'))
-    testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
+    testImplementation testFixtures(project(':one-time-passcode-use-cases'))
 
     integrationTestImplementation 'com.github.stefanbirkner:system-rules:1.19.0'
     integrationTestImplementation project(':one-time-passcode-sns-delivery').sourceSets.integrationTest.output

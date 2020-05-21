@@ -1,9 +1,9 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.verify;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.usecases.onetimepasscode.VerifyOneTimePasscodeRequest.VerifyOneTimePasscodeRequestBuilder;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.VerifyOneTimePasscodeRequest.VerifyOneTimePasscodeRequestBuilder;
 
 import java.util.Collection;
 import java.util.Collections;

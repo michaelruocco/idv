@@ -3,7 +3,7 @@ package uk.co.idv.onetimepasscode.sender;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
-import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeDeliverySender;
+import uk.co.idv.domain.usecases.onetimepasscode.send.OneTimePasscodeDeliverySender;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 
 import java.util.ArrayList;

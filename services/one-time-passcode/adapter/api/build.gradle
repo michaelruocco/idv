@@ -4,7 +4,7 @@ dependencies {
     api 'com.github.michaelruocco:jackson-json-api:2.0.2'
 
     testImplementation testFixtures(project(':one-time-passcode-entities'))
-    testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
+    testImplementation testFixtures(project(':one-time-passcode-use-cases'))
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitVersion}"
     testImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 }

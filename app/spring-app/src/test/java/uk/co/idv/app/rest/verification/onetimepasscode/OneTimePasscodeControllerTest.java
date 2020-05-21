@@ -12,12 +12,12 @@ import uk.co.idv.api.onetimepasscode.VerifyOneTimePasscodeRequestDocument;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
 import uk.co.idv.domain.usecases.onetimepasscode.FakeOneTimePasscodeService;
-import uk.co.idv.domain.usecases.onetimepasscode.ResendOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.onetimepasscode.ResendOneTimePasscodeRequestMother;
-import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequestMother;
-import uk.co.idv.domain.usecases.onetimepasscode.VerifyOneTimePasscodeRequest;
-import uk.co.idv.domain.usecases.onetimepasscode.VerifyOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.send.ResendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.send.ResendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.send.SendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.send.SendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.VerifyOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.VerifyOneTimePasscodeRequestMother;
 
 import java.util.UUID;
 

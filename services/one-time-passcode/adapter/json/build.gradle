@@ -6,7 +6,7 @@ dependencies {
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDataTypeJsrVersion}"
 
     testImplementation testFixtures(project(':one-time-passcode-entities'))
-    testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
+    testImplementation testFixtures(project(':one-time-passcode-use-cases'))
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitVersion}"
     testImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
     testImplementation "org.meanbean:meanbean:${meanBeanVersion}"

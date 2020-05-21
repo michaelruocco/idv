@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.send;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,10 @@ import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.Deli
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.DeliveryMethodMother;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscodeMother;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationContextLoader;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationFactory;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationLoader;
 import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;

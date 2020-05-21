@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.verify;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;

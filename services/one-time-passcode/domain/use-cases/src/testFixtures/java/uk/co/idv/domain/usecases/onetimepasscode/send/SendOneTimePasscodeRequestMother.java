@@ -1,4 +1,5 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.send;
+
 
 import java.util.UUID;
 

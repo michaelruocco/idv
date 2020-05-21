@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.send;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -9,9 +9,8 @@ import java.util.UUID;
 @Builder
 @Getter
 @EqualsAndHashCode
-public class ResendOneTimePasscodeRequest {
+public class SendOneTimePasscodeRequest {
 
-    private final UUID id;
     private final UUID contextId;
     private final UUID deliveryMethodId;
 

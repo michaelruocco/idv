@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.send;
 
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
 

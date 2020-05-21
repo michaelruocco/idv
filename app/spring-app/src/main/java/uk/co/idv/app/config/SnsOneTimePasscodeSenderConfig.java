@@ -4,7 +4,7 @@ import com.amazonaws.services.sns.AmazonSNS;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeDeliverySender;
+import uk.co.idv.domain.usecases.onetimepasscode.send.OneTimePasscodeDeliverySender;
 import uk.co.idv.onetimepasscode.sender.sns.OneTimePasscodeDeliveryConverter;
 import uk.co.idv.onetimepasscode.sender.sns.SnsClientFactory;
 import uk.co.idv.onetimepasscode.sender.sns.SnsOneTimePasscodeDeliverySender;

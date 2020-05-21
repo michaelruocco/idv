@@ -2,7 +2,7 @@ package uk.co.idv.api.onetimepasscode;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.usecases.onetimepasscode.SendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.send.SendOneTimePasscodeRequestMother;
 import uk.co.mruoc.file.content.ContentLoader;
 
 import java.io.IOException;

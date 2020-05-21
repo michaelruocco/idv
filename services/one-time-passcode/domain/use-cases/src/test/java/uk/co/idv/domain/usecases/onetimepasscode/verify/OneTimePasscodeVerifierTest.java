@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.verify;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -6,6 +6,9 @@ import org.mockito.Mockito;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttempt;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationAttemptMother;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationConverter;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationLoader;
 import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequest;
 import uk.co.idv.domain.usecases.verificationcontext.result.RecordResultRequestMother;
 import uk.co.idv.domain.usecases.verificationcontext.result.VerificationContextResultRecorder;

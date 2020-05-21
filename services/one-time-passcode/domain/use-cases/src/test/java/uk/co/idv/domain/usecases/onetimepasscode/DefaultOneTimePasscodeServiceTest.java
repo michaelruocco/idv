@@ -3,6 +3,14 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerificationMother;
+import uk.co.idv.domain.usecases.onetimepasscode.send.OneTimePasscodeSender;
+import uk.co.idv.domain.usecases.onetimepasscode.send.ResendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.send.ResendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.send.SendOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.send.SendOneTimePasscodeRequestMother;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.OneTimePasscodeVerifier;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.VerifyOneTimePasscodeRequest;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.VerifyOneTimePasscodeRequestMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

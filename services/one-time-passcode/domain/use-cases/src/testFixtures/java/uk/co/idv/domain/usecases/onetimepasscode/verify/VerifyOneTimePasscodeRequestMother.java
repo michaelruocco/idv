@@ -1,4 +1,5 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.verify;
+
 
 import java.util.Arrays;
 import java.util.Collection;

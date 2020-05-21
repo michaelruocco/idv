@@ -1,4 +1,4 @@
-package uk.co.idv.domain.usecases.onetimepasscode;
+package uk.co.idv.domain.usecases.onetimepasscode.send;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.activity.Activity;
@@ -6,6 +6,10 @@ import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeDelivery;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationContextLoader;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationFactory;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationLoader;
 import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
