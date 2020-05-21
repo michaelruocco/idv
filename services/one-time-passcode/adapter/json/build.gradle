@@ -5,15 +5,7 @@ dependencies {
 
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonDataTypeJsrVersion}"
 
-    testImplementation project(':verification-context-entities').sourceSets.test.output
-    //TODO tests depending on use cases source set? Maybe for fakes? Should try and
-    //remove this if possible? Maybe use mocks instead, need to assess impact on complexity
-    //of tests by changing this
-    testImplementation project(':verification-context-use-cases').sourceSets.test.output
     testImplementation testFixtures(project(':one-time-passcode-entities'))
-    //TODO tests depending on use cases source set? Maybe for fakes? Should try and
-    //remove this if possible? Maybe use mocks instead, need to assess impact on complexity
-    //of tests by changing this
     testImplementation project(':one-time-passcode-use-cases').sourceSets.test.output
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitVersion}"
     testImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"

@@ -4,7 +4,5 @@ dependencies {
     implementation project(':one-time-passcode-use-cases')
     implementation project(':verification-context-use-cases')
 
-    testImplementation project(':verification-context-entities').sourceSets.test.output
-    testImplementation project(':verification-context-use-cases').sourceSets.test.output
     testImplementation testFixtures(project(':one-time-passcode-entities'))
 }
