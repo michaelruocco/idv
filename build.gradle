@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'idea'
-    id 'com.diffplug.gradle.spotless' version '3.28.1'
+    id 'com.diffplug.gradle.spotless' version '4.0.1'
     id 'com.github.ben-manes.versions' version '0.28.0'
     id 'com.vanniktech.dependency.graph.generator' version '0.5.0'
     id 'pl.allegro.tech.build.axion-release' version '1.11.0'
@@ -45,17 +45,17 @@ subprojects {
         lombokVersion = '1.18.12'
         slf4jVersion = '1.7.30'
         meanBeanVersion = '2.0.3'
-        equalsVerifierVersion = '3.1.13'
+        equalsVerifierVersion = '3.3'
         fileLoaderVersion = '5.0.1'
-        testContainersVersion = '1.13.0'
+        testContainersVersion = '1.14.2'
         jsonUnitVersion = '2.17.0'
-        junitPioneerVersion = '0.5.6'
-        awsSdkVersion = '1.11.762'
+        junitPioneerVersion = '0.6.0'
+        awsSdkVersion = '1.11.787'
         commonsCollectionsVersion = '4.4'
         commonsLangVersion = '3.10'
-        jacksonDataTypeJsrVersion = '2.10.3'
+        jacksonDataTypeJsrVersion = '2.11.0'
         testSetsPluginVersion = '3.0.1'
-        assertjVersion = '3.15.0'
+        assertjVersion = '3.16.1'
     }
 
     dependencies {

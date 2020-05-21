@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api 'org.javamoney:moneta:1.3'
+    api 'org.javamoney:moneta:1.4'
 
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
