@@ -7,7 +7,7 @@ import uk.co.idv.domain.entities.verificationcontext.result.VerificationResult;
 import java.time.Instant;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 class OneTimePasscodeVerificationResultTest {
