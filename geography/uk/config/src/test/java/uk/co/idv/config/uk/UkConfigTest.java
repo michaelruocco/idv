@@ -1,9 +1,8 @@
-package uk.co.idv.uk.config;
+package uk.co.idv.config.uk;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
 import uk.co.idv.uk.domain.entities.policy.lockout.UkLockoutPolicyProvider;
 
 import java.util.Collection;
@@ -21,7 +20,7 @@ class UkConfigTest {
     void shouldReturnObjectMapperWithUkApiModules() {
         final Collection<Object> expectedModuleIds = toIds(new UkApiIdvModule());
 
-        final ObjectMapper mapper = config.jsonApiObjectMapper();
+        final ObjectMapper mapper = config.apiObjectMapper();
 
         assertThat(mapper.getRegisteredModuleIds()).containsExactlyInAnyOrderElementsOf(expectedModuleIds);
     }
@@ -30,14 +29,9 @@ class UkConfigTest {
     void shouldReturnObjectMapperWithUkModules() {
         final Collection<Object> expectedModuleIds = toIds( new UkIdvModule());
 
-        final ObjectMapper mapper = config.objectMapper();
+        final ObjectMapper mapper = config.persistenceObjectMapper();
 
         assertThat(mapper.getRegisteredModuleIds()).containsExactlyInAnyOrderElementsOf(expectedModuleIds);
-    }
-
-    @Test
-    void shouldReturnRandomIdGenerator() {
-        assertThat(config.idGenerator()).isInstanceOf(RandomIdGenerator.class);
     }
 
     @Test

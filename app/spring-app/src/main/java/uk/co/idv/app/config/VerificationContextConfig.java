@@ -5,19 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
 import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicyProvider;
-import uk.co.idv.domain.usecases.identity.data.AccountLoader;
-import uk.co.idv.domain.usecases.identity.data.AliasLoader;
-import uk.co.idv.domain.usecases.identity.data.IdentityDataService;
-import uk.co.idv.domain.usecases.identity.data.MobileDeviceLoader;
-import uk.co.idv.domain.usecases.identity.data.PhoneNumberLoader;
 import uk.co.idv.domain.usecases.lockout.policy.InitialLockoutPolicyCreator;
 import uk.co.idv.domain.usecases.lockout.state.LockoutRequestService;
+import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
 import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
-import uk.co.idv.domain.usecases.util.id.IdGenerator;
-import uk.co.idv.domain.usecases.util.time.TimeProvider;
-import uk.co.idv.domain.usecases.identity.IdentityDao;
-import uk.co.idv.domain.entities.identity.alias.AliasFactory;
-import uk.co.idv.domain.usecases.identity.DefaultIdentityService;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.policy.LockoutPolicyDao;
 import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptDao;
@@ -52,12 +43,7 @@ import uk.co.idv.domain.usecases.verificationcontext.result.VerificationContextR
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 
 @Configuration
-public class VerificationContextDomainConfig {
-
-    @Bean
-    public TimeProvider timeService() {
-        return new CurrentTimeProvider();
-    }
+public class VerificationContextConfig {
 
     @Bean
     public ExpiryCalculator expiryCalculator() {
@@ -90,59 +76,9 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public AliasFactory aliasFactory() {
-        return new AliasFactory();
-    }
-
-    @Bean
-    public AliasLoader aliasLoader() {
-        return new AliasLoader();
-    }
-
-    @Bean
-    public PhoneNumberLoader phoneNumberLoader() {
-        return new PhoneNumberLoader();
-    }
-
-    @Bean
-    public AccountLoader accountLoader() {
-        return new AccountLoader();
-    }
-
-    @Bean
-    public MobileDeviceLoader mobileApplicationEligibleLoader(final TimeProvider timeProvider) {
-        return new MobileDeviceLoader(timeProvider);
-    }
-
-    @Bean
-    public IdentityDataService identityDataService(final AliasLoader aliasLoader,
-                                                   final PhoneNumberLoader phoneNumberLoader,
-                                                   final AccountLoader accountLoader,
-                                                   final MobileDeviceLoader mobileDeviceLoader) {
-        return IdentityDataService.builder()
-                .aliasLoader(aliasLoader)
-                .phoneNumberLoader(phoneNumberLoader)
-                .accountLoader(accountLoader)
-                .mobileDeviceLoader(mobileDeviceLoader)
-                .build();
-    }
-
-    @Bean
-    public IdentityService identityService(final IdGenerator idGenerator,
-                                           final IdentityDataService dataService,
-                                           final IdentityDao dao) {
-        return DefaultIdentityService.builder()
-                .idGenerator(idGenerator)
-                .dataService(dataService)
-                .dao(dao)
-                .build();
-    }
-
-    @Bean
-    public VerificationAttemptsLoader verificationAttemptsLoader(final IdGenerator idGenerator,
-                                                                 final VerificationAttemptDao dao) {
+    public VerificationAttemptsLoader verificationAttemptsLoader(final VerificationAttemptDao dao) {
         return DefaultVerificationAttemptsLoader.builder()
-                .idGenerator(idGenerator)
+                .idGenerator(new RandomIdGenerator())
                 .dao(dao)
                 .build();
     }
@@ -221,11 +157,10 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public VerificationContextLoader verificationContextLoader(final TimeProvider timeProvider,
-                                                               final LockoutService lockoutService,
+    public VerificationContextLoader verificationContextLoader(final LockoutService lockoutService,
                                                                final VerificationContextDao dao) {
         return DefaultVerificationContextLoader.builder()
-                .timeProvider(timeProvider)
+                .timeProvider(new CurrentTimeProvider())
                 .lockoutService(lockoutService)
                 .dao(dao)
                 .build();
@@ -243,16 +178,14 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public VerificationContextCreator verificationContextCreator(final IdGenerator idGenerator,
-                                                                 final TimeProvider timeProvider,
-                                                                 final IdentityService identityService,
+    public VerificationContextCreator verificationContextCreator(final IdentityService identityService,
                                                                  final SequenceLoader sequenceLoader,
                                                                  final ExpiryCalculator expiryCalculator,
                                                                  final LockoutService lockoutService,
                                                                  final VerificationContextDao dao) {
         return VerificationContextCreator.builder()
-                .idGenerator(idGenerator)
-                .timeProvider(timeProvider)
+                .idGenerator(new RandomIdGenerator())
+                .timeProvider(new CurrentTimeProvider())
                 .identityService(identityService)
                 .sequenceLoader(sequenceLoader)
                 .expiryCalculator(expiryCalculator)
@@ -274,11 +207,10 @@ public class VerificationContextDomainConfig {
     }
 
     @Bean
-    public LockoutFacade lockoutFacade(final TimeProvider timeProvider,
-                                       final IdentityService identityService,
+    public LockoutFacade lockoutFacade(final IdentityService identityService,
                                        final LockoutService lockoutService) {
         return DefaultLockoutFacade.builder()
-                .timeProvider(timeProvider)
+                .timeProvider(new CurrentTimeProvider())
                 .identityService(identityService)
                 .lockoutService(lockoutService)
                 .build();

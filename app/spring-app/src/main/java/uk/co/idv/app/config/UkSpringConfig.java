@@ -7,8 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import uk.co.idv.domain.entities.lockout.policy.LockoutPolicyProvider;
 import uk.co.idv.domain.entities.verificationcontext.policy.VerificationPolicyProvider;
-import uk.co.idv.domain.usecases.util.id.IdGenerator;
-import uk.co.idv.uk.config.UkConfig;
+import uk.co.idv.config.uk.UkConfig;
 import uk.co.idv.utils.json.converter.JsonConverter;
 import uk.co.idv.utils.json.converter.jackson.JacksonJsonConverter;
 
@@ -19,23 +18,18 @@ public class UkSpringConfig {
 
     @Primary
     @Bean
-    public ObjectMapper jsonApiObjectMapper() {
-        return ukConfig.jsonApiObjectMapper();
+    public ObjectMapper apiObjectMapper() {
+        return ukConfig.apiObjectMapper();
     }
 
     @Bean
     public ObjectMapper persistenceObjectMapper() {
-        return ukConfig.objectMapper();
+        return ukConfig.persistenceObjectMapper();
     }
 
     @Bean
     public JsonConverter jsonConverter(@Qualifier("persistenceObjectMapper") final ObjectMapper mapper) {
         return new JacksonJsonConverter(mapper);
-    }
-
-    @Bean
-    public IdGenerator idGenerator() {
-        return ukConfig.idGenerator();
     }
 
     @Bean
