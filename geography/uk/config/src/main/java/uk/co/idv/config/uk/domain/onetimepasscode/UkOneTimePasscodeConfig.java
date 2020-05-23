@@ -1,0 +1,90 @@
+package uk.co.idv.config.uk.domain.onetimepasscode;
+
+import uk.co.idv.domain.usecases.onetimepasscode.DefaultOneTimePasscodeService;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeService;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationContextLoader;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationConverter;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationFactory;
+import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationLoader;
+import uk.co.idv.domain.usecases.onetimepasscode.generator.RandomPasscodeGenerator;
+import uk.co.idv.domain.usecases.onetimepasscode.message.DefaultOneTimePasscodeMessageBuilder;
+import uk.co.idv.domain.usecases.onetimepasscode.message.DelegatingOneTimePasscodeMessageBuilder;
+import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
+import uk.co.idv.domain.usecases.onetimepasscode.message.OnlinePurchaseOneTimePasscodeMessageBuilder;
+import uk.co.idv.domain.usecases.onetimepasscode.send.OneTimePasscodeDeliverySender;
+import uk.co.idv.domain.usecases.onetimepasscode.send.OneTimePasscodeSender;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.OneTimePasscodeVerifier;
+import uk.co.idv.domain.usecases.onetimepasscode.verify.VerifyOneTimePasscodeRequestConverter;
+import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
+import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
+import uk.co.idv.domain.usecases.util.time.TimeProvider;
+import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
+import uk.co.idv.domain.usecases.verificationcontext.result.VerificationContextResultRecorder;
+
+public class UkOneTimePasscodeConfig {
+
+    private final TimeProvider timeProvider = new CurrentTimeProvider();
+
+    public OneTimePasscodeService oneTimePasscodeService(final OneTimePasscodeVerificationDao dao,
+                                                         final VerificationContextResultRecorder resultRecorder,
+                                                         final OneTimePasscodeSender sender) {
+        return DefaultOneTimePasscodeService.builder()
+                .verificationLoader(verificationLoader(dao))
+                .verifier(verifier(dao, resultRecorder))
+                .sender(sender)
+                .build();
+    }
+
+    public OneTimePasscodeSender oneTimePasscodeSender(final VerificationContextLoader contextLoader,
+                                                       final OneTimePasscodeDeliverySender sender,
+                                                       final OneTimePasscodeVerificationDao dao) {
+        return OneTimePasscodeSender.builder()
+                .contextLoader(oneTimePasscodeContextLoader(contextLoader))
+                .verificationFactory(verificationFactory())
+                .verificationLoader(verificationLoader(dao))
+                .passcodeGenerator(new RandomPasscodeGenerator())
+                .messageBuilder(messageBuilder())
+                .timeProvider(timeProvider)
+                .sender(sender)
+                .dao(dao)
+                .build();
+    }
+
+    private OneTimePasscodeVerifier verifier(final OneTimePasscodeVerificationDao dao,
+                                             final VerificationContextResultRecorder resultRecorder) {
+        return OneTimePasscodeVerifier.builder()
+                .verificationLoader(verificationLoader(dao))
+                .requestConverter(new VerifyOneTimePasscodeRequestConverter(timeProvider))
+                .verificationConverter(new OneTimePasscodeVerificationConverter(timeProvider))
+                .dao(dao)
+                .resultRecorder(resultRecorder)
+                .build();
+    }
+
+    private OneTimePasscodeVerificationLoader verificationLoader(final OneTimePasscodeVerificationDao dao) {
+        return OneTimePasscodeVerificationLoader.builder()
+                .timeProvider(timeProvider)
+                .dao(dao)
+                .build();
+    }
+
+    private OneTimePasscodeVerificationFactory verificationFactory() {
+        return OneTimePasscodeVerificationFactory.builder()
+                .timeProvider(timeProvider)
+                .idGenerator(new RandomIdGenerator())
+                .build();
+    }
+
+    private OneTimePasscodeVerificationContextLoader oneTimePasscodeContextLoader(final VerificationContextLoader contextLoader) {
+        return new OneTimePasscodeVerificationContextLoader(contextLoader);
+    }
+
+    private OneTimePasscodeMessageBuilder messageBuilder() {
+        return new DelegatingOneTimePasscodeMessageBuilder(
+                new OnlinePurchaseOneTimePasscodeMessageBuilder(),
+                new DefaultOneTimePasscodeMessageBuilder()
+        );
+    }
+
+}

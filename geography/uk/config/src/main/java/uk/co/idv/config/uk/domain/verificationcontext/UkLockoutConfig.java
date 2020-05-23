@@ -1,4 +1,4 @@
-package uk.co.idv.config.uk.domain;
+package uk.co.idv.config.uk.domain.verificationcontext;
 
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequestConverter;
 import uk.co.idv.domain.usecases.identity.IdentityService;

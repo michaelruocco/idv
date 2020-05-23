@@ -2,7 +2,7 @@ package uk.co.idv.app.config.domain.verificationcontext;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.config.uk.domain.UkLockoutConfig;
+import uk.co.idv.config.uk.domain.verificationcontext.UkLockoutConfig;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.LockoutFacade;
 import uk.co.idv.domain.usecases.lockout.LockoutService;

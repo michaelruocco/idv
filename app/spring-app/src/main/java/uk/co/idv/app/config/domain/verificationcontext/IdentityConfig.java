@@ -2,7 +2,7 @@ package uk.co.idv.app.config.domain.verificationcontext;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.config.uk.domain.UkIdentityConfig;
+import uk.co.idv.config.uk.domain.verificationcontext.UkIdentityConfig;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.usecases.identity.IdentityDao;
 import uk.co.idv.domain.usecases.identity.IdentityService;
