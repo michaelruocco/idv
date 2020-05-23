@@ -1,4 +1,4 @@
-package uk.co.idv.config.uk;
+package uk.co.idv.config.uk.domain;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;

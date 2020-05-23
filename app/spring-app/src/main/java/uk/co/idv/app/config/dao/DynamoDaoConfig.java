@@ -1,4 +1,4 @@
-package uk.co.idv.app.config;
+package uk.co.idv.app.config.dao;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import org.springframework.context.annotation.Bean;

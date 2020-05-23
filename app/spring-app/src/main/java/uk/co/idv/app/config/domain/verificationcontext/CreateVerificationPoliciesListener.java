@@ -1,4 +1,4 @@
-package uk.co.idv.app.config;
+package uk.co.idv.app.config.domain.verificationcontext;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

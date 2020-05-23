@@ -1,4 +1,4 @@
-package uk.co.idv.app.config;
+package uk.co.idv.app.config.domain.onetimepasscode;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

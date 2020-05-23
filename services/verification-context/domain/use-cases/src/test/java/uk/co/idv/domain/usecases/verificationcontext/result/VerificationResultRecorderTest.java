@@ -22,7 +22,7 @@ class VerificationResultRecorderTest {
     private final FakeLockoutService lockoutService = new FakeLockoutService();
     private final VerificationContextDao dao = mock(VerificationContextDao.class);
 
-    private final VerificationContextResultRecorder resultRecorder = VerificationContextResultRecorder.builder()
+    private final VerificationContextResultRecorder resultRecorder = DefaultVerificationContextResultRecorder.builder()
             .contextLoader(contextLoader)
             .lockoutService(lockoutService)
             .dao(dao)

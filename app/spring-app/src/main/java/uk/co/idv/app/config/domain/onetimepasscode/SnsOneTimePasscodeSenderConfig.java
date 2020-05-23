@@ -1,4 +1,4 @@
-package uk.co.idv.app.config;
+package uk.co.idv.app.config.domain.onetimepasscode;
 
 import com.amazonaws.services.sns.AmazonSNS;
 import org.springframework.context.annotation.Bean;

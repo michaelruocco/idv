@@ -1,4 +1,4 @@
-package uk.co.idv.config.uk;
+package uk.co.idv.config.uk.jackson;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;

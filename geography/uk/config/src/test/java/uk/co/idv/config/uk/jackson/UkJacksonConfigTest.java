@@ -1,9 +1,8 @@
-package uk.co.idv.config.uk;
+package uk.co.idv.config.uk.jackson;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.uk.domain.entities.policy.lockout.UkLockoutPolicyProvider;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -12,9 +11,9 @@ import java.util.stream.StreamSupport;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UkConfigTest {
+class UkJacksonConfigTest {
 
-    private final UkConfig config = new UkConfig();
+    private final UkJacksonConfig config = new UkJacksonConfig();
 
     @Test
     void shouldReturnObjectMapperWithUkApiModules() {
@@ -34,11 +33,6 @@ class UkConfigTest {
         assertThat(mapper.getRegisteredModuleIds()).containsExactlyInAnyOrderElementsOf(expectedModuleIds);
     }
 
-    @Test
-    void shouldReturnUkLockoutPolicyProvider() {
-        assertThat(config.lockoutPolicyProvider()).isInstanceOf(UkLockoutPolicyProvider.class);
-    }
-
     private static Collection<Object> toIds(final Module module) {
         return toDependencyStream(module)
                 .map(Module::getTypeId)
@@ -48,7 +42,7 @@ class UkConfigTest {
     private static Stream<Module> toDependencyStream(final Module module) {
         final Iterable<? extends Module> iterable = module.getDependencies();
         final Stream<? extends Module> dependencyStream = StreamSupport.stream(iterable.spliterator(), false)
-                .flatMap(UkConfigTest::toDependencyStream);
+                .flatMap(UkJacksonConfigTest::toDependencyStream);
         return Stream.concat(dependencyStream, Stream.of(module));
     }
 

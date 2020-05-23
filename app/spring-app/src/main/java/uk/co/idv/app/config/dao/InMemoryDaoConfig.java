@@ -1,4 +1,4 @@
-package uk.co.idv.app.config;
+package uk.co.idv.app.config.dao;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
