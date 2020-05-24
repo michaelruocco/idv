@@ -14,9 +14,13 @@ import java.util.Collection;
 @Builder
 public class OneTimePasscodeVerifier {
 
+    @Builder.Default
+    private final VerifyOneTimePasscodeRequestConverter requestConverter = new VerifyOneTimePasscodeRequestConverter();
+
+    @Builder.Default
+    private final OneTimePasscodeVerificationConverter verificationConverter = new OneTimePasscodeVerificationConverter();
+
     private final OneTimePasscodeVerificationLoader verificationLoader;
-    private final VerifyOneTimePasscodeRequestConverter requestConverter;
-    private final OneTimePasscodeVerificationConverter verificationConverter;
     private final OneTimePasscodeVerificationDao dao;
     private final VerificationContextResultRecorder resultRecorder;
 

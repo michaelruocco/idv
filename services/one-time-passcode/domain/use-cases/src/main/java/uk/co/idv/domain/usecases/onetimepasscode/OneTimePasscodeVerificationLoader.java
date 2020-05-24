@@ -2,6 +2,7 @@ package uk.co.idv.domain.usecases.onetimepasscode;
 
 import lombok.Builder;
 import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
+import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 import java.time.Instant;
@@ -10,8 +11,10 @@ import java.util.UUID;
 @Builder
 public class OneTimePasscodeVerificationLoader {
 
+    @Builder.Default
+    private final TimeProvider timeProvider = new CurrentTimeProvider();
+
     private final OneTimePasscodeVerificationDao dao;
-    private final TimeProvider timeProvider;
 
     public OneTimePasscodeVerification load(final UUID id) {
         final OneTimePasscodeVerification verification = dao.load(id)

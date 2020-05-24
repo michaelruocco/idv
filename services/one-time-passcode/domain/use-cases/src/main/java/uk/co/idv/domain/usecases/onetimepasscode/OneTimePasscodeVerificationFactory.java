@@ -5,6 +5,8 @@ import uk.co.idv.domain.entities.onetimepasscode.OneTimePasscodeVerification;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.method.onetimepasscode.OneTimePasscode;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
+import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
+import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 import java.time.Instant;
@@ -12,8 +14,11 @@ import java.time.Instant;
 @Builder
 public class OneTimePasscodeVerificationFactory {
 
-    private final IdGenerator idGenerator;
-    private final TimeProvider timeProvider;
+    @Builder.Default
+    private final IdGenerator idGenerator = new RandomIdGenerator();
+
+    @Builder.Default
+    private final TimeProvider timeProvider = new CurrentTimeProvider();
 
     public OneTimePasscodeVerification build(final VerificationContext context) {
         final OneTimePasscode method = context.getNextOneTimePasscodeEligibleMethod();

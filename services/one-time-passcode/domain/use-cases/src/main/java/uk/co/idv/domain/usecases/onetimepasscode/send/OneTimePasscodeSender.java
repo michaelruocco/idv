@@ -11,7 +11,9 @@ import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationDao;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationFactory;
 import uk.co.idv.domain.usecases.onetimepasscode.OneTimePasscodeVerificationLoader;
 import uk.co.idv.domain.usecases.onetimepasscode.generator.PasscodeGenerator;
+import uk.co.idv.domain.usecases.onetimepasscode.generator.RandomPasscodeGenerator;
 import uk.co.idv.domain.usecases.onetimepasscode.message.OneTimePasscodeMessageBuilder;
+import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 import java.time.Instant;
@@ -20,12 +22,16 @@ import java.util.UUID;
 @Builder
 public class OneTimePasscodeSender {
 
+    @Builder.Default
+    private final PasscodeGenerator passcodeGenerator = new RandomPasscodeGenerator();
+
+    @Builder.Default
+    private final TimeProvider timeProvider = new CurrentTimeProvider();
+
     private final OneTimePasscodeVerificationContextLoader contextLoader;
     private final OneTimePasscodeVerificationFactory verificationFactory;
     private final OneTimePasscodeVerificationLoader verificationLoader;
-    private final PasscodeGenerator passcodeGenerator;
     private final OneTimePasscodeMessageBuilder messageBuilder;
-    private final TimeProvider timeProvider;
     private final OneTimePasscodeDeliverySender sender;
     private final OneTimePasscodeVerificationDao dao;
 
