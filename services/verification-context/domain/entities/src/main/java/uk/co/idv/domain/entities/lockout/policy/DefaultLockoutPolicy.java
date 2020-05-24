@@ -1,6 +1,7 @@
 package uk.co.idv.domain.entities.lockout.policy;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.domain.entities.lockout.policy.state.ApplicableAttemptFilter;
 import uk.co.idv.domain.entities.lockout.policy.state.CalculateLockoutStateRequest;
@@ -13,6 +14,7 @@ import uk.co.idv.domain.entities.policy.PolicyLevel;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Slf4j
 public class DefaultLockoutPolicy implements LockoutPolicy {
 
@@ -28,18 +30,6 @@ public class DefaultLockoutPolicy implements LockoutPolicy {
                                 final LockoutStateCalculator stateCalculator,
                                 final RecordAttemptStrategy recordAttemptStrategy) {
         this(id, level, stateCalculator, recordAttemptStrategy, new ApplicableAttemptFilter(level));
-    }
-
-    public DefaultLockoutPolicy(final UUID id,
-                                final PolicyLevel level,
-                                final LockoutStateCalculator stateCalculator,
-                                final RecordAttemptStrategy recordAttemptStrategy,
-                                final ApplicableAttemptFilter attemptFilter) {
-        this.id = id;
-        this.stateCalculator = stateCalculator;
-        this.level = level;
-        this.recordAttemptStrategy = recordAttemptStrategy;
-        this.attemptFilter = attemptFilter;
     }
 
     @Override

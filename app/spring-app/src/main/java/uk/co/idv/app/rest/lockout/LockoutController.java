@@ -11,7 +11,6 @@ import uk.co.idv.domain.entities.lockout.DefaultLockoutRequest;
 import uk.co.idv.domain.entities.lockout.LockoutRequest;
 import uk.co.idv.api.lockout.state.LockoutStateDocument;
 import uk.co.idv.api.lockout.state.ResetLockoutStateDocument;
-import uk.co.idv.domain.entities.identity.alias.Alias;
 import uk.co.idv.domain.entities.identity.alias.AliasFactory;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.LockoutFacade;
@@ -29,7 +28,11 @@ public class LockoutController {
                                                 @RequestParam final String activityName,
                                                 @RequestParam final String aliasType,
                                                 @RequestParam final String aliasValue) {
-        final LockoutRequest request = toRequest(channelId, activityName, aliasType, aliasValue);
+        final LockoutRequest request = DefaultLockoutRequest.builder()
+                .channelId(channelId)
+                .activityName(activityName)
+                .alias(aliasFactory.build(aliasType, aliasValue))
+                .build();
         final LockoutState state = lockoutFacade.loadLockoutState(request);
         return toDocument(state);
     }
@@ -39,18 +42,6 @@ public class LockoutController {
         final LockoutRequest request = document.getAttributes();
         final LockoutState state = lockoutFacade.resetLockoutState(request);
         return toDocument(state);
-    }
-
-    private LockoutRequest toRequest(final String channelId,
-                                     final String activityName,
-                                     final String aliasType,
-                                     final String aliasValue) {
-        final Alias alias = aliasFactory.build(aliasType, aliasValue);
-        return DefaultLockoutRequest.builder()
-                .channelId(channelId)
-                .activityName(activityName)
-                .alias(alias)
-                .build();
     }
 
     private static LockoutStateDocument toDocument(final LockoutState state) {
