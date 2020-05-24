@@ -23,6 +23,8 @@
 
 ## Future Enhancements / Ideas
 
+*  Try out adding expiry calculation into verification policy
+
 *  Create own simpler cloud formation templates with ECS, API gateway, ElastiCache
 
 *  Add eligibility against delivery method (for otp) and card (for pinsentry)

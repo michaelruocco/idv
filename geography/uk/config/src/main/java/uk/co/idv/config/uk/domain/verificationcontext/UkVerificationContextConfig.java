@@ -3,15 +3,12 @@ package uk.co.idv.config.uk.domain.verificationcontext;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.usecases.policy.PolicyCreator;
-import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
-import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextService;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
-import uk.co.idv.domain.usecases.verificationcontext.expiry.MaxDurationExpiryCalculator;
 import uk.co.idv.domain.usecases.verificationcontext.policy.DefaultVerificationPolicyService;
 import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyCreator;
 import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyDao;
@@ -52,11 +49,8 @@ public class UkVerificationContextConfig {
                                                       final VerificationPolicyDao policyDao,
                                                       final VerificationContextDao contextDao) {
         return VerificationContextCreator.builder()
-                .idGenerator(new RandomIdGenerator())
-                .timeProvider(new CurrentTimeProvider())
                 .identityService(identityService)
                 .sequenceLoader(sequenceLoader(policyDao))
-                .expiryCalculator(new MaxDurationExpiryCalculator())
                 .lockoutService(lockoutService)
                 .dao(contextDao)
                 .build();
@@ -69,7 +63,6 @@ public class UkVerificationContextConfig {
     private VerificationContextLoader contextLoader(final LockoutService lockoutService,
                                                     final VerificationContextDao dao) {
         return DefaultVerificationContextLoader.builder()
-                .timeProvider(new CurrentTimeProvider())
                 .lockoutService(lockoutService)
                 .dao(dao)
                 .build();

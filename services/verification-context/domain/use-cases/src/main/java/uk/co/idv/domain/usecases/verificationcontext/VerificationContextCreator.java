@@ -5,6 +5,8 @@ import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
 import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.usecases.lockout.state.DefaultLoadLockoutStateRequest;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
+import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
+import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.entities.identity.Identity;
 import uk.co.idv.domain.usecases.identity.IdentityService;
@@ -13,6 +15,7 @@ import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.CalculateExpiryRequest;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.ExpiryCalculator;
+import uk.co.idv.domain.usecases.verificationcontext.expiry.MaxDurationExpiryCalculator;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.LoadSequencesRequest;
 import uk.co.idv.domain.usecases.verificationcontext.sequence.SequenceLoader;
 
@@ -21,11 +24,17 @@ import java.time.Instant;
 @Builder
 public class VerificationContextCreator {
 
-    private final IdGenerator idGenerator;
-    private final TimeProvider timeProvider;
+    @Builder.Default
+    private final IdGenerator idGenerator = new RandomIdGenerator();
+
+    @Builder.Default
+    private final TimeProvider timeProvider = new CurrentTimeProvider();
+
+    @Builder.Default
+    private final ExpiryCalculator expiryCalculator = new MaxDurationExpiryCalculator();
+
     private final IdentityService identityService;
     private final SequenceLoader sequenceLoader;
-    private final ExpiryCalculator expiryCalculator;
     private final LockoutService lockoutService;
     private final VerificationContextDao dao;
 
