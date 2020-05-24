@@ -10,8 +10,10 @@ import uk.co.idv.domain.usecases.lockout.attempt.VerificationAttemptsLoader;
 @Builder
 public class LockoutRequestService {
 
+    @Builder.Default
+    private final LockoutStateRequestConverter requestConverter = new LockoutStateRequestConverter();
+
     private final VerificationAttemptsLoader attemptsLoader;
-    private final LockoutStateRequestConverter requestConverter;
 
     public CalculateLockoutStateRequest toCalculateRequest(final LockoutStateRequest request) {
         final VerificationAttempts attempts = attemptsLoader.load(request.getIdvIdValue());

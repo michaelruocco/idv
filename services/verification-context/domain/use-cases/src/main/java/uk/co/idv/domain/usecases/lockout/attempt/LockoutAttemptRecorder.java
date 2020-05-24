@@ -14,7 +14,9 @@ import uk.co.idv.domain.usecases.lockout.state.LockoutStateResetter;
 @Slf4j
 public class LockoutAttemptRecorder {
 
-    private final RecordAttemptRequestConverter requestConverter;
+    @Builder.Default
+    private final RecordAttemptRequestConverter requestConverter = new RecordAttemptRequestConverter();
+
     private final LockoutPolicyService policyService;
     private final LockoutStateLoader stateLoader;
     private final LockoutStateResetter stateResetter;

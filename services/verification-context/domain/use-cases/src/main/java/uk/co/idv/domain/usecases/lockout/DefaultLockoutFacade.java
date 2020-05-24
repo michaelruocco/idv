@@ -9,12 +9,15 @@ import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.identity.LoadIdentityRequest;
 import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
 import uk.co.idv.domain.usecases.lockout.state.DefaultLoadLockoutStateRequest;
+import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 
 @Builder
 public class DefaultLockoutFacade implements LockoutFacade {
 
-    private final TimeProvider timeProvider;
+    @Builder.Default
+    private final TimeProvider timeProvider = new CurrentTimeProvider();
+
     private final IdentityService identityService;
     private final LockoutService lockoutService;
 

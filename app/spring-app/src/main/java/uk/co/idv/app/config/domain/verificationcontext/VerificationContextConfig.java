@@ -29,8 +29,8 @@ public class VerificationContextConfig {
     }
 
     @Bean
-    public CreateVerificationPoliciesListener createVerificationPoliciesListener(final VerificationPolicyDao dao) {
-        return new CreateVerificationPoliciesListener(config.policyCreator(dao));
+    public CreatePoliciesListener createVerificationPoliciesListener(final VerificationPolicyDao dao) {
+        return new CreatePoliciesListener(config.policyCreator(dao));
     }
 
 }

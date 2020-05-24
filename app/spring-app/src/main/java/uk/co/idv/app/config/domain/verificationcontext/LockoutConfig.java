@@ -33,8 +33,8 @@ public class LockoutConfig {
     }
 
     @Bean
-    public CreateLockoutPoliciesListener createLockoutPoliciesListener(final LockoutPolicyDao dao) {
-        return new CreateLockoutPoliciesListener(config.policyCreator(dao));
+    public CreatePoliciesListener createLockoutPoliciesListener(final LockoutPolicyDao dao) {
+        return new CreatePoliciesListener(config.policyCreator(dao));
     }
 
 }

@@ -2,6 +2,7 @@ package uk.co.idv.config.uk.domain.verificationcontext;
 
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
+import uk.co.idv.domain.usecases.policy.PolicyCreator;
 import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
 import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextLoader;
@@ -12,7 +13,7 @@ import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextService;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.MaxDurationExpiryCalculator;
 import uk.co.idv.domain.usecases.verificationcontext.policy.DefaultVerificationPolicyService;
-import uk.co.idv.domain.usecases.verificationcontext.policy.InitialVerificationPolicyCreator;
+import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyCreator;
 import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyDao;
 import uk.co.idv.domain.usecases.verificationcontext.policy.VerificationPolicyService;
 import uk.co.idv.domain.usecases.verificationcontext.result.DefaultVerificationContextResultRecorder;
@@ -35,8 +36,8 @@ public class UkVerificationContextConfig {
                 .build();
     }
 
-    public InitialVerificationPolicyCreator policyCreator(final VerificationPolicyDao dao) {
-        return InitialVerificationPolicyCreator.builder()
+    public PolicyCreator policyCreator(final VerificationPolicyDao dao) {
+        return VerificationPolicyCreator.builder()
                 .policyProvider(new UkVerificationPolicyProvider())
                 .policyService(policyService(dao))
                 .build();

@@ -14,12 +14,12 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class InitialPolicyCreatorTest {
+class DefaultPolicyCreatorTest {
 
     private final PolicyProvider<Policy> provider = mock(PolicyProvider.class);
     private final PolicyService<Policy> service = mock(PolicyService.class);
 
-    private final InitialPolicyCreator<Policy> creator = new InitialPolicyCreator<>(provider, service);
+    private final DefaultPolicyCreator<Policy> creator = new DefaultPolicyCreator<>(provider, service);
 
     @Test
     void shouldReturnAllCreatedTrueIfNoExceptionsThrown() {

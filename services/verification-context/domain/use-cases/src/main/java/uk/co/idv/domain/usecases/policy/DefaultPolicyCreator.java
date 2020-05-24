@@ -10,11 +10,12 @@ import java.util.Collection;
 
 @RequiredArgsConstructor
 @Slf4j
-public class InitialPolicyCreator<T extends Policy> {
+public class DefaultPolicyCreator<T extends Policy> implements PolicyCreator {
 
     private final PolicyProvider<T> policyProvider;
     private final PolicyService<T> policyService;
 
+    @Override
     public boolean create() {
         final Collection<T> policies = policyProvider.getPolicies();
         boolean allCreated = true;
