@@ -50,7 +50,7 @@ subprojects {
         testContainersVersion = '1.14.2'
         jsonUnitVersion = '2.17.0'
         junitPioneerVersion = '0.6.0'
-        awsSdkVersion = '1.11.787'
+        awsSdkVersion = '1.11.789'
         commonsCollectionsVersion = '4.4'
         commonsLangVersion = '3.10'
         jacksonDataTypeJsrVersion = '2.11.0'

@@ -8,7 +8,7 @@ testSets {
 }
 
 ext {
-    redissonVersion = '3.12.5'
+    redissonVersion = '3.13.0'
 }
 
 dependencies {
