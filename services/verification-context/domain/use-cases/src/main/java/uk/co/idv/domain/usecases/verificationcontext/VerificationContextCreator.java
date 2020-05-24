@@ -1,16 +1,11 @@
 package uk.co.idv.domain.usecases.verificationcontext;
 
 import lombok.Builder;
-import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
-import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
-import uk.co.idv.domain.usecases.lockout.state.DefaultLoadLockoutStateRequest;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.id.RandomIdGenerator;
 import uk.co.idv.domain.usecases.util.time.CurrentTimeProvider;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.usecases.identity.IdentityService;
-import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.CalculateExpiryRequest;
@@ -33,39 +28,18 @@ public class VerificationContextCreator {
     @Builder.Default
     private final ExpiryCalculator expiryCalculator = new MaxDurationExpiryCalculator();
 
-    private final IdentityService identityService;
+    private final IdentityUpserter identityUpserter;
     private final SequenceLoader sequenceLoader;
-    private final LockoutService lockoutService;
     private final VerificationContextDao dao;
 
     public VerificationContext create(final CreateContextRequest request) {
-        final Identity identity = loadIdentity(request);
-        validateLockoutState(request, identity);
+        final Identity identity = identityUpserter.upsertIdentity(request);
 
         final VerificationSequences sequences = loadVerificationSequences(request, identity);
         final VerificationContext context = buildContext(request, identity, sequences);
         dao.save(context);
 
         return context;
-    }
-
-    private Identity loadIdentity(final CreateContextRequest createContextRequest) {
-        final UpsertIdentityRequest request = UpsertIdentityRequest.builder()
-                .channel(createContextRequest.getChannel())
-                .providedAlias(createContextRequest.getProvidedAlias())
-                .build();
-        return identityService.upsert(request);
-    }
-
-    private void validateLockoutState(final CreateContextRequest createContextRequest, final Identity identity) {
-        final LockoutStateRequest request = DefaultLoadLockoutStateRequest.builder()
-                .channelId(createContextRequest.getChannelId())
-                .activityName(createContextRequest.getActivityName())
-                .alias(createContextRequest.getProvidedAlias())
-                .idvIdValue(identity.getIdvIdValue())
-                .timestamp(timeProvider.now())
-                .build();
-        lockoutService.validateState(request);
     }
 
     private VerificationSequences loadVerificationSequences(final CreateContextRequest createContextRequest,

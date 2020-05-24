@@ -2,17 +2,11 @@ package uk.co.idv.domain.usecases.verificationcontext;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.domain.entities.identity.IdentityMother;
-import uk.co.idv.domain.entities.lockout.policy.state.LockoutStateRequest;
-import uk.co.idv.domain.usecases.identity.UpsertIdentityRequest;
 import uk.co.idv.domain.usecases.util.id.FakeIdGenerator;
 import uk.co.idv.domain.usecases.util.time.FakeTimeProvider;
 import uk.co.idv.domain.usecases.util.id.IdGenerator;
 import uk.co.idv.domain.usecases.util.time.TimeProvider;
 import uk.co.idv.domain.entities.identity.Identity;
-import uk.co.idv.domain.usecases.identity.FakeIdentityService;
-import uk.co.idv.domain.entities.lockout.policy.state.LockoutState;
-import uk.co.idv.domain.usecases.lockout.FakeLockoutService;
-import uk.co.idv.domain.usecases.lockout.state.LockoutStateValidator.LockedOutException;
 import uk.co.idv.domain.entities.verificationcontext.VerificationContext;
 import uk.co.idv.domain.entities.verificationcontext.sequence.VerificationSequences;
 import uk.co.idv.domain.usecases.verificationcontext.expiry.CalculateExpiryRequest;
@@ -25,7 +19,6 @@ import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.Mockito.mock;
 
 class VerificationContextCreatorTest {
@@ -37,8 +30,7 @@ class VerificationContextCreatorTest {
     private final IdGenerator idGenerator = new FakeIdGenerator(ID);
     private final TimeProvider timeProvider = new FakeTimeProvider(NOW);
 
-    private final Identity identity = IdentityMother.build();
-    private final FakeIdentityService identityService = new FakeIdentityService(identity);
+    private final FakeIdentityUpserter identityUpserter = new FakeIdentityUpserter();
 
     private final VerificationSequences sequences = mock(VerificationSequences.class);
     private final FakeSequenceLoader sequenceLoader = new FakeSequenceLoader(sequences);
@@ -46,100 +38,23 @@ class VerificationContextCreatorTest {
     private final FakeExpiryCalculator expiryCalculator = new FakeExpiryCalculator(EXPIRY_DURATION);
     private final VerificationContextDao dao = mock(VerificationContextDao.class);
 
-    private final FakeLockoutService lockoutService = new FakeLockoutService();
-
     private final VerificationContextCreator creator = VerificationContextCreator.builder()
             .idGenerator(idGenerator)
             .timeProvider(timeProvider)
-            .identityService(identityService)
+            .identityUpserter(identityUpserter)
             .sequenceLoader(sequenceLoader)
             .expiryCalculator(expiryCalculator)
-            .lockoutService(lockoutService)
             .dao(dao)
             .build();
 
     @Test
-    void shouldPassChannelWhenUpsertingIdentity() {
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
+    void shouldPassRequestWhenUpsertingIdentity() {
+        final CreateContextRequest request = CreateContextRequestMother.build();
 
-        creator.create(createContextRequest);
+        creator.create(request);
 
-        final UpsertIdentityRequest identityRequest = identityService.getLastUpsertRequest();
-        assertThat(identityRequest.getChannel()).isEqualTo(createContextRequest.getChannel());
+        assertThat(identityUpserter.getLastRequest()).isEqualTo(request);
     }
-
-    @Test
-    void shouldPassProvidedAliasWhenUpsertingIdentity() {
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
-
-        creator.create(createContextRequest);
-
-        final UpsertIdentityRequest identityRequest = identityService.getLastUpsertRequest();
-        assertThat(identityRequest.getProvidedAlias()).isEqualTo(createContextRequest.getProvidedAlias());
-    }
-
-    @Test
-    void shouldPassChannelWhenValidatingLockoutState() {
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
-
-        creator.create(createContextRequest);
-
-        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getChannelId()).isEqualTo(createContextRequest.getChannelId());
-    }
-
-    @Test
-    void shouldPassActivityWhenValidatingLockoutState() {
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
-
-        creator.create(createContextRequest);
-
-        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getActivityName()).isEqualTo(createContextRequest.getActivityName());
-    }
-
-    @Test
-    void shouldPassProvidedAliasWhenValidatingLockoutState() {
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
-
-        creator.create(createContextRequest);
-
-        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getAlias()).isEqualTo(createContextRequest.getProvidedAlias());
-    }
-
-    @Test
-    void shouldPassIdvIdValueWhenValidatingLockoutState() {
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
-
-        creator.create(createContextRequest);
-
-        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getIdvIdValue()).isEqualTo(identity.getIdvIdValue());
-    }
-
-    @Test
-    void shouldPassCurrentTimestampWhenValidatingLockoutState() {
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
-
-        creator.create(createContextRequest);
-
-        final LockoutStateRequest validateStateRequest = lockoutService.getLastValidateStateRequest();
-        assertThat(validateStateRequest.getTimestamp()).isEqualTo(NOW);
-    }
-
-    @Test
-    void shouldThrowExceptionIfLockoutStateIsLocked() {
-        final LockoutState lockedState = mock(LockoutState.class);
-        lockoutService.setHasLockedState(lockedState);
-        final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
-
-        final LockedOutException error = (LockedOutException) catchThrowable(() -> creator.create(createContextRequest));
-
-        assertThat(error).hasMessage("locked");
-        assertThat(error.getLockoutState()).isEqualTo(lockedState);
-    }
-
 
     @Test
     void shouldPassChannelWhenLoadingSequences() {
@@ -174,6 +89,8 @@ class VerificationContextCreatorTest {
     @Test
     void shouldPassIdentityWhenLoadingSequences() {
         final CreateContextRequest createContextRequest = CreateContextRequestMother.build();
+        final Identity identity = IdentityMother.build();
+        identityUpserter.setIdentityToReturn(identity);
 
         creator.create(createContextRequest);
 
@@ -260,6 +177,8 @@ class VerificationContextCreatorTest {
     @Test
     void shouldPopulateIdentity() {
         final CreateContextRequest request = CreateContextRequestMother.build();
+        final Identity identity = IdentityMother.build();
+        identityUpserter.setIdentityToReturn(identity);
 
         final VerificationContext context = creator.create(request);
 

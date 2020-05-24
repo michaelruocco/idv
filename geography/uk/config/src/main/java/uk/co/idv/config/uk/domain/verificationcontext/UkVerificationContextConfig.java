@@ -3,8 +3,10 @@ package uk.co.idv.config.uk.domain.verificationcontext;
 import uk.co.idv.domain.usecases.identity.IdentityService;
 import uk.co.idv.domain.usecases.lockout.LockoutService;
 import uk.co.idv.domain.usecases.policy.PolicyCreator;
+import uk.co.idv.domain.usecases.verificationcontext.DefaultIdentityUpserter;
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextLoader;
 import uk.co.idv.domain.usecases.verificationcontext.DefaultVerificationContextService;
+import uk.co.idv.domain.usecases.verificationcontext.IdentityUpserter;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextCreator;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextDao;
 import uk.co.idv.domain.usecases.verificationcontext.VerificationContextLoader;
@@ -21,13 +23,13 @@ import uk.co.idv.uk.domain.entities.policy.sequence.UkVerificationPolicyProvider
 
 public class UkVerificationContextConfig {
 
-    //TODO consider pulling out a facade to remove dependency on identity and lockout service in context service
     public VerificationContextService verificationContextService(final IdentityService identityService,
                                                                  final LockoutService lockoutService,
                                                                  final VerificationPolicyDao policyDao,
                                                                  final VerificationContextDao contextDao) {
+        final IdentityUpserter identityUpserter = identityUpserter(identityService, lockoutService);
         return DefaultVerificationContextService.builder()
-                .creator(contextCreator(identityService, lockoutService, policyDao, contextDao))
+                .creator(contextCreator(identityUpserter, policyDao, contextDao))
                 .loader(contextLoader(lockoutService, contextDao))
                 .resultRecorder(resultRecorder(lockoutService, contextDao))
                 .build();
@@ -44,15 +46,21 @@ public class UkVerificationContextConfig {
         return new DefaultVerificationPolicyService(dao);
     }
 
-    private VerificationContextCreator contextCreator(final IdentityService identityService,
-                                                      final LockoutService lockoutService,
+    private VerificationContextCreator contextCreator(final IdentityUpserter identityUpserter,
                                                       final VerificationPolicyDao policyDao,
                                                       final VerificationContextDao contextDao) {
         return VerificationContextCreator.builder()
-                .identityService(identityService)
+                .identityUpserter(identityUpserter)
                 .sequenceLoader(sequenceLoader(policyDao))
-                .lockoutService(lockoutService)
                 .dao(contextDao)
+                .build();
+    }
+
+    private IdentityUpserter identityUpserter(final IdentityService identityService,
+                                              final LockoutService lockoutService) {
+        return DefaultIdentityUpserter.builder()
+                .identityService(identityService)
+                .lockoutService(lockoutService)
                 .build();
     }
 
@@ -69,7 +77,7 @@ public class UkVerificationContextConfig {
     }
 
     private VerificationContextResultRecorder resultRecorder(final LockoutService lockoutService,
-                                                                    final VerificationContextDao dao) {
+                                                             final VerificationContextDao dao) {
         return DefaultVerificationContextResultRecorder.builder()
                 .contextLoader(contextLoader(lockoutService, dao))
                 .lockoutService(lockoutService)
