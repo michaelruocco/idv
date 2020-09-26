@@ -21,7 +21,7 @@ public class SnsLocalContainer extends GenericContainer<SnsLocalContainer> {
 
     public SnsLocalContainer(final Regions region) {
         super("localstack/localstack:latest");
-        withExposedPorts(4575);
+        withExposedPorts(4566);
         withEnv("SERVICES", "sns");
         this.region = region;
     }

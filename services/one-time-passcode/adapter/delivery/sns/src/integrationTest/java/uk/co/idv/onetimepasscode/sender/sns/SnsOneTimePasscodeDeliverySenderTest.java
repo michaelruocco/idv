@@ -26,7 +26,7 @@ class SnsOneTimePasscodeDeliverySenderTest {
             .build();
 
     @Test
-    public void shouldSendSms() {
+    void shouldSendSms() {
         final OneTimePasscodeDelivery delivery = OneTimePasscodeDelivery.builder()
                 .method(DeliveryMethodMother.sms())
                 .message("Your IDV passcode is 12345678")

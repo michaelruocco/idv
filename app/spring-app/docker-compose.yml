@@ -26,7 +26,7 @@ services:
       - AWS_ACCESS_KEY=abc
       - AWS_SECRET_KEY=123
       - AWS_DYNAMO_DB_ENDPOINT_URI=http://aws-dynamo-db:8000
-      - AWS_SNS_ENDPOINT_URI=http://aws-sns:4575
+      - AWS_SNS_ENDPOINT_URI=http://aws-sns:4566
       - REDIS_ENDPOINT_URI=redis://redis:6379
     depends_on:
       - aws-dynamo-db
