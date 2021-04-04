@@ -64,11 +64,6 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -125,11 +120,6 @@
 						"name": "Content-Type",
 						"value": "application/json",
 						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
-						"type": "text"
 					}
 				],
 				"body": {
@@ -181,11 +171,6 @@
 						"key": "Content-Type",
 						"name": "Content-Type",
 						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0",
 						"type": "text"
 					}
 				],
@@ -240,11 +225,6 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0"
 					}
 				],
 				"body": {
@@ -301,11 +281,6 @@
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
-					},
-					{
-						"key": "Authorization",
-						"type": "text",
-						"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4YzRkMDQ0Ny1iZDdiLTQ2NmItOGY5NC04ZDAxMWIwMzAxYTAiLCJpYXQiOjE1NzgzNTY0MjYsInN1YiI6ImppbWJvb2IiLCJpc3MiOiJkZWZhdWx0LWlkdi1pc3N1ZXIiLCJleHAiOjE1NzgzODUyMjZ9.MDA1WQZM0qbfDyhSNUQyCp3N7g8cEE9l5Bp71XBysY0"
 					}
 				],
 				"body": {
